@@ -1,6 +1,6 @@
 # Financial Programming Concepts in Solana
 
-Solana Building Blocks covered the platform. This chapter covers the money: how to calculate with it, how to bring facts about it onchain, how it gets stolen, and how to operate a program that holds it. Everything here applies to every program in Building Financial Products in Solana, which is why it comes first. One framing idea opens it, because every one of those programs is shaped by it.
+Solana Building Blocks covered the platform. This chapter covers the money: how to calculate with it, how to bring facts about it onchain, how it gets stolen, and how to operate a program that holds it. Everything here applies to every financial product you will build, starting with one framing idea that shapes them all.
 
 ## Financial Software Is a State Machine, and Every State Needs an Exit
 
