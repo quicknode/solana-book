@@ -10,6 +10,7 @@ The book teaches the durable layer of building financial software on Solana: how
 
 - [OUTLINE.md](OUTLINE.md) - the table of contents with per-chapter summaries
 - [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
+- [chapters/](chapters/) - drafted chapters: [How to Use This Book](chapters/how-to-use-this-book.md) and [Escrow](chapters/escrow.md)
 
 ## Companion projects
 
@@ -18,4 +19,4 @@ The book teaches the durable layer of building financial software on Solana: how
 
 ## Status
 
-Outline stage. No chapters drafted yet.
+Two chapters drafted: How to Use This Book, and Escrow (with figure placeholders awaiting the visual pass). Everything else is at outline stage.
