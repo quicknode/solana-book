@@ -2,9 +2,19 @@
 
 Assets on Solana are tokens, and tokens are nothing more than accounts with well-known shapes, managed by a token program.
 
-## The Mint Account Defines the Token
+## Every Distinct Token Is a Distinct Mint
 
-The **mint account** is the token's definition: its total supply, its decimals, and its authorities. When this book says "USDC" or "BONK", the precise referent is a mint account, and passing the *right* mint is a validation problem every program chapter takes seriously.
+Each kind of token is defined by its own **mint account**. USDC is one mint; BONK is another; the shares a fund issues are a third. Two tokens are the same asset exactly when they come from the same mint address, and *only* then: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "BONK", the precise referent is a mint account, and passing the *right* mint is a validation problem every program chapter takes seriously.
+
+The mint account records the token's definition: its current total supply, its decimals, and its authorities.
+
+## A Mint Is a Factory, and the Mint Authority Is Its Boss
+
+A mint does not just describe a token; it manufactures it. New tokens come into existence when, and only when, the mint's **mint authority** signs a mint instruction: the supply counter rises and the new tokens land in a token account. Burning does the reverse. Nothing else in the system can create or destroy a single unit.
+
+The mint authority is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can print at will: fine for a test token, alarming for money), a multisig (printing takes a quorum), or a PDA, which is how this book's programs use it: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever; that is what a token means when it claims no more can ever exist.
+
+**[FIGURE: The mint as a factory. The mint account with its supply counter; the mint authority signing a mint instruction and new tokens flowing into a token account as the counter rises; a burn shrinking it; a second panel where the authority is set to none and the supply is sealed.]**
 
 ## Token Accounts Hold Balances, and ATAs Make Them Findable
 
@@ -16,9 +26,9 @@ A **token account** holds one owner's balance of one token. The **associated tok
 
 The mint's **decimals** set the **minor unit**, the raw integer everything actually calculates and transfers in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked`, which fails unless the caller states the decimals the mint really has.
 
-## Mint and Freeze Authority Are Finance Levers
+## The Freeze Authority Can Stop Any Holder Cold
 
-Two authorities on the mint matter to financial products. The **mint authority** can create supply: it is how a fund issues shares and a stablecoin issues dollars, and in this book's programs it is usually a PDA, so issuance follows code, not a person. The **freeze authority** can freeze individual token accounts: the compliance lever behind regulated assets, and a fact to check before building on someone else's token.
+The mint's other lever is the **freeze authority**, which can freeze and thaw individual token accounts: a frozen account can neither send nor receive. It is the compliance mechanism behind regulated assets (sanctions, court orders, fraud response), and it applies to holders one at a time, not to the token as a whole. Before building on someone else's token, check both authorities: who can print, and who can freeze, is the token's real constitution.
 
 ## Token Extensions Change What a Transfer Means
 
