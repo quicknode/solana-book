@@ -6,9 +6,9 @@ The program for this chapter lives at `finance/escrow` in the companion reposito
 
 ## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
-Alice has 10 USDC and wants 100 BONK. Bob has plenty of BONK and likes that price. They want to trade.
+Alice has 250 USDC and wants a share of Tesla stock. Bob holds TSLAx and likes that price. They want to trade.
 
-**[FIGURE: Alice with USDC wanting BONK, Bob with BONK wanting USDC, arrows showing the intended swap.]**
+**[FIGURE: Alice with USDC wanting TSLAx, Bob with TSLAx wanting USDC, arrows showing the intended swap.]**
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? Maybe Bob is just that type of guy. The real problem an **escrow** solves is not moving tokens, it is letting Alice and Bob swap without having to trust each other.
 
@@ -20,20 +20,20 @@ A Solana program replaces the third party. The program holds Alice's tokens unde
 
 **[FIGURE: The same swap through the escrow program. Both sides receive the full amount; the middle box is a program, not a company.]**
 
-## The Deal: Alice's 10 USDC for Bob's 100 BONK
+## The Deal: Alice's 250 USDC for Bob's Tesla Share
 
 Two roles run through this chapter, and the code names them the same way:
 
-- **Alice is the maker.** She creates the offer: 10 USDC for 100 BONK.
+- **Alice is the maker.** She creates the offer: 250 USDC for 1 TSLAx.
 - **Bob is the taker.** He accepts the offer as it stands.
 
-The deal is denominated the way all Solana money is denominated: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 10 USDC is 10,000,000 minor units. BONK has five decimals, so the 100 BONK she wants is also 10,000,000 minor units. The two numbers are identical and mean completely different things, which is exactly why programs track each token's decimals instead of assuming them. The minor-units section of Financial Programming Concepts in Solana covers this in depth; escrow is where you first feel it.
+The deal is denominated the way all Solana money is denominated: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. Identical integers meaning completely different things is exactly why programs track each token's decimals instead of assuming them. The minor-units section of Financial Programming Concepts in Solana covers this in depth; escrow is where you first feel it.
 
 ## The Account Model
 
 Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard cast of accounts every token-handling program touches.
 
-**[FIGURE: Account-relationship map. Alice's wallet and her two token accounts; Bob's wallet and his two token accounts; the offer account (PDA) pointing at its vault; the mint accounts for USDC and BONK; arrows labelled with owner and authority relationships.]**
+**[FIGURE: Account-relationship map. Alice's wallet and her two token accounts; Bob's wallet and his two token accounts; the offer account (PDA) pointing at its vault; the mint accounts for USDC and TSLAx; arrows labelled with owner and authority relationships.]**
 
 The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
 
@@ -57,15 +57,15 @@ The program has three instruction handlers, and together they form the offer's c
 
 ### Alice Makes the Offer
 
-Alice calls `make_offer` with three arguments: her chosen `id`, `token_a_offered_amount` (10,000,000 minor units of USDC), and `token_b_wanted_amount` (10,000,000 minor units of BONK).
+Alice calls `make_offer` with three arguments: her chosen `id`, `token_a_offered_amount` (250,000,000 minor units of USDC), and `token_b_wanted_amount` (100,000,000 minor units of TSLAx).
 
 Before the handler body runs a single line, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here (`init`), with space for the data fields plus Anchor's discriminator, at the PDA address derived from `"offer"`, Alice's address, and the id; if that account already exists, creation fails and the whole transaction aborts, which is the id-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
 
 One constraint deserves a pause: `maker_token_account_b`, Alice's account for the token she *wants*, is created now if it does not exist, and Alice pays for it. This is a deliberate piece of economics. The party who chose to open the offer carries its rent burden, and `take_offer` can then require the destination for Bob's payment to already exist rather than making Bob pay to create an account that belongs to Alice.
 
-With the structure verified, the handler body is two small steps. `handle_send_offered_tokens_to_vault` calls the shared `transfer_tokens` helper to move the 10,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority. Then `handle_save_offer` writes the offer's fields, including the saved bump, into the offer account.
+With the structure verified, the handler body is two small steps. `handle_send_offered_tokens_to_vault` calls the shared `transfer_tokens` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority. Then `handle_save_offer` writes the offer's fields, including the saved bump, into the offer account.
 
-**[FIGURE: make_offer token movement. 10,000,000 minor units of USDC flowing from Alice's token account into the vault; beside it, the offer account being written with maker, mints, wanted amount.]**
+**[FIGURE: make_offer token movement. 250,000,000 minor units of USDC flowing from Alice's token account into the vault; beside it, the offer account being written with maker, mints, wanted amount.]**
 
 Alice is done. She can close her laptop.
 
@@ -75,9 +75,9 @@ Bob calls `take_offer`. It takes no arguments beyond the accounts themselves, an
 
 Alice does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
-The handler body runs two steps. First, `handle_send_wanted_tokens_to_maker` moves 10,000,000 minor units of BONK straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it. Second, `handle_withdraw_and_close_vault` moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the id, and the saved bump. Then the same helper pair closes the vault with `close_token_account`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
+The handler body runs two steps. First, `handle_send_wanted_tokens_to_maker` moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it. Second, `handle_withdraw_and_close_vault` moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the id, and the saved bump. Then the same helper pair closes the vault with `close_token_account`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
 
-**[FIGURE: take_offer token movement, two arrows. BONK flowing directly from Bob's token account to Alice's; USDC flowing from the vault to Bob's token account; the vault and offer accounts shown closing, with rent lamports returning to Alice.]**
+**[FIGURE: take_offer token movement, two arrows. TSLAx flowing directly from Bob's token account to Alice's; USDC flowing from the vault to Bob's token account; the vault and offer accounts shown closing, with rent lamports returning to Alice.]**
 
 Both sides now hold exactly what the other offered. No percentage went to anyone.
 

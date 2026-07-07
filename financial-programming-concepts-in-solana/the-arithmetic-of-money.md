@@ -10,7 +10,7 @@ So the rule is absolute: token amounts, prices, rates, and everything derived fr
 
 ## Minor Units, Lots, and Fixed-Point Scale
 
-Programs calculate in **minor units**, the smallest denomination of each token: the raw integer the token program actually moves. The **decimals** declared on each mint say how many minor units make one **major unit**: USDC has 6, so $10 is 10,000,000; BONK has 5, so 100 BONK is also 10,000,000. Identical integers, entirely different meanings. Three rules keep them straight:
+Programs calculate in **minor units**, the smallest denomination of each token: the raw integer the token program actually moves. The **decimals** declared on each mint say how many minor units make one **major unit**: USDC has 6, so $10 is 10,000,000; TSLAx (Tesla stock) has 8, so a tenth of a share is also 10,000,000. Identical integers, entirely different meanings. Three rules keep them straight:
 
 - **Read decimals from the mint; never assume them.** Hard-coding `10^9` because SOL has 9 decimals is a bug waiting for the first token that has 6.
 - **Never mix scales in one calculation.** An amount in USDC minor units times a price per whole share is nonsense with a plausible magnitude, the worst kind of wrong. Name variables with their unit and scale.
