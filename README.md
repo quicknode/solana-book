@@ -10,7 +10,7 @@ The book teaches the durable layer of building financial software on Solana: how
 
 - [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents
 - [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
-- One folder per section ([opening-pages/](opening-pages/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [appendices/](appendices/)), one file per chapter; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
+- One folder per section ([prelude/](prelude/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [appendices/](appendices/)), one file per chapter; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
 
 ## Companion projects
 
@@ -19,4 +19,4 @@ The book teaches the durable layer of building financial software on Solana: how
 
 ## Status
 
-Drafted: How to Use This Book, Escrow, The Order Book Exchange, The Constant-Product AMM, Vaults (vault strategy), Lending and Borrowing, The Betting Market, the Terminology appendix, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Solana Building Blocks, Financial Programming Concepts in Solana, Token Fundraiser, Perpetual Futures, the Invariant Checklist, and The Visual Language.
+Drafted: How to Use This Book, all of Financial Programming Concepts in Solana, Escrow, The Order Book Exchange, The Constant-Product AMM, The Vault Strategy, Lending and Borrowing, The Betting Market, the Terminology appendix, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Solana Building Blocks, Token Fundraiser, Perpetual Futures, and the Invariant Checklist.

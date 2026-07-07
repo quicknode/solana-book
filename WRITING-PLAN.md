@@ -46,6 +46,10 @@ Each incident is researched from primary sources and placed inside the chapter n
 - The Hundred and Sonne precision drains: the precision-exploits section of Financial Programming Concepts in Solana
 - Crema Finance ($8.8M, tick-account forgery): the validation section or The Constant-Product AMM chapter, decided during drafting
 
+## The Visual Language
+
+The diagram conventions (account-relationship maps, state machines, token-movement flows, the War Story box) are production guidance, not reader content, so they live here rather than in an appendix. They are fixed during the single visual pass that draws every figure, and each convention is taught to the reader by the first figure that uses it, with a small legend on that figure. One consistent set of conventions across the whole book; no figure invents its own.
+
 ## Reviewers, Feedback, and Editions
 
 - **Named technical reviewers**: recruit respected Solana engineers early, so review happens per part rather than as one giant pass at the end. Their names fill the About the Technical Reviewers section. Visible peer review is part of how fundamentals titles earn their standing.

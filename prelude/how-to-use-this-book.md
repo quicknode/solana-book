@@ -54,6 +54,6 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 - **Auditing or reviewing?** The adversary sections of Financial Programming Concepts in Solana first, then the program chapter matching what is in front of you, then the Invariant Checklist appendix.
 - **In a hurry and dangerous about it?** The Invariant Checklist appendix is the one-page distillation of the whole book's rules. It will not teach you why, but it will stop the worst bugs while you circle back for the why.
 
-## Two Appendices Meant to Be Worn Out: Terminology and the Visual Language
+## Two Appendices Meant to Be Worn Out: Terminology and the Invariant Checklist
 
-Two appendices are meant to be worn out. The Terminology appendix is the glossary: Solana's own vocabulary plus the financial vocabulary this field uses daily (minor units, lots, ticks, basis points, WAD, and the rest). When a term in a chapter surprises you, it is defined there. The Visual Language appendix defines the diagram conventions: every diagram in the book (account-relationship maps, state machines, token-movement flows) uses one consistent set of conventions, defined once, so that by mid-book you read the diagrams faster than the prose.
+Two appendices are meant to be worn out. The Terminology appendix is the glossary: Solana's own vocabulary plus the financial vocabulary this field uses daily (minor units, lots, ticks, basis points, WAD, and the rest). When a term in a chapter surprises you, it is defined there. The Invariant Checklist is the whole book's rules on one page, for the moment before you ship. The diagrams throughout the book share one set of conventions, and each is explained by the first figure that uses it.
