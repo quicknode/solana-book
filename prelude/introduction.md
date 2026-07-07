@@ -12,7 +12,7 @@ This is a book about building software **on** Solana, not about how Solana itsel
 
 ## Why a Book at All, in the Age of AI
 
-AI can write a Solana program on request, and this book's own companion AI skill exists to make it do so correctly. What no model can do is know things on your behalf. The value of this book is the knowledge it leaves in your head: **how financial products exist on Solana**, as accounts, instruction handlers, invariants, and trust decisions, so that you can design one, judge one, and catch the moment one goes wrong.
+AI can write a Solana program on request, and this book's own companion AI skill exists to make it do so correctly. What no model can do is know things on your behalf. The value of this book is the knowledge it leaves in your head: **how financial products exist on Solana**, as accounts, instruction handlers, invariants, and trust decisions, so that you can design one, judge one, and prove a program is correct.
 
 That judgment matters most exactly where AI is weakest. An assistant will happily produce a swap handler that divides before multiplying, rounds toward the user, or trusts an unvalidated account, and the code will look perfect and pass the happy-path test. The only reliable defense is a person who knows the invariants well enough to catch the violation, whether the code was typed or generated.
 
