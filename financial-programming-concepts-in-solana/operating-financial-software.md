@@ -1,11 +1,30 @@
 # Operating Financial Software
 
-Not yet drafted. The discipline that keeps a correct program correct in production. Planned sections:
+Correct code is the entry fee. This section is the rest of the job: proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
 
 ## Testing Financial Software: Test the Branch the Bug Lives In
 
-Both directions of symmetric flows; nonzero, asymmetric values; property-based invariants (conservation, monotonicity, never rounds in the user's favour); state built through real instruction handlers, not fixtures.
+Financial code fails in the branches nobody drives: the refund path, the second claim, the withdrawal that lands exactly at the health boundary. Coverage of the happy path proves a demo; the discipline below proves a market.
+
+- **Build state through the program's own instruction handlers, never by injecting accounts.** Hand-built fixtures skip the very constraints under test; a program can pass every fixture-based test while being unusable, or unsafe, onchain. The only exception is accounts a foreign program would have created, like a price feed, which the harness builds deliberately as a controllable fixture, because valuation code cannot be honestly tested against prices you cannot move.
+- **Test both directions of every symmetric flow.** Deposit and withdraw. Bid and ask. Borrow and repay. A bug that favours one side is invisible if you only assert the other, and the swap that works A-to-B routinely fails B-to-A.
+- **Use nonzero, asymmetric values.** A test with `duration: 0` or equal amounts on both sides sits exactly where opposite comparisons coincide, so it passes with the inequality written backwards. Prime-ish, unequal, memorable numbers make wrong math produce wrong answers.
+- **Test both sides of every boundary.** The borrow at maximum loan-to-value must succeed, and the same borrow plus one minor unit must fail. Two tests, one unit apart; the lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is the pattern's name made literal.
+- **Test the adversarial branch by name.** Every rule in the failure-modes section of a program chapter earns a test that tries to break it: the non-maker cancelling, the fee vault substituted for the user vault, the double claim. A wall that has never been pushed on is a hypothesis.
+- **Assert properties, not just balances.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favour). Property tests catch whole bug classes; balance assertions catch instances.
+
+The mechanics are cheap: LiteSVM runs the real program in-process in milliseconds, slot-warping makes weeks of interest pass in a test, and injected feed accounts make prices a fixture. Nothing about the discipline is expensive except deciding to have it.
 
 ## Admin Power, Pausing, and Upgrades
 
-Financially-safe config validation; upgrade authority as a normal, honest part of Solana; escape hatches for when a price feed dies or a counterparty vanishes.
+Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is not a design failure; on Solana even upgrade authority is normal and honest, because programs must be fixable when the next section's exploit class is discovered in yours. The failure is *unbounded* power, and the discipline is to treat the admin as a component with a specification, exactly like an oracle: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?
+
+- **Bound what configuration can express.** Validate every parameter at write time against limits that make abuse structurally impossible: the fee that cannot exceed 10,000 basis points, the loan-to-value that cannot exceed the liquidation threshold, the manager fee capped because an uncapped one drains the vault *by configuration*. A config the admin cannot make dangerous is worth more than an admin promise.
+- **Snapshot terms when money commits.** The betting market copies the fee onto each event at creation; the vault strategy's fee has no setter at all. Whatever the admin can change, they cannot change it retroactively for funds already inside.
+- **Keep admin money and user money in different pots.** The fee vault, the accumulated-fees counter carved out of the exchange rate: the admin's upside is segregated so that collecting it cannot touch what users are owed, and the withdraw path moves only from the segregated pot.
+- **Give the admin no path to principal.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves funds between program-owned vaults; settlement pays by formula. When that property holds, the honest claim is not "non-custodial", it is better and more precise: the rules are the deployed bytecode, and the operator is not in them.
+- **Pausing is for entrances, not exits.** A pause switch that stops new deposits and new positions during an incident protects users; one that blocks withdrawals holds them hostage. Design the pause to narrow the program toward its exits, and remember the state-machine rule: every state needs an exit *even while paused*.
+- **Plan for the admin going silent.** Fees claimable whenever (a no-op when empty, so a cron can run it), nothing user-facing gated on the operator showing up, and an escape hatch for the day the price feed dies: a market that cannot value collateral should be able to enter a wind-down where positions close and deposits leave, rather than freezing everyone in place waiting for truth that is not coming.
+- **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than one laptop key, and say so. Users are not trusting that the code will never change; they are trusting that changing it takes more than one bad day.
+
+The through-line of the whole chapter, one last time: the arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every branch, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next eight chapters walk through.
