@@ -6,8 +6,6 @@
 
 ## [Introduction](prelude/introduction.md)
 
-What this book is, who it is for, why it exists in the age of AI, and the fastest path through it for what you came to do.
-
 ## Solana Building Blocks
 
 [Solana Building Blocks](solana-building-blocks/solana-building-blocks.md) is everything Solana-mechanical the rest of the book stands on: accounts, tokens, PDAs, rent, atomic transactions, time, and cranks.

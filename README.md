@@ -1,6 +1,6 @@
 # Building Financial Software on Solana
 
-The planning and manuscript repo for **Building Financial Software on Solana**, a long-lived fundamentals book in the tradition of TCP/IP Illustrated: the mental models, the math, and the adversary, for developers building financial software on Solana.
+The planning and manuscript repo for **Building Financial Software on Solana**, a long-lived fundamentals book in the tradition of *TCP/IP Illustrated*: the mental models, the math, and the adversary, for developers building financial software on Solana.
 
 ## Purpose
 
