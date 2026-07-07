@@ -1,12 +1,12 @@
 # Building Financial Software on Solana
 
-## [How to Use This Book](prelude/how-to-use-this-book.md)
-
-Start here: what this book is, who it is for, why it exists in the age of AI, and the fastest path through it for what you came to do.
-
 ## Prelude
 
 [Praise](prelude/praise.md), [dedication](prelude/dedication.md), [acknowledgements](prelude/acknowledgements.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
+
+## [Introduction](prelude/introduction.md)
+
+What this book is, who it is for, why it exists in the age of AI, and the fastest path through it for what you came to do.
 
 ## Solana Building Blocks
 

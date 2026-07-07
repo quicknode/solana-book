@@ -19,4 +19,4 @@ The book teaches the durable layer of building financial software on Solana: how
 
 ## Status
 
-Drafted: How to Use This Book, Solana Building Blocks, all of Financial Programming Concepts in Solana, Escrow, The Order Book Exchange, The Constant-Product AMM, The Vault Strategy, Lending and Borrowing, The Betting Market, the Terminology appendix, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Token Fundraiser, Perpetual Futures, and the Invariant Checklist.
+Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, Escrow, The Order Book Exchange, The Constant-Product AMM, The Vault Strategy, Lending and Borrowing, The Betting Market, the Terminology appendix, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Token Fundraiser, Perpetual Futures, and the Invariant Checklist.

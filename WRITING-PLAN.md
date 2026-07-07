@@ -58,7 +58,7 @@ The diagram conventions (account-relationship maps, state machines, token-moveme
 
 ## Milestones
 
-- **Voice samples first** (drafted): How to Use This Book, Escrow, and The Order Book Exchange lock voice, depth, and template.
+- **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
 - The remaining program chapters, one per example, in table-of-contents order (drafted so far: The Constant-Product AMM, Vaults, Lending and Borrowing, The Betting Market; remaining: Token Fundraiser, Perpetual Futures).
 - The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
 - The remaining appendices. The Invariant Checklist is nearly free: it distills the existing skill. Terminology is drafted.

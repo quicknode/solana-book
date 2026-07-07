@@ -1,4 +1,4 @@
-# How to Use This Book
+# Introduction
 
 ## A Long-Lived Technical Book for Solana
 
