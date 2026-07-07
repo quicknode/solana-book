@@ -51,10 +51,10 @@ Real incidents appear throughout the book in boxed **War Story** sections, each 
 
 Reading front to back works: the parts are ordered so that each one uses only what came before. But the book is built to be entered anywhere, so a few honest shortcuts:
 
-- **Already building on Solana?** Skim Solana Building Blocks, read Financial Programming Concepts in Solana properly, then take the program chapters in order.
-- **Here to ship one specific thing?** Read the arithmetic and offchain-truth sections of Financial Programming Concepts in Solana, then go straight to your program chapter. Each program chapter names the sections it leans on.
-- **Auditing or reviewing?** The adversary sections of Financial Programming Concepts in Solana first, then the program chapter matching what is in front of you, then the Invariant Checklist appendix.
-- **In a hurry and dangerous about it?** The Invariant Checklist appendix is the one-page distillation of the whole book's rules. It will not teach you why, but it will stop the worst bugs while you circle back for the why.
+- **Already building on Solana?** Skim [Solana Building Blocks](../solana-building-blocks/solana-building-blocks.md), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
+- **Here to ship one specific thing?** Read [The Arithmetic of Money](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) and [Offchain Truth](../financial-programming-concepts-in-solana/offchain-truth.md), then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
+- **Auditing or reviewing?** [The Adversary](../financial-programming-concepts-in-solana/the-adversary.md) first, then the [program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) matching what is in front of you, then [the Invariant Checklist](../appendices/invariant-checklist.md).
+- **In a hurry and dangerous about it?** [The Invariant Checklist](../appendices/invariant-checklist.md) is the one-page distillation of the whole book's rules. It will not teach you why, but it will stop the worst bugs while you circle back for the why.
 
 ## Two Appendices Meant to Be Worn Out: Terminology and the Invariant Checklist
 
