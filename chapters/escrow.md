@@ -4,7 +4,7 @@ There is an old saying that once you have built an escrow, everything else looks
 
 The program for this chapter lives at `finance/escrow` in the companion repo, with Anchor, Quasar, and native versions. This chapter walks the Anchor version.
 
-## What Escrow Solves
+## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
 Alice has 10 USDC and wants 100 BONK. Bob has plenty of BONK and likes that price. They want to trade.
 
@@ -20,14 +20,14 @@ A Solana program replaces the third party. The program holds Alice's tokens unde
 
 **[FIGURE: The same swap through the escrow program. Both sides receive the full amount; the middle box is a program, not a company.]**
 
-## The Cast and the Deal
+## The Deal: Alice's 10 USDC for Bob's 100 BONK
 
 Two roles run through this chapter, and the code names them the same way:
 
 - **Alice is the maker.** She creates the offer: 10 USDC for 100 BONK.
 - **Bob is the taker.** He accepts the offer as it stands.
 
-The deal is denominated the way all Solana money is denominated: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 10 USDC is 10,000,000 minor units. BONK has five decimals, so the 100 BONK she wants is also 10,000,000 minor units. The two numbers are identical and mean completely different things, which is exactly why programs track each token's decimals instead of assuming them. The Fixed Point and Scale chapter covers this in depth; escrow is where you first feel it.
+The deal is denominated the way all Solana money is denominated: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 10 USDC is 10,000,000 minor units. BONK has five decimals, so the 100 BONK she wants is also 10,000,000 minor units. The two numbers are identical and mean completely different things, which is exactly why programs track each token's decimals instead of assuming them. The minor-units section of Financial Programming Concepts in Solana covers this in depth; escrow is where you first feel it.
 
 ## The Account Model
 
@@ -71,7 +71,7 @@ Alice is done. She can close her laptop.
 
 ### Bob Takes the Offer
 
-Bob calls `take_offer`. It takes no arguments beyond the accounts themselves, and that is worth dwelling on: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the Validation chapter treats in full.
+Bob calls `take_offer`. It takes no arguments beyond the accounts themselves, and that is worth dwelling on: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of Financial Programming Concepts in Solana treats in full.
 
 Alice does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
@@ -91,7 +91,7 @@ The constraints make it maker-only: the signer must be the maker, and `has_one =
 
 ## The Math
 
-Escrow is the one program in Part V whose arithmetic is nearly invisible, which is itself the lesson: the offer is all-or-nothing, so there are no partial fills, no division, and therefore no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication hiding in the program is in `transfer_checked`, which the `transfer_tokens` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
+Escrow is the one program in this book whose arithmetic is nearly invisible, which is itself the lesson: the offer is all-or-nothing, so there are no partial fills, no division, and therefore no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication hiding in the program is in `transfer_checked`, which the `transfer_tokens` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
 
 The money math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). On either exit path, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
@@ -122,7 +122,7 @@ The tests live in `tests/test_escrow.rs` and run against LiteSVM, with `solana_k
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial branch: Bob attempts to cancel Alice's offer and the transaction fails. Test the branch the bug lives in; the branch where money goes to the wrong person is the one that matters.
 
-The Testing Financial Software chapter builds the general method; this suite is the method at its smallest useful size.
+The testing section of Financial Programming Concepts in Solana builds the general method; this suite is the method at its smallest useful size.
 
 ## Everything Looks Like an Escrow
 

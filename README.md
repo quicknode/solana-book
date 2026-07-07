@@ -8,15 +8,15 @@ The book teaches the durable layer of building financial software on Solana: how
 
 ## Contents
 
-- [OUTLINE.md](OUTLINE.md) - the table of contents with per-chapter summaries
+- [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents
 - [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
-- [chapters/](chapters/) - drafted chapters: [How to Use This Book](chapters/how-to-use-this-book.md) and [Escrow](chapters/escrow.md)
+- [chapters/](chapters/) - one file per chapter, front-matter section, and appendix; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
 
 ## Companion projects
 
-- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the tested, CI-verified programs that each chapter of Part V walks through
+- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the tested, CI-verified programs that each program chapter walks through
 - [Solana Finance Claude Plugin](https://github.com/quicknode/solana-finance-claude-plugin) - the skill whose rules the book distills and whose style guide the manuscript follows
 
 ## Status
 
-Two chapters drafted: How to Use This Book, and Escrow (with figure placeholders awaiting the visual pass). Everything else is at outline stage.
+Drafted: How to Use This Book, Escrow, The Order Book Exchange, The Constant-Product AMM, Vaults (vault strategy), Lending and Borrowing, The Betting Market, the Terminology appendix, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Solana Building Blocks, Financial Programming Concepts in Solana, Token Fundraiser, Perpetual Futures, the Invariant Checklist, and The Visual Language.

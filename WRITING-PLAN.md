@@ -1,6 +1,6 @@
 # Writing Plan
 
-How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [OUTLINE.md](OUTLINE.md). Chapters are referenced by name, not number, so renumbering never breaks this document.
+How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md), and each chapter is a file under [chapters/](chapters/). Chapters are referenced by name, not number, so reordering never breaks this document.
 
 ## Principles
 
@@ -8,11 +8,12 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 - Diagrams are the longest-lived medium. Every chapter budget includes them: account map, state machine, flow.
 - Style is inherited wholesale from the [Solana Finance plugin skill](https://github.com/quicknode/solana-finance-claude-plugin): onchain and offchain unhyphenated, "instruction handlers" for the functions and "instructions" for their input, "minor unit" not "base unit", one name per role enforced within each chapter, concrete two-asset examples, real handler names in lifecycle prose, persona-driven walkthroughs.
 - Banned phrases, enforced by a lint script over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
-- Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer.
+- Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
+- Headings carry the content. A reader skimming only the headings learns the chapter's actual claims: "A Long-Lived Technical Book for Solana", not "Introduction"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
 
-## The Chapter Template (Part V)
+## The Program Chapter Template
 
-Each Part V chapter runs the same seven beats:
+Each program chapter runs the same seven beats:
 
 - **Concept** - what this financial software does in the real world, cast with personas and real assets.
 - **Account model** - the accounts, their owners, their PDAs, with the account-relationship diagram.
@@ -22,7 +23,7 @@ Each Part V chapter runs the same seven beats:
 - **The failure modes** - how this program gets attacked or bricked, with the inline War Story where an incident matches.
 - **The test that catches the bug** - the property or scenario test from the example's own test suite that would have caught each failure mode.
 
-Concept chapters (Parts I through IV, and VI) use a lighter template: claim, mechanism, consequence, War Story where applicable.
+The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana) use a lighter per-section template: claim, mechanism, consequence, War Story where applicable.
 
 ## Generation Pipeline (per chapter)
 
@@ -36,13 +37,13 @@ Concept chapters (Parts I through IV, and VI) use a lighter template: claim, mec
 
 Each incident is researched from primary sources and placed inside the chapter named here:
 
-- SPL token-lending rounding (about $2.6B at risk): Rounding Is a Policy Decision
-- Cashio ($52M, unvalidated account chain): Validation: Signers, Owners, and the Confused Deputy
-- Wormhole ($325M, bypassed signature verification): Validation: Signers, Owners, and the Confused Deputy
-- First-depositor inflation incidents (the ERC-4626 class): The Empty Pool, and Vaults and Share Accounting
-- Mango Markets ($116M): Price Manipulation
-- The Hundred and Sonne precision drains: Rounding and Precision Exploits
-- Crema Finance ($8.8M, tick-account forgery): Validation or The Constant-Product AMM, decided during drafting
+- SPL token-lending rounding (about $2.6B at risk): the rounding section of Financial Programming Concepts in Solana
+- Cashio ($52M, unvalidated account chain): the validation section of Financial Programming Concepts in Solana
+- Wormhole ($325M, bypassed signature verification): the validation section of Financial Programming Concepts in Solana
+- First-depositor inflation incidents (the ERC-4626 class): the empty-pool section of Financial Programming Concepts in Solana, and The Constant-Product AMM chapter
+- Mango Markets ($116M): the price-manipulation section of Financial Programming Concepts in Solana
+- The Hundred and Sonne precision drains: the precision-exploits section of Financial Programming Concepts in Solana
+- Crema Finance ($8.8M, tick-account forgery): the validation section or The Constant-Product AMM chapter, decided during drafting
 
 ## Reviewers, Feedback, and Editions
 
@@ -52,12 +53,11 @@ Each incident is researched from primary sources and placed inside the chapter n
 
 ## Milestones
 
-- **Voice samples first**: Rounding Is a Policy Decision and Escrow drafted in full, to lock voice, depth, and template before anything else.
-- Part II (The Arithmetic of Money) complete.
-- Part V (The Financial Software) complete, one chapter per example, in outline order.
-- Parts I, III, and IV, with technical reviewers engaged per part as each completes.
-- Part VI and the Appendices. The Invariant Checklist is nearly free: it distills the existing skill.
-- How to Use This Book, the author bio, and the placeholder pages last.
+- **Voice samples first** (drafted): How to Use This Book, Escrow, and The Order Book Exchange lock voice, depth, and template.
+- The remaining program chapters, one per example, in table-of-contents order (drafted so far: The Constant-Product AMM, Vaults, Lending and Borrowing, The Betting Market; remaining: Token Fundraiser, Perpetual Futures).
+- The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
+- The remaining appendices. The Invariant Checklist is nearly free: it distills the existing skill. Terminology is drafted.
+- The placeholder front-matter pages last.
 - A single visual pass producing all diagrams in one consistent style.
 - Public early-access release and errata page live before print.
 
