@@ -10,7 +10,7 @@ The book teaches the durable layer of building financial software on Solana: how
 
 - [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents
 - [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
-- [chapters/](chapters/) - one file per chapter, front-matter section, and appendix; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
+- One folder per section ([opening-pages/](opening-pages/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [appendices/](appendices/)), one file per chapter; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
 
 ## Companion projects
 

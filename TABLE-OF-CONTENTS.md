@@ -1,69 +1,42 @@
 # Building Financial Software on Solana
 
-Working title. "Definitive" and "canonical" are labels readers award. They never appear on the cover.
-
 ## Opening Pages
 
-- [Praise for Building Financial Software on Solana](chapters/praise.md)
-- [Dedication](chapters/dedication.md)
-- [Acknowledgements and Credits](chapters/acknowledgements.md)
-- [About the Author](chapters/about-the-author.md)
-- [About the Technical Reviewers](chapters/about-the-technical-reviewers.md)
+- [Praise for Building Financial Software on Solana](opening-pages/praise.md)
+- [Dedication](opening-pages/dedication.md)
+- [Acknowledgements and Credits](opening-pages/acknowledgements.md)
+- [About the Author](opening-pages/about-the-author.md)
+- [About the Technical Reviewers](opening-pages/about-the-technical-reviewers.md)
+- [How to Use This Book](opening-pages/how-to-use-this-book.md)
 
-## [How to Use This Book](chapters/how-to-use-this-book.md)
+## Solana Building Blocks
 
-Why long-lived fundamentals books exist and why this is one; what lives in the book versus the CI-verified companion repo; the seven-beat anatomy of every program chapter; War Stories; reading paths.
+[Solana Building Blocks](solana-building-blocks/solana-building-blocks.md) is everything Solana-mechanical the rest of the book stands on: accounts, tokens, PDAs, rent, atomic transactions, time, and cranks.
 
-## [Solana Building Blocks](chapters/solana-building-blocks.md)
+## Financial Programming Concepts in Solana
 
-Everything Solana-mechanical the rest of the book stands on:
+- [Financial software is a state machine](financial-programming-concepts-in-solana/intro.md), and every state needs an exit.
+- [The Arithmetic of Money](financial-programming-concepts-in-solana/the-arithmetic-of-money.md) is how programs calculate with funds and never lose a minor unit: integers, scale, rounding, and interest.
+- [Offchain Truth](financial-programming-concepts-in-solana/offchain-truth.md) is how a program verifies the price of SOL: by verifying a signature from a trusted source.
+- [The Adversary](financial-programming-concepts-in-solana/the-adversary.md) is how onchain money actually gets stolen, exploit class by exploit class.
+- [Operating Financial Software](financial-programming-concepts-in-solana/operating-financial-software.md) is how to test money and wield admin power safely.
 
-- Money lives in accounts, logic lives in instruction handlers
-- Tokens: mints, token accounts, and minor units
-- The token extensions that matter for finance
-- PDAs: addresses a program can sign for
-- Rent and the account lifecycle
-- One transaction, all or nothing: atomicity, flash loans, and composed settlement
-- Time onchain: slots for adversarial logic, timestamps for humans
-- Cranks: incentivized automation for work nobody owns
+## Building Financial Products in Solana
 
-## [Financial Programming Concepts in Solana](chapters/financial-programming-concepts.md)
+Each chapter walks one complete, tested program from the [companion repo](https://github.com/quicknode/solana-program-examples), end to end.
 
-Everything money-specific, from arithmetic to the adversary:
-
-- Financial software is a state machine, and every state needs an exit
-- Money is integers: no floats near funds
-- Minor units, lots, and fixed-point scale
-- Multiply before divide, with wider intermediates
-- Rounding is a policy decision (*War Story: the SPL token-lending rounding bug, about $2.6B at risk*)
-- Invariants and conservation: assert after the math
-- Interest and growth over time
-- Offchain truth: verifying signatures from trusted sources
-- The adversarial environment
-- Validation: signers, owners, and the confused deputy (*War Stories: Cashio, Wormhole*)
-- The empty pool: inflation and donation attacks
-- Price manipulation (*War Story: Mango Markets*)
-- Rounding and precision exploits (*War Stories: the Hundred and Sonne precision drains*)
-- Ordering and composability: CPI trust boundaries
-- Testing financial software: test the branch the bug lives in
-- Admin power, pausing, and upgrades
-
-## The Financial Software
-
-Each chapter walks one complete, tested program from the [companion repo](https://github.com/quicknode/solana-program-examples) through the same seven beats: concept, account model, instruction handlers, the math, the invariants, the failure modes, the test that catches the bug.
-
-- [Escrow](chapters/escrow.md) - atomic two-party settlement; the best first program *(finance/escrow)*
-- [Token Fundraiser](chapters/token-fundraiser.md) - targets, deadlines, refund paths; onchain crowdfunding *(finance/token-fundraiser)*
-- [The Constant-Product AMM](chapters/constant-product-amm.md) - pools, liquidity providers, slippage, the K invariant *(finance/token-swap)*
-- [The Order Book Exchange](chapters/order-book.md) - bids, asks, matching, maker and taker fees, lots and ticks *(finance/order-book)*
-- [Vaults and Share Accounting](chapters/vault-strategy.md) - deposits for shares, NAV, management fees via dilution *(finance/vault-strategy)*
-- [Lending and Borrowing](chapters/lending.md) - interest accrual, collateral, liquidation *(finance/lending)*
-- [The Betting Market](chapters/betting-market.md) - parimutuel pools, outcome settlement, fee splits *(finance/betting-market)*
-- [Perpetual Futures](chapters/perpetual-futures.md) - the capstone: leverage, margin, mark and index prices, funding, liquidation *(finance/perpetual-futures)*
+- [Escrow](building-financial-products-in-solana/escrow.md) lets two strangers swap without trusting each other, and it is the pattern inside everything else.
+- [Token Fundraiser](building-financial-products-in-solana/token-fundraiser.md) is onchain crowdfunding: targets, deadlines, and refund paths.
+- [The Order Book Exchange](building-financial-products-in-solana/order-book.md) matches bids and asks the way NASDAQ does, with lots, ticks, and taker fees.
+- [The Constant-Product AMM](building-financial-products-in-solana/constant-product-amm.md) fills every trade instantly against a pooled formula, and pays its liquidity providers for the privilege.
+- [The Betting Market](building-financial-products-in-solana/betting-market.md) pays winners from the losers' pool, pro rata by conviction, with no bookmaker.
+- [Lending and Borrowing](building-financial-products-in-solana/lending.md) is a bank built from a growing interest index, marked-to-market collateral, and a liquidation engine.
+- [The Vault Strategy](building-financial-products-in-solana/vault-strategy.md) is an index fund whose manager can rebalance and earn a fee, and can do nothing else.
+- [Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) is the capstone: leverage, margin, funding, and liquidation, using everything above at once.
 
 ## Appendices
 
-- [The Invariant Checklist](chapters/invariant-checklist.md) - the one-page rules, distilled from the Solana Finance plugin skill
-- [Terminology](chapters/terminology.md) - the [solana.com terminology reference](https://solana.com/docs/references/terminology) extended with the financial vocabulary it lacks: lot, tick size, minor unit and major unit, WAD, basis point, dust, Newton's method (integer square root), maker and taker, NAV, slippage, notional, funding rate, mark price and index price, collateral factor, liquidation
-- [The Visual Language](chapters/visual-language.md) - the diagram conventions used throughout
-- Index (print edition placeholder)
+- [The Invariant Checklist](appendices/invariant-checklist.md)
+- [Terminology](appendices/terminology.md)
+- [The Visual Language](appendices/visual-language.md)
+- Index (print edition)

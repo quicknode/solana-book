@@ -1,6 +1,6 @@
 # Writing Plan
 
-How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md), and each chapter is a file under [chapters/](chapters/). Chapters are referenced by name, not number, so reordering never breaks this document.
+How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md), and each chapter is a file under its section's folder. Chapters are referenced by name, not number, so reordering never breaks this document.
 
 ## Principles
 
@@ -10,6 +10,7 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 - Banned phrases, enforced by a lint script over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
 - Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
 - Headings carry the content. A reader skimming only the headings learns the chapter's actual claims: "A Long-Lived Technical Book for Solana", not "Introduction"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
+- Plain language. Define things by what they concretely are, not by abstract category: an account is "some data - a Rust struct - with an address", never "the unit of state". If a definition would fit equally well in a book about a different subject, it is too vague. Prefer the short common word to the impressive one.
 
 ## The Program Chapter Template
 

@@ -6,6 +6,12 @@ Some technical books die with the release they document. A smaller number live f
 
 This book makes the same decision for financial software on Solana. It teaches the durable layer: how financial ideas become accounts and instruction handlers, how to calculate with money using integers without losing a lamport, how facts from outside the chain are verified on it, how programs get attacked, and how each of the classic pieces of financial software actually works. The math will not change. The adversary will not change. The account model has been stable since Solana launched. That is the material a book is for.
 
+## Why a Book at All, in the Age of AI
+
+AI ended one kind of technical book: the lookup manual, the "how do I call X" reference you kept on your desk. The model knows the API better than any index ever did. It did not end the canonical, opinionated, mental-model book, and in three ways it raised that book's value.
+
+First, as generated content floods every search result, a source that is curated, verified, and accountable becomes scarcer, not less necessary. Every claim in this book is checked against programs whose tests run in CI, by named authors and reviewers whose reputations ride on it; that is precisely what most of the internet is not. Second, the layer this book teaches is the layer AI gets subtly wrong. An assistant will happily produce a swap handler that divides before multiplying, rounds toward the user, or trusts an unvalidated account, and the code will look perfect and pass the happy-path test. The only defense is a human who knows the invariants well enough to catch it, and building that judgment is this book's job, whether the code is typed or generated. Third, models anchor to canonical texts: the books that define a field's vocabulary and framing shape what every assistant tells the next generation of builders. A durable, correct reference does not compete with AI; it is upstream of it.
+
 ## A Book About Building Financial Products, Not About How Solana Is Built
 
 This is a book about building software **on** Solana, not about how Solana itself is built. There is already a great deal of good material on consensus, validators, and Proof of History: [Anza's documentation](https://docs.anza.xyz/) covers the validator and the runtime, and the [Firedancer project](https://github.com/firedancer-io/firedancer) documents a validator built from scratch. This book gladly points to material like that when the internals matter. Here, the chain is the platform, the way TCP/IP Illustrated treats the wire: explained exactly as far as an application developer needs, and no further. The subject is what a developer writes: the programs, the math, the invariants, the tests.
@@ -21,9 +27,9 @@ So the book splits the work with two companions:
 
 Where code appears in these pages, it is there to illustrate an idea, and the repo is the source of truth for running it. When the two disagree, trust the repo, and check the errata page.
 
-## For Working Programmers: No Blockchain or Rust Experience Required
+## For Working Programmers: No Solana or Finance Background Required
 
-You should be a working programmer, comfortable in some language. You do not need prior blockchain experience, and you do not need to know Rust: the Rust that matters is introduced as it appears, and the programs are deliberately small. If you can read a struct and a function, you can read the program chapters.
+You should be a working programmer, comfortable in some language. Beyond that, this book assumes deep familiarity with neither Solana nor finance, and covers both in enough detail to work from either side with confidence. Every Solana mechanism is introduced before it is used, starting from the account model itself. Every financial concept (escrow, collateral, liquidation, market making, interest) is explained from first principles, with the personas and dollar amounts on the page, before any code depends on it. You also do not need to know Rust: the Rust that matters is introduced as it appears, and the programs are deliberately small. If you can read a struct and a function, you can read the program chapters.
 
 ## Every Program Chapter Follows the Same Seven Beats
 
@@ -33,7 +39,7 @@ The book has two foundation chapters and eight program chapters. **Solana Buildi
 
 The repetition is the point. By the third chapter the structure disappears and what remains is the habit of asking the seven questions in order, which is precisely the habit that builds correct financial software. It is the same trick TCP/IP Illustrated pulled with its relentless per-topic structure, and it is why that book teaches a way of thinking rather than a list of facts.
 
-The concept chapters in the other parts are lighter: claim, mechanism, consequence.
+The two foundation chapters are lighter per section: claim, mechanism, consequence.
 
 ## War Stories: Real Incidents, Placed Where Their Lesson Lives
 
