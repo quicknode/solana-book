@@ -20,16 +20,16 @@ Second, the layer this book teaches is the layer AI gets subtly wrong. An assist
 
 Third, models anchor to canonical texts: the books that define a field's vocabulary and framing shape what every assistant tells the next generation of builders. A durable, correct reference does not compete with AI; it is upstream of it.
 
-## The Ideas Live in the Book, the Code Lives in the CI-Verified Repo
+## The Ideas Live in the Book, the Code Lives in the Companion Repository
 
 Everything perishable is deliberately kept out of these pages. Framework releases, tool versions, and API details churn; a book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
 So the book splits the work with two companions:
 
-- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) holds the complete, tested programs that the program chapters walk through, in Anchor, Quasar, and native versions. CI runs their tests continuously, so the code stays correct and current in a way paper cannot.
-- The [Solana Finance plugin](https://github.com/quicknode/solana-finance-claude-plugin) distills this book's rules into a form AI coding tools apply automatically.
+- The **companion repository** ([Solana Program Examples](https://github.com/quicknode/solana-program-examples)) holds the complete, tested programs that the program chapters walk through, in Anchor, Quasar, and native versions. CI runs their tests continuously, so the code stays correct and current in a way paper cannot.
+- The **companion AI skill** ([Solana Finance plugin](https://github.com/quicknode/solana-finance-claude-plugin)) distills this book's rules into a form AI coding tools apply automatically.
 
-Where code appears in these pages, it is there to illustrate an idea, and the repo is the source of truth for running it. When the two disagree, trust the repo, and check the errata page.
+Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page.
 
 ## For Working Programmers: No Solana or Finance Background Required
 

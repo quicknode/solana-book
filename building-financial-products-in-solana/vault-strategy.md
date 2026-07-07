@@ -1,6 +1,6 @@
 # The Vault Strategy
 
-A **vault strategy** is the onchain equivalent of an index fund. A list of approved assets, a fund manager who picks the allocation, investors who deposit and receive shares, a management fee for the manager's expertise. On Solana you know the genre from Symmetry and Kamino. The program lives at `finance/vault-strategy` in the companion repo, and its story trades stocks: TSLAx and NVDAx, quoted in USDC.
+A **vault strategy** is the onchain equivalent of an index fund. A list of approved assets, a fund manager who picks the allocation, investors who deposit and receive shares, a management fee for the manager's expertise. On Solana you know the genre from Symmetry and Kamino. The program lives at `finance/vault-strategy` in the companion repository, and its story trades stocks: TSLAx and NVDAx, quoted in USDC.
 
 This is the chapter where the original promise of onchain programs pays off most visibly. In a traditional fund, "the manager cannot run off with client money" is enforced by custodians, auditors, and courts. Here it is enforced by the program: **the manager can change the allocation and earn the fee, and can do nothing else.** No instruction in the program moves a vault's tokens to the manager. That sentence is the chapter.
 

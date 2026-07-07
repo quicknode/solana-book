@@ -4,7 +4,7 @@ The planning and manuscript repo for **Building Financial Software on Solana**, 
 
 ## Purpose
 
-The book teaches the durable layer of building financial software on Solana: how financial ideas become accounts and instruction handlers, how to calculate with money safely, how facts from outside the chain are verified on it, and how programs get attacked. Runnable, current code is deliberately not the book's job. It lives in the companion repo, where CI keeps it honest.
+The book teaches the durable layer of building financial software on Solana: how financial ideas become accounts and instruction handlers, how to calculate with money safely, how facts from outside the chain are verified on it, and how programs get attacked. Runnable, current code is deliberately not the book's job. It lives in the companion repository, where CI keeps it honest.
 
 ## Contents
 
@@ -14,8 +14,8 @@ The book teaches the durable layer of building financial software on Solana: how
 
 ## Companion projects
 
-- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the tested, CI-verified programs that each program chapter walks through
-- [Solana Finance Claude Plugin](https://github.com/quicknode/solana-finance-claude-plugin) - the skill whose rules the book distills and whose style guide the manuscript follows
+- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the book's **companion repository**: the tested, CI-verified programs that each program chapter walks through
+- [Solana Finance Claude Plugin](https://github.com/quicknode/solana-finance-claude-plugin) - the book's **companion AI skill**: its rules are what the book distills, and its style guide is what the manuscript follows
 
 ## Status
 

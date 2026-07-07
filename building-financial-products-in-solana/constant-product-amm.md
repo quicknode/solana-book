@@ -2,7 +2,7 @@
 
 The order book chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee is not free money, and by the end of the chapter you will be able to say exactly why, with a number attached.
 
-AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. On Solana you know the genre from Orca, Raydium, and Pump.fun. The program lives at `finance/token-swap` in the companion repo.
+AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. On Solana you know the genre from Orca, Raydium, and Pump.fun. The program lives at `finance/token-swap` in the companion repository.
 
 A warning about most AMM explanations: they use two toy tokens, no admin fees, no liquidity providers, and they tell you "K never changes," which is false. This chapter does a genuine launch, with an operator, fees, LPs, and the true story of X, Y, and K after every single trade.
 

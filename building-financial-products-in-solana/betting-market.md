@@ -2,7 +2,7 @@
 
 What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' money in proportion to how much they staked. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
 
-The program lives at `finance/betting-market` in the companion repo. Structurally it is the escrow chapter with many parties and one new, serious question: who decides what happened in the real world?
+The program lives at `finance/betting-market` in the companion repository. Structurally it is the escrow chapter with many parties and one new, serious question: who decides what happened in the real world?
 
 ## Nobody Sets the Odds: The Pool Is the Odds
 

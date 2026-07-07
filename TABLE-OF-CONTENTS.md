@@ -22,7 +22,7 @@ What this book is, who it is for, why it exists in the age of AI, and the fastes
 
 ## Building Financial Products in Solana
 
-Each chapter walks one complete, tested program from the [companion repo](https://github.com/quicknode/solana-program-examples).
+Each chapter walks one complete, tested program from the [companion repository](https://github.com/quicknode/solana-program-examples).
 
 - [Escrow](building-financial-products-in-solana/escrow.md) - two strangers swap without trusting each other
 - [Token Fundraiser](building-financial-products-in-solana/token-fundraiser.md) - onchain crowdfunding

@@ -4,13 +4,14 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 
 ## Principles
 
-- The book prints the durable layer. Every code claim is verified against the companion repo before it lands: the skill's "grep before naming" rule, applied to a manuscript.
+- The book prints the durable layer. Every code claim is verified against the companion repository before it lands: the skill's "grep before naming" rule, applied to a manuscript.
 - Diagrams are the longest-lived medium. Every chapter budget includes them: account map, state machine, flow.
-- Style is inherited wholesale from the [Solana Finance plugin skill](https://github.com/quicknode/solana-finance-claude-plugin): onchain and offchain unhyphenated, "instruction handlers" for the functions and "instructions" for their input, "minor unit" not "base unit", one name per role enforced within each chapter, concrete two-asset examples, real handler names in lifecycle prose, persona-driven walkthroughs.
+- Style is inherited wholesale from the [companion AI skill](https://github.com/quicknode/solana-finance-claude-plugin): onchain and offchain unhyphenated, "instruction handlers" for the functions and "instructions" for their input, "minor unit" not "base unit", one name per role enforced within each chapter, concrete two-asset examples, real handler names in lifecycle prose, persona-driven walkthroughs.
 - Banned phrases, enforced by a lint script over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
 - Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
 - Headings carry the content. A reader skimming only the headings learns the chapter's actual claims: "A Long-Lived Technical Book for Solana", not "Introduction"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
 - Plain language. Define things by what they concretely are, not by abstract category: an account is "some data - a Rust struct - with an address", never "the unit of state". If a definition would fit equally well in a book about a different subject, it is too vague. Prefer the short common word to the impressive one.
+- The two companions have fixed names in the book's prose: solana-program-examples is "the companion repository" and solana-finance-claude-plugin is "the companion AI skill". Each is introduced once, with a link, in the Introduction; everywhere else the fixed name is used, never the repo name.
 
 ## The Program Chapter Template
 
@@ -28,7 +29,7 @@ The two foundation chapters (Solana Building Blocks; Financial Programming Conce
 
 ## Generation Pipeline (per chapter)
 
-- Gather inputs: the example's program source, README, and tests from [Solana Program Examples](https://github.com/quicknode/solana-program-examples); the relevant skill rules; War Story primary sources.
+- Gather inputs: the example's program source, README, and tests from the [companion repository](https://github.com/quicknode/solana-program-examples); the relevant rules from the companion AI skill; War Story primary sources.
 - Draft against the template.
 - Verify: grep every named identifier against the repo; check every number against the source it came from; run the banned-phrase lint.
 - List the figures the chapter needs. Figures are drawn later in a single visual pass so the visual language stays consistent.
@@ -61,14 +62,14 @@ The diagram conventions (account-relationship maps, state machines, token-moveme
 - **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
 - The remaining program chapters, one per example, in table-of-contents order (drafted so far: The Constant-Product AMM, Vaults, Lending and Borrowing, The Betting Market; remaining: Token Fundraiser, Perpetual Futures).
 - The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
-- The remaining appendices. The Invariant Checklist is nearly free: it distills the existing skill. Terminology is drafted.
+- The remaining appendices. The Invariant Checklist is nearly free: it distills the companion AI skill. Terminology is drafted.
 - The placeholder front-matter pages last.
 - A single visual pass producing all diagrams in one consistent style.
 - Public early-access release and errata page live before print.
 
 ## Future Chapters
 
-Added if and when a matching example ships in the companion repo, keeping the one-chapter-per-tested-example rule:
+Added if and when a matching example ships in the companion repository, keeping the one-chapter-per-tested-example rule:
 
 - Staking and Rewards (reward-per-token accounting currently appears inside Lending and Borrowing, and The Betting Market)
 - Vesting and streaming payments

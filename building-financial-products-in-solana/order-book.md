@@ -2,7 +2,7 @@
 
 NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. By the end of this chapter you will have walked through one, end to end: how orders come in, how they rest, how they match, where the money waits, and how the operator collects fees.
 
-The program lives at `finance/order-book` in the companion repo. It assumes you know the escrow pattern from the Escrow chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement gated by who signed. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
+The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the Escrow chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement gated by who signed. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
 
 ## A Limit Order Is a Price You Refuse to Cross
 
