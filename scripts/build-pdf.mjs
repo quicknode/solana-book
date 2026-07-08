@@ -72,7 +72,7 @@ const html = `<!doctype html>
   size: 8.5in 11in;
   margin: 0.6in 0.55in 0.7in 0.55in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 9pt; }
-  @top-center { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; letter-spacing: 0.08em; font-variant: small-caps; color: #444; }
+  @top-center { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
 }
 @page :first { @bottom-center { content: none; } @top-center { content: none; } }
 @page chapter-start { @top-center { content: none; } }
@@ -90,7 +90,7 @@ a { color: #111 !important; text-decoration: none; }
 
 .title-page { page: chapter-start; text-align: center; break-after: page; }
 .title-page h1 { font-size: 26pt; margin-top: 3.2in; line-height: 1.2; border: none; }
-.title-page .author { margin-top: 0.6in; font-size: 13pt; font-variant: small-caps; letter-spacing: 0.12em; }
+.title-page .author { margin-top: 0.6in; font-size: 13pt; }
 .title-page .note { margin-top: 2.2in; font-size: 9pt; color: #555; }
 
 .book-toc { page: chapter-start; break-after: page; }
