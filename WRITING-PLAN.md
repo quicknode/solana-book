@@ -20,7 +20,7 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 
 Each program chapter runs the same seven beats:
 
-- **Concept** - what this financial software does in the real world, cast with personas and real assets.
+- **Concept** - what this financial software does in the real world, cast with personas, real assets, and each party's incentive (the Introduction promises readers that admin and user incentives are discussed in every program chapter).
 - **Account model** - the accounts, their owners, their PDAs, with the account-relationship diagram.
 - **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use; no flat reference section.
 - **The math** - the calculations, in minor units, with rounding directions stated.
@@ -36,7 +36,7 @@ The two foundation chapters (Solana Building Blocks; Financial Programming Conce
 - Draft against the template.
 - Verify: grep every named identifier against the repo; check every number against the source it came from; run the banned-phrase lint.
 - List the figures the chapter needs. Figures are drawn later in a single visual pass so the visual language stays consistent.
-- Review against the Invariant Checklist and the Terminology appendix.
+- Review against the Invariant Checklist and the Glossary.
 
 ## War Story Register
 
@@ -65,7 +65,7 @@ The diagram conventions (account-relationship maps, state machines, token-moveme
 - **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
 - The remaining program chapters, one per example, in table-of-contents order (drafted so far: The Constant-Product AMM, Vaults, Lending and Borrowing, The Betting Market; remaining: Token Fundraiser, Perpetual Futures).
 - The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
-- The remaining appendices. The Invariant Checklist is nearly free: it distills the companion AI skill. Terminology is drafted.
+- The remaining appendices. The Invariant Checklist is nearly free: it distills the companion AI skill. The Glossary is drafted.
 - The placeholder front-matter pages last.
 - A single visual pass producing all diagrams in one consistent style.
 - Public early-access release and errata page live before print.

@@ -1,4 +1,4 @@
-# Appendix: Terminology
+# Glossary
 
 The vocabulary of this book, in one place: Solana's terms alongside the financial vocabulary this field uses daily but rarely defines. Terms are alphabetical, and each is a heading so you can link straight to it. Where a chapter treats a term at length, the definition says so.
 

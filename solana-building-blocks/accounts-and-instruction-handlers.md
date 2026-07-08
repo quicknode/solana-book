@@ -1,6 +1,6 @@
 # Clusters, Programs, Accounts and Handlers
 
-Nearly every generic blockchain articles discusses blockchain as a "shared ledger". This is vague: to what extent does the "sharing" occur? What about the vast majority of data that wouldn't appear in a traditional ledger?
+Nearly every generic blockchain article describes blockchain as a "shared ledger". This is vague: to what extent does the "sharing" occur? And what about the vast majority of data that wouldn't appear in a traditional ledger?
 
 
 

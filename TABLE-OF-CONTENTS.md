@@ -40,5 +40,5 @@ Each chapter walks one complete, tested program from the [companion repository](
 ## Appendices
 
 - [The Invariant Checklist](appendices/invariant-checklist.md)
-- [Terminology](appendices/terminology.md)
+- [Glossary](appendices/glossary.md)
 - Index (print edition)

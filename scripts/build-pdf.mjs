@@ -53,10 +53,12 @@ const printedToc = sections
   .map((section) => `<li><a href="#${section.id}"><span class="t">${section.title}</span><span class="dots"></span><span class="pg"></span></a></li>`)
   .join("\n");
 
+const isPreludeItem = (path) => path.startsWith("prelude/") && !path.endsWith("introduction.md");
 const body = sections
   .map((section) => {
     const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
-    return `<section class="chapter" id="${section.id}">\n${html}\n</section>`;
+    const classes = isPreludeItem(section.path) ? "chapter prelude-item" : "chapter";
+    return `<section class="${classes}" id="${section.id}">\n${html}\n</section>`;
   })
   .join("\n");
 
@@ -101,6 +103,10 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc .dots { flex: 1; border-bottom: 1pt dotted #999; margin: 0 0.35em; }
 
 section.chapter { break-before: page; }
+/* Front-matter placeholder pages share one flow until they have real content. */
+section.prelude-item + section.prelude-item { break-before: auto; }
+section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
+section.prelude-item .cols { column-count: 1; }
 section.chapter .cols { column-count: 2; column-gap: 0.32in; column-fill: auto; }
 section.chapter h1 {
   string-set: chapter content(text);
