@@ -1,10 +1,20 @@
-# Data Lives in Accounts, Logic Lives in Instruction Handlers
+# Clusters, Programs, Accounts and Handlers
 
-Every Solana program is two halves: accounts that hold the data, and instruction handlers that change it. Master these two ideas and every financial product in this book reads as a variation on them.
+Nearly every generic blockchain articles discusses blockchain as a "shared ledger". This is vague: to what extent does the "sharing" occur? What about the vast majority of data that wouldn't appear in a traditional ledger?
+
+
+
+
+
+
+
+Every Solana program is two halves: accounts that hold the data, and instruction handlers that change it. 
 
 ## Accounts Store Data
 
-An **account** is some data with an address. In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an owner program that alone may change it. All data on Solana lives in accounts, including every balance: wallets, token holdings, program code, and every record a financial program keeps. There is no other place for state to live, which is why a financial program's whole ledger is a set of accounts.
+An **account** is some data with an address. 
+
+In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an owner program that alone may change it. All data on Solana lives in accounts, including every balance: wallets, token holdings, program code, and every record a financial program keeps. There is no other place for state to live, which is why a financial program's whole ledger is a set of accounts.
 
 **[FIGURE: One account, dissected. A box showing its address, owner program, lamport balance, and data bytes, with the data bytes expanded into a labelled Rust struct (an escrow offer: maker, mints, wanted amount).]**
 
@@ -12,7 +22,7 @@ An **account** is some data with an address. In a program, the data is a Rust st
 
 Every account sits at a 32-byte **address**, usually shown base58-encoded. Most addresses are public keys; the rest are PDAs, addresses derived from seeds that no private key controls (they get their own section). Because addresses are how everything is found, financial programs lean on *derivable* addresses: put the market's pair, the user's key, or the offer's id into the derivation, and anyone can compute where the account must be, no lookup table required.
 
-## Programs Hold No State of Their Own
+## Programs Hold No State
 
 A program is pure logic. It reads the accounts it is handed, checks them, and writes new values back; it stores nothing between calls. This split, all state in accounts and all logic in programs, is what makes financial state legible: to know a market's condition you read its accounts, and to change it there are only the program's declared entry points.
 
