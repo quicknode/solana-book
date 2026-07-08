@@ -54,7 +54,10 @@ const printedToc = sections
   .join("\n");
 
 const body = sections
-  .map((section) => `<section class="chapter" id="${section.id}">\n${section.html}\n</section>`)
+  .map((section) => {
+    const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
+    return `<section class="chapter" id="${section.id}">\n${html}\n</section>`;
+  })
   .join("\n");
 
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
@@ -66,61 +69,61 @@ const html = `<!doctype html>
 <title>${TITLE}</title>
 <style>
 @page {
-  size: 6in 9in;
-  margin: 0.75in 0.7in 0.8in 0.7in;
+  size: 8.5in 11in;
+  margin: 0.6in 0.55in 0.7in 0.55in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 9pt; }
   @top-center { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; letter-spacing: 0.08em; font-variant: small-caps; color: #444; }
 }
 @page :first { @bottom-center { content: none; } @top-center { content: none; } }
 @page chapter-start { @top-center { content: none; } }
 
-html { font-size: 10.5pt; }
+html { font-size: 9pt; }
 body {
   font-family: Charter, "Bitstream Charter", Georgia, "Times New Roman", serif;
-  line-height: 1.45;
+  line-height: 1.32;
   color: #111;
   text-rendering: optimizeLegibility;
   hyphens: auto;
 }
-p { margin: 0 0 0.55em 0; text-align: justify; }
+p { margin: 0 0 0.45em 0; text-align: justify; }
 a { color: #111 !important; text-decoration: none; }
 
 .title-page { page: chapter-start; text-align: center; break-after: page; }
-.title-page h1 { font-size: 24pt; margin-top: 2.6in; line-height: 1.2; border: none; }
+.title-page h1 { font-size: 26pt; margin-top: 3.2in; line-height: 1.2; border: none; }
 .title-page .author { margin-top: 0.6in; font-size: 13pt; font-variant: small-caps; letter-spacing: 0.12em; }
 .title-page .note { margin-top: 2.2in; font-size: 9pt; color: #555; }
 
 .book-toc { page: chapter-start; break-after: page; }
 .book-toc h1 { font-size: 17pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { margin: 0.45em 0; font-size: 10.5pt; }
+.book-toc li { margin: 0.4em 0; font-size: 9.5pt; }
 .book-toc li a { display: flex; align-items: baseline; }
 .book-toc .dots { flex: 1; border-bottom: 1pt dotted #999; margin: 0 0.35em; }
 
 section.chapter { break-before: page; }
+section.chapter .cols { column-count: 2; column-gap: 0.32in; column-fill: auto; }
 section.chapter h1 {
   string-set: chapter content(text);
-  page: chapter-start;
-  font-size: 17pt;
+  font-size: 15pt;
   line-height: 1.25;
-  margin: 0.5in 0 0.35in 0;
-  padding-bottom: 0.12in;
+  margin: 0.1in 0 0.22in 0;
+  padding-bottom: 0.09in;
   border-bottom: 0.5pt solid #999;
 }
-h2 { font-size: 12.5pt; margin: 1.1em 0 0.4em 0; }
-h3 { font-size: 10.5pt; margin: 1em 0 0.3em 0; font-style: italic; font-weight: 600; }
+h2 { font-size: 10.5pt; margin: 0.9em 0 0.35em 0; }
+h3 { font-size: 9pt; margin: 0.8em 0 0.25em 0; font-style: italic; font-weight: 600; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; }
 
 code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
-blockquote { margin: 0.7em 0; padding: 0.5em 0.8em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
+blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }
 ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
 li { margin: 0.18em 0; }
 .figure-placeholder {
   border: 0.75pt dashed #888;
-  padding: 0.6em 0.8em;
-  margin: 0.8em 0;
+  padding: 0.45em 0.6em;
+  margin: 0.6em 0;
   font-style: italic;
   font-size: 0.9em;
   color: #444;

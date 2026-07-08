@@ -19,7 +19,7 @@ The book teaches the durable layer of building financial software on Solana: how
 
 ## Building the PDF
 
-`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a 6x9in technical-book PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
+`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a two-column, letter-size textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
 
 ## Status
 
