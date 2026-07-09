@@ -39,21 +39,44 @@ function prepareMarkdown(markdown) {
     .replace(/\]\(((?:\.\.\/)?(?!https?:)[^)#]+\.md)(#[^)]*)?\)/g, (whole, path) => "](#" + idForPath(path.replace(/^\.\.\//, "")) + ")");
 }
 
+const cleanTitle = (raw) => raw.replace(/[*_`]/g, "");
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
-  const html = marked.parse(prepareMarkdown(markdown), { mangle: false, headerIds: false });
-  const title = (markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1];
-  return { id: idForPath(path), title, html, path };
+  const id = idForPath(path);
+  const subsections = [...markdown.matchAll(/^## (.+)$/gm)].map((match, index) => ({
+    id: `${id}-s${index + 1}`,
+    title: cleanTitle(match[1]),
+  }));
+  let htmlSubIndex = 0;
+  const html = marked
+    .parse(prepareMarkdown(markdown), { mangle: false, headerIds: false })
+    .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`);
+  const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
+  return { id, title, html, path, subsections };
 });
 
-// The printed table of contents: one line per chapter, page number filled in
-// by Paged.js at layout time.
-const printedToc = sections
-  .filter((section) => !section.path.startsWith("prelude/") || section.path.endsWith("introduction.md"))
-  .map((section) => `<li><a href="#${section.id}"><span class="t">${section.title}</span><span class="dots"></span><span class="pg"></span></a></li>`)
-  .join("\n");
-
 const isPreludeItem = (path) => path.startsWith("prelude/") && !path.endsWith("introduction.md");
+
+// The printed table of contents, in the style of TCP/IP Illustrated:
+// "Chapter N  Title" rows in bold, "N.M  Section" rows beneath, page numbers
+// right-aligned and filled in after Paged.js lays the pages out.
+const tocEntries = [];
+let chapterNumber = 0;
+let appendixNumber = 0;
+for (const section of sections) {
+  if (isPreludeItem(section.path)) continue;
+  const isAppendix = section.path.startsWith("appendices/");
+  const label = isAppendix
+    ? `Appendix ${String.fromCharCode(65 + appendixNumber++)}`
+    : `Chapter ${++chapterNumber}`;
+  const shortLabel = isAppendix ? String.fromCharCode(64 + appendixNumber) : String(chapterNumber);
+  tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}"><span class="label">${label}</span><span class="t">${section.title}</span><span class="pg"></span></a></li>`);
+  for (const [index, subsection] of section.subsections.entries()) {
+    tocEntries.push(`<li class="toc-section"><a href="#${subsection.id}"><span class="label">${shortLabel}.${index + 1}</span><span class="t">${subsection.title}</span><span class="pg"></span></a></li>`);
+  }
+}
+const printedToc = tocEntries.join("\n");
+
 const body = sections
   .map((section) => {
     const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
@@ -74,10 +97,11 @@ const html = `<!doctype html>
   size: 8.5in 11in;
   margin: 0.6in 0.55in 0.7in 0.55in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 9pt; }
-  @top-center { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
+  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
 }
-@page :first { @bottom-center { content: none; } @top-center { content: none; } }
-@page chapter-start { @top-center { content: none; } }
+@page :first { @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page chapter-start { @top-left { content: none; } @top-right { content: none; } }
 
 html { font-size: 9pt; }
 body {
@@ -98,9 +122,13 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc { page: chapter-start; break-after: page; }
 .book-toc h1 { font-size: 17pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { margin: 0.4em 0; font-size: 9.5pt; }
+.book-toc li { font-size: 9.5pt; }
 .book-toc li a { display: flex; align-items: baseline; }
-.book-toc .dots { flex: 1; border-bottom: 1pt dotted #999; margin: 0 0.35em; }
+.book-toc .label { flex: 0 0 5.4em; }
+.book-toc .t { flex: 1; padding-right: 1em; }
+.book-toc .pg { flex: 0 0 auto; }
+.book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }
+.book-toc li.toc-section { margin: 0.08em 0 0.08em 1.6em; }
 
 section.chapter { break-before: page; }
 /* Front-matter placeholder pages share one flow until they have real content. */
