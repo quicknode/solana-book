@@ -240,6 +240,9 @@ if (existsSync(coverPdfPath)) {
   book.setTitle(TITLE);
   book.setAuthor(AUTHOR);
   const [coverPage] = await book.copyPages(coverDoc, [0]);
+  // Design exports come at the artwork's native size; scale to the book page.
+  const bookPage = interior.getPage(0).getSize();
+  coverPage.scale(bookPage.width / coverPage.getWidth(), bookPage.height / coverPage.getHeight());
   book.addPage(coverPage);
   for (const pageCopy of await book.copyPages(interior, interior.getPageIndices().slice(1))) {
     book.addPage(pageCopy);
