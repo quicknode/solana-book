@@ -168,8 +168,8 @@ section.chapter h1::after {
   background: linear-gradient(90deg, #6673f5, #00d1ff, #2ef29a);
 }
 h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
-h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; font-weight: 600; }
-h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; }
+h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
+h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
 
 code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }

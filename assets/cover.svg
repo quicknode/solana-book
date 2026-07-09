@@ -43,13 +43,13 @@
     <!-- beak notch top-left -->
     <path d="M -6,18 L 30,10 L 30,26 Z" fill="#ffffff"/>
   </g>
-  <text x="200" y="238" font-size="34" fill="#ffffff" font-weight="bold">Quicknode Press</text>
+  <text x="200" y="238" font-size="34" fill="#ffffff">Quicknode Press</text>
 
   <!-- title block -->
-  <text x="84" y="472" font-size="64" fill="#ffffff" font-weight="bold">Building</text>
+  <text x="84" y="472" font-size="64" fill="#ffffff">Building</text>
   <rect x="72" y="496" width="672" height="180" fill="url(#cover-solana-gradient)"/>
-  <text x="84" y="566" font-size="64" fill="#101010" font-weight="bold">Financial Software</text>
-  <text x="84" y="646" font-size="64" fill="#101010" font-weight="bold">on Solana</text>
+  <text x="84" y="566" font-size="64" fill="#101010">Financial Software</text>
+  <text x="84" y="646" font-size="64" fill="#101010">on Solana</text>
 
   <!-- author -->
   <text x="84" y="740" font-size="30" fill="#ffffff">Mike MacCana</text>
