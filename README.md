@@ -6,6 +6,8 @@ The planning and manuscript repo for **Building Financial Software on Solana**, 
 
 The book teaches the durable layer of building financial software on Solana: how financial ideas become accounts and instruction handlers, how to calculate with money safely, how facts from outside the chain are verified on it, and how programs get attacked. Runnable, current code is deliberately not the book's job. It lives in the companion repository, where CI keeps it honest.
 
+The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts the published chapters, the errata page (source: [ERRATA.md](ERRATA.md)), and links to both companions.
+
 ## Contents
 
 - [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents

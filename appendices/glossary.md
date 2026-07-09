@@ -46,6 +46,10 @@ The extra byte found while deriving a PDA that pushes the result off the ed25519
 
 In a lending market, the fraction of a debt one liquidation may repay (typically 50%). Turns liquidation into a correction rather than an execution. See the Lending and Borrowing chapter.
 
+### cluster
+
+One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine. An account exists on one cluster, not all of them.
+
 ### collateral
 
 Assets pledged to secure a loan, seizable on default or on breach of the liquidation threshold.
@@ -121,6 +125,10 @@ A property that must hold before and after every state change: K must not decrea
 ### K
 
 The product of an AMM pool's two reserves. Constant within a trade, growing across deposits and fees. Its only job is to hold the two reserves in relation to each other.
+
+### key pair
+
+Two mathematically linked keys: a private key, kept secret, that signs messages, and a public key, shared freely, that proves who signed. All authority on Solana reduces to signatures from key pairs.
 
 ### lamport
 
@@ -277,6 +285,10 @@ A token account owned by a program (usually by a PDA), where a program holds fun
 ### WAD
 
 A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for interest indexes and rate math.
+
+### wallet
+
+A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a keypair file is just 64 bytes; whoever holds them is the wallet.
 
 ### zero-copy
 

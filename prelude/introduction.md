@@ -2,7 +2,7 @@
 
 It might seem strange to release a book - let alone one available in a physical form - for building financial software on Solana. Countless YouTube videos, articles and online courses cover how Solana, as a development platform, is built, including topics like consensus, validators, and Proof of History: [Anza's documentation](https://docs.anza.xyz/) is by far the best source for these matters and is often regurgitated into other formats. Most of the existing materials go into the basics of minting and moving tokens. 
 
-This isn't a book about how Solana is built, and how to use the token program. It's about **building on the platform**, and if you're creating financial products on the world's most active blockchain then we're aiming for it to be the essential reference for this topic.
+This isn't a book about how Solana is built, and how to use the token program (tokens appear in these pages only as far as financial products need them). It's about **building on the platform**, and if you're creating financial products on the world's most active blockchain then we're aiming for it to be the essential reference for this topic.
 
 ## A Long-Lived Technical Book for Solana
 
@@ -29,7 +29,7 @@ The book splits the work with two companions. Both are available at [thesolanabo
 
 The AI skill makes your tools better. The book makes you better.
 
-Everything perishable is deliberately kept out of these pages. Where code appears, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page.
+Everything perishable is deliberately kept out of these pages. Where code appears, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page at [thesolanabook.com](https://thesolanabook.com).
 
 ## Prerequisites
 

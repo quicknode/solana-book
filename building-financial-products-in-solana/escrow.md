@@ -2,7 +2,7 @@
 
 There is an old saying that once you have built an escrow, everything else looks like an escrow. An auction house is an escrow with competing takers. A betting market is an escrow where an outcome decides the payout. A lending market is an escrow with time and interest attached. This is why escrow is the first program in this book: it is the smallest program that actually handles value, and every pattern it uses (holding tokens in a program-owned account, storing custom data, controlling who may do what) reappears in every chapter that follows.
 
-The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions. This chapter walks the Anchor version.
+The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus machine-checked proofs of its core properties under `kani-proofs`. This chapter walks the Anchor version.
 
 ## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
@@ -122,7 +122,7 @@ The tests live in `tests/test_escrow.rs` and run against LiteSVM, with `solana_k
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial branch: Bob attempts to cancel Alice's offer and the transaction fails. Test the branch the bug lives in; the branch where money goes to the wrong person is the one that matters.
 
-The testing section of Financial Programming Concepts in Solana builds the general method; this suite is the method at its smallest useful size.
+The testing section of Financial Programming Concepts in Solana builds the general method; this suite is the method at its smallest useful size. And escrow goes one rung further: the `kani-proofs` crate in the companion repository proves the conservation properties formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of Operating Financial Software explains the technique.
 
 ## Everything Looks Like an Escrow
 

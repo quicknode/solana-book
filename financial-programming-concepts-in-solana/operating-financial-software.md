@@ -15,6 +15,16 @@ Financial code fails in the branches nobody drives: the refund path, the second 
 
 The mechanics are cheap: LiteSVM runs the real program in-process in milliseconds, slot-warping makes weeks of interest pass in a test, and injected feed accounts make prices a fixture. Nothing about the discipline is expensive except deciding to have it.
 
+## Proving Goes Further Than Testing
+
+A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the discipline above, driving every branch with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like [Kani](https://github.com/model-checking/kani) explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
+
+The escrow program in the companion repository ships a set of Kani harnesses that do precisely this for its verifiable core: `proof_take_offer_conserves_value` proves that taking an offer conserves both tokens' totals on every input, not just the tested ones; `proof_cancel_offer_returns_all_to_maker` proves the refund path whole; `proof_offer_id_seed_injective` proves two different offer ids can never derive the same address. Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. When a chapter of this book says an invariant "must hold," this is what taking that sentence literally looks like.
+
+## Ship With a Second Opinion
+
+Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. The audit is not a stamp; it is the cheapest adversary you will ever face, because this one writes you a report instead of a withdrawal.
+
 ## Admin Power, Pausing, and Upgrades
 
 Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is not a design failure; on Solana even upgrade authority is normal and honest, because programs must be fixable when the next section's exploit class is discovered in yours. The failure is *unbounded* power, and the discipline is to treat the admin as a component with a specification, exactly like an oracle: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?

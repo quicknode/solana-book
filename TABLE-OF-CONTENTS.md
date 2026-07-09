@@ -8,7 +8,7 @@
 
 ## Solana Building Blocks
 
-- [Data lives in accounts, logic lives in instruction handlers](solana-building-blocks/accounts-and-instruction-handlers.md)
+- [Clusters, programs, accounts and handlers](solana-building-blocks/accounts-and-instruction-handlers.md)
 - [Tokens are accounts: mints define them, token accounts hold them](solana-building-blocks/tokens.md)
 - [PDAs are addresses a program can sign for](solana-building-blocks/pdas.md)
 - [Accounts pay a rent deposit, and closing refunds it](solana-building-blocks/rent.md)
