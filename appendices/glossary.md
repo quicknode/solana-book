@@ -10,6 +10,10 @@ Some data with an [address](#address). In a program, the data is a Rust struct. 
 
 The 32-byte identifier of an account, usually shown base58-encoded. Most addresses are public keys; PDAs are addresses without private keys.
 
+### all-or-nothing
+
+A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The Token Fundraiser chapter builds it onchain.
+
 ### ask
 
 An order to sell at or above a stated price. The seller's side of an order book.
@@ -90,6 +94,10 @@ Sub-unit remainders left over by integer division. Rounding policy decides who o
 
 A period of roughly two days (432,000 slots) over which a validator schedule holds. Mostly relevant to staking; application logic usually counts slots.
 
+### equity (position)
+
+What a leveraged position is worth to its owner right now: collateral plus unrealized profit and loss, minus funding owed. Equity at or below the maintenance margin makes the position liquidatable.
+
 ### escrow
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
@@ -138,6 +146,10 @@ The minor unit of SOL: one billionth. Named for Leslie Lamport.
 
 A pooled borrow-lend venue: suppliers earn interest, borrowers pay it against collateral, liquidation keeps it solvent.
 
+### leverage
+
+Controlling more exposure than the collateral posted: a 5,000 USDC position over 1,000 USDC of collateral is 5x leverage. Leverage multiplies both the gain and the loss of every price move, which is why leveraged venues need margin and liquidation.
+
 ### limit order
 
 An order with a price it refuses to cross: buy at or below, sell at or above.
@@ -165,6 +177,10 @@ The indivisible quantity unit of an order book market. Prices and quantities are
 ### LP token
 
 The receipt token minted to a liquidity provider, representing a proportional claim on a pool's reserves and accrued fees.
+
+### maintenance margin
+
+The minimum equity a leveraged position must keep, usually stated in basis points of its notional. Below it, the position may be liquidated by anyone.
 
 ### major unit
 
@@ -202,6 +218,10 @@ The face value of a position, as opposed to the margin posted against it. Five N
 
 A borrower's loan file in a lending market: their collateral deposits, their borrows, and the cached valuations health checks run against.
 
+### open interest
+
+The total notional of positions currently open on a market, usually tracked per side. A perpetual futures venue's funding direction and solvency reasoning both read it.
+
 ### oracle
 
 A service that publishes signed statements of offchain facts, most often prices, onchain. A program verifies the publisher's signature, the freshness, and the confidence interval, exactly as it validates any other input.
@@ -213,6 +233,10 @@ A betting structure with no bookmaker: all stakes pool together, and winners spl
 ### PDA (program derived address)
 
 An address computed from a program's id and chosen seeds, with no private key. Only the owning program can sign as it, which is what makes program-owned vaults trustworthy.
+
+### perpetual future
+
+A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The capstone chapter of this book.
 
 ### price-time priority
 
