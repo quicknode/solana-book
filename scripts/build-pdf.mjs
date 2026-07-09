@@ -92,6 +92,8 @@ const body = sections
   .join("\n");
 
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
+const coverSvg = readFileSync(join(repoRoot, "assets", "cover.svg"), "utf8");
+const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
 
 const html = `<!doctype html>
 <html>
@@ -99,6 +101,11 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <title>${TITLE}</title>
 <style>
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-Regular.ttf")}"); font-weight: normal; font-style: normal; }
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-RegularItalic.ttf")}"); font-weight: normal; font-style: italic; }
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-Bold.ttf")}"); font-weight: bold; font-style: normal; }
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
+
 @page {
   size: 8.5in 11in;
   margin: 0.9in 1.1in 0.95in 1.1in;
@@ -108,6 +115,9 @@ const html = `<!doctype html>
 }
 @page :first { @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
+@page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
+.cover { page: cover; break-after: page; }
+.cover svg { display: block; width: 8.5in; height: 11in; }
 
 html { font-size: 11pt; }
 body {
@@ -140,6 +150,7 @@ section.chapter { break-before: page; }
 /* Front-matter placeholder pages share one flow until they have real content. */
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
+section.prelude-item h1::after { content: none; }
 section.prelude-item .cols { column-count: 1; }
 section.chapter .cols { column-count: 1; }
 section.chapter h1 {
@@ -148,11 +159,17 @@ section.chapter h1 {
   line-height: 1.25;
   margin: 0.15in 0 0.28in 0;
   padding-bottom: 0.1in;
-  border-bottom: 0.5pt solid #999;
 }
-h2 { font-size: 13.5pt; margin: 1.1em 0 0.45em 0; }
-h3 { font-size: 11.5pt; margin: 0.9em 0 0.3em 0; font-style: italic; font-weight: 600; }
-h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; }
+section.chapter h1::after {
+  content: "";
+  display: block;
+  height: 3.5px;
+  margin-top: 0.08in;
+  background: linear-gradient(90deg, #6673f5, #00d1ff, #2ef29a);
+}
+h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
+h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; font-weight: 600; }
+h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; }
 
 code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
@@ -176,6 +193,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 </style>
 </head>
 <body>
+<div class="cover">${coverSvg}</div>
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>

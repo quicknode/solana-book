@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 816 1056" font-family="'Denim INK', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="cover-solana-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6673f5"/>
+      <stop offset="0.5" stop-color="#00d1ff"/>
+      <stop offset="1" stop-color="#2ef29a"/>
+    </linearGradient>
+    <pattern id="cover-hatch-light" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="26" height="26" fill="#eef1ea"/>
+      <line x1="0" y1="0" x2="0" y2="26" stroke="#d7dbd2" stroke-width="2"/>
+      <circle cx="13" cy="13" r="1.6" fill="#b9beb2"/>
+    </pattern>
+    <pattern id="cover-dots-dark" width="30" height="30" patternUnits="userSpaceOnUse">
+      <rect width="30" height="30" fill="#191919"/>
+      <circle cx="8" cy="8" r="2.2" fill="#3d3d3d"/>
+    </pattern>
+    <pattern id="cover-lines-dark" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="34" height="34" fill="#212121"/>
+      <line x1="0" y1="0" x2="0" y2="34" stroke="#282828" stroke-width="3"/>
+    </pattern>
+  </defs>
+
+  <!-- top light hatched band -->
+  <rect x="0" y="0" width="816" height="92" fill="url(#cover-hatch-light)"/>
+
+  <!-- charcoal main field -->
+  <rect x="0" y="92" width="816" height="852" fill="url(#cover-lines-dark)"/>
+
+  <!-- bottom dot band -->
+  <rect x="0" y="944" width="816" height="112" fill="url(#cover-dots-dark)"/>
+
+  <!-- Quicknode Q mark (approximation): ring with beak and tail -->
+  <g transform="translate(84,168)">
+    <path d="M 44,0
+             A 44,44 0 1 0 88,44
+             L 88,74 L 58,74
+             A 44,44 0 0 0 44,0 Z"
+          fill="#ffffff" transform="rotate(0)" opacity="0"/>
+    <!-- ring -->
+    <path fill="#ffffff" fill-rule="evenodd"
+          d="M 46,0 A 46,46 0 1 0 92,46 L 92,92 L 64,92 A 46,46 0 0 0 46,0 Z
+             M 46,20 A 26,26 0 1 1 20,46 A 26,26 0 0 1 46,20 Z"/>
+    <!-- beak notch top-left -->
+    <path d="M -6,18 L 30,10 L 30,26 Z" fill="#ffffff"/>
+  </g>
+  <text x="200" y="238" font-size="34" fill="#ffffff" font-weight="bold">Quicknode Press</text>
+
+  <!-- title block -->
+  <text x="84" y="472" font-size="64" fill="#ffffff" font-weight="bold">Building</text>
+  <rect x="72" y="496" width="672" height="180" fill="url(#cover-solana-gradient)"/>
+  <text x="84" y="566" font-size="64" fill="#101010" font-weight="bold">Financial Software</text>
+  <text x="84" y="646" font-size="64" fill="#101010" font-weight="bold">on Solana</text>
+
+  <!-- author -->
+  <text x="84" y="740" font-size="30" fill="#ffffff">Mike MacCana</text>
+
+  <!-- ghosted devnet curve motif -->
+  <g opacity="0.5">
+    <path d="M 60,910 Q 408,760 756,910" fill="none" stroke="#3f3f3f" stroke-width="3"/>
+    <circle cx="234" cy="855" r="7" fill="#4a4a4a"/>
+    <circle cx="582" cy="855" r="7" fill="#4a4a4a"/>
+    <rect x="398" y="791" width="14" height="14" fill="none" stroke="#4a4a4a" stroke-width="3"/>
+  </g>
+
+  <!-- slash label -->
+  <text x="84" y="1012" font-size="17" fill="#8f8f8f" font-family="Menlo, Consolas, monospace" letter-spacing="4">// QUICKNODE PRESS</text>
+</svg>
