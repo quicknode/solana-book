@@ -101,23 +101,23 @@ const html = `<!doctype html>
 <style>
 @page {
   size: 8.5in 11in;
-  margin: 0.6in 0.55in 0.7in 0.55in;
-  @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 9pt; }
-  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
-  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
+  margin: 0.9in 1.1in 0.95in 1.1in;
+  @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
+  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
 }
 @page :first { @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
 
-html { font-size: 9pt; }
+html { font-size: 11pt; }
 body {
   font-family: Charter, "Bitstream Charter", Georgia, "Times New Roman", serif;
-  line-height: 1.32;
+  line-height: 1.38;
   color: #111;
   text-rendering: optimizeLegibility;
   hyphens: auto;
 }
-p { margin: 0 0 0.45em 0; text-align: justify; }
+p { margin: 0 0 0.6em 0; text-align: justify; }
 a { color: #111 !important; text-decoration: none; }
 
 .title-page { page: chapter-start; text-align: center; break-after: page; }
@@ -128,7 +128,7 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc { page: chapter-start; break-after: page; }
 .book-toc h1 { font-size: 17pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { font-size: 9.5pt; }
+.book-toc li { font-size: 10.5pt; }
 .book-toc li a { display: flex; align-items: baseline; }
 .book-toc .label { flex: 0 0 5.4em; }
 .book-toc .t { flex: 1; padding-right: 1em; }
@@ -141,17 +141,17 @@ section.chapter { break-before: page; }
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
 section.prelude-item .cols { column-count: 1; }
-section.chapter .cols { column-count: 2; column-gap: 0.32in; column-fill: auto; }
+section.chapter .cols { column-count: 1; }
 section.chapter h1 {
   string-set: chapter content(text);
-  font-size: 15pt;
+  font-size: 17pt;
   line-height: 1.25;
-  margin: 0.1in 0 0.22in 0;
-  padding-bottom: 0.09in;
+  margin: 0.15in 0 0.28in 0;
+  padding-bottom: 0.1in;
   border-bottom: 0.5pt solid #999;
 }
-h2 { font-size: 10.5pt; margin: 0.9em 0 0.35em 0; }
-h3 { font-size: 9pt; margin: 0.8em 0 0.25em 0; font-style: italic; font-weight: 600; }
+h2 { font-size: 13.5pt; margin: 1.1em 0 0.45em 0; }
+h3 { font-size: 11.5pt; margin: 0.9em 0 0.3em 0; font-style: italic; font-weight: 600; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; }
 
 code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
@@ -160,9 +160,9 @@ blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border
 blockquote p { text-align: left; }
 ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
 li { margin: 0.18em 0; }
-figure { margin: 0.7em 0; break-inside: avoid; text-align: center; }
+figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: 4.9in; }
 figure svg { width: 100%; height: auto; }
-figcaption { font-size: 8.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.25em; }
+figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
 .figure-placeholder {
   border: 0.75pt dashed #888;
   padding: 0.45em 0.6em;
