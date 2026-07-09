@@ -1,4 +1,4 @@
-# Tokens Are Accounts: Mints Define Them, Token Accounts Hold Them
+# Tokens
 
 Assets on Solana are tokens, and tokens are nothing more than accounts with well-known shapes, managed by a token program.
 
@@ -14,13 +14,13 @@ A mint does not just describe a token; it manufactures it. New tokens come into 
 
 The mint authority is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can print at will: fine for a test token, alarming for money), a multisig (printing takes a quorum), or a PDA, which is how this book's programs use it: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever; that is what a token means when it claims no more can ever exist.
 
-**[FIGURE: The mint as a factory. The mint account with its supply counter; the mint authority signing a mint instruction and new tokens flowing into a token account as the counter rises; a burn shrinking it; a second panel where the authority is set to none and the supply is sealed.]**
+![The mint is a factory: new tokens exist only when the mint authority signs, burning reverses it, and an authority set to none seals the supply forever.](figures/mint-factory.svg)
 
 ## Token Accounts Hold Balances, and ATAs Make Them Findable
 
-A **token account** holds one owner's balance of one token. The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from the pair: this is how a program knows where Alice's USDC lives without asking her, and how account constraints can verify that a supplied token account really is hers.
+A **token account** holds one owner's balance of one token. The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from the pair: this is how a program knows where Alice's USDC lives without asking her, and how account constraints can verify that a supplied token account really is hers. ATAs are also the first **PDAs** you meet on Solana: derived addresses that sit off the curve, with no private key. The PDAs chapter explains the mechanism.
 
-**[FIGURE: The token account triangle. A mint account (USDC) at the top; two wallets below, each with an ATA for that mint, the ATA addresses shown derived from wallet + mint; balances inside the token accounts, supply and decimals inside the mint.]**
+![Alice's and Bob's USDC stores are the first PDAs you meet: derived from owner and mint, they sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
 ## Decimals Define the Minor Unit
 
@@ -36,4 +36,4 @@ Solana has two token programs: the **Classic Token Program** and the **Token Ext
 
 The extensions that matter for financial products: **transfer fees** (a cut of every transfer, taken by the mint itself), **transfer hooks** (a program of the issuer's choosing runs on every transfer, which enables allowlists and also means a transfer can execute foreign code, a fact the ordering section of The Adversary takes seriously), **confidential transfers** (amounts hidden onchain, visible to the parties and an auditor key), **permanent delegate** (an authority that can move any holder's tokens, a seizure power some regulated assets require), **interest-bearing** (a rate stamped on the mint so balances display accrual), and **non-transferable** (tokens bound to their holder). When you build on a token you did not issue, read its extensions first: several of them change what "I transferred X" means.
 
-**[FIGURE: A transfer passing through the Token Extensions Program, with extension checkpoints along the arrow: a fee peeled off, a transfer hook invoking another program, the received amount landing smaller than the sent amount.]**
+![A transfer through the Token Extensions Program: a fee peeled off, a transfer hook running the issuer's program, and 99 arriving where 100 was sent.](figures/transfer-through-extensions.svg)

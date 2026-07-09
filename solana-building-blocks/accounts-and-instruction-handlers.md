@@ -30,7 +30,7 @@ An **account** is some data with an address.
 
 In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an owner program that alone may change it. At Alice's address lives Alice's account, and its lamport balance *is* her SOL. All data on Solana lives in accounts, including every balance: wallets, token holdings, program code, and every record a financial program keeps. There is no other place for state to live, which is why a financial program's whole ledger is a set of accounts.
 
-**[FIGURE: One account, dissected. A box showing its address, owner program, lamport balance, and data bytes, with the data bytes expanded into a labelled Rust struct (an escrow offer: maker, mints, wanted amount).]**
+![One account, dissected: an address, an owner program, a lamport balance, and data bytes that the owning program reads as a Rust struct.](figures/account-dissected.svg)
 
 ## Addresses Identify and Find Accounts
 
