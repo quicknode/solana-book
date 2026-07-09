@@ -18,5 +18,8 @@
     "pagedjs": "^0.4.3",
     "playwright-core": "^1.61.1"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
 }

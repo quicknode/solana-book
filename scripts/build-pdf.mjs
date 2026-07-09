@@ -9,12 +9,13 @@
 //
 // Usage: node scripts/build-pdf.mjs [output.pdf]
 
-import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdtempSync, existsSync } from "node:fs";
 import { join, dirname, resolve, basename } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
 import { chromium } from "playwright-core";
+import { PDFDocument } from "pdf-lib";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", "building-financial-software-on-solana.pdf"));
@@ -92,7 +93,6 @@ const body = sections
   .join("\n");
 
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
-const coverSvg = readFileSync(join(repoRoot, "assets", "cover.svg"), "utf8");
 const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
 
 const html = `<!doctype html>
@@ -111,13 +111,14 @@ const html = `<!doctype html>
   margin: 0.9in 1.1in 0.95in 1.1in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
   @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
+  @top-center { content: "PRERELEASE DRAFT"; font-family: Georgia, serif; font-size: 9.5pt; letter-spacing: 0.08em; color: #999; }
   @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
 }
-@page :first { @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page :first { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
-@page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+/* Blank stand-in page; the printed cover page from assets/cover.pdf replaces it after layout. */
 .cover { page: cover; break-after: page; }
-.cover svg { display: block; width: 8.5in; height: 11in; }
 
 html { font-size: 11pt; }
 body {
@@ -150,7 +151,6 @@ section.chapter { break-before: page; }
 /* Front-matter placeholder pages share one flow until they have real content. */
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
-section.prelude-item h1::after { content: none; }
 section.prelude-item .cols { column-count: 1; }
 section.chapter .cols { column-count: 1; }
 section.chapter h1 {
@@ -159,13 +159,7 @@ section.chapter h1 {
   line-height: 1.25;
   margin: 0.15in 0 0.28in 0;
   padding-bottom: 0.1in;
-}
-section.chapter h1::after {
-  content: "";
-  display: block;
-  height: 3.5px;
-  margin-top: 0.08in;
-  background: linear-gradient(90deg, #9945FF, #05B5E9, #14F195);
+  border-bottom: 0.5pt solid #999;
 }
 h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
 h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
@@ -193,7 +187,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 </style>
 </head>
 <body>
-<div class="cover">${coverSvg}</div>
+<div class="cover">&nbsp;</div>
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
@@ -235,6 +229,25 @@ await page.evaluate(() => {
 
 writeFileSync(outputPath, await page.pdf({ preferCSSPageSize: true }));
 await browser.close();
+
+// The cover is authored as a print-ready PDF; swap it in for the blank
+// stand-in page so the interior's page numbering is unaffected.
+const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
+if (existsSync(coverPdfPath)) {
+  const interior = await PDFDocument.load(readFileSync(outputPath));
+  const coverDoc = await PDFDocument.load(readFileSync(coverPdfPath));
+  const book = await PDFDocument.create();
+  book.setTitle(TITLE);
+  book.setAuthor(AUTHOR);
+  const [coverPage] = await book.copyPages(coverDoc, [0]);
+  book.addPage(coverPage);
+  for (const pageCopy of await book.copyPages(interior, interior.getPageIndices().slice(1))) {
+    book.addPage(pageCopy);
+  }
+  writeFileSync(outputPath, await book.save());
+} else {
+  console.warn("assets/cover.pdf not found; the cover page is blank");
+}
 
 const pageCount = await (async () => {
   const bytes = readFileSync(outputPath);
