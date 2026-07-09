@@ -50,7 +50,13 @@ const sections = chapterPaths.map((path) => {
   let htmlSubIndex = 0;
   const html = marked
     .parse(prepareMarkdown(markdown), { mangle: false, headerIds: false })
-    .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`);
+    .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
+    // Inline SVG figures so the single-file HTML needs no external assets;
+    // the image's alt text becomes the printed caption.
+    .replace(/<img src="([^"]+\.svg)" alt="([^"]*)"[^>]*>/g, (whole, src, alt) => {
+      const svg = readFileSync(join(repoRoot, dirname(path), src), "utf8");
+      return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
+    });
   const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
   return { id, title, html, path, subsections };
 });
@@ -154,6 +160,9 @@ blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border
 blockquote p { text-align: left; }
 ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
 li { margin: 0.18em 0; }
+figure { margin: 0.7em 0; break-inside: avoid; text-align: center; }
+figure svg { width: 100%; height: auto; }
+figcaption { font-size: 8.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.25em; }
 .figure-placeholder {
   border: 0.75pt dashed #888;
   padding: 0.45em 0.6em;
