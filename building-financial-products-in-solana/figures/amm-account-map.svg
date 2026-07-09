@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="amm-account-map-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
+    </marker>
+  </defs>
+  <!-- config PDA -->
+  <rect x="34" y="42" width="160" height="84" rx="8" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <circle cx="50" cy="60" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="64" y="64" font-size="12" font-weight="bold">config</text>
+  <text x="48" y="86" font-size="10.5">admin</text>
+  <text x="48" y="100" font-size="10.5">fee (bps)</text>
+  <text x="48" y="114" font-size="10.5">admin_share_bps</text>
+  <text x="48" y="142" font-size="10.5" font-style="italic" fill="#444">seed: &#8220;config&#8221;, one per program</text>
+  <!-- derivation: config -> pool config -->
+  <line x1="114" y1="150" x2="114" y2="196" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-account-map-arr)"/>
+  <text x="124" y="176" font-size="10.5" font-style="italic" fill="#444">+ mint_a + mint_b</text>
+  <!-- pool config PDA -->
+  <rect x="34" y="200" width="180" height="106" rx="8" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <circle cx="50" cy="220" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="64" y="224" font-size="12" font-weight="bold">pool config</text>
+  <text x="64" y="240" font-size="10.5" fill="#444">ACME / USDC</text>
+  <text x="48" y="262" font-size="10.5">mint_a, mint_b</text>
+  <text x="48" y="278" font-size="10.5">admin_fees_owed_a</text>
+  <text x="48" y="294" font-size="10.5">admin_fees_owed_b</text>
+  <!-- derivation: pool config -> pool authority -->
+  <line x1="216" y1="206" x2="318" y2="100" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-account-map-arr)"/>
+  <text x="254" y="178" font-size="10.5" font-style="italic" fill="#444">derives the pool authority</text>
+  <!-- pool authority -->
+  <text x="330" y="52" font-size="12" font-weight="bold" text-anchor="middle">pool authority</text>
+  <text x="330" y="66" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">signs vault transfers</text>
+  <circle cx="330" cy="90" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <!-- owns arrows -->
+  <path d="M 340,85 C 385,73 425,64 468,58" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#amm-account-map-arr)"/>
+  <path d="M 340,94 C 385,102 425,110 467,117" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#amm-account-map-arr)"/>
+  <path d="M 337,98 C 380,128 425,156 469,183" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#amm-account-map-arr)"/>
+  <text x="398" y="60" font-size="10.5" font-style="italic" fill="#444">owns</text>
+  <!-- vaults -->
+  <circle cx="480" cy="56" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="52" font-size="11" font-weight="bold">pool_a</text>
+  <text x="498" y="66" font-size="10.5" fill="#444">ACME vault</text>
+  <circle cx="480" cy="120" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="116" font-size="11" font-weight="bold">pool_b</text>
+  <text x="498" y="130" font-size="10.5" fill="#444">USDC vault</text>
+  <!-- LP mint -->
+  <rect x="473.5" y="183.5" width="13" height="13" fill="#111" transform="rotate(45 480 190)"/>
+  <text x="498" y="186" font-size="11" font-weight="bold">LP mint</text>
+  <text x="498" y="200" font-size="10.5" fill="#444">liquidity_provider_mint</text>
+  <!-- LP token accounts -->
+  <path d="M 476,198 L 434,254" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-account-map-arr)"/>
+  <path d="M 486,198 L 560,254" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-account-map-arr)"/>
+  <text x="492" y="232" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">LP receipts</text>
+  <rect x="368" y="258" width="122" height="44" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="429" y="284" font-size="11" font-weight="bold" text-anchor="middle">Maria&#8217;s LP tokens</text>
+  <rect x="506" y="258" width="122" height="44" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="567" y="284" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s LP tokens</text>
+  <!-- legend -->
+  <circle cx="44" cy="350" r="5.5" fill="#fff" stroke="#111" stroke-width="1.6"/>
+  <text x="56" y="354" font-size="10.5" fill="#444">PDA / vault (no private key)</text>
+  <rect x="250" y="345" width="10" height="10" fill="#111" transform="rotate(45 255 350)"/>
+  <text x="266" y="354" font-size="10.5" fill="#444">token mint</text>
+  <rect x="346" y="343" width="14" height="12" rx="2" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="366" y="354" font-size="10.5" fill="#444">account data</text>
+</svg>

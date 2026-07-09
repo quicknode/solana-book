@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="vault-rebalance-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- drifted weights -->
+  <text x="36" y="36" font-size="12" font-weight="bold">drift: NVDAx rises $180 &#8594; $200, fund now $960</text>
+  <line x1="140" y1="46" x2="140" y2="284" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="146" y="52" font-size="10" font-style="italic" fill="#444">40% target</text>
+  <rect x="36" y="58" width="97" height="30" fill="#f4f4f2" stroke="#111" stroke-width="1.5"/>
+  <rect x="133" y="58" width="163" height="30" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="84" y="77" font-size="10.5" text-anchor="middle">TSLAx 37.5%</text>
+  <text x="216" y="77" font-size="10.5" text-anchor="middle">NVDAx 62.5%</text>
+  <!-- restored weights -->
+  <rect x="36" y="250" width="104" height="30" fill="#f4f4f2" stroke="#111" stroke-width="1.5"/>
+  <rect x="140" y="250" width="156" height="30" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="88" y="269" font-size="10.5" text-anchor="middle">TSLAx 40%</text>
+  <text x="218" y="269" font-size="10.5" text-anchor="middle">NVDAx 60%</text>
+  <text x="36" y="300" font-size="12" font-weight="bold">after rebalance: back to 40/60</text>
+  <!-- router -->
+  <rect x="420" y="144" width="16" height="16" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="400" y="134" font-size="10.5" fill="#444" text-anchor="middle">swap router</text>
+  <!-- sell leg -->
+  <path d="M 230,90 C 300,116 360,138 416,148" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
+  <text x="380" y="104" font-size="10.5" font-weight="bold" text-anchor="middle">sell 0.12 NVDAx &#8594; $24 USDC</text>
+  <!-- buy leg -->
+  <path d="M 420,162 C 340,192 230,222 120,246" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
+  <text x="253" y="182" font-size="10" font-style="italic" fill="#444" text-anchor="middle">both legs floored at oracle &#8722; 1%</text>
+  <text x="330" y="218" font-size="10.5" font-weight="bold" text-anchor="middle">buy $24 of TSLAx</text>
+  <!-- Maria -->
+  <circle cx="560" cy="60" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 535,102 Q 560,80 585,102" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="560" y="122" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
+  <path d="M 538,98 C 505,115 472,130 444,144" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
+  <text x="509" y="86" font-size="11" font-weight="bold" text-anchor="middle">rebalance</text>
+  <!-- no path to the manager -->
+  <path d="M 436,160 C 448,184 456,202 464,222" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-rebalance-arr)"/>
+  <rect x="470" y="210" width="140" height="36" rx="5" fill="none" stroke="#999" stroke-width="1.3"/>
+  <text x="540" y="232" font-size="10.5" fill="#444" text-anchor="middle">vault tokens &#8594; Maria</text>
+  <line x1="470" y1="210" x2="610" y2="246" stroke="#999" stroke-width="1.6"/>
+  <line x1="610" y1="210" x2="470" y2="246" stroke="#999" stroke-width="1.6"/>
+  <text x="540" y="266" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">no such instruction exists</text>
+  <text x="380" y="324" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">tokens move vault &#8594; vault through the approved router only</text>
+</svg>

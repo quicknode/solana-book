@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia, serif" fill="#111">
+  <text x="320" y="28" font-size="13" font-weight="bold" text-anchor="middle">the NVDAx / USDC book</text>
+  <!-- asks: lowest price nearest the spread -->
+  <text x="185" y="88" font-size="11" font-weight="bold" text-anchor="end">asks</text>
+  <text x="185" y="102" font-size="10" font-style="italic" fill="#444" text-anchor="end">sellers, lowest first</text>
+  <rect x="210" y="48" width="220" height="28" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="224" y="66" font-size="11.5">sell 4 @ <tspan font-weight="bold">275</tspan></text>
+  <rect x="210" y="82" width="220" height="28" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="224" y="100" font-size="11.5">sell 8 @ <tspan font-weight="bold">270</tspan></text>
+  <rect x="210" y="116" width="220" height="28" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="224" y="134" font-size="11.5">sell 10 @ <tspan font-weight="bold">265</tspan></text>
+  <text x="442" y="134" font-size="11" font-weight="bold">best ask</text>
+  <!-- the spread -->
+  <path d="M 445,144 L 455,144 L 455,196 L 445,196" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="470" y="166" font-size="11" font-weight="bold">the spread</text>
+  <text x="470" y="181" font-size="10" font-style="italic" fill="#444">no order rests inside the gap</text>
+  <!-- bids: highest price nearest the spread -->
+  <rect x="210" y="196" width="220" height="28" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="224" y="214" font-size="11.5">buy 5 @ <tspan font-weight="bold">250</tspan></text>
+  <text x="442" y="214" font-size="11" font-weight="bold">best bid</text>
+  <rect x="210" y="230" width="220" height="28" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="224" y="248" font-size="11.5">buy 6 @ <tspan font-weight="bold">245</tspan></text>
+  <rect x="210" y="264" width="220" height="28" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="224" y="282" font-size="11.5">buy 12 @ <tspan font-weight="bold">240</tspan></text>
+  <text x="185" y="238" font-size="11" font-weight="bold" text-anchor="end">bids</text>
+  <text x="185" y="252" font-size="10" font-style="italic" fill="#444" text-anchor="end">buyers, highest first</text>
+  <text x="320" y="322" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">a new order whose limit reaches across the gap trades immediately</text>
+</svg>

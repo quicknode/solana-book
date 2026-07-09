@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="order-book-alice-ask-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- Alice -->
+  <circle cx="75" cy="110" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 50,152 Q 75,130 100,152" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="75" y="172" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <text x="75" y="186" font-size="10" font-style="italic" fill="#444" text-anchor="middle">holds NVDAx</text>
+  <!-- the lock: base moves up front -->
+  <path d="M 108,125 L 285,138" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-alice-ask-arr)"/>
+  <text x="195" y="113" font-size="11" font-weight="bold" text-anchor="middle">10 NVDAx</text>
+  <text x="195" y="155" font-size="10" font-style="italic" fill="#444" text-anchor="middle">locked up front: the order is funded</text>
+  <circle cx="300" cy="140" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="300" y="168" font-size="11" font-weight="bold" text-anchor="middle">base vault</text>
+  <text x="300" y="182" font-size="10" font-style="italic" fill="#444" text-anchor="middle">10 NVDAx locked</text>
+  <!-- the call -->
+  <path d="M 100,90 C 200,40 330,40 424,74" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-alice-ask-arr)"/>
+  <text x="262" y="36" font-size="11" font-weight="bold" text-anchor="middle">place_order(Ask, 265, 10)</text>
+  <!-- the resting order -->
+  <text x="510" y="62" font-size="11" font-weight="bold" text-anchor="middle">ask tree</text>
+  <rect x="430" y="75" width="160" height="58" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="510" y="95" font-size="12" font-weight="bold" text-anchor="middle">ask: 10 @ 265</text>
+  <text x="510" y="111" font-size="10.5" text-anchor="middle">the only leaf</text>
+  <text x="510" y="125" font-size="10" font-style="italic" fill="#444" text-anchor="middle">order account: Open</text>
+  <text x="320" y="238" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">no bid reaches 265, so nothing matches: the ask rests</text>
+  <text x="320" y="254" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">resting costs only rent and the transaction fee; the taker fee applies to fills</text>
+</svg>

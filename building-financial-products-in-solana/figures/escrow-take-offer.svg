@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="escrow-take-offer-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="escrow-take-offer-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+  </defs>
+  <!-- Alice -->
+  <circle cx="55" cy="150" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 30,192 Q 55,170 80,192" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="55" y="212" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <!-- Bob -->
+  <circle cx="585" cy="150" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 560,192 Q 585,170 610,192" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="585" y="212" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
+  <!-- TSLAx: Bob's account straight to Alice's account -->
+  <circle cx="165" cy="90" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="165" y="64" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s TSLAx account</text>
+  <circle cx="475" cy="90" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="475" y="64" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s TSLAx account</text>
+  <path d="M 465,90 L 176,90" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-take-offer-arr)"/>
+  <text x="320" y="78" font-size="12" font-weight="bold" text-anchor="middle">1 TSLAx</text>
+  <text x="320" y="110" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(100,000,000 minor units, Bob signs)</text>
+  <!-- USDC: vault to Bob's account -->
+  <circle cx="240" cy="210" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="240" y="186" font-size="11" font-weight="bold" text-anchor="middle">vault</text>
+  <circle cx="475" cy="210" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="475" y="236" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC account</text>
+  <path d="M 251,210 L 464,210" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-take-offer-arr)"/>
+  <text x="357" y="198" font-size="12" font-weight="bold" text-anchor="middle">250 USDC</text>
+  <text x="357" y="228" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units, offer PDA signs)</text>
+  <!-- ownership -->
+  <line x1="68" y1="137" x2="157" y2="97" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="572" y1="137" x2="483" y2="97" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="572" y1="163" x2="483" y2="203" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <!-- offer account, closing -->
+  <rect x="175" y="258" width="130" height="32" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="240" y="278" font-size="11" text-anchor="middle">offer account</text>
+  <line x1="226" y1="196" x2="254" y2="224" stroke="#999" stroke-width="1.6"/>
+  <line x1="254" y1="196" x2="226" y2="224" stroke="#999" stroke-width="1.6"/>
+  <line x1="175" y1="258" x2="305" y2="290" stroke="#999" stroke-width="1.6"/>
+  <line x1="305" y1="258" x2="175" y2="290" stroke="#999" stroke-width="1.6"/>
+  <text x="240" y="310" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">vault and offer closed</text>
+  <!-- rent home to Alice -->
+  <path d="M 229,216 C 160,235 110,215 78,196" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-take-offer-arrg)"/>
+  <path d="M 173,274 C 120,268 90,240 68,206" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-take-offer-arrg)"/>
+  <text x="105" y="300" font-size="10" font-style="italic" fill="#444" text-anchor="middle">rent lamports return to Alice</text>
+</svg>

@@ -8,17 +8,17 @@ The program for this chapter lives at `finance/escrow` in the companion reposito
 
 Alice has 250 USDC and wants a share of Tesla stock. Bob holds TSLAx and likes that price. They want to trade.
 
-**[FIGURE: Alice with USDC wanting TSLAx, Bob with TSLAx wanting USDC, arrows showing the intended swap.]**
+![Alice holds 250 USDC and wants 1 TSLAx; Bob holds 1 TSLAx and wants 250 USDC. Each side holds exactly what the other wants.](figures/escrow-swap-intent.svg)
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? Maybe Bob is just that type of guy. The real problem an **escrow** solves is not moving tokens, it is letting Alice and Bob swap without having to trust each other.
 
 Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has bought a house or sent money overseas knows, the third party takes a percentage for itself, typically somewhere between one and six percent of the transaction.
 
-**[FIGURE: Traditional escrow. Alice and Bob each send funds to a third party in the middle; the third party forwards the funds onward, minus a slice it keeps.]**
+![Traditional escrow: Alice and Bob each send funds to a third party in the middle, which forwards them onward minus the slice it keeps for itself.](figures/escrow-traditional-escrow.svg)
 
 A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed bytecode: nobody, including the program's author, can move them except along the paths the code defines. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
 
-**[FIGURE: The same swap through the escrow program. Both sides receive the full amount; the middle box is a program, not a company.]**
+![The same swap through the escrow program: both sides receive the full amount, and the box in the middle is a program, not a company.](figures/escrow-program-swap.svg)
 
 ## The Deal: Alice's 250 USDC for Bob's Tesla Share
 
@@ -33,7 +33,7 @@ The deal is denominated the way all Solana money is denominated: in **minor unit
 
 Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard cast of accounts every token-handling program touches.
 
-**[FIGURE: Account-relationship map. Alice's wallet and her two token accounts; Bob's wallet and his two token accounts; the offer account (PDA) pointing at its vault; the mint accounts for USDC and TSLAx; arrows labelled with owner and authority relationships.]**
+![The account map: Alice's and Bob's wallets and their token accounts, the offer account (a PDA) with authority over its vault, the USDC and TSLAx mints, and the owner and authority relationships that connect them.](figures/escrow-account-map.svg)
 
 The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
 
@@ -53,7 +53,7 @@ Around these two sit the accounts every token program interaction needs: the two
 
 The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer` opens it, and it ends in exactly one of two ways, `take_offer` or `cancel_offer`. Every state needs an exit, and an open offer has two.
 
-**[FIGURE: State machine. Open, with two exits: taken (Bob accepts) and cancelled (Alice withdraws). Both exit states show the vault drained and closed.]**
+![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or cancelled when Alice withdraws, and both exits drain and close the vault.](figures/escrow-state-machine.svg)
 
 ### Alice Makes the Offer
 
@@ -65,7 +65,7 @@ One constraint deserves a pause: `maker_token_account_b`, Alice's account for th
 
 With the structure verified, the handler body is two small steps. `handle_send_offered_tokens_to_vault` calls the shared `transfer_tokens` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority. Then `handle_save_offer` writes the offer's fields, including the saved bump, into the offer account.
 
-**[FIGURE: make_offer token movement. 250,000,000 minor units of USDC flowing from Alice's token account into the vault; beside it, the offer account being written with maker, mints, wanted amount.]**
+![make_offer moves 250,000,000 minor units of USDC from Alice's token account into the vault, while the offer account is written with the maker, the mints, and the wanted amount.](figures/escrow-make-offer.svg)
 
 Alice is done. She can close her laptop.
 
@@ -77,7 +77,7 @@ Alice does not need to be awake, online, or anywhere in particular. She signed h
 
 The handler body runs two steps. First, `handle_send_wanted_tokens_to_maker` moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it. Second, `handle_withdraw_and_close_vault` moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the id, and the saved bump. Then the same helper pair closes the vault with `close_token_account`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
 
-**[FIGURE: take_offer token movement, two arrows. TSLAx flowing directly from Bob's token account to Alice's; USDC flowing from the vault to Bob's token account; the vault and offer accounts shown closing, with rent lamports returning to Alice.]**
+![take_offer moves the TSLAx directly from Bob's token account to Alice's and the USDC from the vault to Bob's token account, then closes the vault and the offer account, with the rent lamports returning to Alice.](figures/escrow-take-offer.svg)
 
 Both sides now hold exactly what the other offered. No percentage went to anyone.
 
@@ -87,7 +87,7 @@ What if nobody takes the offer and Alice wants her USDC back? Without an exit, h
 
 The constraints make it maker-only: the signer must be the maker, and `has_one = maker` checks the signer against the address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). The handler, `handle_cancel_offer`, mirrors the second half of `take_offer`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and lets `close = maker` close the offer account to Alice. Every lamport of rent she fronted comes home.
 
-**[FIGURE: cancel_offer token movement. USDC flowing from the vault back to Alice's token account; vault and offer accounts closing, rent returning to Alice.]**
+![cancel_offer returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
 
 ## The Math
 

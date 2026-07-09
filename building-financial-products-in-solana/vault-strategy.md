@@ -20,11 +20,11 @@ Victor runs `initialize_registry` once, then `whitelist_asset` for each approved
 
 The list is stocks, bonds, whatever investors actually want. It is not the manager's own personal token, and structurally cannot be: adding a non-whitelisted asset fails because the whitelist entry PDA for it simply does not exist (pinned by `test_add_asset_rejects_non_whitelisted`).
 
-**[FIGURE: The registry. Victor's authority creating whitelist entries, each binding one mint to one Pyth feed; a manager shown able to select from the list but unable to add to it.]**
+![The registry: Victor's authority creates each whitelist entry, binding one mint to one Pyth feed, and a manager can select from the list but cannot add to it.](figures/vault-registry.svg)
 
 ## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
 
-**[FIGURE: Account map. The strategy PDA owning a USDC vault, one vault per basket asset, and the share mint; asset config PDAs each pointing at a mint, a feed, a vault, and a weight; the registry and whitelist entries behind them; Alice's and Bob's share accounts.]**
+![The account map: the strategy PDA owns a USDC vault, one vault per basket asset, and the share mint; each asset config PDA records a mint, a feed, a weight, and a vault; Victor's registry entries sit behind them, and Alice's and Bob's share accounts hang off the share mint.](figures/vault-account-map.svg)
 
 The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA with the strategy as mint authority: shares only come into existence when the program's own math says so.
 
@@ -48,7 +48,7 @@ Alice runs `deposit` with 900 USDC and a `minimum_shares` floor. The handler doe
 
 **And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output *from the oracle price* and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot wave a bad fill through, because the minimum is never theirs to supply. This is the single most transferable idea in the chapter: **when an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
-**[FIGURE: Alice's deposit. 900 USDC arriving; the NAV loop reading every vault and feed; two router swaps splitting it 360/540 into TSLAx and NVDAx vaults, each with an oracle-anchored minimum-out; 900 shares minted to Alice.]**
+![Alice's deposit: 900 USDC arrives, the NAV loop reads every vault and feed, two router swaps split it 360/540 into the TSLAx and NVDAx vaults with oracle-anchored minimums, and 900 shares are minted to Alice.](figures/vault-deposit.svg)
 
 ## The Market Moves and Maria Rebalances
 
@@ -56,7 +56,7 @@ NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is wor
 
 But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's actual job. She runs `rebalance`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums exactly like deposits. The weights return to 40/60. Note what rebalancing is not: it is not the manager touching money. Tokens moved between strategy-owned vaults through the approved router at oracle-checked prices, and none of them passed anywhere near Maria.
 
-**[FIGURE: The drift and the rebalance. Weights at 37.5/62.5 after NVDAx's rise; sell and buy legs through the router restoring 40/60; every leg annotated with its oracle-computed floor.]**
+![The drift and the rebalance: NVDAx's rise pushes the weights to 37.5/62.5, and the sell and buy legs through the router restore 40/60, every leg floored by an oracle-computed minimum.](figures/vault-rebalance.svg)
 
 ## Bob Buys In at the New Price
 
@@ -66,7 +66,7 @@ Bob deposits 480 USDC. He is not early, and the share math prices that in: share
 
 Traditional funds sell assets to pay the management fee. This program does what Yearn and Lido do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be quietly worsened. The escrow chapter snapshotted a fee per offer; the same principle, at fund scale.
 
-**[FIGURE: Fee by dilution. The share supply growing by 13.5 shares into Maria's account, every other holder's slice of the same pie shrinking proportionally; no tokens leaving any vault.]**
+![Fee by dilution: the share supply grows by 13.5 shares into Maria's account, every other holder's slice of the same pie shrinks proportionally, and no tokens leave any vault.](figures/vault-fee-dilution.svg)
 
 ## Alice Withdraws In Kind
 
@@ -74,7 +74,7 @@ Alice takes profit with `withdraw`, burning her 900 shares. The program does not
 
 She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. And Victor earned nothing, risked nothing, and made all of it safe.
 
-**[FIGURE: In-kind withdrawal. 900 shares burned; proportional slices of the USDC, TSLAx, and NVDAx vaults flowing to Alice's accounts.]**
+![In-kind withdrawal: Alice's 900 shares are burned first, then proportional slices of the USDC, TSLAx, and NVDAx vaults flow to her accounts.](figures/vault-withdraw-in-kind.svg)
 
 ## The Math: One Valuation Loop, Floors Toward the Fund
 

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="vault-withdraw-in-kind-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- burn first -->
+  <rect x="294" y="24" width="12" height="12" fill="#111" transform="rotate(45 300 30)"/>
+  <text x="284" y="34" font-size="11" font-weight="bold" text-anchor="end">share mint</text>
+  <path d="M 582,131 C 540,60 430,32 316,30" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
+  <text x="430" y="26" font-size="11" font-weight="bold" text-anchor="middle">1. burn her 900 shares</text>
+  <!-- vaults -->
+  <circle cx="130" cy="88" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="130" y="66" font-size="11" font-weight="bold" text-anchor="middle">USDC vault</text>
+  <circle cx="130" cy="158" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="130" y="136" font-size="11" font-weight="bold" text-anchor="middle">TSLAx vault</text>
+  <circle cx="130" cy="228" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="130" y="206" font-size="11" font-weight="bold" text-anchor="middle">NVDAx vault</text>
+  <!-- proportional slices out -->
+  <path d="M 142,88 L 452,88" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
+  <text x="295" y="80" font-size="10.5" font-weight="bold" text-anchor="middle">2. her USDC slice</text>
+  <text x="295" y="103" font-size="10" font-style="italic" fill="#444" text-anchor="middle">min_usdc_out floor</text>
+  <path d="M 142,158 L 452,158" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
+  <text x="295" y="150" font-size="10.5" font-weight="bold" text-anchor="middle">&#8776;1.5 TSLAx</text>
+  <path d="M 142,228 L 452,228" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
+  <text x="295" y="220" font-size="10.5" font-weight="bold" text-anchor="middle">&#8776;2.8 NVDAx</text>
+  <!-- Alice's accounts -->
+  <circle cx="465" cy="88" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="478" y="92" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <circle cx="465" cy="158" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="478" y="162" font-size="10.5" font-weight="bold">Alice&#8217;s TSLAx</text>
+  <circle cx="465" cy="228" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="478" y="232" font-size="10.5" font-weight="bold">Alice&#8217;s NVDAx</text>
+  <!-- Alice -->
+  <circle cx="588" cy="150" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 563,192 Q 588,170 613,192" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="588" y="212" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <!-- rules -->
+  <text x="320" y="264" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">each amount floored; each destination verified as hers and of the right mint</text>
+  <text x="320" y="280" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">shares burn before any token moves (checks-effects-interactions)</text>
+</svg>
