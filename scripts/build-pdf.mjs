@@ -165,7 +165,7 @@ section.chapter h1::after {
   display: block;
   height: 3.5px;
   margin-top: 0.08in;
-  background: linear-gradient(90deg, #6673f5, #00d1ff, #2ef29a);
+  background: linear-gradient(90deg, #9945FF, #05B5E9, #14F195);
 }
 h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
 h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
