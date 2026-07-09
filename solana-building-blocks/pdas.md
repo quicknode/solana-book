@@ -1,4 +1,4 @@
-# PDAs Are Addresses a Program Can Sign For
+# PDAs
 
 A **program derived address** (PDA) is an address computed from a program's id and some chosen seeds, deliberately constructed to have no private key (a stored **bump** byte pushes the result off the curve where keys live). Nobody can ever sign as a PDA with a key; the owning program, and only it, can sign as the PDA inside its own instruction handlers by presenting the seeds.
 
@@ -16,4 +16,4 @@ An account that claims to be "the vault for this market" either derives from the
 
 A vault whose authority is a PDA is a vault whose funds move only along the code paths the program defines. The phrase "the program holds the funds" means, precisely, this, and it is the foundation of every escrow, pool, and market in the book.
 
-**[FIGURE: PDA derivation and signing. Seeds ("offer", maker address, id) plus the program id flowing through derivation to an address with no key; below, the program presenting the same seeds to sign a transfer out of the vault that address controls.]**
+![Seeds plus the program id derive an address off the curve, where no private key exists; only the owning program, presenting the same seeds, can sign as it.](figures/pda-derivation.svg)

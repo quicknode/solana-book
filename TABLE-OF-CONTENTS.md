@@ -8,13 +8,13 @@
 
 ## Solana Building Blocks
 
-- [Clusters, programs, accounts and handlers](solana-building-blocks/accounts-and-instruction-handlers.md)
-- [Tokens are accounts: mints define them, token accounts hold them](solana-building-blocks/tokens.md)
-- [PDAs are addresses a program can sign for](solana-building-blocks/pdas.md)
-- [Accounts pay a rent deposit, and closing refunds it](solana-building-blocks/rent.md)
-- [A transaction happens entirely or not at all](solana-building-blocks/atomicity.md)
-- [Slots for adversarial logic, timestamps for humans](solana-building-blocks/time.md)
-- [Cranks pay someone to do the work nobody owns](solana-building-blocks/cranks.md)
+- [The Core Building Blocks of Solana](solana-building-blocks/accounts-and-instruction-handlers.md)
+- [Tokens](solana-building-blocks/tokens.md)
+- [PDAs](solana-building-blocks/pdas.md)
+- [Rent](solana-building-blocks/rent.md)
+- [Atomicity](solana-building-blocks/atomicity.md)
+- [Time](solana-building-blocks/time.md)
+- [Cranks](solana-building-blocks/cranks.md)
 
 ## Financial Programming Concepts in Solana
 

@@ -10,7 +10,7 @@ In a bookmaker market, the house quotes odds and carries risk on every bet. In a
 
 The consequence the chapter's story will make concrete: **parimutuel markets reward conviction**. Bet three times as much as the next winner and you win three times as much of the losing pool.
 
-**[FIGURE: Two pools side by side (winning outcome and losing outcome), with the losing pool flowing to the winners at settlement, split proportionally by stake, and a fee slice diverted to the house.]**
+![The parimutuel split: at settlement the losing pool flows to the winners in proportion to their stakes, with a fee slice diverted to the house.](figures/betting-parimutuel-pools.svg)
 
 ## The Cast: An Admin and Three Bettors
 
@@ -20,7 +20,7 @@ The consequence the chapter's story will make concrete: **parimutuel markets rew
 
 ## The Account Model: One Config, One Event, Its Outcomes, and a Bet per Bettor
 
-**[FIGURE: Account map. The config PDA at top; an event PDA with its vault (an associated token account owned by the event); outcome PDAs hanging off the event; bet PDAs hanging off each outcome; each bettor's user PDA indexing their bets.]**
+![The account map: the config PDA at top, an event PDA with its vault (an associated token account owned by the event), outcome PDAs hanging off the event, bet PDAs hanging off each outcome, and each bettor's user PDA indexing their bets.](figures/betting-account-map.svg)
 
 The **config** is a single PDA (seed `"config"`) created once by `initialize_config`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `fee_bps`, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
@@ -39,7 +39,7 @@ Maria runs `initialize_config` once, naming herself admin, USDC as the token, he
 
 One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
 
-**[FIGURE: Maria's three setup calls building the config, the event with its empty vault, and the two outcome accounts.]**
+![Maria's three setup calls build the config, the event with its empty vault, and the two outcome accounts.](figures/betting-maria-setup.svg)
 
 ## Alice, Bob, and Carol Place Their Bets
 
@@ -47,7 +47,7 @@ Each bettor calls `place_bet` with an amount. Zero-amount bets reject with `Zero
 
 After all three bets, the vault holds 600 USDC: 400 staked on Toy Story 5, 200 on Backrooms.
 
-**[FIGURE: Three place_bet arrows into the single event vault, with the outcome accounts tallying 400 and 200 and the event's total_pool at 600.]**
+![Three place_bet transfers flow into the single event vault, while the outcome accounts tally 400 and 200 and the event's total_pool reaches 600.](figures/betting-place-bets.svg)
 
 ## The Film Grosses: Maria Settles the Event
 
@@ -60,7 +60,7 @@ Settlement does four things, none of which involve paying bettors yet:
 - Does the fee math. The losing pool is `total_pool` minus the winning outcome's total: 600 − 400 = 200 USDC. The fee is 2% of the *losing pool only*: 4 USDC, computed in u128 and floored. The remaining 196 becomes the `distributable_losing_pool`, stored on the event. Charging the fee only on the losing side gives a guarantee worth printing: **a winner can never receive less than they staked**.
 - Transfers the 4 USDC fee out of the vault to the fee recipient's token account, signed by the event PDA.
 
-**[FIGURE: Settlement. The 600 USDC vault split into winning pool (400, untouched), fee (4, flowing to Maria's account), and distributable losing pool (196, earmarked for winners).]**
+![Settlement splits the 600 USDC vault into the winning pool (400, untouched), the fee (4, flowing to Maria's account), and the distributable losing pool (196, earmarked for winners).](figures/betting-settlement.svg)
 
 ## Alice and Bob Claim: Conviction Pays Three to One
 
@@ -74,7 +74,7 @@ The multiply runs in u128 and divides exactly once, after the multiplication, so
 
 Two orderings in this handler are the chapter's security lesson in miniature. First, the bet is removed from the user's index *before* the token transfer: effects before interactions, so no re-entry path can see stale state. Second, the bet account itself closes at the end of the claim, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (pinned by `test_double_claim_fails`). No `claimed` boolean to forget to check; the state machine's exit *is* the account's deletion.
 
-**[FIGURE: claim_winnings for Alice. 447 USDC leaving the vault signed by the event PDA; her bet account closing with rent returning to her; her user index dropping the bet.]**
+![Alice's claim_winnings: 447 USDC leaves the vault signed by the event PDA, her bet account closes with rent returning to her, and her user index drops the bet.](figures/betting-alice-claim.svg)
 
 ## Carol Closes Out, and the Exits That Make the Machine Honest
 
@@ -82,7 +82,7 @@ Carol's losing bet pays nothing, but it still occupies one of her 32 position sl
 
 And what if the film festival burns down? An Open event has a second exit: `cancel_event`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (pinned by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
 
-**[FIGURE: The event's state machine. Open, with betting; two exits to Settled (claims and losing-bet closes) and Cancelled (refunds); every bet account shown reaching a terminal close on every path.]**
+![The event's state machine: an Open event takes bets, then exits to Settled (claims and losing-bet closes) or Cancelled (refunds), and every bet account reaches a terminal close on every path.](figures/betting-state-machine.svg)
 
 ## The Math: One Division, Floored Once, Fee Off the Losers
 

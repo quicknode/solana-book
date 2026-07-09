@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
+    </marker>
+  </defs>
+  <!-- transaction box -->
+  <rect x="30" y="24" width="270" height="130" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="44" y="46" font-size="13" font-weight="bold">Transaction</text>
+  <text x="44" y="62" font-size="11" font-style="italic" fill="#444">signed by Alice&#8217;s private key</text>
+  <rect x="44" y="72" width="242" height="32" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="52" y="86" font-size="11" font-weight="bold">Instruction 1 &#8594; System Program</text>
+  <text x="52" y="99" font-size="11">send lamports to Bob&#8217;s address</text>
+  <rect x="44" y="110" width="242" height="32" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="52" y="124" font-size="11" font-weight="bold">Instruction 2 &#8594; Memo Program</text>
+  <text x="52" y="137" font-size="11">write &#8220;thanks&#8221;</text>
+  <!-- the curve -->
+  <path d="M 40,350 Q 320,90 600,350" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="320" y="372" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <circle cx="180" cy="252" r="6" fill="#111"/>
+  <text x="150" y="282" font-size="12" font-weight="bold">Alice</text>
+  <circle cx="460" cy="252" r="6" fill="#111"/>
+  <text x="452" y="282" font-size="12" font-weight="bold">Bob</text>
+  <rect x="286" y="215" width="12" height="12" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="292" y="207" font-size="10.5" fill="#444" text-anchor="middle">System Program</text>
+  <rect x="372" y="219" width="12" height="12" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="398" y="214" font-size="10.5" fill="#444" text-anchor="middle">Memo Program</text>
+  <!-- instruction arrows -->
+  <path d="M 286,88 C 400,88 340,160 296,213" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M 286,126 C 460,120 420,170 382,216" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <!-- effects -->
+  <path d="M 188,246 Q 320,180 452,246" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+  <text x="320" y="238" font-size="11" fill="#444" text-anchor="middle" font-style="italic">lamports move from Alice to Bob</text>
+  <rect x="500" y="150" width="112" height="34" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="556" y="164" font-size="10.5" text-anchor="middle" font-style="italic">transaction log:</text>
+  <text x="556" y="177" font-size="11" text-anchor="middle">&#8220;thanks&#8221;</text>
+  <path d="M 384,219 C 420,190 460,175 498,168" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+</svg>

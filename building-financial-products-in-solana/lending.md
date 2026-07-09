@@ -14,7 +14,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ## The Account Model: A Market of Reserves, and an Obligation per Borrower
 
-**[FIGURE: Account map. The lending market PDA; three reserve PDAs (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint, each pointing at a price feed; Bob's and Carol's obligation PDAs holding collateral share vaults and borrow entries.]**
+![The account map: one lending market PDA, three reserve PDAs (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation PDAs holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
 
 The **lending market** PDA (seeds: `"lending_market"`, a market id) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market ids give independent, risk-isolated pools.
 
@@ -45,7 +45,7 @@ Maria runs `init_lending_market` with USDC as the quote currency, then `init_res
 
 Alice runs `deposit_reserve_liquidity` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest swells the pool while the share supply stays put, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
 
-**[FIGURE: Alice's deposit. 1,000 USDC into the reserve's liquidity vault, 1,000 shares minted from the share mint; a second panel showing the same shares redeeming for more USDC after interest accrues.]**
+![Alice's deposit: 1,000 USDC into the reserve's liquidity vault mints 1,000 shares from the share mint; after interest accrues, the same shares redeem for more USDC.](figures/lending-deposit-shares.svg)
 
 ## Bob Borrows Against His NVIDIA
 
@@ -58,7 +58,7 @@ Bob wants $750 of cash without selling his NVDAx. Four instruction handlers, in 
 
 The health check behind step 4 is conservative by construction: when `refresh_obligation` values his position, collateral value is *floored* and debt value is *ceiled*, so every health evaluation errs against the borrower. Borrowing one unit past the allowance fails (`BorrowTooLarge`), and the test `borrow_up_to_max_ltv_then_one_more_fails` pins the boundary from both sides. His NVDAx is not sold, and he gets it back the moment he repays.
 
-**[FIGURE: Bob's borrow. NVDAx shares locked in his obligation's collateral vault; $750 USDC flowing out of the USDC reserve to Bob; a gauge showing his debt at 75% of collateral value, with the liquidation threshold at 80% just above it.]**
+![Bob's borrow: NVDAx shares locked in his obligation's collateral vault, $750 USDC flowing out of the USDC reserve to Bob, and his debt at 75% of collateral value with the liquidation threshold at 80% just above it.](figures/lending-borrow-ltv.svg)
 
 ## Carol Shorts SpaceX
 
@@ -76,7 +76,7 @@ The rate itself comes from a **kinked utilization curve**. Utilization is borrow
 
 Of the interest that accrues, the reserve factor (10%) is skimmed into `accumulated_protocol_fees`, floored, in the suppliers' favour; the rest belongs to the share holders through the rising share price.
 
-**[FIGURE: The kinked rate curve. Borrow APR against utilization, gentle to the 80% kink, steep after it; a second panel showing the cumulative index compounding across refreshes.]**
+![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the cumulative index compounding across refreshes.](figures/lending-rate-curve.svg)
 
 ## SpaceX Rallies and Carol Becomes Liquidatable
 
@@ -93,7 +93,7 @@ Dave runs `liquidate_obligation`, repaying some of Carol's SPCXx debt in exchang
 
 Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Why half at a time? A close factor turns liquidation from an execution into a correction: the borrower loses the minimum collateral needed to restore health, not the whole position.
 
-**[FIGURE: Liquidation. Dave repaying SPCXx into the reserve, seizing discounted USDC collateral shares from Carol's obligation, her health gauge crossing back under the threshold; the close factor shown halving what one call may touch.]**
+![Liquidation: Dave repays SPCXx into the reserve and seizes discounted USDC collateral shares from Carol's obligation, her health gauge crossing back under the threshold, with the close factor halving what one call may touch.](figures/lending-liquidation.svg)
 
 ## Bob Repays, Maria Collects, Alice Takes Her Yield
 

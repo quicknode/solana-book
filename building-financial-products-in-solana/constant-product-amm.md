@@ -16,7 +16,7 @@ The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME r
 
 And the truth about K: **K is constant within a single trade and grows over time.** Deposits grow it (more of both tokens, same ratio). The liquidity providers' share of every fee stays in the pool and grows it. And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
 
-**[FIGURE: The constant-product curve. X on one axis, Y on the other, a trade sliding along the curve from one point to another, with the price as the slope and K as the curve itself.]**
+![The constant-product curve: a buy slides the pool along X × Y = K, and the spot price is the slope of the curve at the pool's current point.](figures/amm-curve.svg)
 
 ## The Cast: An Operator, Two LPs, and Two Traders
 
@@ -24,7 +24,7 @@ And the truth about K: **K is constant within a single trade and grows over time
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
-**[FIGURE: Account map. The config PDA; the pool config PDA for ACME/USDC; the pool authority PDA owning the two vaults and the LP mint; LP token accounts held by Maria and Alice.]**
+![The account map: the config PDA, the pool config PDA for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
 
 The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 
@@ -42,7 +42,7 @@ Empty pools cannot price anything, so Maria seeds it. She believes a fair launch
 
 Her LP tokens come from a formula this book has been promising since the arithmetic chapter: the **integer square root of X times Y**, computed by `integer_sqrt`, a hand-rolled Newton's method loop on u128, floored. The square root of 140 million is about 11,832, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`, a floor of 100 LP tokens that is **never minted to anyone**. It is not sent to a burn address (Uniswap V2's trick); it simply never exists as supply, while the reserves it represents stay in the pool. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
-**[FIGURE: Maria's initial deposit. 1,000 ACME and 140,000 USDC entering the vaults; sqrt(140,000,000) ≈ 11,832 LP tokens minted to Maria, with the 100-token floor shown locked, minted to nobody.]**
+![Maria's initial deposit: 1,000 ACME and 140,000 USDC enter the vaults, and the square root of their product, about 11,832 LP tokens, goes to Maria minus the 100-token MINIMUM_LIQUIDITY floor, which is locked and minted to nobody.](figures/amm-first-deposit.svg)
 
 ## Alice Adds Liquidity Without Moving the Price
 
@@ -62,7 +62,7 @@ Bob runs `swap_tokens` to spend 14,000 USDC on ACME, with a `min_output_amount` 
 
 K is now about 201.64 million. It grew mid-trade, from the $35 of LP fees. That is K's second way of growing, the one the toy explanations lie about.
 
-**[FIGURE: Bob's swap. 14,000 USDC in, split into fee slices (admin's $7 as a ledger entry, LPs' $35 into the reserves) and taxed input; 92 ACME out; the price sliding from 140 to 164 along the curve.]**
+![Bob's swap: 14,000 USDC comes in, the $42 fee splits into Maria's $7 virtual claim and the LPs' $35 that stays in the vault, the 13,958 taxed input is priced by the curve, and about 92 ACME goes out as the spot price slides from $140 to $164.](figures/amm-bob-swap.svg)
 
 ## Carol Pays the Price Bob Made
 
@@ -84,7 +84,7 @@ Alice does not get back what she deposited. She deposited 200 ACME and 28,000 US
 
 That gap is **impermanent loss**, and it is the honest price of being an LP. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP is a bet on trading volume, not on price direction**: if accumulated fees outrun the divergence, LPing wins; if the price runs hard in one direction on thin volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $140, the loss would have evaporated. Nobody should provide liquidity without being able to draw this diagram.
 
-**[FIGURE: Impermanent loss. Value of Alice's LP position versus value of just holding, plotted against ACME's price, touching at the deposit price and falling away on both sides, with the fee income shown as the offsetting band.]**
+![Impermanent loss: the value of Alice's LP position touches the value of just holding at the $140 deposit price and falls away on both sides, with fee income as the band that can offset the gap.](figures/amm-impermanent-loss.svg)
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 

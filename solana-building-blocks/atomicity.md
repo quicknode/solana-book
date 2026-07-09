@@ -1,4 +1,4 @@
-# A Transaction Happens Entirely or Not at All
+# Atomicity
 
 A Solana transaction is a signed bundle of instructions, possibly addressed to several different programs, and it executes atomically: every instruction succeeds, or the whole transaction never happened. There is no partial state, no "the payment cleared but the delivery failed."
 
@@ -20,4 +20,4 @@ Sequencing turns from a race into a pattern: the lending market requires its pri
 
 The budget for all this is metered in **compute units** per transaction, and the meter shapes financial design directly: it is why the order book credits balances instead of making one transfer per fill, and why work gets consolidated everywhere you look. Compute cost is a design input, not an afterthought.
 
-**[FIGURE: One transaction as a sealed box containing three instructions across two programs (borrow, swap, repay); a green path where all three commit together, and a red path where the failed repay unwinds the entire box, leaving the chain untouched.]**
+![A flash loan is atomicity turned into credit: three instructions across two programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)

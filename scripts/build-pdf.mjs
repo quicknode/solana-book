@@ -39,21 +39,50 @@ function prepareMarkdown(markdown) {
     .replace(/\]\(((?:\.\.\/)?(?!https?:)[^)#]+\.md)(#[^)]*)?\)/g, (whole, path) => "](#" + idForPath(path.replace(/^\.\.\//, "")) + ")");
 }
 
+const cleanTitle = (raw) => raw.replace(/[*_`]/g, "");
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
-  const html = marked.parse(prepareMarkdown(markdown), { mangle: false, headerIds: false });
-  const title = (markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1];
-  return { id: idForPath(path), title, html, path };
+  const id = idForPath(path);
+  const subsections = [...markdown.matchAll(/^## (.+)$/gm)].map((match, index) => ({
+    id: `${id}-s${index + 1}`,
+    title: cleanTitle(match[1]),
+  }));
+  let htmlSubIndex = 0;
+  const html = marked
+    .parse(prepareMarkdown(markdown), { mangle: false, headerIds: false })
+    .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
+    // Inline SVG figures so the single-file HTML needs no external assets;
+    // the image's alt text becomes the printed caption.
+    .replace(/<img src="([^"]+\.svg)" alt="([^"]*)"[^>]*>/g, (whole, src, alt) => {
+      const svg = readFileSync(join(repoRoot, dirname(path), src), "utf8");
+      return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
+    });
+  const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
+  return { id, title, html, path, subsections };
 });
 
-// The printed table of contents: one line per chapter, page number filled in
-// by Paged.js at layout time.
-const printedToc = sections
-  .filter((section) => !section.path.startsWith("prelude/") || section.path.endsWith("introduction.md"))
-  .map((section) => `<li><a href="#${section.id}"><span class="t">${section.title}</span><span class="dots"></span><span class="pg"></span></a></li>`)
-  .join("\n");
-
 const isPreludeItem = (path) => path.startsWith("prelude/") && !path.endsWith("introduction.md");
+
+// The printed table of contents, in the style of TCP/IP Illustrated:
+// "Chapter N  Title" rows in bold, "N.M  Section" rows beneath, page numbers
+// right-aligned and filled in after Paged.js lays the pages out.
+const tocEntries = [];
+let chapterNumber = 0;
+let appendixNumber = 0;
+for (const section of sections) {
+  if (isPreludeItem(section.path)) continue;
+  const isAppendix = section.path.startsWith("appendices/");
+  const label = isAppendix
+    ? `Appendix ${String.fromCharCode(65 + appendixNumber++)}`
+    : `Chapter ${++chapterNumber}`;
+  const shortLabel = isAppendix ? String.fromCharCode(64 + appendixNumber) : String(chapterNumber);
+  tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}"><span class="label">${label}</span><span class="t">${section.title}</span><span class="pg"></span></a></li>`);
+  for (const [index, subsection] of section.subsections.entries()) {
+    tocEntries.push(`<li class="toc-section"><a href="#${subsection.id}"><span class="label">${shortLabel}.${index + 1}</span><span class="t">${subsection.title}</span><span class="pg"></span></a></li>`);
+  }
+}
+const printedToc = tocEntries.join("\n");
+
 const body = sections
   .map((section) => {
     const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
@@ -63,6 +92,8 @@ const body = sections
   .join("\n");
 
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
+const coverSvg = readFileSync(join(repoRoot, "assets", "cover.svg"), "utf8");
+const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
 
 const html = `<!doctype html>
 <html>
@@ -70,24 +101,33 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <title>${TITLE}</title>
 <style>
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-Regular.ttf")}"); font-weight: normal; font-style: normal; }
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-RegularItalic.ttf")}"); font-weight: normal; font-style: italic; }
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-Bold.ttf")}"); font-weight: bold; font-style: normal; }
+@font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
+
 @page {
   size: 8.5in 11in;
-  margin: 0.6in 0.55in 0.7in 0.55in;
-  @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 9pt; }
-  @top-center { content: string(chapter); font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #444; }
+  margin: 0.9in 1.1in 0.95in 1.1in;
+  @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
+  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
 }
-@page :first { @bottom-center { content: none; } @top-center { content: none; } }
-@page chapter-start { @top-center { content: none; } }
+@page :first { @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page chapter-start { @top-left { content: none; } @top-right { content: none; } }
+@page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-right { content: none; } }
+.cover { page: cover; break-after: page; }
+.cover svg { display: block; width: 8.5in; height: 11in; }
 
-html { font-size: 9pt; }
+html { font-size: 11pt; }
 body {
   font-family: Charter, "Bitstream Charter", Georgia, "Times New Roman", serif;
-  line-height: 1.32;
+  line-height: 1.38;
   color: #111;
   text-rendering: optimizeLegibility;
   hyphens: auto;
 }
-p { margin: 0 0 0.45em 0; text-align: justify; }
+p { margin: 0 0 0.6em 0; text-align: justify; }
 a { color: #111 !important; text-decoration: none; }
 
 .title-page { page: chapter-start; text-align: center; break-after: page; }
@@ -98,27 +138,38 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc { page: chapter-start; break-after: page; }
 .book-toc h1 { font-size: 17pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { margin: 0.4em 0; font-size: 9.5pt; }
+.book-toc li { font-size: 10.5pt; }
 .book-toc li a { display: flex; align-items: baseline; }
-.book-toc .dots { flex: 1; border-bottom: 1pt dotted #999; margin: 0 0.35em; }
+.book-toc .label { flex: 0 0 5.4em; }
+.book-toc .t { flex: 1; padding-right: 1em; }
+.book-toc .pg { flex: 0 0 auto; }
+.book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }
+.book-toc li.toc-section { margin: 0.08em 0 0.08em 1.6em; }
 
 section.chapter { break-before: page; }
 /* Front-matter placeholder pages share one flow until they have real content. */
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
+section.prelude-item h1::after { content: none; }
 section.prelude-item .cols { column-count: 1; }
-section.chapter .cols { column-count: 2; column-gap: 0.32in; column-fill: auto; }
+section.chapter .cols { column-count: 1; }
 section.chapter h1 {
   string-set: chapter content(text);
-  font-size: 15pt;
+  font-size: 17pt;
   line-height: 1.25;
-  margin: 0.1in 0 0.22in 0;
-  padding-bottom: 0.09in;
-  border-bottom: 0.5pt solid #999;
+  margin: 0.15in 0 0.28in 0;
+  padding-bottom: 0.1in;
 }
-h2 { font-size: 10.5pt; margin: 0.9em 0 0.35em 0; }
-h3 { font-size: 9pt; margin: 0.8em 0 0.25em 0; font-style: italic; font-weight: 600; }
-h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; }
+section.chapter h1::after {
+  content: "";
+  display: block;
+  height: 3.5px;
+  margin-top: 0.08in;
+  background: linear-gradient(90deg, #6673f5, #00d1ff, #2ef29a);
+}
+h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
+h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
+h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
 
 code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
@@ -126,6 +177,9 @@ blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border
 blockquote p { text-align: left; }
 ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
 li { margin: 0.18em 0; }
+figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: 4.9in; }
+figure svg { width: 100%; height: auto; }
+figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
 .figure-placeholder {
   border: 0.75pt dashed #888;
   padding: 0.45em 0.6em;
@@ -139,6 +193,7 @@ li { margin: 0.18em 0; }
 </style>
 </head>
 <body>
+<div class="cover">${coverSvg}</div>
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
