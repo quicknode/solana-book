@@ -18,10 +18,11 @@ import { chromium } from "playwright-core";
 import { PDFDocument } from "pdf-lib";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", "building-financial-software-on-solana.pdf"));
 
 const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
+
+const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", `${TITLE}.pdf`));
 
 // Chapter order comes from the reader-facing table of contents: every
 // relative .md link, in document order.
@@ -95,6 +96,56 @@ const body = sections
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
 const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
 
+const workDir = mkdtempSync(join(tmpdir(), "solana-book-pdf-"));
+const browser = await chromium.launch({
+  executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium",
+  args: ["--allow-file-access-from-files"],
+});
+
+// The cover is authored as a print-ready PDF. Vector PDF covers proved
+// fragile: both pdf-lib merge strategies produced files whose transparency
+// masks and gradients render incorrectly in Quartz viewers (macOS Preview).
+// So the cover is rasterized at print resolution (300dpi) with pdf.js and
+// printed as page one of the book itself: a flat image renders identically
+// in every viewer, and no PDF post-processing is needed at all.
+async function rasterizeCover(coverPdfPath) {
+  const stagePath = join(workDir, "cover-stage.html");
+  writeFileSync(stagePath, "<!doctype html><title>cover</title>");
+  const page = await browser.newPage();
+  await page.goto(pathToFileURL(stagePath).href);
+  const dataUrl = await page.evaluate(
+    async ({ pdfjsUrl, workerUrl, pdfB64, targetWidth }) => {
+      const pdfjs = await import(pdfjsUrl);
+      pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+      const bytes = Uint8Array.from(atob(pdfB64), (c) => c.charCodeAt(0));
+      const doc = await pdfjs.getDocument({ data: bytes }).promise;
+      const first = await doc.getPage(1);
+      const viewport = first.getViewport({ scale: targetWidth / first.getViewport({ scale: 1 }).width });
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(viewport.width);
+      canvas.height = Math.round(viewport.height);
+      await first.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+      return canvas.toDataURL("image/png");
+    },
+    {
+      pdfjsUrl: pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.mjs")).href,
+      workerUrl: pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.worker.mjs")).href,
+      pdfB64: readFileSync(coverPdfPath).toString("base64"),
+      targetWidth: 8.5 * 300,
+    },
+  );
+  await page.close();
+  return dataUrl;
+}
+
+const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
+let coverContent = "&nbsp;";
+if (existsSync(coverPdfPath)) {
+  coverContent = `<img src="${await rasterizeCover(coverPdfPath)}" alt="">`;
+} else {
+  console.warn("assets/cover.pdf not found; the cover page is blank");
+}
+
 const html = `<!doctype html>
 <html>
 <head>
@@ -117,8 +168,8 @@ const html = `<!doctype html>
 @page :first { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
 @page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
-/* Blank stand-in page; the printed cover page from assets/cover.pdf replaces it after layout. */
 .cover { page: cover; break-after: page; }
+.cover img { display: block; width: 8.5in; height: 11in; }
 
 html { font-size: 11pt; }
 body {
@@ -187,7 +238,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 </style>
 </head>
 <body>
-<div class="cover">&nbsp;</div>
+<div class="cover">${coverContent}</div>
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
@@ -202,11 +253,9 @@ ${body}
 </body>
 </html>`;
 
-const workDir = mkdtempSync(join(tmpdir(), "solana-book-pdf-"));
 const htmlPath = join(workDir, "book.html");
 writeFileSync(htmlPath, html);
 
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
 const page = await browser.newPage();
 page.on("pageerror", (error) => console.error("page error:", error.message));
 await page.goto(pathToFileURL(htmlPath).href);
@@ -229,31 +278,6 @@ await page.evaluate(() => {
 
 writeFileSync(outputPath, await page.pdf({ preferCSSPageSize: true }));
 await browser.close();
-
-// The cover is authored as a print-ready PDF. Copying its page into another
-// document rewrites its object graph, which breaks its transparency masks
-// and gradients in Quartz-based viewers (macOS Preview). So the merge goes
-// the other way: the cover document is the base, kept byte-intact, and the
-// interior's pages (plain Chromium print output, which copies safely) are
-// appended into it, dropping the interior's blank stand-in cover page so
-// page numbering is unaffected.
-const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
-if (existsSync(coverPdfPath)) {
-  const interior = await PDFDocument.load(readFileSync(outputPath));
-  const book = await PDFDocument.load(readFileSync(coverPdfPath));
-  book.setTitle(TITLE);
-  book.setAuthor(AUTHOR);
-  // Design exports come at the artwork's native size; scale to the book page.
-  const coverPage = book.getPage(0);
-  const bookPage = interior.getPage(0).getSize();
-  coverPage.scale(bookPage.width / coverPage.getWidth(), bookPage.height / coverPage.getHeight());
-  for (const pageCopy of await book.copyPages(interior, interior.getPageIndices().slice(1))) {
-    book.addPage(pageCopy);
-  }
-  writeFileSync(outputPath, await book.save());
-} else {
-  console.warn("assets/cover.pdf not found; the cover page is blank");
-}
 
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
