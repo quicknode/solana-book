@@ -230,20 +230,23 @@ await page.evaluate(() => {
 writeFileSync(outputPath, await page.pdf({ preferCSSPageSize: true }));
 await browser.close();
 
-// The cover is authored as a print-ready PDF; swap it in for the blank
-// stand-in page so the interior's page numbering is unaffected.
+// The cover is authored as a print-ready PDF. Copying its page into another
+// document rewrites its object graph, which breaks its transparency masks
+// and gradients in Quartz-based viewers (macOS Preview). So the merge goes
+// the other way: the cover document is the base, kept byte-intact, and the
+// interior's pages (plain Chromium print output, which copies safely) are
+// appended into it, dropping the interior's blank stand-in cover page so
+// page numbering is unaffected.
 const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
 if (existsSync(coverPdfPath)) {
   const interior = await PDFDocument.load(readFileSync(outputPath));
-  const coverDoc = await PDFDocument.load(readFileSync(coverPdfPath));
-  const book = await PDFDocument.create();
+  const book = await PDFDocument.load(readFileSync(coverPdfPath));
   book.setTitle(TITLE);
   book.setAuthor(AUTHOR);
-  const [coverPage] = await book.copyPages(coverDoc, [0]);
   // Design exports come at the artwork's native size; scale to the book page.
+  const coverPage = book.getPage(0);
   const bookPage = interior.getPage(0).getSize();
   coverPage.scale(bookPage.width / coverPage.getWidth(), bookPage.height / coverPage.getHeight());
-  book.addPage(coverPage);
   for (const pageCopy of await book.copyPages(interior, interior.getPageIndices().slice(1))) {
     book.addPage(pageCopy);
   }
@@ -252,9 +255,5 @@ if (existsSync(coverPdfPath)) {
   console.warn("assets/cover.pdf not found; the cover page is blank");
 }
 
-const pageCount = await (async () => {
-  const bytes = readFileSync(outputPath);
-  const matches = bytes.toString("latin1").match(/\/Type[\s]*\/Page[^s]/g);
-  return matches ? matches.length : "?";
-})();
+const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);

@@ -16,6 +16,7 @@
   "devDependencies": {
     "marked": "^18.0.5",
     "pagedjs": "^0.4.3",
+    "pdfjs-dist": "^6.1.200",
     "playwright-core": "^1.61.1"
   },
   "private": true,
