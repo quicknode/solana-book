@@ -3,8 +3,8 @@
   <!-- axes -->
   <line x1="70" y1="200" x2="590" y2="200" stroke="#111" stroke-width="1.5" marker-end="url(#perps-fund-arr)"/>
   <line x1="70" y1="200" x2="70" y2="40" stroke="#111" stroke-width="1.5" marker-end="url(#perps-fund-arr)"/>
-  <text x="590" y="220" font-size="10.5" text-anchor="end">slots</text>
-  <text x="60" y="46" font-size="10.5" text-anchor="end">cumulative_funding</text>
+  <text x="588" y="192" font-size="10.5" text-anchor="end">slots</text>
+  <text x="78" y="46" font-size="10.5">cumulative_funding</text>
   <line x1="70" y1="130" x2="585" y2="130" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
   <text x="64" y="134" font-size="9.5" fill="#444" text-anchor="end">0</text>
   <!-- index path: rises (longs heavy), then falls (shorts heavy), then rises -->
@@ -16,7 +16,7 @@
   <text x="315" y="182" font-size="10" fill="#444" text-anchor="middle">index falls, shorts pay</text>
   <!-- entry/exit brackets for one position -->
   <circle cx="120" cy="112" r="4.5" fill="#111"/>
-  <text x="120" y="100" font-size="9.5" text-anchor="middle">entry: snapshot the index</text>
+  <text x="128" y="148" font-size="9.5">entry: snapshot the index</text>
   <circle cx="330" cy="114" r="4.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="336" y="104" font-size="9.5">exit: pay size &#215; index movement</text>
   <path d="M 120,120 L 120,206" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>

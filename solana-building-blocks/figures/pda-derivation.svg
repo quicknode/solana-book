@@ -20,7 +20,6 @@
   <text x="210" y="176" font-size="10.5" fill="#444">off the curve: no private key exists</text>
   <!-- curve for contrast -->
   <path d="M 40,340 Q 320,180 600,340" fill="none" stroke="#111" stroke-width="2"/>
-  <text x="524" y="330" font-size="12" font-weight="bold">Solana Devnet</text>
   <circle cx="180" cy="276" r="5" fill="#111"/>
   <circle cx="460" cy="276" r="5" fill="#111"/>
   <text x="320" y="308" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">keypair addresses live on the curve; PDAs float off it</text>
@@ -31,4 +30,5 @@
   <path d="M 502,108 v 20" stroke="#111" stroke-width="1.3" marker-end="url(#arr3)"/>
   <text x="502" y="146" font-size="10.5" text-anchor="middle" font-style="italic">signs as the PDA: moves the vault it owns</text>
   <path d="M 400,120 C 320,140 250,150 202,164" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arr3)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="524" y="330" font-size="12" font-weight="bold">Solana Devnet</text>
 </svg>

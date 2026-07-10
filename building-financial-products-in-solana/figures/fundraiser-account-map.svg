@@ -38,14 +38,14 @@
   <!-- contributor PDAs -->
   <g>
     <circle cx="330" cy="236" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="345" y="216" width="150" height="42" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+    <rect x="345" y="216" width="195" height="42" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
     <text x="352" y="233" font-size="10" font-weight="bold">Contributor (PDA), one each</text>
     <text x="352" y="248" font-size="10">seeds: "contributor" + fundraiser + who</text>
   </g>
   <path d="M 78,232 C 180,200 260,220 322,232" fill="none" stroke="#111" stroke-width="1.4" marker-end="url(#fund-map-arr)"/>
   <text x="200" y="212" font-size="10" fill="#444" font-style="italic">a receipt: amount contributed so far</text>
   <!-- legend -->
-  <g transform="translate(470,232)">
+  <g transform="translate(478,288)">
     <circle cx="8" cy="6" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
     <text x="20" y="10" font-size="9.5" fill="#444">open circle: PDA, off the curve</text>
     <text x="20" y="26" font-size="9.5" fill="#444">grey box: program state</text>

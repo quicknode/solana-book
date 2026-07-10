@@ -29,8 +29,8 @@
   <!-- Maria cannot add -->
   <path d="M 100,218 C 180,246 260,246 352,234" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-registry-arr)"/>
   <rect x="356" y="212" width="200" height="40" rx="5" fill="none" stroke="#999" stroke-width="1.3"/>
-  <text x="456" y="236" font-size="11" fill="#444" text-anchor="middle">whitelist_asset signed by Maria</text>
   <line x1="356" y1="212" x2="556" y2="252" stroke="#999" stroke-width="1.6"/>
   <line x1="556" y1="212" x2="356" y2="252" stroke="#999" stroke-width="1.6"/>
   <text x="456" y="272" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority may add assets</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="456" y="236" font-size="11" fill="#444" text-anchor="middle">whitelist_asset signed by Maria</text>
 </svg>

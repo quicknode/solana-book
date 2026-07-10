@@ -46,6 +46,6 @@
   <circle cx="539" cy="357" r="5" fill="#111"/>
   <text x="556" y="354" font-size="12" font-weight="bold">$140</text>
   <circle cx="480" cy="317" r="5" fill="#111"/>
-  <text x="480" y="302" font-size="12" font-weight="bold" text-anchor="middle">$164</text>
   <path d="M 526,365 Q 498,352 474,328" fill="none" stroke="#111" stroke-width="1.4" marker-end="url(#amm-bob-swap-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="480" y="302" font-size="12" font-weight="bold" text-anchor="middle">$164</text>
 </svg>

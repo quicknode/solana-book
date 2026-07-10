@@ -19,9 +19,9 @@
   <path d="M 330,104 v -24" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
   <rect x="288" y="62" width="84" height="0" fill="none"/>
   <text x="330" y="74" font-size="10" fill="#444" text-anchor="middle">transfer hook runs</text>
-  <text x="330" y="86" font-size="10" fill="#444" text-anchor="middle">the issuer&#8217;s program</text>
   <circle cx="560" cy="110" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="560" y="86" font-size="11.5" font-weight="bold" text-anchor="middle">Bob&#8217;s store</text>
   <text x="560" y="140" font-size="10.5" fill="#444" text-anchor="middle">receives 99</text>
   <text x="320" y="220" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions can change what &#8220;I transferred 100&#8221; means</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="86" font-size="10" fill="#444" text-anchor="middle">the issuer&#8217;s program</text>
 </svg>

@@ -9,8 +9,6 @@
   <!-- the market PDA at the center -->
   <circle cx="320" cy="175" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="320" y="156" font-size="12" font-weight="bold" text-anchor="middle">market</text>
-  <text x="320" y="200" font-size="10" font-style="italic" fill="#444" text-anchor="middle">PDA: &#8220;market&#8221; + the two mints</text>
-  <text x="320" y="213" font-size="10" font-style="italic" fill="#444" text-anchor="middle">fee 25 bps, ticks, lots, authority: Maria</text>
   <!-- three vaults -->
   <circle cx="105" cy="110" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="90" y="107" font-size="11" font-weight="bold" text-anchor="end">base vault</text>
@@ -28,8 +26,6 @@
   <!-- each trader -->
   <circle cx="545" cy="70" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
   <path d="M 520,112 Q 545,90 570,112" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="545" y="130" font-size="12" font-weight="bold" text-anchor="middle">each trader</text>
-  <text x="545" y="144" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Alice, Bob, Carol</text>
   <!-- market user (one per trader) -->
   <circle cx="460" cy="205" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="460" y="187" font-size="11" font-weight="bold" text-anchor="middle">market user</text>
@@ -55,4 +51,8 @@
   <text x="72" y="376" font-size="10.5" fill="#444">PDA or vault (program-controlled)</text>
   <rect x="300" y="364" width="14" height="12" rx="2" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="322" y="376" font-size="10.5" fill="#444">data account</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="200" font-size="10" font-style="italic" fill="#444" text-anchor="middle">PDA: &#8220;market&#8221; + the two mints</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="213" font-size="10" font-style="italic" fill="#444" text-anchor="middle">fee 25 bps, ticks, lots, authority: Maria</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="545" y="130" font-size="12" font-weight="bold" text-anchor="middle">each trader</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="545" y="144" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Alice, Bob, Carol</text>
 </svg>

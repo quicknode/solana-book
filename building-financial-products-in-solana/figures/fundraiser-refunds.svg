@@ -21,7 +21,7 @@
   <text x="320" y="242" font-size="11" font-weight="bold" text-anchor="middle">Bob</text>
   <!-- Carol refund -->
   <path d="M 394,90 C 450,95 490,110 530,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
-  <text x="472" y="94" font-size="11" font-weight="bold">3,000</text>
+  <text x="448" y="124" font-size="11" font-weight="bold">3,000</text>
   <circle cx="550" cy="160" r="14" fill="none" stroke="#111" stroke-width="1.5"/>
   <path d="M 528,198 Q 550,178 572,198" fill="none" stroke="#111" stroke-width="1.5"/>
   <text x="550" y="216" font-size="11" font-weight="bold" text-anchor="middle">Carol</text>
