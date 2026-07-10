@@ -1,6 +1,6 @@
 # Token Fundraiser
 
-Maria maintains an open-source library that half of Solana quietly depends on, and she wants it audited. The audit firm quoted 30,000 USDC. She could collect promises, chase them for months, and start the audit underfunded; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
+Maria has designed a compact commercial espresso machine, and the factory quoted 30,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 20,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
 The program lives at `finance/token-fundraiser` in the companion repository. It is the smallest program in this part of the book: four instruction handlers, two account types, and one vault. Read it as the escrow chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. Same custody machinery, one new ingredient: a **deadline**.
 
@@ -14,9 +14,9 @@ This is the state machine discipline from Financial Programming Concepts in Sola
 
 ## The Cast: One Maker, Ten Contributors
 
-**Maria is the maker.** The program calls the fundraiser's creator the `maker`, and her incentive is the point of the whole exercise: she gets her audit funded, and she gets it all-or-nothing, because 12,000 USDC of a 30,000 USDC audit buys her nothing but awkward emails. There is no platform operator and no fee in this program; the maker runs her own raise, and the only costs anyone pays are rent deposits on the accounts.
+**Maria is the maker.** The program calls the fundraiser's creator the `maker`, and her incentive is the point of the whole exercise: she gets her production run funded, and she gets it all-or-nothing, because 12,000 USDC of a 30,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs her own raise, and the only costs anyone pays are rent deposits on the accounts.
 
-**Alice, Bob, Carol, and seven others contribute.** Alice's company builds on Maria's library, so an audit directly de-risks her own product: she is in for the maximum. Bob resells security reviews and wants the report to exist so he can cite it. Carol just uses the library and chips in what it is worth to her. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
+**Alice, Bob, Carol, and seven others contribute.** Alice runs three cafes and wants Maria's machine on her counters: she is in for the maximum. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
@@ -45,7 +45,7 @@ Alice comes in hot and tries to contribute 4,000 USDC. The program refuses with 
 
 The cap is not just per call. Carol contributes 1,500 USDC, then comes back the next day with 1,500 more, and her contributor account's running total lands exactly on the 3,000 cap; a third contribution of any size would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
 
-Sit with the arithmetic consequence for a second: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That is a design statement about what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove that the ecosystem wants this audit, and a raise that only closes with broad participation is evidence money alone cannot fake. It also blunts the obvious manipulation: a single whale filling the raise in one transaction to make the project look community-backed now needs ten wallets and still shows up as ten receipts on the fundraiser.
+Sit with the arithmetic consequence for a second: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That is a design statement about what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. It also blunts the obvious manipulation: a single whale filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
 So the money arrives like this: Alice 3,000, Bob 3,000, Carol 1,500 and 1,500, and seven other backers at 3,000 each. Each `contribute` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 30,000 USDC.
 
