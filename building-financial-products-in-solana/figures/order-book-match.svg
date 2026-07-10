@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="order-book-match-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- Carol, the taker -->
+  <circle cx="70" cy="80" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 45,122 Q 70,100 95,122" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="70" y="142" font-size="12" font-weight="bold" text-anchor="middle">Carol</text>
+  <text x="70" y="156" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the taker</text>
+  <!-- her incoming ask meets Bob's resting bid -->
+  <path d="M 103,85 L 383,81" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
+  <text x="240" y="66" font-size="11.5" font-weight="bold" text-anchor="middle">incoming ask: 3 @ 245</text>
+  <text x="240" y="102" font-size="10" font-style="italic" fill="#444" text-anchor="middle">245 &#8804; 250: it crosses</text>
+  <rect x="390" y="50" width="210" height="66" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="495" y="70" font-size="12" font-weight="bold" text-anchor="middle">Bob&#8217;s resting bid: 5 @ 250</text>
+  <text x="495" y="86" font-size="10.5" text-anchor="middle">fills 3 &#8594; PartiallyFilled</text>
+  <text x="495" y="101" font-size="10" font-style="italic" fill="#444" text-anchor="middle">2 remain on the book</text>
+  <!-- the price rule -->
+  <text x="320" y="150" font-size="11" font-weight="bold" text-anchor="middle">executes at 250, the resting order&#8217;s posted price</text>
+  <text x="320" y="165" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the surprise favours the taker: Carol asked 245 and receives 250</text>
+  <!-- ledger credits -->
+  <path d="M 300,172 C 250,184 200,194 165,206" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-match-arr)"/>
+  <path d="M 340,172 C 390,184 440,194 475,206" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-match-arr)"/>
+  <text x="320" y="198" font-size="10" font-style="italic" fill="#444" text-anchor="middle">ledger credits: no tokens move yet</text>
+  <rect x="45" y="210" width="210" height="48" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="150" y="229" font-size="11" font-weight="bold" text-anchor="middle">Carol&#8217;s unsettled_quote</text>
+  <text x="150" y="246" font-size="11" text-anchor="middle">+748.125 USDC</text>
+  <rect x="385" y="210" width="210" height="48" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="490" y="229" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s unsettled_base</text>
+  <text x="490" y="246" font-size="11" text-anchor="middle">+3 NVDAx shares</text>
+  <!-- the fee -->
+  <circle cx="220" cy="330" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="220" y="356" font-size="11" font-weight="bold" text-anchor="middle">quote vault</text>
+  <text x="220" y="370" font-size="10" font-style="italic" fill="#444" text-anchor="middle">gross: 3 &#215; 250 = 750 USDC</text>
+  <circle cx="430" cy="330" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="430" y="356" font-size="11" font-weight="bold" text-anchor="middle">fee vault</text>
+  <text x="430" y="370" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Maria&#8217;s earnings</text>
+  <path d="M 232,330 L 416,330" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
+  <text x="325" y="318" font-size="11" font-weight="bold" text-anchor="middle">1.875 USDC</text>
+  <text x="325" y="345" font-size="10" font-style="italic" fill="#444" text-anchor="middle">fee: 25 bps of 750, rounded up</text>
+</svg>

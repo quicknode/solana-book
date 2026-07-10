@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="fund-map-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- Maria -->
+  <circle cx="90" cy="48" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 65,92 Q 90,68 115,92" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="90" y="110" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
+  <text x="90" y="124" font-size="10" fill="#444" font-style="italic" text-anchor="middle">the maker, signs initialize</text>
+  <!-- fundraiser PDA -->
+  <circle cx="300" cy="80" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="230" y="104" width="180" height="96" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="320" y="124" font-size="12" font-weight="bold" text-anchor="middle">Fundraiser (PDA)</text>
+  <text x="240" y="141" font-size="10">seeds: "fundraiser" + maker</text>
+  <text x="240" y="157" font-size="10">amount_to_raise: 30,000</text>
+  <text x="240" y="172" font-size="10">current_amount, duration: 7 days</text>
+  <text x="240" y="187" font-size="10">time_started (cluster clock)</text>
+  <path d="M 112,68 C 160,80 200,80 226,80" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#fund-map-arr)"/>
+  <text x="168" y="62" font-size="10" fill="#444" font-style="italic">creates, once</text>
+  <!-- vault -->
+  <rect x="470" y="112" width="130" height="80" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="535" y="136" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
+  <text x="535" y="152" font-size="10" fill="#444" text-anchor="middle">token account (ATA)</text>
+  <text x="535" y="167" font-size="10" fill="#444" text-anchor="middle">authority:</text>
+  <text x="535" y="181" font-size="10" fill="#444" text-anchor="middle">the fundraiser PDA</text>
+  <path d="M 414,152 L 466,152" stroke="#111" stroke-width="1.6" marker-end="url(#fund-map-arr)"/>
+  <text x="440" y="144" font-size="10" fill="#444" font-style="italic" text-anchor="middle">signs for</text>
+  <!-- contributors -->
+  <g transform="translate(40,220)">
+    <circle cx="16" cy="12" r="12" fill="none" stroke="#111" stroke-width="1.4"/>
+    <path d="M -2,44 Q 16,26 34,44" fill="none" stroke="#111" stroke-width="1.4"/>
+    <text x="16" y="60" font-size="11" font-weight="bold" text-anchor="middle">Alice</text>
+  </g>
+  <g transform="translate(130,220)">
+    <circle cx="16" cy="12" r="12" fill="none" stroke="#111" stroke-width="1.4"/>
+    <path d="M -2,44 Q 16,26 34,44" fill="none" stroke="#111" stroke-width="1.4"/>
+    <text x="16" y="60" font-size="11" font-weight="bold" text-anchor="middle">Bob</text>
+  </g>
+  <text x="215" y="256" font-size="11" fill="#444">&#8230; eight more</text>
+  <!-- contributor PDAs -->
+  <g>
+    <circle cx="330" cy="236" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+    <rect x="345" y="216" width="195" height="42" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+    <text x="352" y="233" font-size="10" font-weight="bold">Contributor (PDA), one each</text>
+    <text x="352" y="248" font-size="10">seeds: "contributor" + fundraiser + who</text>
+  </g>
+  <path d="M 78,232 C 180,200 260,220 322,232" fill="none" stroke="#111" stroke-width="1.4" marker-end="url(#fund-map-arr)"/>
+  <text x="200" y="212" font-size="10" fill="#444" font-style="italic">a receipt: amount contributed so far</text>
+  <!-- legend -->
+  <g transform="translate(478,288)">
+    <circle cx="8" cy="6" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="20" y="10" font-size="9.5" fill="#444">open circle: PDA, off the curve</text>
+    <text x="20" y="26" font-size="9.5" fill="#444">grey box: program state</text>
+  </g>
+</svg>

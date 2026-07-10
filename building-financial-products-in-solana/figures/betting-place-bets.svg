@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="betting-bets-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- bettors -->
+  <circle cx="70" cy="64" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 45,106 Q 70,84 95,106" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="70" y="126" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <circle cx="70" cy="164" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 45,206 Q 70,184 95,206" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="70" y="226" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
+  <circle cx="70" cy="264" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 45,306 Q 70,284 95,306" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="70" y="326" font-size="12" font-weight="bold" text-anchor="middle">Carol</text>
+  <!-- the single vault -->
+  <circle cx="300" cy="168" r="16" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="300" y="138" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
+  <text x="300" y="200" font-size="11" font-weight="bold" text-anchor="middle">600 USDC</text>
+  <!-- place_bet arrows -->
+  <path d="M 100,72 C 180,90 230,120 287,156" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
+  <text x="192" y="62" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 300 USDC</text>
+  <path d="M 102,166 L 281,168" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
+  <text x="185" y="158" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 100 USDC</text>
+  <path d="M 100,258 C 180,240 230,208 287,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
+  <text x="200" y="274" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 200 USDC</text>
+  <!-- data accounts -->
+  <rect x="440" y="36" width="180" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="530" y="54" font-size="12" font-weight="bold" text-anchor="middle">event PDA</text>
+  <text x="530" y="70" font-size="10.5" fill="#444" text-anchor="middle">total_pool: 600</text>
+  <rect x="440" y="120" width="180" height="58" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="530" y="138" font-size="11" font-weight="bold" text-anchor="middle">Toy Story 5 outcome</text>
+  <text x="530" y="154" font-size="10.5" fill="#444" text-anchor="middle">total_amount: 400</text>
+  <text x="530" y="169" font-size="10" fill="#444" font-style="italic" text-anchor="middle">Alice 300 + Bob 100</text>
+  <rect x="440" y="216" width="180" height="58" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="530" y="234" font-size="11" font-weight="bold" text-anchor="middle">Backrooms outcome</text>
+  <text x="530" y="250" font-size="10.5" fill="#444" text-anchor="middle">total_amount: 200</text>
+  <text x="530" y="265" font-size="10" fill="#444" font-style="italic" text-anchor="middle">Carol 200</text>
+  <!-- bookkeeping links -->
+  <line x1="314" y1="158" x2="438" y2="64" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="316" y1="166" x2="438" y2="149" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="314" y1="176" x2="438" y2="240" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="355" y="332" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">stakes mix in one vault; the accounting lives in the data accounts</text>
+</svg>
