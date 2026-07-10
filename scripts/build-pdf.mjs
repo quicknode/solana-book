@@ -24,6 +24,13 @@ const AUTHOR = "Mike MacCana";
 
 const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", `${TITLE}.pdf`));
 
+// Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
+const reviewerName = process.env.REVIEWER_NAME ?? "";
+const buildDate = new Date().toISOString().slice(0, 10);
+const advanceNote = reviewerName
+  ? `Advance review copy for ${reviewerName}. Please don't redistribute. Built ${buildDate}.`
+  : `Prerelease draft, built ${buildDate}.`;
+
 // Chapter order comes from the reader-facing table of contents: every
 // relative .md link, in document order.
 const toc = readFileSync(join(repoRoot, "TABLE-OF-CONTENTS.md"), "utf8");
@@ -242,7 +249,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
-  <div class="note">Manuscript draft. Figures are placeholders awaiting the visual pass.</div>
+  <div class="note">${advanceNote}</div>
 </div>
 <nav class="book-toc">
   <h1>Contents</h1>

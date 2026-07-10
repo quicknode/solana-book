@@ -26,3 +26,7 @@ The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts t
 ## Status
 
 Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, Escrow, The Order Book Exchange, The Constant-Product AMM, The Vault Strategy, Lending and Borrowing, The Betting Market, the Glossary, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Token Fundraiser, Perpetual Futures, and the Invariant Checklist.
+
+## License
+
+The book's text and figures are [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/); code samples are MIT; Quicknode brand assets and the cover are excluded. See [LICENSE.md](LICENSE.md).
