@@ -6,7 +6,7 @@ For financial software this is not plumbing; it is a primitive you design with.
 
 ## Atomic Settlement Removes Counterparty Risk
 
-Settlement risk between steps simply does not exist inside a transaction: the escrow's `take_offer` moves Bob's payment and Alice's goods in one atomic unit, and no ordering of failures leaves one side paid and the other empty-handed.
+Settlement risk between steps simply does not exist inside a transaction: the escrow's `take_offer` moves Alice's payment and Bob's Tesla share in one atomic unit, and no ordering of failures leaves one side paid and the other empty-handed.
 
 ## Flash Loans Are Atomicity Turned Into Credit
 

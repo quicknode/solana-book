@@ -6,7 +6,7 @@ The program lives at `finance/betting-market` in the companion repository. Struc
 
 ## Nobody Sets the Odds: The Pool Is the Odds
 
-In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk at all. All stakes on all outcomes pool together. When the event settles, the losing side's money (minus the house fee) is distributed to the winning side, pro rata by stake. Your payout odds are simply the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favourite compresses everyone's payout.
+In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk at all. All stakes on all outcomes pool together. When the event settles, the losing side's money (minus the house fee) is distributed to the winning side, pro rata by stake. Your payout odds are simply the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
 The consequence the chapter's story will make concrete: **parimutuel markets reward conviction**. Bet three times as much as the next winner and you win three times as much of the losing pool.
 
@@ -51,7 +51,7 @@ After all three bets, the vault holds 600 USDC: 400 staked on Toy Story 5, 200 o
 
 ## The Film Grosses: Maria Settles the Event
 
-The month ends. In the real world, Toy Story 5 wins. Note what just happened in program terms: the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it the simplest honest way there is: a designated trusted party signs. Maria calls `settle_event` with the winning outcome's index, her signature is checked against the config's admin, and her word becomes the onchain truth. That is not a flaw to apologise for; it is a **trust decision made visible**. The Financial Programming Concepts in Solana chapter covers the full spectrum, from a single admin key like this one, through multi-party resolution, to signed price feeds; what matters is that the program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
+The month ends. In the real world, Toy Story 5 wins. Note what just happened in program terms: the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it the simplest honest way there is: a designated trusted party signs. Maria calls `settle_event` with the winning outcome's index, her signature is checked against the config's admin, and her word becomes the onchain truth. That is not a flaw to apologize for; it is a **trust decision made visible**. Offchain Truth covers the full spectrum, from a single admin key like this one, through multi-party resolution, to signed price feeds; what matters is that the program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
 
 Settlement does four things, none of which involve paying bettors yet:
 

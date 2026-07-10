@@ -114,13 +114,21 @@ A loan borrowed and repaid inside a single transaction, possible only because tr
 
 The periodic payment between longs and shorts on a perpetual futures market that tethers the perpetual's price to the index price.
 
+### health / health factor
+
+A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. At or below the boundary, the position may be liquidated. See Lending and Borrowing.
+
 ### impermanent loss
 
 The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the Constant-Product AMM chapter.
 
+### inflation attack
+
+The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. Defenses include locked minimum liquidity, virtual shares, and state-tracked pool size. See The Adversary.
+
 ### instruction
 
-The input a transaction carries to a program: which handler to run, which accounts it may touch, and the arguments. Distinct from the function that processes it; see instruction handler.
+The input a transaction carries to a program: which handler to run, which accounts it may touch, and the arguments. Distinct from the function that processes it; see [instruction handler](#instruction-handler).
 
 ### instruction handler
 
@@ -198,6 +206,10 @@ On a perpetual futures market, the index price is the oracle's statement of the 
 
 The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC. This book says minor unit, not "base unit."
 
+### MEV
+
+Maximal extractable value: profit taken by controlling transaction ordering, most visibly by sandwiching a pending trade. The reason every trade in this book carries a caller-side bound like minimum output. See The Adversary.
+
 ### mint (account)
 
 The onchain account that defines a token: its supply, decimals, and authorities. In economic prose this book says "token"; "mint account" appears when describing what gets passed to an instruction.
@@ -208,7 +220,7 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 ### Newton's method (integer square root)
 
-The iterative algorithm programs use to take a square root using only integers, converging in a few loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the Constant-Product AMM chapter.
+The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the Constant-Product AMM chapter.
 
 ### notional
 
@@ -282,6 +294,10 @@ The gap between the best bid and the best ask.
 
 A token designed to hold a fixed value, usually one dollar. The quote asset of nearly every market in this book.
 
+### sysvar
+
+A system account the runtime itself keeps current, readable by any program: the Clock sysvar carries the slot and timestamp. Validating that a passed sysvar really is the sysvar matters; see the Wormhole War Story in The Adversary.
+
 ### tick size
 
 The minimum price increment of a market. Prices must land on a multiple of it, which keeps the book from fragmenting into dust price levels.
@@ -296,7 +312,11 @@ Solana's two token programs. The Classic Token Program is the original; the Toke
 
 ### transaction
 
-A signed bundle of instructions that executes atomically: all of it lands or none of it does. The atomicity is a financial primitive; see flash loan.
+A signed bundle of instructions that executes atomically: all of it lands or none of it does. The atomicity is a financial primitive; see [flash loan](#flash-loan).
+
+### TWAP
+
+A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than rent it for one slot. See The Adversary.
 
 ### utilization
 
@@ -304,7 +324,7 @@ In a lending reserve, borrowed divided by total liquidity. The input to the inte
 
 ### vault
 
-A token account owned by a program (usually by a PDA), where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a strategy.
+A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a strategy.
 
 ### WAD
 
@@ -312,7 +332,7 @@ A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 follow
 
 ### wallet
 
-A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a keypair file is just 64 bytes; whoever holds them is the wallet.
+A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet.
 
 ### zero-copy
 

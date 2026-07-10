@@ -16,7 +16,7 @@ Traditional finance solves this with a trusted third party. Alice sends her fund
 
 ![Traditional escrow: Alice and Bob each send funds to a third party in the middle, which forwards them onward minus the slice it keeps for itself.](figures/escrow-traditional-escrow.svg)
 
-A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed bytecode: nobody, including the program's author, can move them except along the paths the code defines. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
+A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed bytecode: nobody, including the program's author, can move them except along the paths the code defines. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no key that matters, which is exactly the point. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
 
 ![The same swap through the escrow program: both sides receive the full amount, and the box in the middle is a program, not a company.](figures/escrow-program-swap.svg)
 
@@ -53,7 +53,7 @@ Around these two sit the accounts every token program interaction needs: the two
 
 The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer` opens it, and it ends in exactly one of two ways, `take_offer` or `cancel_offer`. Every state needs an exit, and an open offer has two.
 
-![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or cancelled when Alice withdraws, and both exits drain and close the vault.](figures/escrow-state-machine.svg)
+![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits drain and close the vault.](figures/escrow-state-machine.svg)
 
 ### Alice Makes the Offer
 
@@ -100,7 +100,7 @@ The money math that remains is rent. Alice fronts the rent deposits for the offe
 What must hold, before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account. Conservation, the escrow edition.
-- The vault holds exactly `token_a_offered_amount` from the end of `make_offer` until an exit runs, and both exits drain the vault completely before closing it.
+- The vault holds at least `token_a_offered_amount` from the end of `make_offer` until an exit runs (a direct donation could push it above, and changes nothing), and both exits drain the vault completely before closing it.
 - The offer account's data never changes after `handle_save_offer` writes it. There is no update handler, so there is nothing to get wrong.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
 - Rent returns to whoever paid it, on every path.
@@ -108,7 +108,7 @@ What must hold, before and after every handler:
 ## The Failure Modes
 
 - **Reused offer id.** The offer account is created with `init` at an address derived from the maker and the id, so a second `make_offer` with the same id fails at account creation.
-- **Account substitution.** The classic escrow attack is a taker who passes his own account where the maker's payment account should be, or a foreign vault, or a mismatched mint. Every one of these is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, `has_one` binds the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The Validation chapter dissects what happens to programs that skip these checks.
+- **Account substitution.** The classic escrow attack is a taker who passes his own account where the maker's payment account should be, or a foreign vault, or a mismatched mint. Every one of these is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, `has_one` binds the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The Adversary dissects what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer` requires the maker's signature and checks it against the offer's stored maker.
 - **The abandoned offer.** The failure mode that is a missing feature: without `cancel_offer`, an untaken offer strands the maker's tokens permanently. Every state needs an exit.
 - **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks are worth adding to any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same, since a swap of a token for a different amount of itself means someone is about to be ripped off.
@@ -118,7 +118,7 @@ What must hold, before and after every handler:
 The tests live in `tests/test_escrow.rs` and run against LiteSVM, with `solana_kite` helpers creating the wallets, mints, and token accounts. Every piece of program state in the tests is created through the program's own instruction handlers, never injected, so a missing constraint or an unusable handler cannot hide behind a hand-built fixture.
 
 - `test_make_offer` calls `make_offer` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (id, maker) match what Alice sent.
-- `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Symmetric flows get tested in both directions, because a bug that favours one side is invisible if you only assert the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, pinning the rent economics.
+- `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Symmetric flows get tested in both directions, because a bug that favors one side is invisible if you only assert the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, pinning the rent economics.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial branch: Bob attempts to cancel Alice's offer and the transaction fails. Test the branch the bug lives in; the branch where money goes to the wrong person is the one that matters.
 
@@ -128,4 +128,4 @@ The testing section of Financial Programming Concepts in Solana builds the gener
 
 Hold tokens in a program-owned vault whose authority is a data account. Record the deal's terms in that data account. Gate each state transition on who signed and what the stored data says. Drain and close everything on every exit path, returning rent to whoever paid it.
 
-That is the whole pattern, and you will now see it everywhere. The fundraiser in the next chapter is an escrow with many makers and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome. Once you have built an escrow, everything else looks like an escrow.
+That is the whole pattern, and you will now see it everywhere. The fundraiser in the next chapter is an escrow with many depositors and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome. Once you have built an escrow, everything else looks like an escrow.

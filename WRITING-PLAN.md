@@ -7,7 +7,7 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 - The book prints the durable layer. Every code claim is verified against the companion repository before it lands: the skill's "grep before naming" rule, applied to a manuscript.
 - Diagrams are the longest-lived medium. Every chapter budget includes them: account map, state machine, flow.
 - Style is inherited wholesale from the [companion AI skill](https://github.com/quicknode/solana-finance-claude-plugin): onchain and offchain unhyphenated, "instruction handlers" for the functions and "instructions" for their input, "minor unit" not "base unit", one name per role enforced within each chapter, concrete two-asset examples, real handler names in lifecycle prose, persona-driven walkthroughs.
-- Banned phrases, enforced by a lint script over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
+- Banned phrases, enforced by `scripts/lint-manuscript.mjs` (`npm run lint`) over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
 - Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
 - Chapter titles are traditional short names: "Tokens", "Escrow", "The Adversary". Headings *inside* a chapter carry the content, so a reader skimming only the headings learns the chapter's actual claims: "A Mint Is a Factory, and the Mint Authority Is Its Boss", not "Mint Authority"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
 - Plain language. Define things by what they concretely are, not by abstract category: an account is "some data - a Rust struct - with an address", never "the unit of state". If a definition would fit equally well in a book about a different subject, it is too vague. Prefer the short common word to the impressive one.
@@ -42,13 +42,12 @@ The two foundation chapters (Solana Building Blocks; Financial Programming Conce
 
 Each incident is researched from primary sources and placed inside the chapter named here:
 
-- SPL token-lending rounding (about $2.6B at risk): the rounding section of Financial Programming Concepts in Solana
-- Cashio ($52M, unvalidated account chain): the validation section of Financial Programming Concepts in Solana
-- Wormhole ($325M, bypassed signature verification): the validation section of Financial Programming Concepts in Solana
-- First-depositor inflation incidents (the ERC-4626 class): the empty-pool section of Financial Programming Concepts in Solana, and The Constant-Product AMM chapter
-- Mango Markets ($116M): the price-manipulation section of Financial Programming Concepts in Solana
-- The Hundred and Sonne precision drains: the precision-exploits section of Financial Programming Concepts in Solana
-- Crema Finance ($8.8M, tick-account forgery): the validation section or The Constant-Product AMM chapter, decided during drafting
+- SPL token-lending rounding (about $2.6B at risk): the rounding section of The Arithmetic of Money
+- Cashio ($52M, unvalidated account chain): the validation section of The Adversary
+- Wormhole ($325M, bypassed signature verification): the validation section of The Adversary
+- First-depositor inflation incidents (the ERC-4626 class): named incidents are the Hundred and Sonne stories below (their setup is the inflation attack); the empty-pool section of The Adversary teaches the class, and The Constant-Product AMM chapter teaches the locked-minimum defense without an incident box
+- Mango Markets ($116M): the price-manipulation section of The Adversary
+- The Hundred and Sonne precision drains: the precision-exploits section of The Adversary
 
 ## The Visual Language
 

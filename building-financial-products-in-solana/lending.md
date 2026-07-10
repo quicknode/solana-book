@@ -1,6 +1,6 @@
 # Lending and Borrowing
 
-Think about how a bank works. Savers deposit money and earn interest. Borrowers take loans and pay interest. The bank sits in the middle, collecting from the borrowers, paying most of it to the savers, and keeping a slice for itself. The onchain equivalent is a borrow-lend market, usually just called a **lending market**: Solend and Kamino are the ones you know on Solana, and tens of billions of dollars have moved through the category. The program for this chapter lives at `finance/lending`, and it is the biggest machine in the book so far: interest that compounds by the slot, collateral that gets marked to market, and a liquidation engine that keeps the whole thing solvent when prices move.
+Think about how a bank works. Savers deposit money and earn interest. Borrowers take loans and pay interest. The bank sits in the middle, collecting from the borrowers, paying most of it to the savers, and keeping a slice for itself. The onchain equivalent is a borrow-lend market, usually just called a **lending market**: Save, Kamino Lend, and MarginFi are the ones you know on Solana, and tens of billions of dollars have moved through the category. The program for this chapter lives at `finance/lending`, and it is the biggest machine in the book so far: interest that compounds by the slot, collateral that gets marked to market, and a liquidation engine that keeps the whole thing solvent when prices move.
 
 One word needs defusing before anything else. This chapter's market trades stocks like NVDAx and SPCXx, which people colloquially call "shares." **In this chapter, a share is a share of a reserve**: a token minted by the program representing your claim on a pool of deposited assets, including the interest it earns. The stocks are just tokens.
 
@@ -18,7 +18,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 The **lending market** PDA (seeds: `"lending_market"`, a market id) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market ids give independent, risk-isolated pools.
 
-Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are depositors' claims on the vault plus its accrued interest. The reserve tracks `available_liquidity` (the un-borrowed pool, and deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate), `borrowed_amount_scaled`, the `cumulative_borrow_rate_index` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates depositors' exchange rate.
+Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks `available_liquidity` (the un-borrowed pool, and deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate), `borrowed_amount_scaled`, the `cumulative_borrow_rate_index` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate.
 
 Each reserve carries a `ReserveConfig`, all in basis points, and its validation rules are a compressed education in credit risk:
 
@@ -72,9 +72,9 @@ Weeks pass, and the loans accrue interest without a single token moving. The mec
 
 Each reserve stores one number that starts at 1.0 and only grows. On every `refresh_reserve`, the program computes the current borrow rate, multiplies it by the slots elapsed, and grows the index: new index = old index × (1 + rate per slot × elapsed slots). A loan is stored not as an amount but as a *scaled* amount: the amount divided by the index at borrow time. The live debt is always scaled amount × current index, rounded *up*, because debt rounds against the debtor. One multiplication per refresh serves every borrower in the reserve simultaneously; nobody's loan is ever visited individually. The moving of actual tokens is consolidated to the moments people repay or redeem, exactly like the order book's unsettled balances but across time instead of across fills.
 
-The rate itself comes from a **kinked utilization curve**. Utilization is borrowed ÷ (available + borrowed). Below the kink at 80% utilization, the rate climbs gently from 2% toward 20% APR; above it, steeply toward 150%. The kink is the reserve begging for liquidity: when nearly everything is lent out, the rate spikes, which simultaneously pushes borrowers to repay and pulls new depositors in with yield. It is monetary policy in fifteen lines of integer math.
+The rate itself comes from a **kinked utilization curve**. Utilization is borrowed ÷ (available + borrowed). Below the kink at 80% utilization, the rate climbs gently from 2% toward 20% APR; above it, steeply toward 150%. The kink is the reserve begging for liquidity: when nearly everything is lent out, the rate spikes, which simultaneously pushes borrowers to repay and pulls new suppliers in with yield. It is monetary policy in fifteen lines of integer math.
 
-Of the interest that accrues, the reserve factor (10%) is skimmed into `accumulated_protocol_fees`, floored, in the suppliers' favour; the rest belongs to the share holders through the rising share price.
+Of the interest that accrues, the reserve factor (10%) is skimmed into `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 
 ![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the cumulative index compounding across refreshes.](figures/lending-rate-curve.svg)
 
@@ -107,24 +107,24 @@ The scoreboard: Alice +$3.50 for five weeks of idle capital. Bob got his liquidi
 
 ## The Math: Two Rounding Helpers and a Rule
 
-Every number in this program flows through `mul_div_floor` or `mul_div_ceil`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use fits in one sentence: **quantities favourable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is a property, not a vibe: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` proves it by trying.
+Every number in this program flows through `mul_div_floor` or `mul_div_ceil`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use fits in one sentence: **quantities favorable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is a property, not a vibe: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` proves it by trying.
 
 ## The Invariants: Solvency by Construction
 
 - Total liquidity = available + borrowed-with-interest − the house's accumulated fees, and the share supply is a claim on exactly that; the exchange rate cannot be moved by donating tokens to the vault (pinned by `raw_token_donation_does_not_inflate_exchange_rate`).
 - No action may leave an obligation past its allowed borrow value, and every valuation is fresh (same transaction) or refused.
 - Loan-to-value ≤ liquidation threshold in every valid config, so there is always a buffer between the most you can borrow and the point you can be liquidated.
-- The index never decreases, and debt computed from it never rounds in the borrower's favour.
+- The index never decreases, and debt computed from it never rounds in the borrower's favor.
 - Liquidation can only shrink an unhealthy position toward health, by at most the close factor, at exactly the bonus.
 
-## The Failure Modes: Everything Downstream of the Price
+## The Failure Modes: The Liquidation Engine Is Only as Honest as Its Prices
 
 - **A stale or wrong price is the whole ballgame.** Every health check multiplies by the feed. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and gates who may write them, but the deeper lesson stands: the liquidation engine can only be as honest as its prices, and manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of Financial Programming Concepts in Solana dissects Mango Markets).
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
 - **Config foot-guns are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
 - **The donation attack** dies against `available_liquidity` being the source of truth rather than the vault balance.
-- **Self-liquidation** is allowed, deliberately: it is only possible while unhealthy and is economically pointless, matching how Solend and Kamino behave. Not every strange-looking path needs a wall; some just need to not be worth taking.
+- **Self-liquidation** is allowed, deliberately: it is only possible while unhealthy and is economically pointless, matching how Save and Kamino Lend behave. Not every strange-looking path needs a wall; some just need to not be worth taking.
 
 ## The Test That Catches the Bug
 

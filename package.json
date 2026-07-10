@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Manuscript and build tooling for Building Financial Software on Solana",
   "scripts": {
-    "build-pdf": "node scripts/build-pdf.mjs"
+    "build-pdf": "node scripts/build-pdf.mjs",
+    "lint": "node scripts/lint-manuscript.mjs"
   },
   "repository": {
     "type": "git",

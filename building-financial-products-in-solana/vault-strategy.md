@@ -8,7 +8,7 @@ One vocabulary note before the story, because the word is overloaded. On Solana,
 
 ## The Cast: A Gatekeeper, a Manager, and Two Investors
 
-- **Victor runs the registry.** He is not a fund manager; he is the gatekeeper who decides which assets managers may invest in at all, and which price feed is the truth for each.
+- **Victor runs the registry.** He is not a fund manager; he is the gatekeeper who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is worth exactly as much as its reputation for funds not blowing up: vetting feeds is not charity, it is his product.
 - **Maria is the fund manager.** She creates the strategy, sets the weights, rebalances, and earns the fee.
 - **Alice and Bob invest.** They deposit USDC, hold shares, and eventually withdraw.
 
@@ -64,7 +64,7 @@ Bob deposits 480 USDC. He is not early, and the share math prices that in: share
 
 ## Maria's Fee Arrives by Dilution
 
-Traditional funds sell assets to pay the management fee. This program does what Yearn and Lido do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be quietly worsened. The escrow chapter snapshotted a fee per offer; the same principle, at fund scale.
+Traditional funds sell assets to pay the management fee. This program does what large onchain fund products do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be quietly worsened. The escrow chapter snapshotted a fee per offer; the same principle, at fund scale.
 
 ![Fee by dilution: the share supply grows by 13.5 shares into Maria's account, every other holder's slice of the same pie shrinks proportionally, and no tokens leave any vault.](figures/vault-fee-dilution.svg)
 
@@ -72,7 +72,7 @@ Traditional funds sell assets to pay the management fee. This program does what 
 
 Alice takes profit with `withdraw`, burning her 900 shares. The program does not sell anything to pay her: it hands her **her proportional slice of every vault, in kind**: her share of the USDC vault, of the TSLAx vault (about 1.5), of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
 
-She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. And Victor earned nothing, risked nothing, and made all of it safe.
+She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. And Victor took no fee on any of it; what he earned is the only thing his platform sells, a track record of funds that cannot be rugged.
 
 ![In-kind withdrawal: Alice's 900 shares are burned first, then proportional slices of the USDC, TSLAx, and NVDAx vaults flow to her accounts.](figures/vault-withdraw-in-kind.svg)
 

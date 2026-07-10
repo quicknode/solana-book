@@ -8,7 +8,7 @@ A warning about most AMM explanations: they use two toy tokens, no admin fees, n
 
 ## X Times Y Equals K, and What K Is Actually For
 
-The pool holds two tokens. Call the amount of the first one **X** (here, a new token called ACME) and the amount of the second **Y** (USDC, because you quote in the stable asset). **K is just X times Y.** Its only job is to hold X and Y in relation to each other during a trade: a buyer who adds USDC to the pool gets exactly the amount of ACME that keeps the product steady at K. Rearranged, that is the whole pricing engine:
+The pool holds two tokens. Call the amount of the first one **X** (here, ACME, the freshly listed stock of a robotics startup) and the amount of the second **Y** (USDC, because you quote in the stable asset). **K is just X times Y.** Its only job is to hold X and Y in relation to each other during a trade: a buyer who adds USDC to the pool gets exactly the amount of ACME that keeps the product steady at K. Rearranged, that is the whole pricing engine:
 
 output = taxed_input × other_reserve ÷ (this_reserve + taxed_input)
 
@@ -20,7 +20,7 @@ And the truth about K: **K is constant within a single trade and grows over time
 
 ## The Cast: An Operator, Two LPs, and Two Traders
 
-**Maria operates the AMM** and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. **Alice works at ACME**, holds a token grant, and becomes the second liquidity provider. **Bob and Carol trade**: Bob is early and bullish, Carol shows up after the price has moved.
+**Maria operates the AMM** and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. **Alice works at ACME**, holds a token grant, and becomes the second liquidity provider. **Bob and Carol trade**: Bob is early and bullish; Carol has watched the launch all morning and wants in even though the price has already moved.
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
@@ -36,13 +36,13 @@ The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool co
 
 ## Maria Creates the Venue and Prices the Launch
 
-Maria runs `create_config` with a fee of 30 basis points and an admin share of 1,667 basis points, one sixth of each fee, the classic Uniswap-style split. Then `create_pool` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
+Maria runs `create_config` with a fee of 30 basis points and an admin share of 1,667 basis points, approximately one sixth of each fee, the classic Uniswap-style split. Then `create_pool` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $140, so she runs `deposit_liquidity` with 1,000 ACME and 140,000 USDC. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 1,000, Y = 140,000, K = 140 million.
 
-Her LP tokens come from a formula this book has been promising since the arithmetic chapter: the **integer square root of X times Y**, computed by `integer_sqrt`, a hand-rolled Newton's method loop on u128, floored. The square root of 140 million is about 11,832, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`, a floor of 100 LP tokens that is **never minted to anyone**. It is not sent to a burn address (Uniswap V2's trick); it simply never exists as supply, while the reserves it represents stay in the pool. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
+Her LP tokens come from a formula this book has been promising since the arithmetic chapter: the **integer square root of X times Y**, computed by `integer_sqrt`, a hand-rolled Newton's method loop on u128, floored. The square root of 140 million is about 11,832, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`, a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address (Uniswap V2's trick); it simply never exists as supply, while the reserves it represents stay in the pool. Its power has nothing to do with its value, which is a fraction of a cent; it comes from always sitting in the divisor. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
-![Maria's initial deposit: 1,000 ACME and 140,000 USDC enter the vaults, and the square root of their product, about 11,832 LP tokens, goes to Maria minus the 100-token MINIMUM_LIQUIDITY floor, which is locked and minted to nobody.](figures/amm-first-deposit.svg)
+![Maria's initial deposit: 1,000 ACME and 140,000 USDC enter the vaults, and the square root of their product, about 11,832 LP tokens, goes to Maria minus the tiny locked MINIMUM_LIQUIDITY floor, 100 minor units of supply minted to nobody.](figures/amm-first-deposit.svg)
 
 ## Alice Adds Liquidity Without Moving the Price
 
@@ -54,7 +54,7 @@ X is now 1,200, Y is 168,000, K is 201.6 million. The price is still exactly $14
 
 Bob runs `swap_tokens` to spend 14,000 USDC on ACME, with a `min_output_amount` as his slippage guard. Three things happen in strict order.
 
-**The fee comes off the top.** 30 basis points of 14,000 is $42. One sixth of that, $7, accrues to `admin_fees_owed_b` as Maria's virtual claim; the other $35 simply stays in the pool, where it fattens the reserves that back every LP token. Bob's taxed input is 13,958.
+**The fee comes off the top.** 30 basis points of 14,000 is $42. The admin share, about $7 (1,667 basis points of it, floored in minor units), accrues to `admin_fees_owed_b` as Maria's virtual claim; the remaining $35 or so simply stays in the pool, where it fattens the reserves that back every LP token. Bob's taxed input is 13,958.
 
 **The curve prices the trade.** Y rises to 181,958, and X must fall to K ÷ Y ≈ 1,107.9. Bob receives about 92 ACME. Notice he paid an *average* of about $152 per token while the quoted price before his trade was $140 and the spot price after it is about $164: his own trade moved along the curve as it executed. Every AMM trade pays its own price impact.
 
@@ -62,15 +62,15 @@ Bob runs `swap_tokens` to spend 14,000 USDC on ACME, with a `min_output_amount` 
 
 K is now about 201.64 million. It grew mid-trade, from the $35 of LP fees. That is K's second way of growing, the one the toy explanations lie about.
 
-![Bob's swap: 14,000 USDC comes in, the $42 fee splits into Maria's $7 virtual claim and the LPs' $35 that stays in the vault, the 13,958 taxed input is priced by the curve, and about 92 ACME goes out as the spot price slides from $140 to $164.](figures/amm-bob-swap.svg)
+![Bob's swap: 14,000 USDC comes in, the $42 fee splits into Maria's roughly $7 virtual claim and the LPs' roughly $35 that stays in the vault, the 13,958 taxed input is priced by the curve, and about 92 ACME goes out as the spot price slides from $140 to $164.](figures/amm-bob-swap.svg)
 
 ## Carol Pays the Price Bob Made
 
-Carol arrives late and buys $7,000 of ACME: $21 of fees ($3.50 admin, $17.50 LPs), 6,979 taxed input, and the same arithmetic hands her about 40 ACME at an average near $171. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
+Carol arrives late and buys $7,000 of ACME: $21 of fees (about $3.50 admin, about $17.50 LPs), 6,979 taxed input, and the same arithmetic hands her about 41 ACME at an average near $171. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
 
 ## Bob Takes Profit, Paying Fees in ACME
 
-Bob sells 40 of his 92 ACME. A sell is the same instruction with `input_is_token_a` flipped: now the fee comes off his ACME input (0.12 ACME, of which 0.02 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 6,800 USDC to Bob, an average near $170 against the $152 he paid. The spot price drops back to about $152. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
+Bob sells 40 of his 92 ACME. A sell is the same instruction with `input_is_token_a` flipped: now the fee comes off his ACME input (0.12 ACME, of which 0.02 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 6,800 USDC to Bob, an average near $170 against the $152 he paid. The spot price eases back to about $165. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
 
 ## Maria Sweeps the Admin Fees
 
@@ -80,7 +80,7 @@ Whenever she likes, Maria runs `claim_admin_fees`. It zeroes both owed counters 
 
 Alice wants her capital back. `withdraw_liquidity` burns her LP tokens and pays her a pro-rata slice of both effective reserves, with one adjustment: the divisor is the LP supply *plus* `MINIMUM_LIQUIDITY`, because the locked floor is backed by reserves but absent from the supply counter, and forgetting it would overpay every withdrawer.
 
-Alice does not get back what she deposited. She deposited 200 ACME and 28,000 USDC; the pool's mix has shifted since, so her slice is about 184 ACME and 30,300 USDC. Valued at the current price, that is roughly $187 *less* than if she had simply held her original tokens in her wallet.
+Alice does not get back what she deposited. She deposited 200 ACME and 28,000 USDC; the pool's mix has shifted since, so her slice is about 184 ACME and 30,360 USDC. Valued at the current price, that is roughly $187 *less* than if she had simply held her original tokens in her wallet.
 
 That gap is **impermanent loss**, and it is the honest price of being an LP. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP is a bet on trading volume, not on price direction**: if accumulated fees outrun the divergence, LPing wins; if the price runs hard in one direction on thin volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $140, the loss would have evaporated. Nobody should provide liquidity without being able to draw this diagram.
 
@@ -88,19 +88,19 @@ That gap is **impermanent loss**, and it is the honest price of being an LP. A c
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 
-Every formula in this program rounds the same direction: **down, in the pool's favour**. Swap output is floored, LP minting is floored, withdrawal amounts are floored; the dust stays in the reserves, where it accrues to all LPs rather than leaking to whoever transacts most often. Every multiplication runs in u128 before its division (multiply before divide), and every step is `checked_*` with `MathOverflow` waiting on failure. The one exotic operation, the initial deposit's square root, is eleven lines of Newton's method on integers, floored like everything else. The arithmetic sections of Financial Programming Concepts in Solana are these paragraphs, generalized; this program is where every one of those rules shows up in the same file.
+Every division in this program floors. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor** (the one floor that favors the trader is the fee itself, clipped by at most one minor unit); the dust stays in the reserves, where it accrues to all LPs rather than leaking to whoever transacts most often. Every multiplication runs in u128 before its division (multiply before divide), and every step is `checked_*` with `MathOverflow` waiting on failure. The one exotic operation, the initial deposit's square root, is eleven lines of Newton's method on integers, floored like everything else. The arithmetic sections of Financial Programming Concepts in Solana are these paragraphs, generalized; this program is where every one of those rules shows up in the same file.
 
 ## The Invariants: K Must Not Decrease
 
 - After every swap, effective X times effective Y is at least what it was before, enforced onchain, after the transfers, not assumed from the algebra.
 - The admin's owed fees never participate in pricing, LP minting, or withdrawal: all LP-facing math uses effective reserves.
-- LP tokens are a fixed-share claim: mint pro rata on the way in, burn pro rata on the way out, with the locked floor consistently accounted on both paths.
+- LP tokens are a fixed-share claim: mint pro rata on the way in, burn pro rata on the way out, with the locked floor added back to the divisor on the way out, the one place forgetting it would overpay.
 - The pool never prices against an empty side (see below).
 
 ## The Failure Modes: Empty Pools, First Deposits, and the Vacuous Invariant
 
 - **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other), and here is the vicious part: the invariant check would not catch it, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A guard requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs. An invariant that can go vacuously true is not an invariant.
-- **The inflation attack.** The empty-pool attack from Financial Programming Concepts in Solana, in its native habitat: a first depositor minting dust-level LP supply, donating tokens to skew the share price, and rounding later depositors down to zero. The `MINIMUM_LIQUIDITY` floor makes the attack uneconomic by forcing the first 100 LP tokens' worth of value to be unownable forever.
+- **The inflation attack.** The empty-pool attack from Financial Programming Concepts in Solana, in its native habitat: a first depositor minting dust-level LP supply, donating tokens to skew the share price, and rounding later depositors down to zero. The `MINIMUM_LIQUIDITY` floor makes the attack uneconomic: because the locked units always sit in the supply, share supply can never be dust-sized relative to the pool, and inflating the value behind each share means inflating the value behind units the attacker can never own.
 - **The first deposit sets the price, and anyone can be first.** The program's own source is candid that pool creation can be front-run with a bad ratio. The floor bounds the share-math games, but a launch operator should still expect arbitrage traffic (or hostile seeding) until the pool's price matches the market's, and seed with size. An honest limitation, stated as one.
 - **Slippage and sandwiches.** Every trade and deposit carries a caller-supplied minimum (`min_output_amount`, `minimum_lp_tokens_out`, the withdrawal minimums), and the tests prove each one rejects (`SlippageExceeded`, `DepositBelowMinimum`, `WithdrawalBelowMinimum`). What the program cannot do is choose the number for you; a zero minimum is legal and is exactly what a sandwich attacker hopes you send.
 - **Liquidity fragmentation.** Canonical mint ordering, one pool per pair, by construction.

@@ -249,7 +249,16 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
   <ol>${printedToc}</ol>
 </nav>
 ${body}
+<script>window.PagedConfig = { auto: false };</script>
 <script>${pagedPolyfill}</script>
+<script>
+// Pagination must not start until the embedded fonts have loaded: text
+// measured against fallback fonts paginates differently, which made page
+// counts vary from build to build.
+document.fonts.ready
+  .then(() => window.PagedPolyfill.preview())
+  .then(() => { window.__pagedRendered = true; });
+</script>
 </body>
 </html>`;
 
@@ -260,10 +269,7 @@ const page = await browser.newPage();
 page.on("pageerror", (error) => console.error("page error:", error.message));
 await page.goto(pathToFileURL(htmlPath).href);
 // Paged.js re-lays-out the document into pages; wait for it to finish.
-await page.waitForSelector(".pagedjs_pages", { timeout: 120000 });
-await page.waitForFunction(() => window.PagedPolyfill !== undefined, { timeout: 120000 });
-await page.waitForLoadState("networkidle");
-await page.waitForTimeout(2000);
+await page.waitForFunction(() => window.__pagedRendered === true, { timeout: 180000 });
 
 // Fill the printed table of contents with real page numbers, read from the
 // laid-out pages.

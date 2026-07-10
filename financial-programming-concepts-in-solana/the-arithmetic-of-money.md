@@ -8,7 +8,7 @@ Every validator that executes your program must compute exactly the same result,
 
 So the rule is absolute: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that smuggles them in. When a calculation needs fractions, scale integers up instead (see fixed point, below). When it needs a square root or an exponential, compute it with integer iteration (see the AMM and interest sections). The program chapters contain not one float between them, and yours should not either.
 
-## Minor Units, Lots, and Fixed-Point Scale
+## Every Amount Is an Integer at a Declared Scale
 
 Programs calculate in **minor units**, the smallest denomination of each token: the raw integer the token program actually moves. The **decimals** declared on each mint say how many minor units make one **major unit**: USDC has 6, so $10 is 10,000,000; TSLAx (Tesla stock) has 8, so a tenth of a share is also 10,000,000. Identical integers, entirely different meanings. Three rules keep them straight:
 
@@ -30,11 +30,11 @@ Some formulas need more than the four operations. The classic is the AMM's initi
 
 ## Rounding Is a Policy Decision
 
-Every integer division rounds, so every division is a decision about who gets the remainder. Make it deliberately, in one direction: **against the user, in favour of the program.** Floor what the program pays out (withdrawals, winnings, swap outputs, shares minted). Ceil what the user owes (debt, fees). The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
+Every integer division rounds, so every division is a decision about who gets the remainder. Make it deliberately, in one direction: **against the user, in favor of the program.** Floor what the program pays out (withdrawals, winnings, swap outputs, shares minted). Ceil what the user owes (debt, fees). The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
 
-This is not stinginess; it is the only stable policy. One minor unit of rounding in the user's favour is invisible in a test and industrial at scale: an attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of The Adversary shows exactly that attack succeeding in production.
+This is not stinginess; it is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale: an attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of The Adversary shows exactly that attack succeeding in production.
 
-> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favour half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favourable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is not a detail, it is a security boundary, and "closest" is never the answer for money.
+> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is not a detail, it is a security boundary, and "closest" is never the answer for money.
 
 Two corollaries. First, round *once*: floor a value once at the end, not at every intermediate step, or errors compound (this is multiply-before-divide again). Second, when health and safety checks are involved, round so the check is conservative: a lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better.
 
@@ -50,7 +50,7 @@ The discipline that makes invariants worth having: **assert after the math, not 
 
 One warning from the same file: an invariant that can hold vacuously is not an invariant. `new_k >= old_k` passes trivially when `old_k` is zero, which is why the empty pool needs its own explicit guard. Know the degenerate values of every property you assert.
 
-## Interest and Growth Over Time
+## One Index Compounds Interest for Every Borrower at Once
 
 Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **cumulative index**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New index = old index × (1 + rate per slot × elapsed slots). A debt is stored divided by the index at borrow time, and its live value is that scaled figure times the current index. One multiplication serves every borrower simultaneously, interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The Lending chapter runs this machine in production; the same shape prices any share of a growing pool.
 

@@ -1,6 +1,6 @@
 # Rent
 
-Storage is paid for. Every account holds a lamport deposit proportional to its size, called **rent**; hold enough and the account is **rent-exempt** and lives forever. The deposit is not a fee: close the account and the lamports come back.
+Storage is paid for. Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. The deposit is not a fee: close the account and the lamports come back.
 
 For financial software, rent is small but real money with a lifecycle, and the design questions are always the same:
 
