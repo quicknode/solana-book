@@ -12,7 +12,7 @@ Two consequences follow immediately, and both are absences. A trade's unit price
 
 ## The Cast: A Firm and Two Traders
 
-**Maria runs the market-making firm** that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. **Alice and Bob trade** NVDAx, the tokenized NVIDIA stock from the perpetual futures chapter, against USDC. The oracle quotes NVDAx at $165.
+**Maria runs the market-making firm** that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. **Alice and Bob trade** NVDAx, the tokenized NVIDIA stock the order book chapter traded, against USDC; Bob holds 5 NVDAx alongside his standard wallet. The oracle quotes NVDAx at $165.
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
@@ -26,21 +26,21 @@ What is missing is the chapter's real lesson. No LP mint: there are no depositor
 
 Maria calls `initialize_market` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
-Then `deposit_inventory` moves 1,000 NVDAx and 200,000 USDC of the firm's own tokens into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
+Then `deposit_inventory` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
 
 ## Alice Buys at the Ask
 
 ![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
 
-Alice wants 10 NVDAx. She calls `swap` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 1,651.65 USDC buys exactly 10 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
+Alice wants 5 NVDAx. She calls `swap` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
-Had Alice bought 500 NVDAx instead, she would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $152 on a $140 quote for moving the pool; Alice pays the quote.
+Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
 ## Bob Sells at the Bid, and the Round Trip Is the Fee
 
-Bob sells 10 NVDAx: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 1,648.35 USDC.
+Bob sells his 5 NVDAx: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 824.175 USDC.
 
-Look at the two numbers together. Buying 10 NVDAx cost 1,651.65; selling them back returned 1,648.35. The difference, 3.30 USDC, is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
+Look at the two numbers together. Buying 5 NVDAx cost 825.825; selling them back returned 824.175. The difference, 1.65 USDC, is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
 ## The Oracle Moves and the Quote Moves With It
 
@@ -82,7 +82,7 @@ The unit conversion deserves one honest sentence: prices arrive at the oracle's 
 
 ## The Test That Catches the Bug
 
-The suite (`tests/test_prop_amm.rs`, LiteSVM plus solana_kite) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 3.30 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the property that defines the genre: the capital is Maria's, and the market fails safe without it.
+The suite (`tests/test_prop_amm.rs`, LiteSVM plus solana_kite) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the property that defines the genre: the capital is Maria's, and the market fails safe without it.
 
 ## The Book, Without the Book
 

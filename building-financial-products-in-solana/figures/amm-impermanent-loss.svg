@@ -14,14 +14,14 @@
   <text x="612" y="352" font-size="13" font-weight="bold" text-anchor="end">ACME price</text>
   <!-- just holding: a straight line -->
   <line x1="80" y1="279" x2="600" y2="76" stroke="#111" stroke-width="1.6"/>
-  <text x="598" y="60" font-size="12" font-weight="bold" text-anchor="end">just holding 200 ACME + 28,000 USDC</text>
+  <text x="598" y="60" font-size="12" font-weight="bold" text-anchor="end">just holding 100 ACME + 225 USDC</text>
   <!-- LP position: tangent below the line everywhere else -->
   <path d="M 80,296 C 115,275 149,258 184,242 C 219,226 253,212 288,198 C 323,184 357,172 392,160 C 427,148 461,136 496,125 C 531,114 565,104 600,94" fill="none" stroke="#111" stroke-width="2.2"/>
   <text x="96" y="320" font-size="12" font-weight="bold">LP position</text>
   <!-- deposit price: the touching point -->
   <line x1="288" y1="204" x2="288" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
   <circle cx="288" cy="198" r="5" fill="#111"/>
-  <text x="288" y="348" font-size="12" font-weight="bold" text-anchor="middle">$140 deposit</text>
+  <text x="288" y="348" font-size="12" font-weight="bold" text-anchor="middle">$2.25 deposit</text>
   <text x="230" y="148" font-size="11" font-style="italic" fill="#444" text-anchor="middle">touches only at the deposit price</text>
   <!-- fee band label -->
   <text x="105" y="182" font-size="11" font-style="italic" fill="#444">fees offset the gap</text>
@@ -29,6 +29,6 @@
   <!-- Alice's withdrawal -->
   <circle cx="319" cy="186" r="4" fill="#111"/>
   <path d="M 346,232 L 325,193" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="350" y="238" font-size="10.5" font-style="italic" fill="#444">at withdrawal (spot &#8776; $152):</text>
-  <text x="350" y="253" font-size="10.5" font-style="italic" fill="#444">&#8776; $187 behind just holding</text>
+  <text x="350" y="238" font-size="10.5" font-style="italic" fill="#444">at withdrawal (spot &#8776; $2.64):</text>
+  <text x="350" y="253" font-size="10.5" font-style="italic" fill="#444">&#8776; $1.50 behind just holding</text>
 </svg>

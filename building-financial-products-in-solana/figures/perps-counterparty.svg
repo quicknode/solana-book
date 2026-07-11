@@ -10,9 +10,9 @@
   <circle cx="80" cy="110" r="15" fill="none" stroke="#111" stroke-width="1.5"/>
   <path d="M 57,150 Q 80,128 103,150" fill="none" stroke="#111" stroke-width="1.5"/>
   <text x="80" y="168" font-size="12" font-weight="bold" text-anchor="middle">Carol</text>
-  <text x="80" y="183" font-size="10" fill="#444" font-style="italic" text-anchor="middle">liquidity provider</text>
+  <text x="80" y="183" font-size="10" fill="#444" font-style="italic" text-anchor="middle">first of twelve LPs</text>
   <path d="M 108,118 L 236,124" stroke="#111" stroke-width="1.8" marker-end="url(#perps-cp-arr)"/>
-  <text x="170" y="110" font-size="10.5" text-anchor="middle">100,000 USDC in</text>
+  <text x="170" y="110" font-size="10.5" text-anchor="middle">1,000 USDC in</text>
   <path d="M 236,146 L 108,140" stroke="#111" stroke-width="1.4" marker-end="url(#perps-cp-arr)"/>
   <text x="170" y="160" font-size="10" fill="#444" text-anchor="middle">LP shares, priced at</text>
   <text x="170" y="173" font-size="10" fill="#444" text-anchor="middle">marked AUM</text>

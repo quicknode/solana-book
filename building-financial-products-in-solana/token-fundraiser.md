@@ -1,6 +1,6 @@
 # Token Fundraiser
 
-Maria has designed a compact commercial espresso machine, and the factory quoted 30,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 20,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
+Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
 The program lives at `finance/token-fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: five instruction handlers, two account types, and one vault. Read it as the escrow chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. Same custody machinery, one new ingredient: a **deadline**.
 
@@ -14,9 +14,9 @@ This is the state machine discipline from Financial Programming Concepts in Sola
 
 ## The Cast: One Maker, Ten Contributors
 
-**Maria is the maker.** The program calls the fundraiser's creator the `maker`, and her incentive is the point of the whole exercise: she gets her production run funded, and she gets it all-or-nothing, because 12,000 USDC of a 30,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs her own raise, and the only costs anyone pays are rent deposits on the accounts.
+**Maria is the maker.** The program calls the fundraiser's creator the `maker`, and her incentive is the point of the whole exercise: she gets her production run funded, and she gets it all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs her own raise, and the only costs anyone pays are rent deposits on the accounts.
 
-**Alice, Bob, Carol, and seven others contribute.** Alice runs three cafes and wants Maria's machine on her counters: she is in for the maximum. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
+**Alice, Bob, Carol, and seven others contribute.** Each starts with the standard wallet, one SOL and 1,000 USDC. Alice runs three cafes and wants Maria's machine on her counters: she is in for the maximum. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
@@ -25,7 +25,7 @@ This is the state machine discipline from Financial Programming Concepts in Sola
 The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the entire terms sheet:
 
 - `maker` and `mint_to_raise`: who is raising, and in what token (USDC here; the program accepts any mint, including Token Extensions mints, because every account is declared through the token interface).
-- `amount_to_raise`: the target, 30,000 USDC in minor units. `initialize` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
+- `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
 - `current_amount`: the running total the program itself has counted. Keep an eye on this field; the chapter's sharpest lesson lives in it.
 - `time_started` and `duration`: the clock's unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
 
@@ -35,25 +35,25 @@ Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, th
 
 ## Maria Opens a Seven-Day Window
 
-Maria calls `initialize` with a target of 30,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
+Maria calls `initialize` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
 
 The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. The Time chapter's warning applies: with day-granularity math, the window ends at the first tick of day seven, not at some intuitive "end of the seventh day". `contribute` requires the floored day count to be *less than* the duration; `refund` requires it to be *at least* the duration. The same expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the elapsed-day count reaches 7, contributions turn off and refunds turn on, atomically, by arithmetic.
 
 ## Nobody May Carry More Than a Tenth of the Raise
 
-Alice comes in hot and tries to contribute 4,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution`, is 10% of the target: 3,000 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, the same multiply-before-divide discipline as every other chapter.
+Alice comes in hot and tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, the same multiply-before-divide discipline as every other chapter.
 
-The cap is not just per call. Carol contributes 1,500 USDC, then comes back the next day with 1,500 more, and her contributor account's running total lands exactly on the 3,000 cap; a third contribution would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
+The cap is not just per call. Carol contributes 450 USDC, then comes back the next day with 450 more, and her contributor account's running total lands exactly on the 900 cap; a third contribution would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
 
 Sit with the arithmetic consequence for a second: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That is a design statement about what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. It also blunts the obvious manipulation: a single whale filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
-So the money arrives like this: Alice 3,000, Bob 3,000, Carol 1,500 and 1,500, and seven other backers at 3,000 each. Each `contribute` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 30,000 USDC.
+So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and seven other backers at 900 each. Each `contribute` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
 
-![Ten contributors, none above 3,000 USDC: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
+![Ten contributors, none above 900 USDC: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
 
 ## The Counter Is the Truth; the Vault Is Just Custody
 
-Here is the field to watch. The claim handler's one gate compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. The distinction sounds pedantic until you remember that anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, a helpful idiot, or Maria herself, could top the vault up with 18,000 USDC of outside money on day six, "reach" the target, and unlock a claim the contributors never funded to that level. Because the gate reads the counter, a direct donation to the vault changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and then watches the claim fail anyway.
+Here is the field to watch. The claim handler's one gate compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. The distinction sounds pedantic until you remember that anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, a helpful idiot, or Maria herself, could top the vault up with 5,400 USDC of outside money on day six, "reach" the target, and unlock a claim the contributors never funded to that level. Because the gate reads the counter, a direct donation to the vault changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and then watches the claim fail anyway.
 
 The Constant-Product AMM chapter will fight the same battle over pool pricing, and the rule generalizes to every gate you will ever write: **balances are custody, state is truth**. Any check that *unlocks money* by reading a balance someone else can inflate is an invitation.
 
@@ -69,7 +69,7 @@ One loose end survives success, and it is worth being honest about because you w
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Run the alternative. Day seven arrives with only 12,000 USDC in the counter. Nothing announces the failure; the deadline arithmetic simply flips which handler works. Alice calls `refund`: the handler checks the deadline has passed (`FundraiserNotEnded` otherwise), checks the target was missed (`TargetMet` otherwise), reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Run the alternative. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure; the deadline arithmetic simply flips which handler works. Alice calls `refund`: the handler checks the deadline has passed (`FundraiserNotEnded` otherwise), checks the target was missed (`TargetMet` otherwise), reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 Note the order inside that handler, because it is the checks-effects-interactions pattern doing real work: the receipt is zeroed and the counter decremented *before* the token transfer, and the account close makes a second refund impossible because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and by now you should expect it anywhere money exits.
 

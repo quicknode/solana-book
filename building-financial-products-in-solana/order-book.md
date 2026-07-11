@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 **Maria runs the exchange.** She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match, so it is borne by whichever side of the fill receives the quote token.
 
-**Alice, Bob, and Carol trade on it.** The market's pair is NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
+**Alice, Bob, and Carol trade on it**, each starting with the standard wallet: one SOL, 1,000 USDC, and (for the two sellers) some NVDAx. The market's pair is NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
 ## The Account Model: A Market, Its Book, and a Ledger of Who Is Owed What
 
@@ -67,9 +67,9 @@ The book's ask side is empty and no bid reaches 265, so there is nothing to matc
 
 ![Alice's ten shares flow into the base vault, and her ask becomes the only leaf in the ask tree at price 265.](figures/order-book-alice-ask.svg)
 
-## Bob Bids: Five Shares at 250
+## Bob Bids: Four Shares at 250
 
-Bob wants in, but he is not prepared to pay more than 250. He calls `place_order` with side `Bid`, price 250, quantity five. The handler locks 5 × 250 = 1,250 USDC from his token account into the quote vault. The best ask is Alice's 265, and Bob's limit refuses to cross it, so his bid rests too. The book now has a spread: bid 250, ask 265.
+Bob wants in, but he is not prepared to pay more than 250. He calls `place_order` with side `Bid`, price 250, quantity four. The handler locks 4 × 250 = 1,000 USDC from his token account into the quote vault: every dollar he has, committed the moment the order rests. The best ask is Alice's 265, and Bob's limit refuses to cross it, so his bid rests too. The book now has a spread: bid 250, ask 265.
 
 ![The book after two orders: Alice's ask at 265 and Bob's bid at 250, with the spread between them.](figures/order-book-resting-spread.svg)
 
@@ -83,7 +83,7 @@ The fill executes at **the resting order's posted price**: 250, not Carol's 245.
 
 One Solana-specific mechanic makes this work: the program cannot load arbitrary accounts mid-instruction, so Carol's transaction must carry the accounts of the makers she will match with, passed as pairs of (order account, market user account) in the order the book would walk them. The program does not trust that list. It plans fills from its own tree, then verifies each supplied pair against the plan: the order ids must match, the accounts must belong to this market, and each maker order's owner must match its market user. A wrong or missing account fails the transaction with `MakerAccountMismatch`, `MakerOwnerMismatch`, or `MissingMakerAccounts`.
 
-Now the money moves, in the unsettled-balance style. Gross proceeds are 3 × 250 = 750 USDC. Maria's fee is 25 basis points of that: 1.875 USDC, computed with ceiling division so any rounding goes to the market rather than leaking value one minor unit per fill (the fee section below returns to this). Carol's `unsettled_quote` is credited with the net 748.125 USDC. Bob's `unsettled_base` is credited with three shares. The fee moves from the quote vault to the fee vault in a single program-signed transfer at the end, aggregated across all fills in the order. Bob's order account is stamped PartiallyFilled with three of five filled, and the leaf in the bid tree has its remaining quantity reduced to two in place. Carol's order account is stamped Filled; nothing of hers rests.
+Now the money moves, in the unsettled-balance style. Gross proceeds are 3 × 250 = 750 USDC. Maria's fee is 25 basis points of that: 1.875 USDC, computed with ceiling division so any rounding goes to the market rather than leaking value one minor unit per fill (the fee section below returns to this). Carol's `unsettled_quote` is credited with the net 748.125 USDC. Bob's `unsettled_base` is credited with three shares. The fee moves from the quote vault to the fee vault in a single program-signed transfer at the end, aggregated across all fills in the order. Bob's order account is stamped PartiallyFilled with three of four filled, and the leaf in the bid tree has its remaining quantity reduced to one in place. Carol's order account is stamped Filled; nothing of hers rests.
 
 ![The match: Carol's incoming ask meets Bob's resting bid and fills at 250, crediting 748.125 USDC to Carol's unsettled quote and 3 shares to Bob's unsettled base, while 1.875 USDC flows from the quote vault to the fee vault.](figures/order-book-match.svg)
 
@@ -91,15 +91,15 @@ Notice who did nothing: Bob. Like Alice in the escrow chapter, a maker signs onc
 
 ## Bob Cancels the Rest of His Order
 
-Bob decides three shares is enough. He calls `cancel_order` on his order account. The handler checks the signer is the order's owner, and that the status is still Open or PartiallyFilled; a Filled or already-Cancelled order rejects with `OrderNotCancellable`. His remaining two shares at 250 mean 500 USDC of his original lock is still sitting in the quote vault, so his `unsettled_quote` is credited 500, using the same price-times-remaining formula that locked it. The leaf comes out of the bid tree, the order id leaves his open-order list, and the order account is stamped Cancelled, closing out its little state machine. Every state has an exit.
+Bob decides three shares is enough. He calls `cancel_order` on his order account. The handler checks the signer is the order's owner, and that the status is still Open or PartiallyFilled; a Filled or already-Cancelled order rejects with `OrderNotCancellable`. His remaining share at 250 means 250 USDC of his original lock is still sitting in the quote vault, so his `unsettled_quote` is credited 250, using the same price-times-remaining formula that locked it. The leaf comes out of the bid tree, the order id leaves his open-order list, and the order account is stamped Cancelled, closing out its little state machine. Every state has an exit.
 
 ![An order's state machine: fills walk it from Open through PartiallyFilled to Filled, cancel_order exits from either live state, and both terminal states refuse further transitions.](figures/order-book-state-machine.svg)
 
-![Bob's cancel: his leaf comes out of the bid tree, and the 500 USDC still locked for it moves to his unsettled quote balance.](figures/order-book-cancel.svg)
+![Bob's cancel: his leaf comes out of the bid tree, and the 250 USDC still locked for it moves to his unsettled quote balance.](figures/order-book-cancel.svg)
 
 ## Bob and Carol Settle Their Funds
 
-Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 500 USDC refund; Carol receives her 748.125 USDC.
+Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
 The handler contains one line of discipline worth copying into everything you build: it snapshots the unsettled amounts and **zeroes the counters before making the transfers**. If a token transfer could ever call back into this program (token extensions can attach hooks to transfers), a caller re-entering mid-transfer would find balances already zeroed instead of still-credited, making double-withdrawal structurally impossible. The pattern is called checks-effects-interactions, and The Adversary treats it fully.
 

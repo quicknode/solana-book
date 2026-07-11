@@ -10,7 +10,7 @@
   <rect x="230" y="104" width="180" height="96" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
   <text x="320" y="124" font-size="12" font-weight="bold" text-anchor="middle">Fundraiser (PDA)</text>
   <text x="240" y="141" font-size="10">seeds: "fundraiser" + maker</text>
-  <text x="240" y="157" font-size="10">amount_to_raise: 30,000</text>
+  <text x="240" y="157" font-size="10">amount_to_raise: 9,000</text>
   <text x="240" y="172" font-size="10">current_amount, duration: 7 days</text>
   <text x="240" y="187" font-size="10">time_started (cluster clock)</text>
   <path d="M 112,68 C 160,80 200,80 226,80" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#fund-map-arr)"/>

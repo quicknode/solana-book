@@ -10,7 +10,7 @@
   <text x="487" y="123" font-size="10" font-style="italic" fill="#444">bid 250 / ask 265</text>
   <!-- the bid side -->
   <rect x="200" y="150" width="250" height="34" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="325" y="171" font-size="11.5" text-anchor="middle"><tspan font-weight="bold">Bob&#8217;s bid:</tspan> 5 shares @ 250</text>
+  <text x="325" y="171" font-size="11.5" text-anchor="middle"><tspan font-weight="bold">Bob&#8217;s bid:</tspan> 4 shares @ 250</text>
   <text x="185" y="166" font-size="11" font-weight="bold" text-anchor="end">bids</text>
   <text x="185" y="180" font-size="10" font-style="italic" fill="#444" text-anchor="end">highest first</text>
   <text x="320" y="218" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">neither limit reaches across the gap, so both orders rest</text>

@@ -16,7 +16,7 @@ The consequence the chapter's story will make concrete: **parimutuel markets rew
 
 **Maria is the admin.** Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel. Her revenue is a 2% fee, charged only on the losing pool.
 
-**Alice, Bob, and Carol bet.** The event is "top-grossing film this month" with two outcomes: *Toy Story 5* and *Backrooms*. Alice is confident about school holidays and puts $300 on Toy Story 5. Bob agrees but has less to spend: $100 on Toy Story 5. Carol believes in word of mouth and puts $200 on Backrooms. All bets are in USDC, the token the config designates.
+**Alice, Bob, and Carol bet**, each from the standard wallet of one SOL and 1,000 USDC. The event is "top-grossing film this month" with two outcomes: *Toy Story 5* and *Backrooms*. Alice is confident about school holidays and puts $300 on Toy Story 5. Bob agrees but has less to spend: $100 on Toy Story 5. Carol believes in word of mouth and puts $200 on Backrooms. All bets are in USDC, the token the config designates.
 
 ## The Account Model: One Config, One Event, Its Outcomes, and a Bet per Bettor
 

@@ -4,14 +4,14 @@
   <!-- vault -->
   <rect x="70" y="60" width="150" height="80" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
   <text x="145" y="88" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
-  <text x="145" y="106" font-size="10.5" text-anchor="middle">30,000 USDC</text>
+  <text x="145" y="106" font-size="10.5" text-anchor="middle">9,000 USDC</text>
   <text x="145" y="122" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">entire balance drains</text>
   <!-- Maria -->
   <circle cx="430" cy="80" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
   <path d="M 405,124 Q 430,100 455,124" fill="none" stroke="#111" stroke-width="1.5"/>
   <text x="430" y="142" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
   <path d="M 224,100 L 404,100" stroke="#111" stroke-width="2" marker-end="url(#fund-succ-arr)"/>
-  <text x="314" y="90" font-size="11" font-weight="bold" text-anchor="middle">30,000 USDC</text>
+  <text x="314" y="90" font-size="11" font-weight="bold" text-anchor="middle">9,000 USDC</text>
   <text x="314" y="116" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">signed by the fundraiser PDA</text>
   <!-- closes -->
   <g transform="translate(70,170)">

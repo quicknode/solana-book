@@ -18,15 +18,15 @@
   <!-- buyer arrow -->
   <path d="M 490,40 L 490,74" stroke="#111" stroke-width="1.6" marker-end="url(#propamm-band-arr)"/>
   <text x="490" y="30" font-size="10.5" font-weight="bold" text-anchor="middle">buyers pay the ask</text>
-  <text x="533" y="60" font-size="9.5" fill="#444">1,651.65 USDC</text>
-  <text x="533" y="73" font-size="9.5" fill="#444">&#8594; 10 NVDAx</text>
+  <text x="533" y="60" font-size="9.5" fill="#444">825.825 USDC</text>
+  <text x="533" y="73" font-size="9.5" fill="#444">&#8594; 5 NVDAx</text>
   <!-- seller arrow -->
   <path d="M 490,210 L 490,176" stroke="#111" stroke-width="1.6" marker-end="url(#propamm-band-arr)"/>
   <text x="490" y="228" font-size="10.5" font-weight="bold" text-anchor="middle">sellers receive the bid</text>
-  <text x="533" y="190" font-size="9.5" fill="#444">10 NVDAx &#8594;</text>
-  <text x="533" y="203" font-size="9.5" fill="#444">1,648.35 USDC</text>
+  <text x="533" y="190" font-size="9.5" fill="#444">5 NVDAx &#8594;</text>
+  <text x="533" y="203" font-size="9.5" fill="#444">824.175 USDC</text>
   <!-- round trip note -->
   <rect x="70" y="196" width="300" height="40" fill="#fff" stroke="#888" stroke-width="1"/>
-  <text x="220" y="213" font-size="10" font-weight="bold" text-anchor="middle">round trip: 1,651.65 in, 1,648.35 back</text>
-  <text x="220" y="228" font-size="9.5" fill="#444" text-anchor="middle">the 3.30 USDC difference is the whole fee</text>
+  <text x="220" y="213" font-size="10" font-weight="bold" text-anchor="middle">round trip: 825.825 in, 824.175 back</text>
+  <text x="220" y="228" font-size="9.5" fill="#444" text-anchor="middle">the 1.65 USDC difference is the whole fee</text>
 </svg>

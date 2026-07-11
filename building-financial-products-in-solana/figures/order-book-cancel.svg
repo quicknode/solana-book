@@ -15,13 +15,13 @@
   <!-- the refund -->
   <rect x="430" y="55" width="185" height="50" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="522" y="74" font-size="11" font-weight="bold" text-anchor="middle">still locked in quote vault</text>
-  <text x="522" y="91" font-size="11" text-anchor="middle">2 &#215; 250 = 500 USDC</text>
+  <text x="522" y="91" font-size="11" text-anchor="middle">1 &#215; 250 = 250 USDC</text>
   <path d="M 522,107 L 522,166" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-cancel-arr)"/>
   <text x="514" y="140" font-size="10" font-style="italic" fill="#444" text-anchor="end">credited on cancel</text>
   <rect x="430" y="172" width="185" height="48" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="522" y="191" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s unsettled_quote</text>
-  <text x="522" y="208" font-size="11" text-anchor="middle">+500 USDC</text>
+  <text x="522" y="208" font-size="11" text-anchor="middle">+250 USDC</text>
   <text x="320" y="252" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">the tokens stay in the vault; the claim moves to Bob&#8217;s ledger line</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="290" y="82" font-size="11.5" font-weight="bold" fill="#444" text-anchor="middle">bid leaf: 2 @ 250</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="290" y="82" font-size="11.5" font-weight="bold" fill="#444" text-anchor="middle">bid leaf: 1 @ 250</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="290" y="112" font-size="10.5" fill="#444" text-anchor="middle">removed from the bid tree</text>
 </svg>
