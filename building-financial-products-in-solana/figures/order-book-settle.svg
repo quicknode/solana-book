@@ -10,7 +10,7 @@
   <path d="M 121,85 L 450,85" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
   <text x="285" y="73" font-size="11" font-weight="bold" text-anchor="middle">3 NVDAx</text>
   <path d="M 120,209 L 451,155" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
-  <text x="285" y="170" font-size="11" font-weight="bold" text-anchor="middle">500 USDC</text>
+  <text x="285" y="170" font-size="11" font-weight="bold" text-anchor="middle">250 USDC</text>
   <path d="M 119,221 L 451,271" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
   <text x="285" y="264" font-size="11" font-weight="bold" text-anchor="middle">748.125 USDC</text>
   <!-- token accounts and their owners -->
@@ -34,7 +34,7 @@
   <rect x="50" y="302" width="230" height="64" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="165" y="320" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s market user</text>
   <text x="165" y="336" font-size="11" text-anchor="middle">unsettled_base: 3 &#8594; 0</text>
-  <text x="165" y="352" font-size="11" text-anchor="middle">unsettled_quote: 500 &#8594; 0</text>
+  <text x="165" y="352" font-size="11" text-anchor="middle">unsettled_quote: 250 &#8594; 0</text>
   <rect x="310" y="302" width="220" height="48" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="420" y="320" font-size="11" font-weight="bold" text-anchor="middle">Carol&#8217;s market user</text>
   <text x="420" y="336" font-size="11" text-anchor="middle">unsettled_quote: 748.125 &#8594; 0</text>

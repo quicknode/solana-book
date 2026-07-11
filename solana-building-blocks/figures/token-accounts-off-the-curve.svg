@@ -11,7 +11,7 @@
   <!-- off-curve PDAs: the token accounts -->
   <circle cx="150" cy="90" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="150" y="66" font-size="12" font-weight="bold" text-anchor="middle">Alice&#8217;s USDC store</text>
-  <text x="150" y="80" font-size="10" fill="#444" text-anchor="middle">1,250 USDC</text>
+  <text x="150" y="80" font-size="10" fill="#444" text-anchor="middle">1,000 USDC</text>
   <circle cx="490" cy="90" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="490" y="66" font-size="12" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC store</text>
   <text x="490" y="80" font-size="10" fill="#444" text-anchor="middle">300 USDC</text>

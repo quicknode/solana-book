@@ -47,6 +47,8 @@ The book has two foundation chapters and nine program chapters. **Building Block
 
 Then every program chapter walks one complete financial program. Incentives for admins and individual users are discussed, and we show how individual instruction handlers modify onchain state on behalf of their users.
 
+To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory). When larger sums move, they belong to a firm's treasury or to a crowd, and the chapter says so.
+
 Like *TCP/IP Illustrated*, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit. 
 
 ## Real War Stories

@@ -6,7 +6,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ## The Cast: Five People, Five Motives
 
-- **Alice** has 1,000 USDC and four SPCXx (SpaceX stock, $250 each) sitting idle. She wants yield.
+- **Alice** has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle. She wants yield.
 - **Bob** needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each). He will pledge them as collateral and borrow USDC.
 - **Carol** thinks SpaceX is overvalued and wants to profit if it falls. Carol, you do you.
 - **Dave** watches for liquidation opportunities. He is not a villain; he is the reason the market stays solvent.

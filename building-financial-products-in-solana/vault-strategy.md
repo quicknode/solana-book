@@ -10,7 +10,7 @@ One vocabulary note before the story, because the word is overloaded. On Solana,
 
 - **Victor runs the registry.** He is not a fund manager; he is the gatekeeper who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is worth exactly as much as its reputation for funds not blowing up: vetting feeds is not charity, it is his product.
 - **Maria is the fund manager.** She creates the strategy, sets the weights, rebalances, and earns the fee.
-- **Alice and Bob invest.** They deposit USDC, hold shares, and eventually withdraw.
+- **Alice and Bob invest.** Each starts with the standard one SOL and 1,000 USDC; they deposit USDC, hold shares, and eventually withdraw.
 
 The separation between Victor and Maria is the program's first security decision, so it comes first.
 

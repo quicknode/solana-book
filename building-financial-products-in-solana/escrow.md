@@ -6,7 +6,7 @@ The program for this chapter lives at `finance/escrow` in the companion reposito
 
 ## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
-Alice has 250 USDC and wants a share of Tesla stock. Bob holds TSLAx and likes that price. They want to trade.
+Alice starts, like every character in this book, with one SOL and 1,000 USDC; she wants a share of Tesla stock and is prepared to spend 250 USDC on it. Bob holds TSLAx and likes that price. They want to trade.
 
 ![Alice holds 250 USDC and wants 1 TSLAx; Bob holds 1 TSLAx and wants 250 USDC. Each side holds exactly what the other wants.](figures/escrow-swap-intent.svg)
 
