@@ -10,6 +10,10 @@ Some data with an [address](#address). In a program, the data is a Rust struct. 
 
 The 32-byte identifier of an account, usually shown base58-encoded. Most addresses are public keys; PDAs are addresses without private keys.
 
+### adverse selection
+
+A market maker's structural loss: the trades that find you when your quote is wrong are exactly the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The Prop AMM chapter treats it at length.
+
 ### all-or-nothing
 
 A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The Token Fundraiser chapter builds it onchain.
@@ -202,6 +206,10 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 On a perpetual futures market, the index price is the oracle's statement of the asset's real-world price; the mark price is the venue's own price used for margin and liquidation.
 
+### market maker
+
+A party that quotes both a buy and a sell price and earns the spread between them. On an order book, makers rest orders; in a prop AMM, one firm is the standing maker for the whole venue.
+
 ### minor unit
 
 The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC. This book says minor unit, not "base unit."
@@ -258,6 +266,10 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 Executable code deployed onchain; the thing this book builds. Called a "smart contract" on other chains.
 
+### proprietary AMM (prop AMM)
+
+An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the Prop AMM chapter builds one.
+
 ### rent
 
 The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is real money design.
@@ -288,7 +300,7 @@ Solana's basic unit of time, roughly 400ms, in which a leader may produce a bloc
 
 ### spread
 
-The gap between the best bid and the best ask.
+The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
 
 ### stablecoin
 
