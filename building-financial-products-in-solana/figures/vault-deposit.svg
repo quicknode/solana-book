@@ -30,15 +30,16 @@
   <text x="540" y="259" font-size="11" font-weight="bold" text-anchor="middle">USDC vault</text>
   <text x="540" y="324" font-size="10" font-style="italic" fill="#444" text-anchor="middle">NAV loop: every vault, every feed</text>
   <!-- router and swap legs -->
-  <rect x="402" y="140" width="16" height="16" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="410" y="172" font-size="10.5" fill="#444" text-anchor="middle">swap router</text>
-  <text x="410" y="185" font-size="10" font-style="italic" fill="#444" text-anchor="middle">fixed at creation</text>
-  <path d="M 350,110 C 370,116 386,126 400,139" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
-  <path d="M 420,142 C 455,131 490,120 528,112" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
-  <text x="470" y="118" font-size="10.5" font-weight="bold" text-anchor="middle">$360</text>
-  <text x="540" y="131" font-size="10" fill="#444" text-anchor="middle">+1.44 TSLAx @ $250</text>
-  <path d="M 420,154 C 455,166 490,180 528,192" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
-  <text x="447" y="158" font-size="10.5" font-weight="bold" text-anchor="middle">$540</text>
+  <rect x="352" y="128" width="130" height="56" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="417" y="144" font-size="10.5" font-weight="bold" text-anchor="middle">swap router</text>
+  <text x="417" y="158" font-size="8.5" text-anchor="middle" font-family="Menlo, monospace">swap_usdc_for_asset</text>
+  <text x="417" y="172" font-size="9" font-style="italic" fill="#444" text-anchor="middle">fixed at creation</text>
+  <path d="M 350,110 C 362,114 372,119 380,126" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <path d="M 482,138 C 500,130 514,122 528,114" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <text x="470" y="112" font-size="10.5" font-weight="bold" text-anchor="middle">$360</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="552" y="136" font-size="10" fill="#444" text-anchor="middle">+1.44 TSLAx @ $250</text>
+  <path d="M 482,168 C 500,176 514,183 528,190" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <text x="502" y="200" font-size="10.5" font-weight="bold" text-anchor="middle">$540</text>
   <text x="540" y="216" font-size="10" fill="#444" text-anchor="middle">+3 NVDAx @ $180</text>
   <text x="540" y="297" font-size="10" font-style="italic" fill="#444" text-anchor="middle">nothing left idle</text>
   <!-- shares to Alice -->
