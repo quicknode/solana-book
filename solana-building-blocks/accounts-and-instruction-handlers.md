@@ -44,7 +44,7 @@ Anyone handling money online, on a blockchain or on a credit card rail, works in
 
 The programs that run on this giant computer are called **onchain programs**, and just like people, every program has its own address: another point on the same curve. The **System Program** sits at a well-known address and creates accounts and transfers SOL; the Memo Program sits at another and writes notes into the transaction log; the escrow you will build in this book gets an address of its own the day you deploy it. Program code is itself stored in accounts, because there is nowhere else for anything to live.
 
-![Programs sit on the same curve as people: the System Program and the Memo Program each have an address.](figures/programs-on-the-curve.svg)
+![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
 
 ## Programs Hold No State
 

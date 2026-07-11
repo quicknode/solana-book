@@ -15,23 +15,25 @@
   <text x="218" y="269" font-size="10.5" text-anchor="middle">NVDAx 60%</text>
   <text x="36" y="300" font-size="12" font-weight="bold">after rebalance: back to 40/60</text>
   <!-- router -->
-  <rect x="420" y="144" width="16" height="16" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="400" y="134" font-size="10.5" fill="#444" text-anchor="middle">swap router</text>
+  <rect x="380" y="124" width="130" height="56" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="445" y="140" font-size="10.5" font-weight="bold" text-anchor="middle">swap router</text>
+  <text x="445" y="154" font-size="8.5" text-anchor="middle" font-family="Menlo, monospace">swap_asset_for_usdc</text>
+  <text x="445" y="168" font-size="8.5" text-anchor="middle" font-family="Menlo, monospace">swap_usdc_for_asset</text>
   <!-- sell leg -->
-  <path d="M 230,90 C 300,116 360,138 416,148" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
-  <text x="380" y="104" font-size="10.5" font-weight="bold" text-anchor="middle">sell 0.12 NVDAx &#8594; $24 USDC</text>
+  <path d="M 230,90 C 290,112 330,126 376,140" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="380" y="104" font-size="10.5" font-weight="bold" text-anchor="middle">sell 0.12 NVDAx &#8594; $24 USDC</text>
   <!-- buy leg -->
-  <path d="M 420,162 C 340,192 230,222 120,246" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
+  <path d="M 390,182 C 310,212 225,230 120,248" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
   <text x="253" y="182" font-size="10" font-style="italic" fill="#444" text-anchor="middle">both legs floored at oracle &#8722; 1%</text>
-  <text x="330" y="218" font-size="10.5" font-weight="bold" text-anchor="middle">buy $24 of TSLAx</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="218" font-size="10.5" font-weight="bold" text-anchor="middle">buy $24 of TSLAx</text>
   <!-- Maria -->
   <circle cx="560" cy="60" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
   <path d="M 535,102 Q 560,80 585,102" fill="none" stroke="#111" stroke-width="1.5"/>
   <text x="560" y="122" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
-  <path d="M 538,98 C 505,115 472,130 444,144" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
+  <path d="M 538,98 C 512,106 484,112 462,120" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
   <text x="509" y="86" font-size="11" font-weight="bold" text-anchor="middle">rebalance</text>
   <!-- no path to the manager -->
-  <path d="M 436,160 C 448,184 456,202 464,222" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-rebalance-arr)"/>
+  <path d="M 460,182 C 462,196 463,208 464,220" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-rebalance-arr)"/>
   <rect x="470" y="210" width="140" height="36" rx="5" fill="none" stroke="#999" stroke-width="1.3"/>
   <line x1="470" y1="210" x2="610" y2="246" stroke="#999" stroke-width="1.6"/>
   <line x1="610" y1="210" x2="470" y2="246" stroke="#999" stroke-width="1.6"/>
