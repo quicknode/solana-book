@@ -47,7 +47,7 @@ Withdrawals have one extra gate: only **free** liquidity, `liquidity − reserve
 
 ## The Price Comes From Outside, So It Gets Interrogated at the Door
 
-Every handler that touches money begins the same way: read the oracle, validate it, accrue funding. The pool is pinned at creation to one **oracle feed** account, the offchain-truth mechanism from Financial Programming Concepts in Solana at production scale: a price written onchain by a network whose signatures prove its origin. In the companion repository the feed is a mock (`mock-switchboard`, an authority-gated stand-in the tests can set prices on, labeled not-for-production); the production path is a real Switchboard feed verified with the SDK's parse-and-verify call. Either way the program interrogates what it reads, in order:
+Every handler that touches money begins the same way: read the oracle, validate it, accrue funding. The pool is pinned at creation to one **oracle feed** account, the offchain-truth mechanism from Financial Programming Concepts in Solana at production scale: a price written onchain by a network whose signatures prove its origin, read with the same five-check discipline the prop AMM chapter's whole business rested on. In the companion repository the feed is a mock (`mock-switchboard`, an authority-gated stand-in the tests can set prices on, labeled not-for-production); the production path is a real Switchboard feed verified with the SDK's parse-and-verify call. Either way the program interrogates what it reads, in order:
 
 - the account is long enough to contain a price (`OracleDataTooShort`),
 - the price is positive (`NonPositivePrice`),

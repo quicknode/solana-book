@@ -32,6 +32,7 @@ Each chapter walks one complete, tested program from the [companion repository](
 - [Token Fundraiser](building-financial-products-in-solana/token-fundraiser.md) - onchain crowdfunding
 - [The Order Book Exchange](building-financial-products-in-solana/order-book.md) - a traditional NYSE/NASDAQ/CME style exchange
 - [The Constant-Product AMM](building-financial-products-in-solana/constant-product-amm.md) - instant swaps priced by a formula
+- [The Prop AMM](building-financial-products-in-solana/prop-amm.md) - a market maker quoting its own capital at oracle prices
 - [The Betting Market](building-financial-products-in-solana/betting-market.md) - a parimutuel pool with no bookmaker
 - [Lending and Borrowing](building-financial-products-in-solana/lending.md) - deposits, collateral, interest, and liquidation
 - [The Vault Strategy](building-financial-products-in-solana/vault-strategy.md) - an onchain index fund

@@ -9,6 +9,7 @@ The whole book's rules on one page, for the moment before you ship. Every line n
 - **Multiply before divide**, and divide as late and as few times as possible. (The Arithmetic of Money)
 - **Every division's rounding direction is chosen, stated, and rounds against the caller**: floor what the program pays out, ceil what the program is owed. Dust accrues to the pool, never to whoever calls most often. (The Arithmetic of Money)
 - **Token conservation holds after every handler**: tokens in equal tokens out plus tokens held, and the tests assert it. A round-trip (deposit then withdraw, swap in then swap back) never creates value. (The Arithmetic of Money; The Adversary)
+- **The core value invariant is asserted after the math, not assumed from it**: K may not fall after the transfers land, a fill's output may not exceed its input's value at the oracle price. The check exists to catch the refactor that breaks a rounding direction. (The Constant-Product AMM; The Prop AMM)
 
 ## The accounts
 
@@ -26,7 +27,7 @@ The whole book's rules on one page, for the moment before you ship. Every line n
 
 ## The outside world
 
-- **Every offchain fact is verified on arrival**: the publisher's identity, the freshness (in slots where the consumer chooses the clock), the confidence interval, and the decimal scale, pinned at setup. (Offchain Truth; Perpetual Futures)
+- **Every offchain fact is verified on arrival**: the publisher's identity, the freshness (in slots where the consumer chooses the clock), the confidence interval, and the decimal scale, pinned at setup. A stale price is not an inconvenience; it is a free option for whoever notices first. (Offchain Truth; The Prop AMM; Perpetual Futures)
 - **A true price can still be a purchased price**: leverage is never built on a market thinner than the credit it collateralizes, and consumers degrade when confidence widens. (The Adversary)
 - **Time uses the right clock**: slots where an adversary profits from bending time, timestamps only for humans and long horizons. (Time)
 - **Work with no natural caller has a crank**: permissionless, idempotent, quiet on no-op, and paid if it must be reliable. Check what happens when the incentive stops paying. (Cranks; Perpetual Futures)
