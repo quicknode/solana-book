@@ -1,4 +1,4 @@
-# Time
+# Chapter 5: Time
 
 Solana has two clocks, and choosing the wrong one is a security decision made by accident.
 

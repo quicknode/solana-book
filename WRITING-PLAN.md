@@ -1,6 +1,6 @@
 # Writing Plan
 
-How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md), and each chapter is a file under its section's folder. Chapters are referenced by name, not number, so reordering never breaks this document.
+How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md), and each chapter is a file under its section's folder. Within this document, chapters are referenced by name so reordering never breaks it; the manuscript's chapter titles carry sequential numbers ("Chapter 11: Escrow"), and the table of contents is the source of truth for the numbering.
 
 ## Principles
 
@@ -9,7 +9,7 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 - Style is inherited wholesale from the [companion AI skill](https://github.com/quicknode/solana-finance-claude-plugin): onchain and offchain unhyphenated, "instruction handlers" for the functions and "instructions" for their input, "minor unit" not "base unit", one name per role enforced within each chapter, concrete two-asset examples, real handler names in lifecycle prose, persona-driven walkthroughs.
 - Banned phrases, enforced by `scripts/lint-manuscript.mjs` (`npm run lint`) over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
 - Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
-- Chapter titles are traditional short names: "Tokens", "Escrow", "The Adversary". Headings *inside* a chapter carry the content, so a reader skimming only the headings learns the chapter's actual claims: "A Mint Is a Factory, and the Mint Authority Is Its Boss", not "Mint Authority"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
+- Chapter titles are numbered traditional short names: "Chapter 3: Tokens", "Chapter 11: Escrow", "Chapter 9: The Adversary". Headings *inside* a chapter carry the content, so a reader skimming only the headings learns the chapter's actual claims: "A Mint Is a Factory, and the Mint Authority Is Its Boss", not "Mint Authority"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
 - Plain language. Define things by what they concretely are, not by abstract category: an account is "some data - a Rust struct - with an address", never "the unit of state". If a definition would fit equally well in a book about a different subject, it is too vague. Prefer the short common word to the impressive one.
 - Example assets are USDC and real-world assets: stocks like NVDAx, TSLAx, and SPCXx. Never meme tokens.
 - Talk to readers, never about the book's construction. No sentences explaining why a chapter is organized, sized, or placed the way it is ("each section is short on purpose", "that is why it comes first"). If a sentence is addressed to the author, editor, or reviewer rather than the reader, delete it.
@@ -36,7 +36,7 @@ The two foundation chapters (Solana Building Blocks; Financial Programming Conce
 - Draft against the template.
 - Verify: grep every named identifier against the repo; check every number against the source it came from; run the banned-phrase lint.
 - List the figures the chapter needs. Figures are drawn later in a single visual pass so the visual language stays consistent.
-- Review against the Invariant Checklist and the Glossary.
+- Review against the companion AI skill's rules and the Glossary.
 
 ## War Story Register
 
@@ -64,7 +64,7 @@ The diagram conventions (account-relationship maps, state machines, token-moveme
 - **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
 - The remaining program chapters, one per example, in table-of-contents order (all nine drafted: Escrow, Token Fundraiser, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, The Betting Market, Lending and Borrowing, The Vault Strategy, Perpetual Futures).
 - The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
-- The remaining appendices. The Invariant Checklist is nearly free: it distills the companion AI skill. The Glossary is drafted.
+- The remaining appendices. The Glossary is drafted.
 - The placeholder front-matter pages last.
 - A single visual pass producing all diagrams in one consistent style.
 - Public early-access release and errata page live before print.

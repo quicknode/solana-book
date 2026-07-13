@@ -1,4 +1,4 @@
-# Offchain Truth
+# Chapter 8: Offchain Truth
 
 A program can verify a lot on its own: signatures, balances, account ownership, its own arithmetic. But most financial products depend on facts that happen in the real world, outside anything the chain can see. What is NVIDIA trading at? Which film grossed highest this month? Did the shipment arrive? Did the borrower's collateral just crash? Every one of the book's markets turns on a fact like this: prices for the lending market and the perpetual futures exchange, an event outcome for the betting market, asset valuations for the vault strategy. And facts get onchain the same way every time: a trusted party signs them, and a careful program verifies far more than the signature.
 

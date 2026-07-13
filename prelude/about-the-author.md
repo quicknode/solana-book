@@ -1,3 +1,3 @@
 # About the Author
 
-Mike MacCana leads Solana content at Quicknode, where he has covered LiteSVM and Solana Kit and maintained the most comprehensive example library of Solana programs. Previously he ran developer education at Solana Foundation, where he created the Solana Foundation educational material taught to hundreds of students from blockchain clubs in Romania to Ivy League universities in the USA, and co-created and presented the Solana Foundation Developer Bootcamp. He is a top ten member of Solana StackExchange, the author of multiple popular Rust and TypeScript libraries, and a two-time winner at the Solana Sandstorm hackathon.
+PLACEHOLDER. To be written when the book is complete.

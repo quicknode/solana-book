@@ -1,4 +1,4 @@
-# The Order Book Exchange
+# Chapter 13: The Order Book Exchange
 
 NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. By the end of this chapter you will have walked through one, end to end: how orders come in, how they rest, how they match, where the money waits, and how the operator collects fees.
 
@@ -14,13 +14,9 @@ The other model for an exchange is the automated market maker, where there are n
 
 One naming note: this design is traditionally called a *central limit* order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network. Slightly strange, entirely workable.
 
-## The Cast: One Operator and Three Traders
-
-**Maria runs the exchange.** She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match, so it is borne by whichever side of the fill receives the quote token.
-
-**Alice, Bob, and Carol trade on it**, each starting with the standard wallet: one SOL, 1,000 USDC, and (for the two sellers) some NVDAx. The market's pair is NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
-
 ## The Account Model: A Market, Its Book, and a Ledger of Who Is Owed What
+
+The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
 ![The account map: the market PDA at the center, with the order book account, base vault, quote vault, and fee vault hanging off it, and each trader's market user account, order accounts, and token accounts at the edges.](figures/order-book-accounts.svg)
 
@@ -47,6 +43,8 @@ So the book's two sides are **critbit trees**. The name sounds complex; the idea
 
 ## Maria Opens the NVDAx/USDC Market
 
+Maria runs the exchange. She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match, so it is borne by whichever side of the fill receives the quote token.
+
 Maria's client first creates the empty order book account, then calls `initialize_market` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, because a fee above 100% is nonsense. It creates the market PDA and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
 
 The tick size and minimum order size are market hygiene. Prices must land on a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. Orders below `min_order_size` are rejected outright, which keeps spam from filling the trees.
@@ -55,7 +53,7 @@ The tick size and minimum order size are market hygiene. Prices must land on a m
 
 ## Every Trader Gets a Ledger Line
 
-Before trading, each of Alice, Bob, and Carol calls `create_market_user` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
+Three traders use the market this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus (for the two sellers, Alice and Carol) some NVDAx. Before trading, each of them calls `create_market_user` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
 
 ## Alice Asks: Ten Shares at 265
 
@@ -107,7 +105,7 @@ The handler contains one line of discipline worth copying into everything you bu
 
 ## Maria Withdraws Her Fees
 
-At any time, Maria calls `withdraw_fees`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One operational nicety: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is the crank pattern from the Cranks chapter, though this handler adds an authority gate because it moves fee money.
+At any time, Maria calls `withdraw_fees`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One operational nicety: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is a pattern this book calls a **crank** (the Lending and Borrowing chapter treats it fully), though this handler adds an authority gate because it moves fee money.
 
 ![withdraw_fees drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 
@@ -137,18 +135,28 @@ At any time, Maria calls `withdraw_fees`, and the fee vault's balance (1.875 USD
 - **Book spam.** A full tree is a denial-of-service on everyone else's orders. Tick alignment, the minimum order size, the 20-open-orders-per-user cap, and the `OrderBookFull` check are all anti-spam walls, and each rejects with its own named error.
 - **The unauthorized paths.** Cancelling someone else's order rejects with `Unauthorized`; withdrawing fees without being the authority rejects with `NotMarketAuthority`; placing orders on a paused market rejects with `MarketPaused`.
 
-## The Tests: Every Lock, Match, and Rounding Branch
+## Testing Considerations
 
-The suite in `tests/test_order_book.rs` runs against LiteSVM, builds all state through the program's own instruction handlers, and covers each branch above by name:
+The suite in `tests/test_order_book.rs` builds all state through the program's own instruction handlers, and covers each code path above by name:
 
 - Locking: `place_bid_locks_quote_in_vault`, `place_ask_locks_base_in_vault`, and the rejection tests for zero prices, unaligned ticks, and undersized orders.
 - Matching, both directions and both partial-fill shapes: `taker_bid_fully_crosses_best_ask`, `taker_ask_fully_crosses_best_bid`, `taker_partially_fills_resting_order_rest_stays_on_book`, `taker_partially_filled_remainder_rests_on_book`, and `taker_crosses_multiple_resting_orders_best_price_first`.
 - The fairness rules: `resting_orders_at_same_price_fill_by_time_priority` and `taker_bid_gets_price_improvement_from_resting_ask`.
 - The money: `fee_vault_receives_exactly_bps_of_taker_gross`, `fee_rounds_up_when_gross_is_not_a_bps_multiple`, `cancel_and_settle_bid_refunds_full_quote`, and `settle_funds_after_match_pays_out_both_unsettled_balances`.
-- The adversarial branches: `settle_funds_rejects_fee_vault_substituted_for_quote_vault`, `cancel_order_rejects_non_owner`, and `authority_can_withdraw_fees_after_match`.
+- The adversarial cases: `settle_funds_rejects_fee_vault_substituted_for_quote_vault`, `cancel_order_rejects_non_owner`, and `authority_can_withdraw_fees_after_match`.
 
-If you write one test after reading this chapter, write the vault-swap one for your own program. The branch where two accounts are interchangeable to the token program but not to your accounting is the branch the bug lives in.
+If you write one test after reading this chapter, write the vault-swap one for your own program. The code path where two accounts are interchangeable to the token program but not to your accounting is the path the bug lives in.
 
-## An Exchange Is Escrows All the Way Down
+## What You Learnt from Building the Order Book Exchange
 
-Strip the tree away and every resting order is the escrow chapter again: funds locked in a program-owned vault, terms in a data account, movement gated by signatures and stored addresses, and an exit from every state. The order book adds three genuinely new ideas on top: a data structure chosen for onchain cost (the critbit tree), an internal ledger that consolidates payouts (unsettled balances), and a fee whose rounding direction is a security decision. All three come back. The AMM in the next chapter replaces the book with a formula; the perpetual futures exchange at the end of the book is this chapter plus leverage, a price feed, and time.
+NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds` is settlement, permissionless and instant. The operator who remains, Maria, sets the market's parameters and collects its fee, and can do nothing else.
+
+The concepts you now have, on top of the escrow's:
+
+- **Every resting order is a funded commitment.** Lock-on-entry means no matched order can turn out to be backed by nothing.
+- **A data structure chosen for onchain cost.** The critbit tree gives insertion without shifting and price-time priority for free, on a chain where compute is metered.
+- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them before the transfer (checks-effects-interactions) makes double-withdrawal structurally impossible.
+- **A fee whose rounding direction is a security decision.** Ceiling division on the fee closes a leak an attacker could industrialize through thousands of tiny fills.
+- **Vault separation plus `has_one`.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep user money and fee money apart.
+
+The AMM in the next chapter replaces the book with a formula; the perpetual futures exchange at the end of the book is this chapter plus leverage, a price feed, and time.

@@ -26,6 +26,10 @@ An order to sell at or above a stated price. The seller's side of an order book.
 
 The canonical token account for a given wallet and mint, at an address anyone can derive from the two. ATAs are why a program can know where Alice's USDC lives without asking her.
 
+### AUM (assets under management)
+
+The total value a pool or fund controls, marked to market: on a perpetual futures venue, the LPs' liquidity minus traders' unrealized profit (or plus their unrealized loss). LP shares price against AUM so that entering and leaving the pool is fair at any instant. See the Perpetual Futures chapter.
+
 ### authority
 
 The key or account with the right to perform an action: a mint authority may create supply, a freeze authority may freeze token accounts, a market authority may withdraw fees. Recording the authority and verifying it on the way out is the core of access control in every chapter.
@@ -89,6 +93,10 @@ The number of minor units in one major unit of a token, declared on the mint. US
 ### discriminator
 
 The 8 bytes Anchor writes at the start of an account's data identifying its type, so a program cannot be fed one kind of account where another belongs.
+
+### discretization
+
+Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and The Arithmetic of Money.
 
 ### dust
 
@@ -282,6 +290,10 @@ In a lending market, the per-asset pool: its liquidity vault, its share mint, it
 
 A limit order that did not match on arrival and now waits on the book, funded and cancellable.
 
+### RWA (real-world asset)
+
+A traditional asset represented as a token onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading.
+
 ### share
 
 A token representing proportional ownership of a pool: of a lending reserve, of a fund's holdings, of anything with a NAV. Minted on the way in, burned on the way out, priced by dividing the pool by the supply.
@@ -302,9 +314,17 @@ Solana's basic unit of time, roughly 400ms, in which a leader may produce a bloc
 
 The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
 
+### SPL token
+
+Any token other than SOL, managed by a token program; the name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
+
 ### stablecoin
 
 A token designed to hold a fixed value, usually one dollar. The quote asset of nearly every market in this book.
+
+### state compression
+
+A technique for storing bulk data offchain with onchain proofs, used for things like very large NFT collections. It is the reason "nearly all", rather than "all", data on Solana lives in accounts; none of the financial state in this book uses it.
 
 ### sysvar
 
@@ -340,7 +360,7 @@ A token account whose authority is a program's PDA, where a program holds funds 
 
 ### WAD
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for interest indexes and rate math.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for interest indexes and rate math. The name comes from Ethereum's DappHub and MakerDAO convention (a "wad" as in a wad of bills) and has become the standard word for 18-decimal fixed point on every chain.
 
 ### wallet
 

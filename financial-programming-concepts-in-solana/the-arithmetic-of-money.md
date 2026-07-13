@@ -1,6 +1,6 @@
-# The Arithmetic of Money
+# Chapter 7: The Arithmetic of Money
 
-Every bug class in this chapter has drained a real market. The rules are few, they fit on a page of the Invariant Checklist, and none of them will ever change, because they follow from one fact: onchain money is integers.
+Every bug class in this chapter has drained a real market. The rules are few, and none of them will ever change, because they follow from one fact: onchain money is integers.
 
 ## Money Is Integers: No Floats Near Funds
 
@@ -16,7 +16,13 @@ Programs calculate in **minor units**, the smallest denomination of each token: 
 - **Never mix scales in one calculation.** An amount in USDC minor units times a price per whole share is nonsense with a plausible magnitude, the worst kind of wrong. Name variables with their unit and scale.
 - **Use `transfer_checked`**, which makes every transfer state the decimals it believes and fails if the mint disagrees.
 
-Two conventions build on minor units. Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the Order Book chapter shows the construction). And fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, conventionally 10^18 (a **WAD**), so 1.05 is stored as 1_050_000_000_000_000_000. The scale is chosen large enough that the smallest value you care about (one slot's interest) does not truncate to zero, and small enough that intermediates stay inside u128.
+## Lots and WADs
+
+Two conventions build on minor units.
+
+Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the Order Book chapter shows the construction).
+
+Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so 1.05 is stored as 1_050_000_000_000_000_000. The conventional constant is 10^18, and a value at that scale is called a **WAD**; the name comes from Ethereum's DappHub and MakerDAO convention, a "wad" as in a wad of bills, and it has become the standard word for 18-decimal fixed point on every chain. The scale is chosen large enough that the smallest value you care about (one slot's interest) does not truncate to zero, and small enough that intermediates stay inside u128.
 
 ## Multiply Before Divide, with Wider Intermediates
 

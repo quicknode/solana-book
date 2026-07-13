@@ -1,4 +1,4 @@
-# The Adversary
+# Chapter 9: The Adversary
 
 APIs churn; exploits recur. The same half-dozen attack classes have drained onchain markets for a decade, on every chain, in every framework, and they will drain the next decade's markets too. That makes this the most durable section in the book, and the one to reread before every launch. Each class below ends with the defense, and where a real incident makes the lesson concrete, a War Story tells it.
 

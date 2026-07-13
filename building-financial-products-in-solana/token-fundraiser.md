@@ -1,4 +1,4 @@
-# Token Fundraiser
+# Chapter 12: Token Fundraiser
 
 Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
@@ -12,13 +12,9 @@ This is the state machine discipline from Financial Programming Concepts in Sola
 
 ![The fundraiser's two futures: contributions flow in during the window; at the target the vault drains to Maria, and past the deadline it drains back to the contributors.](figures/fundraiser-two-exits.svg)
 
-## The Cast: One Maker, Ten Contributors
-
-**Maria is the maker.** The program calls the fundraiser's creator the `maker`, and her incentive is the point of the whole exercise: she gets her production run funded, and she gets it all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs her own raise, and the only costs anyone pays are rent deposits on the accounts.
-
-**Alice, Bob, Carol, and seven others contribute.** Each starts with the standard wallet, one SOL and 1,000 USDC. Alice runs three cafes and wants Maria's machine on her counters: she is in for the maximum. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
-
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
+
+The program calls the fundraiser's creator the **maker**: Maria here, and her incentive is the point of the whole exercise: she gets her production run funded all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs her own raise, and the only costs anyone pays are rent deposits on the accounts.
 
 ![The account map: Maria's fundraiser PDA owns the vault token account; each contributor holds a contributor PDA recording their running total.](figures/fundraiser-account-map.svg)
 
@@ -40,6 +36,8 @@ Maria calls `initialize` with a target of 9,000 USDC and a duration of 7 days, a
 The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. The Time chapter's warning applies: with day-granularity math, the window ends at the first tick of day seven, not at some intuitive "end of the seventh day". `contribute` requires the floored day count to be *less than* the duration; `refund` requires it to be *at least* the duration. The same expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the elapsed-day count reaches 7, contributions turn off and refunds turn on, atomically, by arithmetic.
 
 ## Nobody May Carry More Than a Tenth of the Raise
+
+Ten backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
 
 Alice comes in hot and tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, the same multiply-before-divide discipline as every other chapter.
 
@@ -102,10 +100,20 @@ The program's entire financial surface is: the cap, `amount_to_raise × 10 / 100
 - **Dust griefing** fails on the one-major-unit minimum: `ContributionTooSmall`.
 - **Retiring the machine early or with money inside** fails on the close gates: `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
 
-## The Test That Catches the Bug
+## Testing Considerations
 
-The suite runs on LiteSVM with solana_kite, warps the clock with a helper that advances whole days, and asserts balances after every move. Its anchors are the paired lifecycle tests: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and watches the claim, `test_refund_after_deadline_target_not_met_succeeds` walks the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` retires the failed machine and proves the same wallet can raise again. Around them, one test per gate, and the one to copy into every vault program you write is the donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` proves close is where strays finally drain).
+The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Its anchors are the paired lifecycle tests: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and watches the claim, `test_refund_after_deadline_target_not_met_succeeds` walks the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` retires the failed machine and proves the same wallet can raise again. Around them, one test per gate, and the one to copy into every vault program you write is the donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` proves close is where strays finally drain).
 
-## The Deal Got Bigger; the Shape Did Not
+## What You Learnt from Building the Token Fundraiser
+
+Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-flight. This chapter made the same promise a property of code: no platform, no fee, and terms that are physically incapable of changing because no handler exists to change them.
+
+The concepts you now have, on top of the escrow's:
+
+- **A deadline that flips which exit is open.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
+- **The counter is the truth; the vault is just custody.** A gate that unlocks money must read state the program itself wrote, never a token balance anyone can inflate by donation.
+- **A receipt PDA per participant**, created on first use, topped up on repeats, and closed when its purpose is served, so double refunds die with the account.
+- **Cumulative caps.** Per-participant limits checked against running totals, which turn "broad participation" from hope into arithmetic.
+- **Name the closer for every account.** The stranded contributor receipts after a successful raise are this chapter's honest omission, and the habit that catches it.
 
 An escrow held two strangers to one deal. The fundraiser holds eleven strangers to one condition, and paid for it with exactly one new mechanism: a deadline that flips which exit is open. Every program in the rest of this part is this same shape under increasing pressure: a vault owned by a data account, terms frozen at entry, and an exit from every state for every participant's money. The next chapter puts the shape on a trading floor.

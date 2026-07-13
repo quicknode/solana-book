@@ -1,8 +1,8 @@
-# The Constant-Product AMM
+# Chapter 14: The Constant-Product AMM
 
 The order book chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee is not free money, and by the end of the chapter you will be able to say exactly why, with a number attached.
 
-AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. On Solana you know the genre from Orca, Raydium, and Pump.fun. The program lives at `finance/token-swap` in the companion repository.
+AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
 A warning about most AMM explanations: they use two toy tokens, no admin fees, no liquidity providers, and they tell you "K never changes," which is false. This chapter does a genuine launch, with an operator, fees, LPs, and the true story of X, Y, and K after every single trade.
 
@@ -18,10 +18,6 @@ And the truth about K: **K is constant within a single trade and grows over time
 
 ![The constant-product curve: a buy slides the pool along X × Y = K, and the spot price is the slope of the curve at the pool's current point.](figures/amm-curve.svg)
 
-## The Cast: An Operator, Two LPs, and Two Traders
-
-**Maria operates the AMM** and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. Everyone starts the chapter with the standard wallet, one SOL and 1,000 USDC; Maria also holds 400 ACME of founder stock. **Alice works at ACME**, holds a grant of 100 ACME, and becomes the second liquidity provider. **Bob and Carol trade**: Bob is early and bullish; Carol has watched the launch all morning and wants in even though the price has already moved.
-
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
 ![The account map: the config PDA, the pool config PDA for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
@@ -36,6 +32,8 @@ The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool co
 
 ## Maria Creates the Venue and Prices the Launch
 
+Maria operates the AMM and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. Like every character in this book she starts with one SOL and 1,000 USDC; she also holds 400 ACME of founder stock.
+
 Maria runs `create_config` with a fee of 30 basis points and an admin share of 1,667 basis points, approximately one sixth of each fee, the classic Uniswap-style split. Then `create_pool` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $2.25, so she runs `deposit_liquidity` with her 400 ACME and 900 USDC, the founder stock and nine-tenths of her cash. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 400, Y = 900, K = 360,000.
@@ -46,13 +44,13 @@ Her LP tokens come from a formula this book has been promising since the arithme
 
 ## Alice Adds Liquidity Without Moving the Price
 
-Alice wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and guarded by her `minimum_lp_tokens_out`.
+Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and guarded by her `minimum_lp_tokens_out`.
 
 X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Deposits grow K without touching the price**; that is the first of K's two ways of growing.
 
 ## Bob Buys the Launch and Moves the Price
 
-Bob runs `swap_tokens` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage guard. Three things happen in strict order.
+Bob is early and bullish. He runs `swap_tokens` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage guard. Three things happen in strict order.
 
 **The fee comes off the top.** 30 basis points of 100 is 30 cents. The admin share, about 5 cents (1,667 basis points of it, floored in minor units), accrues to `admin_fees_owed_b` as Maria's virtual claim; the remaining 25 cents simply stays in the pool, where it fattens the reserves that back every LP token. Bob's taxed input is 99.70.
 
@@ -66,7 +64,7 @@ K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is
 
 ## Carol Pays the Price Bob Made
 
-Carol arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
+Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
 
 ## Bob Takes Profit, Paying Fees in ACME
 
@@ -105,10 +103,21 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 - **Slippage and sandwiches.** Every trade and deposit carries a caller-supplied minimum (`min_output_amount`, `minimum_lp_tokens_out`, the withdrawal minimums), and the tests prove each one rejects (`SlippageExceeded`, `DepositBelowMinimum`, `WithdrawalBelowMinimum`). What the program cannot do is choose the number for you; a zero minimum is legal and is exactly what a sandwich attacker hopes you send.
 - **Liquidity fragmentation.** Canonical mint ordering, one pool per pair, by construction.
 
-## The Test That Catches the Bug
+## Testing Considerations
 
-The suite (`tests/test_swap.rs`, LiteSVM plus solana_kite) reads like this chapter's outline: `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap` pin K's direction both ways; `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` pin the admin-fee exclusion, which is exactly the kind of accounting a refactor silently breaks; `test_deposit_clamps_excess_amount_a` and `_b` pin the ratio clamp from both directions (both directions of every symmetric flow); and the three reverts-below-minimum tests pin every slippage guard. If you write one property test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not pay for the privilege.
+The suite (`tests/test_swap.rs`) reads like this chapter's outline: `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap` pin K's direction both ways; `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` pin the admin-fee exclusion, which is exactly the kind of accounting a refactor silently breaks; `test_deposit_clamps_excess_amount_a` and `_b` pin the ratio clamp from both directions (both directions of every symmetric flow); and the three reverts-below-minimum tests pin every slippage guard. If you write one property test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not pay for the privilege.
 
-## The Formula Is the Maker
+## What You Learnt from Building the Constant-Product AMM
 
-The order book needed a tree, a matching engine, and maker accounts, because humans were quoting the prices. The AMM replaced all of it with one multiplication and got instant liquidity for anything, priced by a curve, at the cost of price impact and impermanent loss. The next chapter builds the design that pays neither cost, a market maker quoting its own capital at oracle prices, and pays a different one instead. And the vault strategy chapter, later in the book, climbs one level up the stack: it *uses* venues like these, and the question stops being "how do trades clear" and becomes "who is allowed to trade with other people's money, and what stops them."
+The order book needed a tree, a matching engine, and maker accounts, because humans were quoting the prices. The AMM replaced all of it, and the market makers themselves, with one multiplication: instant liquidity for anything, priced by a curve, funded by anyone willing to earn fees for supplying it.
+
+The concepts you now have:
+
+- **A formula as the market maker.** Output = taxed input × other reserve ÷ (this reserve + taxed input); the first deposit sets the price, and every trade pays its own price impact.
+- **K's real story.** Constant within a trade, growing across deposits and fees; and an invariant that can hold vacuously (new K ≥ 0 on an empty pool) is not an invariant.
+- **Assert after the math.** The post-trade product re-check catches every "computed the output wrong and overpaid" bug, including the ones not written yet.
+- **Effective reserves.** The admin's virtual fee claim is excluded from every piece of LP-facing math, the order book's fee vault implemented as accounting.
+- **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone, keeps the share divisor from ever being dust-sized.
+- **Impermanent loss.** An LP is a bet on trading volume, not price direction, and nobody should provide liquidity without being able to draw the diagram.
+
+The next chapter builds the design that pays neither price impact nor impermanent loss, a market maker quoting its own capital at oracle prices, and pays a different cost instead. And the vault strategy chapter, later in the book, climbs one level up the stack: it *uses* venues like these, and the question stops being "how do trades clear" and becomes "who is allowed to trade with other people's money, and what stops them."
