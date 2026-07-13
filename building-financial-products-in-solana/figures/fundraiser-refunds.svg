@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="fund-ref-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <text x="320" y="26" font-size="12" font-weight="bold" text-anchor="middle">day 7, only 3,600 raised: refunds open, each contributor pulls their own</text>
+  <!-- vault -->
+  <rect x="250" y="50" width="140" height="80" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="320" y="78" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
+  <text x="320" y="96" font-size="10.5" text-anchor="middle">3,600 USDC</text>
+  <text x="320" y="112" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">drains receipt by receipt</text>
+  <!-- Alice refund -->
+  <path d="M 246,90 C 190,95 150,110 110,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
+  <text x="150" y="94" font-size="11" font-weight="bold">900</text>
+  <circle cx="90" cy="160" r="14" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 68,198 Q 90,178 112,198" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="90" y="216" font-size="11" font-weight="bold" text-anchor="middle">Alice</text>
+  <text x="90" y="231" font-size="9.5" fill="#444" text-anchor="middle">exactly her recorded amount</text>
+  <!-- Bob refund -->
+  <path d="M 320,134 L 320,168" stroke="#111" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
+  <text x="332" y="154" font-size="11" font-weight="bold">900</text>
+  <circle cx="320" cy="186" r="14" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 298,224 Q 320,204 342,224" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="320" y="242" font-size="11" font-weight="bold" text-anchor="middle">Bob</text>
+  <!-- Carol refund -->
+  <path d="M 394,90 C 450,95 490,110 530,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
+  <text x="448" y="124" font-size="11" font-weight="bold">900</text>
+  <circle cx="550" cy="160" r="14" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 528,198 Q 550,178 572,198" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="550" y="216" font-size="11" font-weight="bold" text-anchor="middle">Carol</text>
+  <text x="550" y="231" font-size="9.5" fill="#444" text-anchor="middle">receipt closes as it pays</text>
+  <!-- order note -->
+  <rect x="440" y="44" width="186" height="44" fill="#fff" stroke="#888" stroke-width="1"/>
+  <text x="533" y="60" font-size="9.5" fill="#444" text-anchor="middle">zero the receipt, decrement the</text>
+  <text x="533" y="73" font-size="9.5" fill="#444" text-anchor="middle">counter, then transfer: effects</text>
+  <text x="533" y="85" font-size="9.5" fill="#444" text-anchor="middle">before interactions</text>
+</svg>

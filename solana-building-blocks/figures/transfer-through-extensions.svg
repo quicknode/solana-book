@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="arr2" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <circle cx="70" cy="110" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="70" y="86" font-size="11.5" font-weight="bold" text-anchor="middle">Alice&#8217;s store</text>
+  <text x="70" y="140" font-size="10.5" fill="#444" text-anchor="middle">sends 100</text>
+  <rect x="170" y="38" width="300" height="122" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="180" y="58" font-size="11.5" font-weight="bold">Token Extensions Program</text>
+  <text x="180" y="74" font-size="10.5" font-family="Menlo, monospace">transfer_checked</text>
+  <path d="M 84,110 h 82" stroke="#111" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <path d="M 200,110 h 60" stroke="#111" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <path d="M 300,110 h 60" stroke="#111" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <path d="M 400,110 h 66" stroke="#111" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <!-- fee checkpoint -->
+  <circle cx="220" cy="110" r="4" fill="#111"/>
+  <path d="M 220,116 v 44" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
+  <text x="220" y="176" font-size="10" fill="#444" text-anchor="middle">1 peeled off as</text>
+  <text x="220" y="188" font-size="10" fill="#444" text-anchor="middle">transfer fee</text>
+  <!-- hook checkpoint -->
+  <circle cx="330" cy="110" r="4" fill="#111"/>
+  <path d="M 330,104 v -24" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
+  <text x="342" y="78" font-size="10" fill="#444">transfer hook runs:</text>
+  <circle cx="560" cy="110" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="560" y="86" font-size="11.5" font-weight="bold" text-anchor="middle">Bob&#8217;s store</text>
+  <text x="560" y="140" font-size="10.5" fill="#444" text-anchor="middle">receives 99</text>
+  <text x="320" y="220" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions can change what &#8220;I transferred 100&#8221; means</text>
+  <text x="342" y="91" font-size="10" fill="#444" font-style="italic">the issuer&#8217;s program</text>
+</svg>

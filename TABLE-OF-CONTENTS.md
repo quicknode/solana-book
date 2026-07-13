@@ -1,0 +1,41 @@
+# Building Financial Software on Solana
+
+## Prelude
+
+[Praise](prelude/praise.md), [copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [acknowledgements](prelude/acknowledgements.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
+
+## [Chapter 1: Introduction](prelude/introduction.md)
+
+## Solana Building Blocks
+
+- [Chapter 2: The Core Building Blocks of Solana](solana-building-blocks/accounts-and-instruction-handlers.md) - keys, accounts, programs, instruction handlers, and atomic transactions
+- [Chapter 3: Tokens](solana-building-blocks/tokens.md)
+- [Chapter 4: PDAs: How Solana Programs Store Data](solana-building-blocks/pdas.md) - derived addresses, program custody, and rent
+- [Chapter 5: Time](solana-building-blocks/time.md)
+
+## Financial Programming Concepts in Solana
+
+- [Chapter 6: Financial software is a state machine](financial-programming-concepts-in-solana/intro.md), and every state needs an exit.
+- [Chapter 7: The Arithmetic of Money](financial-programming-concepts-in-solana/the-arithmetic-of-money.md) - integers, scale, rounding, and interest
+- [Chapter 8: Offchain Truth](financial-programming-concepts-in-solana/offchain-truth.md) - how real-world facts (prices, event outcomes, anything the chain cannot see) get onchain, and how a program verifies them
+- [Chapter 9: The Adversary](financial-programming-concepts-in-solana/the-adversary.md) - how onchain money gets stolen, exploit class by exploit class
+- [Chapter 10: Operating Financial Software](financial-programming-concepts-in-solana/operating-financial-software.md) - testing money, and wielding admin power safely
+
+## Building Financial Products in Solana
+
+Each chapter walks one complete, tested program from the [companion repository](https://github.com/quicknode/solana-program-examples).
+
+- [Chapter 11: Escrow](building-financial-products-in-solana/escrow.md) - two strangers swap without trusting each other
+- [Chapter 12: Token Fundraiser](building-financial-products-in-solana/token-fundraiser.md) - onchain crowdfunding
+- [Chapter 13: The Order Book Exchange](building-financial-products-in-solana/order-book.md) - a traditional NYSE/NASDAQ/CME style exchange
+- [Chapter 14: The Constant-Product AMM](building-financial-products-in-solana/constant-product-amm.md) - instant swaps priced by a formula
+- [Chapter 15: The Prop AMM](building-financial-products-in-solana/prop-amm.md) - a market maker quoting its own capital at oracle prices
+- [Chapter 16: The Betting Market](building-financial-products-in-solana/betting-market.md) - a parimutuel pool with no bookmaker
+- [Chapter 17: Lending and Borrowing](building-financial-products-in-solana/lending.md) - deposits, collateral, interest, liquidation, and cranks
+- [Chapter 18: The Vault Strategy](building-financial-products-in-solana/vault-strategy.md) - an onchain index fund
+- [Chapter 19: Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) - leveraged bets on a price; the capstone
+
+## Appendices
+
+- [Glossary](appendices/glossary.md)
+- Index (print edition)

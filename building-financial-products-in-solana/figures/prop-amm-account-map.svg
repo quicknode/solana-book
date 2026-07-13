@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="propamm-map-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- market PDA -->
+  <circle cx="238" cy="52" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="226" y="48" font-size="9" font-style="italic" fill="#444" text-anchor="end">seeds: "market" + base mint + quote mint</text>
+  <rect x="160" y="70" width="210" height="122" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="265" y="88" font-size="12" font-weight="bold" text-anchor="middle">Market (PDA)</text>
+  <text x="170" y="104" font-size="9.5">operator: Maria</text>
+  <text x="170" y="117" font-size="9.5">oracle_feed: pinned at creation</text>
+  <text x="170" y="130" font-size="9.5">oracle_scale: 10^8</text>
+  <text x="170" y="143" font-size="9.5">base_decimals: 8 &#183; quote_decimals: 6</text>
+  <text x="170" y="156" font-size="9.5">spread_bps: 10</text>
+  <text x="170" y="169" font-size="9.5">max_confidence_bps: 100 &#183; paused: false</text>
+  <text x="170" y="184" font-size="9" fill="#444" font-style="italic">no LP mint, no fee ledger</text>
+  <!-- authority PDA -->
+  <circle cx="465" cy="88" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="465" y="70" font-size="10.5" font-weight="bold" text-anchor="middle">market authority (PDA)</text>
+  <text x="465" y="44" font-size="9" fill="#444" text-anchor="middle">holds no data;</text>
+  <text x="465" y="56" font-size="9" fill="#444" text-anchor="middle">exists to sign</text>
+  <path d="M 374,110 L 452,94" stroke="#888" stroke-width="1.2"/>
+  <!-- vaults -->
+  <rect x="400" y="146" width="106" height="52" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="453" y="167" font-size="11" font-weight="bold" text-anchor="middle">base vault</text>
+  <text x="453" y="184" font-size="9" fill="#444" text-anchor="middle">NVDAx inventory</text>
+  <rect x="522" y="146" width="106" height="52" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="575" y="167" font-size="11" font-weight="bold" text-anchor="middle">quote vault</text>
+  <text x="575" y="184" font-size="9" fill="#444" text-anchor="middle">USDC inventory</text>
+  <path d="M 460,98 L 455,142" stroke="#111" stroke-width="1.4" marker-end="url(#propamm-map-arr)"/>
+  <path d="M 472,96 C 530,108 560,124 572,142" fill="none" stroke="#111" stroke-width="1.4" marker-end="url(#propamm-map-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="518" y="133" font-size="9" fill="#444" font-style="italic">token authority of both</text>
+  <!-- oracle feed -->
+  <rect x="28" y="70" width="104" height="64" fill="#fff" stroke="#111" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="80" y="92" font-size="11" font-weight="bold" text-anchor="middle">oracle feed</text>
+  <text x="80" y="108" font-size="9" fill="#444" text-anchor="middle">price, scale, slot,</text>
+  <text x="80" y="120" font-size="9" fill="#444" text-anchor="middle">confidence</text>
+  <path d="M 136,102 L 156,102" stroke="#111" stroke-width="1.4" marker-end="url(#propamm-map-arr)"/>
+  <text x="80" y="150" font-size="9" fill="#444" font-style="italic" text-anchor="middle">pinned at creation;</text>
+  <text x="80" y="162" font-size="9" fill="#444" font-style="italic" text-anchor="middle">interrogated on every swap</text>
+  <!-- Maria, operator -->
+  <circle cx="90" cy="240" r="15" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 67,280 Q 90,258 113,280" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="90" y="298" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
+  <text x="90" y="313" font-size="10" fill="#444" font-style="italic" text-anchor="middle">the operator: her capital, her quote</text>
+  <path d="M 112,232 C 148,218 182,208 206,198" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#propamm-map-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="128" y="200" font-size="10" text-anchor="middle">set_quote</text>
+  <path d="M 118,246 C 220,250 330,236 396,196" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#propamm-map-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="264" font-size="10" text-anchor="middle">deposit_inventory / withdraw_inventory</text>
+  <!-- traders -->
+  <circle cx="360" cy="270" r="13" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 340,304 Q 360,286 380,304" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="360" y="320" font-size="11" font-weight="bold" text-anchor="middle">Alice</text>
+  <circle cx="430" cy="270" r="13" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 410,304 Q 430,286 450,304" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="430" y="320" font-size="11" font-weight="bold" text-anchor="middle">Bob</text>
+  <path d="M 420,254 C 450,232 470,218 480,202" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#propamm-map-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="507" y="228" font-size="10" text-anchor="middle">swap</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="507" y="241" font-size="9" fill="#444" text-anchor="middle">(atomic; no deposits)</text>
+</svg>

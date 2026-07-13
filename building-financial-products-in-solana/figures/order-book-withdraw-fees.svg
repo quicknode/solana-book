@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="order-book-withdraw-fees-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="order-book-withdraw-fees-arr-gray" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#999"/></marker>
+  </defs>
+  <!-- the fee vault -->
+  <text x="110" y="95" font-size="11" font-weight="bold" text-anchor="middle">fee vault</text>
+  <circle cx="110" cy="120" r="10" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="110" y="148" font-size="10" font-style="italic" fill="#444" text-anchor="middle">1.875 USDC so far</text>
+  <!-- the money, through the gate -->
+  <path d="M 122,118 L 246,118" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-withdraw-fees-arr)"/>
+  <text x="184" y="104" font-size="11" font-weight="bold" text-anchor="middle">1.875 USDC</text>
+  <text x="184" y="136" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the whole balance</text>
+  <rect x="250" y="90" width="160" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="330" y="110" font-size="11" font-weight="bold" text-anchor="middle">authority check</text>
+  <text x="330" y="127" font-size="10" text-anchor="middle" font-family="Menlo, monospace">signer == authority</text>
+  <path d="M 410,118 L 488,118" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-withdraw-fees-arr)"/>
+  <!-- Maria's account and Maria -->
+  <text x="500" y="95" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Maria&#8217;s USDC account</text>
+  <circle cx="500" cy="118" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <line x1="505" y1="123" x2="571" y2="148" stroke="#888" stroke-width="1"/>
+  <circle cx="585" cy="160" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 560,202 Q 585,180 610,202" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="585" y="222" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
+  <!-- the rejected path -->
+  <path d="M 330,226 L 330,152" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#order-book-withdraw-fees-arr-gray)"/>
+  <line x1="322" y1="180" x2="338" y2="196" stroke="#999" stroke-width="1.6"/>
+  <line x1="338" y1="180" x2="322" y2="196" stroke="#999" stroke-width="1.6"/>
+  <text x="330" y="246" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">anyone else &#8594; NotMarketAuthority</text>
+  <text x="150" y="230" font-size="10" font-style="italic" fill="#444" text-anchor="middle">empty vault: succeeds as a no-op,</text>
+  <text x="150" y="244" font-size="10" font-style="italic" fill="#444" text-anchor="middle">so Maria can run it on a schedule</text>
+</svg>

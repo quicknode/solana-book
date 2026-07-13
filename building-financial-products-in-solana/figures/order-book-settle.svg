@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="order-book-settle-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- the vaults -->
+  <text x="110" y="62" font-size="11" font-weight="bold" text-anchor="middle">base vault</text>
+  <circle cx="110" cy="85" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="110" y="192" font-size="11" font-weight="bold" text-anchor="middle">quote vault</text>
+  <circle cx="110" cy="215" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="140" y="255" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the market PDA signs all three</text>
+  <!-- the transfers -->
+  <path d="M 121,85 L 450,85" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
+  <text x="285" y="73" font-size="11" font-weight="bold" text-anchor="middle">3 NVDAx</text>
+  <path d="M 120,209 L 451,155" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
+  <text x="285" y="170" font-size="11" font-weight="bold" text-anchor="middle">250 USDC</text>
+  <path d="M 119,221 L 451,271" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
+  <text x="285" y="264" font-size="11" font-weight="bold" text-anchor="middle">748.125 USDC</text>
+  <!-- token accounts and their owners -->
+  <text x="460" y="66" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Bob&#8217;s NVDAx account</text>
+  <circle cx="460" cy="85" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="460" y="131" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Bob&#8217;s USDC account</text>
+  <circle cx="460" cy="150" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="460" y="256" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Carol&#8217;s USDC account</text>
+  <circle cx="460" cy="275" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="575" cy="105" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 550,147 Q 575,125 600,147" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="575" y="167" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
+  <circle cx="575" cy="270" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 550,312 Q 575,290 600,312" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="575" y="332" font-size="12" font-weight="bold" text-anchor="middle">Carol</text>
+  <line x1="467" y1="88" x2="557" y2="100" stroke="#888" stroke-width="1"/>
+  <line x1="467" y1="148" x2="558" y2="112" stroke="#888" stroke-width="1"/>
+  <line x1="467" y1="275" x2="557" y2="272" stroke="#888" stroke-width="1"/>
+  <!-- counters zeroed before the transfers -->
+  <text x="300" y="292" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">step 1: zero the counters; step 2: transfer (checks-effects-interactions)</text>
+  <rect x="50" y="302" width="230" height="64" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="165" y="320" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s market user</text>
+  <text x="165" y="336" font-size="11" text-anchor="middle">unsettled_base: 3 &#8594; 0</text>
+  <text x="165" y="352" font-size="11" text-anchor="middle">unsettled_quote: 250 &#8594; 0</text>
+  <rect x="310" y="302" width="220" height="48" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="420" y="320" font-size="11" font-weight="bold" text-anchor="middle">Carol&#8217;s market user</text>
+  <text x="420" y="336" font-size="11" text-anchor="middle">unsettled_quote: 748.125 &#8594; 0</text>
+</svg>
