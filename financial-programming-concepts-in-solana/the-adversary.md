@@ -1,4 +1,4 @@
-# The Adversary
+# Chapter 9: The Adversary
 
 APIs churn; exploits recur. The same half-dozen attack classes have drained onchain markets for a decade, on every chain, in every framework, and they will drain the next decade's markets too. That makes this the most durable section in the book, and the one to reread before every launch. Each class below ends with the defense, and where a real incident makes the lesson concrete, a War Story tells it.
 
@@ -53,3 +53,11 @@ A transaction can invoke your program, which invokes another, which invokes anot
 The discipline is **checks-effects-interactions**: validate everything, then update your own state, and only then call out to other programs or move tokens. The order book's settlement zeroes a user's claimed balance *before* the transfer, so even if the token transfer could re-enter (token extensions can attach hooks to transfers), a re-entrant call finds the balance already spent. Solana's runtime forbids re-entering a program through another program, the pattern that plagued EVM contracts (only direct self-recursion is allowed, capped in depth), but the discipline earns its keep anyway, because it also defends against the failure you cannot see coming: a callee that is upgraded tomorrow, a hook added to a mint next year, an instruction sequenced after yours in the same transaction.
 
 Two more boundary rules. **Validate what a CPI returns and what it was given**: calling a program does not sanctify the accounts it touched; the vault strategy computes each swap's minimum output from the oracle precisely because the router it calls is outside its trust boundary. And **assume hostile sequencing**: any invariant your program needs must hold at the end of *your* instruction, not at the end of the transaction, because the instructions after yours belong to someone else. The postcondition asserts from The Arithmetic of Money (re-check K after the transfers land) are exactly this: your state, proven sound, before anyone else gets the keys.
+
+## What You Learnt
+
+- Every mistake on a public chain is a bounty: attacks are industrialized, ordering is contestable, and the boundary values are where the money is.
+- Every supplied account is a claim to verify, and every trust chain must terminate in something the program itself derived or recorded.
+- Empty pools need a named defense against inflation attacks, and rounding leaks become faucets the moment someone finds the loop.
+- A true price can still be a purchased price: time-weight it, respect the confidence interval, bound per-block change, and never build leverage on a market thinner than the credit it collateralizes.
+- Checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.

@@ -1,3 +1,3 @@
 # Dedication
 
-Dedicated to Victoria, who has patience. 
+PLACEHOLDER. To be written when the book is complete.
