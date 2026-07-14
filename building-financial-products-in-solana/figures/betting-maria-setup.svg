@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="betting-setup-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- Maria -->
+  <circle cx="70" cy="130" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 45,172 Q 70,150 95,172" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="70" y="192" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
+  <text x="70" y="206" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the admin</text>
+  <!-- call 1: initialize_config -->
+  <path d="M 100,118 C 170,70 220,54 296,50" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-setup-arr)"/>
+  <text x="185" y="48" font-size="11" font-weight="bold" text-anchor="middle">initialize_config</text>
+  <rect x="300" y="28" width="270" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="435" y="48" font-size="12" font-weight="bold" text-anchor="middle">config PDA</text>
+  <text x="435" y="64" font-size="10.5" fill="#444" text-anchor="middle">admin: Maria &#183; token: USDC &#183; fee: 2% (200 bps)</text>
+  <!-- call 2: create_event -->
+  <path d="M 102,130 C 180,134 230,138 296,140" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-setup-arr)"/>
+  <text x="190" y="122" font-size="11" font-weight="bold" text-anchor="middle">create_event</text>
+  <rect x="300" y="118" width="190" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="395" y="138" font-size="12" font-weight="bold" text-anchor="middle">event PDA</text>
+  <text x="395" y="154" font-size="10.5" fill="#444" text-anchor="middle">status: Open &#183; pool: 0</text>
+  <line x1="492" y1="142" x2="547" y2="142" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="560" cy="142" r="11" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="560" y="114" font-size="11" font-weight="bold" text-anchor="middle">vault</text>
+  <text x="560" y="170" font-size="10" fill="#444" text-anchor="middle">0 USDC</text>
+  <text x="560" y="184" font-size="10" fill="#444" font-style="italic" text-anchor="middle">ATA, authority = event</text>
+  <!-- call 3: add_outcome x2 -->
+  <path d="M 98,144 C 170,206 220,226 296,232" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-setup-arr)"/>
+  <text x="170" y="248" font-size="11" font-weight="bold" text-anchor="middle">add_outcome &#215;2</text>
+  <rect x="300" y="214" width="130" height="40" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="365" y="230" font-size="11" font-weight="bold" text-anchor="middle">outcome 0</text>
+  <text x="365" y="246" font-size="10.5" fill="#444" text-anchor="middle">Toy Story 5</text>
+  <rect x="450" y="214" width="130" height="40" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="515" y="230" font-size="11" font-weight="bold" text-anchor="middle">outcome 1</text>
+  <text x="515" y="246" font-size="10.5" fill="#444" text-anchor="middle">Backrooms</text>
+  <!-- annotations -->
+  <text x="320" y="282" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria&#8217;s signature against config.admin; anyone else gets Unauthorized</text>
+  <text x="320" y="297" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">add_outcome locks once betting starts: BettingAlreadyStarted</text>
+</svg>

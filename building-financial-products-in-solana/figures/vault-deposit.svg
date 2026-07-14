@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="vault-deposit-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- Alice -->
+  <circle cx="55" cy="105" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 30,147 Q 55,125 80,147" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="55" y="167" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <path d="M 88,98 C 110,90 128,86 152,83" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#vault-deposit-arr)"/>
+  <text x="118" y="70" font-size="12" font-weight="bold" text-anchor="middle">900 USDC</text>
+  <!-- deposit handler -->
+  <rect x="155" y="36" width="195" height="124" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="169" y="58" font-size="13" font-weight="bold">deposit</text>
+  <rect x="167" y="66" width="171" height="24" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="175" y="82" font-size="10.5">1. value the fund (NAV)</text>
+  <rect x="167" y="96" width="171" height="24" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="175" y="112" font-size="10.5">2. deploy at the weights</text>
+  <rect x="167" y="126" width="171" height="24" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="175" y="142" font-size="10.5">3. mint shares at NAV</text>
+  <!-- Pyth feeds -->
+  <rect x="430" y="20" width="186" height="36" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="523" y="34" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Pyth prices, fresh within 60s:</text>
+  <text x="523" y="48" font-size="10.5" text-anchor="middle">TSLAx $250 &#183; NVDAx $180</text>
+  <path d="M 350,74 C 385,66 400,56 426,46" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#vault-deposit-arr)"/>
+  <!-- NAV loop over vaults -->
+  <rect x="480" y="76" width="120" height="230" rx="10" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <circle cx="540" cy="110" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="540" y="94" font-size="11" font-weight="bold" text-anchor="middle">TSLAx vault</text>
+  <circle cx="540" cy="195" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="540" y="179" font-size="11" font-weight="bold" text-anchor="middle">NVDAx vault</text>
+  <circle cx="540" cy="275" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="540" y="259" font-size="11" font-weight="bold" text-anchor="middle">USDC vault</text>
+  <text x="540" y="324" font-size="10" font-style="italic" fill="#444" text-anchor="middle">NAV loop: every vault, every feed</text>
+  <!-- router and swap legs -->
+  <rect x="352" y="128" width="130" height="56" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="417" y="144" font-size="10.5" font-weight="bold" text-anchor="middle">swap router</text>
+  <text x="417" y="158" font-size="8.5" text-anchor="middle" font-family="Menlo, monospace">swap_usdc_for_asset</text>
+  <text x="417" y="172" font-size="9" font-style="italic" fill="#444" text-anchor="middle">fixed at creation</text>
+  <path d="M 350,110 C 362,114 372,119 380,126" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <path d="M 482,138 C 500,130 514,122 528,114" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <text x="470" y="112" font-size="10.5" font-weight="bold" text-anchor="middle">$360</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="552" y="136" font-size="10" fill="#444" text-anchor="middle">+1.44 TSLAx @ $250</text>
+  <path d="M 482,168 C 500,176 514,183 528,190" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <text x="502" y="200" font-size="10.5" font-weight="bold" text-anchor="middle">$540</text>
+  <text x="540" y="216" font-size="10" fill="#444" text-anchor="middle">+3 NVDAx @ $180</text>
+  <text x="540" y="297" font-size="10" font-style="italic" fill="#444" text-anchor="middle">nothing left idle</text>
+  <!-- shares to Alice -->
+  <path d="M 252,162 C 252,176 251,188 250,203" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <rect x="244" y="209" width="12" height="12" fill="#111" transform="rotate(45 250 215)"/>
+  <text x="250" y="243" font-size="11" font-weight="bold" text-anchor="middle">share mint</text>
+  <text x="250" y="257" font-size="10" font-style="italic" fill="#444" text-anchor="middle">first deposit: 1 share = $1</text>
+  <path d="M 240,215 C 200,215 155,215 112,215" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-deposit-arr)"/>
+  <text x="172" y="204" font-size="11" font-weight="bold" text-anchor="middle">900 shares</text>
+  <circle cx="100" cy="215" r="7" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="100" y="240" font-size="10.5" font-weight="bold" text-anchor="middle">Alice&#8217;s shares</text>
+  <!-- the slippage rule -->
+  <text x="280" y="290" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">each leg&#8217;s minimum out comes from the oracle, never the manager:</text>
+  <text x="280" y="304" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">a fill worse than the feed price &#8722; 1% reverts the whole deposit</text>
+</svg>

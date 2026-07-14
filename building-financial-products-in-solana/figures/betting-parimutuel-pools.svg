@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="betting-pools-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- winning pool -->
+  <text x="150" y="40" font-size="12" font-weight="bold" text-anchor="middle">Toy Story 5 pool: 400 USDC</text>
+  <text x="150" y="55" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the winning side</text>
+  <rect x="60" y="70" width="180" height="96" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <rect x="60" y="166" width="180" height="32" fill="#fff" stroke="#888" stroke-width="1"/>
+  <rect x="60" y="70" width="180" height="128" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="150" y="122" font-size="11" font-weight="bold" text-anchor="middle">Alice staked 300</text>
+  <text x="150" y="187" font-size="11" font-weight="bold" text-anchor="middle">Bob staked 100</text>
+  <!-- losing pool -->
+  <text x="500" y="40" font-size="12" font-weight="bold" text-anchor="middle">Backrooms pool: 200 USDC</text>
+  <text x="500" y="55" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the losing side</text>
+  <rect x="420" y="70" width="160" height="64" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="500" y="96" font-size="11" font-weight="bold" text-anchor="middle">Carol staked 200</text>
+  <text x="500" y="114" font-size="10.5" fill="#444" text-anchor="middle">loses her stake</text>
+  <!-- settlement flows -->
+  <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
+  <text x="330" y="78" font-size="11" font-weight="bold" text-anchor="middle">+147 to Alice</text>
+  <text x="330" y="104" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
+  <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
+  <text x="330" y="128" font-size="11" font-weight="bold" text-anchor="middle">+49 to Bob</text>
+  <!-- fee to the house -->
+  <path d="M 500,136 L 500,184" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
+  <text x="512" y="156" font-size="10.5">fee: 2% of 200</text>
+  <text x="512" y="170" font-size="10.5">= 4 USDC</text>
+  <circle cx="500" cy="204" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 475,246 Q 500,224 525,246" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="500" y="266" font-size="12" font-weight="bold" text-anchor="middle">Maria</text>
+  <text x="500" y="280" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the house</text>
+  <!-- pro-rata annotation -->
+  <text x="190" y="248" font-size="10.5" fill="#444" text-anchor="middle">losing pool 200 &#8722; fee 4 = 196 USDC distributable</text>
+  <text x="190" y="264" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">split pro rata: Alice staked 3&#215; Bob, wins 3&#215; the share</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="escrow-make-offer-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="escrow-make-offer-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+  </defs>
+  <!-- the curve -->
+  <path d="M 40,360 Q 320,230 600,360" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="410" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- Alice: wallet account, address on the curve -->
+  <circle cx="96" cy="337" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="108" y="335" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="104" y="349" width="118" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="119" cy="366" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 111,377 Q 119,370 127,377" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="134" y="366" font-size="10.5" font-weight="bold">Alice (maker)</text>
+  <text x="134" y="382" font-size="9.5" fill="#444">0.1 SOL</text>
+  <!-- Alice's USDC token account -->
+  <circle cx="56" cy="64" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="68" y="60" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
+  <text x="68" y="71" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <rect x="64" y="78" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="74" y="96" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <text x="74" y="112" font-size="9.5" fill="#444">1,000 USDC</text>
+  <!-- the vault -->
+  <circle cx="426" cy="64" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="438" y="60" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + OFFER&#8217;S ADDRESS</text>
+  <text x="438" y="71" font-size="8.5" letter-spacing="0.6" fill="#555">+ USDC MINT ADDRESS</text>
+  <rect x="434" y="78" width="146" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="442" y="96" font-size="10" font-weight="bold">vault: the offer&#8217;s USDC</text>
+  <text x="442" y="112" font-size="9.5" fill="#444">250 USDC</text>
+  <!-- the transfer -->
+  <path d="M 188,100 L 430,100" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-make-offer-arr)"/>
+  <text x="310" y="138" font-size="11" font-weight="bold" text-anchor="middle">250,000,000 minor units of USDC</text>
+  <text x="310" y="154" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(250 USDC, Alice signs)</text>
+  <text x="310" y="170" font-size="10" font-style="italic" fill="#444" text-anchor="middle">handle_send_offered_tokens_to_vault</text>
+  <!-- the offer account: its dot off the curve, seeds beside it -->
+  <circle cx="232" cy="188" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="244" y="191" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
+  <rect x="240" y="196" width="190" height="88" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="250" y="214" font-size="10.5" font-weight="bold">offer account</text>
+  <text x="250" y="230" font-size="9.5">maker: Alice</text>
+  <text x="250" y="244" font-size="9.5">token_mint_a: USDC</text>
+  <text x="250" y="258" font-size="9.5">token_mint_b: TSLAx</text>
+  <text x="250" y="272" font-size="9.5">token_b_wanted_amount: 100,000,000</text>
+  <!-- handle_save_offer writes the terms -->
+  <path d="M 185,345 C 205,318 220,300 238,282" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-make-offer-arrg)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="140" y="284" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">handle_save_offer</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="140" y="298" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">writes the terms</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="order-book-initialize-market-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="order-book-initialize-market-arr-gray" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+  </defs>
+  <!-- the curve -->
+  <path d="M 40,368 Q 320,318 600,368" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="592" y="400" font-size="12" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- the market struct: created at its PDA -->
+  <circle cx="34" cy="28" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="46" y="24" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET&#8221; + NVDAX &amp;</text>
+  <text x="46" y="35" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESSES</text>
+  <rect x="26" y="42" width="176" height="146" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="36" y="60" font-size="10.5" font-weight="bold">market</text>
+  <text x="36" y="76" font-size="9.5">authority: Maria</text>
+  <text x="36" y="90" font-size="9.5">base_mint: NVDAx</text>
+  <text x="36" y="104" font-size="9.5">quote_mint: USDC</text>
+  <text x="36" y="118" font-size="9.5">base_vault, quote_vault,</text>
+  <text x="36" y="132" font-size="9.5">fee_vault, order_book</text>
+  <text x="36" y="146" font-size="9.5">fee_basis_points: 25</text>
+  <text x="36" y="160" font-size="9.5">tick_size, min_order_size</text>
+  <text x="36" y="174" font-size="9.5">is_active: true</text>
+  <!-- Maria: wallet account, address on the curve -->
+  <circle cx="79" cy="361" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="91" y="358" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="24" y="373" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="39" cy="390" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 31,401 Q 39,394 47,401" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="53" y="390" font-size="10.5" font-weight="bold">Maria (authority)</text>
+  <text x="53" y="406" font-size="9.5" fill="#444">1 SOL</text>
+  <!-- the call -->
+  <path d="M 79,353 C 82,300 88,240 96,194" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-initialize-market-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="95" y="318" font-size="11" font-weight="bold">initialize_market</text>
+  <!-- three empty vaults: plain token accounts, keypair addresses on the curve -->
+  <rect x="180" y="242" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="190" y="260" font-size="10.5" font-weight="bold">base vault</text>
+  <text x="190" y="276" font-size="9.5" fill="#444">0 NVDAx</text>
+  <line x1="250" y1="284" x2="250" y2="339" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="250" cy="345" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="262" y="341" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="335" y="242" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="345" y="260" font-size="10.5" font-weight="bold">quote vault</text>
+  <text x="345" y="276" font-size="9.5" fill="#444">0 USDC</text>
+  <line x1="405" y1="284" x2="405" y2="339" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="405" cy="345" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="417" y="341" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="490" y="242" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="500" y="260" font-size="10.5" font-weight="bold">fee vault</text>
+  <text x="500" y="276" font-size="9.5" fill="#444">0 USDC, Maria&#8217;s</text>
+  <line x1="560" y1="284" x2="560" y2="355" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="560" cy="361" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="548" y="357" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+  <path d="M 100,192 L 230,238" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
+  <path d="M 140,192 L 390,238" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
+  <path d="M 170,192 L 540,238" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="300" y="216" font-size="8.5" font-style="italic" fill="#777" text-anchor="middle">owns</text>
+  <!-- the pre-created order book: a keypair account, address on the curve -->
+  <rect x="200" y="382" width="230" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="210" y="400" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
+  <text x="210" y="416" font-size="9.5">stamped: empty bid tree, empty ask tree</text>
+  <line x1="303" y1="382" x2="303" y2="349" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="303" cy="343" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="291" y="363" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+  <path d="M 154,393 C 168,396 182,400 196,404" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="315" y="442" font-size="10" font-style="italic" fill="#444" text-anchor="middle">created first by Maria&#8217;s client:</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="315" y="455" font-size="10" font-style="italic" fill="#444" text-anchor="middle">too big for the program to allocate</text>
+  <path d="M 150,188 C 165,280 175,340 205,378" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-initialize-market-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="150" y="368" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the handler stamps the trees</text>
+</svg>

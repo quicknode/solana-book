@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="order-book-settle-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- the curve -->
+  <path d="M 40,505 Q 320,455 600,505" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="120" y="540" font-size="12" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- the vaults: plain token accounts, keypair addresses on the curve -->
+  <rect x="30" y="54" width="150" height="46" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="40" y="72" font-size="10.5" font-weight="bold">base vault</text>
+  <text x="40" y="89" font-size="9.5" fill="#444">13 &#8594; 10 NVDAx</text>
+  <line x1="38" y1="100" x2="49" y2="497" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="50" cy="503" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="54" y="522" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="48" y="204" width="150" height="46" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="58" y="222" font-size="10.5" font-weight="bold">quote vault</text>
+  <text x="58" y="239" font-size="9.5" fill="#444">998.125 &#8594; 0 USDC</text>
+  <line x1="54" y1="250" x2="105" y2="489" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="107" cy="494" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="121" y="490" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <text x="105" y="138" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the market PDA</text>
+  <text x="105" y="152" font-size="10" font-style="italic" fill="#444" text-anchor="middle">signs all three</text>
+  <!-- the transfers -->
+  <path d="M 184,77 L 392,74" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="288" y="66" font-size="11" font-weight="bold" text-anchor="middle">3 NVDAx</text>
+  <path d="M 202,216 L 392,164" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="288" y="180" font-size="11" font-weight="bold" text-anchor="middle">250 USDC</text>
+  <path d="M 202,232 L 392,284" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#order-book-settle-arr)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="288" y="248" font-size="11" font-weight="bold" text-anchor="middle">748.125 USDC</text>
+  <!-- token accounts -->
+  <circle cx="404" cy="40" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="416" y="36" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + BOB&#8217;S</text>
+  <text x="416" y="47" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + NVDAX MINT ADDRESS</text>
+  <rect x="396" y="54" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="406" y="72" font-size="10.5" font-weight="bold">Bob&#8217;s NVDAx</text>
+  <text x="406" y="88" font-size="9.5" fill="#444">+3 NVDAx</text>
+  <circle cx="404" cy="130" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="416" y="126" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + BOB&#8217;S</text>
+  <text x="416" y="137" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <rect x="396" y="144" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="406" y="162" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <text x="406" y="178" font-size="9.5" fill="#444">+250 USDC</text>
+  <circle cx="404" cy="250" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="416" y="246" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + CAROL&#8217;S</text>
+  <text x="416" y="257" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <rect x="396" y="264" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="406" y="282" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+  <text x="406" y="298" font-size="9.5" fill="#444">+748.125 USDC</text>
+  <!-- counters zeroed before the transfers -->
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="234" y="316" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">step 1: zero the counters; step 2: transfer (checks-effects-interactions)</text>
+  <circle cx="104" cy="330" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="116" y="326" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET_USER&#8221; + MARKET</text>
+  <text x="116" y="337" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; BOB ADDRESSES</text>
+  <rect x="96" y="344" width="175" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="106" y="362" font-size="10.5" font-weight="bold">Bob&#8217;s market user</text>
+  <text x="106" y="378" font-size="9.5">unsettled_base: 3 &#8594; 0</text>
+  <text x="106" y="393" font-size="9.5">unsettled_quote: 250 &#8594; 0</text>
+  <circle cx="293" cy="330" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="305" y="326" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET_USER&#8221; + MARKET</text>
+  <text x="305" y="337" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; CAROL ADDRESSES</text>
+  <rect x="285" y="344" width="195" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="295" y="362" font-size="10.5" font-weight="bold">Carol&#8217;s market user</text>
+  <text x="295" y="378" font-size="9.5">unsettled_quote: 748.125 &#8594; 0</text>
+  <!-- the wallets, addresses on the curve -->
+  <circle cx="348" cy="480" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="360" y="477" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="356" y="492" width="112" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="371" cy="509" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 363,520 Q 371,513 379,520" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="385" y="509" font-size="10.5" font-weight="bold">Bob</text>
+  <text x="385" y="524" font-size="9.5" fill="#444">1 SOL</text>
+  <circle cx="516" cy="492" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="528" y="489" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="524" y="509" width="110" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="539" cy="526" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 531,537 Q 539,530 547,537" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="553" y="526" font-size="10.5" font-weight="bold">Carol</text>
+  <text x="553" y="541" font-size="9.5" fill="#444">1 SOL</text>
+</svg>

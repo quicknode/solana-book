@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="ob-sm-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- states -->
+  <rect x="40" y="90" width="120" height="44" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="100" y="117" font-size="12" font-weight="bold" text-anchor="middle">Open</text>
+  <rect x="250" y="90" width="140" height="44" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="320" y="117" font-size="12" font-weight="bold" text-anchor="middle">PartiallyFilled</text>
+  <rect x="480" y="30" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="2.4"/>
+  <text x="540" y="57" font-size="12" font-weight="bold" text-anchor="middle">Filled</text>
+  <rect x="480" y="156" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="2.4"/>
+  <text x="540" y="183" font-size="12" font-weight="bold" text-anchor="middle">Cancelled</text>
+  <!-- transitions -->
+  <path d="M 164,105 L 246,105" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="205" y="97" font-size="10" fill="#444" text-anchor="middle">a fill lands</text>
+  <path d="M 394,100 C 430,84 450,68 476,58" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="436" y="62" font-size="10" fill="#444" text-anchor="middle">last lot fills</text>
+  <path d="M 120,86 C 200,26 380,22 476,44" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="290" y="28" font-size="10" fill="#444" text-anchor="middle">one taker crosses the whole order</text>
+  <path d="M 130,134 C 220,200 380,196 476,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="280" y="212" font-size="10" fill="#444" text-anchor="middle">cancel_order, remaining lock credited back</text>
+  <path d="M 370,134 C 410,158 440,168 476,172" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="424" y="142" font-size="10" fill="#444" text-anchor="middle">cancel_order</text>
+  <!-- terminal note -->
+  <text x="540" y="90" font-size="9.5" fill="#444" text-anchor="middle">terminal: OrderNotCancellable</text>
+  <text x="540" y="216" font-size="9.5" fill="#444" text-anchor="middle">terminal: leaf out of the tree</text>
+  <text x="100" y="152" font-size="9.5" fill="#444" text-anchor="middle">resting in the tree</text>
+</svg>
