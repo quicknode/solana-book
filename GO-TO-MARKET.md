@@ -16,7 +16,8 @@ Testimonials are the exhaust of technical review, not a separate campaign. The s
 
 Rules for the praise page:
 
-- **It should read like the ecosystem endorsing the book, not one clique.** Target one founder-tier name, one protocol builder per domain the book covers (order books, AMMs, perps, lending, funds), one security firm, and one educator.
+- **Reviews and endorsements come from named people, never organizations.** An org account can amplify a launch, but it cannot read three chapters or sign a quote. Where the candidate table lists a company, it is a placeholder for a person at that company who must be identified before any invitation goes out.
+- **It should read like the ecosystem endorsing the book, not one clique.** Target one founder-tier name, one protocol builder per domain the book covers (order books, AMMs, perps, lending, funds), one named security researcher, and one educator.
 - **Review before reach.** A quote from someone who read their slice beats a bigger name who skimmed the cover. Reach without review produces the weakest quotes.
 - **Marquee names get the smallest slices**: the chapter that cites their own work, plus the Introduction, and a one-page "why this book exists". Warm intros over cold email, always.
 - **Deadline**: quotes must be in hand before cover finalization, so the testimonial ask goes out with the review invitations, not after print planning starts.
@@ -45,18 +46,18 @@ Kingmaker rank and tier annotated where the person or org appears in the snapsho
 | Max Resnick (@MaxResnick) | #96 Royalty | Anza economist, market design | The Order Book Exchange + The Adversary's MEV section | Microstructure claims reviewed by a market designer |
 | Mary Gooneratne (@marygooneratne) | #101 Royalty | Loopscale co-founder (Solana lending, org #59) | Lending and Borrowing | Production lending reviewed by a builder who is not a competitor's fork |
 | Stepan Simkin (@SimkinStepan) | #99 Royalty | Squads (org #102) | Operating Financial Software | The admin-power chapter tells readers to ship multisig upgrade authority; Squads is that multisig |
-| xStocks (org) | #53 Royalty | Issuer of the book's example equities (NVDAx, TSLAx, SPCXx style) | Tokens + the RWA framing | The book's asset universe, endorsed by its issuer |
-| Kamino (Marius, @y2kappa) | org #18 Kings, Marius #176 Knights | Highest-ranked protocol in the index; lending + vaults | Lending and Borrowing + The Vault Strategy | Both chapters cite Kamino by name |
-| Jupiter (@kashdhanda or devrel) | org #30 Kings, kash #195 Knights | Aggregator; Jupiter Perps | Prop AMM + Perpetual Futures | Both chapters cite Jupiter's designs |
-| Dean (@deanmlittle) | #209 Knights, Blueshift org #88 Royalty | Solana internals educator | Building Blocks + Escrow | The foundation chapters need the harshest available reviewer |
+| Person TBD at Backed/xStocks | org #53 Royalty | Issuer of the book's example equities (NVDAx, TSLAx, SPCXx style) | Tokens + the RWA framing | The book's asset universe, endorsed by a named person at its issuer; identify the individual before inviting |
+| Marius Ciubotariu (@y2kappa, Kamino) | #176 Knights (org #18 Kings) | Kamino is the highest-ranked protocol in the index; lending + vaults | Lending and Borrowing + The Vault Strategy | Both chapters cite Kamino by name |
+| Kash Dhanda (@kashdhanda, Jupiter) | #195 Knights (org #30 Kings) | Aggregator; Jupiter Perps | Prop AMM + Perpetual Futures | Both chapters cite Jupiter's designs |
+| Dean (@deanmlittle, Blueshift) | #209 Knights (org #88 Royalty) | Solana internals educator | Building Blocks + Escrow | The foundation chapters need the harshest available reviewer |
 | Noah (@redacted_noah) | #165 Knights | Token engineering at production scale | Tokens + Token Fundraiser + Lending | Token machinery reviewed by someone who shipped it at scale |
-| Jarry Xiao (@jarxiao) | #184 Knights | Ellipsis Labs co-founder; built Phoenix (org #75 Royalty) | The Order Book Exchange + Prop AMM | The order book chapter cites Phoenix by name (alternate: Eugene Chen #585) |
-| Drift (Cindy Leow, @cindyleowtt) | org #37 Royalty, Cindy #314 Commoners | Perps from the order-book side | Perpetual Futures + Offchain Truth | Chapter 19 explicitly contrasts pool-based design with Drift's |
-| Lucas Bruder (@buffalu__) | #159 Knights | Jito | The Adversary (MEV and ordering) | The MEV section reviewed by the person whose infrastructure defines it |
+| Jarry Xiao (@jarxiao, Ellipsis Labs) | #184 Knights (Phoenix org #75) | Ellipsis co-founder; built Phoenix | The Order Book Exchange + Prop AMM | The order book chapter cites Phoenix by name (alternate person: Eugene Chen #585) |
+| Cindy Leow (@cindyleowtt, Drift) | #314 Commoners (org #37 Royalty) | Perps from the order-book side | Perpetual Futures + Offchain Truth | Chapter 19 explicitly contrasts pool-based design with Drift's |
+| Lucas Bruder (@buffalu__, Jito) | #159 Knights | Jito | The Adversary (MEV and ordering) | The MEV section reviewed by the person whose infrastructure defines it |
 | Armani Ferrante (@armaniferrante) | #659 Commoners | Created Anchor; Backpack | PDAs + Escrow + one program chapter | The book's programs are Anchor-first; authority, not amplification |
-| Neodyme (founder or researcher) | not in index | Their research is the $2.6B rounding War Story | Arithmetic of Money + The Adversary + Operating | The book's security spine, reviewed by its primary source (index-present alternates: Ackee #552, Immunefi #789) |
-| HumidiFi or Tessera | #227 / #421 Knights/Commoners | Prop AMM operators the chapter names | The Prop AMM | Lifinity (the credited pioneer) is not in the index; these two are |
-| Switchboard (@switchboardxyz) | #603 Commoners | The oracle the book's examples mirror | Offchain Truth | The feed-parsing claims checked by the feed's own team (alternate: Pyth #544) |
+| Person TBD at Neodyme | not in index | Their research is the $2.6B rounding War Story | Arithmetic of Money + The Adversary + Operating | The book's security spine, reviewed by a named researcher at its primary source (alternate: a named auditor at Ackee, org #552) |
+| Person TBD at HumidiFi or Tessera | orgs #227 / #421 | Prop AMM operators the chapter names | The Prop AMM | Lifinity (the credited pioneer) is not in the index; a named operator at either firm works |
+| Person TBD at Switchboard | org #603 | The oracle the book's examples mirror | Offchain Truth | The feed-parsing claims checked by a named engineer on the feed's own team (alternate: a named person at Pyth, org #544) |
 
 ## Launch Channels
 
