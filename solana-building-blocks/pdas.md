@@ -26,6 +26,16 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 
 ![Seeds plus the program id derive an address off the curve, where no private key exists; only the program whose id derived it, presenting the same seeds, can sign as it.](figures/pda-derivation.svg)
 
+> **Why seeds? Why a program does not simply get authority.** Readers arriving from Ethereum, where a contract authorizes actions just by being the caller, often ask why Solana bothers: the runtime knows which program is executing, so why not let a program move funds from any token account that names it as authority? Each part of the seed mechanism closes a real hole.
+>
+> The program's own address cannot hold the power, because a private key for it exists: program ids sit on the curve like any wallet, generated as key pairs at deployment, and nothing proves that key was destroyed. A PDA provably has no key, so the only path to signing as it is the deriving program's own instruction handlers.
+>
+> Seeds make authority **explicit instead of ambient**. A program that automatically wielded power over every account naming it would wield that power whenever it runs, whoever invoked it, for whatever reason, and the token program could only ever learn "this program is executing", never "this handler means to spend from this particular vault". Ambient authority is what turns a program into a **confused deputy**, an entity with power tricked into using it on an attacker's behalf; The Adversary examines the bug class in detail. With seeds, nothing is authorized by default: a handler presents the seeds of the one identity it wields, in the one instruction that wields it.
+>
+> And seeds partition the blast radius. A program as a single authority would hold one master key over everything it ever touched; seeds hand it thousands of narrow ones. The vault for one market is a different identity from the vault for another, so a code path signing with the first market's seeds cannot move the second's funds, even under a bug. (Derive a PDA from an empty seed list and the single "the program itself" identity reappears as a special case; seeds generalize one identity into as many as a program needs.)
+>
+> What remains is one rule for everyone: the token program checks only that **the authority signed**, identically for a wallet holding its private key and for a program presenting its seeds. Programs join the same rule people use rather than receiving a special one.
+
 ## Storage Is Paid For: Rent
 
 Every account, PDA or otherwise, holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. The deposit is not a fee: close the account and the lamports come back.
