@@ -1,4 +1,4 @@
-# The Betting Market
+# Chapter 16: The Betting Market
 
 What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' money in proportion to how much they staked. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
 
@@ -11,12 +11,6 @@ In a bookmaker market, the house quotes odds and carries risk on every bet. In a
 The consequence the chapter's story will make concrete: **parimutuel markets reward conviction**. Bet three times as much as the next winner and you win three times as much of the losing pool.
 
 ![The parimutuel split: at settlement the losing pool flows to the winners in proportion to their stakes, with a fee slice diverted to the house.](figures/betting-parimutuel-pools.svg)
-
-## The Cast: An Admin and Three Bettors
-
-**Maria is the admin.** Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel. Her revenue is a 2% fee, charged only on the losing pool.
-
-**Alice, Bob, and Carol bet**, each from the standard wallet of one SOL and 1,000 USDC. The event is "top-grossing film this month" with two outcomes: *Toy Story 5* and *Backrooms*. Alice is confident about school holidays and puts $300 on Toy Story 5. Bob agrees but has less to spend: $100 on Toy Story 5. Carol believes in word of mouth and puts $200 on Backrooms. All bets are in USDC, the token the config designates.
 
 ## The Account Model: One Config, One Event, Its Outcomes, and a Bet per Bettor
 
@@ -35,13 +29,15 @@ Finally, each bettor gets a **user** PDA indexing their open bet accounts, cappe
 
 ## Maria Creates the Market
 
-Maria runs `initialize_config` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `create_event` with a description, then `add_outcome` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_create_event` pins it.
+Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `create_event` with a description ("top-grossing film this month"), then `add_outcome` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_create_event` pins it.
 
 One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
 
 ![Maria's three setup calls build the config, the event with its empty vault, and the two outcome accounts.](figures/betting-maria-setup.svg)
 
 ## Alice, Bob, and Carol Place Their Bets
+
+Three bettors take a view, each from the standard wallet of one SOL and 1,000 USDC, and all in USDC, the token the config designates. Alice is confident about school holidays and puts $300 on Toy Story 5. Bob agrees but has less to spend: $100 on Toy Story 5. Carol believes in word of mouth and puts $200 on Backrooms.
 
 Each bettor calls `place_bet` with an amount. Zero-amount bets reject with `ZeroAmount`. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA gymnastics needed on the way in), creates the bet account if this is the bettor's first bet on this outcome, and bumps the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is exactly how the handler tells a first bet from a top-up and gates the per-outcome bookkeeping.
 
@@ -105,10 +101,20 @@ The entire financial surface of this program is four expressions: the losing poo
 - **Slot exhaustion**: 32 concurrent positions per user, `TooManyBets` beyond it, and `close_losing_bet` to recycle slots.
 - **Betting after the whistle** rejects with `EventNotOpen`, whichever exit the event took.
 
-## The Test That Catches the Bug
+## Testing Considerations
 
-The suite runs on LiteSVM with solana_kite helpers, builds all state through the program's own handlers, and its centrepiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: admin gating, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and both properties of losing-bet closure. When you write your own market, copy the shape: the happy path proves the math, and every adversarial branch gets a test whose name says what it refuses to allow.
+The suite builds all state through the program's own handlers, and its centrepiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: admin gating, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and both properties of losing-bet closure. When you write your own market, copy the shape: the happy path proves the math, and every adversarial code path gets a test whose name says what it refuses to allow.
 
-## Everything Is Still an Escrow
+## What You Learnt from Building the Betting Market
 
-A vault owned by a data account. Terms recorded at entry, immutable once money is in. Exits from every state, each one draining exactly what it promised. The betting market adds the pooled payout formula and its first honest look at offchain truth, both of which return at full scale in the lending and perpetual futures chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
+A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window; a betting site adds a bookmaker carrying risk on every line. This chapter replaced all of it with a vault and four expressions of arithmetic: the pool is the odds, the program carries no risk, and the house takes a fee only from the losers.
+
+The concepts you now have:
+
+- **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so conviction pays proportionally and no one sets odds.
+- **Offchain truth by designated signer.** Maria's signature is the oracle, and the program's job is making that trust visible and narrow: she picks the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
+- **Terms locked when money commits.** The outcome list freezes at the first bet and the fee is snapshotted at event creation, so the question bettors staked on cannot be rewritten.
+- **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize; the state machine's exit is the account's deletion.
+- **An exit from every state.** Open events can be canceled and refunded in full, so a burned-down film festival strands nobody's stake.
+
+The pooled payout formula and the honest look at offchain truth both return at full scale in the lending and perpetual futures chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.

@@ -12,6 +12,8 @@ The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts t
 
 - [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents
 - [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
+- [GO-TO-MARKET.md](GO-TO-MARKET.md) - positioning, the testimonial engine, reviewer targeting, and launch channels
+- [REVIEWING.md](REVIEWING.md) - the reviewer-facing guide sent with advance copies
 - One folder per section ([prelude/](prelude/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [appendices/](appendices/)), one file per chapter; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
 
 ## Companion projects
@@ -25,7 +27,7 @@ The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts t
 
 ## Status
 
-Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, Escrow, The Order Book Exchange, The Constant-Product AMM, The Vault Strategy, Lending and Borrowing, The Betting Market, the Glossary, and the author bio. Program chapters carry figure placeholders awaiting the visual pass. Skeletons only: Token Fundraiser, Perpetual Futures, and the Invariant Checklist.
+Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, every program chapter, and the Glossary. Program chapters carry figure placeholders awaiting the visual pass. The dedication, acknowledgements, and author bio are placeholders until the book is complete.
 
 ## License
 

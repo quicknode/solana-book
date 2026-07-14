@@ -1,4 +1,4 @@
-# The Prop AMM
+# Chapter 15: The Prop AMM
 
 The constant-product chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the venue that quietly took most of Solana's swap volume away from both designs: the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: *proprietary* trading is trading the firm's own money.
 
@@ -10,10 +10,6 @@ A constant-product pool computes its price from its reserves, which means its pr
 
 Two consequences follow immediately, and both are absences. A trade's unit price does not depend on its size, so there is no price impact: 500 NVDAx fills at the same price per token as 5, until the inventory runs out. And the price does not depend on the pool's balances, so there is nothing to sandwich: the front-run/back-run attack from The Adversary needs a price that moves with each trade, and this one does not move.
 
-## The Cast: A Firm and Two Traders
-
-**Maria runs the market-making firm** that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. **Alice and Bob trade** NVDAx, the tokenized NVIDIA stock the order book chapter traded, against USDC; Bob holds 5 NVDAx alongside his standard wallet. The oracle quotes NVDAx at $165.
-
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
 ![The account map: the market PDA pinned to its oracle feed, the dataless authority PDA that owns the base and quote vaults, Maria on the operator edge, and traders swapping against the vaults.](figures/prop-amm-account-map.svg)
@@ -24,6 +20,8 @@ What is missing is the chapter's real lesson. No LP mint: there are no depositor
 
 ## Maria Opens the Market and Stocks It
 
+Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. The market trades NVDAx, the NVIDIA stock the order book chapter traded, against USDC, and the oracle quotes NVDAx at $165.
+
 Maria calls `initialize_market` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
 Then `deposit_inventory` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
@@ -32,13 +30,13 @@ Then `deposit_inventory` moves 1,000 NVDAx and 200,000 USDC from the firm's trea
 
 ![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
 
-Alice wants 5 NVDAx. She calls `swap` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
+Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
 Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
 ## Bob Sells at the Bid, and the Round Trip Is the Fee
 
-Bob sells his 5 NVDAx: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 824.175 USDC.
+Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 824.175 USDC.
 
 Look at the two numbers together. Buying 5 NVDAx cost 825.825; selling them back returned 824.175. The difference, 1.65 USDC, is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
@@ -80,10 +78,20 @@ The unit conversion deserves one honest sentence: prices arrive at the oracle's 
 - **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the perpetual futures chapter makes, with one difference worth noticing: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
 - **What is absent.** Run The Adversary's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares to dilute, so the empty-pool games have no board to play on. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Simplicity is not just elegance here; it is attack surface that was never built.
 
-## The Test That Catches the Bug
+## Testing Considerations
 
-The suite (`tests/test_prop_amm.rs`, LiteSVM plus solana_kite) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the property that defines the genre: the capital is Maria's, and the market fails safe without it.
+The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the property that defines the genre: the capital is Maria's, and the market fails safe without it.
 
-## The Book, Without the Book
+## What You Learnt from Building the Prop AMM
 
-The order book chapter needed makers willing to rest orders; the constant-product chapter replaced them with a formula and paid for it in price impact and impermanent loss. The prop AMM is the third answer: bring back the market maker, drop the book, and let an oracle plus a spread do what a thousand resting orders used to. The price of that efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The perpetual futures chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.
+A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. This chapter rebuilt the desk as a program: the oracle is the trader on the desk, the spread is the firm's margin, `set_quote` is the risk manager widening quotes, and `paused` is pulling them entirely.
+
+The concepts you now have:
+
+- **Oracle-priced quoting.** The price comes from a feed, not from reserves, so there is no price impact and nothing to sandwich; the spread is the entire fee.
+- **The oracle checks as the business itself.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.
+- **Adverse selection.** The flow that finds you when your quote is wrong is exactly the flow you did not want: the market maker's structural cost, mitigated commercially (wider spreads, pulled quotes), never by a `require!`.
+- **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the whole book.
+- **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from The Adversary return "not applicable" because the design never created their board.
+
+The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The perpetual futures chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.

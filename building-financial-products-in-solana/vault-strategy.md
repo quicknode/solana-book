@@ -1,20 +1,14 @@
-# The Vault Strategy
+# Chapter 18: The Vault Strategy
 
-A **vault strategy** is the onchain equivalent of an index fund. A list of approved assets, a fund manager who picks the allocation, investors who deposit and receive shares, a management fee for the manager's expertise. On Solana you know the genre from Symmetry and Kamino. The program lives at `finance/vault-strategy` in the companion repository, and its story trades stocks: TSLAx and NVDAx, quoted in USDC.
+A **vault strategy** is the onchain equivalent of an index fund. A list of approved assets, a fund manager who picks the allocation, investors who deposit and receive shares, a management fee for the manager's expertise. Symmetry and Kamino are popular vault-strategy platforms on Solana. The program lives at `finance/vault-strategy` in the companion repository, and its story trades stocks: TSLAx and NVDAx, quoted in USDC.
 
 This is the chapter where the original promise of onchain programs pays off most visibly. In a traditional fund, "the manager cannot run off with client money" is enforced by custodians, auditors, and courts. Here it is enforced by the program: **the manager can change the allocation and earn the fee, and can do nothing else.** No instruction in the program moves a vault's tokens to the manager. That sentence is the chapter.
 
 One vocabulary note before the story, because the word is overloaded. On Solana, a **vault** is a token account owned by a program; that is how this book has used it in every chapter. Some platforms call the whole fund product "a vault." This book does not: here **the product is the strategy, and the token accounts are the vaults.**
 
-## The Cast: A Gatekeeper, a Manager, and Two Investors
-
-- **Victor runs the registry.** He is not a fund manager; he is the gatekeeper who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is worth exactly as much as its reputation for funds not blowing up: vetting feeds is not charity, it is his product.
-- **Maria is the fund manager.** She creates the strategy, sets the weights, rebalances, and earns the fee.
-- **Alice and Bob invest.** Each starts with the standard one SOL and 1,000 USDC; they deposit USDC, hold shares, and eventually withdraw.
-
-The separation between Victor and Maria is the program's first security decision, so it comes first.
-
 ## Victor's Registry: What Managers May Touch at All
+
+Two different people hold power in this program, and their separation is its first security decision. Victor runs the registry: he is not a fund manager, but the gatekeeper who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is worth exactly as much as its reputation for funds not blowing up: vetting feeds is not charity, it is his product. Maria, the fund manager you will meet shortly, gets to pick allocations only from what Victor has approved.
 
 Victor runs `initialize_registry` once, then `whitelist_asset` for each approved asset, binding the asset's mint to its official Pyth price feed. The registry's own doc comment states the threat it exists for: the authority vets which assets and which feeds are safe, so a manager cannot list a token they minted themselves, and cannot pair a real asset with a price feed they control. When Maria later adds an asset to her strategy, the feed address is copied out of Victor's whitelist entry; the manager never supplies a price feed, ever.
 
@@ -34,13 +28,13 @@ The indexes matter more than they look: every handler that computes the fund's v
 
 ## Maria Creates the Strategy and Sets the Weights
 
-Maria runs `initialize_strategy` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund *by configuration*, and the cap is the program refusing to make that a parameter.
+Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund *by configuration*, and the cap is the program refusing to make that a parameter.
 
 She then runs `add_asset` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and here is the rule that shapes the whole design: **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight`, and only Maria: the manager gate is pinned by `test_set_weight_rejects_non_manager`.
 
-## Alice Deposits 900 USDC and the Program Goes Shopping
+## Alice Deposits 900 USDC and the Program Acquires Assets
 
-Alice runs `deposit` with 900 USDC and a `minimum_shares` floor. The handler does three jobs in one transaction, and the order is the security model.
+Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `deposit` with 900 USDC and a `minimum_shares` floor. The handler does three jobs in one transaction, and the order is the security model.
 
 **First it values the fund.** It walks every asset: reads the vault balance, loads the Pyth price (rejecting a feed that is not the one recorded in the asset config, a price that is not positive, or a price older than 60 seconds), and accumulates value in u128: amount × price ÷ 10^8, multiply before divide. Plus the USDC vault. That total is the **net asset value**, the NAV. On the fund's first deposit the NAV is zero and shares are minted one-to-one: Alice's 900 USDC becomes 900 shares.
 
@@ -60,7 +54,7 @@ But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund agains
 
 ## Bob Buys In at the New Price
 
-Bob deposits 480 USDC. He is not early, and the share math prices that in: shares = deposit × total shares ÷ NAV, floored. With 900 shares outstanding against a $960 NAV, his 480 buys 450 shares, not 480. Alice's early position is not diluted by his arrival, and the test suite pins the fairness directly (`test_deposit_fair_pricing`). His money deploys 40/60 at current prices, same as hers, same slippage discipline.
+Bob, the second investor, deposits 480 USDC of his standard wallet. He is not early, and the share math prices that in: shares = deposit × total shares ÷ NAV, floored. With 900 shares outstanding against a $960 NAV, his 480 buys 450 shares, not 480. Alice's early position is not diluted by his arrival, and the test suite pins the fairness directly (`test_deposit_fair_pricing`). His money deploys 40/60 at current prices, same as hers, same slippage discipline.
 
 ## Maria's Fee Arrives by Dilution
 
@@ -92,13 +86,23 @@ Every formula in the program is a proportion, and they all lean the same way. Sh
 
 - **The manager is the threat model**, and the program treats her as such: assets only from Victor's list, feeds only from Victor's entries, swaps only through the fixed router, minimums only from the oracle, fee capped and immutable, custody never hers. What remains to a careless manager is churn: pointless rebalancing that pays market slippage. That hurts depositors, but it does not enrich the manager, which is the design's honest boundary. Aligning *that* incentive is what the fee-on-assets structure is for.
 - **The feed is load-bearing.** A stale price fails closed (`StalePriceFeed`, 60-second window), a non-positive price fails (`NegativePrice`), a substituted feed account fails (`InvalidPriceFeed`). What this example does not check is the feed's confidence interval; a production strategy should, and the offchain-truth section of Financial Programming Concepts in Solana explains what confidence means and why "fresh but uncertain" is its own failure mode.
-- **The first deposit has no dead-shares guard**, and the chapter says so plainly: the empty-fund deposit mints one-to-one, with no locked minimum like the AMM's `MINIMUM_LIQUIDITY`. The design leans on two mitigations: deposits only open at full allocation, and every deposit deploys immediately, so there is no idle pot to donate into and skew. That narrows the classic inflation attack without formally closing it; a production strategy should add virtual shares or a dead-shares floor, and the empty-pool section of Financial Programming Concepts in Solana shows exactly how. Naming the gap is the chapter's last lesson: knowing which defense your program relies on, and which it lacks, is the difference between a design decision and an accident.
+- **The first deposit has no dead-shares guard**: the empty-fund deposit mints one-to-one, with no locked minimum like the AMM's `MINIMUM_LIQUIDITY`. The design leans on two mitigations: deposits only open at full allocation, and every deposit deploys immediately, so there is no idle pot to donate into and skew. That narrows the classic inflation attack without formally closing it; a production strategy should add virtual shares or a dead-shares floor, and the empty-pool section of Financial Programming Concepts in Solana shows exactly how. Naming the gap is the chapter's last lesson: knowing which defense your program relies on, and which it lacks, is the difference between a design decision and an accident.
 - **Partial baskets are refused**, on deposit, withdrawal, and valuation alike (`IncompleteAssetAccounts`): an attacker who could get the fund valued without its best-performing vault could buy shares at a discount.
 
-## The Test That Catches the Bug
+## Testing Considerations
 
-The suite (LiteSVM plus solana_kite, with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`) and then pins each wall separately: under-allocated strategies refuse deposits, non-whitelisted assets refuse listing, weight overflows refuse, the 17th asset refuses, non-managers cannot set weights, unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be honestly tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
+The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`) and then pins each wall separately: under-allocated strategies refuse deposits, non-whitelisted assets refuse listing, weight overflows refuse, the 17th asset refuses, non-managers cannot set weights, unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be honestly tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
 
-## What the Program Replaced
+## What You Learnt from Building the Vault Strategy
 
-An index fund needs a custodian, a compliance officer, a fee schedule in a prospectus, and an auditor checking that the manager's trades match the mandate. This chapter needed a registry PDA, a weight sum that must hit 10,000, a fee constant with no setter, and a slippage floor computed from a feed the manager cannot choose. The perpetual futures chapter closes the book by combining everything: vaults, shares, oracles, funding, margin, and liquidation, in the one program that uses all of it at once.
+An index fund needs a custodian, a compliance officer, a fee schedule in a prospectus, and an auditor checking that the manager's trades match the mandate. This chapter needed a registry PDA, a weight sum that must hit 10,000, a fee constant with no setter, and a slippage floor computed from a feed the manager cannot choose.
+
+The concepts you now have:
+
+- **The manager as the threat model.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves tokens between program-owned vaults; the fee path mints shares and touches no vault.
+- **A gatekeeper separate from a manager.** Victor's whitelist binds each asset to its feed, so a manager can neither list their own token nor pair a real asset with a feed they control.
+- **Oracle-anchored minimums.** When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control; this is the chapter's most transferable idea.
+- **NAV as the share price.** Value every vault with a fresh feed or refuse to run; a valuation that can skip an asset is a discount for whoever exploits it.
+- **Fees by dilution, snapshotted.** The fee mints shares against everyone proportionally, accrues by time rather than the manager's diligence, and has no setter, so the deal investors joined under cannot be quietly worsened.
+
+The perpetual futures chapter closes the book by combining everything: vaults, shares, oracles, funding, margin, and liquidation, in the one program that uses all of it at once.

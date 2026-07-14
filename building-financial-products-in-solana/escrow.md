@@ -1,4 +1,4 @@
-# Escrow
+# Chapter 11: Escrow
 
 There is an old saying that once you have built an escrow, everything else looks like an escrow. An auction house is an escrow with competing takers. A betting market is an escrow where an outcome decides the payout. A lending market is an escrow with time and interest attached. This is why escrow is the first program in this book: it is the smallest program that actually handles value, and every pattern it uses (holding tokens in a program-owned account, storing custom data, controlling who may do what) reappears in every chapter that follows.
 
@@ -113,19 +113,27 @@ What must hold, before and after every handler:
 - **The abandoned offer.** The failure mode that is a missing feature: without `cancel_offer`, an untaken offer strands the maker's tokens permanently. Every state needs an exit.
 - **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks are worth adding to any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same, since a swap of a token for a different amount of itself means someone is about to be ripped off.
 
-## The Test That Catches the Bug
+## Testing Considerations
 
-The tests live in `tests/test_escrow.rs` and run against LiteSVM, with `solana_kite` helpers creating the wallets, mints, and token accounts. Every piece of program state in the tests is created through the program's own instruction handlers, never injected, so a missing constraint or an unusable handler cannot hide behind a hand-built fixture.
+The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token accounts each scenario needs. Every piece of program state in the tests is created through the program's own instruction handlers, never injected, so a missing constraint or an unusable handler cannot hide behind a hand-built fixture.
 
 - `test_make_offer` calls `make_offer` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (id, maker) match what Alice sent.
 - `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Symmetric flows get tested in both directions, because a bug that favors one side is invisible if you only assert the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, pinning the rent economics.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
-- `test_cancel_offer_rejects_non_maker` is the adversarial branch: Bob attempts to cancel Alice's offer and the transaction fails. Test the branch the bug lives in; the branch where money goes to the wrong person is the one that matters.
+- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in; the path where money goes to the wrong person is the one that matters.
 
 The testing section of Financial Programming Concepts in Solana builds the general method; this suite is the method at its smallest useful size. And escrow goes one rung further: the `kani-proofs` crate in the companion repository proves the conservation properties formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of Operating Financial Software explains the technique.
 
-## Everything Looks Like an Escrow
+## What You Learnt from Building the Escrow
 
-Hold tokens in a program-owned vault whose authority is a data account. Record the deal's terms in that data account. Gate each state transition on who signed and what the stored data says. Drain and close everything on every exit path, returning rent to whoever paid it.
+In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, charges one to six percent for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are the deployed bytecode, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
+
+The concepts you now have:
+
+- **Program custody.** Tokens held in a vault whose authority is a data account (a PDA), so funds move only along the code paths the program defines.
+- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler validates its accounts against that stored data.
+- **State transitions gated by signatures and state.** Who signed, and what the stored data says, decide what may happen; `has_one`, seeds, and ATA derivation close every substitution.
+- **An exit from every state.** `take_offer` and `cancel_offer` both drain and close everything, returning rent to whoever paid it.
+- **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
 That is the whole pattern, and you will now see it everywhere. The fundraiser in the next chapter is an escrow with many depositors and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome. Once you have built an escrow, everything else looks like an escrow.

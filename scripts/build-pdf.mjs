@@ -9,7 +9,7 @@
 //
 // Usage: node scripts/build-pdf.mjs [output.pdf]
 
-import { readFileSync, writeFileSync, mkdtempSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname, resolve, basename } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -23,6 +23,7 @@ const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
 const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", `${TITLE}.pdf`));
+mkdirSync(dirname(outputPath), { recursive: true });
 
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
 const reviewerName = process.env.REVIEWER_NAME ?? "";
