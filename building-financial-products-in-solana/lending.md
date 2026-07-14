@@ -14,12 +14,14 @@ Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's m
 
 Each reserve carries a `ReserveConfig`, all in basis points, and its validation rules are a compressed education in credit risk:
 
-- `loan_to_value_bps` (75%): how much of your collateral's value you may borrow.
-- `liquidation_threshold_bps` (80%): the debt level at which your position becomes liquidatable. The config validator refuses `loan_to_value_bps` above it, because you cannot be allowed to borrow past the point you would be liquidated.
-- `liquidation_bonus_bps` (5%): the liquidator's discount.
-- `close_factor_bps` (50%): how much of a debt one liquidation may repay. A zero close factor would make every liquidation a no-op, so zero is rejected.
-- `reserve_factor_bps` (10%): the house's cut of interest.
-- The interest curve: `min_borrow_rate_bps`, `optimal_borrow_rate_bps`, `max_borrow_rate_bps`, kinked at `optimal_utilization_bps`, which must sit strictly inside (0%, 100%).
+| Parameter | This market | Meaning |
+| --- | --- | --- |
+| `loan_to_value_bps` | 75% | How much of your collateral's value you may borrow. |
+| `liquidation_threshold_bps` | 80% | The debt level at which your position becomes liquidatable. The validator refuses a loan-to-value above it: you cannot be allowed to borrow past the point you would be liquidated. |
+| `liquidation_bonus_bps` | 5% | The liquidator's discount. |
+| `close_factor_bps` | 50% | How much of a debt one liquidation may repay. Zero is rejected, because it would make every liquidation a no-op. |
+| `reserve_factor_bps` | 10% | The house's cut of interest. |
+| `min/optimal/max_borrow_rate_bps` | 2% / 20% / 150% | The interest curve, kinked at `optimal_utilization_bps` (80%), which must sit strictly inside (0%, 100%). |
 
 Finally, each borrower gets one **obligation** PDA per market (seeds: `"obligation"`, the market, the owner): their loan file, listing collateral deposits and borrows (up to four reserves each), with cached values (`deposited_value`, `borrowed_value`, `allowed_borrow_value`, `unhealthy_borrow_value`) and a `stale` flag that forces revaluation before anything financial happens.
 

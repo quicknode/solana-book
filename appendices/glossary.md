@@ -54,6 +54,10 @@ A recent block's hash, included in every transaction to bound its lifetime. When
 
 The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address cheaply.
 
+### checks-effects-interactions
+
+The ordering discipline for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See The Adversary.
+
 ### close factor
 
 In a lending market, the fraction of a debt one liquidation may repay (typically 50%). Turns liquidation into a correction rather than an execution. See the Lending and Borrowing chapter.
@@ -65,6 +69,10 @@ One running instance of Solana: the same software, a separate world. Mainnet hol
 ### collateral
 
 Assets pledged to secure a loan, seizable on default or on breach of the liquidation threshold.
+
+### compute unit
+
+The metered unit of onchain execution. Every transaction runs against a compute budget, and the meter shapes financial design: consolidate work, credit balances instead of transferring on every fill, and treat compute cost as a design input.
 
 ### confidence interval
 
@@ -113,6 +121,10 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 ### escrow
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
+
+### faucet
+
+A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or faucet.solana.com, USDC from Circle's faucet at faucet.circle.com. Faucets are why nothing in this book needs real money.
 
 ### fixed point
 
@@ -214,9 +226,17 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 On a perpetual futures market, the index price is the oracle's statement of the asset's real-world price; the mark price is the venue's own price used for margin and liquidation.
 
+### mark to market
+
+Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because yesterday's valuation is an opinion and today's is the one money moves on.
+
 ### market maker
 
 A party that quotes both a buy and a sell price and earns the spread between them. On an order book, makers rest orders; in a prop AMM, one firm is the standing maker for the whole venue.
+
+### Memo Program
+
+The program at a well-known address whose one job is writing a note into the transaction log. Alice's first transaction in this book pairs a transfer with a memo, which is how the book introduces multi-instruction atomicity.
 
 ### minor unit
 
@@ -265,6 +285,10 @@ An address computed from a program's id and chosen seeds, with no private key. O
 ### perpetual future
 
 A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The capstone chapter of this book.
+
+### PnL (profit and loss)
+
+What a position has gained or lost. While the position is open the figure is **unrealized PnL**, marked to market against the current price; closing the position realizes it. On the book's perpetual futures venue, PnL is size × price change ÷ entry price.
 
 ### price-time priority
 
@@ -325,6 +349,10 @@ A token designed to hold a fixed value, usually one dollar. The quote asset of n
 ### state compression
 
 A technique for storing bulk data offchain with onchain proofs, used for things like very large NFT collections. It is the reason "nearly all", rather than "all", data on Solana lives in accounts; none of the financial state in this book uses it.
+
+### System Program
+
+The program at a well-known address that creates accounts and transfers SOL. Every wallet account is owned by it, and every account any program creates is born through it.
 
 ### sysvar
 

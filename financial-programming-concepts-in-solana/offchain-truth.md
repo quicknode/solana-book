@@ -28,3 +28,9 @@ The third question, **what happens when publication stops**, is the one designs 
 One more consequence of taking trust seriously: **the fact's meaning must be pinned when the money commits, not when the fact arrives.** The betting market locks its outcome list the moment the first bet lands and snapshots its fee at event creation, so the question bettors staked on cannot be quietly rewritten before it is answered. Whatever the source, the deal is: the terms were fixed when you entered; only the answer arrives later.
 
 The Adversary's price-manipulation section is this section's dark twin: what happens when the signed fact is fresh, confident, correctly verified, and *engineered* - a true report of a market the attacker just bent.
+
+## What You Learnt
+
+- Offchain facts arrive by signature, and a program verifies them like any other input: the publisher, the freshness (in the right clock), the confidence, and the degenerate values.
+- Trust is an engineering parameter: a single key, a committee, or a feed network, chosen by asking who publishes, what lying costs them, and what happens when they go silent.
+- Pin the fact's meaning when the money commits, and give every state an exit that does not depend on the feed.

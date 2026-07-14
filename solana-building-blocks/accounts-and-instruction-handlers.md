@@ -69,6 +69,8 @@ Because addresses are how everything is found, financial programs lean on *deriv
 
 Anyone handling money online, on a blockchain or on a credit card rail, works in **minor units**: the small money alongside the big money, cents to the dollar, pence to the pound. SOL has the **lamport**: one billion lamports make one SOL. The balance an explorer displays as 1 SOL is stored as, and calculated with, the integer 1,000,000,000. Every asset in this book gets the same treatment, and The Arithmetic of Money builds the full discipline on this one idea.
 
+> **Why "lamport"?** The unit is named for Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
+
 ## Programs Live at Addresses Too
 
 The programs that run on this giant computer are called **onchain programs**, and just like people, every program has its own address: another point on the same curve. The **System Program** sits at a well-known address and creates accounts and transfers SOL; the **Memo Program** sits at another and writes notes into the transaction log; the escrow you will build in this book gets an address of its own the day you deploy it. Compiled programs, like everything else, are stored in accounts.
@@ -102,3 +104,15 @@ The budget for all this is metered in **compute units** per transaction, and the
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
 Every instruction declares up front which accounts it touches, which is what lets the runtime execute non-overlapping transactions in parallel. The consequence that shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account a caller hands in is a claim to verify. The validation discipline in Financial Programming Concepts in Solana exists because of this one design fact.
+
+## What You Learnt
+
+The rest of the book builds on this chapter's tour:
+
+- A **key pair**'s public key is an address, and every transaction includes a signed message: all authority reduces to whose signature a transaction carries.
+- Nearly all data lives in **accounts**: bytes at an address, with a lamport balance and an owner program that users invoke to change it.
+- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which programs sign for.
+- **SOL** pays for account storage and transaction fees, and programs calculate in its minor unit, the **lamport**.
+- Deployed programs and their state live in separate accounts, and **instruction handlers** are how state changes.
+- **Transactions are atomic**: every instruction succeeds or nothing happened, which is a primitive financial software designs with.
+- Instructions supply the accounts as arguments; instruction handlers check them.

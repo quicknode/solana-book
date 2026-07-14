@@ -33,3 +33,10 @@ Every account, PDA or otherwise, holds a lamport deposit proportional to its siz
 For financial software, rent is small but real money with a lifecycle, and the design rule is simple: whoever wants the account pays for it. The maker funds her offer account and vault; the taker funds his own token account if he never held that token. Rent burdens follow the party who chose to create the state, and every deposit should find its way home when its account closes; the state-machine chapter of Financial Programming Concepts in Solana turns those exits into a rule.
 
 ![The rent lifecycle: the maker funds the offer and vault at creation, both exits refund every lamport, and the crossed-out path is the stranded-deposit bug.](figures/rent-lifecycle.svg)
+
+## What You Learnt
+
+- A **PDA** is derived from a program's id and seeds, has no private key, and only the deriving program can sign as it.
+- A program's PDAs form a **key/value store**: the seeds are the identifier, the account's data is the value.
+- Seeds make addresses derivable and relationships verifiable, and PDA authority over a vault is what "the program holds the funds" means.
+- Storage is paid for with a **rent** deposit that returns when the account closes, and whoever wants the account pays for it.
