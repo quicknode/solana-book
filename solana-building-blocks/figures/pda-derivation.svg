@@ -18,7 +18,7 @@
   <circle cx="190" cy="166" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="210" y="162" font-size="12" font-weight="bold">the offer&#8217;s PDA</text>
   <text x="210" y="176" font-size="9.5" letter-spacing="0.8" fill="#555">ESCROW PROGRAM ID + &#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
-  <text x="210" y="190" font-size="10.5" fill="#444">off the curve: no private key exists</text>
+  <text x="210" y="190" font-size="10.5" fill="#444">no private key exists</text>
   <!-- curve for contrast -->
   <path d="M 40,340 Q 320,180 600,340" fill="none" stroke="#111" stroke-width="2"/>
   <circle cx="180" cy="276" r="5" fill="#111"/>
