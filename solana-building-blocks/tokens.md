@@ -38,6 +38,25 @@ The mint's other lever is the **freeze authority**, which can freeze and thaw in
 
 Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core machinery, plus opt-in, per-mint features. Well-written programs support both through a common interface (Anchor's `token_interface`), constraining only that every account in a transaction agrees on which one it is using; every program in this book does so.
 
-The extensions that matter for financial products: **transfer fees** (a cut withheld on every transfer, for the issuer to collect), **transfer hooks** (a program of the issuer's choosing runs on every transfer, which enables allowlists and also means a transfer can execute foreign code, a fact the ordering section of The Adversary takes seriously), **confidential transfers** (amounts hidden onchain, visible to the parties and an auditor key), **permanent delegate** (an authority that can move any holder's tokens, a seizure power some regulated assets require), **interest-bearing** (a rate stamped on the mint so balances display accrual), and **non-transferable** (tokens bound to their holder). When you build on a token you did not issue, read its extensions first: several of them change what "I transferred X" means.
+The extensions that matter for financial products:
+
+| Extension | What it does | What it means for your program |
+| --- | --- | --- |
+| **transfer fees** | A cut is withheld on every transfer, for the issuer to collect | Send 100 and 99 arrives: "I transferred X" no longer delivers X |
+| **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (the ordering section of The Adversary takes this seriously) |
+| **confidential transfers** | Amounts are hidden onchain | Balances are visible only to the parties and an auditor key |
+| **permanent delegate** | An authority can move any holder's tokens | A seizure power some regulated assets require |
+| **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |
+| **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
+
+When you build on a token you did not issue, read its extensions first: several of them change what "I transferred X" means.
 
 ![A transfer through the Token Extensions Program: a fee peeled off, a transfer hook running the issuer's program, and 99 arriving where 100 was sent.](figures/transfer-through-extensions.svg)
+
+## What You Learnt
+
+- Every distinct token is a distinct **mint account**: the address is the identity, the label is decoration.
+- The **mint authority** and **freeze authority** are a token's real constitution: who can mint, and who can freeze, are the first questions to ask about any token.
+- **Token accounts hold tokens**: ATAs are the derivable canonical ones for a wallet, and program vaults can live anywhere the program chose.
+- **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked`.
+- Solana has two token programs, and extensions can change what a transfer means: read a token's extensions before building on it.

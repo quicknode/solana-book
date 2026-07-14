@@ -2,6 +2,11 @@
 
 Solana has two clocks, and choosing the wrong one is a security decision made by accident.
 
+| Clock | Source | Guarantee | Use it for |
+| --- | --- | --- | --- |
+| **slot** | The Clock sysvar's count of block opportunities, roughly 400ms apart | Only goes up, at a rate nobody can meaningfully bend | Anything an adversary would profit from bending: price staleness, per-slot interest |
+| **unix timestamp** | The same Clock sysvar, validator-reported wall time | Right to within a few seconds | Humans and long horizons: day-counted deadlines, annual fees, display |
+
 ## Slots Are Guaranteed to Progress
 
 The **slot** counts block opportunities, roughly 400ms apart, and its progression is guaranteed by the runtime: slots only go up, at a rate nobody can meaningfully bend. Programs read the current slot from the **Clock sysvar**, a system account the runtime keeps fresh. The lending market and the perpetual futures venue both measure price staleness in slots.
@@ -15,3 +20,8 @@ The **unix timestamp**, read from the same Clock sysvar, is validator-reported w
 Anything an adversary would profit from bending is measured in slots. Timestamps are for humans and long horizons, where seconds of slack are noise: display, record-keeping, and rates accrued over months. The vault strategy's annual management fee accrues by timestamp, because seconds of drift against a year is nothing; the lending market's per-slot interest does not.
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
+
+## What You Learnt
+
+- Solana has two clocks: the **slot**, whose progression the runtime guarantees, and the **unix timestamp**, which validators report.
+- Choose the clock by asking who benefits from the error: slots for anything an adversary could profit from bending, timestamps for humans and long horizons.

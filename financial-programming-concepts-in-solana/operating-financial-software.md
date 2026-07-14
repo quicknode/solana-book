@@ -37,4 +37,11 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - **Plan for the admin going silent.** Fees claimable whenever (a no-op when empty, so a cron can run it), nothing user-facing gated on the operator showing up, and an escape hatch for the day the price feed dies: a market that cannot value collateral should be able to enter a wind-down where positions close and deposits leave, rather than freezing everyone in place waiting for truth that is not coming.
 - **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than one laptop key, and say so. Users are not trusting that the code will never change; they are trusting that changing it takes more than one bad day.
 
+## What You Learnt
+
+- Test the code path the bug lives in: both directions of every symmetric flow, both sides of every boundary, adversarial paths by name, and properties as well as balances.
+- Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
+- Ship with a second-opinion audit; it is the cheapest adversary you will ever face.
+- Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
+
 The through-line of the whole chapter, one last time: the arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.

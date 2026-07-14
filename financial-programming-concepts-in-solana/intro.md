@@ -16,4 +16,9 @@ The design rules fall straight out of the drawing:
 
 The rent deposits from Solana Building Blocks are where this rule meets real money: whoever paid an account's rent gets the deposit back on every path (take, cancel, claim, refund), and a program that leaves fragments of state behind on some paths has a slow leak of other people's lamports. An account that can never close is a deposit stranded forever, so for every account your program creates, name the handler that eventually closes it; the escrow's tests assert the maker's lamports round-trip exactly, and yours should too.
 
+## What You Learnt
+
+- Every financial product is a small state machine: draw it before writing any handler, name every state and transition, and give every state an exit for every participant's money.
+- One handler, one transition, guarded by state and not just by signer; terminal states drain, close, and send rent home.
+
 Hold a program's state machine in your head and the rest of this part slots into place: the arithmetic governs what the transitions compute, offchain truth governs which transitions the outside world may trigger, the adversary attacks the transitions you forgot to guard, and testing means driving the machine down every path, especially the exits.

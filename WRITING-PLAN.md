@@ -10,6 +10,10 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 - Banned phrases, enforced by `scripts/lint-manuscript.mjs` (`npm run lint`) over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, verifying a signature from a trusted source.
 - Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
 - Chapter titles are numbered traditional short names: "Chapter 3: Tokens", "Chapter 11: Escrow", "Chapter 9: The Adversary". Headings *inside* a chapter carry the content, so a reader skimming only the headings learns the chapter's actual claims: "A Mint Is a Factory, and the Mint Authority Is Its Boss", not "Mint Authority"; "Carol's Ask Crosses Bob's Bid", not "Matching". No numbered headings.
+- Cross-references in prose use chapter names ("the PDAs chapter", "The Adversary"), never numbers. Chapter numbers appear only in chapter titles and the table of contents, so renumbering never rewrites prose.
+- Characters are introduced at the point they first act, never in a separate cast section.
+- Boxouts (rendered as blockquotes) hold self-contained asides a reader can skip without losing the thread: War Stories, origin stories, and mechanism deep-dives like the flash-loan and keypair-collision boxes.
+- Facts that form a grid go in a table (the cluster table, the token-extensions table, the rounding-direction table), not in a comma-packed paragraph.
 - Plain language. Define things by what they concretely are, not by abstract category: an account is "some data - a Rust struct - with an address", never "the unit of state". If a definition would fit equally well in a book about a different subject, it is too vague. Prefer the short common word to the impressive one.
 - Example assets are USDC and real-world assets: stocks like NVDAx, TSLAx, and SPCXx. Never meme tokens.
 - Talk to readers, never about the book's construction. No sentences explaining why a chapter is organized, sized, or placed the way it is ("each section is short on purpose", "that is why it comes first"). If a sentence is addressed to the author, editor, or reviewer rather than the reader, delete it.
@@ -18,17 +22,18 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 
 ## The Program Chapter Template
 
-Each program chapter runs the same seven beats:
+Each program chapter runs the same eight beats:
 
-- **Concept** - what this financial software does in the real world, cast with personas, real assets, and each party's incentive (the Introduction promises readers that admin and user incentives are discussed in every program chapter).
+- **Concept** - what this financial software does in the real world, with personas, real assets, and each party's incentive (the Introduction promises readers that admin and user incentives are discussed in every program chapter). Personas are introduced where they first act, not in a cast list.
 - **Account model** - the accounts, their owners, their PDAs, with the account-relationship diagram.
-- **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use; no flat reference section.
+- **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use, each step followed by a diagram of what moved and what changed; no flat reference section.
 - **The math** - the calculations, in minor units, with rounding directions stated.
 - **The invariants** - what must hold before and after every handler.
 - **The failure modes** - how this program gets attacked or bricked, with the inline War Story where an incident matches.
-- **The test that catches the bug** - the property or scenario test from the example's own test suite that would have caught each failure mode.
+- **Testing considerations** - the property or scenario tests from the example's own suite that would catch each failure mode, described without dwelling on test libraries (the tooling is covered once, in Operating Financial Software).
+- **What you learnt** - a closing summary of the concepts the chapter taught and the traditional-finance roles and processes the program replaced.
 
-The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana) use a lighter per-section template: claim, mechanism, consequence, War Story where applicable.
+The two foundation chapters (Solana Building Blocks; Financial Programming Concepts in Solana) use a lighter per-section template: claim, mechanism, consequence, War Story where applicable, and a short "What You Learnt" list closing each chapter.
 
 ## Generation Pipeline (per chapter)
 
@@ -52,6 +57,19 @@ Each incident is researched from primary sources and placed inside the chapter n
 ## The Visual Language
 
 The diagram conventions (account-relationship maps, state machines, token-movement flows, the War Story box) are production guidance, not reader content, so they live here rather than in an appendix. They are fixed during the single visual pass that draws every figure, and each convention is taught to the reader by the first figure that uses it, with a small legend on that figure. One consistent set of conventions across the whole book; no figure invents its own.
+
+Conventions already settled, which the visual pass must preserve:
+
+- **Seeds are never drawn inside an account's rectangle**, because seeds are not part of the account struct. They are labeled near the small address circle that sits above or beside the account box.
+- **A custom PDA's rectangle shows its struct as `key: value`, one field per line**, using the walkthrough's story values where the chapter has them.
+- **Every walkthrough step ("Alice does X", "Bob does Y") is followed by a diagram** showing the token movements, account creations and closures, and value changes that step caused.
+
+Steps currently missing their per-step diagram, to be drawn in the visual pass:
+
+- Lending and Borrowing: Carol's short; Bob's repayment and collateral withdrawal.
+- Perpetual Futures: Alice's `close_position` payout.
+- The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
+- The Vault Strategy: Bob's deposit at the new share price.
 
 ## Reviewers, Feedback, and Editions
 

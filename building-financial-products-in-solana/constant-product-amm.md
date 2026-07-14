@@ -42,6 +42,8 @@ Her LP tokens come from a formula this book has been promising since the arithme
 
 ![Maria's initial deposit: 400 ACME and 900 USDC enter the vaults, and the square root of their product, 600 LP tokens, goes to Maria minus the tiny locked MINIMUM_LIQUIDITY floor, 100 minor units of supply minted to nobody.](figures/amm-first-deposit.svg)
 
+> **A square root with no floats.** `integer_sqrt` is **Newton's method** running on integers: start with a guess, repeatedly replace it with the average of the guess and the target divided by the guess, and the sequence homes in on the square root in a few dozen iterations before the result is floored. The trick generalizes: any real-valued function a program needs onchain (roots, exponentials, logs) becomes an integer iteration with a known, bounded error, because floats can never touch funds.
+
 ## Alice Adds Liquidity Without Moving the Price
 
 Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and guarded by her `minimum_lp_tokens_out`.

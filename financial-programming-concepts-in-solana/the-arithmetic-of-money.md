@@ -4,7 +4,7 @@ Every bug class in this chapter has drained a real market. The rules are few, an
 
 ## Money Is Integers: No Floats Near Funds
 
-Every validator that executes your program must compute exactly the same result, or the network cannot agree on state. Floating-point math puts that at risk: results can vary with hardware, compiler flags, and operation order, and floats accumulate representation error (0.1 has no exact binary form). Money itself is discrete anyway; there is no such thing as half a lamport.
+Every validator that executes your program must compute exactly the same result, or the network cannot agree on state. Floating-point math puts that at risk: results can vary with hardware, compiler flags, and operation order, and floats accumulate representation error (0.1 has no exact binary form). Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**, and for money it is not a compromise but the honest representation.
 
 So the rule is absolute: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that smuggles them in. When a calculation needs fractions, scale integers up instead (see fixed point, below). When it needs a square root or an exponential, compute it with integer iteration (see the AMM and interest sections). The program chapters contain not one float between them, and yours should not either.
 
@@ -36,7 +36,14 @@ Some formulas need more than the four operations. The classic is the AMM's initi
 
 ## Rounding Is a Policy Decision
 
-Every integer division rounds, so every division is a decision about who gets the remainder. Make it deliberately, in one direction: **against the user, in favor of the program.** Floor what the program pays out (withdrawals, winnings, swap outputs, shares minted). Ceil what the user owes (debt, fees). The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
+Every integer division rounds, so every division is a decision about who gets the remainder. Make it deliberately, in one direction: **against the user, in favor of the program.**
+
+| What is being computed | Round | Examples |
+| --- | --- | --- |
+| What the program pays out | Down (floor) | Withdrawals, winnings, swap outputs, shares minted |
+| What the user owes | Up (ceil) | Debt, fees |
+
+The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
 
 This is not stinginess; it is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale: an attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of The Adversary shows exactly that attack succeeding in production.
 
@@ -63,3 +70,11 @@ Interest is multiplication repeated over time, and the naive implementation, loo
 Two numerical points complete the picture. Compounding per slot with a simple multiply is a **binomial approximation** of continuous compounding: (1 + r)ⁿ expanded to first order per step. Updated frequently, the error is negligible and always in a known direction; the tradeoff is a few compute units per update against exactness nobody can measure. And when a formula needs (1 + r)ⁿ for large n in one step, compute it by **exponentiation by squaring**: n multiplications become log₂(n), each one checked, each one floored consistently.
 
 Rates themselves are policy, not arithmetic, but one curve recurs everywhere: rates that rise with **utilization**, gently to a target and steeply past it, so a pool that is nearly drained pays depositors more and charges borrowers more until balance returns. Fifteen lines of integer math, doing a central bank's job.
+
+## What You Learnt
+
+- Onchain money is integers: no floats near funds, every amount at a declared scale read from the mint, lots for order books and WADs for fractions.
+- Multiply before divide, promote intermediates to u128, and check every operation with a named overflow error.
+- Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
+- Assert invariants after the math, and know the degenerate values where an invariant can hold vacuously.
+- One cumulative index compounds interest for every borrower at once, and a utilization curve is monetary policy in fifteen lines of integer math.
