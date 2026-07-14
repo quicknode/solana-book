@@ -13,6 +13,8 @@
   <text x="545" y="130" font-size="13" text-anchor="middle">Bob</text>
   <circle cx="460" cy="212" r="6" fill="#111"/>
   <line x1="530" y1="115" x2="464" y2="202" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="194" y="210" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="446" y="210" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="120" y="242" font-size="12.5" font-weight="bold">Alice&#8217;s address</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="470" y="242" font-size="12.5" font-weight="bold">Bob&#8217;s address</text>
 </svg>
