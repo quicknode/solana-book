@@ -1,46 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" font-family="Georgia, serif" fill="#111">
   <defs>
     <marker id="escrow-take-offer-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
     <marker id="escrow-take-offer-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
   </defs>
+  <!-- the curve -->
+  <path d="M 40,410 Q 320,362 600,410" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="382" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- Alice -->
-  <circle cx="55" cy="150" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 30,192 Q 55,170 80,192" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="55" y="212" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <circle cx="48" cy="140" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 23,182 Q 48,160 73,182" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="48" y="201" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
   <!-- Bob -->
-  <circle cx="585" cy="150" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 560,192 Q 585,170 610,192" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="585" y="212" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
+  <circle cx="592" cy="140" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 567,182 Q 592,160 617,182" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="592" y="201" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
+  <!-- wallet addresses on the curve -->
+  <line x1="48" y1="206" x2="59" y2="399" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="60" cy="407" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="72" y="410" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <line x1="592" y1="206" x2="581" y2="399" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="580" cy="407" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="568" y="410" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
   <!-- TSLAx: Bob's account straight to Alice's account -->
-  <circle cx="165" cy="90" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="165" y="64" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s TSLAx account</text>
-  <circle cx="475" cy="90" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="475" y="64" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s TSLAx account</text>
-  <path d="M 465,90 L 176,90" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-take-offer-arr)"/>
-  <text x="320" y="78" font-size="12" font-weight="bold" text-anchor="middle">1 TSLAx</text>
-  <text x="320" y="110" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(100,000,000 minor units, Bob signs)</text>
+  <rect x="110" y="48" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="174" y="66" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s TSLAx</text>
+  <text x="174" y="83" font-size="10" fill="#444" text-anchor="middle">0 TSLAx</text>
+  <rect x="402" y="48" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="466" y="66" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s TSLAx</text>
+  <text x="466" y="83" font-size="10" fill="#444" text-anchor="middle">1 TSLAx</text>
+  <path d="M 398,70 L 242,70" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-take-offer-arr)"/>
+  <text x="320" y="62" font-size="12" font-weight="bold" text-anchor="middle">1 TSLAx</text>
+  <text x="320" y="108" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(100,000,000 minor units, Bob signs)</text>
   <!-- USDC: vault to Bob's account -->
-  <circle cx="240" cy="210" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="240" y="186" font-size="11" font-weight="bold" text-anchor="middle">vault</text>
-  <circle cx="475" cy="210" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="475" y="241" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC account</text>
-  <path d="M 251,210 L 464,210" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-take-offer-arr)"/>
-  <text x="357" y="198" font-size="12" font-weight="bold" text-anchor="middle">250 USDC</text>
-  <text x="348" y="225" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units, offer PDA signs)</text>
+  <rect x="150" y="150" width="148" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <line x1="150" y1="150" x2="298" y2="194" stroke="#999" stroke-width="1.6"/>
+  <line x1="298" y1="150" x2="150" y2="194" stroke="#999" stroke-width="1.6"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="224" y="168" font-size="10.5" font-weight="bold" text-anchor="middle">vault: the offer&#8217;s USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="224" y="185" font-size="10" fill="#444" text-anchor="middle">250 USDC</text>
+  <rect x="402" y="150" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="466" y="168" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC</text>
+  <text x="466" y="185" font-size="10" fill="#444" text-anchor="middle">300 USDC</text>
+  <path d="M 302,172 L 398,172" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-take-offer-arr)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="350" y="164" font-size="12" font-weight="bold" text-anchor="middle">250 USDC</text>
+  <text x="350" y="212" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units, offer PDA signs)</text>
   <!-- ownership -->
-  <line x1="68" y1="137" x2="157" y2="97" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <line x1="572" y1="137" x2="483" y2="97" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <line x1="572" y1="163" x2="483" y2="203" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="60" y1="130" x2="106" y2="88" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="580" y1="130" x2="534" y2="88" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="578" y1="150" x2="534" y2="166" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <!-- offer account, closing -->
-  <rect x="175" y="258" width="130" height="32" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <line x1="226" y1="196" x2="254" y2="224" stroke="#999" stroke-width="1.6"/>
-  <line x1="254" y1="196" x2="226" y2="224" stroke="#999" stroke-width="1.6"/>
-  <line x1="175" y1="258" x2="305" y2="290" stroke="#999" stroke-width="1.6"/>
-  <line x1="305" y1="258" x2="175" y2="290" stroke="#999" stroke-width="1.6"/>
-  <text x="240" y="278" font-size="11" text-anchor="middle" stroke="#f4f4f2" stroke-width="5" paint-order="stroke" stroke-linejoin="round">offer account</text>
-  <text x="240" y="310" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">vault and offer closed</text>
+  <rect x="150" y="246" width="130" height="32" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <line x1="150" y1="246" x2="280" y2="278" stroke="#999" stroke-width="1.6"/>
+  <line x1="280" y1="246" x2="150" y2="278" stroke="#999" stroke-width="1.6"/>
+  <text x="215" y="266" font-size="11" text-anchor="middle" stroke="#f4f4f2" stroke-width="5" paint-order="stroke" stroke-linejoin="round">offer account</text>
+  <text x="215" y="298" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">vault and offer closed</text>
   <!-- rent home to Alice -->
-  <path d="M 229,216 C 160,235 110,215 80,193" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-take-offer-arrg)"/>
-  <path d="M 173,274 C 120,268 92,238 66,198" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-take-offer-arrg)"/>
-  <text x="105" y="300" font-size="10" font-style="italic" fill="#444" text-anchor="middle">rent lamports return to Alice</text>
+  <path d="M 148,186 C 120,196 100,196 84,192" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-take-offer-arrg)"/>
+  <path d="M 148,262 C 110,262 80,240 64,212" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-take-offer-arrg)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="88" y="320" font-size="10" font-style="italic" fill="#444" text-anchor="middle">rent lamports return to Alice</text>
 </svg>

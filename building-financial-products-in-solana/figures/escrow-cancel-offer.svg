@@ -1,33 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia, serif" fill="#111">
   <defs>
     <marker id="escrow-cancel-offer-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
     <marker id="escrow-cancel-offer-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
   </defs>
+  <!-- the curve -->
+  <path d="M 40,300 Q 320,252 600,300" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="272" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- Alice -->
-  <circle cx="70" cy="110" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 45,152 Q 70,130 95,152" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="70" y="172" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
-  <text x="70" y="186" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(maker, signs)</text>
+  <circle cx="55" cy="95" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
+  <path d="M 30,137 Q 55,115 80,137" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="55" y="156" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <text x="55" y="170" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(maker, signs)</text>
+  <!-- Alice's wallet address on the curve -->
+  <line x1="55" y1="175" x2="59" y2="289" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="60" cy="297" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="72" y="300" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
   <!-- her token account -->
-  <circle cx="200" cy="100" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="200" y="74" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s USDC account</text>
-  <line x1="86" y1="103" x2="190" y2="101" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <!-- the vault, draining back -->
-  <circle cx="470" cy="100" r="9" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="470" y="74" font-size="11" font-weight="bold" text-anchor="middle">vault</text>
-  <path d="M 459,100 L 211,100" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-cancel-offer-arr)"/>
-  <text x="335" y="88" font-size="12" font-weight="bold" text-anchor="middle">250 USDC</text>
-  <text x="335" y="120" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units, offer PDA signs)</text>
+  <rect x="130" y="70" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="194" y="88" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s USDC</text>
+  <text x="194" y="105" font-size="10" fill="#444" text-anchor="middle">750 USDC</text>
+  <line x1="78" y1="108" x2="126" y2="98" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <!-- the vault, draining back and closing -->
+  <rect x="430" y="70" width="148" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <line x1="430" y1="70" x2="578" y2="114" stroke="#999" stroke-width="1.6"/>
+  <line x1="578" y1="70" x2="430" y2="114" stroke="#999" stroke-width="1.6"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="504" y="88" font-size="10.5" font-weight="bold" text-anchor="middle">vault: the offer&#8217;s USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="504" y="105" font-size="10" fill="#444" text-anchor="middle">250 USDC</text>
+  <path d="M 426,92 L 262,92" fill="none" stroke="#111" stroke-width="2" marker-end="url(#escrow-cancel-offer-arr)"/>
+  <text x="344" y="84" font-size="12" font-weight="bold" text-anchor="middle">250 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="344" y="130" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units, offer PDA signs)</text>
   <!-- offer account, closing -->
-  <rect x="405" y="160" width="130" height="32" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <line x1="456" y1="86" x2="484" y2="114" stroke="#999" stroke-width="1.6"/>
-  <line x1="484" y1="86" x2="456" y2="114" stroke="#999" stroke-width="1.6"/>
-  <line x1="405" y1="160" x2="535" y2="192" stroke="#999" stroke-width="1.6"/>
-  <line x1="535" y1="160" x2="405" y2="192" stroke="#999" stroke-width="1.6"/>
-  <text x="470" y="216" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">vault and offer closed</text>
+  <rect x="400" y="160" width="130" height="32" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <line x1="400" y1="160" x2="530" y2="192" stroke="#999" stroke-width="1.6"/>
+  <line x1="530" y1="160" x2="400" y2="192" stroke="#999" stroke-width="1.6"/>
+  <text x="465" y="180" font-size="11" text-anchor="middle" stroke="#f4f4f2" stroke-width="5" paint-order="stroke" stroke-linejoin="round">offer account</text>
+  <text x="465" y="212" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">vault and offer closed</text>
   <!-- rent home to Alice -->
-  <path d="M 458,110 C 380,155 250,155 100,136" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-cancel-offer-arrg)"/>
-  <path d="M 403,176 C 300,200 180,190 98,158" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-cancel-offer-arrg)"/>
-  <text x="250" y="232" font-size="10" font-style="italic" fill="#444" text-anchor="middle">rent lamports return to Alice</text>
-  <text stroke="#f4f4f2" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="470" y="180" font-size="11" text-anchor="middle">offer account</text>
+  <path d="M 428,112 C 330,170 220,164 98,132" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-cancel-offer-arrg)"/>
+  <path d="M 398,176 C 300,205 180,195 95,150" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-cancel-offer-arrg)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="250" y="222" font-size="10" font-style="italic" fill="#444" text-anchor="middle">rent lamports return to Alice</text>
 </svg>

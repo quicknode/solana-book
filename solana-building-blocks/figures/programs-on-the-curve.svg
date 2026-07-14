@@ -4,23 +4,26 @@
   <!-- people -->
   <circle cx="180" cy="212" r="6" fill="#111"/>
   <circle cx="460" cy="212" r="6" fill="#111"/>
-  <!-- programs as squares on the same curve -->
-  <rect x="286" y="175" width="12" height="12" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <!-- programs as points on the same curve: their addresses are public keys too -->
+  <circle cx="292" cy="181" r="6" fill="#111"/>
   <line x1="292" y1="173" x2="268" y2="98" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <rect x="192" y="34" width="152" height="62" fill="#fff" stroke="#111" stroke-width="1.6"/>
   <text x="268" y="52" font-size="12.5" font-weight="bold" text-anchor="middle">System Program</text>
   <text x="268" y="68" font-size="10.5" text-anchor="middle" font-family="Menlo, monospace">create_account</text>
   <text x="268" y="84" font-size="10.5" text-anchor="middle" font-family="Menlo, monospace">transfer</text>
-  <rect x="372" y="179" width="12" height="12" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <line x1="378" y1="193" x2="420" y2="256" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="420" cy="197" r="6" fill="#111"/>
+  <line x1="420" y1="205" x2="424" y2="256" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <rect x="364" y="258" width="120" height="48" fill="#fff" stroke="#111" stroke-width="1.6"/>
   <text x="424" y="276" font-size="12.5" font-weight="bold" text-anchor="middle">Memo Program</text>
   <text x="424" y="294" font-size="10.5" text-anchor="middle" font-family="Menlo, monospace">memo</text>
   <!-- legend -->
-  <circle cx="52" cy="52" r="5" fill="#111"/>
-  <text x="63" y="56" font-size="11" fill="#444">people&#8217;s addresses</text>
-  <rect x="47" y="70" width="10" height="10" fill="#fff" stroke="#111" stroke-width="1.6"/>
-  <text x="63" y="79" font-size="11" fill="#444">programs&#8217; addresses</text>
+  <circle cx="52" cy="348" r="5" fill="#111"/>
+  <text x="63" y="352" font-size="11" fill="#444">an address: a public key, on the curve</text>
+  <text x="63" y="368" font-size="10" fill="#444" font-style="italic">people and programs alike</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="194" y="210" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="302" y="178" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="408" y="194" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="472" y="226" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="120" y="242" font-size="12.5" font-weight="bold">Alice&#8217;s address</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="470" y="242" font-size="12.5" font-weight="bold">Bob&#8217;s address</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="470" y="244" font-size="12.5" font-weight="bold">Bob&#8217;s address</text>
 </svg>
