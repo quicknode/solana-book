@@ -9,28 +9,13 @@ This isn't a book about how Solana is built. It's about **building on the Solana
 Financial products built on Solana have properties no traditional rail offers:
 
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.
-- **Settlement is instant, across the globe.** A trade and its settlement are the same event, whether the two parties are in the same city or on different continents.
+- **Settlement is atomic, instant, and global.** A trade and its settlement are the same event, whether the two parties are in the same city or on different continents. There is no counterparty risk to manage and no collateral parked against unsettled trades.
+- **Everyone reads the same ledger.** When both sides of a trade see identical state, reconciliation, the back office's largest hidden cost, becomes a non-event.
+- **Money is programmable.** Coupon payments, margin calls, and corporate actions run as code instead of chains of manual instructions.
 - **Transactions cost a fraction of a penny**, regardless of the size of the transfer.
 - **Blockchains can move assets of any kind.** Traditional "crypto" assets like BTC and SOL, and real-world assets (RWAs): commodities, equities, real estate, and exotics. As of mid-2026, Solana is the most popular chain for RWA trading.
 
-## Institutions Are Adopting the Primitives, Not the Philosophy
-
-For years the standard story was that traditional finance and DeFi would converge into a single elegant hybrid. What is actually happening, as a16z crypto's essay [*TradFi doesn't want DeFi. It wants blockchain.*](https://x.com/a16zcrypto/status/2077098776003543381) lays out, is more selective: **an institution adopts a blockchain primitive when it improves cost, risk, or distribution, and stays compatible with the institution's requirements for control and accountability.** JPMorgan settles institutional deposits on a permissioned blockchain. BlackRock and Franklin Templeton run tokenized money market funds. SWIFT frames tokenized assets as a way for existing institutions to coordinate better. None of these firms embraced decentralization; each found better plumbing for something it already does. Stablecoins are the clearest example: banks, payment providers, and fintechs move dollars on them because they are faster settlement infrastructure, not because they signed up for permissionless finance.
-
-The primitives passing that adoption test are the material of this book:
-
-| Primitive institutions adopt | What it buys them | Where this book teaches it |
-|---|---|---|
-| Atomic settlement | The trade and its settlement become one event, erasing counterparty risk and freeing the collateral parked against unsettled trades | The Core Building Blocks of Solana |
-| A shared ledger | Reconciliation, the back office's largest hidden cost, becomes a non-event | The Core Building Blocks of Solana |
-| Programmable money | Coupon payments, margin calls, and corporate actions run as code instead of chains of manual instructions | Tokens, and every program chapter |
-| Tokenized funds | Fund subscription and yield distribution become token mints, transfers, and burns | The Vault Strategy |
-| AMM curve math | A pricing engine for onchain FX and tokenized fund NAVs | The Constant-Product AMM |
-| Collateralized lending | Credit strategies that run on shared, inspectable rails | Lending and Borrowing |
-
-What institutions discard is just as predictable: open access, pseudonymity, and execution nobody can pause, the properties that deliver value only by removing institutional control. The result is a category the essay calls **programmable financial infrastructure**: financial products built on blockchain rails and shaped around institutional constraints like KYC, sanctions screening, and the ability to freeze assets and identify counterparties. Some of it consumes crypto-native infrastructure directly. Apollo's ACRED fund, for example, runs part of its onchain lending strategy through Morpho, a lending protocol born in DeFi and repackaged with institutional distribution and compliance.
-
-This means there are two markets for what this book teaches, not one. Open networks reward permissionless access, composability, and liquidity; institutions reward compliance, controls, and fit with existing workflows. They are different businesses with different customers, but they run on the same rails, and innovation flows in one direction: every primitive institutions are adopting today, from atomic settlement to AMM math, was invented on open networks first. Whichever market you build for, the accounts, tokens, math, and checks in these pages are the layer both markets share.
+These properties are why the buyers of financial software now come from two directions. Open networks use them for permissionless markets anyone can join. Traditional financial institutions adopt the same primitives wherever they improve cost, risk, or distribution while preserving the control and accountability their regulators require: atomic settlement, shared ledgers, programmable money, tokenized funds, and AMM pricing math, delivered on permissioned terms. The two markets have different customers and different rules, but they run on the same rails, and the primitives institutions adopt were invented on open networks first. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
 ## A Long-Lived Technical Book for Solana
 
