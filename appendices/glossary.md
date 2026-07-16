@@ -222,6 +222,10 @@ The human-scale denomination of an asset: the dollar, the SOL, the whole share. 
 
 The maker posted the resting order; the taker crossed the spread to hit it. Fills execute at the maker's posted price, and fee schedules usually distinguish the two roles.
 
+### mantissa
+
+See [significand](#significand).
+
 ### mark price / index price
 
 On a perpetual futures market, the index price is the oracle's statement of the asset's real-world price; the mark price is the venue's own price used for margin and liquidation.
@@ -325,6 +329,10 @@ A token representing proportional ownership of a pool: of a lending reserve, of 
 ### signer
 
 An account whose private key signed the transaction. "Is this account a signer" is the first validation question in every instruction handler.
+
+### significand
+
+The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see The Arithmetic of Money). Most people, most oracle formats, and this book's price feeds say [mantissa](#mantissa) for the digits; the two terms are interchangeable in practice.
 
 ### slippage
 
