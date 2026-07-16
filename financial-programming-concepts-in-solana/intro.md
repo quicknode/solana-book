@@ -1,6 +1,6 @@
 # Chapter 6: Financial Programming Concepts in Solana
 
-This part covers the money: everything financial you will ever build reduces to calculating with money, bringing facts about assets onchain, defending assets, and operating a program that holds assets. All of it applies whether your program serves an open network or an institution on permissioned rails: the arithmetic, the adversary, and the exits do not change with the customer.
+This part covers the money: everything financial you will ever build reduces to calculating with money, bringing facts about assets onchain, defending assets, and operating a program that holds assets.
 
 ## Financial Software Is a State Machine
 
