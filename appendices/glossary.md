@@ -34,13 +34,9 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 The key or account with the right to perform an action: a mint authority may create supply, a freeze authority may freeze token accounts, a market authority may withdraw fees. Recording the authority and verifying it on the way out is the core of access control in every chapter.
 
-### base amount / quote amount
+### base token
 
-An amount denominated in the [base or quote token](#base-token--quote-token): a base amount is a quantity of the thing traded (5 NVDAx), a quote amount is a quantity of the thing prices are stated in (1,000 USDC). The naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" trips people up: in that base/quote notation base is the numerator, the value on top, not the denominator you might expect from "base." Keep the two straight, because multiplying a base amount by a price yields a quote amount, and confusing them inverts the trade.
-
-### base token / quote token
-
-The pair every market trades. The base is the thing bought and sold (NVDAx); the quote is the thing prices are stated in (USDC). You quote in the stable asset so the numbers mean dollars.
+The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. The base pairs against the [quote token](#quote-token), and the naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" trips people up: in that base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base." Multiplying a base amount by a price yields a quote amount, so keeping the two straight matters — confusing them inverts the trade.
 
 ### basis point (bps)
 
@@ -309,6 +305,10 @@ Executable code deployed onchain; the thing this book builds. Called a "smart co
 ### proprietary AMM (prop AMM)
 
 An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the Prop AMM chapter builds one.
+
+### quote token
+
+The thing a market states its prices in (USDC), and the unit a **quote amount** is denominated in: 1,000 USDC is a quote amount. The quote is the second half of the [base token](#base-token) pair; you quote in the stable asset so the numbers mean dollars. A base amount times a price is a quote amount.
 
 ### rent
 
