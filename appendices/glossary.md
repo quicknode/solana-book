@@ -34,6 +34,10 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 The key or account with the right to perform an action: a mint authority may create supply, a freeze authority may freeze token accounts, a market authority may withdraw fees. Recording the authority and verifying it on the way out is the core of access control in every chapter.
 
+### base amount / quote amount
+
+An amount denominated in the [base or quote token](#base-token--quote-token): a base amount is a quantity of the thing traded (5 NVDAx), a quote amount is a quantity of the thing prices are stated in (1,000 USDC). The naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" trips people up: in that base/quote notation base is the numerator, the value on top, not the denominator you might expect from "base." Keep the two straight, because multiplying a base amount by a price yields a quote amount, and confusing them inverts the trade.
+
 ### base token / quote token
 
 The pair every market trades. The base is the thing bought and sold (NVDAx); the quote is the thing prices are stated in (USDC). You quote in the stable asset so the numbers mean dollars.
