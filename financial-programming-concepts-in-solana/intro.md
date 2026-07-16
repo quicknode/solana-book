@@ -1,6 +1,6 @@
 # Chapter 6: Financial Programming Concepts in Solana
 
-Solana Building Blocks covered the platform. This part covers the money: everything financial you will ever build reduces to calculating with it, bringing facts about it onchain, defending it, and operating a program that holds it. All of it applies to every financial product in this book, and it applies whether your program serves an open network or an institution on permissioned rails: the arithmetic, the adversary, and the exits do not change with the customer. It all starts with one framing idea that shapes everything.
+Solana Building Blocks covered the platform. This part covers the money: everything financial you will ever build reduces to calculating with money, bringing facts about assets onchain, defending assets, and operating a program that holds assets. All of it applies whether your program serves an open network or an institution on permissioned rails: the arithmetic, the adversary, and the exits do not change with the customer.
 
 ## Financial Software Is a State Machine, and Every State Needs an Exit
 
