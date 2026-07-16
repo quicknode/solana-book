@@ -308,7 +308,7 @@ An automated market maker funded entirely by its operator's own capital and pric
 
 ### quote token
 
-The thing a market states its prices in (USDC), and the unit a **quote amount** is denominated in: 1,000 USDC is a quote amount. The quote is the second half of the [base token](#base-token) pair; you quote in the stable asset so the numbers mean dollars. A base amount times a price is a quote amount.
+The thing a market states its prices in (USDC), and the unit a **quote amount** is denominated in: 1,000 USDC is a quote amount. The quote is the second half of the [base token](#base-token) pair, and is typically a more stable asset, usually a USD-backed stablecoin like USDC; you quote in the stable asset so the numbers mean dollars. A base amount times a price is a quote amount.
 
 ### rent
 
