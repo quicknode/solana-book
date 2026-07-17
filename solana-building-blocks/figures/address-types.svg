@@ -27,6 +27,6 @@
   <text x="452" y="106" font-size="10" font-style="italic" fill="#777" text-anchor="end">derives</text>
   <!-- contrast note -->
   <line x1="460" y1="160" x2="460" y2="252" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="272" font-size="10.5" font-style="italic" fill="#444">not a point on the curve: only the escrow</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="286" font-size="10.5" font-style="italic" fill="#444">program can sign as this address</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="272" font-size="10.5" font-style="italic" fill="#444">not a point on the curve: only the escrow program</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="286" font-size="10.5" font-style="italic" fill="#444">&#8220;signs&#8221; as this address, by presenting the seeds</text>
 </svg>

@@ -280,7 +280,7 @@ A betting structure with no bookmaker: all stakes pool together, and winners spl
 
 ### PDA (program derived address)
 
-An address computed from a program's id and chosen seeds, with no private key. Only the owning program can sign as it, which is what makes program-owned vaults trustworthy.
+An address computed from a program's id and chosen seeds, with no private key, so no signature for it can ever exist. Only the deriving program can "sign" as it, by presenting the seeds for the runtime to recheck, which is what makes program-owned vaults trustworthy.
 
 ### perpetual future
 
