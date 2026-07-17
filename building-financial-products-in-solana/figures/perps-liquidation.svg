@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="perps-liq-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <text x="320" y="24" font-size="12" font-weight="bold" text-anchor="middle">Bob's short at $115: equity 245 &#8804; maintenance 250, so anyone may liquidate</text>
+  <!-- collateral bar -->
+  <rect x="70" y="50" width="240" height="44" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="190" y="70" font-size="11" font-weight="bold" text-anchor="middle">Bob's working collateral: 995</text>
+  <text x="190" y="86" font-size="9.5" fill="#444" text-anchor="middle">(1,000 minus the 5 open fee)</text>
+  <!-- split into loss and equity -->
+  <path d="M 190,98 L 190,124" stroke="#111" stroke-width="1.5" marker-end="url(#perps-liq-arr)"/>
+  <rect x="70" y="130" width="181" height="40" fill="#e2e2de" stroke="#111" stroke-width="1.5"/>
+  <text x="160" y="147" font-size="10.5" font-weight="bold" text-anchor="middle">price loss: 750</text>
+  <text x="160" y="162" font-size="9.5" fill="#444" text-anchor="middle">5,000 &#215; (115 &#8722; 100) / 100</text>
+  <rect x="251" y="130" width="59" height="40" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="280" y="147" font-size="10.5" font-weight="bold" text-anchor="middle">245</text>
+  <text x="280" y="162" font-size="9" fill="#444" text-anchor="middle">equity left</text>
+  <!-- waterfall from remaining equity -->
+  <path d="M 268,174 C 240,204 205,218 154,230" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
+  <rect x="44" y="234" width="140" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="59" cy="251" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 51,262 Q 59,255 67,262" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="74" y="251" font-size="10.5" font-weight="bold">Dave (liquidator)</text>
+  <text x="74" y="267" font-size="9.5" fill="#444">0.1 SOL</text>
+  <path d="M 292,174 C 350,188 420,186 496,182" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
+  <text x="342" y="220" font-size="9.5" fill="#444">plus his position account's rent</text>
+  <rect x="500" y="160" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="515" cy="177" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 507,188 Q 515,181 523,188" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="530" y="177" font-size="10.5" font-weight="bold">Bob (short)</text>
+  <text x="530" y="193" font-size="9.5" fill="#444">0.1 SOL</text>
+  <!-- LP gain -->
+  <path d="M 160,172 C 180,220 300,260 470,262" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
+  <rect x="474" y="238" width="150" height="48" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <text x="549" y="258" font-size="10.5" font-weight="bold" text-anchor="middle">750 stays with the LPs</text>
+  <text x="549" y="274" font-size="9.5" fill="#444" text-anchor="middle">liquidity += 995 &#8722; 245</text>
+  <!-- gap warning -->
+  <rect x="420" y="50" width="200" height="72" fill="#fff" stroke="#888" stroke-width="1"/>
+  <text x="520" y="68" font-size="10" font-weight="bold" text-anchor="middle">the documented gap:</text>
+  <text x="520" y="83" font-size="9.5" fill="#444" text-anchor="middle">a position that gaps through</text>
+  <text x="520" y="96" font-size="9.5" fill="#444" text-anchor="middle">zero equity pays Dave nothing,</text>
+  <text x="520" y="109" font-size="9.5" fill="#444" text-anchor="middle">so nobody hurries to clean it up</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="196" y="204" font-size="10.5" font-weight="bold">50 to Dave</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="196" y="218" font-size="9.5" fill="#444">liquidation fee: 1% of 5,000,</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="196" y="231" font-size="9.5" fill="#444">capped at remaining equity</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="342" y="206" font-size="10.5" font-weight="bold">195 back to Bob</text>
+</svg>

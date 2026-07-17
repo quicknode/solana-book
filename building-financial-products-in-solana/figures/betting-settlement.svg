@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="betting-settle-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <text x="165" y="40" font-size="12" font-weight="bold" text-anchor="middle">the vault: 600 USDC</text>
+  <text x="440" y="36" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs settle_event:</text>
+  <text x="440" y="50" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">Toy Story 5 wins</text>
+  <!-- vault bands -->
+  <rect x="70" y="64" width="190" height="120" fill="#fff"/>
+  <rect x="70" y="184" width="190" height="70" fill="#f4f4f2"/>
+  <rect x="70" y="254" width="190" height="26" fill="#f4f4f2"/>
+  <line x1="70" y1="184" x2="260" y2="184" stroke="#888" stroke-width="1"/>
+  <line x1="70" y1="254" x2="260" y2="254" stroke="#888" stroke-width="1"/>
+  <rect x="70" y="64" width="190" height="216" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="165" y="112" font-size="12" font-weight="bold" text-anchor="middle">winning pool: 400</text>
+  <text x="165" y="130" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">winners&#8217; stakes, untouched</text>
+  <text x="165" y="212" font-size="11" font-weight="bold" text-anchor="middle">distributable losing pool: 196</text>
+  <text x="165" y="230" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">earmarked for winners</text>
+  <text x="165" y="271" font-size="11" font-weight="bold" text-anchor="middle">fee: 4</text>
+  <!-- guarantee -->
+  <text x="290" y="104" font-size="10.5" fill="#444" font-style="italic">the fee never touches the winning side:</text>
+  <text x="290" y="120" font-size="10.5" font-weight="bold">a winner never receives less than they staked</text>
+  <!-- the math -->
+  <text x="290" y="196" font-size="10.5">losing pool: 600 &#8722; 400 = 200</text>
+  <text x="290" y="212" font-size="10.5">fee: 2% of 200 = 4 (u128, floored once)</text>
+  <text x="290" y="228" font-size="10.5">distributable: 200 &#8722; 4 = 196</text>
+  <!-- fee transfer into Maria's token account (a rectangle) -->
+  <path d="M 262,267 C 320,267 370,262 448,258" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-settle-arr)"/>
+  <rect x="454" y="238" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="464" y="256" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+  <text x="464" y="272" font-size="9.5" fill="#444">+4 USDC (the fee)</text>
+  <text x="330" y="306" font-size="10" fill="#444" font-style="italic" text-anchor="middle">signed by the event PDA</text>
+</svg>

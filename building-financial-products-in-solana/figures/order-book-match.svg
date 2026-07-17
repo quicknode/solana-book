@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="order-book-match-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="order-book-match-arr-gray" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+  </defs>
+  <!-- the curve -->
+  <path d="M 40,450 Q 320,400 600,450" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="588" y="484" font-size="12" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- Carol, the taker: wallet account, address on the curve -->
+  <circle cx="85" cy="443" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="97" y="440" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="93" y="455" width="124" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="108" cy="472" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 100,483 Q 108,476 116,483" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="122" y="472" font-size="10.5" font-weight="bold">Carol (taker)</text>
+  <text x="122" y="487" font-size="9.5" fill="#444">1 SOL</text>
+  <!-- her incoming ask meets Bob's resting bid -->
+  <path d="M 85,435 C 40,300 50,140 142,80" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-match-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="95" y="132" font-size="11" font-weight="bold">incoming ask: 3 @ 245</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="95" y="148" font-size="10" font-style="italic" fill="#444">245 &#8804; 250: it crosses</text>
+  <circle cx="150" cy="40" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="162" y="36" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;ORDER&#8221; + MARKET ADDRESS</text>
+  <text x="162" y="47" font-size="8.5" letter-spacing="0.6" fill="#555">+ ORDER ID</text>
+  <rect x="146" y="54" width="210" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="156" y="72" font-size="10.5" font-weight="bold">Bob&#8217;s resting bid: 4 @ 250</text>
+  <text x="156" y="88" font-size="9.5">fills 3 &#8594; PartiallyFilled</text>
+  <text x="156" y="103" font-size="9.5" font-style="italic" fill="#444">1 remains on the book</text>
+  <!-- the price rule -->
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="380" y="158" font-size="11" font-weight="bold" text-anchor="middle">executes at 250, the resting order&#8217;s posted price</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="380" y="174" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the surprise favours the taker: Carol asked 245 and receives 250</text>
+  <!-- ledger credits -->
+  <path d="M 340,182 L 245,240" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-match-arr-gray)"/>
+  <path d="M 420,182 L 390,250" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-match-arr-gray)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="360" y="218" font-size="10" font-style="italic" fill="#444" text-anchor="middle">ledger credits: no tokens move yet</text>
+  <circle cx="128" cy="232" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="140" y="228" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET_USER&#8221; + MARKET</text>
+  <text x="140" y="239" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; CAROL ADDRESSES</text>
+  <rect x="120" y="246" width="192" height="48" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="130" y="264" font-size="10.5" font-weight="bold">Carol&#8217;s market user</text>
+  <text x="130" y="280" font-size="9.5">unsettled_quote: +748.125 USDC</text>
+  <circle cx="392" cy="232" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="404" y="228" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET_USER&#8221; + MARKET</text>
+  <text x="404" y="239" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; BOB ADDRESSES</text>
+  <rect x="384" y="246" width="186" height="48" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="394" y="264" font-size="10.5" font-weight="bold">Bob&#8217;s market user</text>
+  <text x="394" y="280" font-size="9.5">unsettled_base: +3 NVDAx</text>
+  <!-- the fee -->
+  <text x="217" y="312" font-size="10" font-style="italic" fill="#444" text-anchor="middle">gross of this fill: 3 &#215; 250 = 750 USDC</text>
+  <rect x="142" y="330" width="150" height="46" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="152" y="348" font-size="10.5" font-weight="bold">quote vault</text>
+  <text x="152" y="364" font-size="9.5" fill="#444">holds Bob&#8217;s 1,000 USDC</text>
+  <line x1="217" y1="376" x2="217" y2="422" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="217" cy="428" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="229" y="424" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="412" y="330" width="150" height="46" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="422" y="348" font-size="10.5" font-weight="bold">fee vault</text>
+  <text x="422" y="364" font-size="9.5" fill="#444">+1.875 USDC, Maria&#8217;s</text>
+  <line x1="487" y1="376" x2="487" y2="428" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="487" cy="434" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="499" y="430" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <path d="M 296,353 L 408,353" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
+  <text x="352" y="344" font-size="11" font-weight="bold" text-anchor="middle">1.875 USDC</text>
+  <text x="352" y="368" font-size="10" font-style="italic" fill="#444" text-anchor="middle">25 bps of 750,</text>
+  <text x="352" y="381" font-size="10" font-style="italic" fill="#444" text-anchor="middle">rounded up</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
+    </marker>
+  </defs>
+  <!-- transaction box -->
+  <rect x="340" y="20" width="272" height="104" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="354" y="42" font-size="13" font-weight="bold">Transaction</text>
+  <text x="354" y="58" font-size="11" font-style="italic" fill="#444">signed by Bob&#8217;s private key</text>
+  <rect x="354" y="68" width="244" height="40" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="362" y="83" font-size="11" font-weight="bold">Instruction 1 &#8594; Token Program</text>
+  <text x="362" y="97" font-size="11"><tspan font-family="Menlo, monospace">transfer</tspan>: send 25 USDC to Alice</text>
+  <!-- the curve -->
+  <path d="M 40,410 Q 320,150 600,410" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="320" y="434" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <circle cx="180" cy="312" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="168" y="304" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+  <circle cx="460" cy="312" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="472" y="326" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <!-- Alice: wallet account -->
+  <rect x="150" y="340" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="165" cy="357" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 157,368 Q 165,361 173,368" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="180" y="357" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
+  <text x="180" y="373" font-size="9.5" fill="#444">0.15 SOL</text>
+  <line x1="180" y1="319" x2="180" y2="339" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <!-- Bob: wallet account -->
+  <rect x="372" y="340" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="387" cy="357" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 379,368 Q 387,361 395,368" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="402" y="357" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
+  <text x="402" y="373" font-size="9.5" fill="#444">0.15 SOL</text>
+  <line x1="460" y1="319" x2="460" y2="339" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <!-- the Token Program, on the curve -->
+  <rect x="265" y="258" width="110" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="275" y="274" font-size="10.5" font-weight="bold">Token Program</text>
+  <text x="275" y="292" font-size="10" font-family="Menlo, monospace">transfer</text>
+  <!-- instruction arrow -->
+  <path d="M 420,124 C 400,180 370,220 348,256" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <!-- the ATAs: off the curve, each with its own derived-address dot -->
+  <circle cx="70" cy="40" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="82" y="36" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
+  <text x="82" y="47" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <rect x="80" y="52" width="132" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="146" y="74" font-size="12" font-weight="bold" text-anchor="middle">Alice&#8217;s USDC</text>
+  <text x="146" y="93" font-size="10.5" fill="#444" text-anchor="middle">975 &#8594; 1,000 USDC</text>
+  <circle cx="428" cy="140" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="440" y="136" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + BOB&#8217;S</text>
+  <text x="440" y="147" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <rect x="438" y="152" width="132" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="504" y="174" font-size="12" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC</text>
+  <text x="504" y="193" font-size="10.5" fill="#444" text-anchor="middle">325 &#8594; 300 USDC</text>
+  <!-- effect: the balance moves between token accounts -->
+  <path d="M 436,180 C 350,140 300,105 218,84" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+  <text x="290" y="150" font-size="11" fill="#444" text-anchor="middle" font-style="italic">25 USDC</text>
+</svg>

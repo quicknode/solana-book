@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="order-book-alice-ask-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- the curve -->
+  <path d="M 40,350 Q 320,300 600,350" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="592" y="384" font-size="12" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- Alice: wallet account, address on the curve -->
+  <circle cx="85" cy="343" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="97" y="340" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <rect x="93" y="355" width="124" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="108" cy="372" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 100,383 Q 108,376 116,383" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="122" y="372" font-size="10.5" font-weight="bold">Alice (trader)</text>
+  <text x="122" y="387" font-size="9.5" fill="#444">1 SOL</text>
+  <!-- her token account -->
+  <circle cx="30" cy="60" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="42" y="56" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
+  <text x="42" y="67" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + NVDAX MINT ADDRESS</text>
+  <rect x="22" y="74" width="132" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="32" y="92" font-size="10.5" font-weight="bold">Alice&#8217;s NVDAx</text>
+  <text x="32" y="108" font-size="9.5" fill="#444">10 &#8594; 0 NVDAx</text>
+  <!-- the lock: base moves up front -->
+  <path d="M 158,100 L 244,160" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#order-book-alice-ask-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="196" y="110" font-size="11" font-weight="bold" text-anchor="middle">10 NVDAx</text>
+  <rect x="248" y="150" width="140" height="46" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="258" y="168" font-size="10.5" font-weight="bold">base vault</text>
+  <text x="258" y="185" font-size="9.5" fill="#444">10 NVDAx locked</text>
+  <line x1="270" y1="196" x2="270" y2="320" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="270" cy="326" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="282" y="322" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="318" y="214" font-size="10" font-style="italic" fill="#444" text-anchor="middle">locked up front: the order is funded</text>
+  <!-- the call -->
+  <path d="M 85,334 C 105,210 280,40 386,88" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-alice-ask-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="270" y="48" font-size="11" font-weight="bold" text-anchor="middle">place_order(Ask, 265, 10)</text>
+  <!-- the resting order in the order book: a keypair account on the curve -->
+  <rect x="390" y="60" width="226" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="400" y="78" font-size="10.5" font-weight="bold">order book: ask tree</text>
+  <text x="400" y="94" font-size="9.5">leaf: Alice&#8217;s ask, 10 @ 265 (the only leaf)</text>
+  <text x="400" y="110" font-size="9.5" font-style="italic" fill="#444">her order account: status Open</text>
+  <circle cx="443" cy="330" r="6" fill="#111"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="455" y="327" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <line x1="443" y1="124" x2="443" y2="324" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="240" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">no bid reaches 265, so nothing matches: the ask rests</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="256" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">resting costs only rent and the transaction fee; the taker fee applies to fills</text>
+</svg>
