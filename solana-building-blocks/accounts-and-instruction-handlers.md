@@ -95,9 +95,9 @@ The programs themselves are stored the same way. Deploying a program stores its 
 Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in two kinds:
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
-- **PDAs** (program derived addresses). A PDA is computed from a program's id and some chosen **seeds**, and has no private key at all; the program that derived it signs for it instead. The escrow program you will build in this book stores each offer at a PDA derived from the maker's address and an offer id. PDAs get their own chapter.
+- **PDAs** (program derived addresses). A PDA is computed from a program's id and some chosen **seeds**, and has no private key at all, so no signature for it can ever exist. Solana keeps the word "sign" anyway, and it is worth being precise about what actually happens: PDAs can own accounts of their own, and the deriving program "signs" a transaction that spends from them simply by presenting the seeds behind the PDA's address; the runtime recomputes the derivation and grants the PDA signer status, no cryptography involved. The escrow program you will build in this book stores each offer at a PDA derived from the maker's address and an offer id. PDAs get their own chapter.
 
-![Two kinds of address: public keys sit on the curve, each with a private key that signs for it; PDAs sit off the curve, derived from a program id and seeds, with no private key.](figures/address-types.svg)
+![Two kinds of address: public keys sit on the curve, each with a private key that signs for it; PDAs sit off the curve, derived from a program id and seeds, with no private key: the deriving program "signs" by presenting the seeds.](figures/address-types.svg)
 
 Because addresses are how everything is found, financial programs lean on *derivable* addresses: put the market's pair, the user's key, or the offer's id into the derivation, and anyone can compute where the account must be, no lookup table required.
 
@@ -123,5 +123,5 @@ Alice and Bob's two payments toured every building block the rest of the book us
 - **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee: all authority reduces to whose signature a transaction carries.
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. Deployed programs and their state live in separate accounts.
-- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which programs sign for. Bob paid Alice's USDC into one: an **associated token account**, derived from her address and the mint.
+- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds. Bob paid Alice's USDC into one: an **associated token account**, derived from her address and the mint.
 - Instructions supply the accounts as arguments; instruction handlers check them.
