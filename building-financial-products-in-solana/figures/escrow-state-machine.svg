@@ -5,18 +5,18 @@
   <text x="74" y="128" font-size="11" font-weight="bold" text-anchor="middle">make_offer</text>
   <text x="74" y="158" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(Alice)</text>
   <!-- Open -->
-  <rect x="118" y="105" width="150" height="70" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="118" y="105" width="150" height="70" fill="none" stroke="#111" stroke-width="2"/>
   <text x="193" y="128" font-size="13" font-weight="bold" text-anchor="middle">Open</text>
   <text x="193" y="146" font-size="10" font-style="italic" fill="#444" text-anchor="middle">vault holds 250 USDC</text>
   <text x="193" y="160" font-size="10" font-style="italic" fill="#444" text-anchor="middle">offer stores the terms</text>
   <!-- Taken -->
-  <rect x="430" y="28" width="185" height="94" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="430" y="28" width="185" height="94" fill="none" stroke="#111" stroke-width="2"/>
   <text x="522" y="50" font-size="12" font-weight="bold" text-anchor="middle">Taken</text>
   <text x="522" y="68" font-size="10" text-anchor="middle">USDC &#8594; Bob, TSLAx &#8594; Alice</text>
   <text x="522" y="84" font-size="10" text-anchor="middle">vault drained &amp; closed</text>
   <text x="522" y="100" font-size="10" text-anchor="middle">rent &#8594; Alice</text>
   <!-- Cancelled -->
-  <rect x="430" y="168" width="185" height="94" rx="8" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="430" y="168" width="185" height="94" fill="none" stroke="#111" stroke-width="2"/>
   <text x="522" y="190" font-size="12" font-weight="bold" text-anchor="middle">Cancelled</text>
   <text x="522" y="208" font-size="10" text-anchor="middle">USDC &#8594; Alice</text>
   <text x="522" y="224" font-size="10" text-anchor="middle">vault drained &amp; closed</text>

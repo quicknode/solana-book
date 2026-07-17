@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" font-family="Georgia, serif" fill="#111">
   <defs><marker id="ob-sm-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <!-- states -->
-  <rect x="40" y="90" width="120" height="44" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <rect x="40" y="90" width="120" height="44" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
   <text x="100" y="117" font-size="12" font-weight="bold" text-anchor="middle">Open</text>
-  <rect x="250" y="90" width="140" height="44" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
+  <rect x="250" y="90" width="140" height="44" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
   <text x="320" y="117" font-size="12" font-weight="bold" text-anchor="middle">PartiallyFilled</text>
-  <rect x="480" y="30" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="2.4"/>
+  <rect x="480" y="30" width="120" height="44" fill="#fff" stroke="#111" stroke-width="2.4"/>
   <text x="540" y="57" font-size="12" font-weight="bold" text-anchor="middle">Filled</text>
-  <rect x="480" y="156" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="2.4"/>
+  <rect x="480" y="156" width="120" height="44" fill="#fff" stroke="#111" stroke-width="2.4"/>
   <text x="540" y="183" font-size="12" font-weight="bold" text-anchor="middle">Cancelled</text>
   <!-- transitions -->
   <path d="M 164,105 L 246,105" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
