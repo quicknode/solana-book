@@ -6,33 +6,50 @@
   <path d="M 23,72 Q 31,65 39,72" fill="none" stroke="#111" stroke-width="1.3"/>
   <text x="46" y="61" font-size="10.5" font-weight="bold">Victor (authority)</text>
   <text x="46" y="77" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Victor whitelists -->
-  <path d="M 156,60 C 192,54 222,56 246,64" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-registry-arr)"/>
-  <text x="196" y="36" font-size="11" font-weight="bold" text-anchor="middle">whitelist_asset</text>
+  <!-- Victor approves assets -->
+  <path d="M 156,58 C 250,14 350,8 436,46" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-registry-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="20" font-size="11" font-weight="bold" text-anchor="middle">approve_asset &#215;2</text>
   <text x="140" y="102" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">binds one mint to one Pyth feed</text>
-  <!-- Registry -->
-  <rect x="250" y="28" width="240" height="150" rx="8" fill="none" stroke="#111" stroke-width="2"/>
-  <text x="370" y="50" font-size="13" font-weight="bold" text-anchor="middle">Registry</text>
-  <text x="370" y="64" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">one whitelist entry PDA per asset</text>
-  <rect x="266" y="76" width="208" height="30" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="370" y="95" font-size="11" text-anchor="middle">TSLAx mint &#8594; Pyth TSLA feed</text>
-  <rect x="266" y="114" width="208" height="30" rx="4" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="370" y="133" font-size="11" text-anchor="middle">NVDAx mint &#8594; Pyth NVDA feed</text>
+  <!-- the registry: the curator record -->
+  <circle cx="244" cy="34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="256" y="37" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;REGISTRY&#8221; + VICTOR&#8217;S ADDRESS</text>
+  <rect x="250" y="42" width="150" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="260" y="60" font-size="10.5" font-weight="bold">Registry</text>
+  <text x="260" y="75" font-size="9.5">authority: Victor</text>
+  <text x="325" y="110" font-size="8.5" font-style="italic" fill="#444" text-anchor="middle">the curator record: it holds no list</text>
+  <!-- the ApprovedAsset accounts, one PDA per approved mint -->
+  <circle cx="434" cy="26" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="446" y="22" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
+  <text x="446" y="31" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + TSLAX MINT</text>
+  <rect x="440" y="36" width="192" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="450" y="53" font-size="10" font-weight="bold">ApprovedAsset</text>
+  <text x="450" y="67" font-size="9.5">TSLAx mint &#8594; Pyth TSLA feed</text>
+  <circle cx="434" cy="106" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="446" y="102" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
+  <text x="446" y="111" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + NVDAX MINT</text>
+  <rect x="440" y="116" width="192" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="450" y="133" font-size="10" font-weight="bold">ApprovedAsset</text>
+  <text x="450" y="147" font-size="9.5">NVDAx mint &#8594; Pyth NVDA feed</text>
+  <!-- derivation links from the registry to each ApprovedAsset address -->
+  <path d="M 400,60 C 414,50 420,40 428,29" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <path d="M 400,80 C 414,90 420,96 428,104" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="536" y="180" font-size="8.5" font-style="italic" fill="#444" text-anchor="middle">an asset is approved exactly when</text>
+  <text x="536" y="191" font-size="8.5" font-style="italic" fill="#444" text-anchor="middle">its ApprovedAsset account exists</text>
   <!-- Maria's wallet -->
   <rect x="16" y="186" width="140" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <circle cx="31" cy="203" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
   <path d="M 23,214 Q 31,207 39,214" fill="none" stroke="#111" stroke-width="1.3"/>
   <text x="46" y="203" font-size="10.5" font-weight="bold">Maria (manager)</text>
   <text x="46" y="219" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Maria selects from the list -->
-  <path d="M 160,190 C 198,174 222,158 258,136" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-registry-arr)"/>
-  <text x="248" y="196" font-size="11" font-weight="bold" text-anchor="middle">add_asset: selects an entry</text>
-  <text x="248" y="209" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">the feed is copied from Victor&#8217;s entry</text>
-  <!-- Maria cannot add -->
+  <!-- Maria selects from the approved set -->
+  <path d="M 160,192 C 250,178 340,158 434,140" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-registry-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="260" y="200" font-size="11" font-weight="bold" text-anchor="middle">add_asset: presents an ApprovedAsset</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="260" y="213" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">the feed comes from that account</text>
+  <!-- Maria cannot approve -->
   <path d="M 132,224 C 200,248 268,248 352,236" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-registry-arr)"/>
   <rect x="356" y="212" width="200" height="40" rx="5" fill="none" stroke="#999" stroke-width="1.3"/>
   <line x1="356" y1="212" x2="556" y2="252" stroke="#999" stroke-width="1.6"/>
   <line x1="556" y1="212" x2="356" y2="252" stroke="#999" stroke-width="1.6"/>
-  <text x="456" y="272" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority may add assets</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="456" y="236" font-size="11" fill="#444" text-anchor="middle">whitelist_asset signed by Maria</text>
+  <text x="456" y="272" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority may approve assets</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="456" y="236" font-size="11" fill="#444" text-anchor="middle">approve_asset signed by Maria</text>
 </svg>
