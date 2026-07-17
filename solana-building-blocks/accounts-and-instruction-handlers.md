@@ -24,7 +24,7 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet** | Identical machinery for building and testing | No: tokens are free | Globally |
 | **localnet** | Development and fast test loops | No | Locally, on your own machine |
 
-Test tokens on devnet are free. The `solana airdrop` command, or the faucet at [faucet.solana.com](https://faucet.solana.com), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. The curve and Alice's address are the same everywhere; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
+Test tokens on devnet are free. The `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. The curve and Alice's address are the same everywhere; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
 
 ## Every Transaction Includes a Signed Message
 
