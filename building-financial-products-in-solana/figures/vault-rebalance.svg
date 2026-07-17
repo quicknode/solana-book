@@ -27,10 +27,10 @@
   <text x="253" y="182" font-size="10" font-style="italic" fill="#444" text-anchor="middle">both legs floored at oracle &#8722; 1%</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="218" font-size="10.5" font-weight="bold" text-anchor="middle">buy $24 of TSLAx</text>
   <!-- Maria's wallet -->
-  <rect x="500" y="34" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="500" y="34" width="126" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <circle cx="515" cy="51" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
   <path d="M 507,62 Q 515,55 523,62" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="530" y="51" font-size="10.5" font-weight="bold">Maria (mgr)</text>
+  <text x="530" y="51" font-size="10.5" font-weight="bold">Maria (manager)</text>
   <text x="530" y="67" font-size="9.5" fill="#444">0.1 SOL</text>
   <path d="M 494,70 C 477,86 469,102 462,120" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-rebalance-arr)"/>
   <text x="516" y="98" font-size="11" font-weight="bold" text-anchor="middle">rebalance</text>
