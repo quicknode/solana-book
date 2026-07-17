@@ -4,18 +4,20 @@
   <line x1="322" y1="24" x2="322" y2="222" stroke="#999" stroke-width="1" stroke-dasharray="2 4"/>
   <!-- left panel: deposit -->
   <text x="155" y="28" font-size="12" font-weight="bold" text-anchor="middle">1. deposit</text>
-  <circle cx="60" cy="105" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 35,147 Q 60,125 85,147" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="60" y="167" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
+  <rect x="10" y="96" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="25" cy="113" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 17,124 Q 25,117 33,124" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="40" y="113" font-size="10.5" font-weight="bold">Alice (supplier)</text>
+  <text x="40" y="129" font-size="9.5" fill="#444">0.1 SOL</text>
   <rect x="170" y="60" width="132" height="118" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
   <text x="236" y="80" font-size="11" font-weight="bold" text-anchor="middle">USDC reserve</text>
   <circle cx="192" cy="104" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="204" y="108" font-size="10.5">liquidity vault</text>
   <rect x="187.5" y="141.5" width="9" height="9" fill="#111" transform="rotate(45 192 146)"/>
   <text x="204" y="150" font-size="10.5">share mint</text>
-  <path d="M 88,96 C 120,92 140,96 166,102" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
-  <text x="124" y="80" font-size="11" font-weight="bold" text-anchor="middle">1,000 USDC</text>
-  <path d="M 168,148 C 135,150 112,138 90,124" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
+  <path d="M 138,100 C 148,94 157,96 166,102" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
+  <text x="124" y="84" font-size="11" font-weight="bold" text-anchor="middle">1,000 USDC</text>
+  <path d="M 168,148 C 154,152 145,146 138,136" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
   <text x="148" y="192" font-size="11" text-anchor="middle">1,000 shares minted</text>
   <text x="155" y="218" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">the first deposit mints one to one</text>
   <!-- right panel: redeem -->
@@ -26,13 +28,15 @@
   <text x="379" y="108" font-size="10.5">liquidity vault</text>
   <rect x="362.5" y="141.5" width="9" height="9" fill="#111" transform="rotate(45 367 146)"/>
   <text x="379" y="150" font-size="10.5">share mint</text>
-  <circle cx="585" cy="105" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 560,147 Q 585,125 610,147" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="585" y="167" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
-  <path d="M 560,120 C 530,138 510,146 481,148" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
+  <rect x="514" y="96" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="529" cy="113" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 521,124 Q 529,117 537,124" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="544" y="113" font-size="10.5" font-weight="bold">Alice (supplier)</text>
+  <text x="544" y="129" font-size="9.5" fill="#444">0.1 SOL</text>
+  <path d="M 510,132 C 498,144 490,148 481,148" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
   <text x="496" y="192" font-size="11" text-anchor="middle">1,000 shares burned</text>
-  <path d="M 481,100 C 510,92 530,92 558,98" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
-  <text x="548" y="62" font-size="11" font-weight="bold" text-anchor="middle">&#8776; $1,003.50 USDC</text>
+  <path d="M 481,100 C 494,94 502,96 510,102" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-deposit-shares-arr)"/>
+  <text x="548" y="86" font-size="11" font-weight="bold" text-anchor="middle">&#8776; $1,003.50 USDC</text>
   <text x="480" y="212" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">interest swelled the pool while the share</text>
   <text x="480" y="226" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">supply stayed put: each share is worth more</text>
 </svg>

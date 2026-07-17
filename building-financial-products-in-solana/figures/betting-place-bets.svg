@@ -1,25 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia, serif" fill="#111">
   <defs><marker id="betting-bets-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- bettors -->
-  <circle cx="70" cy="64" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 45,106 Q 70,84 95,106" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="70" y="126" font-size="12" font-weight="bold" text-anchor="middle">Alice</text>
-  <circle cx="70" cy="164" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 45,206 Q 70,184 95,206" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="70" y="226" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
-  <circle cx="70" cy="264" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 45,306 Q 70,284 95,306" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="70" y="326" font-size="12" font-weight="bold" text-anchor="middle">Carol</text>
+  <!-- bettors: wallet accounts -->
+  <rect x="20" y="48" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="35" cy="65" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 27,76 Q 35,69 43,76" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="50" y="65" font-size="10.5" font-weight="bold">Alice</text>
+  <text x="50" y="81" font-size="9.5" fill="#444">0.1 SOL</text>
+  <rect x="20" y="146" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="35" cy="163" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 27,174 Q 35,167 43,174" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="50" y="163" font-size="10.5" font-weight="bold">Bob</text>
+  <text x="50" y="179" font-size="9.5" fill="#444">0.1 SOL</text>
+  <rect x="20" y="246" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="35" cy="263" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 27,274 Q 35,267 43,274" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="50" y="263" font-size="10.5" font-weight="bold">Carol</text>
+  <text x="50" y="279" font-size="9.5" fill="#444">0.1 SOL</text>
   <!-- the single vault -->
   <circle cx="300" cy="168" r="16" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="300" y="138" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
   <text x="300" y="200" font-size="11" font-weight="bold" text-anchor="middle">600 USDC</text>
   <!-- place_bet arrows -->
-  <path d="M 100,72 C 180,90 230,120 287,156" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
+  <path d="M 128,74 C 195,92 235,122 287,156" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
   <text x="192" y="62" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 300 USDC</text>
-  <path d="M 102,166 L 281,168" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
-  <text x="185" y="158" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 100 USDC</text>
-  <path d="M 100,258 C 180,240 230,208 287,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
+  <path d="M 128,168 L 281,168" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
+  <text x="198" y="158" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 100 USDC</text>
+  <path d="M 128,262 C 195,244 235,210 287,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-bets-arr)"/>
   <text x="200" y="274" font-size="11" font-weight="bold" text-anchor="middle">place_bet &#183; 200 USDC</text>
   <!-- data accounts -->
   <rect x="440" y="36" width="180" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
