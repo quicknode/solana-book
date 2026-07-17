@@ -20,11 +20,11 @@ The mint authority is the boss of that factory, and who holds the role is the fi
 
 ## Token Accounts Hold Tokens
 
-A **token account** holds one owner's balance of one token. The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from the two (plus the token program that manages the mint): this is how a program knows where Alice's USDC lives without asking her, and how account constraints can verify that a supplied token account really is hers. ATAs are also the first **PDAs** you meet on Solana: derived addresses that sit off the curve, with no private key. The PDAs chapter explains the mechanism.
+A **token account** holds one owner's balance of one token. The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from the two (plus the token program that manages the mint): this is how a program knows where Alice's USDC lives without asking her, and how account constraints can verify that a supplied token account really is hers. ATAs are the **PDAs** you met when Bob paid Alice in The Core Building Blocks of Solana: derived addresses that sit off the curve, with no private key. The PDAs chapter explains the mechanism.
 
 Not every token account is an ATA. A token account can live at any address, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves: some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *a wallet's* balance of a mint; program-held tokens live wherever the program put them.
 
-![Alice's and Bob's USDC stores are the first PDAs you meet: derived from owner and mint, they sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
+![Alice's and Bob's USDC stores are PDAs: derived from owner and mint, they sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
 ## Decimals Define the Minor Unit
 
