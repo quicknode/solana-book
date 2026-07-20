@@ -124,7 +124,7 @@ A neutral holder of funds that releases them only when agreed conditions are met
 
 ### faucet
 
-A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or faucet.solana.com, USDC from Circle's faucet at faucet.circle.com. Faucets are why nothing in this book needs real money.
+A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or faucet.quicknode.com/solana, USDC from Circle's faucet at faucet.circle.com. Faucets are why nothing in this book needs real money.
 
 ### fixed point
 
@@ -280,7 +280,7 @@ A betting structure with no bookmaker: all stakes pool together, and winners spl
 
 ### PDA (program derived address)
 
-An address computed from a program's id and chosen seeds, with no private key. Only the owning program can sign as it, which is what makes program-owned vaults trustworthy.
+An address computed from a program's ID and chosen seeds. A PDA is not a public key and thus has no private key, so no signature for it can ever exist. Only the deriving program can "sign" as it, by presenting the seeds for the runtime to recheck, which is what makes program-owned vaults trustworthy.
 
 ### perpetual future
 
@@ -297,6 +297,10 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 ### program
 
 Executable code deployed onchain; the thing this book builds. Called a "smart contract" on other chains.
+
+### program ID
+
+A program's address: the account its executable code is deployed at. Every PDA is derived from a program ID plus seeds, so the ID is what ties a derived address back to the one program that can "sign" for it.
 
 ### proprietary AMM (prop AMM)
 

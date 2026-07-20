@@ -4,9 +4,11 @@
     <pattern id="lending-borrow-ltv-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#888" stroke-width="1.4"/></pattern>
   </defs>
   <!-- Bob -->
-  <circle cx="60" cy="85" r="16" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 35,127 Q 60,105 85,127" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="60" y="147" font-size="12" font-weight="bold" text-anchor="middle">Bob</text>
+  <rect x="10" y="64" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="25" cy="81" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 17,92 Q 25,85 33,92" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="40" y="81" font-size="10.5" font-weight="bold">Bob</text>
+  <text x="40" y="97" font-size="9.5" fill="#444">0.1 SOL</text>
   <!-- Bob's obligation -->
   <rect x="180" y="36" width="225" height="118" rx="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <circle cx="198" cy="58" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -21,9 +23,9 @@
   <circle cx="487" cy="92" r="5" fill="#fff" stroke="#111" stroke-width="1.6"/>
   <text x="499" y="96" font-size="10.5">liquidity vault</text>
   <!-- flows -->
-  <path d="M 88,74 C 120,64 145,60 176,60" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-borrow-ltv-arr)"/>
+  <path d="M 126,78 C 145,68 158,62 176,60" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-borrow-ltv-arr)"/>
   <text x="112" y="44" font-size="11" font-weight="bold" text-anchor="middle">5 NVDAx shares</text>
-  <path d="M 465,112 C 420,190 190,180 90,116" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-borrow-ltv-arr)"/>
+  <path d="M 465,112 C 420,190 190,185 84,112" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#lending-borrow-ltv-arr)"/>
   <text x="280" y="196" font-size="12" font-weight="bold" text-anchor="middle">$750 USDC</text>
   <!-- health gauge -->
   <text x="40" y="240" font-size="11" font-weight="bold">Bob&#8217;s position, marked to market</text>

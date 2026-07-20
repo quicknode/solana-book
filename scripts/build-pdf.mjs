@@ -230,6 +230,21 @@ blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border
 blockquote p { text-align: left; }
 ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
 li { margin: 0.18em 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.9em 0;
+  font-size: 0.9em;
+  break-inside: avoid;
+}
+th, td {
+  border: 0.5pt solid #999;
+  padding: 0.35em 0.55em;
+  text-align: left;
+  vertical-align: top;
+}
+th { background: #ececea; font-weight: bold; border-bottom: 1pt solid #666; }
+table p { margin: 0; text-align: left; }
 figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: 4.9in; }
 figure svg { width: 100%; height: auto; }
 figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
