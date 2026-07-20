@@ -1,6 +1,6 @@
 # Chapter 2: The Core Building Blocks of Solana
 
-Nearly every generic blockchain article describes blockchain as a "shared ledger". This is vague: to what extent does the "sharing" occur? And what about the vast majority of data that wouldn't appear in a traditional ledger?
+Nearly every generic blockchain introduction describes it as a "shared ledger". This is vague: to what extent does the "sharing" occur? And what about the vast majority of program data, beyond account balances, that wouldn't appear in a traditional ledger?
 
 Solana - or more specifically, Solana mainnet and devnet - is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
 
@@ -8,7 +8,7 @@ Solana - or more specifically, Solana mainnet and devnet - is better understood 
 
 Meet Alice. Alice has a **key pair**: two mathematically linked keys. Her **private key** is kept secret, stored securely on her device, and is used to sign. The matching **public key** can be shared with everyone, and is used to check those signatures: a valid signature proves that the holder of the private key, and nobody else, produced it.
 
-On Solana, the public key does double duty: it is also Alice's **address**, the identifier anyone can use to find her and transact with her. And "key" is not a metaphor: Solana public keys are points on a cryptographic curve, so this book draws the network exactly that way, as a curve with addresses sitting on it.
+On Solana, as with most blockchains, the public key does double duty: it is also Alice's **address**, the identifier anyone can use to find her and transact with her. And "key" is not a metaphor: Solana public keys are points on a cryptographic curve, so this book draws the network exactly that way, as a curve with addresses sitting on it.
 
 At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called rent, covered with PDAs later in this part) and the fees on her future transactions. Anyone who knows Alice's address can look up her account and see that balance; what nobody can do without her private key is spend it.
 
@@ -20,11 +20,11 @@ At Alice's address lives Alice's **account**: some data with an address. Her acc
 
 The curve in the figure is labeled **Solana Devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate world.
 
-| Cluster | Purpose | Assets have value? | Where it runs |
-| --- | --- | --- | --- |
-| **mainnet** | Production: where real financial products run | Yes | Globally |
-| **devnet** | Identical machinery for building and testing | No: tokens are free | Globally |
-| **localnet** | Development and fast test loops | No | Locally, on your own machine |
+| Cluster      | Purpose                                       | Assets have value?  | Where it runs                |
+| ------------ | --------------------------------------------- | ------------------- | ---------------------------- |
+| **mainnet**  | Production: where real financial products run | Yes                 | Globally                     |
+| **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
+| **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
 Alice's SOL is devnet SOL, and it cost her nothing: the `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
 

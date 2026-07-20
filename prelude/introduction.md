@@ -1,6 +1,6 @@
 # Chapter 1: Introduction
 
-It might seem strange to release a book - let alone one available in a physical form - for building financial software on Solana. Countless YouTube videos, articles and online courses cover how Solana is built, including topics like consensus, validators, and Proof of History: [Anza's documentation](https://docs.anza.xyz/) is by far the best source for these matters. Most of the existing materials go into the basics of minting and moving tokens.
+It might seem strange to release a book - let alone one available in a physical form - for building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
 
 This isn't a book about how Solana is built. It's about **building on the Solana platform**. We're aiming for it to be the essential reference for creating financial products on the world's most active blockchain.
 
@@ -9,27 +9,27 @@ This isn't a book about how Solana is built. It's about **building on the Solana
 Financial products built on Solana have properties no traditional rail offers:
 
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.
-- **Settlement is instant, across the globe.** A trade and its settlement are the same event, whether the two parties are in the same city or on different continents.
+- **Settlement is instant, across the globe.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents.
 - **Transactions cost a fraction of a penny**, regardless of the size of the transfer.
-- **Blockchains can move assets of any kind.** Traditional "crypto" assets like BTC and SOL, and real-world assets (RWAs): commodities, equities, real estate, and exotics. As of mid-2026, Solana is the most popular chain for RWA trading.
+- **Blockchains can move assets of any kind.** Traditional "crypto" assets like BTC and SOL, and real-world assets (RWAs): commodities, equities, real estate, and exotics. As of mid-2026, Solana is the most popular chain for real world asset trading.
 
 ## A Long-Lived Technical Book for Solana
 
-Some technical books die with the release they document. A smaller number live for decades. *TCP/IP Illustrated* is still the book network engineers hand each other, thirty years on. *The UNIX and Linux System Administration Handbook* has outlasted every operating system release it ever mentioned. *Mastering Bitcoin* remains the standard text on its subject. What these books share is a decision about altitude: they teach the layer that does not change. Packets still flow the way Stevens drew them. Processes still fork on Unix and Linux. The mental models survive even as every command-line flag dies. This book provides the same long term knowledge for building financial products on Solana.
+Some technical books die with the release they document. A smaller number live for decades. _TCP/IP Illustrated_ is still the book network engineers hand each other, thirty years on. _The UNIX and Linux System Administration Handbook_ has outlasted every operating system release it ever mentioned. _Mastering Bitcoin_ remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way Stevens drew them. Processes still fork on Unix and Linux. The mental models survive even as every command-line flag dies. This book provides the same long term knowledge for building financial products on Solana.
 
-Solana is a fast-moving space: framework releases, tool versions, and the Solana API are known to churn. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
+Solana is a fast-moving space: framework releases, library versions, and tools are known to churn. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
-*Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will not change. Nor will the desire of adversaries to seize your assets.
+_Building Financial Software on Solana_ teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
-In this book you'll learn how each of the classic financial products actually works, how to handle assets without losing a lamport, what to verify and how to prove your program works. These long term concepts are what this book is for.
+In this book you'll learn how each of the classic financial products actually works, how to handle assets without losing a lamport, and how to prove your program works. These long term concepts are what this book is for.
 
 ## Why Write a Book in the Age of AI?
 
-AI can write a Solana program on request, and this book's own companion AI skill, introduced below, exists to make it do so correctly.
+An LLM can write a Solana program on request, and we fully expect you to use an AI to do exactly that - this book includes a companion AI skill, introduced below, to help you do this correctly.
 
-**No AI can understand a program on your behalf.** The value of this book is the knowledge it leaves in your head: how financial products exist on Solana, as programs, instruction handlers, accounts, seeds, tests, and proofs, so you can design your own programs, understand their implementation, incentives and trust decisions, and have confidence in what you have built. After reading it, you will be able to:
+However **no AI can understand a program on your behalf.** The value of this book is the knowledge it leaves in your head: how financial products exist as Solana programs, so you can design your own programs, understand their implementation, incentives and trust decisions, and have confidence in what you have built. After reading it, you will be able to:
 
-- Design programs
+- Design financial products as Solana programs
 - Understand existing programs
 - Iterate with your AI as a peer
 - Understand the economic incentives of your programs
@@ -64,7 +64,7 @@ Real incidents appear throughout the book in boxed **War Story** sections: in Th
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory). When larger sums move, they belong to a firm's treasury or to a crowd, and the chapter says so.
 
-Like *TCP/IP Illustrated*, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit.
+Like _TCP/IP Illustrated_, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit.
 
 ## Where to Start, Depending on What You Came For
 
@@ -72,7 +72,7 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read [The Arithmetic of Money](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) and [Offchain Truth](../financial-programming-concepts-in-solana/offchain-truth.md), then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
-- **Auditing or reviewing?** [The Adversary](../financial-programming-concepts-in-solana/the-adversary.md) first, then the [program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) matching what is in front of you. Always get a second-opinion audit before releasing a Solana program to mainnet.
+- **Auditing or reviewing?** [The Adversary](../financial-programming-concepts-in-solana/the-adversary.md) first, then the [program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) matching what is in front of you. Always get a second-opinion from a professional auditor before releasing a Solana program to mainnet.
 
 ## An Appendix Meant to Be Worn Out: the Glossary
 
