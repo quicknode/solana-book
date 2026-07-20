@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Georgia, serif" fill="#111">
   <defs><marker id="arr3" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <!-- seeds -->
-  <rect x="36" y="36" width="70" height="26" rx="4" fill="#f4f4f2" stroke="#888"/>
+  <rect x="36" y="36" width="70" height="26" fill="#f4f4f2" stroke="#888"/>
   <text x="71" y="53" font-size="10.5" text-anchor="middle" font-family="Menlo, monospace">"offer"</text>
-  <rect x="112" y="36" width="94" height="26" rx="4" fill="#f4f4f2" stroke="#888"/>
+  <rect x="112" y="36" width="94" height="26" fill="#f4f4f2" stroke="#888"/>
   <text x="159" y="53" font-size="10.5" text-anchor="middle">maker&#8217;s address</text>
-  <rect x="212" y="36" width="40" height="26" rx="4" fill="#f4f4f2" stroke="#888"/>
-  <text x="232" y="53" font-size="10.5" text-anchor="middle">id</text>
-  <rect x="258" y="36" width="86" height="26" rx="4" fill="#fff" stroke="#111" stroke-width="1.4"/>
-  <text x="301" y="53" font-size="10.5" text-anchor="middle">program id</text>
-  <text x="190" y="26" font-size="11" font-weight="bold">seeds + program id</text>
+  <rect x="212" y="36" width="40" height="26" fill="#f4f4f2" stroke="#888"/>
+  <text x="232" y="53" font-size="10.5" text-anchor="middle">ID</text>
+  <rect x="258" y="36" width="86" height="26" fill="#fff" stroke="#111" stroke-width="1.4"/>
+  <text x="301" y="53" font-size="10.5" text-anchor="middle">program ID</text>
+  <text x="190" y="26" font-size="11" font-weight="bold">seeds + program ID</text>
   <path d="M 190,62 v 26" stroke="#111" stroke-width="1.4" marker-end="url(#arr3)"/>
-  <rect x="130" y="92" width="120" height="30" rx="15" fill="none" stroke="#111" stroke-width="1.8"/>
+  <rect x="130" y="92" width="120" height="30" fill="none" stroke="#111" stroke-width="1.8"/>
   <text x="190" y="111" font-size="11" text-anchor="middle">derivation</text>
   <path d="M 190,122 v 30" stroke="#111" stroke-width="1.4" marker-end="url(#arr3)"/>
   <!-- off-curve result -->
@@ -27,11 +27,11 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="472" y="270" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
   <text x="320" y="308" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">keypair addresses live on the curve; PDAs float off it</text>
   <!-- signing -->
-  <rect x="400" y="60" width="204" height="96" rx="8" fill="none" stroke="#111" stroke-width="1.6"/>
+  <rect x="400" y="60" width="204" height="96" rx="6" fill="none" stroke="#111" stroke-width="1.6"/>
   <text x="502" y="82" font-size="11.5" font-weight="bold" text-anchor="middle">the owning program</text>
   <text x="502" y="100" font-size="10.5" fill="#444" text-anchor="middle">presents the same seeds</text>
   <path d="M 502,108 v 20" stroke="#111" stroke-width="1.3" marker-end="url(#arr3)"/>
-  <text x="502" y="146" font-size="10.5" text-anchor="middle" font-style="italic">signs as the PDA: moves the vault it owns</text>
+  <text x="502" y="146" font-size="10.5" text-anchor="middle" font-style="italic">&#8220;signs&#8221; as the PDA: moves the vault it owns</text>
   <path d="M 400,120 C 320,140 250,150 202,164" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arr3)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="524" y="330" font-size="12" font-weight="bold">Solana Devnet</text>
 </svg>

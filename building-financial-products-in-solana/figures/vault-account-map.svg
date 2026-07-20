@@ -1,16 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 592" font-family="Georgia, serif" fill="#111">
-  <!-- registry PDA with its whitelist entries -->
+  <!-- the registry (curator record) and its ApprovedAsset accounts -->
   <circle cx="14" cy="24" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="26" y="27" font-size="8.5" letter-spacing="0.5" fill="#555">&#8220;REGISTRY&#8221; + VICTOR&#8217;S ADDRESS</text>
-  <rect x="22" y="34" width="188" height="118" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="32" y="52" font-size="10.5" font-weight="bold">Victor&#8217;s registry</text>
-  <circle cx="34" cy="72" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="44" y="75" font-size="9">TSLAx whitelist &#8594; TSLA feed</text>
-  <text x="44" y="86" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;WHITELIST&#8221; + REGISTRY + TSLAX MINT</text>
-  <circle cx="34" cy="104" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="44" y="107" font-size="9">NVDAx whitelist &#8594; NVDA feed</text>
-  <text x="44" y="118" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;WHITELIST&#8221; + REGISTRY + NVDAX MINT</text>
-  <text x="32" y="140" font-size="8.5" fill="#444" font-style="italic">whitelist gates which assets a strategy may hold</text>
+  <rect x="22" y="34" width="188" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="32" y="50" font-size="10.5" font-weight="bold">Registry</text>
+  <text x="32" y="65" font-size="9">authority: Victor &#183; holds no list</text>
+  <circle cx="14" cy="88" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="24" y="85" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
+  <text x="24" y="94" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + TSLAX MINT</text>
+  <rect x="22" y="98" width="188" height="24" rx="4" fill="#f4f4f2" stroke="#888"/>
+  <text x="30" y="113" font-size="9"><tspan font-weight="bold">ApprovedAsset:</tspan> TSLAx &#8594; TSLA feed</text>
+  <circle cx="14" cy="132" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <text x="24" y="129" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
+  <text x="24" y="138" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + NVDAX MINT</text>
+  <rect x="22" y="142" width="188" height="24" rx="4" fill="#f4f4f2" stroke="#888"/>
+  <text x="30" y="157" font-size="9"><tspan font-weight="bold">ApprovedAsset:</tspan> NVDAx &#8594; NVDA feed</text>
+  <text x="22" y="177" font-size="8.5" fill="#444" font-style="italic">approved if it has an ApprovedAsset account</text>
   <!-- strategy PDA -->
   <circle cx="232" cy="24" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="244" y="27" font-size="8.5" letter-spacing="0.5" fill="#555">&#8220;STRATEGY&#8221; + INDEX</text>
@@ -32,13 +37,13 @@
   <rect x="22" y="192" width="200" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
   <text x="32" y="210" font-size="10.5" font-weight="bold">Asset config 0</text>
   <text x="32" y="226" font-size="9.5">TSLAx &#183; weight 4,000 bps</text>
-  <text x="32" y="240" font-size="8.5" fill="#444" font-style="italic">feed copied from the registry</text>
+  <text x="32" y="240" font-size="8.5" fill="#444" font-style="italic">feed copied from the ApprovedAsset</text>
   <circle cx="238" cy="182" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="250" y="185" font-size="8.5" letter-spacing="0.5" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
   <rect x="246" y="192" width="200" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
   <text x="256" y="210" font-size="10.5" font-weight="bold">Asset config 1</text>
   <text x="256" y="226" font-size="9.5">NVDAx &#183; weight 6,000 bps</text>
-  <text x="256" y="240" font-size="8.5" fill="#444" font-style="italic">feed copied from the registry</text>
+  <text x="256" y="240" font-size="8.5" fill="#444" font-style="italic">feed copied from the ApprovedAsset</text>
   <!-- Alice's and Bob's share accounts (ATAs of the share mint) -->
   <circle cx="462" cy="122" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="474" y="118" font-size="8" letter-spacing="0.4" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
@@ -81,7 +86,7 @@
   <rect x="32" y="523" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <circle cx="47" cy="540" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
   <path d="M 39,551 Q 47,544 55,551" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="62" y="540" font-size="10" font-weight="bold">Maria (mgr)</text>
+  <text x="62" y="540" font-size="10" font-weight="bold">Maria (manager)</text>
   <text x="62" y="556" font-size="9.5" fill="#444">0.1 SOL</text>
   <!-- Alice wallet -->
   <circle cx="196" cy="489" r="6" fill="#111"/>

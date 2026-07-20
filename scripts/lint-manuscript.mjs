@@ -36,6 +36,7 @@ const rules = [
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
   [/\bbase units?\b/i, 'say "minor unit"'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
+  [/(?<!`)\bids?\b(?!`|\.json)/, 'write "ID"/"IDs" in capitals in prose (code identifiers like `program_id` and the `id.json` filename keep lowercase)'],
   [/\bSolend\b/, "renamed: say Save"],
   [/\bSerum\b/, "collapsed project: cite OpenBook or Phoenix"],
   [/\bfavour|behaviour|\bcancelled\b|\bapologise\b|\blabelled\b/, "American spelling in prose (identifiers like the Cancelled enum are exempt: write them capitalized)"],

@@ -60,6 +60,8 @@ The diagram conventions (account-relationship maps, state machines, token-moveme
 
 Conventions already settled, which the visual pass must preserve:
 
+- **People are wallet rectangles, in the style of the Escrow account map**: a bordered rectangle with a face glyph, a bold left-aligned name title (role labels like "Alice (maker)" in program chapters, "Alice's Account" in the foundation chapters), and the person's SOL balance beneath. Lamport and token arrows that touch a person start or end at this rectangle's edge, never at a bare curve dot or a stick figure. Where a figure draws the cluster curve, the person also keeps a public-key dot on the curve, linked to the rectangle by a dashed line. Instruction handlers listed inside a program's rectangle are left-aligned, one per line.
+- **Rounded corners mean accounts, and nothing else.** Every box that is not an account (transaction envelopes, instruction rows, the transaction log, state-machine states, seed chips, failed or hypothetical calls, offchain parties, annotation panels) draws with square corners, so a reader can tell at a glance what lives on the chain as an account and what does not.
 - **Seeds are never drawn inside an account's rectangle**, because seeds are not part of the account struct. They are labeled near the small address circle that sits above or beside the account box.
 - **A custom PDA's rectangle shows its struct as `key: value`, one field per line**, using the walkthrough's story values where the chapter has them.
 - **Every walkthrough step ("Alice does X", "Bob does Y") is followed by a diagram** showing the token movements, account creations and closures, and value changes that step caused.

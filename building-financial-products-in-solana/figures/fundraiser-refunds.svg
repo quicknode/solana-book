@@ -12,10 +12,12 @@
   <rect x="20" y="110" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <text x="84" y="128" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s USDC</text>
   <text x="84" y="145" font-size="10" fill="#444" text-anchor="middle">1,000 USDC</text>
-  <line x1="84" y1="156" x2="84" y2="181" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="84" cy="196" r="13" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 64,232 Q 84,212 104,232" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="84" y="250" font-size="11" font-weight="bold" text-anchor="middle">Alice</text>
+  <line x1="84" y1="156" x2="84" y2="186" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <rect x="23" y="190" width="122" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="38" cy="207" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 30,218 Q 38,211 46,218" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="53" y="207" font-size="10.5" font-weight="bold">Alice (backer)</text>
+  <text x="53" y="223" font-size="9.5" fill="#444">0.1 SOL</text>
   <text x="84" y="265" font-size="9.5" fill="#444" text-anchor="middle">exactly her recorded amount</text>
   <!-- Bob refund -->
   <path d="M 320,134 L 320,156" stroke="#111" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
@@ -23,20 +25,24 @@
   <rect x="256" y="160" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <text x="320" y="178" font-size="11" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC</text>
   <text x="320" y="195" font-size="10" fill="#444" text-anchor="middle">1,000 USDC</text>
-  <line x1="320" y1="206" x2="320" y2="229" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="320" cy="244" r="13" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 300,280 Q 320,260 340,280" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="320" y="298" font-size="11" font-weight="bold" text-anchor="middle">Bob</text>
+  <line x1="320" y1="208" x2="320" y2="234" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <rect x="259" y="238" width="122" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="274" cy="255" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 266,266 Q 274,259 282,266" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="289" y="255" font-size="10.5" font-weight="bold">Bob (backer)</text>
+  <text x="289" y="271" font-size="9.5" fill="#444">0.1 SOL</text>
   <!-- Carol refund -->
   <path d="M 404,86 C 436,90 462,96 488,106" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="440" y="104" font-size="11" font-weight="bold" text-anchor="middle">900</text>
   <rect x="492" y="110" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <text x="556" y="128" font-size="11" font-weight="bold" text-anchor="middle">Carol&#8217;s USDC</text>
   <text x="556" y="145" font-size="10" fill="#444" text-anchor="middle">1,000 USDC</text>
-  <line x1="556" y1="156" x2="556" y2="181" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="556" cy="196" r="13" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 536,232 Q 556,212 576,232" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="556" y="250" font-size="11" font-weight="bold" text-anchor="middle">Carol</text>
+  <line x1="556" y1="156" x2="556" y2="186" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <rect x="495" y="190" width="122" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="510" cy="207" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+  <path d="M 502,218 Q 510,211 518,218" fill="none" stroke="#111" stroke-width="1.3"/>
+  <text x="525" y="207" font-size="10.5" font-weight="bold">Carol (backer)</text>
+  <text x="525" y="223" font-size="9.5" fill="#444">0.1 SOL</text>
   <text x="556" y="265" font-size="9.5" fill="#444" text-anchor="middle">receipt closes as it pays</text>
   <!-- order note -->
   <rect x="440" y="44" width="186" height="44" fill="#fff" stroke="#888" stroke-width="1"/>
