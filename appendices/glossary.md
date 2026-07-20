@@ -340,7 +340,7 @@ An account whose private key signed the transaction. "Is this account a signer" 
 
 ### significand
 
-The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see The Arithmetic of Money). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics — the fractional part of a logarithm — but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
+The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see The Arithmetic of Money). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
 
 ### slippage
 
