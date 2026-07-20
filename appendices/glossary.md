@@ -34,9 +34,9 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 The key or account with the right to perform an action: a mint authority may create supply, a freeze authority may freeze token accounts, a market authority may withdraw fees. Recording the authority and verifying it on the way out is the core of access control in every chapter.
 
-### base token / quote token
+### base token
 
-The pair every market trades. The base is the thing bought and sold (NVDAx); the quote is the thing prices are stated in (USDC). You quote in the stable asset so the numbers mean dollars.
+The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. The base pairs against the [quote token](#quote-token), and the naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" trips people up: in that base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base."
 
 ### basis point (bps)
 
@@ -222,6 +222,10 @@ The human-scale denomination of an asset: the dollar, the SOL, the whole share. 
 
 The maker posted the resting order; the taker crossed the spread to hit it. Fills execute at the maker's posted price, and fee schedules usually distinguish the two roles.
 
+### mantissa
+
+See [significand](#significand).
+
 ### mark price / index price
 
 On a perpetual futures market, the index price is the oracle's statement of the asset's real-world price; the mark price is the venue's own price used for margin and liquidation.
@@ -306,6 +310,10 @@ A program's address: the account its executable code is deployed at. Every PDA i
 
 An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the Prop AMM chapter builds one.
 
+### quote token
+
+The thing a market states its prices in (USDC), and the unit a **quote amount** is denominated in: 1,000 USDC is a quote amount. The quote is the second half of the [base token](#base-token) pair, and is typically a more stable asset, usually a USD-backed stablecoin like USDC; you quote in the stable asset so the numbers mean dollars. A base amount times a price is a quote amount.
+
 ### rent
 
 The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is real money design.
@@ -329,6 +337,10 @@ A token representing proportional ownership of a pool: of a lending reserve, of 
 ### signer
 
 An account whose private key signed the transaction. "Is this account a signer" is the first validation question in every instruction handler.
+
+### significand
+
+The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see The Arithmetic of Money). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics — the fractional part of a logarithm — but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
 
 ### slippage
 
