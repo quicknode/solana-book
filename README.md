@@ -12,7 +12,6 @@ The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts t
 
 - [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents
 - [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
-- [GO-TO-MARKET.md](GO-TO-MARKET.md) - positioning, the testimonial engine, reviewer targeting, and launch channels
 - [REVIEWING.md](REVIEWING.md) - the reviewer-facing guide sent with advance copies
 - One folder per section ([prelude/](prelude/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [appendices/](appendices/)), one file per chapter; drafted chapters have full text, the rest are skeletons marked "not yet drafted"
 

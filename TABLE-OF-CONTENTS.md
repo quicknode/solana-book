@@ -2,7 +2,7 @@
 
 ## Prelude
 
-[Praise](prelude/praise.md), [copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [acknowledgements](prelude/acknowledgements.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
+[Copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [acknowledgements](prelude/acknowledgements.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
 
 ## [Chapter 1: Introduction](prelude/introduction.md)
 
