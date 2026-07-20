@@ -15,7 +15,7 @@
   <text x="24" y="138" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + NVDAX MINT</text>
   <rect x="22" y="142" width="188" height="24" rx="4" fill="#f4f4f2" stroke="#888"/>
   <text x="30" y="157" font-size="9"><tspan font-weight="bold">ApprovedAsset:</tspan> NVDAx &#8594; NVDA feed</text>
-  <text x="22" y="177" font-size="8.5" fill="#444" font-style="italic">approved = the ApprovedAsset account exists</text>
+  <text x="22" y="177" font-size="8.5" fill="#444" font-style="italic">approved if it has an ApprovedAsset account</text>
   <!-- strategy PDA -->
   <circle cx="232" cy="24" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="244" y="27" font-size="8.5" letter-spacing="0.5" fill="#555">&#8220;STRATEGY&#8221; + INDEX</text>

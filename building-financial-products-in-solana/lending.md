@@ -8,7 +8,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ![The account map: one lending market PDA, three reserve PDAs (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation PDAs holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
 
-The **lending market** PDA (seeds: `"lending_market"`, a market id) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market ids give independent, risk-isolated pools.
+The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
 Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks `available_liquidity` (the un-borrowed pool, and deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate), `borrowed_amount_scaled`, the `cumulative_borrow_rate_index` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate.
 

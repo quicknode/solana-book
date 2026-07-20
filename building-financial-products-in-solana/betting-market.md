@@ -18,7 +18,7 @@ The consequence the chapter's story will make concrete: **parimutuel markets rew
 
 The **config** is a single PDA (seed `"config"`) created once by `initialize_config`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `fee_bps`, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
-Each **event** is a PDA (seeds: `"event"`, the event id) with a description, a status that is Open, Settled, or Cancelled, the running `total_pool`, and, after settlement, the `winning_outcome_index`, `winning_pool`, and `distributable_losing_pool`. Two design details are worth stealing:
+Each **event** is a PDA (seeds: `"event"`, the event ID) with a description, a status that is Open, Settled, or Cancelled, the running `total_pool`, and, after settlement, the `winning_outcome_index`, `winning_pool`, and `distributable_losing_pool`. Two design details are worth stealing:
 
 - **The event snapshots `fee_bps` at creation.** If Maria later changes the config's fee, markets that bettors already joined keep the fee they signed up under. Terms do not change retroactively.
 - **The vault is one token account for the whole event**, an associated token account whose authority is the event PDA. Stakes on every outcome mix in one vault; the accounting that keeps them straight lives in the data accounts, not in separate pots.

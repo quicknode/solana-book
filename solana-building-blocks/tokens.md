@@ -6,7 +6,7 @@ Assets on Solana are tokens, and tokens are nothing more than accounts with well
 
 ## Every Distinct Token Is a Distinct Mint
 
-Each kind of token is defined by its own **mint account**. USDC is one mint; NVDAx is another; the shares a fund issues are a third. Two tokens are the same asset exactly when they come from the same mint address, and *only* then: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account, and passing the *right* mint is a validation problem every program chapter takes seriously.
+Each kind of token is defined by its own **mint account**. USDC is one mint; NVDAx is another; the shares a fund issues are a third. Two tokens are the same asset if they come from the same mint address, and different assets if they do not: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account, and passing the *right* mint is a validation problem every program chapter takes seriously.
 
 The mint account records the token's definition: its current total supply, its decimals, and its authorities.
 
