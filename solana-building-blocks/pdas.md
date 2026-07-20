@@ -1,6 +1,6 @@
 # Chapter 4: PDAs: How Solana Programs Store Data
 
-A **program derived address** (PDA) is an address computed from a program's ID and some chosen seeds, deliberately constructed to have no private key (a **bump** byte, chosen during derivation so the result lands off the curve where keys live, and usually stored so it never needs re-finding). Nobody can ever sign as a PDA with a key, because there is no key, and no digital signature is ever produced. Solana keeps the word "sign" anyway: inside its own instruction handlers, the program whose ID derived the address, and only it, "signs" as the PDA by presenting the seeds, and the runtime, recomputing the derivation, grants the PDA signer status.
+A **program derived address** (PDA) is an address computed from a program's ID and some chosen seeds, deliberately constructed to have no private key (a **bump** byte, chosen during derivation so the result lands off the curve where keys live, and usually stored so it never needs re-finding). Only the program whose ID derived the address can "sign" as the PDA, and what that really means gets its own boxout below.
 
 PDAs are how Solana programs store data. Taken together, a program's PDAs behave like a **key/value store**: the seeds are the key, and the account's data is the value. ("Key" here means *identifier*, the same word a database would use; it has nothing to do with public or private keys.) Every program in this book keeps its state this way:
 
@@ -23,6 +23,8 @@ An account that claims to be "the vault for this market" either derives from the
 ## PDA Authority Makes Custody Programmatic
 
 A vault whose authority is a PDA is a vault whose funds move only along the code paths the program defines. When people say that "the program holds the funds", they mean that the funds are stored in a token account that the program controls, and that moving them means invoking the program's instruction handlers. That arrangement is the foundation of every escrow, pool, and market in the book.
+
+> **"Signing" with a PDA is not signing.** No digital signature is ever produced for a PDA, because there is no private key to produce one; nothing like the cryptographic proof behind Alice's and Bob's transactions exists here. This book still says "sign with the PDA", because that is how Solana itself uses the word, in the runtime and in every library you will touch. When you read it, here or anywhere else, translate it to something plainer: the program specifies the seeds of the PDA that controls the token account, the runtime recomputes the derivation, and the movement is allowed.
 
 ![Seeds plus the program ID derive an address off the curve, where no private key exists; only the program whose ID derived it can "sign" as it, and presenting the same seeds is the entire act.](figures/pda-derivation.svg)
 
