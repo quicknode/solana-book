@@ -1,8 +1,8 @@
 # Chapter 6: Financial Programming Concepts in Solana
 
-Solana Building Blocks covered the platform. This part covers the money: everything financial you will ever build reduces to calculating with it, bringing facts about it onchain, defending it, and operating a program that holds it. All of it applies to every financial product in this book, starting with one framing idea that shapes them all.
+This part covers the money: everything financial you will ever build reduces to calculating with money, bringing facts about assets onchain, defending assets, and operating a program that holds assets.
 
-## Financial Software Is a State Machine, and Every State Needs an Exit
+## Financial Software Is a State Machine
 
 Every financial product in this book is a small number of states and the legal transitions between them. An escrow offer is open, then taken or canceled. A bet is placed, then paid, refunded, or closed. An order is open, partially filled, filled, or canceled. A loan is healthy, unhealthy, repaid, or liquidated. Before writing any handler, draw this machine: name the states, name every legal transition, and check that nothing is missing.
 

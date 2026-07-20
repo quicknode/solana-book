@@ -9,9 +9,13 @@ This isn't a book about how Solana is built. It's about **building on the Solana
 Financial products built on Solana have properties no traditional rail offers:
 
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.
-- **Settlement is instant, across the globe.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents.
+- **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents. There is no counterparty risk to manage and no collateral parked against unsettled trades.
+- **Everyone reads the same ledger.** When both sides of a trade see identical state, reconciliation, the back office's largest hidden cost, becomes a non-event.
+- **Money is programmable.** Coupon payments, margin calls, and corporate actions run as code instead of chains of manual instructions.
 - **Transactions cost a fraction of a penny**, regardless of the size of the transfer.
 - **Blockchains can move assets of any kind.** Traditional "crypto" assets like BTC and SOL, and real-world assets (RWAs): commodities, equities, real estate, and exotics. As of mid-2026, Solana is the most popular chain for real world asset trading.
+
+Open networks use these properties for permissionless markets anyone can join. Traditional financial institutions adopt the same primitives wherever they improve cost, risk, or distribution while preserving the control and accountability their regulators require: atomic settlement, shared ledgers, programmable money, tokenized funds, and AMM pricing math, delivered on permissioned terms. The two markets have different customers and different rules, but they run on the same rails, and the primitives institutions adopt were invented on open networks first. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
 ## A Long-Lived Technical Book for Solana
 
