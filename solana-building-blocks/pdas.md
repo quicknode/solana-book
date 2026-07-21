@@ -28,12 +28,6 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 
 ![Seeds plus the program ID derive an address off the curve, where no private key exists; only the program whose ID derived it can "sign" as it, and presenting the same seeds is the entire act.](figures/pda-derivation.svg)
 
-> **Why doesn't the program simply authorize the transfer directly, without seeds?** Why not let a program move funds from any token account that names it as authority, instead of making it present seeds? Start with what a PDA "signature" actually is. No signing happens: the runtime checks that the presented seeds plus the calling program's ID derive the address, and if they do, it marks the account as a signer for that one instruction. It is authorization granted by the runtime on proof of derivation, not a cryptographic signature.
->
-> That reframing answers the question. A program's ID is an ordinary on-curve address, generated as a key pair when the program is deployed, so a private key for it exists. If a token account could name the program's address as its authority, whoever holds that deployment key could sign a plain transfer and drain the vault directly, with no instruction handler, no checks, and no program logic in the way. Requiring the authority to be a keyless PDA removes that key entirely: there is no signature that empties the vault, only the program presenting the vault's seeds inside a handler. Every movement goes through code.
->
-> Seeds also partition the risk. Giving each vault its own PDA, derived from market-specific seeds, makes the authority over one market's vault a different identity from the authority over another's. A handler that knows only market A's seeds cannot sign for market B's vault even when it is handed B's vault by mistake, because B's authority is a PDA that handler cannot derive. One program as a single authority would be one master key over everything it touches; per-vault PDAs make an accidental or malicious authorization stop at the one vault whose seeds the handler actually presented.
-
 ## Storage Is Paid For: Rent
 
 Every account, PDA or otherwise, holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. The deposit is not a fee: close the account and the lamports come back.
