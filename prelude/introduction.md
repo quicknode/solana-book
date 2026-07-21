@@ -9,14 +9,14 @@ This isn't a book about how Solana is built. It's about **building on the Solana
 Financial products built on Solana have properties no traditional rail offers:
 
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.
-- **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents. There is no counterparty risk to manage and no collateral parked against unsettled trades.
-- **Everyone reads the same ledger.** When both sides of a trade see identical state, reconciliation, the back office's largest hidden cost, becomes a non-event.
-- **Money is programmable.** Coupon payments, margin calls, and corporate actions run as code instead of chains of manual instructions.
+- **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed.
+- **Everyone reads the same accounts.** A traditional trade lands in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
+- **Money is programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
 - **Transactions cost a fraction of a penny**, regardless of the size of the transfer.
 - **Blockchains can move assets of any kind.** Traditional "crypto" assets like BTC and SOL, and real-world assets (RWAs): commodities, equities, real estate, and exotics. As of mid-2026, Solana is the most popular chain for real world asset trading.
 - **Distribution is the deployment.** A traditional fund spends months and a chain of intermediaries reaching its investors: an exchange listing, market makers, brokerage platform approvals, each a gatekeeper with its own cost and lead time. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists. The legal duties of offering a financial product do not change; the infrastructure between you and your investors is what disappears.
 
-Open networks use these properties for permissionless markets anyone can join. Traditional financial institutions adopt the same primitives wherever they improve cost, risk, or distribution while preserving the control and accountability their regulators require: atomic settlement, shared ledgers, programmable money, tokenized funds, and AMM pricing math, delivered on permissioned terms. The two markets have different customers and different rules, but they run on the same rails, and the primitives institutions adopt were invented on open networks first. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
+Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
 ## A Long-Lived Technical Book for Solana
 
