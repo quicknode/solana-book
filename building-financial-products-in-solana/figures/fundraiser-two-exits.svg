@@ -1,44 +1,189 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 290" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 570" font-family="Georgia, serif" fill="#111">
   <defs><marker id="fund-exits-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- timeline -->
-  <line x1="60" y1="70" x2="420" y2="70" stroke="#111" stroke-width="2"/>
-  <line x1="60" y1="62" x2="60" y2="78" stroke="#111" stroke-width="2"/>
-  <line x1="420" y1="62" x2="420" y2="78" stroke="#111" stroke-width="2"/>
-  <text x="60" y="52" font-size="11" text-anchor="middle" font-weight="bold">day 0</text>
-  <text x="420" y="52" font-size="11" text-anchor="middle" font-weight="bold">day 7</text>
-  <text x="240" y="52" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the window: contribute only</text>
-  <!-- contributions flowing in -->
-  <path d="M 120,120 L 120,84" stroke="#111" stroke-width="1.6" marker-end="url(#fund-exits-arr)"/>
-  <path d="M 220,120 L 220,84" stroke="#111" stroke-width="1.6" marker-end="url(#fund-exits-arr)"/>
-  <path d="M 320,120 L 320,84" stroke="#111" stroke-width="1.6" marker-end="url(#fund-exits-arr)"/>
-  <text x="220" y="138" font-size="10.5" fill="#444" text-anchor="middle">contributions, max 10% of target each</text>
-  <!-- vault box -->
-  <rect x="470" y="40" width="120" height="60" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
-  <text x="530" y="65" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
-  <text x="530" y="82" font-size="10" fill="#444" text-anchor="middle">9,000 USDC target</text>
-  <path d="M 424,70 L 466,70" stroke="#111" stroke-width="1.6" marker-end="url(#fund-exits-arr)"/>
-  <!-- two exits -->
-  <path d="M 500,104 C 440,160 340,206 256,218" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-exits-arr)"/>
-  <rect x="130" y="198" width="122" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="145" cy="215" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 137,226 Q 145,219 153,226" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="160" y="215" font-size="10.5" font-weight="bold">Maria (maker)</text>
-  <text x="160" y="231" font-size="9.5" fill="#444">0.1 SOL</text>
-  <path d="M 560,104 C 592,170 566,214 508,228" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-exits-arr)"/>
-  <rect x="420" y="232" width="140" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="436" cy="249" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 428,260 Q 436,253 444,260" fill="none" stroke="#111" stroke-width="1.3"/>
-  <circle cx="454" cy="249" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 446,260 Q 454,253 462,260" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="470" y="249" font-size="10.5" font-weight="bold">contributors</text>
-  <text x="470" y="265" font-size="9.5" fill="#444">0.1 SOL each</text>
-  <!-- mutually exclusive note -->
-  <text x="60" y="176" font-size="10.5" fill="#444" font-style="italic">the same comparison decides both exits,</text>
-  <text x="60" y="191" font-size="10.5" fill="#444" font-style="italic">so only one door is ever open</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="392" y="164" font-size="11" font-weight="bold">target met: everything to Maria</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="620" y="180" font-size="11" font-weight="bold" text-anchor="end">deadline passed,</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="620" y="195" font-size="11" font-weight="bold" text-anchor="end">target missed:</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="620" y="210" font-size="11" font-weight="bold" text-anchor="end">refunds, exactly</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="620" y="225" font-size="11" font-weight="bold" text-anchor="end">what each put in</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="392" y="179" font-size="10" fill="#444" font-style="italic">current_amount &#8805; amount_to_raise</text>
+  <!-- fundraiser PDA: the counter decides both exits -->
+  <g>
+    <circle cx="58" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="70" y="17" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;FUNDRAISER&#8221; + MAKER&#8217;S ADDRESS</text>
+    <rect x="50" y="24" width="205" height="96" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="60" y="42" font-size="10.5" font-weight="bold">fundraiser</text>
+    <text x="60" y="57" font-size="9.5">maker: Maria</text>
+    <text x="60" y="70" font-size="9.5">mint_to_raise: USDC</text>
+    <text x="60" y="83" font-size="9.5">amount_to_raise: 9,000 USDC</text>
+    <text x="60" y="96" font-size="9.5">current_amount: counts contributions</text>
+    <text x="60" y="110" font-size="9" fill="#444">time_started: day 0 &#183; duration: 7 days</text>
+  </g>
+  <!-- annotation: the window and the one comparison -->
+  <g>
+    <rect x="272" y="24" width="186" height="76" fill="#fff" stroke="#888"/>
+    <text x="281" y="40" font-size="9.5" font-weight="bold">one comparison, two futures</text>
+    <text x="281" y="54" font-size="9" fill="#444">day &#60; 7: contribute fills the vault</text>
+    <text x="281" y="66" font-size="9" fill="#444">target met &#8594; check_contributions</text>
+    <text x="281" y="78" font-size="9" fill="#444">day &#8805; 7, target missed &#8594; refund</text>
+    <text x="281" y="92" font-size="9" font-style="italic" fill="#444">only one door is ever open</text>
+  </g>
+  <!-- the fundraiser program -->
+  <g>
+    <circle cx="478" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="490" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="470" y="16" width="160" height="88" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="480" y="32" font-size="10.5" font-weight="bold">fundraiser program</text>
+    <text x="480" y="46" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize</text>
+    <text x="480" y="57" font-size="8.5" font-family="Menlo, monospace" fill="#888">contribute</text>
+    <text x="480" y="68" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">check_contributions</text>
+    <text x="480" y="79" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">refund</text>
+    <text x="480" y="90" font-size="8.5" font-family="Menlo, monospace" fill="#888">close_fundraiser</text>
+  </g>
+  <!-- vault: the fundraiser's USDC ATA -->
+  <g>
+    <circle cx="432" cy="124" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="444" y="120" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM + FUNDRAISER&#8217;S</text>
+    <text x="444" y="131" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+    <rect x="440" y="136" width="170" height="68" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="450" y="154" font-size="10.5" font-weight="bold">vault: the fundraiser&#8217;s USDC</text>
+    <text x="450" y="170" font-size="9.5" fill="#444">holds every contribution</text>
+    <text x="450" y="184" font-size="9" fill="#444" font-style="italic">authority: the fundraiser PDA</text>
+  </g>
+  <!-- the two exits, both signed by the fundraiser PDA -->
+  <path d="M 455,206 C 380,250 200,240 106,268" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-exits-arr)"/>
+  <path d="M 485,206 C 430,250 280,248 220,268" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-exits-arr)"/>
+  <path d="M 515,206 C 470,252 380,252 338,268" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-exits-arr)"/>
+  <path d="M 545,206 C 530,246 480,252 454,268" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#fund-exits-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="44" y="236" font-size="10.5" font-weight="bold">target met: everything to Maria</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="44" y="249" font-size="9" font-style="italic" fill="#444">current_amount &#8805; amount_to_raise</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="632" y="225" font-size="10.5" font-weight="bold" text-anchor="end">deadline passed, target missed:</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="632" y="238" font-size="10.5" font-weight="bold" text-anchor="end">refunds, exactly what each put in</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="632" y="266" font-size="9" font-style="italic" fill="#444" text-anchor="end">day &#8805; 7 &#183; current_amount &#60; amount_to_raise</text>
+  <g transform="translate(287,243)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <g transform="translate(354,246)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <g transform="translate(425,250)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <g transform="translate(503,248)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <!-- USDC token accounts -->
+  <g>
+    <rect x="40" y="272" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="50" y="289" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+    <text x="50" y="304" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="46" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="56" y="321" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="56" y="330" font-size="7.5" letter-spacing="0.4" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="56" y="339" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="158" y="272" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="168" y="289" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="168" y="304" font-size="9.5" fill="#444">100 USDC</text>
+    <circle cx="164" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="174" y="321" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="174" y="330" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="174" y="339" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="276" y="272" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="286" y="289" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="286" y="304" font-size="9.5" fill="#444">100 USDC</text>
+    <circle cx="282" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="292" y="321" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="292" y="330" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="292" y="339" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="394" y="272" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="404" y="289" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+    <text x="404" y="304" font-size="9.5" fill="#444">100 USDC</text>
+    <circle cx="400" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="410" y="321" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="410" y="330" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="410" y="339" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <!-- contributor receipt PDAs -->
+  <g>
+    <circle cx="32" cy="364" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="44" y="360" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; + THE</text>
+    <text x="44" y="371" font-size="8.5" letter-spacing="0.6" fill="#555">FUNDRAISER + ALICE&#8217;S ADDRESS</text>
+    <rect x="40" y="376" width="150" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="50" y="394" font-size="10.5" font-weight="bold">Alice&#8217;s receipt</text>
+    <text x="50" y="410" font-size="9.5" fill="#444">amount: 900 USDC</text>
+  </g>
+  <g>
+    <circle cx="212" cy="364" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="224" y="360" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; + THE</text>
+    <text x="224" y="371" font-size="8.5" letter-spacing="0.6" fill="#555">FUNDRAISER + BOB&#8217;S ADDRESS</text>
+    <rect x="220" y="376" width="150" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="230" y="394" font-size="10.5" font-weight="bold">Bob&#8217;s receipt</text>
+    <text x="230" y="410" font-size="9.5" fill="#444">amount: 900 USDC</text>
+  </g>
+  <g>
+    <circle cx="392" cy="364" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="404" y="360" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; + THE</text>
+    <text x="404" y="371" font-size="8.5" letter-spacing="0.6" fill="#555">FUNDRAISER + CAROL&#8217;S ADDRESS</text>
+    <rect x="400" y="376" width="150" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="410" y="394" font-size="10.5" font-weight="bold">Carol&#8217;s receipt</text>
+    <text x="410" y="410" font-size="9.5" fill="#444">amount: 900 (450 + 450)</text>
+  </g>
+  <text x="320" y="444" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">&#8230;seven more backers, each with a 900 receipt and their own USDC account</text>
+  <!-- the curve -->
+  <path d="M 40,510 Q 320,420 600,510" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="562" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- wallets on the curve -->
+  <g>
+    <circle cx="96" cy="494" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="84" y="492" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="44" y="504" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="59" cy="521" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 51,532 Q 59,525 67,532" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="74" y="521" font-size="10.5" font-weight="bold">Maria (maker)</text>
+    <text x="74" y="537" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="208" cy="472" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="220" y="470" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="156" y="482" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="171" cy="499" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 163,510 Q 171,503 179,510" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="186" y="499" font-size="10.5" font-weight="bold">Alice</text>
+    <text x="186" y="515" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="320" cy="465" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="332" y="463" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="268" y="475" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="283" cy="492" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 275,503 Q 283,496 291,503" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="298" y="492" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="298" y="508" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="432" cy="472" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="444" y="468" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="380" y="482" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="395" cy="499" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 387,510 Q 395,503 403,510" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="410" y="499" font-size="10.5" font-weight="bold">Carol</text>
+    <text x="410" y="515" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <!-- USDC mint on the curve -->
+  <g>
+    <circle cx="516" cy="487" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="528" y="483" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="500" y="498" width="110" height="34" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="510" y="519" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  <!-- the program's address dot sits on the curve too -->
+  <line x1="550" y1="104" x2="602" y2="496" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.3"/>
+  <circle cx="602" cy="502" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
 </svg>

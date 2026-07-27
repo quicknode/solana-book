@@ -1,34 +1,208 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 270" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 690" font-family="Georgia, serif" fill="#111">
   <defs><marker id="perps-open-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- Alice's wallet -->
-  <rect x="8" y="76" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="23" cy="93" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 15,104 Q 23,97 31,104" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="38" y="93" font-size="10.5" font-weight="bold">Alice (long)</text>
-  <text x="38" y="109" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- 1000 in -->
-  <path d="M 124,92 L 176,82" stroke="#111" stroke-width="2" marker-end="url(#perps-open-arr)"/>
-  <text x="139" y="72" font-size="10.5" font-weight="bold" text-anchor="middle">1,000 USDC</text>
-  <!-- split bar -->
-  <rect x="180" y="46" width="30" height="180" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
-  <rect x="180" y="46" width="30" height="1.2" fill="#111"/>
-  <text x="195" y="40" font-size="10" fill="#444" text-anchor="middle">in the vault</text>
-  <!-- fee slice -->
-  <rect x="180" y="46" width="30" height="9" fill="#c9c9c4" stroke="#111" stroke-width="1"/>
-  <path d="M 214,50 L 268,50" stroke="#111" stroke-width="1.4" marker-end="url(#perps-open-arr)"/>
-  <text x="276" y="47" font-size="10.5" font-weight="bold">open fee: 5 USDC to protocol_fees</text>
-  <text x="276" y="61" font-size="9.5" fill="#444" font-style="italic">10 bps of the 5,000 notional, not of the deposit</text>
-  <!-- collateral -->
-  <path d="M 214,150 L 268,150" stroke="#111" stroke-width="1.4" marker-end="url(#perps-open-arr)"/>
-  <text x="276" y="146" font-size="10.5" font-weight="bold">working collateral: 995 USDC</text>
-  <text x="276" y="161" font-size="9.5" fill="#444">carries 5,000 of exposure &#8776; 5x leverage</text>
-  <text x="276" y="175" font-size="9.5" fill="#444">gates: size &#8804; 995 &#215; 10 = 9,950 (max leverage)</text>
-  <text x="276" y="189" font-size="9.5" fill="#444">and 995 &gt; 250, the 5% maintenance margin</text>
-  <!-- reservation -->
-  <rect x="276" y="208" width="330" height="46" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="286" y="226" font-size="10.5" font-weight="bold">the pool reserves 5,000 from its liquidity</text>
-  <text x="286" y="242" font-size="9.5" fill="#444">her best case is prepaid: close profit is capped at size</text>
-  <path d="M 210,220 L 272,228" stroke="#111" stroke-width="1.4" marker-end="url(#perps-open-arr)"/>
-  <text x="120" y="230" font-size="10" fill="#444" font-style="italic" text-anchor="middle">reserved_liquidity</text>
-  <text x="120" y="244" font-size="10" fill="#444" font-style="italic" text-anchor="middle">+ 5,000 &#8804; liquidity</text>
+  <!-- Pool PDA: reserves Alice's best case -->
+  <g>
+    <circle cx="28" cy="18" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="40" y="15" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;POOL&#8221; + COLLATERAL MINT</text>
+    <text x="40" y="26" font-size="8.5" letter-spacing="0.6" fill="#555">+ ORACLE FEED ADDRESS</text>
+    <rect x="20" y="32" width="224" height="132" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="30" y="50" font-size="10.5" font-weight="bold">Pool</text>
+    <text x="30" y="66" font-size="9.5">liquidity: 12,000 USDC</text>
+    <text x="30" y="80" font-size="9.5">reserved_liquidity: 5,000</text>
+    <text x="30" y="94" font-size="9.5">total_collateral: 995</text>
+    <text x="30" y="108" font-size="9.5">protocol_fees: 5</text>
+    <text x="30" y="122" font-size="9.5">long_size: 5,000 &#183; short_size: 0</text>
+    <text x="30" y="136" font-size="9.5">cumulative_funding: 0</text>
+    <text x="30" y="150" font-size="9" fill="#444" font-style="italic">+ scaled accumulators, risk parameters</text>
+  </g>
+  <!-- pool authority PDA, untouched -->
+  <g opacity="0.3">
+    <circle cx="268" cy="18" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="280" y="21" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;AUTHORITY&#8221; + POOL</text>
+    <rect x="260" y="28" width="180" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="270" y="45" font-size="10.5" font-weight="bold">pool authority</text>
+    <text x="270" y="60" font-size="9" fill="#444">holds no data; signs vault &amp; mint</text>
+  </g>
+  <!-- custody vault takes the collateral -->
+  <g>
+    <circle cx="268" cy="92" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="280" y="95" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;VAULT&#8221; + POOL</text>
+    <rect x="260" y="102" width="180" height="58" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="270" y="120" font-size="10.5" font-weight="bold">custody vault</text>
+    <text x="270" y="135" font-size="9.5" fill="#444">every token in the market: 13,000 USDC</text>
+    <text x="270" y="150" font-size="9" fill="#444" font-style="italic">authority: the pool authority</text>
+  </g>
+  <!-- LP share mint, untouched -->
+  <g opacity="0.3">
+    <circle cx="268" cy="172" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="280" y="175" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;LP_MINT&#8221; + POOL</text>
+    <rect x="260" y="182" width="180" height="46" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="270" y="199" font-size="10.5" font-weight="bold">LP share mint</text>
+    <text x="270" y="214" font-size="9" fill="#444" font-style="italic">mint authority: the pool authority</text>
+  </g>
+  <!-- the perps program -->
+  <g>
+    <circle cx="478" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="490" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="470" y="16" width="160" height="110" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="480" y="32" font-size="10.5" font-weight="bold">perps program</text>
+    <text x="480" y="46" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize_pool</text>
+    <text x="480" y="57" font-size="8.5" font-family="Menlo, monospace" fill="#888">add_liquidity</text>
+    <text x="480" y="68" font-size="8.5" font-family="Menlo, monospace" fill="#888">remove_liquidity</text>
+    <text x="480" y="79" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">open_position</text>
+    <text x="480" y="90" font-size="8.5" font-family="Menlo, monospace" fill="#888">close_position</text>
+    <text x="480" y="101" font-size="8.5" font-family="Menlo, monospace" fill="#888">liquidate_position</text>
+    <text x="480" y="112" font-size="8.5" font-family="Menlo, monospace" fill="#888">collect_fees</text>
+  </g>
+  <!-- annotation: the gates (not an account, square corners) -->
+  <rect x="470" y="154" width="160" height="88" fill="#fff" stroke="#888"/>
+  <text x="550" y="172" font-size="9.5" font-weight="bold" text-anchor="middle">the gates, in order</text>
+  <text x="550" y="188" font-size="9" fill="#444" text-anchor="middle">leverage: 5,000 &#8804; 995 &#215; 10</text>
+  <text x="550" y="201" font-size="9" fill="#444" text-anchor="middle">born healthy: 995 &gt; 250 margin</text>
+  <text x="550" y="214" font-size="9" fill="#444" text-anchor="middle">reservation: 5,000 &#8804; liquidity</text>
+  <text x="550" y="230" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">her best-case payout is prepaid</text>
+  <!-- Alice's long position PDA, created by this call -->
+  <g>
+    <circle cx="28" cy="242" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="40" y="238" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;POSITION&#8221; + POOL +</text>
+    <text x="40" y="249" font-size="8.5" letter-spacing="0.6" fill="#555">ALICE&#8217;S ADDRESS + &#8220;LONG&#8221;</text>
+    <rect x="20" y="256" width="196" height="90" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="30" y="274" font-size="10.5" font-weight="bold">Alice&#8217;s position (long)</text>
+    <text x="30" y="290" font-size="9.5">collateral: 995 USDC</text>
+    <text x="30" y="304" font-size="9.5">size: 5,000 (notional)</text>
+    <text x="30" y="318" font-size="9.5">entry_price: $100</text>
+    <text x="30" y="332" font-size="9.5">entry_funding: 0</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="208" y="272" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end">NEW</text>
+  </g>
+  <!-- Bob's position does not exist yet: omitted, not faded -->
+  <!-- the only token movement: 1,000 USDC into the vault -->
+  <path d="M 104,394 C 200,380 320,330 340,260 C 352,215 350,190 350,164" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#perps-open-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="345" y="298" font-size="10.5" font-weight="bold">open_position &#183; 1,000 USDC</text>
+  <g transform="translate(285,325)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="250" y="358" font-size="9" fill="#444" font-style="italic">open fee: 10 bps of the 5,000 notional = 5 USDC;</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="250" y="371" font-size="9" fill="#444" font-style="italic">the remaining 995 is her working collateral</text>
+  <!-- token accounts -->
+  <g>
+    <rect x="6" y="380" width="98" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="14" y="397" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="14" y="412" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="12" cy="434" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="22" y="431" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="22" y="440" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="22" y="449" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="111" y="380" width="98" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="119" y="397" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="119" y="412" font-size="9.5" fill="#444">1,000 USDC</text>
+    <circle cx="117" cy="434" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="127" y="431" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="127" y="440" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="127" y="449" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="216" y="380" width="98" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="224" y="397" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+    <text x="224" y="412" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="222" cy="434" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="232" y="431" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="232" y="440" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="232" y="449" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="321" y="380" width="98" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="329" y="397" font-size="10.5" font-weight="bold">Carol&#8217;s LP shares</text>
+    <text x="329" y="412" font-size="9.5" fill="#444">999.999 LP</text>
+    <circle cx="327" cy="434" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="337" y="431" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="337" y="440" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="337" y="449" font-size="7.5" letter-spacing="0.4" fill="#555">LP SHARE MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="426" y="380" width="98" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="434" y="397" font-size="10.5" font-weight="bold">Dave&#8217;s USDC</text>
+    <text x="434" y="412" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="432" cy="434" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="442" y="431" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="442" y="440" font-size="7.5" letter-spacing="0.4" fill="#555">DAVE&#8217;S ADDRESS +</text>
+    <text x="442" y="449" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="531" y="380" width="98" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="539" y="397" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+    <text x="539" y="412" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="537" cy="434" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="547" y="431" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="547" y="440" font-size="7.5" letter-spacing="0.4" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="547" y="449" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <!-- the curve -->
+  <path d="M 40,610 Q 320,515 600,610" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="676" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- wallets on the curve -->
+  <g>
+    <circle cx="75" cy="599" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="63" y="596" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="8" y="609" width="100" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="23" cy="626" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 15,637 Q 23,630 31,637" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="38" y="626" font-size="10.5" font-weight="bold">Alice (long)</text>
+    <text x="38" y="642" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="150" cy="580" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="138" y="583" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="98" y="526" width="100" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="113" cy="543" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 105,554 Q 113,547 121,554" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="128" y="543" font-size="10.5" font-weight="bold">Bob (short)</text>
+    <text x="128" y="559" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="225" cy="568" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="237" y="565" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="173" y="578" width="96" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="188" cy="595" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 180,606 Q 188,599 196,606" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="203" y="595" font-size="10.5" font-weight="bold">Carol (LP)</text>
+    <text x="203" y="611" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="305" cy="563" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="317" y="566" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="253" y="509" width="128" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="268" cy="526" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 260,537 Q 268,530 276,537" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="283" y="526" font-size="10.5" font-weight="bold">Dave (liquidator)</text>
+    <text x="283" y="542" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="390" cy="566" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="402" y="573" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="338" y="576" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="353" cy="593" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 345,604 Q 353,597 361,604" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="368" y="593" font-size="10.5" font-weight="bold">Maria (authority)</text>
+    <text x="368" y="609" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <!-- USDC mint on the curve, untouched -->
+  <g opacity="0.3">
+    <circle cx="470" cy="576" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="482" y="571" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="418" y="522" width="100" height="34" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="428" y="543" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  <!-- oracle feed: read and interrogated at the door -->
+  <g>
+    <circle cx="545" cy="593" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="557" y="589" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="493" y="603" width="142" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="503" y="621" font-size="10.5" font-weight="bold">oracle feed</text>
+    <text x="503" y="636" font-size="9.5" fill="#444">NVDAx: $100</text>
+    <text x="503" y="649" font-size="8.5" fill="#444" font-style="italic">external; pinned at pool creation</text>
+  </g>
 </svg>

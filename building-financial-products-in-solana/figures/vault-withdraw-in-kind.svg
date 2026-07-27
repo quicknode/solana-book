@@ -1,48 +1,283 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 320" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="vault-withdraw-in-kind-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- burn first: the share mint is a PDA mint -->
-  <circle cx="300" cy="30" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="288" y="34" font-size="11" font-weight="bold" text-anchor="end">share mint</text>
-  <path d="M 640,132 C 616,32 430,24 314,30" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="430" y="26" font-size="11" font-weight="bold" text-anchor="middle">1. burn her 900 shares</text>
-  <!-- the strategy's vaults, as token-account rectangles -->
-  <rect x="20" y="66" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="30" y="84" font-size="10" font-weight="bold">USDC vault</text>
-  <text x="30" y="99" font-size="9" fill="#444">200 USDC</text>
-  <rect x="20" y="140" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="30" y="158" font-size="10" font-weight="bold">TSLAx vault</text>
-  <text x="30" y="173" font-size="9" fill="#444">2 TSLAx</text>
-  <rect x="20" y="214" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="30" y="232" font-size="10" font-weight="bold">NVDAx vault</text>
-  <text x="30" y="247" font-size="9" fill="#444">3 NVDAx</text>
-  <!-- proportional slices out -->
-  <path d="M 142,86 L 448,86" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="295" y="78" font-size="10.5" font-weight="bold" text-anchor="middle">2. her USDC slice</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="295" y="101" font-size="10" font-style="italic" fill="#444" text-anchor="middle">min_usdc_out floor</text>
-  <path d="M 142,160 L 448,160" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="295" y="152" font-size="10.5" font-weight="bold" text-anchor="middle">&#8776;1.5 TSLAx</text>
-  <path d="M 142,234 L 448,234" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-withdraw-in-kind-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="295" y="226" font-size="10.5" font-weight="bold" text-anchor="middle">&#8776;2.8 NVDAx</text>
-  <!-- Alice's token accounts, as rectangles -->
-  <rect x="450" y="66" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="460" y="84" font-size="10" font-weight="bold">Alice&#8217;s USDC</text>
-  <text x="460" y="99" font-size="9" fill="#444">+ her slice</text>
-  <rect x="450" y="140" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="460" y="158" font-size="10" font-weight="bold">Alice&#8217;s TSLAx</text>
-  <text x="460" y="173" font-size="9" fill="#444">+ 1.5 TSLAx</text>
-  <rect x="450" y="214" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="460" y="232" font-size="10" font-weight="bold">Alice&#8217;s NVDAx</text>
-  <text x="460" y="247" font-size="9" fill="#444">+ 2.8 NVDAx</text>
-  <!-- Alice's wallet, owner of all three -->
-  <rect x="584" y="138" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="599" cy="155" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 591,166 Q 599,159 607,166" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="614" y="155" font-size="10.5" font-weight="bold">Alice</text>
-  <text x="614" y="171" font-size="9.5" fill="#444">0.1 SOL</text>
-  <line x1="576" y1="86" x2="576" y2="234" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <line x1="576" y1="160" x2="584" y2="160" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="582" y="246" font-size="8.5" fill="#777" font-style="italic">owner</text>
-  <!-- rules -->
-  <text x="320" y="286" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">each amount floored; each destination verified as hers and of the right mint</text>
-  <text x="320" y="302" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">shares burn before any token moves (checks-effects-interactions)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 752" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="vault-withdraw-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+  </defs>
+  <!-- registry PDA, untouched by withdraw -->
+  <g opacity="0.3">
+    <circle cx="14" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="17" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: &#8220;REGISTRY&#8221; + VICTOR&#8217;S ADDRESS</text>
+    <rect x="22" y="24" width="180" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="41" font-size="10.5" font-weight="bold">registry</text>
+    <text x="32" y="58" font-size="9">authority: Victor &#183; holds no list</text>
+  </g>
+  <!-- strategy PDA -->
+  <g>
+    <circle cx="218" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="230" y="17" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;STRATEGY&#8221; + INDEX</text>
+    <rect x="210" y="24" width="190" height="82" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="220" y="40" font-size="10.5" font-weight="bold">strategy</text>
+    <text x="220" y="54" font-size="9.5">manager: Maria &#183; fee: 1%</text>
+    <text x="220" y="67" font-size="9.5">max_slippage: 1% &#183; asset_count: 2</text>
+    <text x="220" y="80" font-size="9.5">total_shares: 463.5</text>
+    <text x="220" y="95" font-size="8.5" fill="#444" font-style="italic">share count falls before any token moves</text>
+  </g>
+  <!-- the vault-strategy program -->
+  <g>
+    <circle cx="486" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="498" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="478" y="16" width="152" height="130" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="488" y="32" font-size="10.5" font-weight="bold">vault-strategy program</text>
+    <text x="488" y="46" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize_registry</text>
+    <text x="488" y="57" font-size="8.5" font-family="Menlo, monospace" fill="#888">approve_asset</text>
+    <text x="488" y="68" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize_strategy</text>
+    <text x="488" y="79" font-size="8.5" font-family="Menlo, monospace" fill="#888">add_asset</text>
+    <text x="488" y="90" font-size="8.5" font-family="Menlo, monospace" fill="#888">set_weight</text>
+    <text x="488" y="101" font-size="8.5" font-family="Menlo, monospace" fill="#888">deposit</text>
+    <text x="488" y="112" font-size="8.5" font-family="Menlo, monospace" fill="#888">rebalance</text>
+    <text x="488" y="123" font-size="8.5" font-family="Menlo, monospace" fill="#888">collect_fees</text>
+    <text x="488" y="134" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">withdraw</text>
+  </g>
+  <!-- ApprovedAsset PDAs, untouched -->
+  <g opacity="0.3">
+    <circle cx="14" cy="120" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="116" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: &#8220;APPROVED_ASSET&#8221; +</text>
+    <text x="26" y="126" font-size="8" letter-spacing="0.4" fill="#555">REGISTRY + TSLAX MINT</text>
+    <rect x="22" y="132" width="180" height="36" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="146" font-size="9.5" font-weight="bold">ApprovedAsset</text>
+    <text x="32" y="160" font-size="9">TSLAx &#8594; Pyth TSLA feed</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="14" cy="182" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="178" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: &#8220;APPROVED_ASSET&#8221; +</text>
+    <text x="26" y="188" font-size="8" letter-spacing="0.4" fill="#555">REGISTRY + NVDAX MINT</text>
+    <rect x="22" y="194" width="180" height="36" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="208" font-size="9.5" font-weight="bold">ApprovedAsset</text>
+    <text x="32" y="222" font-size="9">NVDAx &#8594; Pyth NVDA feed</text>
+  </g>
+  <!-- the swap router: withdraw sells nothing -->
+  <g opacity="0.3">
+    <circle cx="218" cy="124" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="230" y="127" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="210" y="134" width="190" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="220" y="150" font-size="10.5" font-weight="bold">swap router program</text>
+    <text x="220" y="163" font-size="8.5" font-family="Menlo, monospace">swap_usdc_for_asset</text>
+    <text x="220" y="174" font-size="8.5" font-family="Menlo, monospace">swap_asset_for_usdc</text>
+    <text x="220" y="189" font-size="8.5" fill="#444" font-style="italic">not used: nothing is sold</text>
+  </g>
+  <!-- share mint PDA: the burn -->
+  <g>
+    <circle cx="486" cy="156" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="498" y="159" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; + STRATEGY</text>
+    <rect x="478" y="166" width="152" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="488" y="182" font-size="10.5" font-weight="bold">share mint</text>
+    <text x="488" y="196" font-size="9" fill="#444">supply: 463.5 shares</text>
+    <text x="488" y="210" font-size="8.5" fill="#444" font-style="italic">mint authority: the strategy</text>
+  </g>
+  <!-- asset config PDAs: every index presented, or refuse -->
+  <g>
+    <circle cx="14" cy="254" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="257" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;ASSET&#8221; + STRATEGY + INDEX</text>
+    <rect x="22" y="264" width="190" height="58" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="278" font-size="10.5" font-weight="bold">asset config 0</text>
+    <text x="32" y="291" font-size="9">mint: TSLAx &#183; weight: 4,000 bps</text>
+    <text x="32" y="303" font-size="9">vault: the TSLAx vault</text>
+    <text x="32" y="316" font-size="8" fill="#444" font-style="italic">feed copied from its ApprovedAsset</text>
+  </g>
+  <g>
+    <circle cx="432" cy="254" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="444" y="257" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;ASSET&#8221; + STRATEGY + INDEX</text>
+    <rect x="440" y="264" width="190" height="58" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="450" y="278" font-size="10.5" font-weight="bold">asset config 1</text>
+    <text x="450" y="291" font-size="9">mint: NVDAx &#183; weight: 6,000 bps</text>
+    <text x="450" y="303" font-size="9">vault: the NVDAx vault</text>
+    <text x="450" y="316" font-size="8" fill="#444" font-style="italic">feed copied from its ApprovedAsset</text>
+  </g>
+  <!-- Maria's fee shares, minted earlier by collect_fees -->
+  <g opacity="0.3">
+    <circle cx="222" cy="256" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="234" y="252" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + MARIA&#8217;S</text>
+    <text x="234" y="261" font-size="7" letter-spacing="0.4" fill="#555">ADDRESS + SHARE MINT</text>
+    <rect x="216" y="266" width="120" height="36" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="224" y="280" font-size="9.5" font-weight="bold">Maria&#8217;s shares</text>
+    <text x="224" y="294" font-size="9" fill="#444">13.5 shares</text>
+  </g>
+  <!-- the three vaults -->
+  <g>
+    <circle cx="20" cy="348" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="32" y="344" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + STRATEGY&#8217;S</text>
+    <text x="32" y="354" font-size="8" letter-spacing="0.4" fill="#555">ADDRESS + TSLAX MINT</text>
+    <rect x="28" y="360" width="176" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="38" y="376" font-size="10.5" font-weight="bold">TSLAx vault</text>
+    <text x="38" y="391" font-size="9.5" fill="#444">&#8776;0.78 TSLAx left</text>
+    <text x="38" y="405" font-size="8.5" fill="#444" font-style="italic">authority: the strategy PDA</text>
+  </g>
+  <g>
+    <circle cx="228" cy="348" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="240" y="344" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + STRATEGY&#8217;S</text>
+    <text x="240" y="354" font-size="8" letter-spacing="0.4" fill="#555">ADDRESS + USDC MINT</text>
+    <rect x="236" y="360" width="176" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="246" y="376" font-size="10.5" font-weight="bold">USDC vault</text>
+    <text x="246" y="391" font-size="9.5" fill="#444">0 USDC</text>
+    <text x="246" y="405" font-size="8.5" fill="#444" font-style="italic">authority: the strategy PDA</text>
+  </g>
+  <g>
+    <circle cx="436" cy="348" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="448" y="344" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + STRATEGY&#8217;S</text>
+    <text x="448" y="354" font-size="8" letter-spacing="0.4" fill="#555">ADDRESS + NVDAX MINT</text>
+    <rect x="444" y="360" width="176" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="454" y="376" font-size="10.5" font-weight="bold">NVDAx vault</text>
+    <text x="454" y="391" font-size="9.5" fill="#444">&#8776;1.47 NVDAx left</text>
+    <text x="454" y="405" font-size="8.5" fill="#444" font-style="italic">authority: the strategy PDA</text>
+  </g>
+  <!-- 1. the burn, before anything moves -->
+  <path d="M 295,462 C 345,390 415,310 420,268 C 424,240 455,232 490,229" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#vault-withdraw-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="386" y="330" font-size="10.5" font-weight="bold" text-anchor="end">1. burn her 900 shares</text>
+  <g transform="translate(382,352)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <!-- her slice of the empty USDC vault -->
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="230" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">her USDC slice is 0: every deposit deployed fully,</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="242" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">yet her min_usdc_out floor still guards the USDC leg</text>
+  <!-- 2 and 3: proportional slices out, in kind -->
+  <path d="M 110,420 C 220,446 350,452 450,462" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#vault-withdraw-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="196" y="440" font-size="10.5" font-weight="bold">2. &#8776;1.5 TSLAx</text>
+  <g transform="translate(310,450)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <path d="M 535,420 C 548,436 558,448 566,460" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#vault-withdraw-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="448" y="444" font-size="10.5" font-weight="bold">3. &#8776;2.8 NVDAx</text>
+  <g transform="translate(553,441)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <!-- Alice's token accounts -->
+  <g>
+    <rect x="28" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="36" y="482" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="36" y="497" font-size="9" fill="#444">100 USDC</text>
+    <circle cx="34" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="44" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="44" y="524" font-size="7" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="44" y="533" font-size="7" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="126" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="134" y="482" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="134" y="497" font-size="9" fill="#444">520 USDC</text>
+    <circle cx="132" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="142" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="142" y="524" font-size="7" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="142" y="533" font-size="7" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="224" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="232" y="482" font-size="9.5" font-weight="bold">Alice&#8217;s shares</text>
+    <text x="232" y="497" font-size="9" fill="#444">0 shares</text>
+    <circle cx="230" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="240" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="240" y="524" font-size="7" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="240" y="533" font-size="7" letter-spacing="0.4" fill="#555">SHARE MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="322" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="330" y="482" font-size="9.5" font-weight="bold">Bob&#8217;s shares</text>
+    <text x="330" y="497" font-size="9" fill="#444">450 shares</text>
+    <circle cx="328" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="338" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="338" y="524" font-size="7" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="338" y="533" font-size="7" letter-spacing="0.4" fill="#555">SHARE MINT</text>
+  </g>
+  <g>
+    <rect x="420" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="428" y="482" font-size="9.5" font-weight="bold">Alice&#8217;s TSLAx</text>
+    <text x="428" y="497" font-size="9" fill="#444">&#8776;1.5 TSLAx</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="506" y="500" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end">NEW</text>
+    <circle cx="426" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="436" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="436" y="524" font-size="7" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="436" y="533" font-size="7" letter-spacing="0.4" fill="#555">TSLAX MINT</text>
+  </g>
+  <g>
+    <rect x="518" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="526" y="482" font-size="9.5" font-weight="bold">Alice&#8217;s NVDAx</text>
+    <text x="526" y="497" font-size="9" fill="#444">&#8776;2.8 NVDAx</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="604" y="500" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end">NEW</text>
+    <circle cx="524" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="534" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="534" y="524" font-size="7" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="534" y="533" font-size="7" letter-spacing="0.4" fill="#555">NVDAX MINT</text>
+  </g>
+  <!-- the rules -->
+  <text x="320" y="556" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">each amount floored; each destination verified as hers and of the right mint</text>
+  <text x="320" y="570" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">shares burn before any token moves (checks-effects-interactions)</text>
+  <!-- the curve -->
+  <path d="M 40,640 Q 320,545 600,640" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="290" y="744" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- wallets on the curve -->
+  <g opacity="0.3">
+    <circle cx="90" cy="625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="78" y="622" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="34" y="635" width="108" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="49" cy="652" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 41,663 Q 49,656 57,663" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="64" y="652" font-size="10" font-weight="bold">Victor (curator)</text>
+    <text x="64" y="668" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="200" cy="601" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="212" y="593" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="144" y="611" width="94" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="159" cy="628" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 151,639 Q 159,632 167,639" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="174" y="628" font-size="10.5" font-weight="bold">Alice</text>
+    <text x="174" y="644" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="296" cy="593" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="308" y="591" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="242" y="603" width="94" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="257" cy="620" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 249,631 Q 257,624 265,631" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="272" y="620" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="272" y="636" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="400" cy="596" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="412" y="592" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="340" y="606" width="114" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="355" cy="623" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 347,634 Q 355,627 363,634" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="370" y="623" font-size="10" font-weight="bold">Maria (manager)</text>
+    <text x="370" y="639" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <!-- the three token mints on the curve -->
+  <g opacity="0.3">
+    <circle cx="480" cy="608" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="492" y="604" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <line x1="482" y1="614" x2="490" y2="644" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="458" y="646" width="76" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="496" y="663" font-size="9.5" font-weight="bold" text-anchor="middle">USDC mint</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="523" cy="618" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="535" y="614" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <line x1="526" y1="624" x2="535" y2="672" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="498" y="674" width="78" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="537" y="691" font-size="9.5" font-weight="bold" text-anchor="middle">TSLAx mint</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="558" cy="627" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="546" y="638" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <line x1="562" y1="633" x2="576" y2="700" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="542" y="702" width="84" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="584" y="719" font-size="9.5" font-weight="bold" text-anchor="middle">NVDAx mint</text>
+  </g>
+  <!-- the program's address dot sits on the curve too -->
+  <line x1="554" y1="146" x2="600" y2="636" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.3"/>
+  <circle cx="600" cy="641" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
 </svg>

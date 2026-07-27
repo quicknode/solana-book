@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-![The account map: the market PDA at the center, with the order book account, base vault, quote vault, and fee vault hanging off it, and each trader's market user account, order accounts, and token accounts at the edges.](figures/order-book-accounts.svg)
+![The account map: the market PDA and the program across the top with the order book account beside them, the base, quote, and fee vaults beneath, and each trader's market user account, order accounts, and token accounts between them and the Devnet curve.](figures/order-book-accounts.svg)
 
 The **market** is a PDA holding one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). Its seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 

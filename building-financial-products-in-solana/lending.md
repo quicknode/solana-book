@@ -39,7 +39,7 @@ Maria runs the market, and her revenue is a cut of the interest: the reserve fac
 
 Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest swells the pool while the share supply stays put, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
 
-![Alice's deposit: 1,000 USDC into the reserve's liquidity vault mints 1,000 shares from the share mint; after interest accrues, the same shares redeem for more USDC.](figures/lending-deposit-shares.svg)
+![Alice's deposit: 1,000 USDC into the reserve's liquidity vault mints 1,000 shares from the share mint, one to one; interest later swells the pool while the share supply stays put, so the same shares redeem for more USDC.](figures/lending-deposit-shares.svg)
 
 ## Bob Borrows Against His NVIDIA
 

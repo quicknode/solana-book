@@ -68,7 +68,7 @@ Alice takes profit with `withdraw`, burning her 900 shares. The program does not
 
 She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. And Victor took no fee on any of it; what he earned is the only thing his platform sells, a track record of funds that cannot be rugged.
 
-![In-kind withdrawal: Alice's 900 shares are burned first, then proportional slices of the USDC, TSLAx, and NVDAx vaults flow to her accounts.](figures/vault-withdraw-in-kind.svg)
+![In-kind withdrawal: Alice's 900 shares are burned first, then proportional slices of the TSLAx and NVDAx vaults flow to her accounts; the fully deployed USDC vault has nothing to pay, though her min_usdc_out floor still guards that leg.](figures/vault-withdraw-in-kind.svg)
 
 ## The Math: One Valuation Loop, Floors Toward the Fund
 
