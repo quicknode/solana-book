@@ -84,7 +84,7 @@ const figureDirs = [
 
 const svgRules = [
   [/\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
-  [/\bry="/, "set rx only; ry duplicates it"],
+  [/<rect[^>]*\bry="/, "set rx only on rects; ry duplicates it (ellipse glyphs are exempt)"],
   [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],
 ];
 
