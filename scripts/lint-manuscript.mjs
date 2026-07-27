@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Lint the manuscript for the banned phrases and style rules in
-// WRITING-PLAN.md. Exits nonzero if any rule matches.
+// WRITING-PLAN.md, and the figures for the mechanically checkable parts
+// of the Visual Language conventions. Exits nonzero if any rule matches.
 //
 // Usage: node scripts/lint-manuscript.mjs
 
@@ -71,8 +72,58 @@ for (const file of [...new Set(files)]) {
   });
 }
 
+// Figure checks: the mechanically checkable Visual Language conventions.
+// Rounded corners are reserved for accounts and drawn at one radius, the
+// only fade level is 0.3, address dots have white centers, and seed labels
+// carry the SEEDS prefix. Which rects are accounts is a judgement call the
+// linter cannot make; WRITING-PLAN.md carries the rest of the conventions.
+const figureDirs = [
+  "solana-building-blocks/figures",
+  "building-financial-products-in-solana/figures",
+];
+
+const svgRules = [
+  [/\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
+  [/\bry="/, "set rx only; ry duplicates it"],
+  [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],
+];
+
+const svgFiles = [];
+for (const dir of figureDirs) {
+  for (const name of readdirSync(join(repoRoot, dir))) {
+    if (name.endsWith(".svg")) svgFiles.push(join(repoRoot, dir, name));
+  }
+}
+
+for (const file of svgFiles) {
+  const lines = readFileSync(file, "utf8").split("\n");
+  lines.forEach((line, index) => {
+    for (const [pattern, reason] of svgRules) {
+      if (pattern.test(line)) {
+        failures += 1;
+        console.error(`${file}:${index + 1}: ${reason}\n    ${line.trim().slice(0, 160)}`);
+      }
+    }
+    // An ink-filled circle next to an address label is a filled address
+    // dot; address dots have white centers (fill="#fff").
+    const neighbors = `${lines[index - 1] ?? ""}\n${line}\n${lines[index + 1] ?? ""}`;
+    if (
+      /<circle[^>]*fill="#111"/.test(line) &&
+      /PUBLIC KEY|SEEDS/.test(neighbors)
+    ) {
+      failures += 1;
+      console.error(`${file}:${index + 1}: address dots have white centers: fill="#fff" stroke="#111"\n    ${line.trim().slice(0, 160)}`);
+    }
+    // A seed list beside an address dot starts with the word SEEDS.
+    if (/&#8221; \+/.test(line) && !/SEEDS/.test(line)) {
+      failures += 1;
+      console.error(`${file}:${index + 1}: seed labels start with "SEEDS: "\n    ${line.trim().slice(0, 160)}`);
+    }
+  });
+}
+
 if (failures > 0) {
   console.error(`\n${failures} lint failure(s).`);
   process.exit(1);
 }
-console.log("Manuscript lint clean.");
+console.log("Manuscript and figure lint clean.");
