@@ -33,7 +33,7 @@ The deal is denominated the way all Solana money is denominated: in **minor unit
 
 Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard cast of accounts every token-handling program touches.
 
-![The account map: Alice's and Bob's wallets and their token accounts, the offer account (a PDA) with authority over its vault, the USDC and TSLAx mints, the escrow program with its three instruction handlers, and the owner and authority relationships that connect them.](figures/escrow-account-map.svg)
+![The account map: Alice's and Bob's wallets and their token accounts, the offer account (a PDA) with authority over its vault, the USDC and TSLAx mints, the escrow program with its three instruction handlers, and the offer account's authority over the vault.](figures/escrow-account-map.svg)
 
 The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
 

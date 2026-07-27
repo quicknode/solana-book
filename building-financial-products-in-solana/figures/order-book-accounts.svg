@@ -1,115 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 660" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="order-book-accounts-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
-  <!-- the curve -->
-  <path d="M 40,420 Q 320,210 600,420" fill="none" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="545" y="610" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
-  <!-- the three vaults: plain token accounts, their keypair addresses on the curve -->
-  <rect x="22" y="44" width="148" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="32" y="62" font-size="10.5" font-weight="bold">base vault</text>
-  <text x="32" y="78" font-size="9.5" fill="#444">10 NVDAx locked</text>
-  <line x1="44" y1="86" x2="44" y2="411" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="44" cy="417" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="56" y="413" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="50" y="120" width="148" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="60" y="138" font-size="10.5" font-weight="bold">quote vault</text>
-  <text x="60" y="154" font-size="9.5" fill="#444">1,000 USDC locked</text>
-  <line x1="72" y1="162" x2="72" y2="391" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="72" cy="397" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="84" y="394" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="78" y="196" width="148" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="88" y="214" font-size="10.5" font-weight="bold">fee vault</text>
-  <text x="88" y="230" font-size="9.5" fill="#444">0 USDC, Maria&#8217;s</text>
-  <line x1="100" y1="238" x2="100" y2="374" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="100" cy="380" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="112" y="377" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <!-- the market struct: a PDA, its dot off the curve with its seeds -->
-  <circle cx="248" cy="36" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="260" y="32" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET&#8221; + NVDAX &amp;</text>
-  <text x="260" y="43" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESSES</text>
-  <rect x="240" y="50" width="172" height="146" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="250" y="68" font-size="10.5" font-weight="bold">market</text>
-  <text x="250" y="84" font-size="9.5">authority: Maria</text>
-  <text x="250" y="98" font-size="9.5">base_mint: NVDAx</text>
-  <text x="250" y="112" font-size="9.5">quote_mint: USDC</text>
-  <text x="250" y="126" font-size="9.5">base_vault, quote_vault,</text>
-  <text x="250" y="140" font-size="9.5">fee_vault, order_book</text>
-  <text x="250" y="154" font-size="9.5">fee_basis_points: 25</text>
-  <text x="250" y="168" font-size="9.5">tick_size, min_order_size</text>
-  <text x="250" y="182" font-size="9.5">is_active: true</text>
-  <path d="M 240,84 L 176,66" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-accounts-arr)"/>
-  <path d="M 240,110 L 202,140" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-accounts-arr)"/>
-  <path d="M 240,136 L 230,210" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-accounts-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="214" y="162" font-size="8.5" font-style="italic" fill="#777" text-anchor="middle">owns</text>
-  <!-- the order book: a keypair account, its address on the curve -->
-  <circle cx="376" cy="319" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="388" y="316" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="420" y="40" width="196" height="72" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="430" y="58" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
-  <text x="430" y="74" font-size="9.5">bid tree + ask tree, zero-copy</text>
-  <text x="430" y="90" font-size="9.5" font-style="italic" fill="#444">not a PDA: created by the client</text>
-  <line x1="480" y1="112" x2="377" y2="313" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <!-- the order book program: address on the curve -->
-  <circle cx="320" cy="315" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="308" y="312" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <rect x="250" y="352" width="140" height="108" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="260" y="370" font-size="10.5" font-weight="bold">order book program</text>
-  <text x="260" y="386" font-size="9.5" font-family="Menlo, monospace">initialize_market</text>
-  <text x="260" y="399" font-size="9.5" font-family="Menlo, monospace">create_market_user</text>
-  <text x="260" y="412" font-size="9.5" font-family="Menlo, monospace">place_order</text>
-  <text x="260" y="425" font-size="9.5" font-family="Menlo, monospace">cancel_order</text>
-  <text x="260" y="438" font-size="9.5" font-family="Menlo, monospace">settle_funds</text>
-  <text x="260" y="451" font-size="9.5" font-family="Menlo, monospace">withdraw_fees</text>
-  <line x1="320" y1="321" x2="320" y2="348" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <!-- mints: addresses on the curve -->
-  <circle cx="197" cy="335" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="197" y="354" font-size="9" letter-spacing="1" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="197" y="368" font-size="11" font-weight="bold" text-anchor="middle">NVDAx mint</text>
-  <circle cx="421" cy="329" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="421" y="348" font-size="9" letter-spacing="1" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="421" y="362" font-size="11" font-weight="bold" text-anchor="middle">USDC mint</text>
-  <!-- Alice: a wallet account, address on the curve -->
-  <circle cx="544" cy="382" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="532" y="378" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <rect x="424" y="394" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="439" cy="411" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 431,422 Q 439,415 447,422" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="454" y="411" font-size="10.5" font-weight="bold">Alice (trader)</text>
-  <text x="454" y="427" font-size="9.5" fill="#444">1 SOL</text>
-  <!-- Alice's ATAs -->
-  <circle cx="470" cy="240" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="236" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
-  <text x="482" y="247" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
-  <rect x="478" y="254" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="488" y="272" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
-  <text x="488" y="288" font-size="9.5" fill="#444">1,000 USDC</text>
-  <circle cx="466" cy="470" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="478" y="466" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
-  <text x="478" y="477" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + NVDAX MINT ADDRESS</text>
-  <rect x="474" y="484" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="484" y="502" font-size="10.5" font-weight="bold">Alice&#8217;s NVDAx</text>
-  <text x="484" y="518" font-size="9.5" fill="#444">0 NVDAx</text>
-  <!-- Alice's market user: her ledger line -->
-  <circle cx="320" cy="506" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="332" y="502" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET_USER&#8221; + MARKET</text>
-  <text x="332" y="513" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; ALICE ADDRESSES</text>
-  <rect x="316" y="520" width="148" height="92" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="326" y="538" font-size="10.5" font-weight="bold">Alice&#8217;s market user</text>
-  <text x="326" y="554" font-size="9.5">market: NVDAx/USDC</text>
-  <text x="326" y="567" font-size="9.5">owner: Alice</text>
-  <text x="326" y="580" font-size="9.5">open_orders: [1]</text>
-  <text x="326" y="593" font-size="9.5">unsettled_base: 0</text>
-  <text x="326" y="606" font-size="9.5">unsettled_quote: 0</text>
-  <!-- Alice's order account -->
-  <circle cx="150" cy="506" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="162" y="502" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;ORDER&#8221; + MARKET ADDRESS</text>
-  <text x="162" y="513" font-size="8.5" letter-spacing="0.6" fill="#555">+ ORDER ID</text>
-  <rect x="146" y="520" width="148" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="156" y="538" font-size="10.5" font-weight="bold">Alice&#8217;s order</text>
-  <text x="156" y="554" font-size="9.5">order_id: 1</text>
-  <text x="156" y="567" font-size="9.5">side: Ask</text>
-  <text x="156" y="580" font-size="9.5">price: 265</text>
-  <text x="156" y="593" font-size="9.5">original_quantity: 10</text>
-  <text x="156" y="606" font-size="9.5">filled_quantity: 0</text>
-  <text x="156" y="619" font-size="9.5">status: Open</text>
-  <text x="156" y="632" font-size="9.5">timestamp</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 868" font-family="Georgia, serif" fill="#111">
+<!-- the order book account: a keypair account, not a PDA -->
+<g>
+<circle cx="28" cy="56" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="40" y="59" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="20" y="70" width="205" height="92" rx="6" fill="#f4f4f2" stroke="#888"/><text x="30" y="87" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text><text x="30" y="101" font-size="9.5">ask tree: Alice&#8217;s ask, 10 @ 265</text><text x="30" y="114" font-size="9.5">bid tree: Bob&#8217;s bid, 1 @ 250</text><text x="30" y="127" font-size="9.5">next_order_id: 4</text><text x="30" y="140" font-size="9" font-style="italic" fill="#444">zero-copy &#183; not a PDA:</text><text x="30" y="152" font-size="9" font-style="italic" fill="#444">created by Maria&#8217;s client</text>
+</g>
+<!-- the market PDA -->
+<g>
+<circle cx="248" cy="30" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="260" y="27" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;MARKET&#8221; + NVDAX &amp;</text><text x="260" y="38" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESSES</text><rect x="240" y="44" width="175" height="138" rx="6" fill="#f4f4f2" stroke="#888"/><text x="250" y="62" font-size="10.5" font-weight="bold">market</text><text x="250" y="78" font-size="9.5">authority: Maria</text><text x="250" y="91" font-size="9.5">base_mint: NVDAx</text><text x="250" y="104" font-size="9.5">quote_mint: USDC</text><text x="250" y="117" font-size="9.5">fee_basis_points: 25</text><text x="250" y="130" font-size="9.5">tick_size, lot sizes,</text><text x="250" y="143" font-size="9.5">min_order_size</text><text x="250" y="156" font-size="9.5">is_active: true</text><text x="250" y="169" font-size="9" fill="#444">records vault + book addresses</text>
+</g>
+<!-- the program -->
+<g>
+<circle cx="478" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="490" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="470" y="16" width="160" height="98" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="480" y="32" font-size="10.5" font-weight="bold">order book program</text><text x="480" y="46" font-size="8.5" font-family="Menlo, monospace">initialize_market</text><text x="480" y="57" font-size="8.5" font-family="Menlo, monospace">create_market_user</text><text x="480" y="68" font-size="8.5" font-family="Menlo, monospace">place_order</text><text x="480" y="79" font-size="8.5" font-family="Menlo, monospace">cancel_order</text><text x="480" y="90" font-size="8.5" font-family="Menlo, monospace">settle_funds</text><text x="480" y="101" font-size="8.5" font-family="Menlo, monospace">withdraw_fees</text>
+</g>
+<!-- the three vaults -->
+<g>
+<circle cx="33" cy="196" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="45" y="199" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="25" y="206" width="180" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="35" y="224" font-size="10.5" font-weight="bold">base vault</text><text x="35" y="240" font-size="9.5" fill="#444">13 NVDAx locked</text><text x="35" y="256" font-size="9" fill="#444" font-style="italic">authority: the market PDA</text>
+</g>
+<g>
+<circle cx="238" cy="196" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="250" y="199" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="230" y="206" width="180" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="240" y="224" font-size="10.5" font-weight="bold">quote vault</text><text x="240" y="240" font-size="9.5" fill="#444">998.125 USDC locked</text><text x="240" y="256" font-size="9" fill="#444" font-style="italic">authority: the market PDA</text>
+</g>
+<g>
+<circle cx="443" cy="196" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="455" y="199" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="435" y="206" width="180" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="445" y="224" font-size="10.5" font-weight="bold">fee vault</text><text x="445" y="240" font-size="9.5" fill="#444">1.875 USDC &#183; Maria&#8217;s earnings</text><text x="445" y="256" font-size="9" fill="#444" font-style="italic">authority: the market PDA</text>
+</g>
+<!-- market user accounts: the internal ledger -->
+<g>
+<circle cx="33" cy="310" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="45" y="307" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;MARKET_USER&#8221; + MARKET</text><text x="45" y="318" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; ALICE ADDRESSES</text><rect x="25" y="324" width="180" height="76" rx="6" fill="#f4f4f2" stroke="#888"/><text x="35" y="342" font-size="10.5" font-weight="bold">Alice&#8217;s market user</text><text x="35" y="358" font-size="9.5">open_orders: [1]</text><text x="35" y="371" font-size="9.5">unsettled_base: 0</text><text x="35" y="384" font-size="9.5">unsettled_quote: 0</text>
+</g>
+<g>
+<circle cx="238" cy="310" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="250" y="307" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;MARKET_USER&#8221; + MARKET</text><text x="250" y="318" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; BOB ADDRESSES</text><rect x="230" y="324" width="180" height="76" rx="6" fill="#f4f4f2" stroke="#888"/><text x="240" y="342" font-size="10.5" font-weight="bold">Bob&#8217;s market user</text><text x="240" y="358" font-size="9.5">open_orders: [2]</text><text x="240" y="371" font-size="9.5">unsettled_base: 3</text><text x="240" y="384" font-size="9.5">unsettled_quote: 0</text>
+</g>
+<g>
+<circle cx="443" cy="310" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="455" y="307" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;MARKET_USER&#8221; + MARKET</text><text x="455" y="318" font-size="8.5" letter-spacing="0.6" fill="#555">&amp; CAROL ADDRESSES</text><rect x="435" y="324" width="180" height="76" rx="6" fill="#f4f4f2" stroke="#888"/><text x="445" y="342" font-size="10.5" font-weight="bold">Carol&#8217;s market user</text><text x="445" y="358" font-size="9.5">open_orders: [ ]</text><text x="445" y="371" font-size="9.5">unsettled_base: 0</text><text x="445" y="384" font-size="9.5">unsettled_quote: 748.125</text>
+</g>
+<!-- order accounts -->
+<g>
+<circle cx="33" cy="428" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="45" y="425" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;ORDER&#8221; + MARKET</text><text x="45" y="436" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + ORDER ID</text><rect x="25" y="442" width="180" height="90" rx="6" fill="#f4f4f2" stroke="#888"/><text x="35" y="460" font-size="10.5" font-weight="bold">Alice&#8217;s order</text><text x="35" y="476" font-size="9.5">order_id: 1</text><text x="35" y="489" font-size="9.5">side: Ask &#183; price: 265</text><text x="35" y="502" font-size="9.5">quantity: 10 &#183; filled: 0</text><text x="35" y="515" font-size="9.5">status: Open</text>
+</g>
+<g>
+<circle cx="238" cy="428" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="250" y="425" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;ORDER&#8221; + MARKET</text><text x="250" y="436" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + ORDER ID</text><rect x="230" y="442" width="180" height="90" rx="6" fill="#f4f4f2" stroke="#888"/><text x="240" y="460" font-size="10.5" font-weight="bold">Bob&#8217;s order</text><text x="240" y="476" font-size="9.5">order_id: 2</text><text x="240" y="489" font-size="9.5">side: Bid &#183; price: 250</text><text x="240" y="502" font-size="9.5">quantity: 4 &#183; filled: 3</text><text x="240" y="515" font-size="9.5">status: PartiallyFilled</text>
+</g>
+<g>
+<circle cx="443" cy="428" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="455" y="425" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;ORDER&#8221; + MARKET</text><text x="455" y="436" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + ORDER ID</text><rect x="435" y="442" width="180" height="90" rx="6" fill="#f4f4f2" stroke="#888"/><text x="445" y="460" font-size="10.5" font-weight="bold">Carol&#8217;s order</text><text x="445" y="476" font-size="9.5">order_id: 3</text><text x="445" y="489" font-size="9.5">side: Ask &#183; price: 245</text><text x="445" y="502" font-size="9.5">quantity: 3 &#183; filled: 3</text><text x="445" y="515" font-size="9.5">status: Filled</text>
+</g>
+<text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="547" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">snapshot: the moment just after Carol&#8217;s ask has matched Bob&#8217;s bid</text>
+<!-- token accounts -->
+<g>
+<rect x="25" y="560" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="35" y="577" font-size="10.5" font-weight="bold">Alice&#8217;s NVDAx</text><text x="35" y="593" font-size="9.5" fill="#444">0 NVDAx</text><circle cx="31" cy="616" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="41" y="613" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="41" y="622" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text><text x="41" y="631" font-size="7.5" letter-spacing="0.4" fill="#555">NVDAX MINT</text>
+</g>
+<g>
+<rect x="180" y="560" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="190" y="577" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text><text x="190" y="593" font-size="9.5" fill="#444">1,000 USDC</text><circle cx="186" cy="616" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="196" y="613" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="196" y="622" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text><text x="196" y="631" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+</g>
+<g>
+<rect x="335" y="560" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="345" y="577" font-size="10.5" font-weight="bold">Bob&#8217;s NVDAx</text><text x="345" y="593" font-size="9.5" fill="#444">0 NVDAx</text><circle cx="341" cy="616" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="351" y="613" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="351" y="622" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text><text x="351" y="631" font-size="7.5" letter-spacing="0.4" fill="#555">NVDAX MINT</text>
+</g>
+<g>
+<rect x="490" y="560" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="500" y="577" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text><text x="500" y="593" font-size="9.5" fill="#444">0 USDC</text><circle cx="496" cy="616" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="506" y="613" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="506" y="622" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text><text x="506" y="631" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+</g>
+<g>
+<rect x="25" y="650" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="35" y="667" font-size="10.5" font-weight="bold">Carol&#8217;s NVDAx</text><text x="35" y="683" font-size="9.5" fill="#444">0 NVDAx</text><circle cx="31" cy="706" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="41" y="703" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="41" y="712" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text><text x="41" y="721" font-size="7.5" letter-spacing="0.4" fill="#555">NVDAX MINT</text>
+</g>
+<g>
+<rect x="180" y="650" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="190" y="667" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text><text x="190" y="683" font-size="9.5" fill="#444">1,000 USDC</text><circle cx="186" cy="706" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="196" y="703" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="196" y="712" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text><text x="196" y="721" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+</g>
+<g>
+<rect x="490" y="650" width="142" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="500" y="667" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text><text x="500" y="683" font-size="9.5" fill="#444">0 USDC</text><circle cx="496" cy="706" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text x="506" y="703" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text><text x="506" y="712" font-size="7.5" letter-spacing="0.4" fill="#555">MARIA&#8217;S ADDRESS +</text><text x="506" y="721" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+</g>
+<!-- the curve -->
+<path d="M 40,800 Q 320,710 600,800" fill="none" stroke="#111" stroke-width="2"/>
+<text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="852" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+<g>
+<circle cx="96" cy="784" r="6" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="84" y="782" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text><rect x="44" y="794" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><circle cx="59" cy="811" r="5" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 51,822 Q 59,815 67,822" fill="none" stroke="#111" stroke-width="1.3"/><text x="74" y="811" font-size="10.5" font-weight="bold">Alice (trader)</text><text x="74" y="827" font-size="9.5" fill="#444">1 SOL</text>
+</g>
+<g>
+<circle cx="208" cy="762" r="6" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="220" y="758" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="156" y="772" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><circle cx="171" cy="789" r="5" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 163,800 Q 171,793 179,800" fill="none" stroke="#111" stroke-width="1.3"/><text x="186" y="789" font-size="10.5" font-weight="bold">Bob (trader)</text><text x="186" y="805" font-size="9.5" fill="#444">1 SOL</text>
+</g>
+<g>
+<circle cx="320" cy="755" r="6" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="332" y="751" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="268" y="765" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><circle cx="283" cy="782" r="5" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 275,793 Q 283,786 291,793" fill="none" stroke="#111" stroke-width="1.3"/><text x="298" y="782" font-size="10.5" font-weight="bold">Carol (trader)</text><text x="298" y="798" font-size="9.5" fill="#444">1 SOL</text>
+</g>
+<g>
+<circle cx="432" cy="762" r="6" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="444" y="758" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="374" y="772" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><circle cx="389" cy="789" r="5" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 381,800 Q 389,793 397,800" fill="none" stroke="#111" stroke-width="1.3"/><text x="404" y="789" font-size="10.5" font-weight="bold">Maria<tspan font-size="8.5"> (authority)</tspan></text><text x="404" y="805" font-size="9.5" fill="#444">1 SOL</text>
+</g>
+<g>
+<circle cx="516" cy="777" r="6" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="528" y="773" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text><rect x="504" y="788" width="110" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="514" y="807" font-size="10.5" font-weight="bold">NVDAx mint</text><circle cx="496" cy="832" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/><text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="486" y="835" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text><rect x="504" y="824" width="110" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/><text x="514" y="843" font-size="10.5" font-weight="bold">USDC mint</text>
+</g>
 </svg>

@@ -1,111 +1,333 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 660" font-family="Georgia, serif" fill="#111">
-  <!-- the curve -->
-  <path d="M 40,600 Q 320,500 600,600" fill="none" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="150" y="512" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
-  <!-- Maria: market owner wallet -->
-  <circle cx="96" cy="583" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="108" y="581" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="40" y="593" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="55" cy="610" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 47,621 Q 55,614 63,621" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="70" y="610" font-size="10" font-weight="bold">Maria (owner)</text>
-  <text x="70" y="626" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Bob: borrower wallet -->
-  <circle cx="214" cy="559" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="226" y="557" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="162" y="569" width="100" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="177" cy="586" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 169,597 Q 177,590 185,597" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="192" y="586" font-size="10" font-weight="bold">Bob</text>
-  <text x="192" y="602" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Carol: borrower wallet -->
-  <circle cx="332" cy="553" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="344" y="551" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="280" y="563" width="100" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="295" cy="580" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 287,591 Q 295,584 303,591" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="310" y="580" font-size="10" font-weight="bold">Carol</text>
-  <text x="310" y="596" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- the lending program on the curve -->
-  <circle cx="410" cy="557" r="6" fill="#111"/>
-  <rect x="336" y="616" width="212" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="346" y="632" font-size="10" font-weight="bold">lending program</text>
-  <text x="346" y="646" font-size="8.5" font-family="Menlo, monospace">deposit / borrow / repay / liquidate</text>
-  <line x1="410" y1="563" x2="430" y2="616" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <!-- the three token mints on the curve -->
-  <circle cx="470" cy="566" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="470" y="554" font-size="10" font-weight="bold" text-anchor="middle">USDC mint</text>
-  <circle cx="530" cy="579" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="530" y="598" font-size="10" font-weight="bold" text-anchor="middle">NVDAx mint</text>
-  <circle cx="590" cy="597" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="590" y="585" font-size="10" font-weight="bold" text-anchor="middle">SPCXx mint</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1080" font-family="Georgia, serif" fill="#111">
   <!-- lending market PDA -->
-  <circle cx="230" cy="18" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="242" y="21" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;LENDING_MARKET&#8221; + MARKET ID</text>
-  <rect x="222" y="28" width="196" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="232" y="46" font-size="10.5" font-weight="bold">lending market</text>
-  <text x="232" y="62" font-size="9.5">owner: Maria &#183; quote: USDC</text>
-  <!-- three reserves: each a PDA with a liquidity vault and a share mint (both PDAs) -->
-  <!-- USDC reserve -->
-  <circle cx="14" cy="106" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="26" y="102" font-size="8" letter-spacing="0.5" fill="#555">&#8220;RESERVE&#8221; + MARKET</text>
-  <text x="26" y="112" font-size="8" letter-spacing="0.5" fill="#555">+ USDC MINT ADDRESS</text>
-  <rect x="22" y="118" width="184" height="106" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="32" y="135" font-size="10.5" font-weight="bold">USDC reserve</text>
-  <text x="32" y="150" font-size="9" fill="#444">price feed: $1</text>
-  <circle cx="34" cy="168" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="44" y="171" font-size="9">liquidity vault</text>
-  <text x="44" y="182" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;LIQUIDITY_VAULT&#8221; + RESERVE</text>
-  <circle cx="34" cy="198" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="44" y="201" font-size="9">share mint (a PDA mint)</text>
-  <text x="44" y="212" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;SHARE_MINT&#8221; + RESERVE</text>
-  <!-- NVDAx reserve -->
-  <circle cx="222" cy="106" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="234" y="102" font-size="8" letter-spacing="0.5" fill="#555">&#8220;RESERVE&#8221; + MARKET</text>
-  <text x="234" y="112" font-size="8" letter-spacing="0.5" fill="#555">+ NVDAX MINT ADDRESS</text>
-  <rect x="230" y="118" width="184" height="106" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="240" y="135" font-size="10.5" font-weight="bold">NVDAx reserve</text>
-  <text x="240" y="150" font-size="9" fill="#444">price feed: $200</text>
-  <circle cx="242" cy="168" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="252" y="171" font-size="9">liquidity vault</text>
-  <text x="252" y="182" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;LIQUIDITY_VAULT&#8221; + RESERVE</text>
-  <circle cx="242" cy="198" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="252" y="201" font-size="9">share mint (a PDA mint)</text>
-  <text x="252" y="212" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;SHARE_MINT&#8221; + RESERVE</text>
-  <!-- SPCXx reserve -->
-  <circle cx="430" cy="106" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="442" y="102" font-size="8" letter-spacing="0.5" fill="#555">&#8220;RESERVE&#8221; + MARKET</text>
-  <text x="442" y="112" font-size="8" letter-spacing="0.5" fill="#555">+ SPCXX MINT ADDRESS</text>
-  <rect x="438" y="118" width="184" height="106" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="448" y="135" font-size="10.5" font-weight="bold">SPCXx reserve</text>
-  <text x="448" y="150" font-size="9" fill="#444">price feed: $250</text>
-  <circle cx="450" cy="168" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="460" y="171" font-size="9">liquidity vault</text>
-  <text x="460" y="182" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;LIQUIDITY_VAULT&#8221; + RESERVE</text>
-  <circle cx="450" cy="198" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="460" y="201" font-size="9">share mint (a PDA mint)</text>
-  <text x="460" y="212" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;SHARE_MINT&#8221; + RESERVE</text>
+  <g>
+    <circle cx="48" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="60" y="17" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;LENDING_MARKET&#8221; + MARKET ID</text>
+    <rect x="40" y="24" width="210" height="48" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="50" y="41" font-size="10.5" font-weight="bold">lending market</text>
+    <text x="50" y="58" font-size="9.5">owner: Maria &#183; quote: USDC</text>
+  </g>
+  <text x="40" y="100" font-size="9.5" fill="#444" font-style="italic">every account below is a PDA of the lending program,</text>
+  <text x="40" y="114" font-size="9.5" fill="#444" font-style="italic">except the wallets and mints on the curve</text>
+  <!-- the lending program -->
+  <g>
+    <circle cx="468" cy="10" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="480" y="13" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="460" y="18" width="172" height="186" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="470" y="34" font-size="10.5" font-weight="bold">lending program</text>
+    <text x="470" y="48" font-size="8.5" font-family="Menlo, monospace">init_lending_market</text>
+    <text x="470" y="59" font-size="8.5" font-family="Menlo, monospace">init_reserve</text>
+    <text x="470" y="70" font-size="8.5" font-family="Menlo, monospace">set_price</text>
+    <text x="470" y="81" font-size="8.5" font-family="Menlo, monospace">refresh_reserve</text>
+    <text x="470" y="92" font-size="8.5" font-family="Menlo, monospace">refresh_obligation</text>
+    <text x="470" y="103" font-size="8.5" font-family="Menlo, monospace">deposit_reserve_liquidity</text>
+    <text x="470" y="114" font-size="8.5" font-family="Menlo, monospace">redeem_reserve_collateral</text>
+    <text x="470" y="125" font-size="8.5" font-family="Menlo, monospace">init_obligation</text>
+    <text x="470" y="136" font-size="8.5" font-family="Menlo, monospace">deposit_obligation_collateral</text>
+    <text x="470" y="147" font-size="8.5" font-family="Menlo, monospace">borrow_obligation_liquidity</text>
+    <text x="470" y="158" font-size="8.5" font-family="Menlo, monospace">withdraw_obligation_collateral</text>
+    <text x="470" y="169" font-size="8.5" font-family="Menlo, monospace">repay_obligation_liquidity</text>
+    <text x="470" y="180" font-size="8.5" font-family="Menlo, monospace">liquidate_obligation</text>
+    <text x="470" y="191" font-size="8.5" font-family="Menlo, monospace">collect_protocol_fees</text>
+  </g>
+  <!-- USDC reserve column -->
+  <g>
+    <circle cx="16" cy="238" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="28" y="234" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;RESERVE&#8221; + MARKET</text>
+    <text x="28" y="244" font-size="8" letter-spacing="0.5" fill="#555">+ USDC MINT ADDRESS</text>
+    <rect x="8" y="250" width="200" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="18" y="267" font-size="10.5" font-weight="bold">USDC reserve</text>
+    <text x="18" y="282" font-size="9.5">available_liquidity: 1,250</text>
+    <text x="18" y="296" font-size="9.5">borrowed: 750</text>
+  </g>
+  <g>
+    <circle cx="16" cy="326" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="28" y="322" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;PRICE_FEED&#8221; + MARKET</text>
+    <text x="28" y="332" font-size="8" letter-spacing="0.5" fill="#555">+ USDC MINT ADDRESS</text>
+    <rect x="8" y="338" width="200" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="18" y="354" font-size="10.5" font-weight="bold">USDC price feed</text>
+    <text x="18" y="370" font-size="9.5">price: $1</text>
+  </g>
+  <g>
+    <circle cx="16" cy="400" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="28" y="403" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;LIQUIDITY_VAULT&#8221; + RESERVE</text>
+    <rect x="8" y="410" width="200" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="18" y="427" font-size="10.5" font-weight="bold">liquidity vault</text>
+    <text x="18" y="442" font-size="9.5" fill="#444">1,250 USDC</text>
+    <text x="18" y="456" font-size="9" fill="#444" font-style="italic">authority: the USDC reserve</text>
+  </g>
+  <g>
+    <circle cx="16" cy="486" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="28" y="489" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; + RESERVE</text>
+    <rect x="8" y="496" width="200" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="18" y="513" font-size="10.5" font-weight="bold">USDC share mint</text>
+    <text x="18" y="528" font-size="9.5" fill="#444">supply: 2,000 shares</text>
+    <text x="18" y="542" font-size="9" fill="#444" font-style="italic">mint authority: the USDC reserve</text>
+  </g>
+  <!-- NVDAx reserve column -->
+  <g>
+    <circle cx="228" cy="238" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="240" y="234" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;RESERVE&#8221; + MARKET</text>
+    <text x="240" y="244" font-size="8" letter-spacing="0.5" fill="#555">+ NVDAX MINT ADDRESS</text>
+    <rect x="220" y="250" width="200" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="230" y="267" font-size="10.5" font-weight="bold">NVDAx reserve</text>
+    <text x="230" y="282" font-size="9.5">available_liquidity: 5</text>
+    <text x="230" y="296" font-size="9.5">borrowed: 0</text>
+  </g>
+  <g>
+    <circle cx="228" cy="326" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="240" y="322" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;PRICE_FEED&#8221; + MARKET</text>
+    <text x="240" y="332" font-size="8" letter-spacing="0.5" fill="#555">+ NVDAX MINT ADDRESS</text>
+    <rect x="220" y="338" width="200" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="230" y="354" font-size="10.5" font-weight="bold">NVDAx price feed</text>
+    <text x="230" y="370" font-size="9.5">price: $200</text>
+  </g>
+  <g>
+    <circle cx="228" cy="400" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="240" y="403" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;LIQUIDITY_VAULT&#8221; + RESERVE</text>
+    <rect x="220" y="410" width="200" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="230" y="427" font-size="10.5" font-weight="bold">liquidity vault</text>
+    <text x="230" y="442" font-size="9.5" fill="#444">5 NVDAx</text>
+    <text x="230" y="456" font-size="9" fill="#444" font-style="italic">authority: the NVDAx reserve</text>
+  </g>
+  <g>
+    <circle cx="228" cy="486" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="240" y="489" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; + RESERVE</text>
+    <rect x="220" y="496" width="200" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="230" y="513" font-size="10.5" font-weight="bold">NVDAx share mint</text>
+    <text x="230" y="528" font-size="9.5" fill="#444">supply: 5 shares</text>
+    <text x="230" y="542" font-size="9" fill="#444" font-style="italic">mint authority: the NVDAx reserve</text>
+  </g>
+  <!-- SPCXx reserve column -->
+  <g>
+    <circle cx="440" cy="238" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="452" y="234" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;RESERVE&#8221; + MARKET</text>
+    <text x="452" y="244" font-size="8" letter-spacing="0.5" fill="#555">+ SPCXX MINT ADDRESS</text>
+    <rect x="432" y="250" width="200" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="442" y="267" font-size="10.5" font-weight="bold">SPCXx reserve</text>
+    <text x="442" y="282" font-size="9.5">available_liquidity: 1</text>
+    <text x="442" y="296" font-size="9.5">borrowed: 3</text>
+  </g>
+  <g>
+    <circle cx="440" cy="326" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="452" y="322" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;PRICE_FEED&#8221; + MARKET</text>
+    <text x="452" y="332" font-size="8" letter-spacing="0.5" fill="#555">+ SPCXX MINT ADDRESS</text>
+    <rect x="432" y="338" width="200" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="442" y="354" font-size="10.5" font-weight="bold">SPCXx price feed</text>
+    <text x="442" y="370" font-size="9.5">price: $250</text>
+  </g>
+  <g>
+    <circle cx="440" cy="400" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="452" y="403" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;LIQUIDITY_VAULT&#8221; + RESERVE</text>
+    <rect x="432" y="410" width="200" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="442" y="427" font-size="10.5" font-weight="bold">liquidity vault</text>
+    <text x="442" y="442" font-size="9.5" fill="#444">1 SPCXx</text>
+    <text x="442" y="456" font-size="9" fill="#444" font-style="italic">authority: the SPCXx reserve</text>
+  </g>
+  <g>
+    <circle cx="440" cy="486" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="452" y="489" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; + RESERVE</text>
+    <rect x="432" y="496" width="200" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="442" y="513" font-size="10.5" font-weight="bold">SPCXx share mint</text>
+    <text x="442" y="528" font-size="9.5" fill="#444">supply: 4 shares</text>
+    <text x="442" y="542" font-size="9" fill="#444" font-style="italic">mint authority: the SPCXx reserve</text>
+  </g>
   <!-- Bob's obligation -->
-  <circle cx="40" cy="300" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="52" y="296" font-size="8.5" letter-spacing="0.5" fill="#555">&#8220;OBLIGATION&#8221; + MARKET</text>
-  <text x="52" y="307" font-size="8.5" letter-spacing="0.5" fill="#555">+ BOB&#8217;S ADDRESS</text>
-  <rect x="48" y="314" width="252" height="92" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="58" y="332" font-size="10.5" font-weight="bold">Bob&#8217;s obligation</text>
-  <text x="58" y="349" font-size="9.5">collateral: 5 NVDAx shares</text>
-  <text x="58" y="364" font-size="9.5">borrowed: 750 USDC</text>
-  <circle cx="60" cy="384" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="70" y="387" font-size="8.5">obligation share vault</text>
-  <text x="70" y="398" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;OBLIGATION_SHARE_VAULT&#8221; + RESERVE + OBLIGATION</text>
+  <g>
+    <circle cx="28" cy="574" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="40" y="577" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;OBLIGATION&#8221; + MARKET + BOB&#8217;S ADDRESS</text>
+    <rect x="20" y="584" width="290" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="30" y="601" font-size="10.5" font-weight="bold">Bob&#8217;s obligation</text>
+    <text x="30" y="616" font-size="9.5">collateral: 5 NVDAx shares ($1,000)</text>
+    <text x="30" y="630" font-size="9.5">borrowed: 750 USDC</text>
+  </g>
+  <g>
+    <circle cx="28" cy="658" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="40" y="661" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;OBLIGATION_SHARE_VAULT&#8221; + RESERVE + OBLIGATION</text>
+    <rect x="20" y="668" width="290" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="30" y="685" font-size="10.5" font-weight="bold">collateral vault: 5 NVDAx shares</text>
+    <text x="30" y="701" font-size="9" fill="#444" font-style="italic">authority: Bob&#8217;s obligation</text>
+  </g>
   <!-- Carol's obligation -->
-  <circle cx="340" cy="300" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="296" font-size="8.5" letter-spacing="0.5" fill="#555">&#8220;OBLIGATION&#8221; + MARKET</text>
-  <text x="352" y="307" font-size="8.5" letter-spacing="0.5" fill="#555">+ CAROL&#8217;S ADDRESS</text>
-  <rect x="348" y="314" width="252" height="92" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="358" y="332" font-size="10.5" font-weight="bold">Carol&#8217;s obligation</text>
-  <text x="358" y="349" font-size="9.5">collateral: 1,000 USDC shares</text>
-  <text x="358" y="364" font-size="9.5">borrowed: 3 SPCXx</text>
-  <circle cx="360" cy="384" r="4.5" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="370" y="387" font-size="8.5">obligation share vault</text>
-  <text x="370" y="398" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;OBLIGATION_SHARE_VAULT&#8221; + RESERVE + OBLIGATION</text>
-  <text x="320" y="440" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">every account here is a PDA of the lending program, except the wallets and mints on the curve</text>
+  <g>
+    <circle cx="338" cy="574" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="350" y="577" font-size="8" letter-spacing="0.5" fill="#555">SEEDS: &#8220;OBLIGATION&#8221; + MARKET + CAROL&#8217;S ADDRESS</text>
+    <rect x="330" y="584" width="290" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="340" y="601" font-size="10.5" font-weight="bold">Carol&#8217;s obligation</text>
+    <text x="340" y="616" font-size="9.5">collateral: 1,000 USDC shares ($1,000)</text>
+    <text x="340" y="630" font-size="9.5">borrowed: 3 SPCXx ($750)</text>
+  </g>
+  <g>
+    <circle cx="338" cy="658" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="350" y="661" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;OBLIGATION_SHARE_VAULT&#8221; + RESERVE + OBLIGATION</text>
+    <rect x="330" y="668" width="290" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="340" y="685" font-size="10.5" font-weight="bold">collateral vault: 1,000 USDC shares</text>
+    <text x="340" y="701" font-size="9" fill="#444" font-style="italic">authority: Carol&#8217;s obligation</text>
+  </g>
+  <!-- token accounts, row 1 -->
+  <g>
+    <rect x="12" y="736" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="20" y="753" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="20" y="768" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="18" cy="790" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="28" y="787" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="28" y="796" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="28" y="805" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="138" y="736" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="146" y="753" font-size="10" font-weight="bold">Alice&#8217;s USDC shares</text>
+    <text x="146" y="768" font-size="9.5" fill="#444">1,000 shares</text>
+    <circle cx="144" cy="790" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="154" y="787" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="154" y="796" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="154" y="805" font-size="7.5" letter-spacing="0.4" fill="#555">USDC SHARE MINT</text>
+  </g>
+  <g>
+    <rect x="264" y="736" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="272" y="753" font-size="10" font-weight="bold">Alice&#8217;s SPCXx shares</text>
+    <text x="272" y="768" font-size="9.5" fill="#444">4 shares</text>
+    <circle cx="270" cy="790" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="280" y="787" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="280" y="796" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="280" y="805" font-size="7.5" letter-spacing="0.4" fill="#555">SPCXX SHARE MINT</text>
+  </g>
+  <g>
+    <rect x="390" y="736" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="398" y="753" font-size="10.5" font-weight="bold">Bob&#8217;s NVDAx</text>
+    <text x="398" y="768" font-size="9.5" fill="#444">0 NVDAx</text>
+    <circle cx="396" cy="790" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="406" y="787" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="406" y="796" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="406" y="805" font-size="7.5" letter-spacing="0.4" fill="#555">NVDAX MINT</text>
+  </g>
+  <g>
+    <rect x="516" y="736" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="524" y="753" font-size="10" font-weight="bold">Bob&#8217;s NVDAx shares</text>
+    <text x="524" y="768" font-size="9.5" fill="#444">0 &#183; pledged</text>
+    <circle cx="522" cy="790" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="532" y="787" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="532" y="796" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="532" y="805" font-size="7.5" letter-spacing="0.4" fill="#555">NVDAX SHARE MINT</text>
+  </g>
+  <!-- token accounts, row 2 -->
+  <g>
+    <rect x="12" y="826" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="20" y="843" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="20" y="858" font-size="9.5" fill="#444">750 USDC</text>
+    <circle cx="18" cy="880" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="28" y="877" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="28" y="886" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="28" y="895" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="138" y="826" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="146" y="843" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+    <text x="146" y="858" font-size="9.5" fill="#444">0 USDC</text>
+    <circle cx="144" cy="880" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="154" y="877" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="154" y="886" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="154" y="895" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="264" y="826" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="272" y="843" font-size="10" font-weight="bold">Carol&#8217;s USDC shares</text>
+    <text x="272" y="858" font-size="9.5" fill="#444">0 &#183; pledged</text>
+    <circle cx="270" cy="880" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="280" y="877" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="280" y="886" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="280" y="895" font-size="7.5" letter-spacing="0.4" fill="#555">USDC SHARE MINT</text>
+  </g>
+  <g>
+    <rect x="390" y="826" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="398" y="843" font-size="10.5" font-weight="bold">Carol&#8217;s SPCXx</text>
+    <text x="398" y="858" font-size="9.5" fill="#444">3 SPCXx</text>
+    <circle cx="396" cy="880" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="406" y="877" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="406" y="886" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="406" y="895" font-size="7.5" letter-spacing="0.4" fill="#555">SPCXX MINT</text>
+  </g>
+  <g>
+    <rect x="516" y="826" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="524" y="843" font-size="10.5" font-weight="bold">Dave&#8217;s SPCXx</text>
+    <text x="524" y="858" font-size="9" fill="#444" font-style="italic">his own capital</text>
+    <circle cx="522" cy="880" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="532" y="877" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="532" y="886" font-size="7.5" letter-spacing="0.4" fill="#555">DAVE&#8217;S ADDRESS +</text>
+    <text x="532" y="895" font-size="7.5" letter-spacing="0.4" fill="#555">SPCXX MINT</text>
+  </g>
+  <!-- the curve -->
+  <path d="M 40,1000 Q 320,910 600,1000" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="1066" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- the three mints, dots on the curve -->
+  <g>
+    <line x1="86" y1="934" x2="140" y2="968" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <circle cx="140" cy="974" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="118" y="953" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="40" y="906" width="92" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="50" y="924" font-size="10" font-weight="bold">USDC mint</text>
+  </g>
+  <g>
+    <line x1="194" y1="934" x2="252" y2="952" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <circle cx="252" cy="958" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="218" y="941" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="148" y="906" width="98" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="158" y="924" font-size="10" font-weight="bold">NVDAx mint</text>
+  </g>
+  <g>
+    <line x1="306" y1="934" x2="360" y2="950" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <circle cx="360" cy="956" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="368" y="938" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="262" y="906" width="96" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="272" y="924" font-size="10" font-weight="bold">SPCXx mint</text>
+  </g>
+  <!-- wallets on the curve -->
+  <g>
+    <circle cx="84" cy="987" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="72" y="985" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="36" y="997" width="96" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="51" cy="1014" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 43,1025 Q 51,1018 59,1025" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="66" y="1014" font-size="10.5" font-weight="bold">Alice</text>
+    <text x="66" y="1030" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="196" cy="964" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="208" y="962" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="148" y="974" width="88" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="163" cy="991" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 155,1002 Q 163,995 171,1002" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="178" y="991" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="178" y="1007" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="308" cy="955" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="296" y="952" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="260" y="965" width="96" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="275" cy="982" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 267,993 Q 275,986 283,993" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="290" y="982" font-size="10.5" font-weight="bold">Carol</text>
+    <text x="290" y="998" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="412" cy="960" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="424" y="956" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="368" y="970" width="88" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="383" cy="987" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 375,998 Q 383,991 391,998" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="398" y="987" font-size="10.5" font-weight="bold">Dave</text>
+    <text x="398" y="1003" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="500" cy="974" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="512" y="970" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="464" y="984" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="479" cy="1001" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 471,1012 Q 479,1005 487,1012" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="494" y="1001" font-size="10.5" font-weight="bold">Maria (owner)</text>
+    <text x="494" y="1017" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <!-- the program's address dot sits on the curve too -->
+  <line x1="632" y1="204" x2="592" y2="991" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.3"/>
+  <circle cx="592" cy="997" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
 </svg>

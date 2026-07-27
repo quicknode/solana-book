@@ -1,80 +1,115 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="escrow-map-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+  </defs>
+  <!-- offer account PDA -->
+  <g>
+    <circle cx="58" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="70" y="17" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
+    <rect x="50" y="24" width="210" height="100" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="60" y="41" font-size="10.5" font-weight="bold">offer account</text>
+    <text x="60" y="56" font-size="9.5">maker: Alice</text>
+    <text x="60" y="69" font-size="9.5">token_mint_a: USDC</text>
+    <text x="60" y="82" font-size="9.5">token_mint_b: TSLAx</text>
+    <text x="60" y="95" font-size="9.5">token_b_wanted_amount: 100,000,000</text>
+    <text x="60" y="108" font-size="9.5">bump: 254</text>
+  </g>
+  <!-- the escrow program -->
+  <g>
+    <circle cx="478" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="490" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="470" y="16" width="160" height="66" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="480" y="32" font-size="10.5" font-weight="bold">escrow program</text>
+    <text x="480" y="46" font-size="8.5" font-family="Menlo, monospace">make_offer</text>
+    <text x="480" y="57" font-size="8.5" font-family="Menlo, monospace">take_offer</text>
+    <text x="480" y="68" font-size="8.5" font-family="Menlo, monospace">cancel_offer</text>
+  </g>
+  <!-- the offer account is the vault's authority -->
+  <path d="M 260,100 C 330,135 390,160 454,180" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-map-arrg)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="330" y="132" font-size="9" font-style="italic" fill="#444" text-anchor="middle">is authority for</text>
+  <!-- vault: the offer's USDC ATA -->
+  <g>
+    <circle cx="452" cy="140" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="464" y="137" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM + OFFER&#8217;S</text>
+    <text x="464" y="148" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+    <rect x="460" y="152" width="150" height="58" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="470" y="176" font-size="10" font-weight="bold">vault: the offer&#8217;s USDC</text>
+    <text x="470" y="189" font-size="9.5" fill="#444">250 USDC</text>
+    <text x="470" y="201" font-size="9" fill="#444" font-style="italic">authority: the offer account</text>
+  </g>
+  <!-- token accounts -->
+  <g>
+    <rect x="40" y="250" width="130" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="50" y="267" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="50" y="282" font-size="9.5" fill="#444">750 USDC</text>
+    <circle cx="46" cy="302" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="56" y="299" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="56" y="308" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="56" y="317" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="190" y="250" width="130" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="200" y="267" font-size="10.5" font-weight="bold">Alice&#8217;s TSLAx</text>
+    <text x="200" y="282" font-size="9.5" fill="#444">0 TSLAx</text>
+    <circle cx="196" cy="302" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="206" y="299" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="206" y="308" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="206" y="317" font-size="7.5" letter-spacing="0.4" fill="#555">TSLAX MINT</text>
+  </g>
+  <g>
+    <rect x="340" y="250" width="130" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="350" y="267" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="350" y="282" font-size="9.5" fill="#444">1,000 USDC</text>
+    <circle cx="346" cy="302" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="356" y="299" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="356" y="308" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="356" y="317" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g>
+    <rect x="490" y="250" width="130" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="500" y="267" font-size="10.5" font-weight="bold">Bob&#8217;s TSLAx</text>
+    <text x="500" y="282" font-size="9.5" fill="#444">1 TSLAx</text>
+    <circle cx="496" cy="302" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="506" y="299" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="506" y="308" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="506" y="317" font-size="7.5" letter-spacing="0.4" fill="#555">TSLAX MINT</text>
+  </g>
   <!-- the curve -->
-  <path d="M 40,350 Q 320,140 600,350" fill="none" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="400" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
-  <!-- Alice: wallet account, address on the curve -->
-  <circle cx="96" cy="312" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="108" y="310" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="104" y="324" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="119" cy="341" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 111,352 Q 119,345 127,352" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="134" y="341" font-size="10.5" font-weight="bold">Alice (maker)</text>
-  <text x="134" y="357" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Bob: wallet account, address on the curve -->
-  <circle cx="544" cy="312" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="532" y="310" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <rect x="424" y="324" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="439" cy="341" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 431,352 Q 439,345 447,352" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="454" y="341" font-size="10.5" font-weight="bold">Bob (taker)</text>
-  <text x="454" y="357" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- mints: addresses on the curve -->
-  <circle cx="219" cy="259" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="219" y="278" font-size="9" letter-spacing="1" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="219" y="293" font-size="11" font-weight="bold" text-anchor="middle">USDC mint</text>
-  <circle cx="421" cy="259" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="421" y="278" font-size="9" letter-spacing="1" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="421" y="293" font-size="11" font-weight="bold" text-anchor="middle">TSLAx mint</text>
-  <!-- the escrow program: address on the curve -->
-  <circle cx="320" cy="245" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="332" y="242" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="258" y="152" width="124" height="66" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="268" y="168" font-size="10.5" font-weight="bold">escrow program</text>
-  <text x="268" y="184" font-size="9.5" font-family="Menlo, monospace">make_offer</text>
-  <text x="268" y="197" font-size="9.5" font-family="Menlo, monospace">take_offer</text>
-  <text x="268" y="210" font-size="9.5" font-family="Menlo, monospace">cancel_offer</text>
-  <line x1="320" y1="218" x2="320" y2="239" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <!-- offer account: a PDA's dot sits off the curve, seeds beside it -->
-  <circle cx="66" cy="62" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="78" y="65" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
-  <rect x="58" y="72" width="190" height="104" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="68" y="90" font-size="10.5" font-weight="bold">offer account</text>
-  <text x="68" y="106" font-size="9.5">maker: Alice</text>
-  <text x="68" y="120" font-size="9.5">token_mint_a: USDC</text>
-  <text x="68" y="134" font-size="9.5">token_mint_b: TSLAx</text>
-  <text x="68" y="148" font-size="9.5">token_b_wanted_amount: 100,000,000</text>
-  <text x="68" y="162" font-size="9.5">bump: 254</text>
-  <!-- the vault: the offer's USDC token account -->
-  <circle cx="430" cy="60" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="442" y="55" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + OFFER&#8217;S ADDRESS</text>
-  <text x="442" y="66" font-size="8.5" letter-spacing="0.6" fill="#555">+ USDC MINT ADDRESS</text>
-  <rect x="438" y="72" width="146" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="446" y="90" font-size="10" font-weight="bold">vault: the offer&#8217;s USDC</text>
-  <text x="446" y="106" font-size="9.5" fill="#444">250 USDC</text>
-  <!-- Alice's ATAs -->
-  <circle cx="30" cy="200" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="42" y="196" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
-  <text x="42" y="207" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
-  <rect x="38" y="214" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="48" y="232" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
-  <text x="48" y="248" font-size="9.5" fill="#444">1,000 USDC</text>
-  <circle cx="30" cy="394" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="42" y="390" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
-  <text x="42" y="401" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + TSLAX MINT ADDRESS</text>
-  <rect x="38" y="408" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="48" y="426" font-size="10.5" font-weight="bold">Alice&#8217;s TSLAx</text>
-  <text x="48" y="442" font-size="9.5" fill="#444">0 TSLAx</text>
-  <!-- Bob's ATAs -->
-  <circle cx="460" cy="180" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="472" y="176" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + BOB&#8217;S</text>
-  <text x="472" y="187" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
-  <rect x="468" y="194" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="478" y="212" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
-  <text x="478" y="228" font-size="9.5" fill="#444">300 USDC</text>
-  <circle cx="460" cy="394" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="472" y="390" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + BOB&#8217;S</text>
-  <text x="472" y="401" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + TSLAX MINT ADDRESS</text>
-  <rect x="468" y="408" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="478" y="426" font-size="10.5" font-weight="bold">Bob&#8217;s TSLAx</text>
-  <text x="478" y="442" font-size="9.5" fill="#444">1 TSLAx</text>
+  <path d="M 40,420 Q 320,330 600,420" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="478" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- wallets on the curve -->
+  <g>
+    <circle cx="96" cy="404" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="84" y="402" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="44" y="414" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="59" cy="431" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 51,442 Q 59,435 67,442" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="74" y="431" font-size="10.5" font-weight="bold">Alice (maker)</text>
+    <text x="74" y="447" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="230" cy="380" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="242" y="378" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="178" y="390" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="193" cy="407" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 185,418 Q 193,411 201,418" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="208" y="407" font-size="10.5" font-weight="bold">Bob (taker)</text>
+    <text x="208" y="423" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <!-- mints on the curve -->
+  <g>
+    <circle cx="360" cy="376" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="372" y="372" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="310" y="386" width="100" height="34" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="320" y="407" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  <g>
+    <circle cx="480" cy="390" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="492" y="386" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="430" y="400" width="100" height="34" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="440" y="421" font-size="10.5" font-weight="bold">TSLAx mint</text>
+  </g>
+  <!-- the program's address dot sits on the curve too -->
+  <line x1="625" y1="82" x2="598" y2="412" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.3"/>
+  <circle cx="598" cy="418" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
 </svg>

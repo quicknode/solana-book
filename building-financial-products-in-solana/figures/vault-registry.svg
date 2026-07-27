@@ -1,55 +1,164 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="vault-registry-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- Victor's wallet -->
-  <rect x="16" y="44" width="136" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="31" cy="61" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 23,72 Q 31,65 39,72" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="46" y="61" font-size="10.5" font-weight="bold">Victor (authority)</text>
-  <text x="46" y="77" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Victor approves assets -->
-  <path d="M 156,58 C 250,14 350,8 436,46" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-registry-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="20" font-size="11" font-weight="bold" text-anchor="middle">approve_asset &#215;2</text>
-  <text x="140" y="102" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">binds one mint to one Pyth feed</text>
-  <!-- the registry: the curator record -->
-  <circle cx="244" cy="34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="256" y="37" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;REGISTRY&#8221; + VICTOR&#8217;S ADDRESS</text>
-  <rect x="250" y="42" width="150" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="260" y="60" font-size="10.5" font-weight="bold">Registry</text>
-  <text x="260" y="75" font-size="9.5">authority: Victor</text>
-  <text x="325" y="110" font-size="8.5" font-style="italic" fill="#444" text-anchor="middle">the curator record: it holds no list</text>
-  <!-- the ApprovedAsset accounts, one PDA per approved mint -->
-  <circle cx="434" cy="26" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="446" y="22" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
-  <text x="446" y="31" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + TSLAX MINT</text>
-  <rect x="440" y="36" width="192" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="450" y="53" font-size="10" font-weight="bold">ApprovedAsset</text>
-  <text x="450" y="67" font-size="9.5">TSLAx mint &#8594; Pyth TSLA feed</text>
-  <circle cx="434" cy="106" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="446" y="102" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
-  <text x="446" y="111" font-size="7.5" letter-spacing="0.4" fill="#555">REGISTRY + NVDAX MINT</text>
-  <rect x="440" y="116" width="192" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="450" y="133" font-size="10" font-weight="bold">ApprovedAsset</text>
-  <text x="450" y="147" font-size="9.5">NVDAx mint &#8594; Pyth NVDA feed</text>
-  <!-- derivation links from the registry to each ApprovedAsset address -->
-  <path d="M 400,60 C 414,50 420,40 428,29" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <path d="M 400,80 C 414,90 420,96 428,104" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="536" y="180" font-size="8.5" font-style="italic" fill="#444" text-anchor="middle">an asset is approved if it has</text>
-  <text x="536" y="191" font-size="8.5" font-style="italic" fill="#444" text-anchor="middle">an ApprovedAsset account</text>
-  <!-- Maria's wallet -->
-  <rect x="16" y="186" width="140" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="31" cy="203" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 23,214 Q 31,207 39,214" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="46" y="203" font-size="10.5" font-weight="bold">Maria (manager)</text>
-  <text x="46" y="219" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- Maria selects from the approved set -->
-  <path d="M 160,192 C 250,178 340,158 434,140" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#vault-registry-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="260" y="200" font-size="11" font-weight="bold" text-anchor="middle">add_asset: presents an ApprovedAsset</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="260" y="213" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">the feed comes from that account</text>
-  <!-- Maria cannot approve -->
-  <path d="M 132,224 C 200,248 268,248 352,236" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-registry-arr)"/>
-  <rect x="356" y="212" width="200" height="40" fill="none" stroke="#999" stroke-width="1.3"/>
-  <line x1="356" y1="212" x2="556" y2="252" stroke="#999" stroke-width="1.6"/>
-  <line x1="556" y1="212" x2="356" y2="252" stroke="#999" stroke-width="1.6"/>
-  <text x="456" y="272" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority may approve assets</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="456" y="236" font-size="11" fill="#444" text-anchor="middle">approve_asset signed by Maria</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 752" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="vault-registry-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="vault-registry-arrx" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#999"/></marker>
+  </defs>
+  <!-- registry PDA, created by initialize_registry -->
+  <g>
+    <circle cx="14" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="17" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: &#8220;REGISTRY&#8221; + VICTOR&#8217;S ADDRESS</text>
+    <rect x="22" y="24" width="180" height="46" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="41" font-size="10.5" font-weight="bold">registry</text>
+    <text x="32" y="58" font-size="9">authority: Victor &#183; holds no list</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="196" y="41" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end">NEW</text>
+  </g>
+  <!-- the vault-strategy program -->
+  <g>
+    <circle cx="486" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="498" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="478" y="16" width="152" height="130" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="488" y="32" font-size="10.5" font-weight="bold">vault-strategy program</text>
+    <text x="488" y="46" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">initialize_registry</text>
+    <text x="488" y="57" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">approve_asset &#215;2</text>
+    <text x="488" y="68" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize_strategy</text>
+    <text x="488" y="79" font-size="8.5" font-family="Menlo, monospace" fill="#888">add_asset</text>
+    <text x="488" y="90" font-size="8.5" font-family="Menlo, monospace" fill="#888">set_weight</text>
+    <text x="488" y="101" font-size="8.5" font-family="Menlo, monospace" fill="#888">deposit</text>
+    <text x="488" y="112" font-size="8.5" font-family="Menlo, monospace" fill="#888">rebalance</text>
+    <text x="488" y="123" font-size="8.5" font-family="Menlo, monospace" fill="#888">collect_fees</text>
+    <text x="488" y="134" font-size="8.5" font-family="Menlo, monospace" fill="#888">withdraw</text>
+  </g>
+  <!-- ApprovedAsset PDAs, one per vetted mint -->
+  <g>
+    <circle cx="14" cy="120" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="116" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: &#8220;APPROVED_ASSET&#8221; +</text>
+    <text x="26" y="126" font-size="8" letter-spacing="0.4" fill="#555">REGISTRY + TSLAX MINT</text>
+    <rect x="22" y="132" width="180" height="36" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="146" font-size="9.5" font-weight="bold">ApprovedAsset</text>
+    <text x="32" y="160" font-size="9">TSLAx &#8594; Pyth TSLA feed</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="196" y="146" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end">NEW</text>
+  </g>
+  <g>
+    <circle cx="14" cy="182" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="26" y="178" font-size="8" letter-spacing="0.4" fill="#555">SEEDS: &#8220;APPROVED_ASSET&#8221; +</text>
+    <text x="26" y="188" font-size="8" letter-spacing="0.4" fill="#555">REGISTRY + NVDAX MINT</text>
+    <rect x="22" y="194" width="180" height="36" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="32" y="208" font-size="9.5" font-weight="bold">ApprovedAsset</text>
+    <text x="32" y="222" font-size="9">NVDAx &#8594; Pyth NVDA feed</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="196" y="208" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end">NEW</text>
+  </g>
+  <!-- the swap router exists but plays no part yet -->
+  <g opacity="0.3">
+    <circle cx="218" cy="124" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="230" y="127" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="210" y="134" width="190" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="220" y="150" font-size="10.5" font-weight="bold">swap router program</text>
+    <text x="220" y="163" font-size="8.5" font-family="Menlo, monospace">swap_usdc_for_asset</text>
+    <text x="220" y="174" font-size="8.5" font-family="Menlo, monospace">swap_asset_for_usdc</text>
+    <text x="220" y="189" font-size="8.5" fill="#444" font-style="italic">a mock Jupiter</text>
+  </g>
+  <!-- Maria cannot approve: the hypothetical call fails -->
+  <g>
+    <path d="M 386,604 C 366,440 340,220 325,88" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#vault-registry-arrx)"/>
+    <rect x="240" y="44" width="170" height="36" fill="none" stroke="#999" stroke-width="1.3"/>
+    <line x1="240" y1="44" x2="410" y2="80" stroke="#999" stroke-width="1.6"/>
+    <line x1="410" y1="44" x2="240" y2="80" stroke="#999" stroke-width="1.6"/>
+    <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="325" y="66" font-size="10" fill="#444" text-anchor="middle">approve_asset signed by Maria</text>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="325" y="96" font-size="9" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority approves</text>
+  </g>
+  <!-- Victor's two instructions -->
+  <path d="M 62,632 C 6,470 2,210 27,74" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#vault-registry-arr)"/>
+  <path d="M 86,631 C 42,490 22,330 33,236" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#vault-registry-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="10" y="286" font-size="10.5" font-weight="bold">1. initialize_registry, once</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="10" y="302" font-size="10.5" font-weight="bold">2. approve_asset &#215;2</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="10" y="316" font-size="9" fill="#444" font-style="italic">each call binds one mint to one Pyth feed</text>
+  <!-- what the set is for -->
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="380" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">an asset is approved if its ApprovedAsset account exists, and not approved if it does not.</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="394" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria will later select from this set with add_asset, which derives the ApprovedAsset</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="408" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">address for the mint it is handed and fails if the account is missing; the feed she can</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="320" y="422" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">never supply is copied out of the ApprovedAsset she presents.</text>
+  <!-- investors' USDC, untouched -->
+  <g opacity="0.3">
+    <rect x="28" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="36" y="482" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="36" y="497" font-size="9" fill="#444">1,000 USDC</text>
+    <circle cx="34" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="44" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="44" y="524" font-size="7" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="44" y="533" font-size="7" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="126" y="466" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="134" y="482" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="134" y="497" font-size="9" fill="#444">1,000 USDC</text>
+    <circle cx="132" cy="518" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="142" y="515" font-size="7" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="142" y="524" font-size="7" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="142" y="533" font-size="7" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <!-- the curve -->
+  <path d="M 40,640 Q 320,545 600,640" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="290" y="744" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- wallets on the curve -->
+  <g>
+    <circle cx="90" cy="625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="78" y="622" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="34" y="635" width="108" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="49" cy="652" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 41,663 Q 49,656 57,663" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="64" y="652" font-size="10" font-weight="bold">Victor (curator)</text>
+    <text x="64" y="668" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="200" cy="601" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="212" y="593" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="144" y="611" width="94" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="159" cy="628" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 151,639 Q 159,632 167,639" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="174" y="628" font-size="10.5" font-weight="bold">Alice</text>
+    <text x="174" y="644" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="296" cy="593" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="308" y="591" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="242" y="603" width="94" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="257" cy="620" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 249,631 Q 257,624 265,631" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="272" y="620" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="272" y="636" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+    <circle cx="400" cy="596" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="412" y="592" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="340" y="606" width="114" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="355" cy="623" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 347,634 Q 355,627 363,634" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="370" y="623" font-size="10" font-weight="bold">Maria (manager)</text>
+    <text x="370" y="639" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <!-- the three token mints on the curve -->
+  <g opacity="0.3">
+    <circle cx="480" cy="608" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="492" y="604" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <line x1="482" y1="614" x2="490" y2="644" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="458" y="646" width="76" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="496" y="663" font-size="9.5" font-weight="bold" text-anchor="middle">USDC mint</text>
+  </g>
+  <g>
+    <circle cx="523" cy="618" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="535" y="614" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <line x1="526" y1="624" x2="535" y2="672" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="498" y="674" width="78" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="537" y="691" font-size="9.5" font-weight="bold" text-anchor="middle">TSLAx mint</text>
+  </g>
+  <g>
+    <circle cx="558" cy="627" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="546" y="638" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <line x1="562" y1="633" x2="576" y2="700" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="542" y="702" width="84" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="584" y="719" font-size="9.5" font-weight="bold" text-anchor="middle">NVDAx mint</text>
+  </g>
+  <!-- the program's address dot sits on the curve too -->
+  <line x1="554" y1="146" x2="600" y2="636" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.3"/>
+  <circle cx="600" cy="641" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
 </svg>

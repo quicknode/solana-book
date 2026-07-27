@@ -15,20 +15,35 @@
   <text x="500" y="96" font-size="11" font-weight="bold" text-anchor="middle">Carol staked 200</text>
   <text x="500" y="114" font-size="10.5" fill="#444" text-anchor="middle">loses her stake</text>
   <!-- settlement flows -->
-  <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
-  <text x="330" y="78" font-size="11" font-weight="bold" text-anchor="middle">+147 to Alice</text>
-  <text x="330" y="104" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
-  <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
-  <text x="330" y="128" font-size="11" font-weight="bold" text-anchor="middle">+49 to Bob</text>
+  <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="78" font-size="11" font-weight="bold" text-anchor="middle">+147 to Alice</text>
+  <g transform="translate(327,92)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="378" y="105" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
+  <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="128" font-size="11" font-weight="bold" text-anchor="middle">+49 to Bob</text>
+  <g transform="translate(327,144)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
   <!-- fee to the house -->
-  <path d="M 500,136 L 500,192" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
+  <path d="M 500,136 L 500,192" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
+  <g transform="translate(500,164)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
   <text x="512" y="156" font-size="10.5">fee: 2% of 200</text>
   <text x="512" y="170" font-size="10.5">= 4 USDC</text>
   <rect x="444" y="196" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <circle cx="459" cy="213" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
   <path d="M 451,224 Q 459,217 467,224" fill="none" stroke="#111" stroke-width="1.3"/>
   <text x="474" y="213" font-size="10.5" font-weight="bold">Maria (admin)</text>
-  <text x="474" y="229" font-size="9.5" fill="#444">0.1 SOL</text>
+  <text x="474" y="229" font-size="9.5" fill="#444">1 SOL</text>
   <text x="500" y="256" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the house</text>
   <!-- pro-rata annotation -->
   <text x="190" y="248" font-size="10.5" fill="#444" text-anchor="middle">losing pool 200 &#8722; fee 4 = 196 USDC distributable</text>

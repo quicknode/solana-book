@@ -8,13 +8,13 @@
   <circle cx="51" cy="145" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
   <path d="M 43,156 Q 51,149 59,156" fill="none" stroke="#111" stroke-width="1.3"/>
   <text x="66" y="145" font-size="10.5" font-weight="bold">Alice (maker)</text>
-  <text x="66" y="161" font-size="9.5" fill="#444">0.1 SOL</text>
+  <text x="66" y="161" font-size="9.5" fill="#444">1 SOL</text>
   <!-- Bob: wallet account -->
   <rect x="492" y="128" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <circle cx="507" cy="145" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
   <path d="M 499,156 Q 507,149 515,156" fill="none" stroke="#111" stroke-width="1.3"/>
   <text x="522" y="145" font-size="10.5" font-weight="bold">Bob (taker)</text>
-  <text x="522" y="161" font-size="9.5" fill="#444">0.1 SOL</text>
+  <text x="522" y="161" font-size="9.5" fill="#444">1 SOL</text>
   <!-- the third party -->
   <rect x="240" y="80" width="160" height="140" fill="none" stroke="#111" stroke-width="2"/>
   <text x="320" y="104" font-size="12" font-weight="bold" text-anchor="middle">trusted third party</text>
@@ -24,11 +24,31 @@
   <text x="194" y="130" font-size="10.5" font-weight="bold" text-anchor="middle">250 USDC</text>
   <path d="M 404,140 L 488,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-traditional-escrow-arr)"/>
   <text x="446" y="130" font-size="10.5" font-weight="bold" text-anchor="middle">250 USDC &#8722; fee</text>
+  <g transform="translate(194,140)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <g transform="translate(446,140)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
   <!-- TSLAx lane (bottom) -->
   <path d="M 488,166 L 404,166" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-traditional-escrow-arr)"/>
   <text x="446" y="184" font-size="10.5" font-weight="bold" text-anchor="middle">1 TSLAx</text>
   <path d="M 236,166 L 152,166" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-traditional-escrow-arr)"/>
   <text x="194" y="184" font-size="10.5" font-weight="bold" text-anchor="middle">1 TSLAx &#8722; fee</text>
+  <g transform="translate(446,166)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <g transform="translate(194,166)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
   <!-- the slice it keeps -->
   <path d="M 320,222 L 320,250" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#escrow-traditional-escrow-arrg)"/>
   <text x="320" y="270" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">keeps 1&#8211;6% of the transaction for itself</text>
