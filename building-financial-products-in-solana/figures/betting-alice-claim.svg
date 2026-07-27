@@ -1,36 +1,224 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="betting-claim-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- vault -->
-  <circle cx="90" cy="104" r="16" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="90" y="72" font-size="12" font-weight="bold" text-anchor="middle">vault</text>
-  <text x="90" y="134" font-size="10" fill="#444" text-anchor="middle">holds 596 after fee</text>
-  <text x="90" y="150" font-size="10" fill="#444" font-style="italic" text-anchor="middle">&#8594; 149 left: Bob&#8217;s exact claim</text>
-  <!-- Alice: wallet account -->
-  <rect x="500" y="82" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="515" cy="99" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 507,110 Q 515,103 523,110" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="530" y="99" font-size="10.5" font-weight="bold">Alice</text>
-  <text x="530" y="115" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- payout transfer -->
-  <path d="M 108,100 L 496,100" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
-  <text x="310" y="54" font-size="12" font-weight="bold" text-anchor="middle">2. transfer: 447 USDC to Alice</text>
-  <text x="310" y="72" font-size="10.5" fill="#444" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147</text>
-  <text x="310" y="118" font-size="10" fill="#444" font-style="italic" text-anchor="middle">signed by the event PDA</text>
-  <!-- user index drops the bet first -->
-  <rect x="40" y="190" width="180" height="52" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="130" y="208" font-size="11" font-weight="bold" text-anchor="middle">Alice&#8217;s user PDA</text>
-  <text x="130" y="226" font-size="10.5" text-anchor="middle">bet: Toy Story 5</text>
-  <line x1="85" y1="222" x2="175" y2="222" stroke="#999" stroke-width="1.4"/>
-  <text x="130" y="258" font-size="10.5" font-weight="bold" text-anchor="middle">1. index entry removed first</text>
-  <text x="130" y="272" font-size="10" fill="#444" font-style="italic" text-anchor="middle">effects before interactions</text>
-  <!-- bet account closes -->
-  <rect x="290" y="190" width="150" height="40" rx="5" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <line x1="290" y1="190" x2="440" y2="230" stroke="#999" stroke-width="1.6"/>
-  <line x1="440" y1="190" x2="290" y2="230" stroke="#999" stroke-width="1.6"/>
-  <text x="365" y="258" font-size="10.5" font-weight="bold" text-anchor="middle">3. bet account closed</text>
-  <text x="365" y="272" font-size="10" fill="#444" font-style="italic" text-anchor="middle">no account, no double claim</text>
-  <!-- rent refund -->
-  <path d="M 442,196 C 482,182 512,158 534,131" fill="none" stroke="#111" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr)"/>
-  <text x="502" y="214" font-size="10" fill="#444" font-style="italic" text-anchor="middle">rent refunded to Alice</text>
-  <text stroke="#f4f4f2" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="365" y="214" font-size="11" text-anchor="middle">Alice&#8217;s bet: 300</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 720" font-family="Georgia, serif" fill="#111">
+  <defs>
+    <marker id="betting-claim-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
+    <marker id="betting-claim-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+  </defs>
+  <!-- config PDA, untouched by claim_winnings -->
+  <g opacity="0.3">
+    <circle cx="178" cy="14" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="190" y="17" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONFIG&#8221;</text>
+    <rect x="170" y="24" width="160" height="70" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="180" y="40" font-size="10.5" font-weight="bold">config</text>
+    <text x="180" y="54" font-size="9.5">admin: Maria</text>
+    <text x="180" y="66" font-size="9.5">token_mint: USDC</text>
+    <text x="180" y="78" font-size="9.5">fee_recipient: Maria</text>
+    <text x="180" y="90" font-size="9" fill="#444">fee_bps: 200 (2%)</text>
+  </g>
+  <!-- the betting program -->
+  <g>
+    <circle cx="478" cy="8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="490" y="11" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="470" y="16" width="160" height="118" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="480" y="32" font-size="10.5" font-weight="bold">betting program</text>
+    <text x="480" y="46" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize_config</text>
+    <text x="480" y="57" font-size="8.5" font-family="Menlo, monospace" fill="#888">create_event</text>
+    <text x="480" y="68" font-size="8.5" font-family="Menlo, monospace" fill="#888">add_outcome</text>
+    <text x="480" y="79" font-size="8.5" font-family="Menlo, monospace" fill="#888">place_bet</text>
+    <text x="480" y="90" font-size="8.5" font-family="Menlo, monospace" fill="#888">settle_event</text>
+    <text x="480" y="101" font-size="8.5" font-family="Menlo, monospace" fill="#888">cancel_event</text>
+    <text x="480" y="112" font-size="8.5" font-family="Menlo, monospace" font-weight="bold">claim_winnings</text>
+    <text x="480" y="123" font-size="8.5" font-family="Menlo, monospace" fill="#888">claim_refund</text>
+  </g>
+  <!-- event PDA: read for the payout math -->
+  <g>
+    <circle cx="210" cy="104" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="222" y="107" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;EVENT&#8221; + EVENT ID</text>
+    <rect x="210" y="114" width="220" height="66" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="220" y="131" font-size="10.5" font-weight="bold">event</text>
+    <text x="220" y="146" font-size="9.5">status: Settled &#183; winning_outcome: 0</text>
+    <text x="220" y="159" font-size="9.5">distributable_losing_pool: 196</text>
+    <text x="220" y="172" font-size="9" fill="#444">winning_pool: 400</text>
+  </g>
+  <!-- the vault pays Alice -->
+  <g>
+    <circle cx="452" cy="146" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="464" y="143" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM + EVENT&#8217;S</text>
+    <text x="464" y="154" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+    <rect x="460" y="158" width="150" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="470" y="176" font-size="10.5" font-weight="bold">vault: the event&#8217;s USDC</text>
+    <text x="470" y="191" font-size="9.5" fill="#444">149 USDC</text>
+    <text x="470" y="204" font-size="9" fill="#444" font-style="italic">149 left: Bob&#8217;s exact claim</text>
+  </g>
+  <!-- outcome PDAs -->
+  <g>
+    <circle cx="62" cy="222" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="74" y="218" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;OUTCOME&#8221; + EVENT</text>
+    <text x="74" y="229" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + INDEX</text>
+    <rect x="70" y="234" width="180" height="48" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="80" y="252" font-size="10.5" font-weight="bold">outcome 0: Toy Story 5</text>
+    <text x="80" y="269" font-size="9.5" fill="#444">total_amount: 400 &#183; won</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="382" cy="222" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="394" y="218" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;OUTCOME&#8221; + EVENT</text>
+    <text x="394" y="229" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + INDEX</text>
+    <rect x="390" y="234" width="180" height="48" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="400" y="252" font-size="10.5" font-weight="bold">outcome 1: Backrooms</text>
+    <text x="400" y="269" font-size="9.5" fill="#444">total_amount: 200 &#183; lost</text>
+  </g>
+  <!-- Alice's bet closes: no account, no double claim -->
+  <g>
+    <circle cx="32" cy="318" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="44" y="314" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;BET&#8221; + OUTCOME</text>
+    <text x="44" y="325" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + BETTOR ADDRESS</text>
+    <rect x="40" y="330" width="130" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="50" y="348" font-size="10.5" font-weight="bold">Alice&#8217;s bet</text>
+    <text x="50" y="364" font-size="9.5" fill="#444">on outcome 0: 300 USDC</text>
+    <line x1="40" y1="330" x2="170" y2="374" stroke="#999" stroke-width="1.6"/>
+    <line x1="170" y1="330" x2="40" y2="374" stroke="#999" stroke-width="1.6"/>
+    <text x="50" y="388" font-size="9" font-weight="bold">3. bet account closed</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="192" cy="318" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="204" y="314" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;BET&#8221; + OUTCOME</text>
+    <text x="204" y="325" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + BETTOR ADDRESS</text>
+    <rect x="200" y="330" width="130" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="210" y="348" font-size="10.5" font-weight="bold">Bob&#8217;s bet</text>
+    <text x="210" y="364" font-size="9.5" fill="#444">on outcome 0: 100 USDC</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="432" cy="318" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="444" y="314" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;BET&#8221; + OUTCOME</text>
+    <text x="444" y="325" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + BETTOR ADDRESS</text>
+    <rect x="440" y="330" width="130" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <text x="450" y="348" font-size="10.5" font-weight="bold">Carol&#8217;s bet</text>
+    <text x="450" y="364" font-size="9.5" fill="#444">on outcome 1: 200 USDC</text>
+  </g>
+  <!-- Alice's user index drops the bet before the transfer -->
+  <g>
+    <circle cx="32" cy="396" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="44" y="392" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;USER&#8221; +</text>
+    <text x="44" y="403" font-size="8.5" letter-spacing="0.6" fill="#555">BETTOR ADDRESS</text>
+    <rect x="40" y="410" width="130" height="40" rx="6" fill="#fff" stroke="#888"/>
+    <text x="50" y="427" font-size="10.5" font-weight="bold">Alice&#8217;s user index</text>
+    <text x="50" y="442" font-size="9" fill="#444">open_bets: [ ]</text>
+    <text x="46" y="462" font-size="9" font-weight="bold">1. index entry removed first</text>
+    <text x="46" y="474" font-size="8.5" fill="#444" font-style="italic">effects before interactions</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="192" cy="396" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="204" y="392" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;USER&#8221; +</text>
+    <text x="204" y="403" font-size="8.5" letter-spacing="0.6" fill="#555">BETTOR ADDRESS</text>
+    <rect x="200" y="410" width="130" height="40" rx="6" fill="#fff" stroke="#888"/>
+    <text x="210" y="427" font-size="10.5" font-weight="bold">Bob&#8217;s user index</text>
+    <text x="210" y="442" font-size="9" fill="#444">open_bets: [Bob&#8217;s bet]</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="432" cy="396" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="444" y="392" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;USER&#8221; +</text>
+    <text x="444" y="403" font-size="8.5" letter-spacing="0.6" fill="#555">BETTOR ADDRESS</text>
+    <rect x="440" y="410" width="140" height="40" rx="6" fill="#fff" stroke="#888"/>
+    <text x="450" y="427" font-size="10.5" font-weight="bold">Carol&#8217;s user index</text>
+    <text x="450" y="442" font-size="9" fill="#444">open_bets: [Carol&#8217;s bet]</text>
+  </g>
+  <!-- the payout, signed by the event PDA -->
+  <path d="M 470,216 C 400,300 280,300 190,370 C 184,420 180,445 172,468 C 150,495 120,502 96,506" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="310" y="296" font-size="10.5" font-weight="bold" text-anchor="middle">2. claim_winnings &#183; 447 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="312" font-size="9" font-style="italic" fill="#444" text-anchor="middle">signed by the event PDA</text>
+  <g transform="translate(255,322)">
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+  </g>
+  <!-- rent from the closed bet flows back to Alice's wallet -->
+  <path d="M 50,376 C 16,450 16,560 68,650" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arrg)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="4" y="490" font-size="8.5" fill="#444" font-style="italic">rent refund</text>
+  <text x="320" y="472" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147 = 447</text>
+  <!-- Alice's USDC receives the payout -->
+  <g>
+    <rect x="40" y="510" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="50" y="527" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="50" y="542" font-size="9.5" fill="#444">1,147 USDC</text>
+    <circle cx="46" cy="562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="56" y="559" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="56" y="568" font-size="7.5" letter-spacing="0.4" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="56" y="577" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="158" y="510" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="168" y="527" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="168" y="542" font-size="9.5" fill="#444">900 USDC</text>
+    <circle cx="164" cy="562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="174" y="559" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="174" y="568" font-size="7.5" letter-spacing="0.4" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="174" y="577" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="276" y="510" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="286" y="527" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+    <text x="286" y="542" font-size="9.5" fill="#444">800 USDC</text>
+    <circle cx="282" cy="562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="292" y="559" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="292" y="568" font-size="7.5" letter-spacing="0.4" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="292" y="577" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <g opacity="0.3">
+    <rect x="394" y="510" width="108" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="404" y="527" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+    <text x="404" y="542" font-size="9.5" fill="#444">1,004 USDC</text>
+    <circle cx="400" cy="562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="410" y="559" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="410" y="568" font-size="7.5" letter-spacing="0.4" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="410" y="577" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT</text>
+  </g>
+  <text x="320" y="596" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account is the double-claim guard: no account, no second claim</text>
+  <!-- the curve -->
+  <path d="M 40,660 Q 320,570 600,660" fill="none" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="712" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <!-- wallets on the curve -->
+  <g>
+    <circle cx="96" cy="644" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="84" y="642" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
+    <rect x="44" y="654" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="59" cy="671" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 51,682 Q 59,675 67,682" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="74" y="671" font-size="10.5" font-weight="bold">Alice</text>
+    <text x="74" y="687" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="208" cy="622" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="220" y="620" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="156" y="632" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="171" cy="649" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 163,660 Q 171,653 179,660" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="186" y="649" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="186" y="665" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="320" cy="615" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="332" y="613" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="268" y="625" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="283" cy="642" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 275,653 Q 283,646 291,653" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="298" y="642" font-size="10.5" font-weight="bold">Carol</text>
+    <text x="298" y="658" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="432" cy="622" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="444" y="618" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="380" y="632" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <circle cx="395" cy="649" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 387,660 Q 395,653 403,660" fill="none" stroke="#111" stroke-width="1.3"/>
+    <text x="410" y="649" font-size="10.5" font-weight="bold">Maria (admin)</text>
+    <text x="410" y="665" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+    <circle cx="516" cy="637" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="528" y="633" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+    <rect x="500" y="648" width="110" height="34" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <text x="510" y="669" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  <!-- the program's address dot sits on the curve too -->
+  <line x1="550" y1="134" x2="602" y2="646" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.3"/>
+  <circle cx="602" cy="652" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
 </svg>
