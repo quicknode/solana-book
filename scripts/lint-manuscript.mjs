@@ -119,6 +119,17 @@ for (const file of svgFiles) {
       failures += 1;
       console.error(`${file}:${index + 1}: seed labels start with "SEEDS: "\n    ${line.trim().slice(0, 160)}`);
     }
+    // Handler lines (monospace runs of bare snake_case identifiers) carry
+    // parens: place_bet(), never place_bet.
+    const menlo = line.match(/font-family="Menlo[^>]*>([^<]+)<\/text>/);
+    if (
+      menlo &&
+      /^[a-z_]{3,}(\s+[a-z_]{3,})*(\s*&#215;\d+)?$/.test(menlo[1].trim()) &&
+      !menlo[1].includes("()")
+    ) {
+      failures += 1;
+      console.error(`${file}:${index + 1}: handler names carry parens: ${menlo[1].trim().split(/\s/)[0]}()\n    ${line.trim().slice(0, 160)}`);
+    }
   });
 }
 
