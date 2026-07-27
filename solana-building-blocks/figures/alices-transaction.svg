@@ -13,10 +13,10 @@
   <text x="44" y="62" font-size="11" font-style="italic" fill="#444">signed by Alice&#8217;s private key</text>
   <rect x="44" y="72" width="242" height="32" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="52" y="86" font-size="11" font-weight="bold">Instruction 1 &#8594; System Program</text>
-  <text x="52" y="99" font-size="11"><tspan font-family="Menlo, monospace">transfer</tspan>: send lamports to Bob</text>
+  <text x="52" y="99" font-size="11"><tspan font-family="Menlo, monospace">transfer()</tspan>: send lamports to Bob</text>
   <rect x="44" y="110" width="242" height="32" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="52" y="124" font-size="11" font-weight="bold">Instruction 2 &#8594; Memo Program</text>
-  <text x="52" y="137" font-size="11"><tspan font-family="Menlo, monospace">memo</tspan>: write &#8220;thanks&#8221;</text>
+  <text x="52" y="137" font-size="11"><tspan font-family="Menlo, monospace">memo()</tspan>: write &#8220;thanks&#8221;</text>
   <!-- the curve -->
   <path d="M 40,350 Q 320,90 600,350" fill="none" stroke="#111" stroke-width="2"/>
   <text x="320" y="372" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
@@ -26,15 +26,19 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="472" y="266" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
   <!-- Alice: wallet account -->
   <rect x="150" y="280" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="165" cy="297" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 157,308 Q 165,301 173,308" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(158,287)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="180" y="297" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
   <text x="180" y="313" font-size="9.5" fill="#444">1 &#8594; 0.95 SOL</text>
   <line x1="180" y1="259" x2="180" y2="279" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <!-- Bob: wallet account -->
   <rect x="372" y="280" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="387" cy="297" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 379,308 Q 387,301 395,308" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(380,287)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="402" y="297" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
   <text x="402" y="313" font-size="9.5" fill="#444">1 &#8594; 1.05 SOL</text>
   <line x1="460" y1="259" x2="460" y2="279" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -46,11 +50,31 @@
   <text x="320" y="340" font-size="11" fill="#444" text-anchor="middle" font-style="italic">lamports move from Alice to Bob</text>
   <!-- programs on the curve, with their instruction handlers -->
   <rect x="234" y="196" width="110" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="244" y="212" font-size="10.5" font-weight="bold">System Program</text>
-  <text x="244" y="230" font-size="10" font-family="Menlo, monospace">transfer</text>
+  <g transform="translate(240,201)">
+    <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
+    <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
+    <g stroke="#111" stroke-width="1.3">
+      <line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/>
+      <line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/>
+      <line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/>
+      <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
+    </g>
+  </g>
+  <text x="258" y="212" font-size="10.5" font-weight="bold">System Program</text>
+  <text x="244" y="230" font-size="10" font-family="Menlo, monospace">transfer()</text>
   <rect x="354" y="204" width="100" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="364" y="220" font-size="10.5" font-weight="bold">Memo Program</text>
-  <text x="364" y="238" font-size="10" font-family="Menlo, monospace">memo</text>
+  <g transform="translate(360,209)">
+    <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
+    <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
+    <g stroke="#111" stroke-width="1.3">
+      <line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/>
+      <line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/>
+      <line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/>
+      <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
+    </g>
+  </g>
+  <text x="378" y="220" font-size="10.5" font-weight="bold">Memo Program</text>
+  <text x="364" y="238" font-size="10" font-family="Menlo, monospace">memo()</text>
   <rect x="500" y="150" width="112" height="34" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="556" y="164" font-size="10.5" text-anchor="middle" font-style="italic">transaction log:</text>
   <text x="556" y="177" font-size="11" text-anchor="middle">&#8220;thanks&#8221;</text>

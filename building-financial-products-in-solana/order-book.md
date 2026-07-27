@@ -18,13 +18,13 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-![The account map: the market PDA and the program across the top with the order book account beside them, the base, quote, and fee vaults beneath, and each trader's market user account, order accounts, and token accounts between them and the Devnet curve.](figures/order-book-accounts.svg)
+![The account map: each trader's accounts stacked in a column beneath their spot on the Devnet curve, and the program's column on the right holding the market PDA, the order book account, and the base, quote, and fee vaults.](figures/order-book-accounts.svg)
 
 The **market** is a PDA holding one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). Its seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 
 The **order book** is the big one: about 180 KB holding two trees of resting orders (one per side, 1,024 orders each) plus a monotonic `next_order_id` counter. It is **zero-copy**: an account this large would be prohibitively expensive to deserialize on every instruction, so the program reads and writes fields in place through an `AccountLoader` instead.
 
-> **Why the order book is not a PDA.** Solana caps account allocations made from inside a program at 10 KB, so `initialize_market` cannot create a 180 KB account. Instead, the client creates the account directly with the System Program before calling `initialize_market`, sized to `ORDER_BOOK_ACCOUNT_SIZE` and owned by the program. And it cannot be a PDA at all, because creating an account that way requires the new account's own signature, which a PDA cannot give. The program instead ties the book to its market with a `has_one = order_book` constraint, checked on every instruction that touches it.
+> **Why the order book is not a PDA.** Solana caps account allocations made from inside a program at 10 KB, so `initialize_market()` cannot create a 180 KB account. Instead, the client creates the account directly with the System Program before calling `initialize_market()`, sized to `ORDER_BOOK_ACCOUNT_SIZE` and owned by the program. And it cannot be a PDA at all, because creating an account that way requires the new account's own signature, which a PDA cannot give. The program instead ties the book to its market with a `has_one = order_book` constraint, checked on every instruction that touches it.
 
 Three **vaults** hold the money: a base vault for locked NVDAx, a quote vault for locked USDC, and a separate **fee vault** for Maria's earnings. The fee vault holds the same token as the quote vault, and keeping them separate means balances owed to users and balances earned by the market can never be confused. That separation turns out to be load-bearing; the failure modes section returns to it.
 
@@ -44,19 +44,19 @@ So the book's two sides are **critbit trees**. The name sounds complex; the idea
 
 Maria runs the exchange. She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match, so it is borne by whichever side of the fill receives the quote token.
 
-Maria's client first creates the empty order book account, then calls `initialize_market` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, because a fee above 100% is nonsense. It creates the market PDA and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
+Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, because a fee above 100% is nonsense. It creates the market PDA and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
 
 The tick size and minimum order size are market hygiene. Prices must land on a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. Orders below `min_order_size` are rejected outright, which keeps spam from filling the trees.
 
-![Maria's initialize_market creates the market PDA with its parameters and three empty vaults, and stamps two empty trees onto the pre-created order book account.](figures/order-book-initialize-market.svg)
+![Maria's initialize_market() creates the market PDA with its parameters and three empty vaults, and stamps two empty trees onto the pre-created order book account.](figures/order-book-initialize-market.svg)
 
 ## Every Trader Gets a Ledger Line
 
-Three traders use the market this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus (for the two sellers, Alice and Carol) some NVDAx. Before trading, each of them calls `create_market_user` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
+Three traders use the market this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus (for the two sellers, Alice and Carol) some NVDAx. Before trading, each of them calls `create_market_user()` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
 
 ## Alice Asks: Ten Shares at 265
 
-Alice holds NVDAx and thinks AI is overhyped. She wants out, but not at any price: she calls `place_order` with side `Ask`, price 265, quantity ten shares.
+Alice holds NVDAx and thinks AI is overhyped. She wants out, but not at any price: she calls `place_order()` with side `Ask`, price 265, quantity ten shares.
 
 The handler validates first: the market is active, the price is nonzero and tick-aligned, the quantity meets the minimum, and Alice is under her 20-open-order cap. Then it takes her money up front. An ask locks the base: her ten shares move immediately from her token account into the base vault. (A bid locks the quote instead: price times quantity.) This lock-on-entry rule is what makes every order on the book a funded commitment rather than a promise; there is no path where a matched order turns out to be backed by nothing.
 
@@ -66,7 +66,7 @@ The book's ask side is empty and no bid reaches 265, so there is nothing to matc
 
 ## Bob Bids: Four Shares at 250
 
-Bob wants in, but he is not prepared to pay more than 250. He calls `place_order` with side `Bid`, price 250, quantity four. The handler locks 4 × 250 = 1,000 USDC from his token account into the quote vault: every dollar he has, committed the moment the order rests. The best ask is Alice's 265, and Bob's limit refuses to cross it, so his bid rests too. The book now has a spread: bid 250, ask 265.
+Bob wants in, but he is not prepared to pay more than 250. He calls `place_order()` with side `Bid`, price 250, quantity four. The handler locks 4 × 250 = 1,000 USDC from his token account into the quote vault: every dollar he has, committed the moment the order rests. The best ask is Alice's 265, and Bob's limit refuses to cross it, so his bid rests too. The book now has a spread: bid 250, ask 265.
 
 ![The book after two orders: Alice's ask at 265 and Bob's bid at 250, with the spread between them.](figures/order-book-resting-spread.svg)
 
@@ -74,7 +74,7 @@ Bob wants in, but he is not prepared to pay more than 250. He calls `place_order
 
 Carol also owns NVDAx and also wants out, and she is less patient than Alice: she asks three shares at 245. Her limit is at or below the best bid, so this order crosses.
 
-Here is how matching actually runs. The planning function, `plan_fills`, walks the opposite side of the book in price-time priority and returns the list of fills without mutating anything. Bob's bid is the best (and only) bid, it covers all three shares, so the plan is one fill: three shares against Bob's order. The walk stops at the first resting order that fails to cross, because if the best price fails, every price behind it fails too.
+Here is how matching actually runs. The planning function, `plan_fills()`, walks the opposite side of the book in price-time priority and returns the list of fills without mutating anything. Bob's bid is the best (and only) bid, it covers all three shares, so the plan is one fill: three shares against Bob's order. The walk stops at the first resting order that fails to cross, because if the best price fails, every price behind it fails too.
 
 The fill executes at **the resting order's posted price**: 250, not Carol's 245. This is the standard order book rule, and it is worth internalizing. The maker's posted price is the deal on offer; the taker chose to hit it. The surprise always lands in the taker's favor: a taker bid pays less than its limit allowed, and a taker ask, like Carol's, receives more.
 
@@ -88,25 +88,25 @@ Notice who did nothing: Bob. Like Alice in the escrow chapter, a maker signs onc
 
 ## Bob Cancels the Rest of His Order
 
-Bob decides three shares is enough. He calls `cancel_order` on his order account. The handler checks the signer is the order's owner, and that the status is still Open or PartiallyFilled; a Filled or already-Cancelled order rejects with `OrderNotCancellable`. His remaining share at 250 means 250 USDC of his original lock is still sitting in the quote vault, so his `unsettled_quote` is credited 250, using the same price-times-remaining formula that locked it. The leaf comes out of the bid tree, the order ID leaves his open-order list, and the order account is stamped Cancelled, closing out its little state machine. Every state has an exit.
+Bob decides three shares is enough. He calls `cancel_order()` on his order account. The handler checks the signer is the order's owner, and that the status is still Open or PartiallyFilled; a Filled or already-Cancelled order rejects with `OrderNotCancellable`. His remaining share at 250 means 250 USDC of his original lock is still sitting in the quote vault, so his `unsettled_quote` is credited 250, using the same price-times-remaining formula that locked it. The leaf comes out of the bid tree, the order ID leaves his open-order list, and the order account is stamped Cancelled, closing out its little state machine. Every state has an exit.
 
-![An order's state machine: fills walk it from Open through PartiallyFilled to Filled, cancel_order exits from either live state, and both terminal states refuse further transitions.](figures/order-book-state-machine.svg)
+![An order's state machine: fills walk it from Open through PartiallyFilled to Filled, cancel_order() exits from either live state, and both terminal states refuse further transitions.](figures/order-book-state-machine.svg)
 
 ![Bob's cancel: his leaf comes out of the bid tree, and the 250 USDC still locked for it moves to his unsettled quote balance.](figures/order-book-cancel.svg)
 
 ## Bob and Carol Settle Their Funds
 
-Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
+Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
 The handler contains one line of discipline worth copying into everything you build: it snapshots the unsettled amounts and **zeroes the counters before making the transfers**. If a token transfer could ever call back into this program (token extensions can attach hooks to transfers), a caller re-entering mid-transfer would find balances already zeroed instead of still-credited, making double-withdrawal structurally impossible. The pattern is called checks-effects-interactions, and The Adversary treats it fully.
 
-![settle_funds for Bob and Carol: the unsettled counters are zeroed first, then the market PDA signs the transfers from the base and quote vaults to their token accounts.](figures/order-book-settle.svg)
+![settle_funds() for Bob and Carol: the unsettled counters are zeroed first, then the market PDA signs the transfers from the base and quote vaults to their token accounts.](figures/order-book-settle.svg)
 
 ## Maria Withdraws Her Fees
 
-At any time, Maria calls `withdraw_fees`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One operational nicety: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is a pattern this book calls a **crank** (the Lending and Borrowing chapter treats it fully), though this handler adds an authority gate because it moves fee money.
+At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One operational nicety: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is a pattern this book calls a **crank** (the Lending and Borrowing chapter treats it fully), though this handler adds an authority gate because it moves fee money.
 
-![withdraw_fees drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
+![withdraw_fees() drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 
 ## The Math: Lots, Ticks, and a Fee That Rounds Up
 
@@ -128,7 +128,7 @@ At any time, Maria calls `withdraw_fees`, and the fee vault's balance (1.875 USD
 
 ## The Failure Modes: Vault Swaps, Fake Makers, and Book Spam
 
-- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is `has_one` constraints binding every vault and mint on every instruction to the addresses recorded on the market at creation, and the test suite proves the attack fails. This is the account-substitution attack from the escrow chapter wearing an exchange costume.
+- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is `has_one` constraints binding every vault and mint on every instruction to the addresses recorded on the market at creation, and the test suite proves the attack fails. This is the account-substitution attack from the escrow chapter wearing an exchange costume.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program re-derives the fills from its own book and verifies every supplied account against that plan: order ID, market, and owner all have to line up, or the transaction fails.
 - **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, industrialisable through many tiny fills. Covered above; pinned by a test below.
 - **Book spam.** A full tree is a denial-of-service on everyone else's orders. Tick alignment, the minimum order size, the 20-open-orders-per-user cap, and the `OrderBookFull` check are all anti-spam walls, and each rejects with its own named error.
@@ -148,7 +148,7 @@ If you write one test after reading this chapter, write the vault-swap one for y
 
 ## What You Learnt from Building the Order Book Exchange
 
-NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds` is settlement, permissionless and instant. The operator who remains, Maria, sets the market's parameters and collects its fee, and can do nothing else.
+NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The operator who remains, Maria, sets the market's parameters and collects its fee, and can do nothing else.
 
 The concepts you now have, on top of the escrow's:
 

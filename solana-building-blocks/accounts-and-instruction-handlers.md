@@ -44,7 +44,7 @@ A transaction carries one or more **instructions**, and each instruction is addr
 
 An instruction names which of the program's **instruction handlers** to run (the onchain functions a program exposes), the accounts the handler may touch, and the arguments. One word for two things confuses everyone, so this book always says "instruction handler" for the function and "instruction" for its input. Good financial design keeps the mapping strict: one handler, one state transition (deposit, settle, cancel, liquidate), so the program's API is the state machine's edge list.
 
-Watch Alice run her first transaction. It carries two instructions: the first tells the System Program's `transfer` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
+Watch Alice run her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
 The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports - the balance an explorer displays as 1 SOL is the integer 1,000,000,000 - and every asset in this book gets the same treatment. The Arithmetic of Money builds the full discipline on this one idea.
 
@@ -70,7 +70,7 @@ One thing made Alice's transaction valid: before sending it, she signed it with 
 
 The signature is also a grant of authority. By signing, Alice authorizes what the transaction does in her name:
 
-- **Debit her accounts.** The `transfer` handler may move her lamports because the account losing them belongs to a signer.
+- **Debit her accounts.** The `transfer()` handler may move her lamports because the account losing them belongs to a signer.
 - **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
 - **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
 
@@ -84,7 +84,7 @@ A **wallet** is a key pair being used this way, with the private key stored some
 
 So far, the accounts in the story hold balances. An account in full is some data with an address, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and every record a financial program keeps. (The "nearly" is State Compression, a technique for storing bulk data offchain with onchain proofs; none of the financial state in this book uses it.) A financial program's whole ledger is a set of accounts.
 
-In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an **owner program** that can change this account: users (or other programs) invoke that program to modify the account. Alice's account is the simplest case: no data to speak of, a lamport balance that *is* her SOL, and the System Program as its owner, which is why it was the System Program's `transfer` handler that moved her lamports to Bob.
+In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an **owner program** that can change this account: users (or other programs) invoke that program to modify the account. Alice's account is the simplest case: no data to speak of, a lamport balance that *is* her SOL, and the System Program as its owner, which is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
 ![One account, dissected: an address, an owner program, a lamport balance, and data bytes that the owning program reads as a Rust struct.](figures/account-dissected.svg)
 
@@ -107,7 +107,7 @@ A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dol
 
 Bob's SOL lives in his own account, but his USDC does not. Token balances live in **token accounts**: accounts whose data records three facts - which token, whose balance, and how much. And Bob's USDC token account sits at an address anyone can compute: the **associated token account** (ATA), derived from a wallet address and a mint address. Put in Bob's address and the USDC mint's address, and out comes the address of Bob's USDC account; put in Alice's, and out comes hers. These derived addresses are the second kind from the last section: an ATA is a PDA, sitting off the curve with no private key, and the PDAs chapter explains the mechanism. What matters here is what derivation buys: Bob does not need to ask Alice where her USDC lives. His wallet computes where her account must be, and sends the tokens there.
 
-So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
+So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
 ![Bob pays Alice 25 USDC: his signed transaction runs the Token Program's transfer handler, and the balance moves between their associated token accounts, each derived from its owner's address and the USDC mint.](figures/bobs-usdc-transaction.svg)
 

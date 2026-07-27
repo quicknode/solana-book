@@ -3,16 +3,20 @@
   <text x="320" y="148" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- Alice: wallet account -->
   <rect x="36" y="64" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="51" cy="81" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 43,92 Q 51,85 59,92" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(44,71)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="66" y="81" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
   <text x="66" y="97" font-size="9.5" fill="#444">1 SOL</text>
   <circle cx="180" cy="212" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <line x1="100" y1="108" x2="176" y2="203" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <!-- Bob: wallet account -->
   <rect x="480" y="64" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="495" cy="81" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 487,92 Q 495,85 503,92" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(488,71)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="510" y="81" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
   <text x="510" y="97" font-size="9.5" fill="#444">1 SOL</text>
   <circle cx="460" cy="212" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
