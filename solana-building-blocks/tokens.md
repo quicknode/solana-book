@@ -28,7 +28,7 @@ Not every token account is an ATA. A token account can live at any address, and 
 
 ## Decimals Define the Minor Unit
 
-The mint's **decimals** set the **minor unit**, the raw integer everything actually calculates and transfers in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked`, which fails unless the caller states the decimals the mint really has.
+The mint's **decimals** set the **minor unit**, the raw integer everything actually calculates and transfers in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
 
 ## The Freeze Authority Can Stop Any Holder Cold
 
@@ -58,5 +58,5 @@ When you build on a token you did not issue, read its extensions first: several 
 - Every distinct token is a distinct **mint account**: the address is the identity, the label is decoration.
 - The **mint authority** and **freeze authority** are a token's real constitution: who can mint, and who can freeze, are the first questions to ask about any token.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for a wallet, and program vaults can live anywhere the program chose.
-- **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked`.
+- **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
 - Solana has two token programs, and extensions can change what a transfer means: read a token's extensions before building on it.

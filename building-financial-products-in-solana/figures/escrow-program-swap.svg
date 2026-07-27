@@ -1,55 +1,69 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="escrow-program-swap-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <defs><marker id="escrow-program-swap-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <!-- Alice: wallet account -->
   <rect x="36" y="128" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="51" cy="145" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 43,156 Q 51,149 59,156" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(44,134)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="66" y="145" font-size="10.5" font-weight="bold">Alice (maker)</text>
   <text x="66" y="161" font-size="9.5" fill="#444">1 SOL</text>
   <!-- Bob: wallet account -->
   <rect x="492" y="128" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="507" cy="145" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 499,156 Q 507,149 515,156" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(500,134)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="522" y="145" font-size="10.5" font-weight="bold">Bob (taker)</text>
   <text x="522" y="161" font-size="9.5" fill="#444">1 SOL</text>
   <!-- the program: a box of code, not a company -->
   <rect x="240" y="80" width="160" height="140" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="252" y="100" font-size="10.5" font-weight="bold">escrow program</text>
+  <g transform="translate(250,89)">
+    <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
+    <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
+    <g stroke="#111" stroke-width="1.3">
+      <line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/>
+      <line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/>
+      <line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/>
+      <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
+    </g>
+  </g>
+  <text x="270" y="100" font-size="10.5" font-weight="bold">escrow program</text>
   <text x="252" y="114" font-size="10" font-style="italic" fill="#444">rules are the deployed bytecode</text>
-  <text x="252" y="176" font-size="10" font-family="Menlo, monospace">make_offer</text>
-  <text x="252" y="191" font-size="10" font-family="Menlo, monospace">take_offer</text>
-  <text x="252" y="206" font-size="10" font-family="Menlo, monospace">cancel_offer</text>
+  <text x="252" y="176" font-size="10" font-family="Menlo, monospace">make_offer()</text>
+  <text x="252" y="191" font-size="10" font-family="Menlo, monospace">take_offer()</text>
+  <text x="252" y="206" font-size="10" font-family="Menlo, monospace">cancel_offer()</text>
   <!-- USDC lane (top) -->
-  <path d="M 152,140 L 236,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="194" y="130" font-size="10.5" font-weight="bold" text-anchor="middle">250 USDC</text>
-  <path d="M 404,140 L 488,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="446" y="116" font-size="10.5" font-weight="bold" text-anchor="middle">250 USDC</text>
+  <path d="M 152,140 L 236,140" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
+  <text x="194" y="130" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">250 USDC</text>
+  <path d="M 404,140 L 488,140" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
+  <text x="446" y="116" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">250 USDC</text>
   <text x="446" y="130" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(all of it)</text>
   <g transform="translate(194,140)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
   <g transform="translate(446,140)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
   <!-- TSLAx lane (bottom) -->
-  <path d="M 488,166 L 404,166" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="446" y="184" font-size="10.5" font-weight="bold" text-anchor="middle">1 TSLAx</text>
-  <path d="M 236,166 L 152,166" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="194" y="184" font-size="10.5" font-weight="bold" text-anchor="middle">1 TSLAx</text>
+  <path d="M 488,166 L 404,166" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
+  <text x="446" y="184" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1 TSLAx</text>
+  <path d="M 236,166 L 152,166" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
+  <text x="194" y="184" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1 TSLAx</text>
   <text x="194" y="200" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(all of it)</text>
   <g transform="translate(446,166)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
   <g transform="translate(194,166)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#111" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" text-anchor="middle">$</text>
+    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
+    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
   <text x="320" y="268" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">no percentage kept; the network fee is a fraction of a cent</text>
 </svg>

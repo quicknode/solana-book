@@ -1,7 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
   <!-- account box -->
   <rect x="40" y="40" width="240" height="210" rx="6" fill="none" stroke="#111" stroke-width="2"/>
-  <text x="160" y="28" font-size="13" font-weight="bold" text-anchor="middle">One account</text>
+  <g transform="translate(100,15)" stroke="#111" stroke-width="1.2" fill="none">
+    <rect x="1" y="2" width="12" height="10"/>
+    <line x1="1" y1="5.4" x2="13" y2="5.4"/>
+    <line x1="7" y1="5.4" x2="7" y2="12"/>
+  </g>
+  <text x="168" y="28" font-size="13" font-weight="bold" text-anchor="middle">One account</text>
   <rect x="56" y="56" width="208" height="34" fill="#f4f4f2" stroke="#888"/>
   <text x="64" y="70" font-size="11" font-weight="bold">address</text>
   <text x="64" y="83" font-size="10" fill="#444">7Zb3…kQd9 (32 bytes)</text>

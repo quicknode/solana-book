@@ -8,7 +8,7 @@ Every financial product in this book is a small number of states and the legal t
 
 The design rules fall straight out of the drawing:
 
-- **One instruction handler, one transition.** `take_offer` moves an offer from open to taken and does nothing else. Handlers that perform two transitions, or half of one, are where partial-state bugs live.
+- **One instruction handler, one transition.** `take_offer()` moves an offer from open to taken and does nothing else. Handlers that perform two transitions, or half of one, are where partial-state bugs live.
 - **Make the state explicit.** A status enum on the account, or, often better, the account's own existence: the betting market's bet account closes when the position ends, so "already claimed" is not a flag that can desynchronize but an account that is gone.
 - **Guard every transition by state, not just by signer.** Betting on a settled event, canceling a filled order, and liquidating a healthy loan must fail because the *state* forbids them, with an error that names the rule.
 - **Every state needs an exit, for every participant's money.** This is the rule that finds missing requirements. An escrow with no cancel handler strands the maker's tokens the day nobody takes the offer. A betting market with no cancel-and-refund path strands every stake the day the event is called off. Walk each state and ask: how does each party's money leave from here? If any state has no answer, the program has a stranded-funds bug that no amount of correct arithmetic will fix.

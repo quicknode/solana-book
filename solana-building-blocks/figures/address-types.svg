@@ -9,8 +9,10 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="112" y="284" font-size="10.5" font-style="italic" fill="#444">a public key, on the curve</text>
   <!-- Alice: wallet account, she holds the private key -->
   <rect x="52" y="60" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="67" cy="77" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 59,88 Q 67,81 75,88" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(60,67)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="82" y="77" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
   <text x="82" y="93" font-size="9.5" fill="#444">1 SOL</text>
   <text x="114" y="118" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">holds the private key</text>

@@ -8,8 +8,10 @@
   <text x="320" y="148" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- Alice: wallet account -->
   <rect x="20" y="58" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="35" cy="75" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 27,86 Q 35,79 43,86" fill="none" stroke="#111" stroke-width="1.3"/>
+  <g transform="translate(28,65)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
   <text x="50" y="75" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
   <text x="50" y="91" font-size="9.5" fill="#444">1 SOL</text>
   <!-- Alice's private key: a bare key glyph, not an account, so no rectangle -->
