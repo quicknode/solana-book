@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" font-family="Georgia, serif" fill="#111">
-  <path d="M 40,310 Q 320,50 600,310" fill="none" stroke="#111" stroke-width="2"/>
+  <path d="M 40,310 Q 320,50 600,310" fill="none" stroke="#111" stroke-width="3.5"/>
   <text x="320" y="148" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- Alice: wallet account -->
   <rect x="36" y="64" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

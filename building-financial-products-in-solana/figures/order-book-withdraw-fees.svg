@@ -6,7 +6,7 @@
     <marker id="order-book-withdraw-fees-arrk" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
   </defs>
   <!-- the curve on top: every on-curve address dot sits on it, everything hangs below -->
-  <path d="M 40,40 Q 320,130 600,40" fill="none" stroke="#111" stroke-width="2"/>
+  <path d="M 40,40 Q 320,130 600,40" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="62" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- the two mints, tucked in the pockets above the curve's ends -->
   <g opacity="0.3">
@@ -85,12 +85,11 @@
     <text x="34" y="165" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
     <rect x="16" y="170" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(24,176)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="42" y="187" font-size="10.5" font-weight="bold">Alice&#8217;s NVDAx</text>
   </g>
@@ -101,12 +100,11 @@
     <text x="146" y="165" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
     <rect x="128" y="170" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(136,176)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="154" y="187" font-size="10.5" font-weight="bold">Bob&#8217;s NVDAx</text>
   </g>
@@ -117,12 +115,11 @@
     <text x="258" y="165" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
     <rect x="240" y="170" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(248,176)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="266" y="187" font-size="10.5" font-weight="bold">Carol&#8217;s NVDAx</text>
   </g>
@@ -133,12 +130,11 @@
     <text x="34" y="245" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="16" y="250" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(24,256)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="42" y="267" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
   </g>
@@ -149,12 +145,11 @@
     <text x="146" y="245" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="128" y="250" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(136,256)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="154" y="267" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
   </g>
@@ -165,12 +160,11 @@
     <text x="258" y="245" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="240" y="250" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(248,256)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="266" y="267" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
   </g>
@@ -181,12 +175,11 @@
     <text x="370" y="245" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="352" y="250" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(360,255)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="378" y="267" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
     <text x="362" y="283" font-size="9" fill="#444">1.875 USDC</text>
@@ -332,12 +325,11 @@
     <text x="484" y="461" font-size="8.5" letter-spacing="0.6" fill="#555">PUBLIC KEY</text>
     <rect x="464" y="468" width="168" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,474)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="492" y="485" font-size="10.5" font-weight="bold">base vault</text>
   </g>
@@ -347,12 +339,11 @@
     <text x="484" y="543" font-size="8.5" letter-spacing="0.6" fill="#555">PUBLIC KEY</text>
     <rect x="464" y="550" width="168" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,556)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="492" y="567" font-size="10.5" font-weight="bold">quote vault</text>
   </g>
@@ -362,12 +353,11 @@
     <text x="484" y="625" font-size="8.5" letter-spacing="0.6" fill="#555">PUBLIC KEY</text>
     <rect x="464" y="632" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,637)">
-      <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-      <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-      <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
     <text x="492" y="649" font-size="10.5" font-weight="bold">fee vault</text>
     <text x="474" y="665" font-size="9.5" fill="#444">0 USDC &#183; drained to Maria</text>
