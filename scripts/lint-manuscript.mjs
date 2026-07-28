@@ -83,9 +83,19 @@ const figureDirs = [
 ];
 
 const svgRules = [
-  [/\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
+  [/<rect[^>]*\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
   [/<rect[^>]*\bry="/, "set rx only on rects; ry duplicates it (ellipse glyphs are exempt)"],
   [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],
+  // The cluster curve is the heaviest line in every figure: 3.5, no other
+  // weight. The M/Q arc against ink #111 is the curve's one shape.
+  [/<path d="M 40,[\d.]+ Q 320,[\d.]+ 600,[\d.]+" fill="none" stroke="#111" stroke-width="(?!3\.5")/,
+    'the cluster curve is stroke-width="3.5", the heaviest line in the figure'],
+  // The piggy-bank snout is an opaque ellipse (fill="#fff") with nostrils,
+  // drawn after the body; the old transparent-circle snout is a regression.
+  [/<circle cx="12\.6" cy="6\.4" r="1\.7"/,
+    'old piggy snout: use the opaque snout ellipse with nostrils from DIAGRAMS.md'],
+  [/<ellipse cx="12\.9" cy="6\.4"[^>]*fill="none"/,
+    'the piggy snout is opaque: fill="#fff" so the body edge never shows through'],
 ];
 
 const svgFiles = [];

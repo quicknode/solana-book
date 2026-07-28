@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Georgia, serif" fill="#111">
-  <path d="M 40,310 Q 320,50 600,310" fill="none" stroke="#111" stroke-width="2"/>
+  <path d="M 40,310 Q 320,50 600,310" fill="none" stroke="#111" stroke-width="3.5"/>
   <text x="320" y="334" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
   <!-- on-curve public keys -->
   <circle cx="180" cy="212" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -33,12 +33,11 @@
   <text x="87" y="49" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
   <rect x="85" y="54" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(93,60)">
-    <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-    <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-    <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-    <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-    <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-    <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+    <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+    <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+    <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+    <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+    <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
   </g>
   <text x="156" y="76" font-size="12" font-weight="bold" text-anchor="middle">Alice&#8217;s USDC</text>
   <text x="150" y="94" font-size="10.5" fill="#444" text-anchor="middle">1,000 USDC</text>
@@ -47,12 +46,11 @@
   <text x="427" y="49" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
   <rect x="425" y="54" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(433,60)">
-    <ellipse cx="7" cy="7" rx="6" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-    <circle cx="12.6" cy="6.4" r="1.7" fill="none" stroke="#111" stroke-width="1"/>
-    <path d="M 3.6,3.4 L 5,1.2 L 6.8,2.9" fill="none" stroke="#111" stroke-width="1"/>
-    <line x1="4" y1="11.2" x2="4" y2="13" stroke="#111" stroke-width="1.2"/>
-    <line x1="10" y1="11.2" x2="10" y2="13" stroke="#111" stroke-width="1.2"/>
-    <line x1="6" y1="4.6" x2="8.4" y2="4.6" stroke="#111" stroke-width="1"/>
+    <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
+    <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
+    <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
+    <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
+    <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
   </g>
   <text x="496" y="76" font-size="12" font-weight="bold" text-anchor="middle">Bob&#8217;s USDC</text>
   <text x="490" y="94" font-size="10.5" fill="#444" text-anchor="middle">300 USDC</text>
