@@ -129,6 +129,14 @@ for (const file of svgFiles) {
       failures += 1;
       console.error(`${file}:${index + 1}: seed labels start with "SEEDS: "\n    ${line.trim().slice(0, 160)}`);
     }
+    // The cluster curve is the positive (top) half of the beach-ball-shaped
+    // Ed25519 curve: it rises to its apex, so the control point sits above
+    // both endpoints. A curve that droops in the middle is a regression.
+    const arc = line.match(/d="M [\d.]+,([\d.]+) Q [\d.]+,([\d.]+) [\d.]+,([\d.]+)"[^>]*stroke-width="3\.5"/);
+    if (arc && Number(arc[2]) >= Math.min(Number(arc[1]), Number(arc[3]))) {
+      failures += 1;
+      console.error(`${file}:${index + 1}: the cluster curve arcs upward (control point above both ends), never droops\n    ${line.trim().slice(0, 160)}`);
+    }
     // Handler lines (monospace runs of bare snake_case identifiers) carry
     // parens: place_bet(), never place_bet.
     const menlo = line.match(/font-family="Menlo[^>]*>([^<]+)<\/text>/);
