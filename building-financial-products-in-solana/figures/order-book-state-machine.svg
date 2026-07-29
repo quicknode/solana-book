@@ -13,7 +13,7 @@
   <path d="M 164,105 L 246,105" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
   <text x="205" y="97" font-size="10" fill="#444" text-anchor="middle">a fill lands</text>
   <path d="M 394,100 C 430,84 450,68 476,58" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
-  <text x="436" y="62" font-size="10" fill="#444" text-anchor="middle">last lot fills</text>
+  <text x="424" y="58" font-size="10" fill="#444" text-anchor="middle">last lot fills</text>
   <path d="M 120,86 C 200,26 380,22 476,44" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
   <text x="290" y="28" font-size="10" fill="#444" text-anchor="middle">one taker crosses the whole order</text>
   <path d="M 130,134 C 220,200 380,196 476,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>

@@ -1,70 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 254" font-family="Georgia, serif" fill="#111">
-  <!-- the curve on top: public keys sit on it, derived addresses hang below -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" font-family="Georgia, serif" fill="#111">
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <!-- the USDC mint, in the pocket above the curve's right end -->
+  <circle cx="508" cy="80.5729" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="500" y="42.8932" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(508,47.8932)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
+  <text x="528" y="58.8932" font-size="10.5" font-weight="bold">USDC mint</text>
+  <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
-    <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
-      <path d="M 1,5 L 7,1 L 13,5 Z"/>
-      <line x1="3" y1="6.5" x2="3" y2="11"/>
-      <line x1="7" y1="6.5" x2="7" y2="11"/>
-      <line x1="11" y1="6.5" x2="11" y2="11"/>
-      <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
-    </g>
-    <text x="526" y="52" font-size="10.5" font-weight="bold">USDC mint</text>
+  <rect x="16" y="44.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,49.6382)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="60.6382" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
+  <line x1="24" y1="65.6382" x2="132" y2="65.6382" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="76.6382" font-size="9.5" fill="#444">0.95 SOL</text>
   </g>
-  <!-- Alice: wallet account on the curve, USDC account off it -->
-  <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="16" y="46" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,53)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-  </g>
-  <text x="46" y="64" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
-  <text x="46" y="80" font-size="9.5" fill="#444">0.95 SOL</text>
+  <circle cx="24" cy="103.138" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="97.6382" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="34" y="106.638" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="115.638" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <g>
-    <circle cx="24" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-    <text x="34" y="148" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-    <text x="34" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="16" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,167)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="42" y="179" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
-    <text x="26" y="193" font-size="9" fill="#444">1,000 USDC</text>
+  <rect x="16" y="121.638" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,126.638)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="44" y="137.638" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <line x1="24" y1="142.638" x2="132" y2="142.638" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="153.638" font-size="9" fill="#444">1,000 USDC</text>
   </g>
-  <!-- Bob: wallet account on the curve, USDC account off it -->
-  <circle cx="300" cy="49" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="240" y="62" width="118" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,69)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-  </g>
-  <text x="270" y="80" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
-  <text x="270" y="96" font-size="9.5" fill="#444">1.05 SOL</text>
+  <circle cx="350" cy="54.7742" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
-    <circle cx="248" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-    <text x="258" y="148" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-    <text x="258" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="240" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(248,167)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="266" y="179" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
-    <text x="250" y="193" font-size="9" fill="#444">300 USDC</text>
+  <rect x="240" y="61.751" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,66.751)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="268" y="77.751" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
+  <line x1="248" y1="82.751" x2="350" y2="82.751" stroke="#888" stroke-width="0.8"/>
+  <text x="248" y="93.751" font-size="9.5" fill="#444">1.05 SOL</text>
   </g>
-  <text x="320" y="226" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the wallets&#8217; addresses are public keys, on the curve; the USDC accounts</text>
-  <text x="320" y="240" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">are derived from owner and mint, off it, with no private key</text>
+  <circle cx="248" cy="120.251" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="258" y="114.751" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="258" y="123.751" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="258" y="132.751" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <g>
+  <rect x="240" y="138.751" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,143.751)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="268" y="154.751" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <line x1="248" y1="159.751" x2="350" y2="159.751" stroke="#888" stroke-width="0.8"/>
+  <text x="248" y="170.751" font-size="9" fill="#444">300 USDC</text>
+  </g>
+  <path d="M 380,146 Q 400,150 412,153" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="400" cy="150" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="426" y="147" font-size="10.5" fill="#444" font-style="italic">on the curve: a public key, and someone</text>
+  <text x="426" y="161" font-size="10.5" fill="#444" font-style="italic">holds the private key that signs for it</text>
+  <circle cx="400" cy="190" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="426" y="187" font-size="10.5" fill="#444" font-style="italic">off the curve: derived from the ingredients</text>
+  <text x="426" y="201" font-size="10.5" fill="#444" font-style="italic">listed beside it, and no private key exists</text>
 </svg>
