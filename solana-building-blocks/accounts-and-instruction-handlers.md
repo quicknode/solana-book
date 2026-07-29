@@ -14,6 +14,8 @@ At Alice's address lives Alice's **account**: some data with an address. Her acc
 
 ![Alice's public key is her address, a point on the curve; her private key stays on her device.](figures/alice-on-the-curve.svg)
 
+That drawing sets a convention this book keeps for every figure that follows. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. The figures never label those dots, because the dot's place on the curve already says it. Later you will meet addresses drawn *off* the curve, listed with the ingredients they were derived from instead; those have no private key, and no one can sign for them directly.
+
 > **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be billions of times the age of the universe. When this book says an address "belongs" to Alice, that is the entire basis of the claim: nobody else will ever roll her number.
 
 ## There Is More Than One Solana Computer

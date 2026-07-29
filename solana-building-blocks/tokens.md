@@ -26,6 +26,8 @@ Not every token account is an ATA. A token account can live at any address, and 
 
 ![Alice's and Bob's USDC stores are PDAs: derived from owner and mint, they sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
+This is the other half of the figure convention. An address drawn **off** the curve is captioned with the ingredients it was derived from (for an ATA: the token program, the owner's address and the mint), and that caption is the whole story. No private key exists for it, so only the owning program can move what it holds.
+
 ## Decimals Define the Minor Unit
 
 The mint's **decimals** set the **minor unit**, the raw integer everything actually calculates and transfers in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.

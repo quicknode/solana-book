@@ -118,20 +118,19 @@ for (const file of svgFiles) {
         console.error(`${file}:${index + 1}: ${reason}\n    ${line.trim().slice(0, 160)}`);
       }
     }
-    // An ink-filled circle next to an address label is a filled address
-    // dot; address dots have white centers (fill="#fff").
-    const neighbors = `${lines[index - 1] ?? ""}\n${line}\n${lines[index + 1] ?? ""}`;
-    if (
-      /<circle[^>]*fill="#111"/.test(line) &&
-      /PUBLIC KEY|SEEDS/.test(neighbors)
-    ) {
+    // Address dots have white centers. Anchor on the dot's own geometry (an
+    // r=5.5/6 circle stroked at 2) rather than on neighbouring label text —
+    // on-curve dots carry no label at all now, so there is nothing to key off.
+    if (/<circle[^>]*\br="(?:5\.5|6)"[^>]*stroke-width="2"/.test(line) && !/fill="#fff"/.test(line)) {
       failures += 1;
       console.error(`${file}:${index + 1}: address dots have white centers: fill="#fff" stroke="#111"\n    ${line.trim().slice(0, 160)}`);
     }
-    // A seed list beside an address dot starts with the word SEEDS.
-    if (/&#8221; \+/.test(line) && !/SEEDS/.test(line)) {
+    // A dot on the curve is itself the signal that the address is a public
+    // key, and a seed list is self-evidently a seed list. Neither label is
+    // drawn any more; the book teaches the convention once, in prose.
+    if (/>PUBLIC KEY<|>SEEDS[: ]/.test(line)) {
       failures += 1;
-      console.error(`${file}:${index + 1}: seed labels start with "SEEDS: "\n    ${line.trim().slice(0, 160)}`);
+      console.error(`${file}:${index + 1}: address labels are gone: a curve dot needs no "PUBLIC KEY", a seed list no "SEEDS:" prefix\n    ${line.trim().slice(0, 160)}`);
     }
     // The cluster curve is the part of the ball-shaped Ed25519 curve near
     // X=0: flat at the top-left, monotonically descending to the right. A

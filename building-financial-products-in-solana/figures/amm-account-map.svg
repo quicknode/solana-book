@@ -5,7 +5,6 @@
   <!-- ACME mint, in the strip above the curve's flat left -->
   <g>
     <circle cx="140" cy="39" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="146" y="27" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="16" y="2" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(24,6)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
@@ -19,7 +18,6 @@
   <!-- USDC mint, in the top-right pocket beneath the title -->
   <g>
     <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="552" y="76" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
@@ -33,7 +31,6 @@
   <!-- Maria's column: wallet, ACME, USDC, LP receipt -->
   <g>
     <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="100" y="51" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="16" y="58" width="104" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(24,65)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -45,7 +42,7 @@
   </g>
   <g>
     <circle cx="24" cy="156" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="151" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="151" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="34" y="160" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
     <text x="34" y="169" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
     <rect x="16" y="174" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -61,7 +58,7 @@
   </g>
   <g>
     <circle cx="24" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="231" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="34" y="240" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
     <text x="34" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="16" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -77,7 +74,7 @@
   </g>
   <g>
     <circle cx="24" cy="316" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="311" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="311" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="34" y="320" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
     <text x="34" y="329" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
     <rect x="16" y="334" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -94,7 +91,6 @@
   <!-- Alice's column: wallet, ACME, USDC, LP receipt -->
   <g>
     <circle cx="210" cy="42" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="210" y="30" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="128" y="50" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(136,57)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -105,7 +101,7 @@
   </g>
   <g>
     <circle cx="136" cy="156" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="151" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="151" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="146" y="160" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="146" y="169" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
     <rect x="128" y="174" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -121,7 +117,7 @@
   </g>
   <g>
     <circle cx="136" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="231" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="146" y="240" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="146" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="128" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -137,7 +133,7 @@
   </g>
   <g>
     <circle cx="136" cy="316" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="311" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="311" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="146" y="320" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="146" y="329" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
     <rect x="128" y="334" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -154,7 +150,6 @@
   <!-- Bob's column: wallet and USDC; his ACME account does not exist yet -->
   <g>
     <circle cx="300" cy="49" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="300" y="37" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="240" y="60" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(248,67)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -165,7 +160,7 @@
   </g>
   <g>
     <circle cx="248" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="258" y="231" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="258" y="240" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
     <text x="258" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="240" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -182,7 +177,6 @@
   <!-- Carol's column: wallet and USDC -->
   <g>
     <circle cx="404" cy="62" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="404" y="50" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="352" y="76" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(360,83)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -193,7 +187,7 @@
   </g>
   <g>
     <circle cx="360" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="370" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="370" y="231" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="370" y="240" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
     <text x="370" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="352" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -210,7 +204,6 @@
   <!-- the program's column: program box, config, pool config, pool authority, vaults, LP mint -->
   <g>
     <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="472" y="87" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="464" y="120" width="168" height="88" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,125)">
       <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -233,7 +226,7 @@
   <!-- config PDA -->
   <g>
     <circle cx="472" cy="228" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="231" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONFIG&#8221;</text>
+    <text x="484" y="231" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;CONFIG&#8221;</text>
     <rect x="464" y="238" width="168" height="66" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(474,243)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
@@ -248,7 +241,7 @@
   <!-- pool config PDA -->
   <g>
     <circle cx="472" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="320" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS +</text>
+    <text x="484" y="320" font-size="7.5" letter-spacing="0.4" fill="#555">CONFIG&#8217;S ADDRESS +</text>
     <text x="484" y="329" font-size="7.5" letter-spacing="0.4" fill="#555">ACME &amp; USDC MINTS</text>
     <rect x="464" y="340" width="168" height="80" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(474,345)" stroke="#111" stroke-width="1.2" fill="none">
@@ -265,7 +258,7 @@
   <!-- pool authority: an address with no account, so a dot and no rect -->
   <g>
     <circle cx="472" cy="446" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="442" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS + ACME</text>
+    <text x="484" y="442" font-size="7.5" letter-spacing="0.4" fill="#555">CONFIG&#8217;S ADDRESS + ACME</text>
     <text x="484" y="451" font-size="7.5" letter-spacing="0.4" fill="#555">&amp; USDC MINTS + &#8220;AUTHORITY&#8221;</text>
     <text x="484" y="465" font-size="10.5" font-weight="bold">pool authority</text>
     <text x="484" y="478" font-size="8.5" fill="#444" font-style="italic">an address with no account</text>
@@ -273,7 +266,7 @@
   <!-- pool_a vault -->
   <g>
     <circle cx="472" cy="502" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="498" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + POOL</text>
+    <text x="484" y="498" font-size="7.5" letter-spacing="0.4" fill="#555">ATA PROGRAM + POOL</text>
     <text x="484" y="507" font-size="7.5" letter-spacing="0.4" fill="#555">AUTHORITY + ACME MINT</text>
     <rect x="464" y="516" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,521)">
@@ -290,7 +283,7 @@
   <!-- pool_b vault -->
   <g>
     <circle cx="472" cy="596" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="592" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + POOL</text>
+    <text x="484" y="592" font-size="7.5" letter-spacing="0.4" fill="#555">ATA PROGRAM + POOL</text>
     <text x="484" y="601" font-size="7.5" letter-spacing="0.4" fill="#555">AUTHORITY + USDC MINT</text>
     <rect x="464" y="610" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,615)">
@@ -307,7 +300,7 @@
   <!-- the LP mint, owned by the pool authority -->
   <g>
     <circle cx="472" cy="690" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="685" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS +</text>
+    <text x="484" y="685" font-size="7.5" letter-spacing="0.4" fill="#555">CONFIG&#8217;S ADDRESS +</text>
     <text x="484" y="694" font-size="7.5" letter-spacing="0.4" fill="#555">ACME &amp; USDC MINTS +</text>
     <text x="484" y="703" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;LIQUIDITY&#8221;</text>
     <rect x="464" y="712" width="168" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

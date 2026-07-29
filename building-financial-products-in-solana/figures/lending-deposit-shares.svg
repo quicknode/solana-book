@@ -8,7 +8,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <g opacity="0.3">
     <circle cx="140" cy="39" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="146" y="27" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="16" y="2" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(24,6)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
@@ -21,7 +20,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="320" cy="51" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="320" y="42" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="208" y="2" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(216,6)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
@@ -34,7 +32,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="552" y="76" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
@@ -47,7 +44,6 @@
   </g>
   <g>
     <circle cx="88" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="88" y="51" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="8" y="58" width="96" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(15,65)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -58,7 +54,7 @@
   </g>
   <g>
     <circle cx="16" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="26" y="141" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="26" y="141" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="26" y="150" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="26" y="159" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="8" y="168" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -74,7 +70,7 @@
   </g>
   <g>
     <circle cx="16" cy="220" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="26" y="217" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="26" y="217" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="26" y="226" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="26" y="235" font-size="7" letter-spacing="0.3" fill="#555">USDC SHARE MINT</text>
     <rect x="8" y="244" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -91,7 +87,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="188" cy="41" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="188" y="55" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="108" y="62" width="96" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(115,68)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -101,7 +96,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="116" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="126" y="141" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="126" y="141" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="126" y="150" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
     <text x="126" y="159" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
     <rect x="108" y="168" width="96" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -116,7 +111,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="256" cy="45" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="256" y="59" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="208" y="66" width="96" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(215,72)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -126,7 +120,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="216" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="226" y="141" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="226" y="141" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="226" y="150" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
     <text x="226" y="159" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="208" y="168" width="96" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -141,7 +135,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="372" cy="58" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="372" y="72" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="308" y="79" width="86" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(315,85)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -151,7 +144,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="316" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="326" y="141" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="326" y="141" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="326" y="150" font-size="7" letter-spacing="0.3" fill="#555">DAVE&#8217;S ADDRESS +</text>
     <text x="326" y="159" font-size="7" letter-spacing="0.3" fill="#555">SPCXX MINT</text>
     <rect x="308" y="168" width="86" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -166,7 +159,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="429" cy="66" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="429" y="54" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="398" y="80" width="62" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(405,86)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -177,7 +169,6 @@
   <!-- the lending program -->
   <g>
     <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="492" y="91" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="464" y="120" width="168" height="170" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,125)">
       <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -207,7 +198,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="472" cy="306" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="482" y="303" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;LENDING_MARKET&#8221;</text>
+    <text x="482" y="303" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LENDING_MARKET&#8221;</text>
     <text x="482" y="312" font-size="7" letter-spacing="0.3" fill="#555">+ MARKET ID</text>
     <rect x="464" y="319" width="168" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(471,325)" stroke="#111" stroke-width="1.2" fill="none">
@@ -219,7 +210,7 @@
   </g>
   <g>
     <circle cx="312" cy="387" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="322" y="384" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;RESERVE&#8221; +</text>
+    <text x="322" y="384" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RESERVE&#8221; +</text>
     <text x="322" y="393" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
     <text x="322" y="402" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
     <rect x="304" y="410" width="104" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -234,7 +225,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="312" cy="481" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="322" y="478" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;PRICE_FEED&#8221; +</text>
+    <text x="322" y="478" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; +</text>
     <text x="322" y="487" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
     <text x="322" y="496" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
     <rect x="304" y="504" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -247,9 +238,8 @@
   </g>
   <g>
     <circle cx="312" cy="565" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="322" y="562" font-size="7" letter-spacing="0.3" fill="#555">SEEDS:</text>
-    <text x="322" y="571" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
-    <text x="322" y="580" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
+    <text x="322" y="562" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
+    <text x="322" y="571" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
     <rect x="304" y="588" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(311,593)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
@@ -264,7 +254,7 @@
   </g>
   <g>
     <circle cx="312" cy="661" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="322" y="658" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; +</text>
+    <text x="322" y="658" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; +</text>
     <text x="322" y="667" font-size="7" letter-spacing="0.3" fill="#555">RESERVE</text>
     <rect x="304" y="674" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(311,679)" stroke="#111" stroke-width="1.2" fill="none">
@@ -280,7 +270,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="424" cy="387" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="434" y="384" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;RESERVE&#8221; +</text>
+    <text x="434" y="384" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RESERVE&#8221; +</text>
     <text x="434" y="393" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
     <text x="434" y="402" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT ADDRESS</text>
     <rect x="416" y="410" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -293,7 +283,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="424" cy="481" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="434" y="478" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;PRICE_FEED&#8221; +</text>
+    <text x="434" y="478" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; +</text>
     <text x="434" y="487" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
     <text x="434" y="496" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT ADDRESS</text>
     <rect x="416" y="504" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -306,9 +296,8 @@
   </g>
   <g opacity="0.3">
     <circle cx="424" cy="565" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="434" y="562" font-size="7" letter-spacing="0.3" fill="#555">SEEDS:</text>
-    <text x="434" y="571" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
-    <text x="434" y="580" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
+    <text x="434" y="562" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
+    <text x="434" y="571" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
     <rect x="416" y="588" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(423,594)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
@@ -321,7 +310,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="424" cy="661" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="434" y="658" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; +</text>
+    <text x="434" y="658" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; +</text>
     <text x="434" y="667" font-size="7" letter-spacing="0.3" fill="#555">RESERVE</text>
     <rect x="416" y="674" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(423,680)" stroke="#111" stroke-width="1.2" fill="none">
@@ -335,7 +324,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="536" cy="387" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="546" y="384" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;RESERVE&#8221; +</text>
+    <text x="546" y="384" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RESERVE&#8221; +</text>
     <text x="546" y="393" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
     <text x="546" y="402" font-size="7" letter-spacing="0.3" fill="#555">SPCXX MINT ADDRESS</text>
     <rect x="528" y="410" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -348,7 +337,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="536" cy="481" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="546" y="478" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;PRICE_FEED&#8221; +</text>
+    <text x="546" y="478" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; +</text>
     <text x="546" y="487" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
     <text x="546" y="496" font-size="7" letter-spacing="0.3" fill="#555">SPCXX MINT ADDRESS</text>
     <rect x="528" y="504" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -361,9 +350,8 @@
   </g>
   <g opacity="0.3">
     <circle cx="536" cy="565" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="546" y="562" font-size="7" letter-spacing="0.3" fill="#555">SEEDS:</text>
-    <text x="546" y="571" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
-    <text x="546" y="580" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
+    <text x="546" y="562" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
+    <text x="546" y="571" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
     <rect x="528" y="588" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(535,594)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
@@ -376,7 +364,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="536" cy="661" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="546" y="658" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;SHARE_MINT&#8221; +</text>
+    <text x="546" y="658" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; +</text>
     <text x="546" y="667" font-size="7" letter-spacing="0.3" fill="#555">RESERVE</text>
     <rect x="528" y="674" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(535,680)" stroke="#111" stroke-width="1.2" fill="none">

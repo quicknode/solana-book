@@ -8,7 +8,6 @@
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <circle cx="72" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="72" y="25" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
   <line x1="72" y1="46" x2="72" y2="148" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <text x="86" y="70" font-size="11" font-weight="bold">the mint&#8217;s address</text>
   <!-- mint authority -->
@@ -32,7 +31,7 @@
   <text x="135" y="262" font-size="10" fill="#444" text-anchor="middle">decimals: 6</text>
   <!-- Alice's ATA, with its own address dot off the curve -->
   <circle cx="300" cy="140" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="312" y="136" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM + ALICE&#8217;S</text>
+  <text x="312" y="136" font-size="8.5" letter-spacing="0.6" fill="#555">ATA PROGRAM + ALICE&#8217;S</text>
   <text x="312" y="147" font-size="8.5" letter-spacing="0.6" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
   <rect x="308" y="152" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(316,160)">

@@ -12,7 +12,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- Alice's column: wallet, then her USDC token account -->
   <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="104" y="25" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
   <rect x="16" y="46" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,53)">
     <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -22,7 +21,7 @@
   <text x="46" y="80" font-size="9.5" fill="#444">0.95 SOL</text>
   <g>
     <circle cx="24" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="34" y="148" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="34" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="16" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -38,7 +37,6 @@
   </g>
   <!-- Bob's column: wallet, then his USDC token account -->
   <circle cx="300" cy="49" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="300" y="37" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
   <rect x="240" y="62" width="118" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(248,69)">
     <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -48,7 +46,7 @@
   <text x="270" y="96" font-size="9.5" fill="#444">1.05 SOL</text>
   <g>
     <circle cx="248" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="258" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="258" y="148" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
     <text x="258" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="240" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -72,7 +70,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="181" y="168" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">25 USDC</text>
   <!-- the Token Program, on the curve -->
   <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="472" y="91" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
   <rect x="464" y="120" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(470,125)">
     <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
