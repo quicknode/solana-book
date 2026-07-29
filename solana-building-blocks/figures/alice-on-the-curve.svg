@@ -9,7 +9,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="17" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- public key on the curve -->
   <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="104" y="25" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
   <!-- Alice: wallet account, hanging beneath her address -->
   <rect x="16" y="46" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,53)">

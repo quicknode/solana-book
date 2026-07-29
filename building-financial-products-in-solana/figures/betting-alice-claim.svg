@@ -10,7 +10,6 @@
   <!-- USDC mint, tucked in the pocket beneath the title -->
   <g opacity="0.3">
     <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="552" y="76" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
@@ -24,7 +23,6 @@
   <!-- Alice signs the claim; rent from her closed bet returns to her wallet -->
   <g>
     <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="104" y="25" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="16" y="44" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(24,51)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -35,7 +33,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="210" cy="42" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="210" y="30" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="128" y="50" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(136,56)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -45,7 +42,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="300" cy="49" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="300" y="37" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="240" y="60" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(248,66)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -55,7 +51,6 @@
   </g>
   <g opacity="0.3">
     <circle cx="404" cy="62" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="404" y="50" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="352" y="76" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(360,82)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -66,7 +61,7 @@
   <!-- Alice's USDC receives the payout -->
   <g>
     <circle cx="24" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="34" y="148" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
     <text x="34" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="16" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -82,7 +77,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="136" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="146" y="148" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
     <text x="146" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="128" y="162" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -97,7 +92,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="248" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="258" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="258" y="148" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
     <text x="258" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="240" y="162" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -112,7 +107,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="360" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="370" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="370" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
     <text x="370" y="148" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
     <text x="370" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
     <rect x="352" y="162" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -128,7 +123,7 @@
   <!-- Alice's user index drops the bet before the transfer -->
   <g>
     <circle cx="24" cy="224" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="220" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;USER&#8221; +</text>
+    <text x="34" y="220" font-size="7" letter-spacing="0.3" fill="#555">&#8220;USER&#8221; +</text>
     <text x="34" y="229" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
     <rect x="16" y="238" width="104" height="40" rx="6" fill="#fff" stroke="#888"/>
     <g transform="translate(24,243)" stroke="#111" stroke-width="1.2" fill="none">
@@ -141,7 +136,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="136" cy="224" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="220" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;USER&#8221; +</text>
+    <text x="146" y="220" font-size="7" letter-spacing="0.3" fill="#555">&#8220;USER&#8221; +</text>
     <text x="146" y="229" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
     <rect x="128" y="238" width="104" height="26" rx="6" fill="#fff" stroke="#888"/>
     <g transform="translate(136,244)" stroke="#111" stroke-width="1.2" fill="none">
@@ -153,7 +148,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="248" cy="224" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="220" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;USER&#8221; +</text>
+    <text x="258" y="220" font-size="7" letter-spacing="0.3" fill="#555">&#8220;USER&#8221; +</text>
     <text x="258" y="229" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
     <rect x="240" y="238" width="104" height="26" rx="6" fill="#fff" stroke="#888"/>
     <g transform="translate(248,244)" stroke="#111" stroke-width="1.2" fill="none">
@@ -166,7 +161,7 @@
   <!-- Alice's bet closes: no account, no double claim -->
   <g>
     <circle cx="24" cy="292" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="288" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;BET&#8221; +</text>
+    <text x="34" y="288" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BET&#8221; +</text>
     <text x="34" y="297" font-size="7" letter-spacing="0.3" fill="#555">OUTCOME ADDRESS +</text>
     <text x="34" y="306" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
     <rect x="16" y="314" width="104" height="48" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -183,7 +178,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="136" cy="292" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="288" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;BET&#8221; +</text>
+    <text x="146" y="288" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BET&#8221; +</text>
     <text x="146" y="297" font-size="7" letter-spacing="0.3" fill="#555">OUTCOME ADDRESS +</text>
     <text x="146" y="306" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
     <rect x="128" y="314" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -196,7 +191,7 @@
   </g>
   <g opacity="0.3">
     <circle cx="248" cy="292" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="288" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: &#8220;BET&#8221; +</text>
+    <text x="258" y="288" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BET&#8221; +</text>
     <text x="258" y="297" font-size="7" letter-spacing="0.3" fill="#555">OUTCOME ADDRESS +</text>
     <text x="258" y="306" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
     <rect x="240" y="314" width="104" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -210,7 +205,6 @@
   <!-- the betting program -->
   <g>
     <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="472" y="87" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
     <rect x="464" y="120" width="168" height="118" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,125)">
       <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
@@ -236,7 +230,7 @@
   <!-- config PDA, untouched by claim_winnings() -->
   <g opacity="0.3">
     <circle cx="472" cy="256" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="259" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONFIG&#8221;</text>
+    <text x="484" y="259" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;CONFIG&#8221;</text>
     <rect x="464" y="266" width="168" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(474,272)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
@@ -248,7 +242,7 @@
   <!-- event PDA: read for the payout math -->
   <g>
     <circle cx="472" cy="354" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="357" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;EVENT&#8221; + EVENT ID</text>
+    <text x="484" y="357" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;EVENT&#8221; + EVENT ID</text>
     <rect x="464" y="366" width="168" height="78" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(474,371)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
@@ -264,7 +258,7 @@
   <!-- outcome 0 PDA -->
   <g>
     <circle cx="472" cy="462" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="458" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;OUTCOME&#8221; + EVENT</text>
+    <text x="484" y="458" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;OUTCOME&#8221; + EVENT</text>
     <text x="484" y="467" font-size="7.5" letter-spacing="0.4" fill="#555">ADDRESS + INDEX</text>
     <rect x="464" y="474" width="168" height="56" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(474,479)" stroke="#111" stroke-width="1.2" fill="none">
@@ -279,7 +273,7 @@
   <!-- outcome 1 PDA -->
   <g opacity="0.3">
     <circle cx="472" cy="546" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="542" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;OUTCOME&#8221; + EVENT</text>
+    <text x="484" y="542" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;OUTCOME&#8221; + EVENT</text>
     <text x="484" y="551" font-size="7.5" letter-spacing="0.4" fill="#555">ADDRESS + INDEX</text>
     <rect x="464" y="558" width="168" height="26" rx="6" fill="#f4f4f2" stroke="#888"/>
     <g transform="translate(474,564)" stroke="#111" stroke-width="1.2" fill="none">
@@ -292,7 +286,7 @@
   <!-- the vault pays Alice -->
   <g>
     <circle cx="472" cy="630" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="626" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + EVENT&#8217;S</text>
+    <text x="484" y="626" font-size="7.5" letter-spacing="0.4" fill="#555">ATA PROGRAM + EVENT&#8217;S</text>
     <text x="484" y="635" font-size="7.5" letter-spacing="0.4" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
     <rect x="464" y="642" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
     <g transform="translate(474,647)">
