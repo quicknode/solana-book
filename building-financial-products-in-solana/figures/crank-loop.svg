@@ -17,7 +17,7 @@
   <path d="M 382,120 C 430,100 450,86 486,72" stroke="#111" stroke-width="1.4" marker-end="url(#arr7)" fill="none"/>
   <rect x="490" y="46" width="130" height="48" fill="#f4f4f2" stroke="#888"/>
   <text x="555" y="65" font-size="10.5" font-weight="bold" text-anchor="middle">work done</text>
-  <text x="555" y="81" font-size="10" fill="#444" text-anchor="middle">incentive paid to the caller</text>
+  <text x="555" y="81" font-size="9" fill="#444" text-anchor="middle">incentive paid to the caller</text>
   <path d="M 382,140 h 104" stroke="#111" stroke-width="1.4" marker-end="url(#arr7)"/>
   <rect x="490" y="118" width="130" height="48" fill="#f4f4f2" stroke="#888"/>
   <text x="555" y="137" font-size="10.5" font-weight="bold" text-anchor="middle">nothing to do</text>

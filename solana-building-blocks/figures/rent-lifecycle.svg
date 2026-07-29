@@ -18,7 +18,7 @@
   <g transform="translate(248,78)" stroke="#111" stroke-width="1.2" fill="none">
     <rect x="1" y="2" width="12" height="10"/>
     <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-    <line x1="7" y1="5.4" x2="7" y2="12"/>
+    <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
   </g>
   <text x="304" y="89" font-size="11" text-anchor="middle">offer account</text>
   <rect x="240" y="110" width="120" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -34,7 +34,7 @@
   <path d="M 364,85 C 440,85 470,110 500,110" stroke="#111" stroke-width="1.5" marker-end="url(#rent-lifecycle-arr)" fill="none"/>
   <text x="505" y="106" font-size="11" font-weight="bold">taken</text>
   <path d="M 364,130 C 440,130 470,150 500,150" stroke="#111" stroke-width="1.5" marker-end="url(#rent-lifecycle-arr)" fill="none"/>
-  <text x="505" y="147" font-size="11" font-weight="bold">cancelled</text>
+  <text x="505" y="147" font-size="11" font-weight="bold">canceled</text>
   <path d="M 560,120 C 560,230 240,240 141,164" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-lifecycle-arrg)" fill="none"/>
   <text x="260" y="278" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">both exits close the accounts and</text>
   <text x="260" y="292" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">refund every lamport to the maker</text>

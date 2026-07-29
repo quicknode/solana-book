@@ -1,218 +1,218 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 743" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 760" font-family="Georgia, serif" fill="#111">
   <!-- the curve on top: every on-curve address dot sits on it, everything hangs below -->
-  <path d="M 40,96 Q 320,12 600,96" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="30" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
-  <!-- ACME mint, tucked in the pocket above the curve's left end -->
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- ACME mint, in the strip above the curve's flat left -->
   <g>
-    <circle cx="140" cy="71" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="140" y="85" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="86" y="24" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(94,28)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="140" cy="39" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="146" y="27" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="16" y="2" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,6)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
       <line x1="3" y1="6.5" x2="3" y2="11"/>
       <line x1="7" y1="6.5" x2="7" y2="11"/>
       <line x1="11" y1="6.5" x2="11" y2="11"/>
       <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
     </g>
-    <text x="112" y="42" font-size="10.5" font-weight="bold">ACME mint</text>
+    <text x="50" y="20" font-size="10.5" font-weight="bold">ACME mint</text>
   </g>
-  <!-- USDC mint, tucked in the pocket above the curve's right end -->
+  <!-- USDC mint, in the top-right pocket beneath the title -->
   <g>
-    <circle cx="500" cy="71" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="500" y="85" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="450" y="28" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(458,32)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="552" y="76" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
       <line x1="3" y1="6.5" x2="3" y2="11"/>
       <line x1="7" y1="6.5" x2="7" y2="11"/>
       <line x1="11" y1="6.5" x2="11" y2="11"/>
       <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
     </g>
-    <text x="476" y="46" font-size="10.5" font-weight="bold">USDC mint</text>
+    <text x="526" y="52" font-size="10.5" font-weight="bold">USDC mint</text>
   </g>
   <!-- Maria's column: wallet, ACME, USDC, LP receipt -->
   <g>
-    <circle cx="104" cy="79" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="104" y="67" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="16" y="104" width="104" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,111)">
+    <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="100" y="51" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="16" y="58" width="104" height="56" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,65)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="43" y="122" font-size="10.5" font-weight="bold">Maria</text>
-    <text x="43" y="135" font-size="8.5" fill="#444">admin &amp; LP</text>
-    <text x="43" y="148" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="43" y="76" font-size="10.5" font-weight="bold">Maria</text>
+    <text x="43" y="89" font-size="8.5" fill="#444">admin &amp; LP</text>
+    <text x="43" y="102" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="24" cy="176" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="171" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="34" y="180" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
-    <text x="34" y="189" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
-    <rect x="16" y="194" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,199)">
+    <circle cx="24" cy="156" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="34" y="151" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="160" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="34" y="169" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
+    <rect x="16" y="174" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,179)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="42" y="211" font-size="10.5" font-weight="bold">Maria&#8217;s ACME</text>
-    <text x="26" y="227" font-size="9" fill="#444">0 ACME</text>
+    <text x="42" y="191" font-size="10.5" font-weight="bold">Maria&#8217;s ACME</text>
+    <text x="26" y="207" font-size="9" fill="#444">0 ACME</text>
   </g>
   <g>
-    <circle cx="24" cy="256" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="251" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="34" y="260" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
-    <text x="34" y="269" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="16" y="274" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,279)">
+    <circle cx="24" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="34" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="240" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="34" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="16" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,259)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="42" y="291" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
-    <text x="26" y="307" font-size="9" fill="#444">100 USDC</text>
+    <text x="42" y="271" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+    <text x="26" y="287" font-size="9" fill="#444">100 USDC</text>
   </g>
   <g>
-    <circle cx="24" cy="336" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="331" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="34" y="340" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
-    <text x="34" y="349" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
-    <rect x="16" y="354" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,359)">
+    <circle cx="24" cy="316" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="34" y="311" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="320" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="34" y="329" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
+    <rect x="16" y="334" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,339)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="42" y="371" font-size="10.5" font-weight="bold">Maria&#8217;s LP</text>
-    <text x="26" y="387" font-size="9" fill="#444">599.9999 LP</text>
+    <text x="42" y="351" font-size="10.5" font-weight="bold">Maria&#8217;s LP</text>
+    <text x="26" y="367" font-size="9" fill="#444">599.9999 LP</text>
   </g>
   <!-- Alice's column: wallet, ACME, USDC, LP receipt -->
   <g>
-    <circle cx="210" cy="60" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="210" y="76" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="128" y="104" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(136,111)">
+    <circle cx="210" cy="42" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="210" y="30" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="128" y="50" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(136,57)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="155" y="122" font-size="10.5" font-weight="bold">Alice (LP)</text>
-    <text x="155" y="138" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="155" y="68" font-size="10.5" font-weight="bold">Alice (LP)</text>
+    <text x="155" y="84" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="136" cy="176" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="171" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="146" y="180" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-    <text x="146" y="189" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
-    <rect x="128" y="194" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(136,199)">
+    <circle cx="136" cy="156" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="146" y="151" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="160" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="146" y="169" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
+    <rect x="128" y="174" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(136,179)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="154" y="211" font-size="10.5" font-weight="bold">Alice&#8217;s ACME</text>
-    <text x="138" y="227" font-size="9" fill="#444">0 ACME</text>
+    <text x="154" y="191" font-size="10.5" font-weight="bold">Alice&#8217;s ACME</text>
+    <text x="138" y="207" font-size="9" fill="#444">0 ACME</text>
   </g>
   <g>
-    <circle cx="136" cy="256" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="251" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="146" y="260" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-    <text x="146" y="269" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="128" y="274" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(136,279)">
+    <circle cx="136" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="146" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="240" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="146" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="128" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(136,259)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="154" y="291" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
-    <text x="138" y="307" font-size="9" fill="#444">775 USDC</text>
+    <text x="154" y="271" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="138" y="287" font-size="9" fill="#444">775 USDC</text>
   </g>
   <g>
-    <circle cx="136" cy="336" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="331" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="146" y="340" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-    <text x="146" y="349" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
-    <rect x="128" y="354" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(136,359)">
+    <circle cx="136" cy="316" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="146" y="311" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="320" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="146" y="329" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
+    <rect x="128" y="334" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(136,339)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="154" y="371" font-size="10.5" font-weight="bold">Alice&#8217;s LP</text>
-    <text x="138" y="387" font-size="9" fill="#444">150 LP</text>
+    <text x="154" y="351" font-size="10.5" font-weight="bold">Alice&#8217;s LP</text>
+    <text x="138" y="367" font-size="9" fill="#444">150 LP</text>
   </g>
   <!-- Bob's column: wallet and USDC; his ACME account does not exist yet -->
   <g>
-    <circle cx="300" cy="54" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="300" y="42" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="240" y="104" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(248,111)">
+    <circle cx="300" cy="49" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="300" y="37" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="240" y="60" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(248,67)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="267" y="122" font-size="10.5" font-weight="bold">Bob</text>
-    <text x="267" y="138" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="267" y="78" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="267" y="94" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="248" cy="256" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="251" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="258" y="260" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-    <text x="258" y="269" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="240" y="274" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(248,279)">
+    <circle cx="248" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="258" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="258" y="240" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="258" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="240" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(248,259)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="266" y="291" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
-    <text x="250" y="307" font-size="9" fill="#444">1,000 USDC</text>
+    <text x="266" y="271" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="250" y="287" font-size="9" fill="#444">1,000 USDC</text>
   </g>
   <!-- Carol's column: wallet and USDC -->
   <g>
-    <circle cx="404" cy="58" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="404" y="46" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="352" y="104" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(360,111)">
+    <circle cx="404" cy="62" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="404" y="50" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="352" y="76" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(360,83)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="379" y="122" font-size="10.5" font-weight="bold">Carol</text>
-    <text x="379" y="138" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="379" y="94" font-size="10.5" font-weight="bold">Carol</text>
+    <text x="379" y="110" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="360" cy="256" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="370" y="251" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="370" y="260" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
-    <text x="370" y="269" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="352" y="274" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(360,279)">
+    <circle cx="360" cy="236" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="370" y="231" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="370" y="240" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="370" y="249" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="352" y="254" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(360,259)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="378" y="291" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
-    <text x="362" y="307" font-size="9" fill="#444">1,000 USDC</text>
+    <text x="378" y="271" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+    <text x="362" y="287" font-size="9" fill="#444">1,000 USDC</text>
   </g>
   <!-- the program's column: program box, config, pool config, pool authority, vaults, LP mint -->
   <g>
-    <circle cx="548" cy="82" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="548" y="70" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="464" y="104" width="168" height="88" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,109)">
+    <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="472" y="87" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="464" y="120" width="168" height="88" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(474,125)">
       <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
       <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
       <g stroke="#111" stroke-width="1.3">
@@ -222,103 +222,103 @@
         <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
       </g>
     </g>
-    <text x="492" y="120" font-size="10.5" font-weight="bold">AMM program</text>
-    <text x="474" y="134" font-size="8.5" font-family="Menlo, monospace">create_config()</text>
-    <text x="474" y="144" font-size="8.5" font-family="Menlo, monospace">create_pool()</text>
-    <text x="474" y="154" font-size="8.5" font-family="Menlo, monospace">deposit_liquidity()</text>
-    <text x="474" y="164" font-size="8.5" font-family="Menlo, monospace">withdraw_liquidity()</text>
-    <text x="474" y="174" font-size="8.5" font-family="Menlo, monospace">swap_tokens()</text>
-    <text x="474" y="184" font-size="8.5" font-family="Menlo, monospace">claim_admin_fees()</text>
+    <text x="492" y="136" font-size="10.5" font-weight="bold">AMM program</text>
+    <text x="474" y="150" font-size="8.5" font-family="Menlo, monospace">create_config()</text>
+    <text x="474" y="160" font-size="8.5" font-family="Menlo, monospace">create_pool()</text>
+    <text x="474" y="170" font-size="8.5" font-family="Menlo, monospace">deposit_liquidity()</text>
+    <text x="474" y="180" font-size="8.5" font-family="Menlo, monospace">withdraw_liquidity()</text>
+    <text x="474" y="190" font-size="8.5" font-family="Menlo, monospace">swap_tokens()</text>
+    <text x="474" y="200" font-size="8.5" font-family="Menlo, monospace">claim_admin_fees()</text>
   </g>
   <!-- config PDA -->
   <g>
-    <circle cx="472" cy="212" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="215" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONFIG&#8221;</text>
-    <rect x="464" y="222" width="168" height="66" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(474,227)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="472" cy="228" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="231" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: &#8220;CONFIG&#8221;</text>
+    <rect x="464" y="238" width="168" height="66" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <g transform="translate(474,243)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
       <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="7" y1="5.4" x2="7" y2="12"/>
+      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
     </g>
-    <text x="492" y="239" font-size="10.5" font-weight="bold">config</text>
-    <text x="474" y="254" font-size="9.5">admin: Maria</text>
-    <text x="474" y="267" font-size="9.5">fee: 30 bps</text>
-    <text x="474" y="280" font-size="9.5">admin_share_bps: 1,667</text>
+    <text x="492" y="255" font-size="10.5" font-weight="bold">config</text>
+    <text x="474" y="270" font-size="9.5">admin: Maria</text>
+    <text x="474" y="283" font-size="9.5">fee: 30 bps</text>
+    <text x="474" y="296" font-size="9.5">admin_share_bps: 1,667</text>
   </g>
   <!-- pool config PDA -->
   <g>
-    <circle cx="472" cy="308" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="304" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS +</text>
-    <text x="484" y="313" font-size="7.5" letter-spacing="0.4" fill="#555">ACME &amp; USDC MINTS</text>
-    <rect x="464" y="324" width="168" height="80" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(474,329)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="472" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="320" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS +</text>
+    <text x="484" y="329" font-size="7.5" letter-spacing="0.4" fill="#555">ACME &amp; USDC MINTS</text>
+    <rect x="464" y="340" width="168" height="80" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <g transform="translate(474,345)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
       <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="7" y1="5.4" x2="7" y2="12"/>
+      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
     </g>
-    <text x="492" y="341" font-size="10.5" font-weight="bold">pool config</text>
-    <text x="474" y="356" font-size="9.5">mint_a: ACME</text>
-    <text x="474" y="368" font-size="9.5">mint_b: USDC</text>
-    <text x="474" y="380" font-size="9.5">admin_fees_owed_a: 0</text>
-    <text x="474" y="392" font-size="9.5">admin_fees_owed_b: 0</text>
+    <text x="492" y="357" font-size="10.5" font-weight="bold">pool config</text>
+    <text x="474" y="372" font-size="9.5">mint_a: ACME</text>
+    <text x="474" y="384" font-size="9.5">mint_b: USDC</text>
+    <text x="474" y="396" font-size="9.5">admin_fees_owed_a: 0</text>
+    <text x="474" y="408" font-size="9.5">admin_fees_owed_b: 0</text>
   </g>
   <!-- pool authority: an address with no account, so a dot and no rect -->
   <g>
-    <circle cx="472" cy="430" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="426" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS + ACME</text>
-    <text x="484" y="435" font-size="7.5" letter-spacing="0.4" fill="#555">&amp; USDC MINTS + &#8220;AUTHORITY&#8221;</text>
-    <text x="484" y="449" font-size="10.5" font-weight="bold">pool authority</text>
-    <text x="484" y="462" font-size="8.5" fill="#444" font-style="italic">an address with no account</text>
+    <circle cx="472" cy="446" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="442" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS + ACME</text>
+    <text x="484" y="451" font-size="7.5" letter-spacing="0.4" fill="#555">&amp; USDC MINTS + &#8220;AUTHORITY&#8221;</text>
+    <text x="484" y="465" font-size="10.5" font-weight="bold">pool authority</text>
+    <text x="484" y="478" font-size="8.5" fill="#444" font-style="italic">an address with no account</text>
   </g>
   <!-- pool_a vault -->
   <g>
-    <circle cx="472" cy="486" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="482" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + POOL</text>
-    <text x="484" y="491" font-size="7.5" letter-spacing="0.4" fill="#555">AUTHORITY + ACME MINT</text>
-    <rect x="464" y="500" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,505)">
+    <circle cx="472" cy="502" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="498" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + POOL</text>
+    <text x="484" y="507" font-size="7.5" letter-spacing="0.4" fill="#555">AUTHORITY + ACME MINT</text>
+    <rect x="464" y="516" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(474,521)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="492" y="517" font-size="10" font-weight="bold">pool_a: the pool&#8217;s ACME</text>
-    <text x="474" y="533" font-size="9.5" fill="#444">500 ACME</text>
-    <text x="474" y="546" font-size="9" fill="#444" font-style="italic">authority: the pool authority</text>
+    <text x="492" y="533" font-size="10" font-weight="bold">pool_a: the pool&#8217;s ACME</text>
+    <text x="474" y="549" font-size="9.5" fill="#444">500 ACME</text>
+    <text x="474" y="562" font-size="9" fill="#444" font-style="italic">authority: the pool authority</text>
   </g>
   <!-- pool_b vault -->
   <g>
-    <circle cx="472" cy="580" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="576" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + POOL</text>
-    <text x="484" y="585" font-size="7.5" letter-spacing="0.4" fill="#555">AUTHORITY + USDC MINT</text>
-    <rect x="464" y="594" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,599)">
+    <circle cx="472" cy="596" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="592" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM + POOL</text>
+    <text x="484" y="601" font-size="7.5" letter-spacing="0.4" fill="#555">AUTHORITY + USDC MINT</text>
+    <rect x="464" y="610" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(474,615)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="492" y="611" font-size="10" font-weight="bold">pool_b: the pool&#8217;s USDC</text>
-    <text x="474" y="627" font-size="9.5" fill="#444">1,125 USDC</text>
-    <text x="474" y="640" font-size="9" fill="#444" font-style="italic">authority: the pool authority</text>
+    <text x="492" y="627" font-size="10" font-weight="bold">pool_b: the pool&#8217;s USDC</text>
+    <text x="474" y="643" font-size="9.5" fill="#444">1,125 USDC</text>
+    <text x="474" y="656" font-size="9" fill="#444" font-style="italic">authority: the pool authority</text>
   </g>
   <!-- the LP mint, owned by the pool authority -->
   <g>
-    <circle cx="472" cy="674" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="669" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS +</text>
-    <text x="484" y="678" font-size="7.5" letter-spacing="0.4" fill="#555">ACME &amp; USDC MINTS +</text>
-    <text x="484" y="687" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;LIQUIDITY&#8221;</text>
-    <rect x="464" y="696" width="168" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,702)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="472" cy="690" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="685" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: CONFIG&#8217;S ADDRESS +</text>
+    <text x="484" y="694" font-size="7.5" letter-spacing="0.4" fill="#555">ACME &amp; USDC MINTS +</text>
+    <text x="484" y="703" font-size="7.5" letter-spacing="0.4" fill="#555">&#8220;LIQUIDITY&#8221;</text>
+    <rect x="464" y="712" width="168" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(474,718)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
       <line x1="3" y1="6.5" x2="3" y2="11"/>
       <line x1="7" y1="6.5" x2="7" y2="11"/>
       <line x1="11" y1="6.5" x2="11" y2="11"/>
       <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
     </g>
-    <text x="492" y="713" font-size="10.5" font-weight="bold">LP mint</text>
-    <text x="474" y="729" font-size="8.5" fill="#444" font-style="italic">authority: the pool authority</text>
+    <text x="492" y="729" font-size="10.5" font-weight="bold">LP mint</text>
+    <text x="474" y="745" font-size="8.5" fill="#444" font-style="italic">authority: the pool authority</text>
   </g>
 </svg>

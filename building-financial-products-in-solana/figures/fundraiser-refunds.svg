@@ -1,193 +1,193 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 484" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 492" font-family="Georgia, serif" fill="#111">
   <!-- the target is missed: each contributor pulls back exactly their recorded amount -->
   <defs>
     <marker id="fund-ref-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker>
     <marker id="fund-ref-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
   </defs>
   <!-- the curve on top: every on-curve address dot sits on it, everything hangs below -->
-  <path d="M 40,96 Q 320,12 600,96" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="30" font-size="13" font-weight="bold" text-anchor="middle">Solana Devnet</text>
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- USDC mint, untouched -->
   <g opacity="0.3">
-    <circle cx="500" cy="71" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="500" y="85" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="450" y="28" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(458,32)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="552" y="76" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
       <path d="M 1,5 L 7,1 L 13,5 Z"/>
       <line x1="3" y1="6.5" x2="3" y2="11"/>
       <line x1="7" y1="6.5" x2="7" y2="11"/>
       <line x1="11" y1="6.5" x2="11" y2="11"/>
       <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
     </g>
-    <text x="476" y="46" font-size="10.5" font-weight="bold">USDC mint</text>
+    <text x="526" y="52" font-size="10.5" font-weight="bold">USDC mint</text>
   </g>
   <!-- the three contributors each sign their own refund() -->
   <g>
-    <circle cx="104" cy="79" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="104" y="67" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="16" y="104" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,111)">
+    <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="104" y="25" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="16" y="44" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,51)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="43" y="122" font-size="10.5" font-weight="bold">Alice</text>
-    <text x="43" y="138" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="43" y="62" font-size="10.5" font-weight="bold">Alice</text>
+    <text x="43" y="78" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="210" cy="60" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="210" y="48" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="128" y="104" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(136,111)">
+    <circle cx="210" cy="42" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="210" y="30" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="128" y="50" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(136,57)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="155" y="122" font-size="10.5" font-weight="bold">Bob</text>
-    <text x="155" y="138" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="155" y="68" font-size="10.5" font-weight="bold">Bob</text>
+    <text x="155" y="84" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="300" cy="54" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="300" y="42" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="240" y="104" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(248,111)">
+    <circle cx="300" cy="49" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="300" y="37" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="240" y="60" width="104" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(248,67)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="267" y="122" font-size="10.5" font-weight="bold">Carol</text>
-    <text x="267" y="138" font-size="9.5" fill="#444">1 SOL</text>
+    <text x="267" y="78" font-size="10.5" font-weight="bold">Carol</text>
+    <text x="267" y="94" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <!-- Maria: untouched by refunds -->
   <g opacity="0.3">
-    <circle cx="404" cy="58" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="404" y="46" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="352" y="104" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(360,110)">
+    <circle cx="404" cy="62" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="404" y="50" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="352" y="76" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(360,82)">
       <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
       <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
     </g>
-    <text x="379" y="121" font-size="10.5" font-weight="bold">Maria (maker)</text>
+    <text x="379" y="93" font-size="10.5" font-weight="bold">Maria (maker)</text>
   </g>
   <!-- contributor token accounts: made exactly whole -->
   <g>
-    <circle cx="24" cy="164" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="159" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="34" y="168" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-    <text x="34" y="177" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="16" y="182" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,187)">
+    <circle cx="24" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="34" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="34" y="148" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+    <text x="34" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="16" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(24,167)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="42" y="199" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
-    <text x="26" y="215" font-size="9" fill="#444">1,000 USDC</text>
+    <text x="42" y="179" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+    <text x="26" y="195" font-size="9" fill="#444">1,000 USDC</text>
   </g>
   <g>
-    <circle cx="136" cy="164" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="159" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="146" y="168" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-    <text x="146" y="177" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="128" y="182" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(136,187)">
+    <circle cx="136" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="146" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="146" y="148" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+    <text x="146" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="128" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(136,167)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="154" y="199" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
-    <text x="138" y="215" font-size="9" fill="#444">1,000 USDC</text>
+    <text x="154" y="179" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+    <text x="138" y="195" font-size="9" fill="#444">1,000 USDC</text>
   </g>
   <g>
-    <circle cx="248" cy="164" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="159" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="258" y="168" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
-    <text x="258" y="177" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="240" y="182" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(248,187)">
+    <circle cx="248" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="258" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="258" y="148" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+    <text x="258" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="240" y="162" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(248,167)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="266" y="199" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
-    <text x="250" y="215" font-size="9" fill="#444">1,000 USDC</text>
+    <text x="266" y="179" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+    <text x="250" y="195" font-size="9" fill="#444">1,000 USDC</text>
   </g>
   <g opacity="0.3">
-    <circle cx="360" cy="164" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="370" y="159" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="370" y="168" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
-    <text x="370" y="177" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="352" y="182" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(360,188)">
+    <circle cx="360" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="370" y="139" font-size="7" letter-spacing="0.3" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="370" y="148" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+    <text x="370" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+    <rect x="352" y="162" width="104" height="26" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(360,168)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="378" y="199" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+    <text x="378" y="179" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
   </g>
   <!-- receipts: zeroed, paid, then closed -->
   <g>
-    <circle cx="24" cy="240" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="34" y="231" font-size="6.5" letter-spacing="0.2" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; +</text>
-    <text x="34" y="240" font-size="6.5" letter-spacing="0.2" fill="#555">THE FUNDRAISER +</text>
-    <text x="34" y="249" font-size="6.5" letter-spacing="0.2" fill="#555">ALICE&#8217;S ADDRESS</text>
-    <rect x="16" y="258" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(24,263)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="24" cy="220" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="34" y="211" font-size="6.5" letter-spacing="0.2" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; +</text>
+    <text x="34" y="220" font-size="6.5" letter-spacing="0.2" fill="#555">THE FUNDRAISER +</text>
+    <text x="34" y="229" font-size="6.5" letter-spacing="0.2" fill="#555">ALICE&#8217;S ADDRESS</text>
+    <rect x="16" y="238" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <g transform="translate(24,243)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
       <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="7" y1="5.4" x2="7" y2="12"/>
+      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
     </g>
-    <text x="42" y="275" font-size="9.5" font-weight="bold">Alice&#8217;s receipt</text>
-    <text x="26" y="291" font-size="8.5" fill="#444">amount: 900 USDC</text>
-    <line x1="16" y1="258" x2="120" y2="298" stroke="#999" stroke-width="1.6"/>
-    <line x1="120" y1="258" x2="16" y2="298" stroke="#999" stroke-width="1.6"/>
-    <text x="26" y="311" font-size="9" font-weight="bold">receipt closed</text>
+    <text x="42" y="255" font-size="9.5" font-weight="bold">Alice&#8217;s receipt</text>
+    <text x="26" y="271" font-size="8.5" fill="#444">amount: 900 USDC</text>
+    <line x1="16" y1="238" x2="120" y2="278" stroke="#999" stroke-width="1.6"/>
+    <line x1="120" y1="238" x2="16" y2="278" stroke="#999" stroke-width="1.6"/>
+    <text x="26" y="291" font-size="9" font-weight="bold">receipt closed</text>
   </g>
   <g>
-    <circle cx="136" cy="240" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="146" y="231" font-size="6.5" letter-spacing="0.2" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; +</text>
-    <text x="146" y="240" font-size="6.5" letter-spacing="0.2" fill="#555">THE FUNDRAISER +</text>
-    <text x="146" y="249" font-size="6.5" letter-spacing="0.2" fill="#555">BOB&#8217;S ADDRESS</text>
-    <rect x="128" y="258" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(136,263)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="136" cy="220" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="146" y="211" font-size="6.5" letter-spacing="0.2" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; +</text>
+    <text x="146" y="220" font-size="6.5" letter-spacing="0.2" fill="#555">THE FUNDRAISER +</text>
+    <text x="146" y="229" font-size="6.5" letter-spacing="0.2" fill="#555">BOB&#8217;S ADDRESS</text>
+    <rect x="128" y="238" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <g transform="translate(136,243)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
       <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="7" y1="5.4" x2="7" y2="12"/>
+      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
     </g>
-    <text x="154" y="275" font-size="9.5" font-weight="bold">Bob&#8217;s receipt</text>
-    <text x="138" y="291" font-size="8.5" fill="#444">amount: 900 USDC</text>
-    <line x1="128" y1="258" x2="232" y2="298" stroke="#999" stroke-width="1.6"/>
-    <line x1="232" y1="258" x2="128" y2="298" stroke="#999" stroke-width="1.6"/>
-    <text x="138" y="311" font-size="9" font-weight="bold">receipt closed</text>
+    <text x="154" y="255" font-size="9.5" font-weight="bold">Bob&#8217;s receipt</text>
+    <text x="138" y="271" font-size="8.5" fill="#444">amount: 900 USDC</text>
+    <line x1="128" y1="238" x2="232" y2="278" stroke="#999" stroke-width="1.6"/>
+    <line x1="232" y1="238" x2="128" y2="278" stroke="#999" stroke-width="1.6"/>
+    <text x="138" y="291" font-size="9" font-weight="bold">receipt closed</text>
   </g>
   <g>
-    <circle cx="248" cy="240" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="258" y="231" font-size="6.5" letter-spacing="0.2" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; +</text>
-    <text x="258" y="240" font-size="6.5" letter-spacing="0.2" fill="#555">THE FUNDRAISER +</text>
-    <text x="258" y="249" font-size="6.5" letter-spacing="0.2" fill="#555">CAROL&#8217;S ADDRESS</text>
-    <rect x="240" y="258" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(248,263)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="248" cy="220" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="258" y="211" font-size="6.5" letter-spacing="0.2" fill="#555">SEEDS: &#8220;CONTRIBUTOR&#8221; +</text>
+    <text x="258" y="220" font-size="6.5" letter-spacing="0.2" fill="#555">THE FUNDRAISER +</text>
+    <text x="258" y="229" font-size="6.5" letter-spacing="0.2" fill="#555">CAROL&#8217;S ADDRESS</text>
+    <rect x="240" y="238" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <g transform="translate(248,243)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
       <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="7" y1="5.4" x2="7" y2="12"/>
+      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
     </g>
-    <text x="266" y="275" font-size="9.5" font-weight="bold">Carol&#8217;s receipt</text>
-    <text x="250" y="291" font-size="8.5" fill="#444">amount: 900 (450 + 450)</text>
-    <line x1="240" y1="258" x2="344" y2="298" stroke="#999" stroke-width="1.6"/>
-    <line x1="344" y1="258" x2="240" y2="298" stroke="#999" stroke-width="1.6"/>
-    <text x="250" y="311" font-size="9" font-weight="bold">receipt closed</text>
+    <text x="266" y="255" font-size="9.5" font-weight="bold">Carol&#8217;s receipt</text>
+    <text x="250" y="271" font-size="8.5" fill="#444">amount: 900 (450 + 450)</text>
+    <line x1="240" y1="238" x2="344" y2="278" stroke="#999" stroke-width="1.6"/>
+    <line x1="344" y1="238" x2="240" y2="278" stroke="#999" stroke-width="1.6"/>
+    <text x="250" y="291" font-size="9" font-weight="bold">receipt closed</text>
   </g>
   <!-- the program: refund() runs three times -->
   <g>
-    <circle cx="548" cy="82" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="548" y="70" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
-    <rect x="464" y="104" width="168" height="78" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,109)">
+    <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="472" y="87" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+    <rect x="464" y="120" width="168" height="78" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(474,125)">
       <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
       <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
       <g stroke="#111" stroke-width="1.3">
@@ -197,76 +197,75 @@
         <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
       </g>
     </g>
-    <text x="492" y="120" font-size="10.5" font-weight="bold">fundraiser program</text>
-    <text x="474" y="134" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize()</text>
-    <text x="474" y="144" font-size="8.5" font-family="Menlo, monospace" fill="#888">contribute()</text>
-    <text x="474" y="154" font-size="8.5" font-family="Menlo, monospace" fill="#888">check_contributions()</text>
-    <text x="474" y="164" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">refund() &#215;3</text>
-    <text x="474" y="174" font-size="8.5" font-family="Menlo, monospace" fill="#888">close_fundraiser()</text>
+    <text x="492" y="136" font-size="10.5" font-weight="bold">fundraiser program</text>
+    <text x="474" y="150" font-size="8.5" font-family="Menlo, monospace" fill="#888">initialize()</text>
+    <text x="474" y="160" font-size="8.5" font-family="Menlo, monospace" fill="#888">contribute()</text>
+    <text x="474" y="170" font-size="8.5" font-family="Menlo, monospace" fill="#888">check_contributions()</text>
+    <text x="474" y="180" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">refund() &#215;3</text>
+    <text x="474" y="190" font-size="8.5" font-family="Menlo, monospace" fill="#888">close_fundraiser()</text>
   </g>
   <!-- fundraiser PDA: the counter drains with each refund -->
   <g>
-    <circle cx="472" cy="200" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="196" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;FUNDRAISER&#8221; +</text>
-    <text x="484" y="205" font-size="7.5" letter-spacing="0.4" fill="#555">MAKER&#8217;S ADDRESS</text>
-    <rect x="464" y="214" width="168" height="88" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(474,219)" stroke="#111" stroke-width="1.2" fill="none">
+    <circle cx="472" cy="216" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="212" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: &#8220;FUNDRAISER&#8221; +</text>
+    <text x="484" y="221" font-size="7.5" letter-spacing="0.4" fill="#555">MAKER&#8217;S ADDRESS</text>
+    <rect x="464" y="230" width="168" height="88" rx="6" fill="#f4f4f2" stroke="#888"/>
+    <g transform="translate(474,235)" stroke="#111" stroke-width="1.2" fill="none">
       <rect x="1" y="2" width="12" height="10"/>
       <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="7" y1="5.4" x2="7" y2="12"/>
+      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
     </g>
-    <text x="492" y="231" font-size="10.5" font-weight="bold">fundraiser</text>
-    <text x="474" y="245" font-size="9.5">maker: Maria</text>
-    <text x="474" y="257" font-size="9.5">mint_to_raise: USDC</text>
-    <text x="474" y="269" font-size="9.5">amount_to_raise: 9,000 USDC</text>
-    <text x="474" y="281" font-size="9.5">current_amount: 900 USDC</text>
-    <text x="474" y="295" font-size="8" fill="#444">day 7 passed &#183; a fourth 900 receipt open</text>
+    <text x="492" y="247" font-size="10.5" font-weight="bold">fundraiser</text>
+    <text x="474" y="261" font-size="9.5">maker: Maria</text>
+    <text x="474" y="273" font-size="9.5">mint_to_raise: USDC</text>
+    <text x="474" y="285" font-size="9.5">amount_to_raise: 9,000 USDC</text>
+    <text x="474" y="297" font-size="9.5">current_amount: 900 USDC</text>
+    <text x="474" y="311" font-size="8" fill="#444" font-style="italic">day 7 passed &#183; a fourth 900 receipt open</text>
   </g>
   <!-- vault: pays each receipt exactly -->
   <g>
-    <circle cx="472" cy="324" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="315" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
-    <text x="484" y="324" font-size="7.5" letter-spacing="0.4" fill="#555">THE FUNDRAISER&#8217;S ADDRESS +</text>
-    <text x="484" y="333" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT ADDRESS</text>
-    <rect x="464" y="338" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,343)">
+    <circle cx="472" cy="340" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+    <text x="484" y="331" font-size="7.5" letter-spacing="0.4" fill="#555">SEEDS: ATA PROGRAM +</text>
+    <text x="484" y="340" font-size="7.5" letter-spacing="0.4" fill="#555">THE FUNDRAISER&#8217;S ADDRESS +</text>
+    <text x="484" y="349" font-size="7.5" letter-spacing="0.4" fill="#555">USDC MINT ADDRESS</text>
+    <rect x="464" y="354" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+    <g transform="translate(474,359)">
       <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
       <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
       <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
       <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
     </g>
-    <text x="492" y="355" font-size="10.5" font-weight="bold">vault: fundraiser&#8217;s USDC</text>
-    <text x="474" y="371" font-size="9.5" fill="#444">900 USDC</text>
-    <text x="474" y="384" font-size="8.5" fill="#444" font-style="italic">3,600 at day 7 &#8722; three 900 refunds</text>
+    <text x="492" y="371" font-size="10.5" font-weight="bold">vault: fundraiser&#8217;s USDC</text>
+    <text x="474" y="387" font-size="9.5" fill="#444">900 USDC</text>
+    <text x="474" y="400" font-size="8.5" fill="#444" font-style="italic">3,600 at day 7 &#8722; three 900 refunds</text>
   </g>
   <!-- three refunds, each signed by the fundraiser PDA -->
-  <path d="M 464,360 C 352,440 156,436 124,330 C 122,302 121,252 120,213" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
-  <path d="M 464,372 C 372,452 168,452 131,334 C 128,306 126,256 128,209" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
-  <path d="M 464,354 C 428,320 404,278 398,244 C 392,217 372,208 346,206" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="128" y="448" font-size="10.5" font-weight="bold" fill="#1e7a3c">refund() &#183; 900 USDC</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="128" y="462" font-size="8.5" font-style="italic" fill="#444">day &#8805; 7 &#183; target missed &#183; pays the receipt</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="318" y="424" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="394" y="263" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <g transform="translate(220,426)">
+  <path d="M 464,376 C 352,456 156,452 124,330 C 126,300 128,214 120,193" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
+  <path d="M 464,388 C 372,468 168,468 131,330 C 128,300 126,245 128,189" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
+  <path d="M 464,374 C 428,340 404,280 398,240 C 392,205 372,188 346,186" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="128" y="464" font-size="10.5" font-weight="bold" fill="#1e7a3c">refund() &#183; 900 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="128" y="478" font-size="8.5" font-style="italic" fill="#444">day &#8805; 7 &#183; target missed &#183; pays the receipt</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="411" y="247" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
+  <g transform="translate(220,442)">
     <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
-  <g transform="translate(310,444)">
+  <g transform="translate(310,460)">
     <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
-  <g transform="translate(420,299)">
+  <g transform="translate(415,300)">
     <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
   <!-- rent from each closed receipt flows back to its backer's wallet -->
-  <path d="M 16,268 C 5,245 3,188 8,152 C 9,143 11,136 14,132" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-arrg)"/>
-  <path d="M 232,266 C 236,257 235,215 235,187 C 235,166 234,149 233,138" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-arrg)"/>
-  <path d="M 240,268 C 237,260 238,232 238,208 C 238,177 239,153 239,137" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-arrg)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="2" y="160" font-size="8.5" font-style="italic" fill="#444">rent</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="2" y="170" font-size="8.5" font-style="italic" fill="#444">refunds</text>
+  <path d="M 16,248 C 5,225 3,150 8,95 C 9,84 11,76 14,72" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-arrg)"/>
+  <path d="M 232,246 C 236,237 235,185 235,150 C 235,120 234,100 233,88" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-arrg)"/>
+  <path d="M 240,248 C 237,240 238,200 238,170 C 238,130 239,110 239,97" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-arrg)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="30" y="112" font-size="8.5" font-style="italic" fill="#444">rent refunds</text>
 </svg>
