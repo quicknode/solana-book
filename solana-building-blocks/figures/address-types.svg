@@ -1,30 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 228" font-family="Georgia, serif" fill="#111">
   <defs><marker id="addr-types-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <!-- public key address: on the curve -->
-  <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <!-- Alice: wallet account, she holds the private key -->
-  <rect x="16" y="46" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,53)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g>
+  <rect x="16" y="44.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,49.6382)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="60.6382" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
+  <line x1="24" y1="65.6382" x2="132" y2="65.6382" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="76.6382" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <text x="46" y="64" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
-  <text x="46" y="80" font-size="9.5" fill="#444">1 SOL</text>
-  <text x="78" y="106" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">holds the private key</text>
-  <text x="78" y="124" font-size="12.5" font-weight="bold" text-anchor="middle">Alice&#8217;s address</text>
-  <text x="78" y="139" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">a public key, on the curve</text>
-  <!-- PDA: off the curve -->
-  <text x="440" y="108" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
-  <text x="440" y="122" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">+ THE ESCROW PROGRAM ID</text>
-  <path d="M 440,128 L 440,150" stroke="#111" stroke-width="1.4" fill="none" marker-end="url(#addr-types-arr)"/>
-  <text x="432" y="142" font-size="10" font-style="italic" fill="#777" text-anchor="end">derives</text>
-  <circle cx="440" cy="158" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="456" y="155" font-size="12.5" font-weight="bold">the offer&#8217;s PDA</text>
-  <text x="456" y="170" font-size="10.5" fill="#444" font-style="italic">no private key exists</text>
-  <!-- contrast note -->
-  <line x1="440" y1="166" x2="440" y2="192" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="440" y="204" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">not a point on the curve: only the escrow program</text>
-  <text x="440" y="218" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">&#8220;signs&#8221; as this address, by presenting the seeds</text>
+  <text x="78" y="106" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">Alice&#8217;s address</text>
+  <text x="78" y="122" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">a public key, on the curve:</text>
+  <text x="78" y="137" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">Alice holds the private key</text>
+  <text x="430" y="106" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
+  <text x="430" y="120" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">+ THE ESCROW PROGRAM ID</text>
+  <path d="M 430,128 L 430,150" stroke="#111" stroke-width="1.4" fill="none" marker-end="url(#addr-types-arr)"/>
+  <text x="422" y="143" font-size="10" fill="#777" text-anchor="end" font-style="italic">derives</text>
+  <circle cx="430" cy="158" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="430" y="182" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">the offer&#8217;s PDA</text>
+  <text x="430" y="198" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">off the curve: no private key exists</text>
+  <text x="430" y="213" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">only the escrow program &#8220;signs&#8221; as it, by presenting the seeds</text>
 </svg>

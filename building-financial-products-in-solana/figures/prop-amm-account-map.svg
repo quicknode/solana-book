@@ -1,235 +1,169 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 618" font-family="Georgia, serif" fill="#111">
-  <!-- the curve on top: every on-curve address dot sits on it, everything hangs below -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 622" font-family="Georgia, serif" fill="#111">
+  <!-- the curve on top: every on-curve address dot sits on it -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <!-- NVDAx mint, in the strip above the curve's flat left -->
+  <!-- NVDAx mint, above the curve -->
   <g>
-    <circle cx="140" cy="39" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="16" y="2" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(24,6)" stroke="#111" stroke-width="1.2" fill="none">
-      <path d="M 1,5 L 7,1 L 13,5 Z"/>
-      <line x1="3" y1="6.5" x2="3" y2="11"/>
-      <line x1="7" y1="6.5" x2="7" y2="11"/>
-      <line x1="11" y1="6.5" x2="11" y2="11"/>
-      <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
-    </g>
-    <text x="50" y="20" font-size="10.5" font-weight="bold">NVDAx mint</text>
+  <circle cx="178" cy="40.3578" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="170" y="3.95664" width="112" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(178,8.95664)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
+  <text x="198" y="19.9566" font-size="10.5" font-weight="bold">NVDAx mint</text>
   </g>
-  <!-- USDC mint, in the top-right pocket beneath the title -->
+  <!-- USDC mint, above the curve -->
   <g>
-    <circle cx="552" cy="91" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="500" y="34" width="104" height="28" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(508,38)" stroke="#111" stroke-width="1.2" fill="none">
-      <path d="M 1,5 L 7,1 L 13,5 Z"/>
-      <line x1="3" y1="6.5" x2="3" y2="11"/>
-      <line x1="7" y1="6.5" x2="7" y2="11"/>
-      <line x1="11" y1="6.5" x2="11" y2="11"/>
-      <line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/>
-    </g>
-    <text x="526" y="52" font-size="10.5" font-weight="bold">USDC mint</text>
+  <circle cx="488" cy="76.4582" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="480" y="38.8897" width="112" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,43.8897)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
+  <text x="508" y="54.8897" font-size="10.5" font-weight="bold">USDC mint</text>
   </g>
-  <!-- Maria's column -->
+  <!-- Maria (operator) -->
   <g>
-    <circle cx="96" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="48" y="58" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(56,65)">
-      <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-      <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-    </g>
-    <text x="75" y="76" font-size="10.5" font-weight="bold">Maria (operator)</text>
-    <text x="75" y="92" font-size="9.5" fill="#444">1 SOL</text>
+  <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="44.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,49.6382)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="60.6382" font-size="10.5" font-weight="bold">Maria (operator)</text>
+  <line x1="24" y1="65.6382" x2="132" y2="65.6382" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="76.6382" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="56" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="66" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-    <text x="66" y="148" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
-    <text x="66" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="48" y="162" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(56,167)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="74" y="179" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
-    <text x="58" y="195" font-size="9" fill="#444">1,000 USDC</text>
+  <circle cx="24" cy="103.138" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="97.6382" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="34" y="106.638" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+  <text x="34" y="115.638" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="16" y="121.638" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,126.638)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="44" y="137.638" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+  <line x1="24" y1="142.638" x2="132" y2="142.638" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="153.638" font-size="9.5" fill="#444">1,000 USDC</text>
   </g>
-  <!-- Alice's column -->
+  <!-- Alice (trader) -->
   <g>
-    <circle cx="244" cy="44" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="184" y="56" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(192,63)">
-      <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-      <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-    </g>
-    <text x="211" y="74" font-size="10.5" font-weight="bold">Alice (trader)</text>
-    <text x="211" y="90" font-size="9.5" fill="#444">1 SOL</text>
+  <circle cx="294" cy="48.7619" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="178" y="55.5361" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(186,60.5361)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="206" y="71.5361" font-size="10.5" font-weight="bold">Alice (trader)</text>
+  <line x1="186" y1="76.5361" x2="294" y2="76.5361" stroke="#888" stroke-width="0.8"/>
+  <text x="186" y="87.5361" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="192" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="202" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-    <text x="202" y="148" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-    <text x="202" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="184" y="162" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(192,167)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="210" y="179" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
-    <text x="194" y="195" font-size="9" fill="#444">1,000 USDC</text>
+  <circle cx="186" cy="114.036" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="196" y="108.536" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="196" y="117.536" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="196" y="126.536" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="178" y="132.536" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(186,137.536)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="206" y="148.536" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <line x1="186" y1="153.536" x2="294" y2="153.536" stroke="#888" stroke-width="0.8"/>
+  <text x="186" y="164.536" font-size="9.5" fill="#444">1,000 USDC</text>
   </g>
-  <!-- Bob's column -->
+  <!-- Bob (trader) -->
   <g>
-    <circle cx="380" cy="58" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="320" y="74" width="120" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(328,81)">
-      <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-      <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-    </g>
-    <text x="347" y="92" font-size="10.5" font-weight="bold">Bob (trader)</text>
-    <text x="347" y="108" font-size="9.5" fill="#444">1 SOL</text>
+  <circle cx="456" cy="70.4364" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="340" y="77.8798" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(348,82.8798)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="368" y="93.8798" font-size="10.5" font-weight="bold">Bob (trader)</text>
+  <line x1="348" y1="98.8798" x2="456" y2="98.8798" stroke="#888" stroke-width="0.8"/>
+  <text x="348" y="109.88" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-    <circle cx="328" cy="144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="338" y="139" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-    <text x="338" y="148" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-    <text x="338" y="157" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-    <rect x="320" y="162" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(328,167)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="346" y="179" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
-    <text x="330" y="195" font-size="9" fill="#444">1,000 USDC</text>
+  <circle cx="348" cy="136.38" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="358" y="130.88" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="358" y="139.88" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="358" y="148.88" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="340" y="154.88" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(348,159.88)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="368" y="170.88" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <line x1="348" y1="175.88" x2="456" y2="175.88" stroke="#888" stroke-width="0.8"/>
+  <text x="348" y="186.88" font-size="9.5" fill="#444">1,000 USDC</text>
   </g>
   <g>
-    <circle cx="328" cy="222" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="338" y="217" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-    <text x="338" y="226" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-    <text x="338" y="235" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
-    <rect x="320" y="240" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(328,245)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="346" y="257" font-size="10.5" font-weight="bold">Bob&#8217;s NVDAx</text>
-    <text x="330" y="273" font-size="9" fill="#444">5 NVDAx</text>
+  <circle cx="348" cy="213.38" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="358" y="207.88" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="358" y="216.88" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="358" y="225.88" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <rect x="340" y="231.88" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(348,236.88)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="368" y="247.88" font-size="10.5" font-weight="bold">Bob&#8217;s NVDAx</text>
+  <line x1="348" y1="252.88" x2="456" y2="252.88" stroke="#888" stroke-width="0.8"/>
+  <text x="348" y="263.88" font-size="9.5" fill="#444">5 NVDAx</text>
   </g>
-  <!-- oracle feed: an external account, derived by its own program -->
+  <!-- the program column -->
   <g>
-    <circle cx="228" cy="336" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="240" y="333" font-size="8.5" letter-spacing="0.6" fill="#555">DERIVED BY THE</text>
-    <text x="240" y="344" font-size="8.5" letter-spacing="0.6" fill="#555">ORACLE PROGRAM</text>
-    <rect x="220" y="352" width="150" height="58" rx="6" fill="#fff" stroke="#111" stroke-width="1.5" stroke-dasharray="5,3"/>
-    <g transform="translate(230,357)" stroke="#111" stroke-width="1.2" fill="none">
-      <rect x="1" y="2" width="12" height="10"/>
-      <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
-    </g>
-    <text x="248" y="369" font-size="10.5" font-weight="bold">oracle feed</text>
-    <text x="230" y="385" font-size="9">price: $165.00</text>
-    <text x="230" y="398" font-size="9" fill="#444" font-style="italic">plus scale, slot, confidence</text>
+  <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="480" y="119.37" width="152" height="78" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,124.37)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
+  <text x="508" y="135.37" font-size="10.5" font-weight="bold">prop amm program</text>
+  <line x1="488" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="151.37" font-size="8.5" font-family="Menlo, monospace">initialize_market()</text>
+  <text x="488" y="161.37" font-size="8.5" font-family="Menlo, monospace">set_quote()</text>
+  <text x="488" y="171.37" font-size="8.5" font-family="Menlo, monospace">deposit_inventory()</text>
+  <text x="488" y="181.37" font-size="8.5" font-family="Menlo, monospace">withdraw_inventory()</text>
+  <text x="488" y="191.37" font-size="8.5" font-family="Menlo, monospace">swap()</text>
   </g>
-  <!-- the market is pinned to the feed -->
-  <line x1="464" y1="274" x2="372" y2="368" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3"/>
-  <!-- the program's column: program box, market, authority, vaults -->
+  <!-- market: one PDA per pair, and it pins its own vaults -->
   <g>
-    <circle cx="472" cy="73" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-    <rect x="464" y="120" width="168" height="80" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,125)">
-      <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
-      <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
-      <g stroke="#111" stroke-width="1.3">
-        <line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/>
-        <line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/>
-        <line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/>
-        <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
-      </g>
-    </g>
-    <text x="492" y="136" font-size="10.5" font-weight="bold">prop amm program</text>
-    <text x="474" y="150" font-size="8.5" font-family="Menlo, monospace">initialize_market()</text>
-    <text x="474" y="160" font-size="8.5" font-family="Menlo, monospace">set_quote()</text>
-    <text x="474" y="170" font-size="8.5" font-family="Menlo, monospace">deposit_inventory()</text>
-    <text x="474" y="180" font-size="8.5" font-family="Menlo, monospace">withdraw_inventory()</text>
-    <text x="474" y="190" font-size="8.5" font-family="Menlo, monospace">swap()</text>
+  <circle cx="488" cy="211.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="210.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;MARKET&#8221; + NVDAX &amp;</text>
+  <text x="498" y="219.37" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESSES</text>
+  <rect x="480" y="225.37" width="152" height="148" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(488,230.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="508" y="241.37" font-size="10.5" font-weight="bold">market</text>
+  <line x1="488" y1="246.37" x2="624" y2="246.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="257.37" font-size="9.5">operator: Maria</text>
+  <text x="488" y="269.37" font-size="9.5">oracle_feed: the NVDAx feed</text>
+  <text x="488" y="281.37" font-size="9.5">oracle_scale: 8 (10^8)</text>
+  <text x="488" y="293.37" font-size="9.5">base_vault: the NVDAx vault</text>
+  <text x="488" y="305.37" font-size="9.5">quote_vault: the USDC vault</text>
+  <text x="488" y="317.37" font-size="9.5">base_decimals: 6</text>
+  <text x="488" y="329.37" font-size="9.5">quote_decimals: 6</text>
+  <text x="488" y="341.37" font-size="9.5">spread_bps: 10</text>
+  <text x="488" y="353.37" font-size="9.5">max_confidence_bps: 100</text>
+  <text x="488" y="365.37" font-size="9.5">paused: false</text>
   </g>
-  <!-- market: the program's struct account, a PDA -->
+  <!-- market authority: a PDA that holds no data, so no account rect -->
   <g>
-    <circle cx="472" cy="222" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="218" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET&#8221; + NVDAX &amp;</text>
-    <text x="484" y="227" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESSES</text>
-    <rect x="464" y="234" width="168" height="126" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(474,239)" stroke="#111" stroke-width="1.2" fill="none">
-      <rect x="1" y="2" width="12" height="10"/>
-      <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
-    </g>
-    <text x="492" y="251" font-size="10.5" font-weight="bold">market</text>
-    <text x="474" y="265" font-size="9.5">operator: Maria</text>
-    <text x="474" y="277" font-size="9.5">oracle_feed: the NVDAx feed</text>
-    <text x="474" y="289" font-size="9.5">oracle_scale: 8 (10^8)</text>
-    <text x="474" y="301" font-size="9.5">base_decimals: 6</text>
-    <text x="474" y="313" font-size="9.5">quote_decimals: 6</text>
-    <text x="474" y="325" font-size="9.5">spread_bps: 10</text>
-    <text x="474" y="337" font-size="9.5">max_confidence_bps: 100</text>
-    <text x="474" y="349" font-size="9.5">paused: false</text>
+  <circle cx="488" cy="387.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="386.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;AUTHORITY&#8221; +</text>
+  <text x="498" y="395.37" font-size="7" letter-spacing="0.3" fill="#555">MARKET&#8217;S ADDRESS</text>
+  <text x="488" y="417.37" font-size="10.5" font-weight="bold">market authority</text>
+  <text x="488" y="430.37" font-size="9" fill="#444" font-style="italic">an address with no account;</text>
+  <text x="488" y="442.37" font-size="9" fill="#444" font-style="italic">it exists only to sign for the vaults</text>
   </g>
-  <!-- market authority: dataless PDA that signs for the vaults -->
   <g>
-    <circle cx="472" cy="382" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="378" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;AUTHORITY&#8221; +</text>
-    <text x="484" y="387" font-size="8.5" letter-spacing="0.6" fill="#555">MARKET&#8217;S ADDRESS</text>
-    <rect x="464" y="394" width="168" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
-    <g transform="translate(474,399)" stroke="#111" stroke-width="1.2" fill="none">
-      <rect x="1" y="2" width="12" height="10"/>
-      <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-      <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
-    </g>
-    <text x="492" y="411" font-size="10.5" font-weight="bold">market authority</text>
-    <text x="474" y="426" font-size="8.5" fill="#444" font-style="italic">holds no data; signs for the vaults</text>
+  <circle cx="488" cy="462.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="461.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BASE_VAULT&#8221; +</text>
+  <text x="498" y="470.37" font-size="7" letter-spacing="0.3" fill="#555">MARKET&#8217;S ADDRESS</text>
+  <rect x="480" y="476.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,481.37)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="508" y="492.37" font-size="10.5" font-weight="bold">base vault</text>
+  <line x1="488" y1="497.37" x2="624" y2="497.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="508.37" font-size="9.5" fill="#444">1,000 NVDAx</text>
+  <text x="488" y="520.37" font-size="9" font-style="italic" fill="#444">authority: the market authority</text>
   </g>
-  <!-- base vault -->
   <g>
-    <circle cx="472" cy="456" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="452" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;BASE_VAULT&#8221; +</text>
-    <text x="484" y="461" font-size="8.5" letter-spacing="0.6" fill="#555">MARKET&#8217;S ADDRESS</text>
-    <rect x="464" y="468" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,473)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="492" y="485" font-size="10.5" font-weight="bold">base vault</text>
-    <text x="474" y="501" font-size="9.5" fill="#444">1,000 NVDAx</text>
-    <text x="474" y="514" font-size="9" fill="#444" font-style="italic">authority: the market authority</text>
+  <circle cx="488" cy="542.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="541.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;QUOTE_VAULT&#8221; +</text>
+  <text x="498" y="550.37" font-size="7" letter-spacing="0.3" fill="#555">MARKET&#8217;S ADDRESS</text>
+  <rect x="480" y="556.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,561.37)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="508" y="572.37" font-size="10.5" font-weight="bold">quote vault</text>
+  <line x1="488" y1="577.37" x2="624" y2="577.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="588.37" font-size="9.5" fill="#444">200,000 USDC</text>
+  <text x="488" y="600.37" font-size="9" font-style="italic" fill="#444">authority: the market authority</text>
   </g>
-  <!-- quote vault -->
+  <!-- the oracle feed: an account this program only reads -->
   <g>
-    <circle cx="472" cy="544" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-    <text x="484" y="540" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;QUOTE_VAULT&#8221; +</text>
-    <text x="484" y="549" font-size="8.5" letter-spacing="0.6" fill="#555">MARKET&#8217;S ADDRESS</text>
-    <rect x="464" y="556" width="168" height="54" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-    <g transform="translate(474,561)">
-      <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-      <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-      <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-      <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
-    </g>
-    <text x="492" y="573" font-size="10.5" font-weight="bold">quote vault</text>
-    <text x="474" y="589" font-size="9.5" fill="#444">200,000 USDC</text>
-    <text x="474" y="602" font-size="9" fill="#444" font-style="italic">authority: the market authority</text>
+  <circle cx="260" cy="290" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="270" y="293" font-size="7" letter-spacing="0.3" fill="#555">DERIVED BY THE ORACLE PROGRAM</text>
+  <rect x="252" y="306" width="186" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <g transform="translate(260,311)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="280" y="322" font-size="10.5" font-weight="bold">oracle feed</text>
+  <line x1="260" y1="327" x2="430" y2="327" stroke="#888" stroke-width="0.8"/>
+  <text x="260" y="338" font-size="9.5">price: $165.00</text>
+  <text x="260" y="350" font-size="9" font-style="italic" fill="#444">plus its scale, slot and confidence band</text>
   </g>
+  <!-- the market pins this feed: a read-only link, dashed grey, no coins -->
+  <line x1="478" y1="332" x2="442" y2="332" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="240" y="430" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no LP mint, no fee ledger, no reserves the price depends on:</text>
+  <text x="240" y="445" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">with one depositor, the vault balances <tspan font-style="normal">are</tspan> the accounting</text>
 </svg>

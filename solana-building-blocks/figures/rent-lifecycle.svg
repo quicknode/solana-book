@@ -1,48 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia, serif" fill="#111">
-  <defs>
-    <marker id="rent-lifecycle-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
-    <marker id="rent-lifecycle-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
-  </defs>
-  <!-- the maker: wallet account -->
-  <rect x="24" y="128" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(32,135)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 296" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="rent-i" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="rent-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker><marker id="rent-x" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#999"/></marker></defs>
+  <g>
+  <rect x="24" y="94" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(32,99)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="52" y="110" font-size="10.5" font-weight="bold">the maker</text>
+  <line x1="32" y1="115" x2="128" y2="115" stroke="#888" stroke-width="0.8"/>
+  <text x="32" y="126" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <text x="54" y="145" font-size="10.5" font-weight="bold">the maker</text>
-  <text x="54" y="161" font-size="9.5" fill="#444">1 SOL</text>
-  <!-- deposit out -->
-  <path d="M 140,138 C 175,115 200,102 236,100" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-lifecycle-arrg)" fill="none"/>
-  <text x="160" y="88" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">rent deposits paid at creation</text>
-  <rect x="240" y="70" width="120" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(248,78)" stroke="#111" stroke-width="1.2" fill="none">
-    <rect x="1" y="2" width="12" height="10"/>
-    <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-    <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
+  <g>
+  <rect x="250" y="72" width="124" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(258,77)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="278" y="88" font-size="10.5" font-weight="bold">offer account</text>
   </g>
-  <text x="304" y="89" font-size="11" text-anchor="middle">offer account</text>
-  <rect x="240" y="110" width="120" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(248,117)">
-    <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
-    <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
-    <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
-    <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
-    <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
+  <g>
+  <rect x="250" y="116" width="124" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(258,121)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="278" y="132" font-size="10.5" font-weight="bold">vault</text>
   </g>
-  <text x="304" y="129" font-size="11" text-anchor="middle">vault</text>
-  <!-- exits -->
-  <path d="M 364,85 C 440,85 470,110 500,110" stroke="#111" stroke-width="1.5" marker-end="url(#rent-lifecycle-arr)" fill="none"/>
-  <text x="505" y="106" font-size="11" font-weight="bold">taken</text>
-  <path d="M 364,130 C 440,130 470,150 500,150" stroke="#111" stroke-width="1.5" marker-end="url(#rent-lifecycle-arr)" fill="none"/>
-  <text x="505" y="147" font-size="11" font-weight="bold">canceled</text>
-  <path d="M 560,120 C 560,230 240,240 141,164" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-lifecycle-arrg)" fill="none"/>
-  <text x="260" y="278" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">both exits close the accounts and</text>
-  <text x="260" y="292" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">refund every lamport to the maker</text>
-  <!-- stuck path -->
-  <path d="M 364,118 C 430,160 440,190 452,214" stroke="#999" stroke-width="1.4" marker-end="url(#rent-lifecycle-arrg)" fill="none"/>
-  <rect x="420" y="218" width="180" height="46" fill="none" stroke="#999" stroke-width="1.3"/>
-  <line x1="420" y1="218" x2="600" y2="264" stroke="#999" stroke-width="1.6"/>
-  <line x1="600" y1="218" x2="420" y2="264" stroke="#999" stroke-width="1.6"/>
-  <text x="510" y="288" font-size="10.5" fill="#444" text-anchor="middle">no close handler: deposit stranded forever</text>
-  <text x="510" y="302" font-size="10.5" fill="#444" text-anchor="middle">(the bug this chapter forbids)</text>
+  <path d="M 140,104 C 180,92 210,82 244,78" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <path d="M 140,120 C 180,122 210,126 244,129" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <text x="200" y="160" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">rent deposits paid at creation</text>
+  <path d="M 378,86 L 466,86" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
+  <text x="474" y="90" font-size="11" font-weight="bold">taken</text>
+  <path d="M 378,130 L 466,130" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
+  <text x="474" y="134" font-size="11" font-weight="bold">canceled</text>
+  <path d="M 556,108 C 562,40 300,32 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <text x="330" y="22" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">both exits close the accounts and refund every lamport to the maker</text>
+  <path d="M 312,148 L 312,196" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#rent-x)"/>
+  <rect x="222" y="200" width="180" height="46" fill="none" stroke="#999" stroke-width="1.3"/>
+  <line x1="222" y1="200" x2="402" y2="246" stroke="#999" stroke-width="1.6"/>
+  <line x1="402" y1="200" x2="222" y2="246" stroke="#999" stroke-width="1.6"/>
+  <text x="312" y="266" font-size="10.5" fill="#444" text-anchor="middle">no close handler: the deposit is stranded forever</text>
+  <text x="312" y="280" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">(the bug this chapter forbids)</text>
 </svg>

@@ -1,27 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 136" font-family="Georgia, serif" fill="#111">
-  <!-- ghost clusters: the same monotone ball shape, nested above -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 176" font-family="Georgia, serif" fill="#111">
   <path d="M 0,2 Q 400,2 640,36" fill="none" stroke="#e0e0e0" stroke-width="1.2"/>
   <path d="M 0,10 Q 400,10 640,70" fill="none" stroke="#cccccc" stroke-width="1.2"/>
-  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="50" font-size="10" fill="#bbb" text-anchor="end" font-style="italic">Localnet</text>
-  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="84" font-size="10" fill="#999" text-anchor="end" font-style="italic">Solana Mainnet</text>
-  <!-- the devnet curve -->
+  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="52" font-size="10" fill="#bbb" text-anchor="end" font-style="italic">Localnet</text>
+  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="86" font-size="10" fill="#999" text-anchor="end" font-style="italic">Solana Mainnet</text>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="17" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <!-- public key on the curve -->
-  <circle cx="104" cy="37" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <!-- Alice: wallet account, hanging beneath her address -->
-  <rect x="16" y="46" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,53)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g>
+  <rect x="16" y="50.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,55.6382)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="66.6382" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
+  <line x1="24" y1="71.6382" x2="132" y2="71.6382" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="82.6382" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <text x="46" y="64" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
-  <text x="46" y="80" font-size="9.5" fill="#444">1 SOL</text>
-  <text x="78" y="108" font-size="12.5" font-weight="bold" text-anchor="middle">Alice&#8217;s address</text>
-  <!-- Alice's private key: a bare key glyph, not an account, so no rectangle -->
-  <circle cx="200" cy="78" r="7" fill="none" stroke="#111" stroke-width="1.5"/>
-  <path d="M 207,78 h 24 m -8,0 v 7 m -6,-7 v 5" fill="none" stroke="#111" stroke-width="1.5"/>
-  <text x="250" y="74" font-size="11.5">Private key stored securely</text>
-  <text x="250" y="89" font-size="11.5">on Alice&#8217;s device</text>
-  <path d="M 196,72 Q 140,46 110,40" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <g transform="translate(306,112)" fill="none" stroke="#111" stroke-width="1.5"><circle cx="0" cy="0" r="7.5"/><path d="M 7.5,0 h 26 m -9,0 v 7 m -7,-7 v 5"/></g>
+  <text x="352" y="106" font-size="11.5" fill="#111" font-weight="bold">Alice&#8217;s private key</text>
+  <text x="352" y="122" font-size="10.5" fill="#444" font-style="italic">stays on her device, and signs for this address</text>
+  <path d="M 297,104 C 240,92 180,64 138,41" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="320" y="158" font-size="11.5" fill="#444" text-anchor="middle" font-style="italic">a dot on the curve is an address someone holds the private key for</text>
 </svg>
