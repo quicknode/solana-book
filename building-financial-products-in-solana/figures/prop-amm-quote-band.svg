@@ -14,7 +14,7 @@
   <!-- spread annotations inside band -->
   <text x="282" y="102" font-size="9.5" fill="#444" text-anchor="middle">+10 bps, rounded up</text>
   <text x="282" y="158" font-size="9.5" fill="#444" text-anchor="middle">&#8722;10 bps, rounded down</text>
-  <text x="282" y="130" font-size="9" fill="#888" text-anchor="middle" stroke="#f4f4f2" stroke-width="4" paint-order="stroke" stroke-linejoin="round">the band is Maria's revenue</text>
+  <text x="282" y="140" font-size="9" fill="#888" text-anchor="middle" stroke="#f4f4f2" stroke-width="4" paint-order="stroke" stroke-linejoin="round">the band is Maria&#8217;s revenue</text>
   <!-- buyer arrow -->
   <path d="M 490,40 L 490,74" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#propamm-band-arr)"/>
   <g transform="translate(490,55)">

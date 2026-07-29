@@ -96,6 +96,10 @@ const svgRules = [
     'old piggy snout: use the opaque snout ellipse with nostrils from DIAGRAMS.md'],
   [/<ellipse cx="12\.9" cy="6\.4"[^>]*fill="none"/,
     'the piggy snout is opaque: fill="#fff" so the body edge never shows through'],
+  // The table icon's divider sits left of center: the key column is narrower
+  // than the value column.
+  [/<line x1="7" y1="5\.4" x2="7" y2="12"/,
+    'table-icon divider sits at x=5.5 (key column narrower than value column)'],
 ];
 
 const svgFiles = [];
@@ -129,13 +133,18 @@ for (const file of svgFiles) {
       failures += 1;
       console.error(`${file}:${index + 1}: seed labels start with "SEEDS: "\n    ${line.trim().slice(0, 160)}`);
     }
-    // The cluster curve is the positive (top) half of the beach-ball-shaped
-    // Ed25519 curve: it rises to its apex, so the control point sits above
-    // both endpoints. A curve that droops in the middle is a regression.
+    // The cluster curve is the part of the ball-shaped Ed25519 curve near
+    // X=0: flat at the top-left, monotonically descending to the right. A
+    // curve that droops down OR raises up in the middle is a regression, so
+    // the control point's y must sit between the endpoints', and the right
+    // end must be lower than the left.
     const arc = line.match(/d="M [\d.]+,([\d.]+) Q [\d.]+,([\d.]+) [\d.]+,([\d.]+)"[^>]*stroke-width="3\.5"/);
-    if (arc && Number(arc[2]) >= Math.min(Number(arc[1]), Number(arc[3]))) {
-      failures += 1;
-      console.error(`${file}:${index + 1}: the cluster curve arcs upward (control point above both ends), never droops\n    ${line.trim().slice(0, 160)}`);
+    if (arc) {
+      const [y0, yc, y1] = [Number(arc[1]), Number(arc[2]), Number(arc[3])];
+      if (!(y1 > y0 && yc >= y0 && yc <= y1)) {
+        failures += 1;
+        console.error(`${file}:${index + 1}: the cluster curve descends monotonically to the right (no droop, no dome)\n    ${line.trim().slice(0, 160)}`);
+      }
     }
     // Handler lines (monospace runs of bare snake_case identifiers) carry
     // parens: place_bet(), never place_bet.

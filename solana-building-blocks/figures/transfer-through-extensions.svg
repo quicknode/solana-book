@@ -4,22 +4,30 @@
     <marker id="transfer-ext-arrg" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
     <marker id="transfer-ext-arr-acc" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker>
   </defs>
-  <circle cx="20" cy="60" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="32" y="49" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM +</text>
-  <text x="32" y="60" font-size="8.5" letter-spacing="0.6" fill="#555">ALICE&#8217;S ADDRESS +</text>
-  <text x="32" y="71" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESS</text>
-  <rect x="20" y="84" width="104" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(26,89)">
+  <!-- the curve on top: the token program's address is a public key on it -->
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="210" cy="42" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="210" y="30" font-size="7.5" letter-spacing="0.8" fill="#555" text-anchor="middle">PUBLIC KEY</text>
+  <line x1="210" y1="50" x2="210" y2="120" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <!-- Alice's USDC account -->
+  <circle cx="20" cy="146" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="32" y="135" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM +</text>
+  <text x="32" y="146" font-size="8.5" letter-spacing="0.6" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="32" y="157" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESS</text>
+  <rect x="20" y="170" width="104" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(26,175)">
     <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
     <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
     <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
     <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
     <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
   </g>
-  <text x="44" y="104" font-size="11.5" font-weight="bold">Alice&#8217;s USDC</text>
-  <text x="30" y="122" font-size="10" fill="#444">sends 100</text>
-  <rect x="170" y="38" width="300" height="122" rx="6" fill="none" stroke="#111" stroke-width="2"/>
-  <g transform="translate(178,47)">
+  <text x="44" y="190" font-size="11.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <text x="30" y="208" font-size="10" fill="#444">sends 100</text>
+  <!-- the Token Extensions Program -->
+  <rect x="170" y="124" width="300" height="122" rx="6" fill="none" stroke="#111" stroke-width="2"/>
+  <g transform="translate(178,133)">
     <circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/>
     <circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/>
     <g stroke="#111" stroke-width="1.3">
@@ -29,51 +37,46 @@
       <line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/>
     </g>
   </g>
-  <text x="196" y="58" font-size="11.5" font-weight="bold">Token Extensions Program</text>
-  <text x="180" y="74" font-size="10.5" font-family="Menlo, monospace">transfer_checked()</text>
-  <path d="M 126,110 h 40" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
-  <g transform="translate(146,110)">
+  <text x="196" y="144" font-size="11.5" font-weight="bold">Token Extensions Program</text>
+  <text x="180" y="160" font-size="10.5" font-family="Menlo, monospace">transfer_checked()</text>
+  <path d="M 126,196 h 40" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
+  <g transform="translate(146,196)">
     <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
-  <path d="M 200,110 h 60" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
-  <path d="M 300,110 h 60" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
-  <path d="M 400,110 h 104" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
-  <g transform="translate(487,110)">
+  <path d="M 200,196 h 60" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
+  <path d="M 300,196 h 60" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
+  <path d="M 400,196 h 104" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-arr-acc)"/>
+  <g transform="translate(487,196)">
     <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
     <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
   </g>
   <!-- fee checkpoint -->
-  <circle cx="220" cy="110" r="4" fill="#111"/>
-  <path d="M 220,116 v 44" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-arrg)"/>
-  <text x="220" y="176" font-size="10" fill="#444" text-anchor="middle">1 peeled off as</text>
-  <text x="220" y="188" font-size="10" fill="#444" text-anchor="middle">transfer fee</text>
+  <circle cx="220" cy="196" r="4" fill="#111"/>
+  <path d="M 220,202 v 44" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-arrg)"/>
+  <text x="220" y="262" font-size="10" fill="#444" text-anchor="middle">1 peeled off as</text>
+  <text x="220" y="274" font-size="10" fill="#444" text-anchor="middle">transfer fee</text>
   <!-- hook checkpoint -->
-  <circle cx="330" cy="110" r="4" fill="#111"/>
-  <path d="M 330,104 v -24" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-arrg)"/>
-  <text x="342" y="78" font-size="10" fill="#444">transfer hook runs:</text>
-  <circle cx="508" cy="60" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="520" y="49" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM +</text>
-  <text x="520" y="60" font-size="8.5" letter-spacing="0.6" fill="#555">BOB&#8217;S ADDRESS +</text>
-  <text x="520" y="71" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESS</text>
-  <rect x="508" y="84" width="104" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(514,89)">
+  <circle cx="330" cy="196" r="4" fill="#111"/>
+  <path d="M 330,190 v -24" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-arrg)"/>
+  <text x="342" y="164" font-size="10" fill="#444">transfer hook runs:</text>
+  <text x="342" y="177" font-size="10" fill="#444" font-style="italic">the issuer&#8217;s program</text>
+  <!-- Bob's USDC account -->
+  <circle cx="508" cy="146" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="520" y="135" font-size="8.5" letter-spacing="0.6" fill="#555">SEEDS: ATA PROGRAM +</text>
+  <text x="520" y="146" font-size="8.5" letter-spacing="0.6" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="520" y="157" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESS</text>
+  <rect x="508" y="170" width="104" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(514,175)">
     <path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/>
     <ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/>
     <line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/>
     <line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/>
     <line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/>
   </g>
-  <text x="532" y="104" font-size="11.5" font-weight="bold">Bob&#8217;s USDC</text>
-  <text x="518" y="122" font-size="10" fill="#444">receives 99</text>
-  <text x="320" y="225" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions can change what &#8220;I transferred 100&#8221; means</text>
-  <text x="342" y="91" font-size="10" fill="#444" font-style="italic">the issuer&#8217;s program</text>
-  <!-- the curve: the token program's address is a public key on it -->
-  <path d="M 40,290 Q 320,220 600,290" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="70" y="284" font-size="12" font-weight="bold">Solana Devnet</text>
-  <circle cx="490" cy="268" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <line x1="468" y1="162" x2="488" y2="260" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="502" y="264" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
+  <text x="532" y="190" font-size="11.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <text x="518" y="208" font-size="10" fill="#444">receives 99</text>
+  <text x="320" y="296" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions can change what &#8220;I transferred 100&#8221; means</text>
 </svg>
