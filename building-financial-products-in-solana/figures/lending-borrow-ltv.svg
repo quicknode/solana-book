@@ -307,10 +307,10 @@
   <g transform="translate(476,816.34)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
   <text x="496" y="827.34" font-size="9.5" font-weight="bold">SPCXx share mint</text>
   </g>
-  <path d="M 186,164 C 208,176 228,188 264,190 C 340,194 416,186 434,206 C 442,220 436,300 436,700 C 436,736 428,764 410,765" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <path d="M 236,834 C 214,834 230,812 230,750 C 230,600 230,300 228,244 C 224,216 212,210 200,209" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <path d="M 195,231 C 208,231 216,240 216,264 C 216,340 216,430 214,452 C 210,472 206,478 199,479" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <path d="M 172,766 C 188,766 202,756 202,720 C 202,600 202,340 202,312 C 202,300 200,298 199,298" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
+  <path d="M 186,164 C 208,176 228,188 264,190 C 340,194 418.235,184.195 434,206 C 443.447,219.067 436,300 436,700 C 436,736 422.347,751.864 410,765" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
+  <path d="M 236,834 C 214,834 230,812 230,750 C 230,600 232.969,299.815 228,244 C 225.492,215.827 211.051,213.783 200,209" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
+  <path d="M 195,231 C 208,231 216,240 216,264 C 216,340 217.171,430.138 214,452 C 211.073,472.185 203.768,473.779 199,479" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
+  <path d="M 172,766 C 188,766 202,756 202,720 C 202,600 202,340 202,312 C 202,300 199.188,298.982 199,298" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="214" font-size="9.5" font-weight="bold" fill="#1e7a3c">1. deposit_reserve_liquidity()</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="228" font-size="9.5" font-weight="bold" fill="#1e7a3c">5 NVDAx in, 5 NVDAx shares out</text>
   <text x="246" y="252" font-size="8.5" fill="#444" font-style="italic">2. init_obligation() opens Bob&#8217;s loan file</text>

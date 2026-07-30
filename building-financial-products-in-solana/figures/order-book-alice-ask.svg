@@ -223,7 +223,7 @@
   <text x="492" y="633.37" font-size="10.5" font-weight="bold">fee vault</text>
   </g>
   <!-- the lock on entry: ten shares, straight from Alice to the base vault -->
-  <path d="M 14,141 C 2,168 2,320 4,464 C 6,516 44,542 136,546 L 372,546 C 424,546 444,526 458,504" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-alice-ask-arr)"/>
+  <path d="M 14,141 C 2,168 2,320 4,464 C 6,516 43.935,544 136,546 L 371.944,551.127 C 424.25,550.695 444,526 458,504" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-alice-ask-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="150" y="536" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">10 NVDAx</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="150" y="570" font-size="9.5" font-style="italic" fill="#444" text-anchor="start">locked on entry by place_order(): the order is funded before it rests</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="600" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">no bid reaches 265, so nothing matches and the ask becomes a leaf</text>

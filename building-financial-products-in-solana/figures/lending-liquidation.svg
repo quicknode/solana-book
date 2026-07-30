@@ -344,10 +344,10 @@
   <g transform="translate(476,816.34)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
   <text x="496" y="827.34" font-size="9.5" font-weight="bold">SPCXx share mint</text>
   </g>
-  <path d="M 395,163 C 420,166 448,172 452,196 C 456,220 452,300 452,700 C 452,738 456,766 464,766" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-liq-arr)"/>
+  <path d="M 395,163 C 420,166 448,172 452,196 C 456,220 452,300 452,700 C 452,738 461.059,758.56 464,766" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-liq-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="460" y="396" font-size="9.5" font-weight="bold" fill="#1e7a3c">liquidate_obligation() &#215;2</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="460" y="410" font-size="9.5" font-weight="bold" fill="#1e7a3c">repays 2.25 SPCXx ($675)</text>
-  <path d="M 300,490 C 340,492 428,496 430,460 C 432,400 430,300 428,268 C 424,248 414,241 399,240" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-liq-arr)"/>
+  <path d="M 300,490 C 340,492 428,496 430,460 C 432,400 432.153,299.792 428,268 C 425.358,247.776 413.152,245.072 399,240" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-liq-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="308" y="296" font-size="9.5" font-weight="bold" fill="#1e7a3c">seizes 708.75</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="308" y="310" font-size="9.5" font-weight="bold" fill="#1e7a3c">USDC shares</text>
   <text x="308" y="326" font-size="7.5" fill="#444" font-style="italic">= $675 &#215; 1.05, the 5% bonus</text>

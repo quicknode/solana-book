@@ -259,7 +259,7 @@
   <path d="M 345,158 C 352,162 348,200 348,268 L 348,452 C 348,476 358,492 382,492 L 456,492" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="358" y="300" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">3 NVDAx</text>
   <!-- the aggregated taker fee, quote vault to fee vault, program-signed -->
-  <path d="M 460,566 C 442,564 434,578 434,598 C 434,620 442,636 456,640" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
+  <path d="M 460,566 C 442,564 434,578 434,598 C 434,620 445.221,630.212 456,640" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="426" y="590" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1.875 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="426" y="604" font-size="9.5" font-style="italic" fill="#444" text-anchor="end">25 bps of the 750 gross, rounded up</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="512" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the fill executes at 250, Bob&#8217;s resting price, not Carol&#8217;s 245</text>

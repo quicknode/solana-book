@@ -237,10 +237,10 @@
   <g transform="translate(476,816.34)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
   <text x="496" y="827.34" font-size="9.5" font-weight="bold">SPCXx share mint</text>
   </g>
-  <path d="M 94,157 C 140,168 184,190 190,250 C 194,320 192,640 192,700 C 192,734 186,760 176,763" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
+  <path d="M 94,157 C 140,168 185.279,189.886 190,250 C 195.49,319.899 192,640 192,700 C 192,734 180.967,753.817 176,763" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="182" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">deposit_reserve_liquidity()</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="182" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1,000 USDC</text>
-  <path d="M 172,834 C 206,834 224,812 224,750 C 224,600 226,330 222,286 C 216,244 150,232 98,226" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
+  <path d="M 172,834 C 206,834 224,812 224,750 C 224,600 227.126,329.883 222,286 C 217.078,243.86 150,232 98,226" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="238" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c">1,000 USDC shares</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="238" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c">minted to Alice</text>
   <text x="312" y="430" font-size="8.5" fill="#444" font-style="italic">the first deposit into a reserve mints one to one:</text>

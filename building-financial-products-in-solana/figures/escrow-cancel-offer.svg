@@ -118,11 +118,11 @@
   <line x1="632" y1="321.4" x2="464" y2="373.4" stroke="#999" stroke-width="1.6"/>
   </g>
   <!-- the vault drains back to Alice's USDC -->
-  <path d="M 460,344 C 380,376 240,368 190,300 C 176,246 186,158 158,150" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-cancel-arr)"/>
+  <path d="M 460,344 C 380,376 226.245,376.226 190,300 C 166.045,249.62 163.031,178.684 158,150" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-cancel-arr)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="330" y="300" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">cancel_offer() &#183; 250 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="330" y="313" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units; the offer PDA signs)</text>
   <!-- both program-created accounts close, rent returns to Alice -->
-  <path d="M 560,375 C 440,414 200,420 60,402 C 10,392 6,300 6,150 C 6,118 12,98 24,88" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#escrow-cancel-arrg)"/>
+  <path d="M 560,375 C 440,414 200,420 60,402 C 10,392 6,300 6,150 C 6,118 14.841,100.653 24,88" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#escrow-cancel-arrg)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="268" y="392" font-size="9" font-style="italic" fill="#444" text-anchor="middle">rent from both closed accounts refunds to Alice</text>
   <g class="coin" transform="translate(256.8,295.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

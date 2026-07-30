@@ -204,10 +204,10 @@
   <path d="M 116,152.787 C 122,158.787 128,164.787 128,182.787 C 128,278 128,338 152,356 C 194,388 360,482 474,534.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="150" y="341" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">deposit_liquidity() &#183; 400 ACME</text>
   <!-- 900 USDC, account to account -->
-  <path d="M 116,229.787 C 119,234.787 121,239.787 121,253.787 C 121,330 121,394 144,432 C 240,494 360,572 474,614.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
+  <path d="M 116,229.787 C 119,234.787 121,239.787 121,253.787 C 121,330 113.053,400.137 144,432 C 223.622,513.978 360,572 474,614.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="250" y="476" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">900 USDC</text>
   <!-- the LP receipt, minted to Maria -->
-  <path d="M 474,694.37 C 380,708.37 150,704.37 80,648.37 C 62,598.37 66,480 66,330.787" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
+  <path d="M 474,694.37 C 380,708.37 132.145,721.287 80,648.37 C 49.088,605.144 66,480 66,330.787" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="200" y="668" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">599.9999 LP</text>
   <!-- the first deposit sets the price -->
   <text x="330" y="240" font-size="9" fill="#444" font-style="italic" text-anchor="middle">the first deposit sets the price:</text>
