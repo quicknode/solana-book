@@ -86,7 +86,11 @@ for (const section of sections) {
     ? `Appendix ${String.fromCharCode(65 + appendixNumber++)}`
     : `Chapter ${++chapterNumber}`;
   const shortLabel = isAppendix ? String.fromCharCode(64 + appendixNumber) : String(chapterNumber);
-  tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}"><span class="label">${label}</span><span class="t">${section.title}</span><span class="pg"></span></a></li>`);
+  // The row already prints its own "Chapter N" label, and every chapter's H1
+  // carries that prefix too (it is what the running header and the chapter
+  // opening page print), so drop it here to avoid "Chapter 2  Chapter 2: ...".
+  const tocTitle = section.title.replace(/^(?:Chapter \d+|Appendix [A-Z]):\s*/, "");
+  tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}"><span class="label">${label}</span><span class="t">${tocTitle}</span><span class="pg"></span></a></li>`);
   for (const [index, subsection] of section.subsections.entries()) {
     tocEntries.push(`<li class="toc-section"><a href="#${subsection.id}"><span class="label">${shortLabel}.${index + 1}</span><span class="t">${subsection.title}</span><span class="pg"></span></a></li>`);
   }

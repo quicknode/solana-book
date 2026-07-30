@@ -304,7 +304,11 @@ Executable code deployed onchain; the thing this book builds. Called a "smart co
 
 ### program ID
 
-A program's address: the account its executable code is deployed at. Every PDA is derived from a program ID plus seeds, so the ID is what ties a derived address back to the one program that can "sign" for it.
+A program's address: the account instructions are addressed to. The compiled code itself lives in a separate account that this one points at. Every PDA is derived from a program ID plus seeds, so the ID is what ties a derived address back to the one program that can "sign" for it.
+
+### ProgramData
+
+The account holding a deployed program's compiled bytecode, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
 
 ### proprietary AMM (prop AMM)
 
