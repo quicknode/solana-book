@@ -103,6 +103,7 @@ for (const file of [...new Set(files)]) {
 // linter cannot make; WRITING-PLAN.md carries the rest of the conventions.
 const figureDirs = [
   "solana-building-blocks/figures",
+  "financial-programming-concepts-in-solana/figures",
   "building-financial-products-in-solana/figures",
 ];
 
