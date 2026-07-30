@@ -20,7 +20,7 @@ A Solana program replaces the third party. The program holds Alice's tokens unde
 
 ![The same swap through the escrow program: both sides receive the full amount, and the box in the middle is a program, not a company.](figures/escrow-program-swap.svg)
 
-## The Deal: Alice's 250 USDC for Bob's Tesla Share
+## The Deal: A Maker Offers, a Taker Accepts
 
 Two roles run through this chapter, and the code names them the same way:
 
@@ -55,7 +55,7 @@ The program has three instruction handlers, and together they form the offer's c
 
 ![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits drain and close the vault.](figures/escrow-state-machine.svg)
 
-### Alice Makes the Offer
+### The Maker Makes the Offer
 
 Alice calls `make_offer()` with three arguments: her chosen `id`, `token_a_offered_amount` (250,000,000 minor units of USDC), and `token_b_wanted_amount` (100,000,000 minor units of TSLAx).
 
@@ -69,7 +69,7 @@ With the structure verified, the handler body is two small steps. `handle_send_o
 
 Alice is done. She can close her laptop.
 
-### Bob Takes the Offer
+### The Taker Takes the Offer
 
 Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves, and that is worth dwelling on: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of Financial Programming Concepts in Solana treats in full.
 
@@ -81,7 +81,7 @@ The handler body runs two steps. First, `handle_send_wanted_tokens_to_maker()` m
 
 Both sides now hold exactly what the other offered. No percentage went to anyone.
 
-### Alice Cancels the Offer
+### The Maker Cancels the Offer
 
 What if nobody takes the offer and Alice wants her USDC back? Without an exit, her tokens would sit in the vault forever, which is how stranded-funds bugs are born. The exit is `cancel_offer()`.
 

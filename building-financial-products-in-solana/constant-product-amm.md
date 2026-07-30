@@ -30,7 +30,7 @@ The tokens sit in two vaults, `pool_a` and `pool_b`, owned by a **pool authority
 
 The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool config. The admin's share of fees is never transferred during a swap; it accrues in these counters as a *virtual claim* while the tokens physically sit in the vaults. Every piece of LP-facing math therefore runs on **effective reserves**: the raw vault balance minus the admin's owed slice. The admin's fees do not boost LP yield, do not distort the price, and get swept out later in one transfer. Keeping owed-to-whom separate from where-it-sits is the same discipline as the order book's fee vault, implemented as accounting instead of as an account.
 
-## Maria Creates the Venue and Prices the Launch
+## Creating the Venue Sets the Launch Price
 
 Maria operates the AMM and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. Like every character in this book she starts with one SOL and 1,000 USDC; she also holds 400 ACME of founder stock.
 
@@ -44,13 +44,13 @@ Her LP tokens come from a formula this book has been promising since the arithme
 
 > **A square root with no floats.** `integer_sqrt()` is **Newton's method** running on integers: start with a guess, repeatedly replace it with the average of the guess and the target divided by the guess, and the sequence homes in on the square root in a few dozen iterations before the result is floored. The trick generalizes: any real-valued function a program needs onchain (roots, exponentials, logs) becomes an integer iteration with a known, bounded error, because floats can never touch funds.
 
-## Alice Adds Liquidity Without Moving the Price
+## Adding Liquidity in Ratio Does Not Move the Price
 
 Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and guarded by her `minimum_lp_tokens_out`.
 
 X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Deposits grow K without touching the price**; that is the first of K's two ways of growing.
 
-## Bob Buys the Launch and Moves the Price
+## A Buy Moves the Price Along the Curve
 
 Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage guard. Three things happen in strict order.
 
@@ -64,19 +64,19 @@ K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is
 
 ![Bob's swap: 100 USDC comes in, the 30-cent fee splits into Maria's roughly 5-cent virtual claim and the LPs' roughly 25 cents that stays in the vault, the 99.70 taxed input is priced by the curve, and about 40.7 ACME goes out as the spot price slides from $2.25 to $2.67.](figures/amm-bob-swap.svg)
 
-## Carol Pays the Price Bob Made
+## The Next Trader Pays the Price the Last One Made
 
 Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
 
-## Bob Takes Profit, Paying Fees in ACME
+## Selling Back Pays the Fee in the Input Token
 
 Bob sells 20 of his 40.7 ACME. A sell is the same instruction with `input_is_token_a` flipped: now the fee comes off his ACME input (0.06 ACME, of which 0.01 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 55.11 USDC to Bob, an average near $2.76 against the $2.46 he paid. The spot price eases back to about $2.64. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
 
-## Maria Sweeps the Admin Fees
+## The Admin Sweeps Its Share of the Fees
 
 Whenever she likes, Maria runs `claim_admin_fees()`. It zeroes both owed counters and transfers exactly those amounts from the vaults to her token accounts, signed by the pool authority; anyone else is rejected (`test_claim_admin_fees_rejects_non_admin`), and claiming when nothing is owed fails with `NothingToClaim`. One transfer per token, however many swaps accrued it: the same consolidation logic as the order book's unsettled balances.
 
-## Alice Withdraws and Meets Impermanent Loss
+## Withdrawing Realizes Impermanent Loss
 
 Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a pro-rata slice of both effective reserves, with one adjustment: the divisor is the LP supply *plus* `MINIMUM_LIQUIDITY`, because the locked floor is backed by reserves but absent from the supply counter, and forgetting it would overpay every withdrawer.
 
