@@ -1,37 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="arr3" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- seeds -->
-  <rect x="36" y="36" width="70" height="26" fill="#f4f4f2" stroke="#888"/>
-  <text x="71" y="53" font-size="10.5" text-anchor="middle" font-family="Menlo, monospace">"offer"</text>
-  <rect x="112" y="36" width="94" height="26" fill="#f4f4f2" stroke="#888"/>
-  <text x="159" y="53" font-size="10.5" text-anchor="middle">maker&#8217;s address</text>
-  <rect x="212" y="36" width="40" height="26" fill="#f4f4f2" stroke="#888"/>
-  <text x="232" y="53" font-size="10.5" text-anchor="middle">ID</text>
-  <rect x="258" y="36" width="86" height="26" fill="#fff" stroke="#111" stroke-width="1.4"/>
-  <text x="301" y="53" font-size="10.5" text-anchor="middle">program ID</text>
-  <text x="190" y="26" font-size="11" font-weight="bold">seeds + program ID</text>
-  <path d="M 190,62 v 26" stroke="#111" stroke-width="1.4" marker-end="url(#arr3)"/>
-  <rect x="130" y="92" width="120" height="30" fill="none" stroke="#111" stroke-width="1.8"/>
-  <text x="190" y="111" font-size="11" text-anchor="middle">derivation</text>
-  <path d="M 190,122 v 30" stroke="#111" stroke-width="1.4" marker-end="url(#arr3)"/>
-  <!-- off-curve result -->
-  <circle cx="190" cy="166" r="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="210" y="162" font-size="12" font-weight="bold">the offer&#8217;s PDA</text>
-  <text x="210" y="176" font-size="9.5" letter-spacing="0.8" fill="#555">ESCROW PROGRAM ID + &#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
-  <text x="210" y="190" font-size="10.5" fill="#444">no private key exists</text>
-  <!-- curve for contrast -->
-  <path d="M 40,340 Q 320,180 600,340" fill="none" stroke="#111" stroke-width="2"/>
-  <circle cx="180" cy="276" r="5" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="168" y="270" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <circle cx="460" cy="276" r="5" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="472" y="270" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <text x="320" y="308" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">keypair addresses live on the curve; PDAs float off it</text>
-  <!-- signing -->
-  <rect x="400" y="60" width="204" height="96" rx="6" fill="none" stroke="#111" stroke-width="1.6"/>
-  <text x="502" y="82" font-size="11.5" font-weight="bold" text-anchor="middle">the owning program</text>
-  <text x="502" y="100" font-size="10.5" fill="#444" text-anchor="middle">presents the same seeds</text>
-  <path d="M 502,108 v 20" stroke="#111" stroke-width="1.3" marker-end="url(#arr3)"/>
-  <text x="502" y="146" font-size="10.5" text-anchor="middle" font-style="italic">&#8220;signs&#8221; as the PDA: moves the vault it owns</text>
-  <path d="M 400,120 C 320,140 250,150 202,164" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arr3)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="524" y="330" font-size="12" font-weight="bold">Solana Devnet</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
+  <defs><marker id="pda-derivation-i" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="pda-derivation-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="60" cy="36.464" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <path d="M 62,43 C 80,58 100,68 116,76" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#pda-derivation-g)"/>
+  <text x="190" y="68" font-size="11" font-weight="bold" text-anchor="middle">seeds + program ID</text>
+  <rect x="36" y="80" width="70" height="26" fill="#f4f4f2" stroke="#888"/>
+  <text x="71" y="97" font-size="10.5" text-anchor="middle" font-family="Menlo, monospace">"offer"</text>
+  <rect x="112" y="80" width="94" height="26" fill="#f4f4f2" stroke="#888"/>
+  <text x="159" y="97" font-size="10.5" text-anchor="middle">maker&#8217;s address</text>
+  <rect x="212" y="80" width="40" height="26" fill="#f4f4f2" stroke="#888"/>
+  <text x="232" y="97" font-size="10.5" text-anchor="middle">ID</text>
+  <rect x="258" y="80" width="86" height="26" fill="#fff" stroke="#111" stroke-width="1.4"/>
+  <text x="301" y="97" font-size="10.5" text-anchor="middle">program ID</text>
+  <path d="M 190,106 v 22" stroke="#111" stroke-width="1.4" marker-end="url(#pda-derivation-i)"/>
+  <rect x="130" y="132" width="120" height="30" fill="none" stroke="#111" stroke-width="1.8"/>
+  <text x="190" y="151" font-size="11" text-anchor="middle">derivation</text>
+  <path d="M 190,162 v 28" stroke="#111" stroke-width="1.4" marker-end="url(#pda-derivation-i)"/>
+  <circle cx="190" cy="200" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="190" y="226" font-size="12" font-weight="bold" text-anchor="middle">the offer&#8217;s PDA</text>
+  <text x="190" y="241" font-size="8.5" letter-spacing="0.6" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
+  <text x="190" y="257" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">no private key exists</text>
+  <circle cx="612" cy="107.104" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="470" y="115.559" width="150" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(478,120.559)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
+  <text x="498" y="131.559" font-size="10.5" font-weight="bold">the escrow program</text>
+  <line x1="478" y1="136.559" x2="612" y2="136.559" stroke="#888" stroke-width="0.8"/>
+  <text x="478" y="147.559" font-size="9" font-family="Menlo, monospace">make_offer()</text>
+  <text x="545" y="172" font-size="10" fill="#444" text-anchor="middle" font-style="italic">presents the same seeds; the runtime</text>
+  <text x="545" y="186" font-size="10" fill="#444" text-anchor="middle" font-style="italic">recomputes the derivation</text>
+  <path d="M 462,204 C 380,212 280,206 198,201" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#pda-derivation-g)"/>
+  <text x="330" y="188" font-size="10" fill="#444" text-anchor="middle" font-style="italic">&#8220;signs&#8221; as the PDA</text>
+  <text x="320" y="286" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">key-pair addresses live on the curve; PDAs float off it</text>
 </svg>

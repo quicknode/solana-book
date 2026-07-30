@@ -1,69 +1,190 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" font-family="Georgia, serif" fill="#111">
-  <defs>
-    <marker id="order-book-initialize-market-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker>
-    <marker id="order-book-initialize-market-arr-gray" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
-  </defs>
-  <!-- the curve -->
-  <path d="M 40,368 Q 320,318 600,368" fill="none" stroke="#111" stroke-width="2"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="592" y="400" font-size="12" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <!-- the market struct: created at its PDA -->
-  <circle cx="34" cy="28" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="46" y="24" font-size="8.5" letter-spacing="0.6" fill="#555">&#8220;MARKET&#8221; + NVDAX &amp;</text>
-  <text x="46" y="35" font-size="8.5" letter-spacing="0.6" fill="#555">USDC MINT ADDRESSES</text>
-  <rect x="26" y="42" width="176" height="146" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="36" y="60" font-size="10.5" font-weight="bold">market</text>
-  <text x="36" y="76" font-size="9.5">authority: Maria</text>
-  <text x="36" y="90" font-size="9.5">base_mint: NVDAx</text>
-  <text x="36" y="104" font-size="9.5">quote_mint: USDC</text>
-  <text x="36" y="118" font-size="9.5">base_vault, quote_vault,</text>
-  <text x="36" y="132" font-size="9.5">fee_vault, order_book</text>
-  <text x="36" y="146" font-size="9.5">fee_basis_points: 25</text>
-  <text x="36" y="160" font-size="9.5">tick_size, min_order_size</text>
-  <text x="36" y="174" font-size="9.5">is_active: true</text>
-  <!-- Maria: wallet account, address on the curve -->
-  <circle cx="79" cy="361" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="91" y="358" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="24" y="373" width="130" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="39" cy="390" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 31,401 Q 39,394 47,401" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="53" y="390" font-size="10.5" font-weight="bold">Maria (authority)</text>
-  <text x="53" y="406" font-size="9.5" fill="#444">1 SOL</text>
-  <!-- the call -->
-  <path d="M 79,353 C 82,300 88,240 96,194" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-initialize-market-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="95" y="318" font-size="11" font-weight="bold">initialize_market</text>
-  <!-- three empty vaults: plain token accounts, keypair addresses on the curve -->
-  <rect x="180" y="242" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="190" y="260" font-size="10.5" font-weight="bold">base vault</text>
-  <text x="190" y="276" font-size="9.5" fill="#444">0 NVDAx</text>
-  <line x1="250" y1="284" x2="250" y2="339" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="250" cy="345" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="262" y="341" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="335" y="242" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="345" y="260" font-size="10.5" font-weight="bold">quote vault</text>
-  <text x="345" y="276" font-size="9.5" fill="#444">0 USDC</text>
-  <line x1="405" y1="284" x2="405" y2="339" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="405" cy="345" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="417" y="341" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <rect x="490" y="242" width="140" height="42" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="500" y="260" font-size="10.5" font-weight="bold">fee vault</text>
-  <text x="500" y="276" font-size="9.5" fill="#444">0 USDC, Maria&#8217;s</text>
-  <line x1="560" y1="284" x2="560" y2="355" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="560" cy="361" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="548" y="357" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <path d="M 100,192 L 230,238" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
-  <path d="M 140,192 L 390,238" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
-  <path d="M 170,192 L 540,238" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="300" y="216" font-size="8.5" font-style="italic" fill="#777" text-anchor="middle">owns</text>
-  <!-- the pre-created order book: a keypair account, address on the curve -->
-  <rect x="200" y="382" width="230" height="44" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <text x="210" y="400" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
-  <text x="210" y="416" font-size="9.5">stamped: empty bid tree, empty ask tree</text>
-  <line x1="303" y1="382" x2="303" y2="349" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="303" cy="343" r="6" fill="#111"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="291" y="363" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <path d="M 154,393 C 168,396 182,400 196,404" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#order-book-initialize-market-arr-gray)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="315" y="442" font-size="10" font-style="italic" fill="#444" text-anchor="middle">created first by Maria&#8217;s client:</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="315" y="455" font-size="10" font-style="italic" fill="#444" text-anchor="middle">too big for the program to allocate</text>
-  <path d="M 150,188 C 165,280 175,340 205,378" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#order-book-initialize-market-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="150" y="368" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the handler stamps the trees</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 680" font-family="Georgia, serif" fill="#111">
+  <!-- initialize_market(): the market PDA, three empty vaults, two empty trees -->
+  <!-- Maria&#8217;s client creates the order book account; initialize_market() builds the rest -->
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <g>
+  <circle cx="360" cy="56" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="352" y="19.0155" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,24.0155)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
+  <text x="380" y="35.0155" font-size="10.5" font-weight="bold">NVDAx mint</text>
+  </g>
+  <g>
+  <circle cx="496" cy="78.0704" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="488" y="40.4582" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(496,45.4582)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
+  <text x="516" y="56.4582" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="43.9168" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,48.9168)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="59.9168" font-size="10.5" font-weight="bold">Alice</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="224" cy="43.0914" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="128" y="49.6439" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,54.6439)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="156" y="65.6439" font-size="10.5" font-weight="bold">Bob</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="336" cy="53.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="240" y="60.0617" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,65.0617)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="268" y="76.0617" font-size="10.5" font-weight="bold">Carol</text>
+  </g>
+  <g>
+  <circle cx="448" cy="69.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="352" y="76.4364" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,81.4364)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="380" y="92.4364" font-size="10.5" font-weight="bold">Maria<tspan font-size="8"> (authority)</tspan></text>
+  <line x1="360" y1="97.4364" x2="448" y2="97.4364" stroke="#888" stroke-width="0.8"/>
+  <text x="360" y="108.436" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="102.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="96.9168" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="34" y="105.917" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="114.917" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <rect x="16" y="120.917" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,125.917)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="44" y="136.917" font-size="9.5" font-weight="bold">Alice&#8217;s NVDAx</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="136" cy="108.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="146" y="102.644" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="146" y="111.644" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="146" y="120.644" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <rect x="128" y="126.644" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,131.644)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="156" y="142.644" font-size="9.5" font-weight="bold">Bob&#8217;s NVDAx</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="248" cy="118.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="258" y="113.062" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="258" y="122.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="258" y="131.062" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <rect x="240" y="137.062" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,142.062)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="268" y="153.062" font-size="9.5" font-weight="bold">Carol&#8217;s NVDAx</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="179.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="173.917" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="34" y="182.917" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="191.917" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="16" y="197.917" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,202.917)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="44" y="213.917" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="136" cy="185.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="146" y="179.644" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="146" y="188.644" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="146" y="197.644" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="128" y="203.644" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,208.644)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="156" y="219.644" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="248" cy="195.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="258" y="190.062" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="258" y="199.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="258" y="208.062" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="240" y="214.062" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,219.062)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="268" y="230.062" font-size="9.5" font-weight="bold">Carol&#8217;s USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="360" cy="134.936" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="370" y="129.436" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="370" y="138.436" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+  <text x="370" y="147.436" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="352" y="153.436" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,158.436)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="380" y="169.436" font-size="9.5" font-weight="bold">Maria&#8217;s USDC</text>
+  </g>
+  <!-- no market user and no order accounts exist yet: omitted, not faded -->
+  <!-- the order book program -->
+  <g>
+  <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="464" y="119.37" width="168" height="90" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,124.37)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
+  <text x="492" y="135.37" font-size="10.5" font-weight="bold">order book program</text>
+  <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="151.37" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_market()</text>
+  <text x="472" y="161.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">create_market_user()</text>
+  <text x="472" y="171.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">place_order()</text>
+  <text x="472" y="181.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">cancel_order()</text>
+  <text x="472" y="191.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">settle_funds()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">withdraw_fees()</text>
+  </g>
+  <g>
+  <circle cx="472" cy="223.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="222.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;MARKET&#8221; + NVDAX MINT +</text>
+  <text x="482" y="231.37" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
+  <rect x="464" y="237.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,242.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="492" y="253.37" font-size="10.5" font-weight="bold">market</text>
+  <line x1="472" y1="258.37" x2="624" y2="258.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="269.37" font-size="9.5">authority: Maria</text>
+  <text x="472" y="281.37" font-size="9.5">base_mint: NVDAx</text>
+  <text x="472" y="293.37" font-size="9.5">quote_mint: USDC</text>
+  <text x="472" y="305.37" font-size="9.5">fee_basis_points: 25</text>
+  <text x="472" y="317.37" font-size="9.5">tick_size: 1 &#183; min_order_size: 1</text>
+  <text x="472" y="329.37" font-size="9.5">base_lot_size: 100 &#183; quote_lot_size: 1</text>
+  <text x="472" y="341.37" font-size="9.5">is_active: true</text>
+  <text x="472" y="353.37" font-size="9" font-style="italic" fill="#444">+ vault and order_book addresses</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="253.37" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="370.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="374.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="380.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,385.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="492" y="396.37" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
+  <line x1="472" y1="401.37" x2="624" y2="401.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="412.37" font-size="9.5">asks_root: empty</text>
+  <text x="472" y="424.37" font-size="9.5">bids_root: empty</text>
+  <text x="472" y="436.37" font-size="9.5">next_order_id: 1</text>
+  <text x="472" y="448.37" font-size="9" font-style="italic" fill="#444">zero-copy: fields read in place</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="396.37" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="465.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="469.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="475.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,480.37)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="492" y="491.37" font-size="10.5" font-weight="bold">base vault</text>
+  <line x1="472" y1="496.37" x2="624" y2="496.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="507.37" font-size="9.5" fill="#444">0 NVDAx</text>
+  <text x="472" y="519.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="491.37" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="536.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="540.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="546.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,551.37)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="492" y="562.37" font-size="10.5" font-weight="bold">quote vault</text>
+  <line x1="472" y1="567.37" x2="624" y2="567.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="578.37" font-size="9.5" fill="#444">0 USDC</text>
+  <text x="472" y="590.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="562.37" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="607.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="611.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="617.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,622.37)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="492" y="633.37" font-size="10.5" font-weight="bold">fee vault</text>
+  <line x1="472" y1="638.37" x2="624" y2="638.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="649.37" font-size="9.5" fill="#444">0 USDC &#183; Maria&#8217;s earnings</text>
+  <text x="472" y="661.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="633.37" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="300" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">Maria&#8217;s client creates the order book account first:</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="316" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">180 KB is more than a program is allowed to allocate</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="350" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the handler validates the sizes and the fee, records every</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="366" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">address on the market, and stamps two empty trees on the book</text>
 </svg>

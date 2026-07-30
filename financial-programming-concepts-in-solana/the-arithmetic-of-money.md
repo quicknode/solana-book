@@ -14,7 +14,7 @@ Programs calculate in **minor units**, the smallest denomination of each token: 
 
 - **Read decimals from the mint; never assume them.** Hard-coding `10^9` because SOL has 9 decimals is a bug waiting for the first token that has 6.
 - **Never mix scales in one calculation.** An amount in USDC minor units times a price per whole share is nonsense with a plausible magnitude, the worst kind of wrong. Name variables with their unit and scale.
-- **Use `transfer_checked`**, which makes every transfer state the decimals it believes and fails if the mint disagrees.
+- **Use `transfer_checked()`**, which makes every transfer state the decimals it believes and fails if the mint disagrees.
 
 ## Lots and WADs
 

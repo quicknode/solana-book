@@ -14,9 +14,9 @@ The consequence the chapter's story will make concrete: **parimutuel markets rew
 
 ## The Account Model: One Config, One Event, Its Outcomes, and a Bet per Bettor
 
-![The account map: the config PDA at top, an event PDA with its vault (an associated token account owned by the event), outcome PDAs hanging off the event, bet PDAs hanging off each outcome, and each bettor's user PDA indexing their bets.](figures/betting-account-map.svg)
+![The account map: each bettor's column stacks their wallet, USDC account, user index, and bet, while the program's column stacks the config, the event with its vault (an associated token account owned by the event), and the two outcome PDAs.](figures/betting-account-map.svg)
 
-The **config** is a single PDA (seed `"config"`) created once by `initialize_config`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `fee_bps`, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
+The **config** is a single PDA (seed `"config"`) created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `fee_bps`, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
 Each **event** is a PDA (seeds: `"event"`, the event ID) with a description, a status that is Open, Settled, or Cancelled, the running `total_pool`, and, after settlement, the `winning_outcome_index`, `winning_pool`, and `distributable_losing_pool`. Two design details are worth stealing:
 
@@ -29,9 +29,9 @@ Finally, each bettor gets a **user** PDA indexing their open bet accounts, cappe
 
 ## Maria Creates the Market
 
-Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `create_event` with a description ("top-grossing film this month"), then `add_outcome` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_create_event` pins it.
+Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `create_event()` with a description ("top-grossing film this month"), then `add_outcome()` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_create_event` pins it.
 
-One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
+One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome()` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
 
 ![Maria's three setup calls build the config, the event with its empty vault, and the two outcome accounts.](figures/betting-maria-setup.svg)
 
@@ -39,19 +39,19 @@ One rule protects the bettors: **the outcome list locks the moment betting start
 
 Three bettors take a view, each from the standard wallet of one SOL and 1,000 USDC, and all in USDC, the token the config designates. Alice is confident about school holidays and puts $300 on Toy Story 5. Bob agrees but has less to spend: $100 on Toy Story 5. Carol believes in word of mouth and puts $200 on Backrooms.
 
-Each bettor calls `place_bet` with an amount. Zero-amount bets reject with `ZeroAmount`. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA gymnastics needed on the way in), creates the bet account if this is the bettor's first bet on this outcome, and bumps the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is exactly how the handler tells a first bet from a top-up and gates the per-outcome bookkeeping.
+Each bettor calls `place_bet()` with an amount. Zero-amount bets reject with `ZeroAmount`. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA gymnastics needed on the way in), creates the bet account if this is the bettor's first bet on this outcome, and bumps the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is exactly how the handler tells a first bet from a top-up and gates the per-outcome bookkeeping.
 
 After all three bets, the vault holds 600 USDC: 400 staked on Toy Story 5, 200 on Backrooms.
 
-![Three place_bet transfers flow into the single event vault, while the outcome accounts tally 400 and 200 and the event's total_pool reaches 600.](figures/betting-place-bets.svg)
+![Three place_bet() transfers flow into the single event vault, while the outcome accounts tally 400 and 200 and the event's total_pool reaches 600.](figures/betting-place-bets.svg)
 
 ## The Film Grosses: Maria Settles the Event
 
-The month ends. In the real world, Toy Story 5 wins. Note what just happened in program terms: the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it the simplest honest way there is: a designated trusted party signs. Maria calls `settle_event` with the winning outcome's index, her signature is checked against the config's admin, and her word becomes the onchain truth. That is not a flaw to apologize for; it is a **trust decision made visible**. Offchain Truth covers the full spectrum, from a single admin key like this one, through multi-party resolution, to signed price feeds; what matters is that the program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
+The month ends. In the real world, Toy Story 5 wins. Note what just happened in program terms: the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it the simplest honest way there is: a designated trusted party signs. Maria calls `settle_event()` with the winning outcome's index, her signature is checked against the config's admin, and her word becomes the onchain truth. That is not a flaw to apologize for; it is a **trust decision made visible**. Offchain Truth covers the full spectrum, from a single admin key like this one, through multi-party resolution, to signed price feeds; what matters is that the program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
 
 Settlement does four things, none of which involve paying bettors yet:
 
-- Marks the event Settled, so `place_bet` now rejects with `EventNotOpen` (pinned by `test_cannot_bet_after_settle`).
+- Marks the event Settled, so `place_bet()` now rejects with `EventNotOpen` (pinned by `test_cannot_bet_after_settle`).
 - Validates the winner structurally: the winning outcome account is re-derived from the index via its PDA seeds, and an outcome nobody bet on rejects with `OutcomeHasNoBets`, because a winning pool of zero would put a divide-by-zero in every claim (pinned by `test_settle_outcome_without_bets_fails`).
 - Does the fee math. The losing pool is `total_pool` minus the winning outcome's total: 600 − 400 = 200 USDC. The fee is 2% of the *losing pool only*: 4 USDC, computed in u128 and floored. The remaining 196 becomes the `distributable_losing_pool`, stored on the event. Charging the fee only on the losing side gives a guarantee worth printing: **a winner can never receive less than they staked**.
 - Transfers the 4 USDC fee out of the vault to the fee recipient's token account, signed by the event PDA.
@@ -60,7 +60,7 @@ Settlement does four things, none of which involve paying bettors yet:
 
 ## Alice and Bob Claim: Conviction Pays Three to One
 
-Winners come and get their money whenever they like; nothing pays out automatically. Alice calls `claim_winnings`. Her payout is her stake back plus her pro-rata share of the distributable losing pool:
+Winners come and get their money whenever they like; nothing pays out automatically. Alice calls `claim_winnings()`. Her payout is her stake back plus her pro-rata share of the distributable losing pool:
 
 payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
@@ -70,13 +70,13 @@ The multiply runs in u128 and divides exactly once, after the multiplication, so
 
 Two orderings in this handler are the chapter's security lesson in miniature. First, the bet is removed from the user's index *before* the token transfer: effects before interactions, so no re-entry path can see stale state. Second, the bet account itself closes at the end of the claim, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (pinned by `test_double_claim_fails`). No `claimed` boolean to forget to check; the state machine's exit *is* the account's deletion.
 
-![Alice's claim_winnings: 447 USDC leaves the vault signed by the event PDA, her bet account closes with rent returning to her, and her user index drops the bet.](figures/betting-alice-claim.svg)
+![Alice's claim_winnings(): 447 USDC leaves the vault signed by the event PDA, her bet account closes with rent returning to her, and her user index drops the bet.](figures/betting-alice-claim.svg)
 
 ## Carol Closes Out, and the Exits That Make the Machine Honest
 
-Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet`, which checks the event is settled and her outcome is not the winner (a winner trying to sneak through this cheaper path rejects with `BetWon` and must use `claim_winnings`), then closes the account and frees the slot. Both properties are pinned by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
+Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to sneak through this cheaper path rejects with `BetWon` and must use `claim_winnings()`), then closes the account and frees the slot. Both properties are pinned by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
 
-And what if the film festival burns down? An Open event has a second exit: `cancel_event`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (pinned by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
+And what if the film festival burns down? An Open event has a second exit: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (pinned by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
 
 ![The event's state machine: an Open event takes bets, then exits to Settled (claims and losing-bet closes) or Cancelled (refunds), and every bet account reaches a terminal close on every path.](figures/betting-state-machine.svg)
 
@@ -98,7 +98,7 @@ The entire financial surface of this program is four expressions: the losing poo
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.
 - **Double claims** die because the bet account dies. There is no flag to desynchronize.
 - **Changing the game mid-play**: adding outcomes after betting starts is rejected; the fee is snapshotted per event.
-- **Slot exhaustion**: 32 concurrent positions per user, `TooManyBets` beyond it, and `close_losing_bet` to recycle slots.
+- **Slot exhaustion**: 32 concurrent positions per user, `TooManyBets` beyond it, and `close_losing_bet()` to recycle slots.
 - **Betting after the whistle** rejects with `EventNotOpen`, whichever exit the event took.
 
 ## Testing Considerations
