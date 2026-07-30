@@ -50,6 +50,28 @@ function prepareMarkdown(markdown) {
 }
 
 const cleanTitle = (raw) => raw.replace(/[*_`]/g, "");
+
+// Parts come from "## Part N: Title" headings in the table of contents, and a
+// chapter belongs to the part heading above it. Any other H2 (Prelude, the
+// Introduction, Appendices) closes the current part, so those chapters sit
+// outside the numbered parts and get no divider page.
+const partForPath = new Map();
+{
+  let current = null;
+  for (const line of toc.split("\n")) {
+    const partHeading = line.match(/^##\s+(Part\s+[IVXL]+):\s*(.+?)\s*$/);
+    if (partHeading) {
+      current = { label: partHeading[1], title: cleanTitle(partHeading[2]) };
+      continue;
+    }
+    if (/^##\s/.test(line)) current = null;
+    if (!current) continue;
+    for (const link of line.matchAll(/\]\(((?!https?:)[^)#]+\.md)\)/g)) {
+      if (!partForPath.has(link[1])) partForPath.set(link[1], current);
+    }
+  }
+}
+
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
   const id = idForPath(path);
@@ -79,8 +101,14 @@ const isPreludeItem = (path) => path.startsWith("prelude/") && !path.endsWith("i
 const tocEntries = [];
 let chapterNumber = 0;
 let appendixNumber = 0;
+let tocPart = null;
 for (const section of sections) {
   if (isPreludeItem(section.path)) continue;
+  const part = partForPath.get(section.path) ?? null;
+  if (part && part !== tocPart) {
+    tocEntries.push(`<li class="toc-part"><span class="label">${part.label}</span><span class="t">${part.title}</span></li>`);
+  }
+  tocPart = part;
   const isAppendix = section.path.startsWith("appendices/");
   const label = isAppendix
     ? `Appendix ${String.fromCharCode(65 + appendixNumber++)}`
@@ -97,11 +125,18 @@ for (const section of sections) {
 }
 const printedToc = tocEntries.join("\n");
 
+let bodyPart = null;
 const body = sections
   .map((section) => {
     const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
     const classes = isPreludeItem(section.path) ? "chapter prelude-item" : "chapter";
-    return `<section class="${classes}" id="${section.id}">\n${html}\n</section>`;
+    const part = partForPath.get(section.path) ?? null;
+    // A part opens with its own page, carrying the label and the part's name.
+    const divider = part && part !== bodyPart
+      ? `<section class="part-divider"><p class="part-label">${part.label}</p><h1>${part.title}</h1></section>\n`
+      : "";
+    bodyPart = part;
+    return `${divider}<section class="${classes}" id="${section.id}">\n${html}\n</section>`;
   })
   .join("\n");
 
@@ -209,6 +244,33 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc .pg { flex: 0 0 auto; }
 .book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }
 .book-toc li.toc-section { margin: 0.08em 0 0.08em 1.6em; }
+.book-toc li.toc-part {
+  display: flex;
+  align-items: baseline;
+  margin: 1.5em 0 0.35em 0;
+  font-size: 11.5pt;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  padding-bottom: 0.18em;
+  border-bottom: 0.5pt solid #999;
+}
+
+/* A part opens on a right-hand page, its title alone in the upper third. */
+section.part-divider { break-before: recto; text-align: center; }
+section.part-divider .part-label {
+  margin: 2.6in 0 0.3in 0;
+  font-size: 11pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #555;
+}
+section.part-divider h1 {
+  font-size: 22pt;
+  line-height: 1.25;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
 
 section.chapter { break-before: page; }
 /* Front-matter placeholder pages share one flow until they have real content. */

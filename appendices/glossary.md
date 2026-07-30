@@ -280,7 +280,7 @@ The total notional of positions currently open on a market, usually tracked per 
 
 ### oracle
 
-A service that publishes signed statements of offchain facts, most often prices, onchain. A program verifies the publisher's signature, the freshness, and the confidence interval, exactly as it validates any other input.
+A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, exactly as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
 
 ### parimutuel
 
