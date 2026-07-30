@@ -61,7 +61,7 @@ The diagrams throughout the book share one set of conventions, and each conventi
 
 ## Programs Follow Patterns, Patterns Build Understanding
 
-The book has two foundation chapters and nine program chapters. **Building Blocks** is everything Solana-mechanical: accounts, tokens, PDAs, rent, atomicity, and time. **Financial Programming Concepts** is everything money-specific: the arithmetic, offchain truth, the adversary, testing, and admin power.
+The book has two foundation parts and nine program chapters. **Building Blocks** is everything Solana-mechanical: accounts, tokens, PDAs, rent, atomicity, and time. **Financial Programming Concepts** is everything money-specific: the arithmetic, offchain truth, the adversary, testing, and admin power.
 
 Then every program chapter walks one complete financial program. Incentives for admins and individual users are discussed, and we show how individual instruction handlers modify onchain state on behalf of their users.
 

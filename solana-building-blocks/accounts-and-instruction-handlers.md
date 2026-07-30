@@ -4,13 +4,13 @@ Nearly every generic blockchain introduction describes it as a "shared ledger". 
 
 Solana - or more specifically, Solana mainnet and devnet - is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
 
-## Alice's Public Key Is Her Address
+## A User's Public Key Is Their Address
 
 Meet Alice. Alice has a **key pair**: two mathematically linked keys. Her **private key** is kept secret, stored securely on her device, and is used to sign. The matching **public key** can be shared with everyone, and is used to check those signatures: a valid signature proves that the holder of the private key, and nobody else, produced it.
 
 On Solana, as with most blockchains, the public key does double duty: it is also Alice's **address**, the identifier anyone can use to find her and transact with her. And "key" is not a metaphor: Solana public keys are points on a cryptographic curve, so this book draws the network exactly that way, as a curve with addresses sitting on it.
 
-At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called rent, covered with PDAs later in this part) and the fees on her future transactions. Anyone who knows Alice's address can look up her account and see that balance; what nobody can do without her private key is spend it.
+At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called rent, covered later in this part) and the fees on her future transactions. Anyone who knows Alice's address can look up her account, see that balance, and send her more SOL; what nobody can do without her private key is spend it.
 
 ![Alice's public key is her address, a point on the curve; her private key stays on her device.](figures/alice-on-the-curve.svg)
 
@@ -28,15 +28,15 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
-Alice's SOL is devnet SOL, and it cost her nothing: the `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
+Alice's SOL is devnet SOL: think of it as the pretend money from a board game, which spends exactly like the real thing inside the game and buys nothing outside it. It cost her nothing: the `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
 
-## Bob Has an Account Too
+## Receiving Is Public, Spending Is Signed
 
 Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of SOL from the same faucet. To send something to Bob, Alice needs only his address; to spend whatever arrives there, Bob needs the private key that matches it. That asymmetry is the whole payment model: receiving is public, spending is signed.
 
 ![Bob joins the curve: his public key is his address, alongside Alice's.](figures/alice-and-bob-on-the-curve.svg)
 
-## Alice Pays Bob by Sending a Transaction
+## Users Interact With Programs and Each Other by Sending Transactions
 
 Alice wants to send Bob some SOL. The only way to change anything on this computer - move a balance, store data, anything - is to send it a **transaction**.
 
@@ -84,13 +84,15 @@ A **wallet** is a key pair being used this way, with the private key stored some
 
 ## Accounts Store Data, Not Just SOL
 
-So far, the accounts in the story hold balances. An account in full is some data with an address, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and every record a financial program keeps. (The "nearly" is State Compression, a technique for storing bulk data offchain with onchain proofs; none of the financial state in this book uses it.) A financial program's whole ledger is a set of accounts.
+Alice's account holds a balance and nothing else, and so does Bob's. That is the smallest an account gets. An account in full is some data with an address, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and every record a financial program keeps. (The "nearly" is State Compression, a technique for storing bulk data offchain with onchain proofs; none of the financial state in this book uses it.) A financial program's whole ledger is a set of accounts.
 
 In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an **owner program** that can change this account: users (or other programs) invoke that program to modify the account. Alice's account is the simplest case: no data to speak of, a lamport balance that *is* her SOL, and the System Program as its owner, which is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
 ![One account, dissected: an address, an owner program, a lamport balance, and data bytes that the owning program reads as a Rust struct.](figures/account-dissected.svg)
 
-The programs themselves are stored the same way. Deploying a program stores its compiled code in an account at the program's address; every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere. A program is pure logic: it reads the accounts it is handed, checks them, and writes new values back, and the only way to change the state it manages is to run its instruction handlers. This split, logic in program accounts and state in data accounts, is what makes financial state legible: to know a market's condition you read its accounts, and to change it there are only the program's declared entry points.
+The programs themselves are stored the same way, and it takes more than one account to do it. Deploying a program writes its compiled code into an account of its own, separate from the address you call, which is why deploying costs rent in proportion to the size of the binary; every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. A program is pure logic: it reads the accounts it is handed, checks them, and writes new values back, and the only way to change the state it manages is to run its instruction handlers. This split, logic in program accounts and state in data accounts, is what makes financial state legible: to know a market's condition you read its accounts, and to change it there are only the program's declared entry points.
+
+> **A deployed program is two accounts, and briefly three.** Under Solana's upgradeable loader, the account at the program's address is a stub of 36 bytes: it is marked executable, and its data is nothing but the address of a second account. That second account, **ProgramData**, holds the compiled bytecode, the slot the program was last deployed in, and the **upgrade authority** permitted to replace it. A third account, the **buffer**, holds new bytecode while a deploy or an upgrade is being written, and is closed once the write lands so its rent comes back. Newer loaders fold this arrangement back into a single account. What stays true across all of them is that a program's code is not the thing sitting at the address you call.
 
 ## Addresses Come in Two Kinds
 
@@ -103,7 +105,7 @@ Every account sits at a 32-byte **address**, usually shown base58-encoded. Addre
 
 Because addresses are how everything is found, financial programs lean on *derivable* addresses: put the market's pair, the user's key, or the offer's ID into the derivation, and anyone can compute where the account must be, no lookup table required.
 
-## Bob Pays Alice Back in USDC
+## Users Use the Token Program to Send Tokens to Each Other
 
 A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana means **USDC**: a **stablecoin**, a token that tracks the dollar one for one. Every asset on Solana except SOL is a **token**, defined by a program rather than by the network itself; SOL is the one asset the network understands natively. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
 
@@ -124,6 +126,6 @@ Alice and Bob's two payments toured every building block the rest of the book us
 - A **key pair**'s public key is an address, and at an address lives an **account**: Alice's holds her balance of **SOL**, stored as an integer of **lamports**, its minor unit.
 - **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee: all authority reduces to whose signature a transaction carries.
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
-- Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. Deployed programs and their state live in separate accounts.
+- Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds. Bob paid Alice's USDC into one: an **associated token account**, derived from her address and the mint.
 - Instructions supply the accounts as arguments; instruction handlers check them.
