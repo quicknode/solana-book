@@ -254,6 +254,10 @@ Maximal extractable value: profit taken by controlling transaction ordering, mos
 
 The onchain account that defines a token: its supply, decimals, and authorities. In economic prose this book says "token"; "mint account" appears when describing what gets passed to an instruction.
 
+### multisig
+
+An account that records a set of owners and how many must agree before it acts, used wherever one person holding a key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority. A transaction can carry several signatures natively; a multisig is that idea made into standing policy.
+
 ### NAV (net asset value)
 
 The total current value of everything a fund holds, computed from fresh prices. Share price is NAV divided by share supply.

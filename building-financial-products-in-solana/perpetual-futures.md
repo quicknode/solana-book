@@ -124,7 +124,7 @@ The suite is the largest in the companion repository: a mock oracle the tests se
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
-A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. This chapter rebuilt the whole stack as one program: the pool is the clearing house and the counterparty, the maintenance margin and reservation are the margin department, the funding index is the funding desk, and Dave's bot is the liquidation clerk, paid per correction.
+A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. This chapter rebuilt the whole stack as one program: the pool is the clearing house and the counterparty, the maintenance margin and reservation are the margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
 The concepts this capstone added:
 

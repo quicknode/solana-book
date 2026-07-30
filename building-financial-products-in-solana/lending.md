@@ -136,7 +136,7 @@ The suite is organized by risk, one file per class: rounding (the round-trip-cre
 
 ## What You Learnt from Building the Lending Market
 
-Strip the branding from a commercial bank and what remains is: pooled deposits earning a rate, loans against collateral marked to market, a margin call when the mark moves, and a spread for the house. This chapter built all four out of PDAs, one growing index, two rounding helpers, and a price that arrives by signature. The loan officer became a loan-to-value check, the risk committee became a config validator that refuses foot-gun parameters, the margin clerk became Dave and his bonus, and the bank's interest ledger became a single number that only grows.
+Strip the branding from a commercial bank and what remains is: pooled deposits earning a rate, loans against collateral marked to market, a margin call when the mark moves, and a spread for the house. This chapter built all four out of PDAs, one growing index, two rounding helpers, and a price that arrives by signature. The loan officer became a loan-to-value check, the risk committee became a config validator that refuses foot-gun parameters, the margin clerk became any bot willing to claim a liquidation bonus, and the bank's interest ledger became a single number that only grows.
 
 The concepts you now have:
 
