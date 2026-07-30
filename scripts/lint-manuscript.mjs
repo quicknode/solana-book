@@ -100,6 +100,14 @@ const svgRules = [
   // than the value column.
   [/<line x1="7" y1="5\.4" x2="7" y2="12"/,
     'table-icon divider sits at x=5.5 (key column narrower than value column)'],
+  // The coin mark is three rings. Two rings read as a pair of address dots at
+  // print size, where the accent colour is gone and the mark is about 2mm.
+  [/<circle cx="4" cy="2" r="6"[^>]*stroke="#1e7a3c"/,
+    'the coin mark is three rings (cx 5/0/-5, r=4.5), not two'],
+  // No currency symbol inside the mark: arrows carry ACME, NVDAx, SPCXx, LP
+  // tokens and SOL as often as USDC, and the adjacent label names the asset.
+  [/class="coin"[^>]*>.*(?:[$€£¥]|<text)/,
+    'the coin mark carries no currency symbol; the amount label names the asset'],
 ];
 
 const svgFiles = [];

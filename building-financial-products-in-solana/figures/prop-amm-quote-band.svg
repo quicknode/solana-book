@@ -17,21 +17,11 @@
   <text x="282" y="140" font-size="9" fill="#888" text-anchor="middle" stroke="#f4f4f2" stroke-width="4" paint-order="stroke" stroke-linejoin="round">the band is Maria&#8217;s revenue</text>
   <!-- buyer arrow -->
   <path d="M 490,40 L 490,74" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#propamm-band-arr)"/>
-  <g transform="translate(490,55)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
-  </g>
   <text x="490" y="30" font-size="10.5" font-weight="bold" text-anchor="middle">buyers pay the ask</text>
   <text x="533" y="60" font-size="9.5" font-weight="bold" fill="#1e7a3c">825.825 USDC</text>
   <text x="533" y="73" font-size="9.5" font-weight="bold" fill="#1e7a3c">&#8594; 5 NVDAx</text>
   <!-- seller arrow -->
   <path d="M 490,210 L 490,176" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#propamm-band-arr)"/>
-  <g transform="translate(490,193)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
-  </g>
   <text x="490" y="228" font-size="10.5" font-weight="bold" text-anchor="middle">sellers receive the bid</text>
   <text x="533" y="190" font-size="9.5" font-weight="bold" fill="#1e7a3c">5 NVDAx &#8594;</text>
   <text x="533" y="203" font-size="9.5" font-weight="bold" fill="#1e7a3c">824.175 USDC</text>
@@ -39,4 +29,6 @@
   <rect x="70" y="196" width="300" height="40" fill="#fff" stroke="#888" stroke-width="1"/>
   <text x="220" y="213" font-size="10" font-weight="bold" text-anchor="middle">round trip: 825.825 in, 824.175 back</text>
   <text x="220" y="228" font-size="9.5" fill="#444" text-anchor="middle">the 1.65 USDC difference is the whole fee</text>
+  <g class="coin" transform="translate(518.5,62.6)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(518.5,192.6)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

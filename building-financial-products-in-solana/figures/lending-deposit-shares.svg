@@ -238,15 +238,15 @@
   <text x="496" y="827.34" font-size="9.5" font-weight="bold">SPCXx share mint</text>
   </g>
   <path d="M 94,157 C 140,168 184,190 190,250 C 194,320 192,640 192,700 C 192,734 186,760 176,763" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
-  <g transform="translate(192,470)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="182" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">deposit_reserve_liquidity()</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="182" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1,000 USDC</text>
   <path d="M 172,834 C 206,834 224,812 224,750 C 224,600 226,330 222,286 C 216,244 150,232 98,226" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
-  <g transform="translate(226,560)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="238" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c">1,000 USDC shares</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="238" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c">minted to Alice</text>
   <text x="312" y="430" font-size="8.5" fill="#444" font-style="italic">the first deposit into a reserve mints one to one:</text>
   <text x="312" y="444" font-size="8.5" fill="#444" font-style="italic">shares = amount, because the pool was empty</text>
   <text x="312" y="468" font-size="8.5" fill="#444" font-style="italic">interest later swells the pool while the share supply</text>
   <text x="312" y="482" font-size="8.5" fill="#444" font-style="italic">stays put, so the same 1,000 shares redeem for more</text>
+  <g class="coin" transform="translate(59,333)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(223.5,333)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

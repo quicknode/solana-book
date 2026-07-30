@@ -198,7 +198,6 @@
   <path d="M 464,613.37 C 400,619.37 330,624 268,578 C 200,528 152,452 130,392 C 124,374 124,340 124,300 C 124,240 124,180 124,146.917 C 124,142.917 122,140.917 120,140.917" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="500" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">2. claim_winnings() &#183; 447 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="516" font-size="9" font-style="italic" fill="#444" text-anchor="middle">signed by the event PDA</text>
-  <g transform="translate(175,480)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <path d="M 68,317.917 C 68,339.917 30,347.917 8,331.917 C 2,260 2,140 14,65.9168" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr-g)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="112" y="335.917" font-size="8.5" font-style="italic" fill="#444" text-anchor="end">rent refund</text>
   <text x="16" y="470" font-size="8.5" font-weight="bold">1. index entry removed first</text>
@@ -206,4 +205,5 @@
   <text x="16" y="498" font-size="8.5" font-weight="bold">3. bet account closed</text>
   <text x="230" y="659" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147 = 447; the 149 left is Bob&#8217;s exact claim</text>
   <text x="230" y="677" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account is the double-claim guard: no account, no second claim</text>
+  <g class="coin" transform="translate(213.9,495.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

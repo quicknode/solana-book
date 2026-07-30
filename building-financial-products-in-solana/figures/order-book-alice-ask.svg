@@ -225,8 +225,8 @@
   <!-- the lock on entry: ten shares, straight from Alice to the base vault -->
   <path d="M 14,141 C 2,168 2,320 4,464 C 6,516 44,542 136,546 L 372,546 C 424,546 444,526 458,504" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-alice-ask-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="150" y="536" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">10 NVDAx</text>
-  <g transform="translate(300,546)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="150" y="570" font-size="9.5" font-style="italic" fill="#444" text-anchor="start">locked on entry by place_order(): the order is funded before it rests</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="600" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">no bid reaches 265, so nothing matches and the ask becomes a leaf</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="616" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">in the ask tree; resting costs only rent and the transaction fee</text>
+  <g class="coin" transform="translate(135.5,531.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

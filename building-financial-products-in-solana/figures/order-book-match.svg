@@ -258,13 +258,13 @@
   <!-- Carol&#8217;s three shares lock in the base vault -->
   <path d="M 345,158 C 352,162 348,200 348,268 L 348,452 C 348,476 358,492 382,492 L 456,492" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="358" y="300" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">3 NVDAx</text>
-  <g transform="translate(410,492)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <!-- the aggregated taker fee, quote vault to fee vault, program-signed -->
   <path d="M 460,566 C 442,564 434,578 434,598 C 434,620 442,636 456,640" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="426" y="590" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1.875 USDC</text>
-  <g transform="translate(436,616)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="426" y="604" font-size="9.5" font-style="italic" fill="#444" text-anchor="end">25 bps of the 750 gross, rounded up</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="512" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the fill executes at 250, Bob&#8217;s resting price, not Carol&#8217;s 245</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="528" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">ledger credits, not transfers: the tokens stay in the vaults until</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="544" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">each side calls settle_funds()</text>
+  <g class="coin" transform="translate(416,295.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(356.7,585.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
