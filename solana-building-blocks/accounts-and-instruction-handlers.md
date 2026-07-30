@@ -30,9 +30,9 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 
 Alice's SOL is devnet SOL: think of it as the pretend money from a board game, which spends exactly like the real thing inside the game and buys nothing outside it. It cost her nothing: the `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
 
-## Receiving Is Public, Spending Is Signed
+## Receiving Needs No Signature, Spending Does
 
-Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of SOL from the same faucet. To send something to Bob, Alice needs only his address; to spend whatever arrives there, Bob needs the private key that matches it. That asymmetry is the whole payment model: receiving is public, spending is signed.
+Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of SOL from the same faucet. To send something to Bob, Alice needs only his address; to spend whatever arrives there, Bob needs the private key that matches it. That asymmetry is the whole payment model: receiving needs no signature, spending does.
 
 ![Bob joins the curve: his public key is his address, alongside Alice's.](figures/alice-and-bob-on-the-curve.svg)
 
@@ -40,7 +40,7 @@ Meet Bob. Bob has his own key pair, and his public key is another point on the s
 
 Alice wants to send Bob some SOL. The only way to change anything on this computer - move a balance, store data, anything - is to send it a **transaction**.
 
-A transaction carries one or more **instructions**, and each instruction is addressed to an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve. The **System Program** sits at a well-known address and creates accounts and transfers SOL; the **Memo Program** sits at another and writes notes into the transaction log; the escrow you will build in this book gets an address of its own the day you deploy it.
+A transaction carries one or more **instructions**, and each instruction is addressed to an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve. The **System Program** sits at a well-known address and creates accounts and transfers SOL; the **Memo Program** sits at another and writes notes into the transaction log; the programs in this book each get an address of their own the day you deploy them.
 
 ![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
 
@@ -68,7 +68,7 @@ The budget for all this is metered in **compute units** per transaction, and the
 
 ## Every Transaction Is Signed
 
-One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is a cryptographic proof that the holder of the private key authorized this exact transaction - not a similar one, not an edited one - and anyone can verify that proof against her public key. You already use this primitive daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh proof that the card is genuine and issued by your bank.
+One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction - not a similar one, not an edited one. Anyone can use the public key to verify that proof. You already use this primitive daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh proof that the card is genuine and issued by your bank.
 
 The signature is also a grant of authority. By signing, Alice authorizes what the transaction does in her name:
 
@@ -76,7 +76,7 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 - **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
 - **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
 
-That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving is public - while nothing will ever leave his account until a transaction *he* signs asks for it. Everything the rest of this book calls "authority" (who may move these funds, who may settle this market) reduces to one question: whose signature does this transaction carry?
+That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving requires no signature from the recipient - while nothing will ever leave his account until a transaction *he* signs asks for it. Everything the rest of this book calls "authority" (who may move these funds, who may settle this market) reduces to one question: whose signature does this transaction carry?
 
 A **wallet** is a key pair being used this way, with the private key stored somewhere safe. Stripped of its apps and branding, a saved wallet is startlingly small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet, which is the entire custody problem in one sentence.
 
