@@ -72,26 +72,19 @@ for (const file of [...new Set(files)]) {
   });
 }
 
-// Heading check: the foundation parts teach general mechanisms, so their
-// headings state the general rule and the characters stay in the prose
-// beneath. The program chapters are walkthroughs whose headings are the
-// story's beats, so they name characters by design and are not scanned.
-const foundationDirs = [
-  "prelude",
-  "solana-building-blocks",
-  "financial-programming-concepts-in-solana",
-];
+// Heading check: a heading states the general mechanism and the characters
+// stay in the prose beneath, in every part of the book. Walkthrough chapters
+// keep the story's order and the specific mechanism; only the names go.
 const characterHeading = /^#{2,6} .*\b(Alice|Bob|Carol|Dave|Maria)\b/;
 
 for (const file of [...new Set(files)]) {
-  if (!foundationDirs.some((dir) => file.includes(join(repoRoot, dir) + "/"))) continue;
   readFileSync(file, "utf8")
     .split("\n")
     .forEach((line, index) => {
       if (!characterHeading.test(line)) return;
       failures += 1;
       console.error(
-        `${file}:${index + 1}: foundation-part headings state the general mechanism, not a specific actor (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
+        `${file}:${index + 1}: headings state the general mechanism, not a specific actor (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
       );
     });
 }

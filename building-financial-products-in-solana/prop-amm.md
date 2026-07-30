@@ -18,7 +18,7 @@ The **market** is a PDA seeded by the two mints: one market per pair, because th
 
 What is missing is the chapter's real lesson. No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The fundraiser chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are, legitimately, the entire accounting.
 
-## Maria Opens the Market and Stocks It
+## The Market Maker Opens the Market and Stocks It
 
 Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. The market trades NVDAx, the NVIDIA stock the order book chapter traded, against USDC, and the oracle quotes NVDAx at $165.
 
@@ -26,7 +26,7 @@ Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap 
 
 Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
 
-## Alice Buys at the Ask
+## A Buyer Trades at the Ask
 
 ![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
 
@@ -34,7 +34,7 @@ Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the 
 
 Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
-## Bob Sells at the Bid, and the Round Trip Is the Fee
+## A Seller Trades at the Bid, and the Round Trip Is the Fee
 
 Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 824.175 USDC.
 
@@ -48,13 +48,13 @@ NVIDIA reports earnings and the feed reprices to $170. The very next swap fills 
 
 That word *reads* is carrying the whole design, though. Between oracle updates, even fresh ones inside the 150-slot bound, the market is quoting a number that is seconds old, and anyone who knows where the price went in those seconds can buy below true value or sell above it. Market makers call this **adverse selection**: the flow that finds you when your quote is wrong is precisely the flow you did not want. It is the prop AMM's impermanent loss: the structural cost of the business, borne entirely by Maria.
 
-## Maria Re-Quotes, and Sometimes Refuses to Quote
+## The Market Maker Re-Quotes, and Sometimes Refuses to Quote
 
 Her defense is `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see exactly this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is not an emergency measure for a market maker. It is Tuesday.
 
 The oracle gates are the automated version of the same instinct. A price older than 150 slots is refused (`StalePrice`) because a lagging quote is a free option for whoever notices first, and a price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`) because quoting a tight spread around a number the oracle itself is unsure of is how inventory walks out the door. For every other program in this book the staleness check was hygiene; for a market maker it is the business itself.
 
-## Maria Leaves, Whole
+## The Market Maker Leaves, Whole
 
 When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no pro-rata slice, no locked floor, no waterfall. The exit machinery that filled three chapters exists to divide pooled money fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them: every state needs an exit, and an empty market's exit is to say no.
 

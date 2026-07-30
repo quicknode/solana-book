@@ -31,17 +31,17 @@ Every valuation in this chapter multiplies an amount by a price, and the prices 
 
 "Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots (about ten seconds) makes the reading handler fail with `StalePriceFeed`, and freshness is measured in slots rather than unix time because the runtime guarantees slot progression while the timestamp is validator-influenced. Every handler that values anything requires a `refresh_reserve()` and `refresh_obligation()` to have run in the same transaction, with `ReserveStale` and `ObligationStale` rejecting anyone who skips it: pricing is never allowed to be an afterthought.
 
-## Maria Opens the Market
+## The Market Owner Opens the Market
 
 Maria runs the market, and her revenue is a cut of the interest: the reserve factor you just met. She runs `init_lending_market()` with USDC as the quote currency, then `init_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `cumulative_borrow_rate_index` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single slot's interest does not truncate to zero while staying far inside u128's ceiling. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
 
-## Alice Supplies: Tokens In, Shares Out
+## Supplying: Tokens In, Shares Out
 
 Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity()` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest swells the pool while the share supply stays put, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
 
 ![Alice's deposit: 1,000 USDC into the reserve's liquidity vault mints 1,000 shares from the share mint, one to one; interest later swells the pool while the share supply stays put, so the same shares redeem for more USDC.](figures/lending-deposit-shares.svg)
 
-## Bob Borrows Against His NVIDIA
+## Borrowing Against Deposited Collateral
 
 Bob needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each): he wants $750 of liquidity while keeping his position. Four instruction handlers, in order:
 
@@ -54,7 +54,7 @@ The health check behind step 4 is conservative by construction: when `refresh_ob
 
 ![Bob's borrow: NVDAx shares locked in his obligation's collateral vault, $750 USDC flowing out of the USDC reserve to Bob, and his debt at 75% of collateral value with the liquidation threshold at 80% just above it.](figures/lending-borrow-ltv.svg)
 
-## Carol Shorts SpaceX
+## Shorting an Asset by Borrowing It
 
 Carol thinks SpaceX is overvalued and wants to profit if it falls. (Carol, you do you.) Her trade is the classic short, and a lending market is where shorts live: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
@@ -72,11 +72,11 @@ Of the interest that accrues, the reserve factor (10%) is skimmed into `accumula
 
 ![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the cumulative index compounding across refreshes.](figures/lending-rate-curve.svg)
 
-## SpaceX Rallies and Carol Becomes Liquidatable
+## The Shorted Asset Rallies and the Position Becomes Liquidatable
 
 The other thing that moves over time is prices. SPCXx rallies from $250 to $300, and the feed says so. Carol's debt is now 3 × $300 = $900 against $1,000 of collateral, and her liquidation threshold is 80%: $800. Her `borrowed_value` exceeds her `unhealthy_borrow_value`, and the market will now pay anyone to fix that.
 
-## Dave Liquidates Her, Twice, by the Rules
+## A Liquidator Closes the Gap, Twice, by the Rules
 
 Dave watches for liquidation opportunities. He is not a villain; he is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler's rules are exact:
 
@@ -99,7 +99,7 @@ Step back from Dave for a moment, because this market runs on a pattern worth na
 
 ![The crank loop: anyone's scheduled bot calls the permissionless handler, and every outcome is clean: work done, a quiet no-op, or a refusal of work the state does not permit.](figures/crank-loop.svg)
 
-## Bob Repays, Maria Collects, Alice Takes Her Yield
+## Repayment, Fees, and Yield: Everyone Leaves Whole
 
 Five weeks in, Bob's cash crunch has passed. His $750 debt has quietly become about $758 through the index. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal lingers with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never squeak past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
 
