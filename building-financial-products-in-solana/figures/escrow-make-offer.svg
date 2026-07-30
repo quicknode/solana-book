@@ -117,7 +117,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="353.4" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <!-- the offered tokens: Alice's USDC straight into the vault -->
-  <path d="M 158,152 C 186,188 184,264 220,296 C 310,342 402,352 458,350" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-make-arr)"/>
+  <path d="M 158,152 C 186,188 180.235,268.82 220,296 C 303.445,353.035 402,352 458,350" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-make-arr)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="354" y="292" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">make_offer() &#183; 250 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="354" y="305" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(250,000,000 minor units of USDC; Alice signs)</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="392" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Alice fronts the rent for the offer account, the vault, and her new TSLAx account</text>

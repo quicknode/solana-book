@@ -43,7 +43,7 @@
   <text x="446" y="68" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">250 USDC</text>
   <text x="446" y="81" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(all of it)</text>
   <!-- TSLAx lane: one unbroken arrow, Bob straight to Alice; the program never holds token B -->
-  <path d="M 548,132 C 552,174 510,190 440,190 C 340,192 240,192 150,190 C 106,190 92,174 92,132" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
+  <path d="M 548,132 C 552,174 510,190 440,190 C 340,192 240,192 150,190 C 106,190 94.258,173.939 92,132" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
   <text x="320" y="216" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1 TSLAx</text>
   <text x="320" y="229" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(all of it, straight to Alice; the program never holds token B)</text>
   <text x="320" y="251" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">no percentage kept; the network fee is a fraction of a cent</text>

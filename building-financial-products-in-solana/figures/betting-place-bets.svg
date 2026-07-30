@@ -220,7 +220,7 @@
   <text x="472" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   </g>
   <path d="M 112,160.917 C 124,174.917 124,190.917 124,430 C 124,486 150,520 220,559.37 C 320,611.37 420,631.37 460,636.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-bets-arr)"/>
-  <path d="M 224,166.644 C 236,180.644 236,196.644 236,398 C 236,452 280,486 330,519.37 C 390,555.37 434,599.37 460,618.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-bets-arr)"/>
+  <path d="M 224,166.644 C 236,180.644 236,196.644 236,398 C 236,452 279.212,487.212 330,519.37 C 389.117,556.802 434,599.37 460,618.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-bets-arr)"/>
   <path d="M 336,177.062 C 348,191.062 348,207.062 348,366 C 348,420 386,452 412,486 C 442,526 452,577.37 460,601.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-bets-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">300 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="228" y="436" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">100 USDC</text>

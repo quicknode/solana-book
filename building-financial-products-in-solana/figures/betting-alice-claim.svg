@@ -195,7 +195,7 @@
   <text x="472" y="623.37" font-size="9.5" font-weight="bold">149 USDC</text>
   <text x="472" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   </g>
-  <path d="M 464,613.37 C 400,619.37 330,624 268,578 C 200,528 152,452 130,392 C 124,374 124,340 124,300 C 124,240 124,180 124,146.917 C 124,142.917 122,140.917 120,140.917" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
+  <path d="M 464,613.37 C 400,619.37 330,624 268,578 C 200,528 152,452 130,392 C 124,374 124,340 124,300 C 124,240 124,180 124,146.917 C 124,142.917 120.526,142.846 120,140.917" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="500" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">2. claim_winnings() &#183; 447 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="516" font-size="9" font-style="italic" fill="#444" text-anchor="middle">signed by the event PDA</text>
   <path d="M 68,317.917 C 68,339.917 30,347.917 8,331.917 C 2,260 2,140 14,65.9168" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr-g)"/>

@@ -5,6 +5,8 @@
 //   1. No text crosses an account box edge, and no two labels overlap.
 //   2. Every coin mark sits inside the canvas, clear of text and boxes.
 //   3. Every coin mark sits beside an amount label, one coin per amount.
+//   4. Value arrows are smooth: no tangent break where two segments join.
+//   5. Arrowheads point along the stroke they terminate.
 //
 // Usage: node scripts/check-figure-geometry.mjs
 // Exits nonzero if any check fails.
@@ -27,6 +29,45 @@ for (const dir of figureDirs) {
   }
 }
 files.sort();
+
+// Tangent break at each interior join of a path, in degrees. The figures use
+// absolute M/L/C/Q only; anything else is left alone rather than guessed at.
+function joinAngles(d) {
+  const tokens = d.match(/[MLCQZ]|[-+]?(?:\d*\.\d+|\d+)(?:[eE][-+]?\d+)?/g) || [];
+  const segments = [];
+  let i = 0, cursor = null, command = null;
+  const next = () => Number(tokens[i++]);
+  while (i < tokens.length) {
+    if (/[MLCQZ]/.test(tokens[i])) command = tokens[i++];
+    if (command === "M") { cursor = [next(), next()]; command = "L"; }
+    else if (command === "L") { const p = [next(), next()]; segments.push([cursor, p]); cursor = p; }
+    else if (command === "C") {
+      const a = [next(), next()], b = [next(), next()], p = [next(), next()];
+      segments.push([cursor, a, b, p]); cursor = p;
+    } else if (command === "Q") {
+      const a = [next(), next()], p = [next(), next()];
+      segments.push([cursor, a, p]); cursor = p;
+    } else return [];
+  }
+
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1]];
+  const size = (v) => Math.hypot(v[0], v[1]);
+  const leaving = (s) => { for (let k = 1; k < s.length; k += 1) { const v = sub(s[k], s[0]); if (size(v) > 1e-6) return v; } return null; };
+  const arriving = (s) => { const last = s[s.length - 1]; for (let k = s.length - 2; k >= 0; k -= 1) { const v = sub(last, s[k]); if (size(v) > 1e-6) return v; } return null; };
+
+  const joins = [];
+  for (let k = 1; k < segments.length; k += 1) {
+    const a = arriving(segments[k - 1]);
+    const b = leaving(segments[k]);
+    if (!a || !b) continue;
+    const cos = (a[0] * b[0] + a[1] * b[1]) / (size(a) * size(b));
+    joins.push({
+      at: segments[k][0],
+      degrees: (Math.acos(Math.max(-1, Math.min(1, cos))) * 180) / Math.PI,
+    });
+  }
+  return joins;
+}
 
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
@@ -85,7 +126,35 @@ for (const file of files) {
       }
     }
 
+    // A value arrow is one stroke: where two Bezier segments meet, the
+    // incoming handle, the anchor and the outgoing handle have to be
+    // collinear or the stroke shows a corner. And an arrowhead drawn with
+    // orient="auto" points along the tangent at the very last point, which
+    // a short terminal hook can swing away from the line the reader sees.
+    const arrows = [];
+    for (const p of svg.querySelectorAll("path")) {
+      const stroke = (p.getAttribute("stroke") || "").toLowerCase();
+      if (!stroke || stroke === "none" || !p.getTotalLength) continue;
+      const accent = stroke === "#1e7a3c";
+      const head = !!p.getAttribute("marker-end");
+      if (!accent && !head) continue;
+      const total = p.getTotalLength();
+      if (total < 8) continue;
+      const width = parseFloat(p.getAttribute("stroke-width") || "1");
+      const end = p.getPointAtLength(total);
+      const nib = p.getPointAtLength(total - 0.25);
+      const behind = p.getPointAtLength(Math.max(0, total - Math.max(10, 9 * width)));
+      arrows.push({
+        accent, head,
+        d: p.getAttribute("d") || "",
+        end: [end.x, end.y],
+        tangent: [end.x - nib.x, end.y - nib.y],
+        approach: [end.x - behind.x, end.y - behind.y],
+      });
+    }
+
     return {
+      arrows,
       coins: [...svg.querySelectorAll("g.coin")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
       rects: [...svg.querySelectorAll("rect")]
@@ -147,6 +216,33 @@ for (const file of files) {
     const beside = fig.amounts.some((a) =>
       Math.hypot(Math.max(a.x1 - c.x2, 0, c.x1 - a.x2), Math.max(a.y1 - c.y2, 0, c.y1 - a.y2)) < 9);
     if (!beside) fail(`coin at ${at(c)} is not beside an amount label`);
+  }
+
+  // 4 and 5. Arrows read as one smooth stroke, ending in a head that points
+  // where the stroke is going.
+  const between = (u, v) => {
+    const lu = Math.hypot(u[0], u[1]);
+    const lv = Math.hypot(v[0], v[1]);
+    if (lu < 1e-9 || lv < 1e-9) return 0;
+    const cos = (u[0] * v[0] + u[1] * v[1]) / (lu * lv);
+    return (Math.acos(Math.max(-1, Math.min(1, cos))) * 180) / Math.PI;
+  };
+  for (const a of fig.arrows) {
+    if (a.accent) {
+      for (const join of joinAngles(a.d)) {
+        if (join.degrees >= 3) {
+          fail(`value arrow kinks ${join.degrees.toFixed(0)}deg at ` +
+               `${join.at.map((v) => v.toFixed(0)).join(",")}; align the handles either side of the join`);
+        }
+      }
+    }
+    if (a.head) {
+      const off = between(a.tangent, a.approach);
+      if (off >= 12) {
+        fail(`arrowhead at ${a.end.map((v) => v.toFixed(0)).join(",")} points ${off.toFixed(0)}deg ` +
+             `off its stroke; the line should meet the middle of the head's base`);
+      }
+    }
   }
 }
 
