@@ -187,7 +187,6 @@
   <text x="24" y="544" font-size="7.5" font-style="italic" fill="#444">external; pinned at pool creation</text>
   </g>
   <path d="M 100,152.542 C 112,164.542 112,176.542 112,300 C 112,372 200,424 320,452 C 400,470 460,480 509,497.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-open-arr)"/>
-  <g transform="translate(114,372)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="300" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1,000 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="316" font-size="9" fill="#444" font-style="italic" text-anchor="start">collateral in</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="224" y="336" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">open_position() &#183; side Long, 5,000 size</text>
@@ -198,4 +197,5 @@
   <text x="224" y="528" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">250 maintenance margin &#183; the reservation: reserved_liquidity + 5,000 &#8804; liquidity,</text>
   <text x="224" y="544" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">so the most the pool could ever owe her is set aside before she owns anything</text>
   <text x="224" y="576" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">the price is read, validated and funding accrued before any of it</text>
+  <g class="coin" transform="translate(111.5,295.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

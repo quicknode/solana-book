@@ -41,7 +41,6 @@
   <text x="248" y="170.751" font-size="9" font-weight="bold">325 &#8594; 300 USDC</text>
   </g>
   <path d="M 236,152 L 146,152" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#bobs-usdc-a)"/>
-  <g transform="translate(181,150)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="181" y="138" font-size="11" fill="#1e7a3c" text-anchor="middle" font-weight="bold">25 USDC</text>
   <circle cx="608" cy="105.901" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="480" y="114.323" width="136" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -56,4 +55,5 @@
   <text x="394" y="253" font-size="10.5" font-weight="bold">Instruction 1 &#8594; Token Program</text>
   <text x="394" y="268" font-size="10"><tspan font-family="Menlo, monospace">transfer()</tspan>: 25,000,000 to Alice&#8217;s USDC</text>
   <path d="M 500,186 C 512,178 528,168 542,157" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#bobs-usdc-i)"/>
+  <g class="coin" transform="translate(217.3,133.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

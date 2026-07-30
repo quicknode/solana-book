@@ -17,26 +17,11 @@
   <!-- settlement flows -->
   <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="78" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">+147 to Alice</text>
-  <g transform="translate(327,92)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
-  </g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="378" y="105" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
   <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="128" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">+49 to Bob</text>
-  <g transform="translate(327,144)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
-  </g>
   <!-- fee to the house -->
   <path d="M 500,136 L 500,192" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
-  <g transform="translate(500,164)">
-    <circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/>
-    <text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text>
-  </g>
   <text x="512" y="156" font-size="10.5">fee: 2% of 200</text>
   <text x="512" y="170" font-size="10.5" font-weight="bold" fill="#1e7a3c">= 4 USDC</text>
   <rect x="444" y="196" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -51,4 +36,7 @@
   <!-- pro-rata annotation -->
   <text x="190" y="248" font-size="10.5" fill="#444" text-anchor="middle">losing pool 200 &#8722; fee 4 = 196 USDC distributable</text>
   <text x="190" y="264" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">split pro rata: Alice staked 3&#215; Bob, wins 3&#215; the share</text>
+  <g class="coin" transform="translate(285.2,73.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(290.1,123.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(497.5,165.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

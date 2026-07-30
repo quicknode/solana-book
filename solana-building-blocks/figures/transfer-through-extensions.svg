@@ -31,10 +31,10 @@
   <text x="508" y="174" font-size="9.5" font-weight="bold">300 &#8594; 399 USDC</text>
   </g>
   <path d="M 144,162 L 496,162" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-a)"/>
-  <g transform="translate(320,160)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="152" font-size="11" fill="#1e7a3c" text-anchor="middle" font-weight="bold">100 USDC</text>
   <path d="M 400,114.423 L 400,156" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-g)"/>
   <text x="320" y="196" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint&#8217;s transfer fee withholds 1 USDC for the issuer</text>
   <text x="320" y="212" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint&#8217;s transfer hook runs the issuer&#8217;s program on the way</text>
   <text x="320" y="238" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions change what &#8220;I transferred 100&#8221; means</text>
+  <g class="coin" transform="translate(200.9,147.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

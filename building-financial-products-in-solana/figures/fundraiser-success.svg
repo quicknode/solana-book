@@ -156,7 +156,6 @@
   </g>
   <!-- the claim: the vault-s whole balance to Maria, then both accounts close -->
   <path d="M 464,398 C 420,420 380,400 366,340 C 358,300 366,230 380,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-succ-a)"/>
-  <g transform="translate(370,302)"><circle cx="4" cy="2" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><circle cx="-3" cy="0" r="6" fill="#fff" stroke="#1e7a3c" stroke-width="1.3"/><text x="-3" y="3" font-size="8" font-weight="bold" fill="#1e7a3c" text-anchor="middle">$</text></g>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="352" y="350" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1. check_contributions() &#183; 9,000 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="352" y="364" font-size="9" font-style="italic" fill="#444" text-anchor="end">the vault&#8217;s entire balance, signed by the fundraiser PDA</text>
   <path d="M 466,364 C 461,332 460,290 460,250 C 460,200 459,150 458,118 C 458,108 457,100 456,96" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-succ-g)"/>
@@ -169,4 +168,5 @@
   <text x="180" y="264" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">the ten receipts are left standing: their only</text>
   <text x="180" y="278" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">closer, refund(), needs a fundraiser that no</text>
   <text x="180" y="292" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">longer exists</text>
+  <g class="coin" transform="translate(165.6,345.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
