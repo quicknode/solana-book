@@ -23,7 +23,7 @@ const manuscriptGlobs = [
 // the pattern says otherwise.
 const rules = [
   [/\binstrument(s|ation)?\b/i, 'say "financial software" or "program", never "instrument"'],
-  [/the oracle problem/i, "teach the positive mechanism instead: verifying a signature from a trusted source"],
+  [/the oracle problem/i, "teach the positive mechanism instead: checking a fact's provenance, freshness, and confidence against a source the program trusts"],
   [/\bon-chain\b/i, 'write "onchain", unhyphenated'],
   [/\boff-chain\b/i, 'write "offchain", unhyphenated'],
   [/\bcross-chain\b/i, 'write "crosschain", unhyphenated'],

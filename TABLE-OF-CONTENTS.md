@@ -6,14 +6,14 @@
 
 ## [Chapter 1: Introduction](prelude/introduction.md)
 
-## Solana Building Blocks
+## Part I: Solana Building Blocks
 
 - [Chapter 2: The Core Building Blocks of Solana](solana-building-blocks/accounts-and-instruction-handlers.md) - keys, accounts, rent, programs, instruction handlers, and atomic transactions
 - [Chapter 3: Tokens](solana-building-blocks/tokens.md)
 - [Chapter 4: PDAs: How Solana Programs Store Data](solana-building-blocks/pdas.md) - derived addresses, key/value storage, and program custody
 - [Chapter 5: Time](solana-building-blocks/time.md)
 
-## Financial Programming Concepts in Solana
+## Part II: Financial Programming Concepts in Solana
 
 - [Chapter 6: Financial Programming Concepts in Solana](financial-programming-concepts-in-solana/intro.md) - financial software is a state machine
 - [Chapter 7: The Arithmetic of Money](financial-programming-concepts-in-solana/the-arithmetic-of-money.md) - integers, scale, rounding, and interest
@@ -21,7 +21,7 @@
 - [Chapter 9: The Adversary](financial-programming-concepts-in-solana/the-adversary.md) - how onchain money gets stolen, exploit class by exploit class
 - [Chapter 10: Operating Financial Software](financial-programming-concepts-in-solana/operating-financial-software.md) - testing money, and wielding admin power safely
 
-## Building Financial Products in Solana
+## Part III: Building Financial Products in Solana
 
 Each chapter walks one complete, tested program from the [companion repository](https://github.com/quicknode/solana-program-examples).
 
