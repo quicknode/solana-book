@@ -28,6 +28,10 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet, along with other clusters stood up to try particular features. Those exist to test the network; the three in the table are where you test what you build on it.
+
+Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the one setting that decides which Solana computer your code is talking to, so moving work from localnet to devnet to mainnet is a change of configuration rather than of code. The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
+
 Alice's SOL is devnet SOL: think of it as the pretend money from a board game, which spends exactly like the real thing inside the game and buys nothing outside it. It cost her nothing: the `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
 
 ## Receiving Needs No Signature, Spending Does
@@ -121,11 +125,11 @@ Look once more at Bob's transfer instruction: it names every account it touches 
 
 ## What You Learnt
 
-Alice and Bob's two payments toured every building block the rest of the book uses:
+Two payments toured every building block the rest of the book uses:
 
-- A **key pair**'s public key is an address, and at an address lives an **account**: Alice's holds her balance of **SOL**, stored as an integer of **lamports**, its minor unit.
+- A **key pair**'s public key is an address, and at an address lives an **account**: a user's holds their balance of **SOL**, stored as an integer of **lamports**, its minor unit.
 - **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee: all authority reduces to whose signature a transaction carries.
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
-- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds. Bob paid Alice's USDC into one: an **associated token account**, derived from her address and the mint.
+- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds. Every token balance sits in one: an **associated token account**, derived from its owner's address and the mint.
 - Instructions supply the accounts as arguments; instruction handlers check them.

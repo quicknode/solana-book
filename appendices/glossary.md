@@ -64,7 +64,7 @@ In a lending market, the fraction of a debt one liquidation may repay (typically
 
 ### cluster
 
-One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine. An account exists on one cluster, not all of them.
+One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine; testnet is where the Solana software itself is tested. An account exists on one cluster, not all of them. Each is reached at an [RPC endpoint](#rpc-endpoint).
 
 ### collateral
 
@@ -329,6 +329,10 @@ In a lending market, the per-asset pool: its liquidity vault, its share mint, it
 ### resting order
 
 A limit order that did not match on arrival and now waits on the book, funded and cancellable.
+
+### RPC endpoint
+
+The URL a program or wallet sends its transactions to: a server holding a [cluster](#cluster)'s state and relaying transactions into it. The endpoint is what decides which cluster the code is talking to. The Solana Foundation's public endpoints are rate limited and meant for development; applications with real users buy a dedicated endpoint from an RPC provider.
 
 ### RWA (real-world asset)
 
