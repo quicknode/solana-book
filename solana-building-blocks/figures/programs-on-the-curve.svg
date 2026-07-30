@@ -1,41 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" font-family="Georgia, serif" fill="#111">
-  <path d="M 40,310 Q 320,50 600,310" fill="none" stroke="#111" stroke-width="2"/>
-  <text x="320" y="330" font-size="14" font-weight="bold" text-anchor="middle">Solana Devnet</text>
-  <!-- people: wallet accounts, addresses on the curve -->
-  <circle cx="180" cy="212" r="6" fill="#111"/>
-  <rect x="36" y="60" width="124" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="51" cy="77" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 43,88 Q 51,81 59,88" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="66" y="77" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
-  <text x="66" y="93" font-size="9.5" fill="#444">0.2 SOL</text>
-  <line x1="100" y1="104" x2="176" y2="203" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="460" cy="212" r="6" fill="#111"/>
-  <rect x="496" y="90" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="511" cy="107" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 503,118 Q 511,111 519,118" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="526" y="107" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
-  <text x="526" y="123" font-size="9.5" fill="#444">0.1 SOL</text>
-  <line x1="508" y1="134" x2="466" y2="205" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <!-- programs as points on the same curve: their addresses are public keys too -->
-  <circle cx="292" cy="181" r="6" fill="#111"/>
-  <line x1="292" y1="173" x2="268" y2="98" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <rect x="192" y="34" width="152" height="62" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="202" y="52" font-size="12.5" font-weight="bold">System Program</text>
-  <text x="202" y="68" font-size="10" font-family="Menlo, monospace">create_account</text>
-  <text x="202" y="84" font-size="10" font-family="Menlo, monospace">transfer</text>
-  <circle cx="420" cy="197" r="6" fill="#111"/>
-  <line x1="420" y1="205" x2="424" y2="256" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <rect x="364" y="258" width="120" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="374" y="276" font-size="12.5" font-weight="bold">Memo Program</text>
-  <text x="374" y="294" font-size="10" font-family="Menlo, monospace">memo</text>
-  <!-- legend -->
-  <circle cx="52" cy="348" r="5" fill="#111"/>
-  <text x="63" y="352" font-size="11" fill="#444">an address: a public key, on the curve</text>
-  <text x="63" y="368" font-size="10" fill="#444" font-style="italic">people and programs alike</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="194" y="210" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="302" y="178" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="408" y="194" font-size="9" letter-spacing="1" fill="#555" text-anchor="end">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="472" y="226" font-size="9" letter-spacing="1" fill="#555">PUBLIC KEY</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="120" y="242" font-size="12.5" font-weight="bold">Alice&#8217;s address</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="470" y="244" font-size="12.5" font-weight="bold">Bob&#8217;s address</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 196" font-family="Georgia, serif" fill="#111">
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g>
+  <rect x="16" y="44.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,49.6382)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="60.6382" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
+  <line x1="24" y1="65.6382" x2="132" y2="65.6382" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="76.6382" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <circle cx="350" cy="54.7742" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g>
+  <rect x="240" y="61.751" width="118" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,66.751)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="268" y="77.751" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
+  <line x1="248" y1="82.751" x2="350" y2="82.751" stroke="#888" stroke-width="0.8"/>
+  <text x="248" y="93.751" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <circle cx="488" cy="76.4582" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="372" y="84.0704" width="124" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(380,89.0704)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
+  <text x="400" y="100.07" font-size="10.5" font-weight="bold">System Program</text>
+  <line x1="380" y1="105.07" x2="488" y2="105.07" stroke="#888" stroke-width="0.8"/>
+  <text x="380" y="116.07" font-size="9" font-family="Menlo, monospace">create_account()</text>
+  <text x="380" y="128.07" font-size="9" font-family="Menlo, monospace">transfer()</text>
+  <circle cx="608" cy="105.901" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="504" y="114.323" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(512,119.323)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
+  <text x="532" y="130.323" font-size="10.5" font-weight="bold">Memo Program</text>
+  <line x1="512" y1="135.323" x2="608" y2="135.323" stroke="#888" stroke-width="0.8"/>
+  <text x="512" y="146.323" font-size="9" font-family="Menlo, monospace">memo()</text>
+  <circle cx="30" cy="168" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="46" y="165" font-size="11" fill="#444">an address: a public key, on the curve</text>
+  <text x="46" y="181" font-size="10" fill="#444" font-style="italic">people and programs alike, each with its own private key</text>
 </svg>

@@ -10,7 +10,7 @@ The whole design hangs on two numbers recorded the moment the fundraiser opens: 
 
 This is the state machine discipline from Financial Programming Concepts in Solana in its purest form. The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors.
 
-![The fundraiser's two futures: contributions flow in during the window; at the target the vault drains to Maria, and past the deadline it drains back to the contributors.](figures/fundraiser-two-exits.svg)
+![The fundraiser's two futures: at the target the vault drains to Maria, and past the deadline it drains back to the contributors; one comparison decides, so only one exit is ever open.](figures/fundraiser-two-exits.svg)
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
@@ -18,10 +18,10 @@ The program calls the fundraiser's creator the **maker**: Maria here, and her in
 
 ![The account map: Maria's fundraiser PDA owns the vault token account; each contributor holds a contributor PDA recording their running total.](figures/fundraiser-account-map.svg)
 
-The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the entire terms sheet:
+The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the entire terms sheet:
 
 - `maker` and `mint_to_raise`: who is raising, and in what token (USDC here; the program accepts any mint, including Token Extensions mints, because every account is declared through the token interface).
-- `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
+- `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize()` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
 - `current_amount`: the running total the program itself has counted. Keep an eye on this field; the chapter's sharpest lesson lives in it.
 - `time_started` and `duration`: the clock's unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
 
@@ -31,21 +31,21 @@ Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, th
 
 ## Maria Opens a Seven-Day Window
 
-Maria calls `initialize` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
+Maria calls `initialize()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
 
-The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. The Time chapter's warning applies: with day-granularity math, the window ends at the first tick of day seven, not at some intuitive "end of the seventh day". `contribute` requires the floored day count to be *less than* the duration; `refund` requires it to be *at least* the duration. The same expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the elapsed-day count reaches 7, contributions turn off and refunds turn on, atomically, by arithmetic.
+The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. The Time chapter's warning applies: with day-granularity math, the window ends at the first tick of day seven, not at some intuitive "end of the seventh day". `contribute()` requires the floored day count to be *less than* the duration; `refund()` requires it to be *at least* the duration. The same expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the elapsed-day count reaches 7, contributions turn off and refunds turn on, atomically, by arithmetic.
 
 ## Nobody May Carry More Than a Tenth of the Raise
 
 Ten backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
 
-Alice comes in hot and tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, the same multiply-before-divide discipline as every other chapter.
+Alice comes in hot and tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, the same multiply-before-divide discipline as every other chapter.
 
 The cap is not just per call. Carol contributes 450 USDC, then comes back the next day with 450 more, and her contributor account's running total lands exactly on the 900 cap; a third contribution would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
 
 Sit with the arithmetic consequence for a second: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That is a design statement about what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. It also blunts the obvious manipulation: a single whale filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
-So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and seven other backers at 900 each. Each `contribute` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
+So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and seven other backers at 900 each. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
 
 ![Ten contributors, none above 900 USDC: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
 
@@ -59,21 +59,21 @@ The trade-off is honest bookkeeping in both directions. Tokens donated straight 
 
 ## The Target Is Met: Maria Claims, and Everything Closes
 
-`check_contributions` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, the counter passes the `TargetNotMet` gate, and three things happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The state machine does not mark itself finished; it **ceases to exist**, which is the strongest possible "finished" and makes double-claiming a structural impossibility rather than a flag check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
+`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, the counter passes the `TargetNotMet` gate, and three things happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The state machine does not mark itself finished; it **ceases to exist**, which is the strongest possible "finished" and makes double-claiming a structural impossibility rather than a flag check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
 
-One loose end survives success, and it is worth being honest about because you will meet it in your own designs: the ten contributor receipts. Their only closing path is `refund`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone; the program omits it, and the omission is the kind you should notice by habit: *for every account your program creates, name the handler that eventually closes it.*
+One loose end survives success, and it is worth being honest about because you will meet it in your own designs: the ten contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone; the program omits it, and the omission is the kind you should notice by habit: *for every account your program creates, name the handler that eventually closes it.*
 
 ![Success: one transaction drains the vault to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Run the alternative. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure; the deadline arithmetic simply flips which handler works. Alice calls `refund`: the handler checks the deadline has passed (`FundraiserNotEnded` otherwise), checks the target was missed (`TargetMet` otherwise), reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Run the alternative. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure; the deadline arithmetic simply flips which handler works. Alice calls `refund()`: the handler checks the deadline has passed (`FundraiserNotEnded` otherwise), checks the target was missed (`TargetMet` otherwise), reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 Note the order inside that handler, because it is the checks-effects-interactions pattern doing real work: the receipt is zeroed and the counter decremented *before* the token transfer, and the account close makes a second refund impossible because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and by now you should expect it anywhere money exits.
 
 Refunds are per-contributor and pull-based: each backer collects their own, whenever they like, with no deadline. The contributors are left exactly whole; the all-or-nothing promise was kept by the cheapest mechanism on the chain: an integer comparison.
 
-One exit remains, and it matters more than it looks. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so while the failed fundraiser's account exists, Maria can never open another raise from that wallet. Once every contribution has been refunded, she calls `close_fundraiser`: it checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so no refund can ever be stranded), sweeps any stray direct donations in the vault to her token account, and closes both the vault and the fundraiser, returning her rent. The machine is fully dismantled, and Maria can try again next quarter with a smaller target. Every account this program creates has a named closer on the failure path.
+One exit remains, and it matters more than it looks. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so while the failed fundraiser's account exists, Maria can never open another raise from that wallet. Once every contribution has been refunded, she calls `close_fundraiser()`: it checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so no refund can ever be stranded), sweeps any stray direct donations in the vault to her token account, and closes both the vault and the fundraiser, returning her rent. The machine is fully dismantled, and Maria can try again next quarter with a smaller target. Every account this program creates has a named closer on the failure path.
 
 ![Failure: after the deadline each contributor pulls back exactly their recorded amount, and each receipt closes as it pays.](figures/fundraiser-refunds.svg)
 
@@ -84,7 +84,7 @@ The program's entire financial surface is: the cap, `amount_to_raise × 10 / 100
 ## The Invariants: The Counter Balances Like a Ledger
 
 - `current_amount` equals the sum of all live contributor receipts, at every moment: contributions add to both together, refunds subtract from both together.
-- Tokens that entered through `contribute` equal `current_amount` plus tokens already refunded; the vault can only exceed that by direct donations, which no check ever reads.
+- Tokens that entered through `contribute()` equal `current_amount` plus tokens already refunded; the vault can only exceed that by direct donations, which no check ever reads.
 - No contributor's receipt ever exceeds 10% of the target.
 - The claim and refund gates read the same comparison with opposite signs, so at most one exit is ever open.
 - Money leaves the vault only through those two exits, both signed by the fundraiser PDA, one gated on the maker's signature and the counter, the other gated on the contributor's signature, the deadline, and their own receipt.

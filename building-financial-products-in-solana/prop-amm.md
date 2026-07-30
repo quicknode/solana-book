@@ -12,7 +12,7 @@ Two consequences follow immediately, and both are absences. A trade's unit price
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
-![The account map: the market PDA pinned to its oracle feed, the dataless authority PDA that owns the base and quote vaults, Maria on the operator edge, and traders swapping against the vaults.](figures/prop-amm-account-map.svg)
+![The account map: the market PDA pinned to its oracle feed, the dataless authority PDA that owns the base and quote vaults, and columns for Maria the operator and the traders who swap against the vaults.](figures/prop-amm-account-map.svg)
 
 The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
@@ -22,15 +22,15 @@ What is missing is the chapter's real lesson. No LP mint: there are no depositor
 
 Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. The market trades NVDAx, the NVIDIA stock the order book chapter traded, against USDC, and the oracle quotes NVDAx at $165.
 
-Maria calls `initialize_market` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
+Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
-Then `deposit_inventory` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
+Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
 
 ## Alice Buys at the Ask
 
 ![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
 
-Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
+Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
 Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
@@ -50,13 +50,13 @@ That word *reads* is carrying the whole design, though. Between oracle updates, 
 
 ## Maria Re-Quotes, and Sometimes Refuses to Quote
 
-Her defense is `set_quote`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see exactly this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is not an emergency measure for a market maker. It is Tuesday.
+Her defense is `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see exactly this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is not an emergency measure for a market maker. It is Tuesday.
 
 The oracle gates are the automated version of the same instinct. A price older than 150 slots is refused (`StalePrice`) because a lagging quote is a free option for whoever notices first, and a price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`) because quoting a tight spread around a number the oracle itself is unsure of is how inventory walks out the door. For every other program in this book the staleness check was hygiene; for a market maker it is the business itself.
 
 ## Maria Leaves, Whole
 
-When Maria wants her capital back, `withdraw_inventory` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no pro-rata slice, no locked floor, no waterfall. The exit machinery that filled three chapters exists to divide pooled money fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them: every state needs an exit, and an empty market's exit is to say no.
+When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no pro-rata slice, no locked floor, no waterfall. The exit machinery that filled three chapters exists to divide pooled money fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them: every state needs an exit, and an empty market's exit is to say no.
 
 ## The Math: Every Rounding Points at the Trader
 
@@ -84,7 +84,7 @@ The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in 
 
 ## What You Learnt from Building the Prop AMM
 
-A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. This chapter rebuilt the desk as a program: the oracle is the trader on the desk, the spread is the firm's margin, `set_quote` is the risk manager widening quotes, and `paused` is pulling them entirely.
+A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. This chapter rebuilt the desk as a program: the oracle is the trader on the desk, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes, and `paused` is pulling them entirely.
 
 The concepts you now have:
 

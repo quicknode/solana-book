@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="betting-pools-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <defs><marker id="betting-pools-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <!-- winning pool -->
   <text x="150" y="40" font-size="12" font-weight="bold" text-anchor="middle">Toy Story 5 pool: 400 USDC</text>
   <text x="150" y="55" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the winning side</text>
@@ -15,22 +15,28 @@
   <text x="500" y="96" font-size="11" font-weight="bold" text-anchor="middle">Carol staked 200</text>
   <text x="500" y="114" font-size="10.5" fill="#444" text-anchor="middle">loses her stake</text>
   <!-- settlement flows -->
-  <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
-  <text x="330" y="78" font-size="11" font-weight="bold" text-anchor="middle">+147 to Alice</text>
-  <text x="330" y="104" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
-  <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
-  <text x="330" y="128" font-size="11" font-weight="bold" text-anchor="middle">+49 to Bob</text>
+  <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="78" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">+147 to Alice</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="378" y="105" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
+  <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="128" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">+49 to Bob</text>
   <!-- fee to the house -->
-  <path d="M 500,136 L 500,192" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#betting-pools-arr)"/>
+  <path d="M 500,136 L 500,192" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
   <text x="512" y="156" font-size="10.5">fee: 2% of 200</text>
-  <text x="512" y="170" font-size="10.5">= 4 USDC</text>
-  <rect x="444" y="196" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="459" cy="213" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 451,224 Q 459,217 467,224" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="474" y="213" font-size="10.5" font-weight="bold">Maria (admin)</text>
-  <text x="474" y="229" font-size="9.5" fill="#444">0.1 SOL</text>
+  <text x="512" y="170" font-size="10.5" font-weight="bold" fill="#1e7a3c">= 4 USDC</text>
+  <rect x="444" y="196" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(452,201)">
+    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
+    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
+  </g>
+  <text x="472" y="212" font-size="10.5" font-weight="bold">Maria (admin)</text>
+  <line x1="452" y1="217" x2="548" y2="217" stroke="#888" stroke-width="0.8"/>
+  <text x="452" y="228" font-size="9.5" fill="#444">1 SOL</text>
   <text x="500" y="256" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">the house</text>
   <!-- pro-rata annotation -->
   <text x="190" y="248" font-size="10.5" fill="#444" text-anchor="middle">losing pool 200 &#8722; fee 4 = 196 USDC distributable</text>
   <text x="190" y="264" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">split pro rata: Alice staked 3&#215; Bob, wins 3&#215; the share</text>
+  <g class="coin" transform="translate(285.2,73.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(290.1,123.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(497.5,165.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

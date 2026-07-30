@@ -26,7 +26,7 @@ The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts t
 
 ## Status
 
-Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, every program chapter, and the Glossary. Program chapters carry figure placeholders awaiting the visual pass. The dedication, acknowledgements, and author bio are placeholders until the book is complete.
+Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, every program chapter, and the Glossary. Every figure is drawn as SVG in the chapters' `figures/` directories. The dedication, acknowledgements, and author bio are placeholders until the book is complete.
 
 ## License
 

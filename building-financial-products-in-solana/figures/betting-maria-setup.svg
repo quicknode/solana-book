@@ -1,38 +1,153 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="betting-setup-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
-  <!-- Maria: wallet account -->
-  <rect x="20" y="108" width="112" height="44" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <circle cx="35" cy="125" r="5" fill="none" stroke="#111" stroke-width="1.3"/>
-  <path d="M 27,136 Q 35,129 43,136" fill="none" stroke="#111" stroke-width="1.3"/>
-  <text x="50" y="125" font-size="10.5" font-weight="bold">Maria (admin)</text>
-  <text x="50" y="141" font-size="9.5" fill="#444">0.1 SOL</text>
-  <!-- call 1: initialize_config -->
-  <path d="M 136,116 C 195,70 235,54 296,50" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-setup-arr)"/>
-  <text x="185" y="48" font-size="11" font-weight="bold" text-anchor="middle">initialize_config</text>
-  <rect x="300" y="28" width="270" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="435" y="48" font-size="12" font-weight="bold" text-anchor="middle">config PDA</text>
-  <text x="435" y="64" font-size="10.5" fill="#444" text-anchor="middle">admin: Maria &#183; token: USDC &#183; fee: 2% (200 bps)</text>
-  <!-- call 2: create_event -->
-  <path d="M 136,130 C 200,134 240,138 296,140" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-setup-arr)"/>
-  <text x="190" y="122" font-size="11" font-weight="bold" text-anchor="middle">create_event</text>
-  <rect x="300" y="118" width="190" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <text x="395" y="138" font-size="12" font-weight="bold" text-anchor="middle">event PDA</text>
-  <text x="395" y="154" font-size="10.5" fill="#444" text-anchor="middle">status: Open &#183; pool: 0</text>
-  <line x1="492" y1="142" x2="547" y2="142" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="560" cy="142" r="11" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="560" y="114" font-size="11" font-weight="bold" text-anchor="middle">vault</text>
-  <text x="560" y="170" font-size="10" fill="#444" text-anchor="middle">0 USDC</text>
-  <text x="560" y="184" font-size="10" fill="#444" font-style="italic" text-anchor="middle">ATA, authority = event</text>
-  <!-- call 3: add_outcome x2 -->
-  <path d="M 136,144 C 195,206 235,226 296,232" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-setup-arr)"/>
-  <text x="170" y="248" font-size="11" font-weight="bold" text-anchor="middle">add_outcome &#215;2</text>
-  <rect x="300" y="214" width="130" height="40" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="365" y="230" font-size="11" font-weight="bold" text-anchor="middle">outcome 0</text>
-  <text x="365" y="246" font-size="10.5" fill="#444" text-anchor="middle">Toy Story 5</text>
-  <rect x="450" y="214" width="130" height="40" rx="6" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="515" y="230" font-size="11" font-weight="bold" text-anchor="middle">outcome 1</text>
-  <text x="515" y="246" font-size="10.5" fill="#444" text-anchor="middle">Backrooms</text>
-  <!-- annotations -->
-  <text x="320" y="282" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria&#8217;s signature against config.admin; anyone else gets Unauthorized</text>
-  <text x="320" y="297" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">add_outcome locks once betting starts: BettingAlreadyStarted</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 695" font-family="Georgia, serif" fill="#111">
+  <!-- Maria&#8217;s setup: initialize_config(), create_event(), add_outcome() &#215;2 -->
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" fill="#111" text-anchor="end">Solana Devnet</text>
+  <g opacity="0.3">
+  <circle cx="508" cy="80.5729" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="500" y="42.8932" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(508,47.8932)" stroke="#111" stroke-width="1.2" fill="none"><path d="M 1,5 L 7,1 L 13,5 Z"/><line x1="3" y1="6.5" x2="3" y2="11"/><line x1="7" y1="6.5" x2="7" y2="11"/><line x1="11" y1="6.5" x2="11" y2="11"/><line x1="1.5" y1="12.5" x2="12.5" y2="12.5"/></g>
+  <text x="528" y="58.8932" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="43.9168" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,48.9168)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="44" y="59.9168" font-size="10.5" font-weight="bold">Alice</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="102.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="96.9168" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="34" y="105.917" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="114.917" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="16" y="120.917" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,125.917)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="44" y="136.917" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="224" cy="43.0914" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="128" y="49.6439" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,54.6439)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="156" y="65.6439" font-size="10.5" font-weight="bold">Bob</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="136" cy="108.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="146" y="102.644" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="146" y="111.644" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="146" y="120.644" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="128" y="126.644" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,131.644)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="156" y="142.644" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="336" cy="53.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="240" y="60.0617" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,65.0617)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="268" y="76.0617" font-size="10.5" font-weight="bold">Carol</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="248" cy="118.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="258" y="113.062" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="258" y="122.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="258" y="131.062" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="240" y="137.062" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,142.062)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="268" y="153.062" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+  </g>
+  <g>
+  <circle cx="448" cy="69.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="352" y="76.4364" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,81.4364)"><circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/><path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/></g>
+  <text x="380" y="92.4364" font-size="10.5" font-weight="bold">Maria (admin)</text>
+  <line x1="360" y1="97.4364" x2="448" y2="97.4364" stroke="#888" stroke-width="0.8"/>
+  <text x="360" y="108.436" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="360" cy="134.936" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="370" y="129.436" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
+  <text x="370" y="138.436" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+  <text x="370" y="147.436" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="352" y="153.436" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,158.436)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="380" y="169.436" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+  </g>
+  <g>
+  <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="464" y="119.37" width="168" height="118" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,124.37)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
+  <text x="492" y="135.37" font-size="10.5" font-weight="bold">betting program</text>
+  <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="151.37" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_config()</text>
+  <text x="472" y="161.37" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">create_event()</text>
+  <text x="472" y="171.37" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">add_outcome() &#215;2</text>
+  <text x="472" y="181.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">place_bet()</text>
+  <text x="472" y="191.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">settle_event()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">claim_winnings()</text>
+  <text x="472" y="211.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">close_losing_bet()</text>
+  <text x="472" y="221.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">cancel_event()</text>
+  <text x="472" y="231.37" font-size="8.5" font-family="Menlo, monospace" fill="#888">claim_refund()</text>
+  </g>
+  <g>
+  <circle cx="472" cy="246.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="250.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;CONFIG&#8221;</text>
+  <rect x="464" y="256.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,261.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="492" y="272.37" font-size="10.5" font-weight="bold">config</text>
+  <line x1="472" y1="277.37" x2="624" y2="277.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="288.37" font-size="9.5">admin: Maria</text>
+  <text x="472" y="300.37" font-size="9.5">token_mint: USDC</text>
+  <text x="472" y="312.37" font-size="9.5">fee_recipient: Maria</text>
+  <text x="472" y="324.37" font-size="9.5">fee_bps: 200 (2%)</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="288.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="341.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="345.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;EVENT&#8221; + EVENT ID</text>
+  <rect x="464" y="351.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,356.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="492" y="367.37" font-size="10.5" font-weight="bold">event</text>
+  <line x1="472" y1="372.37" x2="624" y2="372.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="383.37" font-size="9.5">status: Open</text>
+  <text x="472" y="395.37" font-size="9.5">total_pool: 0</text>
+  <text x="472" y="407.37" font-size="9.5">fee_bps: 200</text>
+  <text x="472" y="419.37" font-size="9" font-style="italic" fill="#444">snapshotted at creation</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="383.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="441.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="440.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OUTCOME&#8221; + EVENT</text>
+  <text x="482" y="449.37" font-size="7" letter-spacing="0.3" fill="#555">ADDRESS + INDEX</text>
+  <rect x="464" y="455.37" width="168" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,460.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="492" y="471.37" font-size="10.5" font-weight="bold">outcome 0: Toy Story 5</text>
+  <line x1="472" y1="476.37" x2="624" y2="476.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="487.37" font-size="9.5">total_amount: 0</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="487.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="509.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="508.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OUTCOME&#8221; + EVENT</text>
+  <text x="482" y="517.37" font-size="7" letter-spacing="0.3" fill="#555">ADDRESS + INDEX</text>
+  <rect x="464" y="523.37" width="168" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,528.37)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="492" y="539.37" font-size="10.5" font-weight="bold">outcome 1: Backrooms</text>
+  <line x1="472" y1="544.37" x2="624" y2="544.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="555.37" font-size="9.5">total_amount: 0</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="555.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="472" cy="577.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="576.37" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM + EVENT&#8217;S</text>
+  <text x="482" y="585.37" font-size="7" letter-spacing="0.3" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <rect x="464" y="591.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,596.37)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="492" y="607.37" font-size="10.5" font-weight="bold">vault: the event&#8217;s USDC</text>
+  <line x1="472" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="623.37" font-size="9.5" fill="#444">0 USDC</text>
+  <text x="472" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="623.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <text x="230" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria&#8217;s signature against config.admin;</text>
+  <text x="230" y="316" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">anyone else gets Unauthorized</text>
+  <text x="230" y="346" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">add_outcome() locks once betting starts: BettingAlreadyStarted</text>
+  <text x="230" y="376" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">no bet or user-index accounts exist yet</text>
 </svg>
