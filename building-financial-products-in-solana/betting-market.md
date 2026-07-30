@@ -112,7 +112,7 @@ A racetrack's parimutuel pool needs a tote board, a licensed operator, and a pay
 The concepts you now have:
 
 - **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so conviction pays proportionally and no one sets odds.
-- **Offchain truth by designated signer.** Maria's signature is the oracle, and the program's job is making that trust visible and narrow: she picks the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
+- **Offchain truth by designated signer.** The operator's signature is the oracle, and the program's job is making that trust visible and narrow: they pick the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
 - **Terms locked when money commits.** The outcome list freezes at the first bet and the fee is snapshotted at event creation, so the question bettors staked on cannot be rewritten.
 - **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize; the state machine's exit is the account's deletion.
 - **An exit from every state.** Open events can be canceled and refunded in full, so a burned-down film festival strands nobody's stake.

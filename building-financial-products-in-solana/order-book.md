@@ -148,7 +148,7 @@ If you write one test after reading this chapter, write the vault-swap one for y
 
 ## What You Learnt from Building the Order Book Exchange
 
-NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The operator who remains, Maria, sets the market's parameters and collects its fee, and can do nothing else.
+NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
 
 The concepts you now have, on top of the escrow's:
 

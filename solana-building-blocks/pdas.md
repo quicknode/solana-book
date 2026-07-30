@@ -12,7 +12,7 @@ PDAs are how Solana programs store data. Taken together, a program's PDAs behave
 
 That one mechanism does three jobs in every chapter of this book:
 
-## Seeds Make Addresses Derivable
+## Seeds Make Data Findable
 
 The market for a token pair, a user's position in it, and the offer with a given ID all live at addresses anyone can compute from the seeds, so exactly one thing exists per key and nobody has to remember where anything is.
 
