@@ -1,4 +1,4 @@
-# Chapter 14: The Constant-Product AMM
+# Chapter 15: The Constant-Product AMM
 
 The order book chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee is not free money, and by the end of the chapter you will be able to say exactly why, with a number attached.
 
@@ -20,7 +20,7 @@ And the truth about K: **K is constant within a single trade and grows over time
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
-![The account map: the config PDA, the pool config PDA for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
+![The account map: the config account, the pool config account for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
 
 The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 

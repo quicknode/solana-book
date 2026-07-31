@@ -6,7 +6,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ## The Account Model: A Market of Reserves, and an Obligation per Borrower
 
-![The account map: one lending market PDA, three reserve PDAs (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation PDAs holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
+![The account map: one lending market account, three reserve accounts (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation accounts holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 

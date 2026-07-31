@@ -1,4 +1,4 @@
-# Chapter 13: The Order Book Exchange
+# Chapter 14: The Order Book Exchange
 
 NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. By the end of this chapter you will have walked through one, end to end: how orders come in, how they rest, how they match, where the money waits, and how the operator collects fees.
 
@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-![The account map: each trader's accounts stacked in a column beneath their spot on the Devnet curve, and the program's column on the right holding the market PDA, the order book account, and the base, quote, and fee vaults.](figures/order-book-accounts.svg)
+![The account map: each trader's accounts stacked in a column beneath their spot on the Devnet curve, and the program's column on the right holding the market account, the order book account, and the base, quote, and fee vaults.](figures/order-book-accounts.svg)
 
 The **market** is a PDA holding one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). Its seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 
@@ -44,11 +44,11 @@ So the book's two sides are **critbit trees**. The name sounds complex; the idea
 
 Maria runs the exchange. She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match, so it is borne by whichever side of the fill receives the quote token.
 
-Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, because a fee above 100% is nonsense. It creates the market PDA and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
+Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, because a fee above 100% is nonsense. It creates the market account and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
 
 The tick size and minimum order size are market hygiene. Prices must land on a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. Orders below `min_order_size` are rejected outright, which keeps spam from filling the trees.
 
-![Maria's initialize_market() creates the market PDA with its parameters and three empty vaults, and stamps two empty trees onto the pre-created order book account.](figures/order-book-initialize-market.svg)
+![Maria's initialize_market() creates the market account with its parameters and three empty vaults, and stamps two empty trees onto the pre-created order book account.](figures/order-book-initialize-market.svg)
 
 ## Every Trader Gets a Ledger Line
 

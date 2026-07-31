@@ -18,7 +18,7 @@ The approved set is stocks, bonds, whatever investors actually want. It is not t
 
 ## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
 
-![The account map: the strategy PDA owns a USDC vault, one vault per basket asset, and the share mint; each asset config PDA records a mint, a feed, a weight, and a vault; Victor's registry and ApprovedAsset accounts sit behind them, and Alice's and Bob's share accounts hang off the share mint.](figures/vault-account-map.svg)
+![The account map: the strategy PDA owns a USDC vault, one vault per basket asset, and the share mint; each asset config account records a mint, a feed, a weight, and a vault; Victor's registry and ApprovedAsset accounts sit behind them, and Alice's and Bob's share accounts hang off the share mint.](figures/vault-account-map.svg)
 
 The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA with the strategy as mint authority: shares only come into existence when the program's own math says so.
 
@@ -95,7 +95,7 @@ The suite (with hand-built Pyth price-update accounts injected so prices are det
 
 ## What You Learnt from Building the Vault Strategy
 
-An index fund needs a custodian, a compliance officer, a fee schedule in a prospectus, and an auditor checking that the manager's trades match the mandate. This chapter needed a registry PDA, a weight sum that must hit 10,000, a fee constant with no setter, and a slippage floor computed from a feed the manager cannot choose.
+An index fund needs a custodian, a compliance officer, a fee schedule in a prospectus, and an auditor checking that the manager's trades match the mandate. This chapter needed a registry account, a weight sum that must hit 10,000, a fee constant with no setter, and a slippage floor computed from a feed the manager cannot choose.
 
 The concepts you now have:
 
