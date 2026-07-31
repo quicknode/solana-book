@@ -16,7 +16,9 @@ const manuscriptGlobs = [
   "solana-building-blocks/*.md",
   "financial-programming-concepts-in-solana/*.md",
   "building-financial-products-in-solana/*.md",
+  "conclusion/*.md",
   "appendices/*.md",
+  "postlude/*.md",
 ];
 
 // Each rule: a regex and the reason it is banned. Case-insensitive unless

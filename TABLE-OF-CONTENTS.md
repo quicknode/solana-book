@@ -2,7 +2,7 @@
 
 ## Prelude
 
-[Copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [acknowledgements](prelude/acknowledgements.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
+[Copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
 
 ## [Chapter 1: Introduction](prelude/introduction.md)
 
@@ -37,7 +37,13 @@ Each chapter walks one complete, tested program from the [companion repository](
 - [Chapter 18: The Vault Strategy](building-financial-products-in-solana/vault-strategy.md) - an onchain index fund
 - [Chapter 19: Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) - leveraged bets on a price; the capstone
 
+## [Chapter 20: Where to Go From Here](conclusion/where-to-go-from-here.md)
+
 ## Appendices
 
 - [Glossary](appendices/glossary.md)
 - Index (print edition)
+
+## Postlude
+
+[Acknowledgements and credits](postlude/acknowledgements.md).
