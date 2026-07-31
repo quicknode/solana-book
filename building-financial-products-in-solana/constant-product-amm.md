@@ -1,4 +1,4 @@
-# Chapter 14: The Constant-Product AMM
+# Chapter 15: The Constant-Product AMM
 
 The order book chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee is not free money, and by the end of the chapter you will be able to say exactly why, with a number attached.
 
@@ -16,11 +16,11 @@ The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME r
 
 And the truth about K: **K is constant within a single trade and grows over time.** Deposits grow it (more of both tokens, same ratio). The liquidity providers' share of every fee stays in the pool and grows it. And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
 
-![The constant-product curve: a buy slides the pool along X × Y = K, and the spot price is the slope of the curve at the pool's current point.](figures/amm-curve.svg)
+![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
-![The account map: the config PDA, the pool config PDA for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
+![The account map: the config account, the pool config account for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
 
 The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 
@@ -34,7 +34,7 @@ The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool co
 
 Maria operates the AMM and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. Like every character in this book she starts with one SOL and 1,000 USDC; she also holds 400 ACME of founder stock.
 
-Maria runs `create_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, approximately one sixth of each fee, the classic Uniswap-style split. Then `create_pool()` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
+Maria runs `initialize_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, approximately one sixth of each fee, the classic Uniswap-style split. Then `initialize_pool()` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $2.25, so she runs `deposit_liquidity()` with her 400 ACME and 900 USDC, the founder stock and nine-tenths of her cash. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 400, Y = 900, K = 360,000.
 

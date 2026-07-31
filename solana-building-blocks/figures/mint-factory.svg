@@ -18,8 +18,8 @@
   <text x="30" y="196" font-size="10" fill="#444" font-style="italic">a wallet, a multisig, or a PDA;</text>
   <text x="30" y="210" font-size="10" fill="#444" font-style="italic">nothing else can create tokens</text>
   <circle cx="388" cy="112.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="398" y="107" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="398" y="116" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="398" y="107" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="398" y="116" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="398" y="125" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <g>
   <rect x="380" y="131" width="136" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

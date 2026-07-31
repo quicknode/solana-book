@@ -156,7 +156,7 @@ The input a transaction carries to a program: which handler to run, which accoun
 
 ### instruction handler
 
-The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input, because tooling that uses one word for both confuses every newcomer.
+The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input, because tooling that uses one word for both confuses every newcomer. Most other material does use one word: "this program has five instructions" means five functions, and Anchor's generated interface file lists a program's functions under `instructions`. Read those as instruction handlers.
 
 ### invariant
 
@@ -312,7 +312,7 @@ A program's address: the account instructions are addressed to. The compiled cod
 
 ### ProgramData
 
-The account holding a deployed program's compiled bytecode, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
+The account holding a deployed program's compiled code, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
 
 ### proprietary AMM (prop AMM)
 

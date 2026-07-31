@@ -16,7 +16,7 @@ Traditional finance solves this with a trusted third party. Alice sends her fund
 
 ![Traditional escrow: Alice and Bob each send funds to a third party in the middle, which forwards them onward minus the slice it keeps for itself.](figures/escrow-traditional-escrow.svg)
 
-A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed bytecode: nobody, including the program's author, can move them except along the paths the code defines. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no key that matters, which is exactly the point. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
+A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed program itself: nobody, including the program's author, can move them except along the paths the code defines. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no key that matters, which is exactly the point. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
 
 ![The same swap through the escrow program: both sides receive the full amount, and the box in the middle is a program, not a company.](figures/escrow-program-swap.svg)
 
@@ -126,7 +126,7 @@ The testing section of Financial Programming Concepts in Solana builds the gener
 
 ## What You Learnt from Building the Escrow
 
-In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, charges one to six percent for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are the deployed bytecode, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
+In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, charges one to six percent for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
 
 The concepts you now have:
 

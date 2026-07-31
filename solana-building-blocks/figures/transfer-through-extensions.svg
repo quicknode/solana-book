@@ -9,8 +9,8 @@
   <line x1="248" y1="91.4227" x2="412" y2="91.4227" stroke="#888" stroke-width="0.8"/>
   <text x="248" y="102.423" font-size="9" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">transfer_checked()</text>
   <circle cx="24" cy="123.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="118" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="34" y="127" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="118" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="127" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="34" y="136" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <g>
   <rect x="16" y="142" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -20,8 +20,8 @@
   <text x="24" y="174" font-size="9.5" font-weight="bold">1,000 &#8594; 900 USDC</text>
   </g>
   <circle cx="508" cy="123.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="518" y="118" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="518" y="127" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="518" y="118" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="518" y="127" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="518" y="136" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <g>
   <rect x="500" y="142" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

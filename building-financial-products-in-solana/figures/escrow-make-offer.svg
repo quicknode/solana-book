@@ -32,8 +32,8 @@
   </g>
   <g>
   <circle cx="24" cy="103.8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="98.3" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="34" y="107.3" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="98.3" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="107.3" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="34" y="116.3" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="16" y="122.3" width="140" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,127.3)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
@@ -43,8 +43,8 @@
   </g>
   <g>
   <circle cx="24" cy="180.8" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="175.3" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="34" y="184.3" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="175.3" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="184.3" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="34" y="193.3" font-size="7" letter-spacing="0.3" fill="#555">TSLAX MINT</text>
   <rect x="16" y="199.3" width="140" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,204.3)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
@@ -62,8 +62,8 @@
   </g>
   <g opacity="0.3">
   <circle cx="208" cy="118.1" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="218" y="112.6" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="218" y="121.6" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="218" y="112.6" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="218" y="121.6" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="218" y="130.6" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="200" y="136.6" width="140" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(208,141.6)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
@@ -71,8 +71,8 @@
   </g>
   <g opacity="0.3">
   <circle cx="208" cy="195.1" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="218" y="189.6" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM +</text>
-  <text x="218" y="198.6" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="218" y="189.6" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="218" y="198.6" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="218" y="207.6" font-size="7" letter-spacing="0.3" fill="#555">TSLAX MINT</text>
   <rect x="200" y="213.6" width="140" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(208,218.6)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
@@ -106,8 +106,8 @@
   </g>
   <g>
   <circle cx="472" cy="307.4" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="306.4" font-size="7" letter-spacing="0.3" fill="#555">ATA PROGRAM + OFFER&#8217;S</text>
-  <text x="482" y="315.4" font-size="7" letter-spacing="0.3" fill="#555">ADDRESS + USDC MINT ADDRESS</text>
+  <text x="482" y="306.4" font-size="7" letter-spacing="0.3" fill="#555">OFFER&#8217;S ADDRESS +</text>
+  <text x="482" y="315.4" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + USDC MINT</text>
   <rect x="464" y="321.4" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,326.4)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
   <text x="492" y="337.4" font-size="10.5" font-weight="bold">vault: the offer&#8217;s USDC</text>
