@@ -312,7 +312,7 @@ A program's address: the account instructions are addressed to. The compiled cod
 
 ### ProgramData
 
-The account holding a deployed program's compiled bytecode, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
+The account holding a deployed program's compiled code, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
 
 ### proprietary AMM (prop AMM)
 
