@@ -18,10 +18,10 @@ The program calls the fundraiser's creator the **maker**: Maria here, and her in
 
 ![The account map: Maria's fundraiser PDA owns the vault token account; each contributor holds a contributor PDA recording their running total.](figures/fundraiser-account-map.svg)
 
-The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the entire terms sheet:
+The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the entire terms sheet:
 
 - `maker` and `mint_to_raise`: who is raising, and in what token (USDC here; the program accepts any mint, including Token Extensions mints, because every account is declared through the token interface).
-- `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize()` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
+- `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
 - `current_amount`: the running total the program itself has counted. Keep an eye on this field; the chapter's sharpest lesson lives in it.
 - `time_started` and `duration`: the clock's unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
 
@@ -31,7 +31,7 @@ Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, th
 
 ## The Maker Opens a Seven-Day Window
 
-Maria calls `initialize()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
+Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
 
 The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. The Time chapter's warning applies: with day-granularity math, the window ends at the first tick of day seven, not at some intuitive "end of the seventh day". `contribute()` requires the floored day count to be *less than* the duration; `refund()` requires it to be *at least* the duration. The same expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the elapsed-day count reaches 7, contributions turn off and refunds turn on, atomically, by arithmetic.
 

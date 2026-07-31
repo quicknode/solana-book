@@ -34,7 +34,7 @@ The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool co
 
 Maria operates the AMM and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. Like every character in this book she starts with one SOL and 1,000 USDC; she also holds 400 ACME of founder stock.
 
-Maria runs `create_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, approximately one sixth of each fee, the classic Uniswap-style split. Then `create_pool()` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
+Maria runs `initialize_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, approximately one sixth of each fee, the classic Uniswap-style split. Then `initialize_pool()` for ACME/USDC, which creates the pool config, the authority, the LP mint, and the two empty vaults.
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $2.25, so she runs `deposit_liquidity()` with her 400 ACME and 900 USDC, the founder stock and nine-tenths of her cash. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 400, Y = 900, K = 360,000.
 

@@ -127,7 +127,11 @@ const sections = chapterPaths.map((path) => {
   return { id, title, html, path, subsections };
 });
 
-const isPreludeItem = (path) => path.startsWith("prelude/") && !path.endsWith("introduction.md");
+// Front and back matter: unnumbered, no table-of-contents row, sharing one
+// page flow. Acknowledgements sit at the back because that list grows with
+// every edition and is for the people named, not for the reader.
+const isPreludeItem = (path) =>
+  (path.startsWith("prelude/") && !path.endsWith("introduction.md")) || path.startsWith("postlude/");
 
 
 // The printed table of contents, in the style of TCP/IP Illustrated:

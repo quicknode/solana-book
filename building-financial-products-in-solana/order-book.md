@@ -52,7 +52,7 @@ The tick size and minimum order size are market hygiene. Prices must land on a m
 
 ## Every Trader Gets a Ledger Line
 
-Three traders use the market this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus (for the two sellers, Alice and Carol) some NVDAx. Before trading, each of them calls `create_market_user()` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
+Three traders use the market this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus (for the two sellers, Alice and Carol) some NVDAx. Before trading, each of them calls `initialize_market_user()` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
 
 ## An Ask Rests Above the Best Bid
 
