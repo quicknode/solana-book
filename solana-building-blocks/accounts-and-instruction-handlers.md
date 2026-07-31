@@ -28,7 +28,7 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet, along with other clusters stood up to try particular features. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live, not somewhere to find out whether it works.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Further clusters are stood up from time to time to try out one particular new feature. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program is expected to be thoroughly audited before it is released onto it.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the one setting that decides which Solana computer your code is talking to, so moving work from localnet to devnet to mainnet is a change of configuration rather than of code. The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
@@ -48,7 +48,7 @@ A transaction carries one or more **instructions**, and each instruction is addr
 
 ![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
 
-An instruction names which of the program's **instruction handlers** to run (the onchain functions a program exposes), the accounts the handler may touch, and the arguments. Good financial design keeps the mapping strict: one handler, one state transition (deposit, settle, cancel, liquidate), so the program's API is the state machine's edge list.
+An instruction names which of the program's **instruction handlers** to run (the onchain functions a program exposes), the accounts the handler may touch, and the arguments. Good financial design keeps the mapping strict: one handler, one state transition (deposit, settle, cancel, liquidate), so the handlers a program exposes are exactly the moves its state machine allows.
 
 > **One word, two meanings, everywhere but here.** A lot of Solana material uses "instruction" for both things: the function a program exposes, and the input that invokes it. You will read "this program has five instructions" meaning five functions, and the interface file Anchor generates for a program lists its functions under `instructions`. One word for two things confuses everyone, so this book never does it:
 >

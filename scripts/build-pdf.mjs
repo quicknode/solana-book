@@ -168,12 +168,16 @@ let bodyPart = null;
 const body = sections
   .map((section) => {
     const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
-    const classes = isPreludeItem(section.path) ? "chapter prelude-item" : "chapter";
+    let classes = isPreludeItem(section.path) ? "chapter prelude-item" : "chapter";
     const part = partForPath.get(section.path) ?? null;
     // A part opens with its own page, carrying the label and the part's name.
-    const divider = part && part !== bodyPart
+    const opensPart = part && part !== bodyPart;
+    const divider = opensPart
       ? `<section class="part-divider"><p class="part-label">${part.label}</p><h1>${part.title}</h1></section>\n`
       : "";
+    // The divider page is a right-hand page with a blank reverse, so the
+    // part's first chapter is pushed to the next right-hand page too.
+    if (opensPart) classes += " part-opening";
     bodyPart = part;
     return `${divider}<section class="${classes}" id="${section.id}">\n${html}\n</section>`;
   })
@@ -252,7 +256,12 @@ const html = `<!doctype html>
   @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
 }
 @page :first { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+/* Pages inserted to push a part title onto a right-hand page carry nothing. */
+@page :blank { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
+/* A part title page carries no running head: the chapter it interrupts is over
+   and the one it announces has not started. */
+@page part-start { @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
 @page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
 .cover { page: cover; break-after: page; }
 .cover img { display: block; width: 8.5in; height: 11in; }
@@ -294,8 +303,10 @@ a { color: #111 !important; text-decoration: none; }
   border-bottom: 0.5pt solid #999;
 }
 
-/* A part opens on a right-hand page, its title alone in the upper third. */
-section.part-divider { break-before: recto; text-align: center; }
+/* A part opens on a right-hand page, its title alone in the upper third, and
+   the reverse of that page is left blank so the first chapter of the part
+   opens on a right-hand page as well. */
+section.part-divider { break-before: recto; page: part-start; text-align: center; }
 section.part-divider .part-label {
   margin: 2.6in 0 0.3in 0;
   font-size: 11pt;
@@ -312,6 +323,12 @@ section.part-divider h1 {
 }
 
 section.chapter { break-before: page; }
+/* Paged.js resolves break rules in source order rather than by specificity,
+   so the part opener's recto rule has to come after the plain chapter rule. */
+section.chapter.part-opening { break-before: recto; }
+/* Paged.js keeps the running headers on the pages it inserts; @page :blank is
+   the standard suppression, and this is the belt-and-braces version of it. */
+.pagedjs_blank_page .pagedjs_margin-content { display: none; }
 /* Front-matter placeholder pages share one flow until they have real content. */
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
@@ -410,8 +427,38 @@ await page.evaluate(() => {
   }
 });
 
+// The cover is page one of the flow and of the PDF, so odd page numbers are
+// right-hand pages. A part title belongs on one, and so does the chapter that
+// follows it across the blank reverse. A section that runs over several pages
+// appears once per page it occupies, so keep the lowest number for each: that
+// is the page it opens on.
+const partPages = await page.evaluate(() => {
+  const opening = new Map();
+  for (const section of document.querySelectorAll("section.part-divider, section.chapter.part-opening")) {
+    const number = Number(section.closest(".pagedjs_page")?.getAttribute("data-page-number"));
+    const key = section.dataset.ref ?? section.id;
+    const name = section.classList.contains("part-divider")
+      ? `part title: ${section.querySelector("h1")?.textContent ?? "?"}`
+      : `part opens with ${section.querySelector("h1")?.textContent ?? "?"}`;
+    const seen = opening.get(key);
+    if (!seen || number < seen.number) opening.set(key, { name, number });
+  }
+  return [...opening.values()].sort((a, b) => a.number - b.number);
+});
+
 writeFileSync(outputPath, await page.pdf({ preferCSSPageSize: true }));
 await browser.close();
 
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
+
+for (const { name, number } of partPages) {
+  const side = number % 2 === 1 ? "right" : "LEFT";
+  console.log(`  page ${number} (${side}): ${name}`);
+}
+const strays = partPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
+if (strays.length > 0) {
+  console.error(`\n${strays.length} part page(s) did not land on a right-hand page:`);
+  for (const { name, number } of strays) console.error(`  page ${number}: ${name}`);
+  process.exitCode = 1;
+}

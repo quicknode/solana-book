@@ -33,7 +33,8 @@ const rules = [
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],
-  [/\bsmart contracts?\b/i, 'say "program" (a contrastive mention in the glossary is the one allowed use)'],
+  [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
+  [/Quicknode Press|QuickNode|QuikNode|Quiknode(?! Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode Inc."; there is no Quicknode Press'],
   [/\bgas fees?\b|\bgas costs?\b/i, 'say "transaction fees"'],
   [/\bmempool/i, "Solana has no mempool"],
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
@@ -48,6 +49,7 @@ const rules = [
 // Allowed exceptions, matched against the full line.
 const exceptions = [
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
+  /other blockchains call the same thing a smart contract/, // the Introduction's contrastive mention
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
