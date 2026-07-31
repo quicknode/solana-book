@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 228" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 258" font-family="Georgia, serif" fill="#111">
   <defs><marker id="addr-types-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
@@ -13,12 +13,21 @@
   <text x="78" y="106" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">Alice&#8217;s address</text>
   <text x="78" y="122" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">a public key, on the curve:</text>
   <text x="78" y="137" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">Alice holds the private key</text>
-  <text x="430" y="106" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
-  <text x="430" y="120" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">+ THE ESCROW PROGRAM ID</text>
-  <path d="M 430,128 L 430,150" stroke="#111" stroke-width="1.4" fill="none" marker-end="url(#addr-types-arr)"/>
-  <text x="422" y="143" font-size="10" fill="#777" text-anchor="end" font-style="italic">derives</text>
-  <circle cx="430" cy="158" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="430" y="182" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">the offer&#8217;s PDA</text>
-  <text x="430" y="198" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">off the curve: no private key exists</text>
-  <text x="430" y="213" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">only the escrow program &#8220;signs&#8221; as it, by presenting the seeds</text>
+  <text x="430" y="86" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
+  <text x="430" y="99" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">+ THE ESCROW PROGRAM ID</text>
+  <path d="M 430,106 L 430,124" stroke="#111" stroke-width="1.4" fill="none" marker-end="url(#addr-types-arr)"/>
+  <text x="422" y="119" font-size="10" fill="#777" text-anchor="end" font-style="italic">derives</text>
+  <circle cx="430" cy="132" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g>
+  <rect x="350" y="140" width="160" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(358,145)" stroke="#111" stroke-width="1.2" fill="none"><rect x="1" y="2" width="12" height="10"/><line x1="1" y1="5.4" x2="13" y2="5.4"/><line x1="5.5" y1="5.4" x2="5.5" y2="12"/></g>
+  <text x="378" y="156" font-size="10.5" font-weight="bold">offer account</text>
+  <line x1="358" y1="161" x2="502" y2="161" stroke="#888" stroke-width="0.8"/>
+  <text x="358" y="173" font-size="9.5">maker: Alice</text>
+  <text x="358" y="185" font-size="9.5">token_mint_a: USDC</text>
+  <text x="358" y="197" font-size="9.5">token_mint_b: TSLAx</text>
+  </g>
+  <text x="430" y="222" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">the offer&#8217;s PDA</text>
+  <text x="430" y="238" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">off the curve: no private key exists</text>
+  <text x="430" y="253" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">only the escrow program &#8220;signs&#8221; as it, by presenting the seeds</text>
 </svg>

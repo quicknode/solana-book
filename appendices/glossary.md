@@ -64,7 +64,7 @@ In a lending market, the fraction of a debt one liquidation may repay (typically
 
 ### cluster
 
-One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine. An account exists on one cluster, not all of them.
+One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine; testnet is where the Solana software itself is tested. An account exists on one cluster, not all of them. Each is reached at an [RPC endpoint](#rpc-endpoint).
 
 ### collateral
 
@@ -254,6 +254,10 @@ Maximal extractable value: profit taken by controlling transaction ordering, mos
 
 The onchain account that defines a token: its supply, decimals, and authorities. In economic prose this book says "token"; "mint account" appears when describing what gets passed to an instruction.
 
+### multisig
+
+An account that records a set of owners and how many must agree before it acts, used wherever one person holding a key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority. A transaction can carry several signatures natively; a multisig is that idea made into standing policy.
+
 ### NAV (net asset value)
 
 The total current value of everything a fund holds, computed from fresh prices. Share price is NAV divided by share supply.
@@ -276,7 +280,7 @@ The total notional of positions currently open on a market, usually tracked per 
 
 ### oracle
 
-A service that publishes signed statements of offchain facts, most often prices, onchain. A program verifies the publisher's signature, the freshness, and the confidence interval, exactly as it validates any other input.
+A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, exactly as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
 
 ### parimutuel
 
@@ -304,7 +308,11 @@ Executable code deployed onchain; the thing this book builds. Called a "smart co
 
 ### program ID
 
-A program's address: the account its executable code is deployed at. Every PDA is derived from a program ID plus seeds, so the ID is what ties a derived address back to the one program that can "sign" for it.
+A program's address: the account instructions are addressed to. The compiled code itself lives in a separate account that this one points at. Every PDA is derived from a program ID plus seeds, so the ID is what ties a derived address back to the one program that can "sign" for it.
+
+### ProgramData
+
+The account holding a deployed program's compiled bytecode, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
 
 ### proprietary AMM (prop AMM)
 
@@ -325,6 +333,10 @@ In a lending market, the per-asset pool: its liquidity vault, its share mint, it
 ### resting order
 
 A limit order that did not match on arrival and now waits on the book, funded and cancellable.
+
+### RPC endpoint
+
+The URL a program or wallet sends its transactions to: a server holding a [cluster](#cluster)'s state and relaying transactions into it. The endpoint is what decides which cluster the code is talking to. The Solana Foundation's public endpoints are rate limited and meant for development; applications with real users buy a dedicated endpoint from an RPC provider.
 
 ### RWA (real-world asset)
 

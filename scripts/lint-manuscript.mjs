@@ -23,7 +23,7 @@ const manuscriptGlobs = [
 // the pattern says otherwise.
 const rules = [
   [/\binstrument(s|ation)?\b/i, 'say "financial software" or "program", never "instrument"'],
-  [/the oracle problem/i, "teach the positive mechanism instead: verifying a signature from a trusted source"],
+  [/the oracle problem/i, "teach the positive mechanism instead: checking a fact's provenance, freshness, and confidence against a source the program trusts"],
   [/\bon-chain\b/i, 'write "onchain", unhyphenated'],
   [/\boff-chain\b/i, 'write "offchain", unhyphenated'],
   [/\bcross-chain\b/i, 'write "crosschain", unhyphenated'],
@@ -72,6 +72,23 @@ for (const file of [...new Set(files)]) {
   });
 }
 
+// Heading check: a heading states the general mechanism and the characters
+// stay in the prose beneath, in every part of the book. Walkthrough chapters
+// keep the story's order and the specific mechanism; only the names go.
+const characterHeading = /^#{2,6} .*\b(Alice|Bob|Carol|Dave|Maria)\b/;
+
+for (const file of [...new Set(files)]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, index) => {
+      if (!characterHeading.test(line)) return;
+      failures += 1;
+      console.error(
+        `${file}:${index + 1}: headings state the general mechanism, not a specific actor (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
+      );
+    });
+}
+
 // Figure checks: the mechanically checkable Visual Language conventions.
 // Rounded corners are reserved for accounts and drawn at one radius, the
 // only fade level is 0.3, address dots have white centers, and seed labels
@@ -79,6 +96,7 @@ for (const file of [...new Set(files)]) {
 // linter cannot make; WRITING-PLAN.md carries the rest of the conventions.
 const figureDirs = [
   "solana-building-blocks/figures",
+  "financial-programming-concepts-in-solana/figures",
   "building-financial-products-in-solana/figures",
 ];
 
