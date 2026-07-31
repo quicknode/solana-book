@@ -14,7 +14,7 @@ At Alice's address lives Alice's **account**: some data with an address. Her acc
 
 ![Alice's public key is her address, a point on the curve; her private key stays on her device.](figures/alice-on-the-curve.svg)
 
-That drawing sets a convention this book keeps for every figure that follows. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. The figures never label those dots, because the dot's place on the curve already says it. Later you will meet addresses drawn *off* the curve, listed with the ingredients they were derived from instead; those have no private key, and no one can sign for them directly.
+That drawing sets a convention this book keeps for every figure that follows. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. The figures never label those dots, because the dot's place on the curve already says it. Later you will meet addresses drawn *off* the curve, listed instead with the **seeds** (the inputs) they were derived from; those have no private key, and no one can sign for them directly.
 
 > **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be billions of times the age of the universe. When this book says an address "belongs" to Alice, that is the entire basis of the claim: nobody else will ever roll her number.
 
@@ -28,7 +28,7 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet, along with other clusters stood up to try particular features. Those exist to test the network; the three in the table are where you test what you build on it.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet, along with other clusters stood up to try particular features. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live, not somewhere to find out whether it works.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the one setting that decides which Solana computer your code is talking to, so moving work from localnet to devnet to mainnet is a change of configuration rather than of code. The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
@@ -107,7 +107,7 @@ The programs themselves are stored the same way, and it takes more than one acco
 Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in two kinds:
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
-- **PDAs** (program derived addresses). A PDA is computed from a program's address (its **program ID**) and some chosen **seeds**, and has no private key at all, so no signature for it can ever exist. PDAs can still own accounts, and the program that derived one can act as it by presenting the seeds; the PDAs chapter explains how, and why Solana keeps the word "sign" for something that involves no signature. The escrow program you will build in this book stores each offer at a PDA derived from the maker's address and an offer ID.
+- **PDAs** (program derived addresses). A PDA is computed from a program's address (its **program ID**) and some chosen seeds, and has no private key at all, so no signature for it can ever exist. PDAs can still own accounts, and the program that derived one can act as it by presenting the seeds; the PDAs chapter explains how, and why Solana keeps the word "sign" for something that involves no signature. The escrow program you will build in this book stores each offer at a PDA derived from the maker's address and an offer ID.
 
 ![Two kinds of address: public keys sit on the curve, each with a private key that signs for it; PDAs sit off the curve, derived from a program ID and seeds, with no private key: the deriving program "signs" by presenting the seeds.](figures/address-types.svg)
 

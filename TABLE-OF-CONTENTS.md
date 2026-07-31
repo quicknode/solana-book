@@ -6,7 +6,7 @@
 
 ## [Chapter 1: Introduction](prelude/introduction.md)
 
-## Part I: The Foundations
+## Part I: The Fundamentals
 
 ### Solana Building Blocks
 

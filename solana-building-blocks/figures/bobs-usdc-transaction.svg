@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 306" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="bobs-usdc-i" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="bobs-usdc-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
+  <defs><marker id="bobs-usdc-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -54,6 +54,5 @@
   <rect x="386" y="238" width="224" height="40" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="394" y="253" font-size="10.5" font-weight="bold">Instruction 1 &#8594; Token Program</text>
   <text x="394" y="268" font-size="10"><tspan font-family="Menlo, monospace">transfer()</tspan>: 25,000,000 to Alice&#8217;s USDC</text>
-  <path d="M 500,186 C 512,178 528,168 542,157" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#bobs-usdc-i)"/>
   <g class="coin" transform="translate(217.3,133.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
