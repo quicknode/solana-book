@@ -156,7 +156,7 @@ The input a transaction carries to a program: which handler to run, which accoun
 
 ### instruction handler
 
-The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input, because tooling that uses one word for both confuses every newcomer.
+The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input, because tooling that uses one word for both confuses every newcomer. Most other material does use one word: "this program has five instructions" means five functions, and Anchor's generated interface file lists a program's functions under `instructions`. Read those as instruction handlers.
 
 ### invariant
 
