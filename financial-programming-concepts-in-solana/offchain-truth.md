@@ -1,6 +1,6 @@
 # Chapter 8: Offchain Truth
 
-A program can verify a lot on its own: signatures, balances, account ownership, its own arithmetic. But most financial products depend on facts that happen in the real world, outside anything the chain can see. What is NVIDIA trading at? Which film grossed highest this month? Did the shipment arrive? Did the borrower's collateral just crash? Every one of the book's markets turns on a fact like this: prices for the lending market and the perpetual futures exchange, an event outcome for the betting market, asset valuations for the vault strategy. And they all get onchain on the same foundation: some party signs, and a careful program checks far more than that signature.
+A program can verify a lot on its own: signatures, balances, account ownership, its own arithmetic. But most financial products depend on facts that happen in the real world, outside anything the chain can see. Did the Federal Reserve cut rates this afternoon? Which film grossed highest this month? Did the shipment arrive? Did the borrower's collateral just crash? Every one of the book's markets turns on a fact like this: prices for the lending market and the perpetual futures exchange, an event outcome for the betting market, asset valuations for the vault strategy. And they all get onchain on the same foundation: some party signs, and a careful program checks far more than that signature.
 
 ## An Oracle's Publication Is Input, Not Gospel
 
