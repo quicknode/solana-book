@@ -72,6 +72,39 @@ const partForPath = new Map();
   }
 }
 
+// Justified text has to absorb a long unbreakable identifier somewhere, and it
+// goes into the word spaces of the line before, which is why a paragraph naming
+// proof_cancel_offer_returns_all_to_maker comes out visibly loose. Snake_case
+// already tells the reader where the seams are, so offer a break opportunity
+// after each underscore and let the line break there. <wbr> is a break
+// opportunity rather than a character, so the identifier a reader copies out of
+// the PDF is still whole, and no hyphen appears to be mistaken for part of the
+// name. Nothing else in an identifier is a legible place to break, so nothing
+// else gets one: a name with no underscores stays atomic.
+//
+// Not every underscore is worth breaking at. Breaking at the first one in
+// test_something strands "test_" at the end of a line, which reads as noise and
+// saves almost nothing, so a break has to leave a substantial fragment behind
+// and carry a substantial one over. These two limits are the idea behind CSS
+// hyphenate-limit-chars, applied by hand because <wbr> has no such knob.
+const BREAK_MIN_BEFORE = 8;
+const BREAK_MIN_AFTER = 5;
+const breakableIdentifier = (text) =>
+  text
+    .split(/(\s+)/)
+    .map((token) => {
+      if (!token.includes("_")) return token;
+      let out = "";
+      for (let i = 0; i < token.length; i++) {
+        out += token[i];
+        const kept = i + 1;
+        const carried = token.length - kept;
+        if (token[i] === "_" && kept >= BREAK_MIN_BEFORE && carried >= BREAK_MIN_AFTER) out += "<wbr>";
+      }
+      return out;
+    })
+    .join("");
+
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
   const id = idForPath(path);
@@ -88,12 +121,14 @@ const sections = chapterPaths.map((path) => {
     .replace(/<img src="([^"]+\.svg)" alt="([^"]*)"[^>]*>/g, (whole, src, alt) => {
       const svg = readFileSync(join(repoRoot, dirname(path), src), "utf8");
       return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
-    });
+    })
+    .replace(/<code>([^<]+)<\/code>/g, (whole, text) => `<code>${breakableIdentifier(text)}</code>`);
   const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
   return { id, title, html, path, subsections };
 });
 
 const isPreludeItem = (path) => path.startsWith("prelude/") && !path.endsWith("introduction.md");
+
 
 // The printed table of contents, in the style of TCP/IP Illustrated:
 // "Chapter N  Title" rows in bold, "N.M  Section" rows beneath, page numbers

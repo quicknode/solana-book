@@ -19,7 +19,13 @@ The mechanics are cheap: LiteSVM runs the real program in-process in millisecond
 
 A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the discipline above, driving every code path with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like [Kani](https://github.com/model-checking/kani) explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
 
-The escrow program in the companion repository ships a set of Kani harnesses that do precisely this for its verifiable core: `proof_take_offer_conserves_value` proves that taking an offer conserves both tokens' totals on every input, not just the tested ones; `proof_cancel_offer_returns_all_to_maker` proves the refund path whole; `proof_offer_id_seed_injective` proves two different offer IDs can never derive the same address. Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. When a chapter of this book says an invariant "must hold," this is what taking that sentence literally looks like.
+The escrow program in the companion repository ships a set of Kani harnesses that do precisely this for its verifiable core:
+
+- `proof_take_offer_conserves_value` proves that taking an offer conserves both tokens' totals on every input, not just the tested ones.
+- `proof_cancel_offer_returns_all_to_maker` proves the refund path whole.
+- `proof_offer_id_seed_injective` proves two different offer IDs can never derive the same address.
+
+Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. When a chapter of this book says an invariant "must hold," this is what taking that sentence literally looks like.
 
 ## Ship With a Second Opinion
 
