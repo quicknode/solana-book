@@ -1,4 +1,4 @@
-# Chapter 16: The Betting Market
+# Chapter 13: The Betting Market
 
 What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' money in proportion to how much they staked. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
 
@@ -29,7 +29,7 @@ Finally, each bettor gets a **user** PDA indexing their open bet accounts, cappe
 
 ## The Operator Creates the Market
 
-Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `create_event()` with a description ("top-grossing film this month"), then `add_outcome()` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_create_event` pins it.
+Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month"), then `add_outcome()` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_initialize_event` pins it.
 
 One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome()` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
 
@@ -118,3 +118,5 @@ The concepts you now have:
 - **An exit from every state.** Open events can be canceled and refunded in full, so a burned-down film festival strands nobody's stake.
 
 The pooled payout formula and the honest look at offchain truth both return at full scale in the lending and perpetual futures chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
+
+The next chapter puts the shape on a trading floor. Everyone here bet into one pool and took a share of it; from here on, the parties quote prices at each other instead, and the price stops being a pool's arithmetic and starts being a commitment somebody posted.

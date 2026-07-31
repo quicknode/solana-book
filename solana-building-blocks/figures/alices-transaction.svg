@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310" font-family="Georgia, serif" fill="#111">
-  <defs><marker id="alices-tx-i" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="alices-tx-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
+  <defs><marker id="alices-tx-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -42,9 +42,7 @@
   <rect x="38" y="242" width="252" height="38" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="46" y="258" font-size="11" font-weight="bold">Instruction 2 &#8594; Memo Program</text>
   <text x="46" y="271" font-size="10"><tspan font-family="Menlo, monospace">memo()</tspan>: write &#8220;thanks&#8221;</text>
-  <path d="M 294,212 C 340,208 375,180 398,140" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#alices-tx-i)"/>
-  <path d="M 294,260 C 380,258 460,190 500,142" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#alices-tx-i)"/>
-  <path d="M 560,156 L 560,190" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#alices-tx-i)"/>
+  <path d="M 560,156 L 560,190" fill="none" stroke="#777" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#alices-tx-g)"/>
   <rect x="498" y="194" width="132" height="40" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
   <text x="564" y="210" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">transaction log:</text>
   <text x="564" y="224" font-size="11" text-anchor="middle">&#8220;thanks&#8221;</text>

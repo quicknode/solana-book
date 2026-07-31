@@ -6,7 +6,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ## The Account Model: A Market of Reserves, and an Obligation per Borrower
 
-![The account map: one lending market PDA, three reserve PDAs (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation PDAs holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
+![The account map: one lending market account, three reserve accounts (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation accounts holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
@@ -33,7 +33,7 @@ Every valuation in this chapter multiplies an amount by a price, and the prices 
 
 ## The Market Owner Opens the Market
 
-Maria runs the market, and her revenue is a cut of the interest: the reserve factor you just met. She runs `init_lending_market()` with USDC as the quote currency, then `init_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `cumulative_borrow_rate_index` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single slot's interest does not truncate to zero while staying far inside u128's ceiling. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
+Maria runs the market, and her revenue is a cut of the interest: the reserve factor you just met. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `cumulative_borrow_rate_index` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single slot's interest does not truncate to zero while staying far inside u128's ceiling. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
 
 ## Supplying: Tokens In, Shares Out
 
@@ -46,7 +46,7 @@ Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), si
 Bob needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each): he wants $750 of liquidity while keeping his position. Four instruction handlers, in order:
 
 1. `deposit_reserve_liquidity()`: his five NVDAx go into the NVDAx reserve; he receives five NVDAx shares.
-2. `init_obligation()`: creates his loan file.
+2. `initialize_obligation()`: creates his loan file.
 3. `deposit_obligation_collateral()`: moves his five NVDAx shares into a collateral vault owned by his obligation. Note what is pledged: *shares*, not raw tokens, so his collateral keeps earning supplier yield while pledged.
 4. `borrow_obligation_liquidity()`: with his collateral worth $1,000 and loan-to-value at 75%, he may borrow up to $750 of USDC, which he does, drawn from the USDC reserve's available liquidity.
 

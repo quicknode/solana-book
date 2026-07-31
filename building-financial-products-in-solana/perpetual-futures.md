@@ -14,7 +14,7 @@ That one design decision creates the problem the whole program is organized arou
 
 ## The Account Model: One Pool, One Vault, One Position per Side per Trader
 
-![The account map: the pool PDA and its authority PDA, the single custody vault and LP share mint they control, one position PDA per trader per side, and the oracle feed the pool is pinned to.](figures/perps-account-map.svg)
+![The account map: the pool account and its authority PDA, the single custody vault and LP share mint they control, one position account per trader per side, and the oracle feed the pool is pinned to.](figures/perps-account-map.svg)
 
 The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_slot`) and the live accounting this chapter keeps returning to:
 
@@ -115,7 +115,7 @@ Plus the book's standing invariants: the vault balance always equals `liquidity 
 - **First-depositor share inflation**: closed by `MINIMUM_LIQUIDITY`, and `test_first_deposit_below_minimum_fails` proves a dust first deposit cannot even open the pool.
 - **Winning too big**: profit beyond the reservation is clipped by the cap rather than bankrupting the pool; the trade-off is printed on the tin.
 - **Sandwiching and price drift**: every money handler takes a user-supplied bound and fails with `SlippageExceeded` instead of filling at a surprise price.
-- **Double close, double liquidation**: the position PDA closes on exit; the second call finds no account.
+- **Double close, double liquidation**: the position account closes on exit; the second call finds no account.
 - **Config foot-guns**: parameter validation at pool creation, including the maintenance-versus-close-fee cross-check.
 
 ## Testing Considerations

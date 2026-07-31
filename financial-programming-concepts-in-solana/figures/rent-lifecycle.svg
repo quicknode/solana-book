@@ -26,10 +26,15 @@
   <text x="474" y="134" font-size="11" font-weight="bold">canceled</text>
   <path d="M 556,108 C 562,40 300,32 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
   <text x="330" y="22" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">both exits close the accounts and refund every lamport to the maker</text>
-  <path d="M 312,148 L 312,196" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#rent-x)"/>
-  <rect x="222" y="200" width="180" height="46" fill="none" stroke="#999" stroke-width="1.3"/>
-  <line x1="222" y1="200" x2="402" y2="246" stroke="#999" stroke-width="1.6"/>
-  <line x1="402" y1="200" x2="222" y2="246" stroke="#999" stroke-width="1.6"/>
-  <text x="312" y="266" font-size="10.5" fill="#444" text-anchor="middle">no close handler: the deposit is stranded forever</text>
-  <text x="312" y="280" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">(the bug this chapter forbids)</text>
+  <path d="M 312,150 L 312,186" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#rent-x)"/>
+  <text x="322" y="172" font-size="10" fill="#444" font-style="italic">no handler closes it</text>
+  <g>
+  <rect x="222" y="190" width="180" height="58" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(230,195)"><path d="M 2.6,7.8 Q 0.6,7.4 0.9,5.6 Q 1.1,4.4 2.3,4.9" fill="none" stroke="#111" stroke-width="1"/><ellipse cx="8" cy="7" rx="5.4" ry="4.4" fill="none" stroke="#111" stroke-width="1.2"/><ellipse cx="12.9" cy="6.4" rx="1.8" ry="1.5" fill="#fff" stroke="#111" stroke-width="1"/><circle cx="12.35" cy="6.4" r="0.35" fill="#111"/><circle cx="13.45" cy="6.4" r="0.35" fill="#111"/><line x1="5.2" y1="11.4" x2="5.2" y2="13" stroke="#111" stroke-width="1.2"/><line x1="10.6" y1="11.4" x2="10.6" y2="13" stroke="#111" stroke-width="1.2"/><line x1="6.8" y1="4.4" x2="9.2" y2="4.4" stroke="#111" stroke-width="1"/></g>
+  <text x="250" y="206" font-size="10.5" font-weight="bold">vault</text>
+  <line x1="230" y1="211" x2="394" y2="211" stroke="#888" stroke-width="0.8"/>
+  <text x="230" y="224" font-size="9.5">tokens and rent, both the maker&#8217;s</text>
+  <text x="230" y="239" font-size="9" font-style="italic" fill="#444">and no handler can return them</text>
+  </g>
+  <text x="312" y="270" font-size="10.5" fill="#444" text-anchor="middle">a state with no exit is a stranded deposit: a bug in the program</text>
 </svg>
