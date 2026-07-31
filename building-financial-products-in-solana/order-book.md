@@ -40,7 +40,7 @@ So the book's two sides are **critbit trees**. The name sounds complex; the idea
 
 ![A four-leaf critbit tree: binary keys with price bits before sequence bits, branch points at the first differing bit, and a walk order that visits best price first and earliest order first.](figures/order-book-critbit.svg)
 
-## Maria Opens the NVDAx/USDC Market
+## The Market Authority Opens the NVDAx/USDC Market
 
 Maria runs the exchange. She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match, so it is borne by whichever side of the fill receives the quote token.
 
@@ -54,7 +54,7 @@ The tick size and minimum order size are market hygiene. Prices must land on a m
 
 Three traders use the market this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus (for the two sellers, Alice and Carol) some NVDAx. Before trading, each of them calls `create_market_user()` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. This is the account the exchange will owe money to; think of it as their line in the exchange's internal ledger.
 
-## Alice Asks: Ten Shares at 265
+## An Ask Rests Above the Best Bid
 
 Alice holds NVDAx and thinks AI is overhyped. She wants out, but not at any price: she calls `place_order()` with side `Ask`, price 265, quantity ten shares.
 
@@ -64,13 +64,13 @@ The book's ask side is empty and no bid reaches 265, so there is nothing to matc
 
 ![Alice's ten shares flow into the base vault, and her ask becomes the only leaf in the ask tree at price 265.](figures/order-book-alice-ask.svg)
 
-## Bob Bids: Four Shares at 250
+## A Bid Below the Best Ask Rests Too
 
 Bob wants in, but he is not prepared to pay more than 250. He calls `place_order()` with side `Bid`, price 250, quantity four. The handler locks 4 × 250 = 1,000 USDC from his token account into the quote vault: every dollar he has, committed the moment the order rests. The best ask is Alice's 265, and Bob's limit refuses to cross it, so his bid rests too. The book now has a spread: bid 250, ask 265.
 
 ![The book after two orders: Alice's ask at 265 and Bob's bid at 250, with the spread between them.](figures/order-book-resting-spread.svg)
 
-## Carol's Ask at 245 Crosses Bob's Bid
+## A Crossing Ask Fills Against the Resting Bid
 
 Carol also owns NVDAx and also wants out, and she is less patient than Alice: she asks three shares at 245. Her limit is at or below the best bid, so this order crosses.
 
@@ -86,7 +86,7 @@ Now the money moves, in the unsettled-balance style. Gross proceeds are 3 × 250
 
 Notice who did nothing: Bob. Like Alice in the escrow chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
 
-## Bob Cancels the Rest of His Order
+## Canceling Returns the Unfilled Lock
 
 Bob decides three shares is enough. He calls `cancel_order()` on his order account. The handler checks the signer is the order's owner, and that the status is still Open or PartiallyFilled; a Filled or already-Cancelled order rejects with `OrderNotCancellable`. His remaining share at 250 means 250 USDC of his original lock is still sitting in the quote vault, so his `unsettled_quote` is credited 250, using the same price-times-remaining formula that locked it. The leaf comes out of the bid tree, the order ID leaves his open-order list, and the order account is stamped Cancelled, closing out its little state machine. Every state has an exit.
 
@@ -94,7 +94,7 @@ Bob decides three shares is enough. He calls `cancel_order()` on his order accou
 
 ![Bob's cancel: his leaf comes out of the bid tree, and the 250 USDC still locked for it moves to his unsettled quote balance.](figures/order-book-cancel.svg)
 
-## Bob and Carol Settle Their Funds
+## Settlement Turns Claims Into Tokens
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
@@ -102,7 +102,7 @@ The handler contains one line of discipline worth copying into everything you bu
 
 ![settle_funds() for Bob and Carol: the unsettled counters are zeroed first, then the market PDA signs the transfers from the base and quote vaults to their token accounts.](figures/order-book-settle.svg)
 
-## Maria Withdraws Her Fees
+## The Market Authority Withdraws the Fees
 
 At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One operational nicety: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is a pattern this book calls a **crank** (the Lending and Borrowing chapter treats it fully), though this handler adds an authority gate because it moves fee money.
 
@@ -148,7 +148,7 @@ If you write one test after reading this chapter, write the vault-swap one for y
 
 ## What You Learnt from Building the Order Book Exchange
 
-NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The operator who remains, Maria, sets the market's parameters and collects its fee, and can do nothing else.
+NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
 
 The concepts you now have, on top of the escrow's:
 

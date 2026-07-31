@@ -12,7 +12,7 @@ PDAs are how Solana programs store data. Taken together, a program's PDAs behave
 
 That one mechanism does three jobs in every chapter of this book:
 
-## Seeds Make Addresses Derivable
+## Seeds Make Data Findable
 
 The market for a token pair, a user's position in it, and the offer with a given ID all live at addresses anyone can compute from the seeds, so exactly one thing exists per key and nobody has to remember where anything is.
 
@@ -28,17 +28,8 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 
 ![Seeds plus the program ID derive an address off the curve, where no private key exists; only the program whose ID derived it can "sign" as it, and presenting the same seeds is the entire act.](figures/pda-derivation.svg)
 
-## Storage Is Paid For: Rent
-
-Every account, PDA or otherwise, holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. The deposit is not a fee: close the account and the lamports come back.
-
-For financial software, rent is small but real money with a lifecycle, and the design rule is simple: whoever wants the account pays for it. The maker funds her offer account and vault; the taker funds his own token account if he never held that token. Rent burdens follow the party who chose to create the state, and every deposit should find its way home when its account closes; the state-machine chapter of Financial Programming Concepts in Solana turns those exits into a rule.
-
-![The rent lifecycle: the maker funds the offer and vault at creation, both exits refund every lamport, and the crossed-out path is the stranded-deposit bug.](figures/rent-lifecycle.svg)
-
 ## What You Learnt
 
 - A **PDA** is derived from a program's ID and seeds and has no private key; only the deriving program can "sign" as it, by presenting the seeds.
 - A program's PDAs form a **key/value store**: the seeds are the identifier, the account's data is the value.
-- Seeds make addresses derivable and relationships verifiable, and PDA authority over a vault is what "the program holds the funds" means.
-- Storage is paid for with a **rent** deposit that returns when the account closes, and whoever wants the account pays for it.
+- Seeds make data findable and relationships verifiable, and PDA authority over a vault is what "the program holds the funds" means.

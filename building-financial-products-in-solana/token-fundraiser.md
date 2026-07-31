@@ -29,7 +29,7 @@ The **vault** is an associated token account whose authority is the fundraiser P
 
 Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, created on first contribution with `init_if_needed`, topped up on repeat contributions, and closed when its purpose is served.
 
-## Maria Opens a Seven-Day Window
+## The Maker Opens a Seven-Day Window
 
 Maria calls `initialize()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. Compare that with the web2 version of this product, where the platform can and occasionally does change campaign rules mid-flight; here the terms are physically incapable of changing, because there is no handler whose job is changing them.
 
@@ -57,7 +57,7 @@ The Constant-Product AMM chapter will fight the same battle over pool pricing, a
 
 The trade-off is honest bookkeeping in both directions. Tokens donated straight to the vault are outside the program's accounting: on a successful raise they ride along to Maria (the claim drains the vault's full balance), and on a failed raise they are stranded, because refunds pay out each receipt's recorded amount and no receipt records the donation. Do not send tokens to program vaults except through the program's front door.
 
-## The Target Is Met: Maria Claims, and Everything Closes
+## The Target Is Met: The Maker Claims, and Everything Closes
 
 `check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, the counter passes the `TargetNotMet` gate, and three things happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The state machine does not mark itself finished; it **ceases to exist**, which is the strongest possible "finished" and makes double-claiming a structural impossibility rather than a flag check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
 

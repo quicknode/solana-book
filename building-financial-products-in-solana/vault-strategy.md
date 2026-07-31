@@ -26,13 +26,13 @@ Each basket asset gets an **asset config** PDA (seeds: `"asset"`, the strategy, 
 
 The indexes matter more than they look: every handler that computes the fund's value walks indexes 0 through `asset_count` and refuses to run if any account is missing (`IncompleteAssetAccounts`), which makes it structurally impossible to omit an asset and understate the fund's value. A retired asset (weight set to zero) keeps its index forever rather than being reused, so the contiguous range the valuation loop depends on stays intact.
 
-## Maria Creates the Strategy and Sets the Weights
+## The Manager Creates the Strategy and Sets the Weights
 
 Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy()` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund _by configuration_, and the cap is the program refusing to make that a parameter.
 
 She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and here is the rule that shapes the whole design: **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight()`, and only Maria: the manager gate is pinned by `test_set_weight_rejects_non_manager`.
 
-## Alice Deposits 900 USDC and the Program Acquires Assets
+## A Deposit Makes the Program Acquire Assets
 
 Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `deposit()` with 900 USDC and a `minimum_shares` floor. The handler does three jobs in one transaction, and the order is the security model.
 
@@ -44,7 +44,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 ![Alice's deposit: 900 USDC arrives, the NAV loop reads every vault and feed, two router swaps split it 360/540 into the TSLAx and NVDAx vaults with oracle-anchored minimums, and 900 shares are minted to Alice.](figures/vault-deposit.svg)
 
-## The Market Moves and Maria Rebalances
+## The Market Moves and the Manager Rebalances
 
 NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is worth about $1.07, and nothing needs to happen for that to be true: the share price _is_ NAV divided by supply, recomputed from feeds every time it matters.
 
@@ -52,17 +52,17 @@ But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund agains
 
 ![The drift and the rebalance: NVDAx's rise pushes the weights to 37.5/62.5, and the sell and buy legs through the router restore 40/60, every leg floored by an oracle-computed minimum.](figures/vault-rebalance.svg)
 
-## Bob Buys In at the New Price
+## A Later Investor Buys In at the New Price
 
 Bob, the second investor, deposits 480 USDC of his standard wallet. He is not early, and the share math prices that in: shares = deposit × total shares ÷ NAV, floored. With 900 shares outstanding against a $960 NAV, his 480 buys 450 shares, not 480. Alice's early position is not diluted by his arrival, and the test suite pins the fairness directly (`test_deposit_fair_pricing`). His money deploys 40/60 at current prices, same as hers, same slippage discipline.
 
-## Maria's Fee Arrives by Dilution
+## The Manager's Fee Arrives by Dilution
 
 Traditional funds sell assets to pay the management fee. This program does what large onchain fund products do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees()` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be quietly worsened. The escrow chapter snapshotted a fee per offer; the same principle, at fund scale.
 
 ![Fee by dilution: the share supply grows by 13.5 shares into Maria's account, every other holder's slice of the same pie shrinks proportionally, and no tokens leave any vault.](figures/vault-fee-dilution.svg)
 
-## Alice Withdraws In Kind
+## Withdrawing In Kind
 
 Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it hands her **her proportional slice of every vault, in kind**: her share of the USDC vault, of the TSLAx vault (about 1.5), of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
 

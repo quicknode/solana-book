@@ -29,11 +29,11 @@ A **pool authority** PDA (seeds `"authority"` + pool) holds no data and exists t
 
 Each position is a **position** PDA with seeds `"position"`, the pool, the owner, and the side (`"long"` or `"short"`), so a trader can hold at most one long and one short per market. The `Position` struct is a snapshot taken at open: `collateral` (net of the open fee), `size` (the notional exposure), `entry_price`, `size_scaled` (size divided by entry price, kept at `SIZE_PRECISION` fixed point), and `entry_funding` (the funding index at entry). Everything the program ever needs to settle the position is derivable from these fields plus the current price, which is what makes settlement **account-local**: closing or liquidating one position touches one position.
 
-## Maria Creates the Market, and the Parameters Police Each Other
+## Creating the Market, Where the Parameters Police Each Other
 
 Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `protocol_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check deserves a sentence because it prevents a subtle dead state: `maintenance_margin_bps` must exceed `close_fee_bps`, otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, leaving its owner with no exit at all. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` pins it. Every state needs an exit, and here that principle reaches back into the *configuration* of the market.
 
-## Carol Funds the Casino and Gets Shares Priced at Mark
+## Liquidity Providers Fund the Casino and Get Shares Priced at Mark
 
 Carol is a liquidity provider. Her income is every losing trader's loss and every funding payment; her risk is every winning trader's profit. She is not being generous; she is selling variance for yield. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`, a withheld 1,000 minor units (a tenth of a cent) that no one will ever own: the same first-depositor defense the constant-product AMM chapter built (and the vault strategy chapter named as its own missing guard), closing the share-inflation attack before it opens. Later deposits mint shares pro rata, but against what denominator? Not the vault balance, and not even `liquidity` alone, but **assets under management marked to market**: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a depositor could buy in cheap the moment traders were winning and dilute Carol at exactly her worst moment. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly. Eleven more providers follow Carol in over the morning, and the pool opens for trading with 12,000 USDC of liquidity.
 
@@ -51,7 +51,7 @@ Every handler that touches money begins the same way: read the oracle, validate 
 
 A stale price is not an inconvenience here; it is an arbitrage machine. Anyone who can trade a leveraged market at a minute-old price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` pin both refusals.
 
-## Alice Opens Her Long, and the Pool Reserves Her Best Case
+## Opening a Long, and the Pool Reserves the Best Case
 
 Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage guard; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the gates, in order:
 
@@ -73,7 +73,7 @@ Two simplifications to notice, both documented in the example. The payment goes 
 
 ![The funding index climbs while longs outweigh shorts and falls when shorts outweigh longs; each position pays or receives the index movement between its entry and its exit.](figures/perps-funding-index.svg)
 
-## NVDAx Rallies: Bob's Short Decays, and Dave Gets Paid to End It
+## NVDAx Rallies: The Short Decays, and a Liquidator Is Paid to End It
 
 The quarter goes Alice's way: NVDAx climbs to $110. Mark both positions to market with the one PnL formula the program owns: size × price change ÷ entry price. Alice is up 500. Bob is down 500, and Bob's **equity**, working collateral plus PnL minus funding owed, is 995 − 500 = 495 USDC. His maintenance margin is 250, so he lives, and `test_healthy_position_cannot_be_liquidated` guarantees Dave cannot touch a healthy position (`PositionHealthy`).
 
@@ -88,7 +88,7 @@ Notice whose incentive does the system's dirty work. The pool cannot sell Bob's 
 
 ![Bob's liquidation at $115: his 245 of remaining equity splits 50 to Dave and 195 back to Bob, while the LPs keep the 750 his position lost.](figures/perps-liquidation.svg)
 
-## Alice Closes at $120 and the Pool Pays Without Flinching
+## Closing at $120, and the Pool Pays Without Flinching
 
 At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**, nearly doubling her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool authority's signature. The same handler protects the pool from the other direction: a position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and must exit through liquidation, and any payout the pool arithmetic cannot cover fails closed with `PoolInsolvent` rather than overdrawing the LPs.
 
@@ -124,7 +124,7 @@ The suite is the largest in the companion repository: a mock oracle the tests se
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
-A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. This chapter rebuilt the whole stack as one program: the pool is the clearing house and the counterparty, the maintenance margin and reservation are the margin department, the funding index is the funding desk, and Dave's bot is the liquidation clerk, paid per correction.
+A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. This chapter rebuilt the whole stack as one program: the pool is the clearing house and the counterparty, the maintenance margin and reservation are the margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
 The concepts this capstone added:
 
