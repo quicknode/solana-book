@@ -37,7 +37,7 @@ The handler stamps `time_started` from the cluster clock and stores the duration
 
 ## Nobody May Carry More Than a Tenth of the Raise
 
-Ten backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
+Eleven backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
 
 Alice comes in hot and tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, the same multiply-before-divide discipline as every other chapter.
 
@@ -45,9 +45,9 @@ The cap is not just per call. Carol contributes 450 USDC, then comes back the ne
 
 Sit with the arithmetic consequence for a second: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That is a design statement about what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. It also blunts the obvious manipulation: a single whale filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
-So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and seven other backers at 900 each. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
+So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here precisely because most of them stopped short of the cap. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
 
-![Ten contributors, none above 900 USDC: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
+![Eleven contributors, none above 900 USDC, each slice as tall as what that backer gave: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
 
 ## The Counter Is the Truth; the Vault Is Just Custody
 
@@ -61,7 +61,7 @@ The trade-off is honest bookkeeping in both directions. Tokens donated straight 
 
 `check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, the counter passes the `TargetNotMet` gate, and three things happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The state machine does not mark itself finished; it **ceases to exist**, which is the strongest possible "finished" and makes double-claiming a structural impossibility rather than a flag check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
 
-One loose end survives success, and it is worth being honest about because you will meet it in your own designs: the ten contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone; the program omits it, and the omission is the kind you should notice by habit: *for every account your program creates, name the handler that eventually closes it.*
+One loose end survives success, and it is worth being honest about because you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone; the program omits it, and the omission is the kind you should notice by habit: *for every account your program creates, name the handler that eventually closes it.*
 
 ![Success: one transaction drains the vault to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
 

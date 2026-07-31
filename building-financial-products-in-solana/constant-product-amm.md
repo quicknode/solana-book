@@ -16,7 +16,7 @@ The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME r
 
 And the truth about K: **K is constant within a single trade and grows over time.** Deposits grow it (more of both tokens, same ratio). The liquidity providers' share of every fee stays in the pool and grows it. And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
 
-![The constant-product curve: a buy slides the pool along X × Y = K, and the spot price is the slope of the curve at the pool's current point.](figures/amm-curve.svg)
+![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
