@@ -87,6 +87,10 @@ Conventions already settled, which the visual pass must preserve:
 - **An arrow is one smooth stroke, and its head points along it.** Where two Bézier segments join, the handles either side of the anchor are collinear, so the flow never shows a corner mid-route. The head is rotated to the tangent at the path's very last point, so the final stretch has to be travelling in the head's direction already — a short terminal hook swings the head off the line and the stroke comes out through its flank instead of meeting the middle of its base.
 - **Handler names carry parens in prose too**: `settle_event()` invokes, `event` is an account, `total_pool` is a field. Test names stay bare.
 
+Defects for the visual pass to correct:
+
+- **ATA seed lists name the wrong program**, in 40 figures. An off-curve dot carries its seeds and nothing else, and an ATA's seeds are the owner's address, the token program that manages the mint, and the mint. The labels currently read `ATA PROGRAM + ALICE'S ADDRESS + USDC MINT`, which names the deriving program (implied everywhere else, as in the escrow's `"OFFER" + MAKER'S ADDRESS + ID`) and omits a real seed. They should read `ALICE'S ADDRESS + TOKEN PROGRAM + USDC MINT`. The prose is already correct in Tokens and PDAs, so the figures contradict the pages they sit on. Some labels wrap mid-phrase across two lines and need re-wrapping rather than a substitution.
+
 Steps currently missing their per-step diagram, to be drawn in the visual pass:
 
 - Lending and Borrowing: Carol's short; Bob's repayment and collateral withdrawal.
