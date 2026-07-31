@@ -1,4 +1,4 @@
-# Chapter 15: The Prop AMM
+# Chapter 16: The Prop AMM
 
 The constant-product chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the venue that quietly took most of Solana's swap volume away from both designs: the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: *proprietary* trading is trading the firm's own money.
 
@@ -12,7 +12,7 @@ Two consequences follow immediately, and both are absences. A trade's unit price
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
-![The account map: the market PDA pinned to its oracle feed, the dataless authority PDA that owns the base and quote vaults, and columns for Maria the operator and the traders who swap against the vaults.](figures/prop-amm-account-map.svg)
+![The account map: the market account pinned to its oracle feed, the dataless authority PDA that owns the base and quote vaults, and columns for Maria the operator and the traders who swap against the vaults.](figures/prop-amm-account-map.svg)
 
 The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
