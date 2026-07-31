@@ -4,7 +4,7 @@ APIs churn; exploits recur. The same half-dozen attack classes have drained onch
 
 ## Every Mistake Is a Bounty, Claimable by Anyone
 
-Deploying financial software on a public chain means accepting a threat model no other kind of software faces. Every instruction handler is callable by anyone on earth, pseudonymously, for a fraction of a cent. Your source, or at least your bytecode, is public. And every mistake is not a crash report but a bounty: a mispriced trade, a leaked minor unit, an unchecked account is money, claimable by the first person to notice.
+Deploying financial software on a public chain means accepting a threat model no other kind of software faces. Every instruction handler is callable by anyone on earth, pseudonymously, for a fraction of a cent. Your source, or at least the compiled program, is public. And every mistake is not a crash report but a bounty: a mispriced trade, a leaked minor unit, an unchecked account is money, claimable by the first person to notice.
 
 Three consequences shape everything:
 
