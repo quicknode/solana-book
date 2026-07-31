@@ -118,6 +118,13 @@ const svgRules = [
   // than the value column.
   [/<line x1="7" y1="5\.4" x2="7" y2="12"/,
     'table-icon divider sits at x=5.5 (key column narrower than value column)'],
+  // A seed list names seeds, and the deriving program stays implied (the
+  // escrow's offer PDA is labeled "OFFER" + MAKER'S ADDRESS + ID, with no
+  // escrow program in it). An ATA's three seeds are the owner's address, the
+  // token program, and the mint; the Associated Token Program derived it and
+  // does not belong in the label.
+  [/>ATA PROGRAM/,
+    'seed lists name seeds, not the deriving program: an ATA is OWNER\'S ADDRESS + TOKEN PROGRAM + MINT'],
   // The coin mark is three rings. Two rings read as a pair of address dots at
   // print size, where the accent colour is gone and the mark is about 2mm.
   [/<circle cx="4" cy="2" r="6"[^>]*stroke="#1e7a3c"/,

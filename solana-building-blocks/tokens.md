@@ -26,7 +26,7 @@ Not every token account is an ATA. A token account can live at any address, and 
 
 ![Alice's and Bob's USDC stores are PDAs: derived from owner and mint, they sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
-This is the other half of the figure convention. An address drawn **off** the curve is captioned with the seeds it was derived from (for an ATA: the token program, the owner's address and the mint), and that caption is the whole story. No private key exists for it, so only the owning program can move what it holds.
+This is the other half of the figure convention. An address drawn **off** the curve is captioned with the seeds it was derived from (for an ATA: the owner's address, the token program, and the mint), and that caption is the whole story. No private key exists for it, so only the owning program can move what it holds.
 
 ## Decimals Define the Minor Unit
 
