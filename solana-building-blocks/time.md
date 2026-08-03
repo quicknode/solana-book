@@ -41,7 +41,7 @@ The two that pick the window pick slots. The vault is the exception that shows t
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
-A deadline counted in days is integer division, and integer division floors. The token fundraiser stores `time_started` and a duration in days, and both of its later handlers reconstruct elapsed days the same way:
+A clock gives a program seconds, so counting days means dividing by 86,400. That division is integer division, which throws the remainder away: six and a half days counts as six, and anything short of a full day counts as none of it. The token fundraiser stores `time_started` and a duration in days, and both of its later handlers reconstruct elapsed days the same way:
 
 ```
 elapsed days = (now − time_started) / 86,400
