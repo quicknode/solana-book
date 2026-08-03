@@ -128,11 +128,11 @@ A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dol
 
 SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
 
-Bob's SOL lives in his own account, but his USDC does not. Token balances live in **token accounts**: accounts whose data records three facts - which token, whose balance, and how much. And Bob's USDC token account sits at an address anyone can compute: the **associated token account** (ATA), derived from a wallet address and a mint address. Put in Bob's address and the USDC mint's address, and out comes the address of Bob's USDC account; put in Alice's, and out comes hers. These derived addresses are the second kind from the last section: an ATA is a PDA, sitting off the curve with no private key, and the PDAs chapter explains the mechanism. What matters here is what derivation buys: Bob does not need to ask Alice where her USDC lives. His wallet computes where her account must be, and sends the tokens there.
+Bob's SOL lives in his own account, but his USDC does not: a token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two, and that is what matters here. Bob does not need to ask Alice where her USDC lives. His wallet computes where her account must be, and sends the tokens there. The Tokens chapter covers token accounts properly.
 
 So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
-![Bob pays Alice 25 USDC: his signed transaction runs the Token Program's transfer handler, and the balance moves between their associated token accounts, each derived from its owner's address and the USDC mint.](figures/bobs-usdc-transaction.svg)
+![Bob pays Alice 25 USDC: his signed transaction runs the Token Program's transfer handler, and the balance moves between their USDC token accounts, each at an address derived from its owner's address, the token program, and the USDC mint.](figures/bobs-usdc-transaction.svg)
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
@@ -147,5 +147,5 @@ Two payments toured every building block the rest of the book uses:
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
-- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds. Every token balance sits in one: an **associated token account**, derived from its owner's address and the mint.
+- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
