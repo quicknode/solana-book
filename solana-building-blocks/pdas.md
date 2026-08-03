@@ -6,11 +6,13 @@ Generalize that and you have the mechanism. A **program derived address** (PDA) 
 
 The Associated Token Program made one choice of seeds for one job: where a wallet's balance of a mint lives. Every other program picks seeds for its own records and gets the same three properties, which is why **PDAs are how Solana programs store data**. Taken together, a program's PDAs behave like a **key/value store**: the seeds are the key, and the account's data is the value. ("Key" here means *identifier*, the same word a database would use; it has nothing to do with public or private keys.) Every program in this book keeps its state this way:
 
-- The escrow stores each offer at `"offer"` + the maker's address + an ID.
-- The fundraiser stores its terms at `"fundraiser"` + the maker's address, and one receipt per backer at `"contributor"` + the fundraiser + the backer's address.
-- The order book stores each market at `"market"` + the two mints.
-- The lending market stores each borrower's loan file at `"obligation"` + the market + the borrower's address.
-- The perpetual futures venue stores each position at `"position"` + the pool + the owner + the side.
+- The escrow stores each offer at an address made from `"offer"` + the maker's address + an ID.
+- The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contributor"` + the fundraiser + the backer's address.
+- The order book stores each market at an address made from `"market"` + the two mints.
+- The lending market stores each borrower's loan file at an address made from `"obligation"` + the market + the borrower's address.
+- The perpetual futures venue stores each position at an address made from `"position"` + the pool + the owner + the side.
+
+![Every program in this book stores its records this way: the seeds are the key, the struct inside is the value, and one key shape holds as many records as the program needs.](figures/pda-key-value-store.svg)
 
 Each of those three jobs again, in the general form every chapter of this book uses:
 
