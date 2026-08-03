@@ -26,7 +26,7 @@ Fractional values (interest rates, indexes, exchange rates) use **fixed point**:
 
 ## Multiply Before Divide, with Wider Intermediates
 
-Integer division throws away the remainder, so every division destroys information. The rule that follows: **do all multiplication before any division, and divide exactly once.** `amount * share / total` is right; `amount / total * share` is catastrophically wrong (the first division usually yields zero). When a formula seems to need two divisions, refactor until it needs one.
+Integer division throws away the remainder, so every division destroys information. The rule that follows: **do all multiplication before any division, and divide exactly once.** `amount * share / total` is right; `amount / total * share` is catastrophically wrong (the first division usually yields zero). When a formula seems to need two divisions, refactor until it needs one. Dividing once is also rounding once, which is why the errors never compound: there is only ever one remainder to lose.
 
 Multiplying first creates the second problem: intermediates overflow. Two u64 values multiply into up to 128 bits, so `price * quantity` can overflow u64 even when the final result, after division, fits easily. This is **phantom overflow**: rejecting or corrupting a perfectly legal trade because the middle of the calculation was too big, not the answer. The fix is mechanical: promote to u128 (or a U256 type for chained multiplications) before multiplying, divide, then narrow back to u64 with an explicit checked conversion, so the only failure mode left is an amount genuinely too large to transfer.
 
@@ -49,12 +49,19 @@ This is not stinginess; it is the only stable policy. One minor unit of rounding
 
 > **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is not a detail, it is a security boundary, and "closest" is never the answer for money.
 
-Four things follow from that table:
+Three things follow from that table, and each is worth remembering on its own.
 
-- **Round once.** Floor a value once at the end, not at every intermediate step, or the errors compound. This is multiply-before-divide again.
-- **Round so that safety checks err against the user.** A lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better.
-- **A ceiled fee is a capped fee.** Rounding up must never make a fee larger than the amount it is charged on: the order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written too, so no configuration can express a fee above 100% and no manager can drain a fund by setting one.
-- **Ceiling debt is what "interest is paid in full" means onchain.** The pool never collects less than the interest that accrued, no schedule of tiny repayments can shave it, and no sub-unit of debt is ever forgiven by rounding. Over-repayment clamps to the debt, so nobody is overcharged either.
+### Safety Checks Round Against the User Too
+
+The table covers money changing hands. The same direction applies to the numbers a program checks before it lets money move at all. A lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better. A borrower is refused a loan they could just barely afford, rather than granted one they just barely cannot.
+
+### A Ceiled Fee Is a Capped Fee
+
+Rounding up must never make a fee larger than the amount it is charged on. The order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written, too, so no configuration can express a fee above 100% and no manager can drain a fund by setting one.
+
+### Ceiling Debt Is What "Paid in Full" Means Onchain
+
+The pool never collects less than the interest that accrued, no schedule of tiny repayments can shave it, and no sub-unit of debt is ever forgiven by rounding. Over-repayment clamps to the debt, so nobody is overcharged either.
 
 ## Invariants and Conservation: Assert After the Math
 
@@ -64,7 +71,7 @@ An **invariant** is a property that must hold before and after every state chang
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 
-The discipline that makes invariants worth having: **assert after the math, not just before.** Preconditions catch bad inputs; a postcondition catches *your own bug*. The AMM re-checks its product after the transfers have actually landed, and that single line catches every "I computed the output wrong and overpaid" mistake in the file, including the ones in code that has not been written yet. When an invariant check costs a few hundred compute units and the alternative is an unbounded drain, the check is free.
+Check them **after the math, not just before.** A check on the way in catches bad inputs; a check on the way out catches *your own bug*. The AMM re-checks its product after the transfers have actually landed, and that single line catches every "I computed the output wrong and overpaid" mistake in the file, including the ones in code that has not been written yet. When an invariant check costs a few hundred compute units and the alternative is an unbounded drain, the check is free.
 
 One warning from the same file: an invariant that can hold vacuously is not an invariant. `new_k >= old_k` passes trivially when `old_k` is zero, which is why the empty pool needs its own explicit guard. Know the degenerate values of every property you assert.
 
