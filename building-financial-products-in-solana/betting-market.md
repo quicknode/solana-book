@@ -78,7 +78,7 @@ Carol's losing bet pays nothing, but it still occupies one of her 32 position sl
 
 And what if the film festival burns down? An Open event has a second exit: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (pinned by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
 
-![The event's state machine: an Open event takes bets, then exits to Settled (claims and losing-bet closes) or Cancelled (refunds), and every bet account reaches a terminal close on every path.](figures/betting-state-machine.svg)
+![The event's state machine: an Open event takes bets, then exits to Settled (claims and losing-bet closes) or Cancelled (refunds), and every bet account is closed on every path.](figures/betting-state-machine.svg)
 
 ## The Math: One Division, Floored Once, Fee Off the Losers
 

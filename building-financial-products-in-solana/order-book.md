@@ -90,7 +90,7 @@ Notice who did nothing: Bob. Like Alice in the escrow chapter, a maker signs onc
 
 Bob decides three shares is enough. He calls `cancel_order()` on his order account. The handler checks the signer is the order's owner, and that the status is still Open or PartiallyFilled; a Filled or already-Cancelled order rejects with `OrderNotCancellable`. His remaining share at 250 means 250 USDC of his original lock is still sitting in the quote vault, so his `unsettled_quote` is credited 250, using the same price-times-remaining formula that locked it. The leaf comes out of the bid tree, the order ID leaves his open-order list, and the order account is stamped Cancelled, closing out its little state machine. Every state has an exit.
 
-![An order's state machine: fills walk it from Open through PartiallyFilled to Filled, cancel_order() exits from either live state, and both terminal states refuse further transitions.](figures/order-book-state-machine.svg)
+![An order's state machine: fills walk it from Open through PartiallyFilled to Filled, cancel_order() exits from either live state, and both final states refuse further transitions.](figures/order-book-state-machine.svg)
 
 ![Bob's cancel: his leaf comes out of the bid tree, and the 250 USDC still locked for it moves to his unsettled quote balance.](figures/order-book-cancel.svg)
 
