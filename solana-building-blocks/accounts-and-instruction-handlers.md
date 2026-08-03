@@ -50,12 +50,12 @@ A transaction carries one or more **instructions**, and each instruction is addr
 
 An instruction names which of the program's **instruction handlers** to run (the onchain functions a program exposes), the accounts the handler may touch, and the arguments. Good financial design keeps the mapping strict: one handler, one state transition (deposit, settle, cancel, liquidate), so the handlers a program exposes are exactly the moves its state machine allows.
 
-> **One word, two meanings, everywhere but here.** A lot of Solana material uses "instruction" for both things: the function a program exposes, and the input that invokes it. You will read "this program has five instructions" meaning five functions, and the interface file Anchor generates for a program lists its functions under `instructions`. One word for two things confuses everyone, so this book never does it:
+> **An instruction and an instruction handler are two different things.** They are the two halves of every call, and each has its own name:
 >
-> - An "instruction" is always the input a transaction carries: which handler to run, which accounts it may touch, and the arguments.
-> - An "instruction handler" is always the onchain function that runs.
+> - An "instruction" is the input a transaction carries: which handler to run, which accounts it may touch, and the arguments.
+> - An "instruction handler" is the onchain function that runs.
 >
-> Where you meet "instruction" elsewhere and it plainly means a function, read it as "instruction handler".
+> Some material is loose about this and uses "instruction" for both. You will read "this program has five instructions" meaning five functions, and the interface file Anchor generates for a program lists its functions under `instructions`. Where you meet "instruction" and it plainly means a function, read it as "instruction handler".
 
 Watch Alice run her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
