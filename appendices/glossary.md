@@ -252,7 +252,7 @@ Maximal extractable value: profit taken by controlling transaction ordering, mos
 
 ### mint (account)
 
-The onchain account that defines a token: its supply, decimals, and authorities. In economic prose this book says "token"; "mint account" appears when describing what gets passed to an instruction.
+The onchain account that defines a type of token: its supply, decimals, and authorities. A mint is a token's factory, not a token itself, and holds no balance of anything; balances live in [token accounts](#token-account). Economic prose names the token ("Alice pays 25 USDC"); "mint" names the account, and is what an instruction is actually passed.
 
 ### multisig
 
