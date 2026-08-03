@@ -124,7 +124,9 @@ Because addresses are how everything is found, financial programs lean on *deriv
 
 ## Users Use the Token Program to Send Tokens to Each Other
 
-A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana means **USDC**: a **stablecoin**, a token that tracks the dollar one for one. Every asset on Solana except SOL is a **token**, defined by a program rather than by the network itself; SOL is the one asset the network understands natively. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
+A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean **USDC**, the most popular **stablecoin**: a token that tracks the dollar one for one.
+
+SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
 
 Bob's SOL lives in his own account, but his USDC does not. Token balances live in **token accounts**: accounts whose data records three facts - which token, whose balance, and how much. And Bob's USDC token account sits at an address anyone can compute: the **associated token account** (ATA), derived from a wallet address and a mint address. Put in Bob's address and the USDC mint's address, and out comes the address of Bob's USDC account; put in Alice's, and out comes hers. These derived addresses are the second kind from the last section: an ATA is a PDA, sitting off the curve with no private key, and the PDAs chapter explains the mechanism. What matters here is what derivation buys: Bob does not need to ask Alice where her USDC lives. His wallet computes where her account must be, and sends the tokens there.
 

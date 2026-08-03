@@ -362,13 +362,17 @@ The difference between the price you expected and the price you got, caused by y
 
 Solana's basic unit of time, roughly 400ms, in which a leader may produce a block. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
+### SOL
+
+Solana's **native token**: the asset the network understands without any token program, used to pay transaction fees and to fund the rent deposit on every account. Denominated in [lamports](#lamport), a billionth of a SOL each. Every other token is an [SPL token](#spl-token).
+
 ### spread
 
 The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
 
 ### SPL token
 
-Any token other than SOL, managed by a token program; the name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
+Any token other than [SOL](#sol): one defined by a token program rather than by the network itself. The name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
 
 ### stablecoin
 
