@@ -24,7 +24,7 @@ An ATA is a **PDA**: a derived address that sits off the curve, with no private 
 
 Not every token account is an ATA. A token account can live at any address, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves: some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *a wallet's* balance of a mint; program-held tokens live wherever the program put them.
 
-![Alice's and Bob's USDC stores are PDAs: derived from owner and mint, they sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
+![Alice's and Bob's USDC stores are ATAs, derived from the owner's address, the token program, and the mint. A program's vault is derived from seeds the program chose instead. All three sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
 This is the other half of the figure convention. An address drawn **off** the curve is captioned with the seeds it was derived from (for an ATA: the owner's address, the token program, and the mint), and that caption is the whole story. No private key exists for it, so only the owning program can move what it holds.
 
@@ -61,4 +61,4 @@ When you build on a token you did not issue, read its extensions first: several 
 - The **mint authority** and **freeze authority** are a token's real constitution: who can mint, and who can freeze, are the first questions to ask about any token.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for a wallet, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
-- Solana has two token programs, and extensions can change what a transfer means: read a token's extensions before building on it.
+- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**, and extensions can change what a transfer means: read a token's extensions before building on it.
