@@ -1,16 +1,16 @@
 # Chapter 3: Tokens
 
-Assets on Solana are tokens, and tokens are nothing more than accounts with well-known shapes, managed by a token program. Every asset you will meet in this book is a token: stablecoins like USDC and USDT, equities like NVDAx, SPCXx, and TSLAx, and the share and receipt tokens the book's own programs mint.
+Assets on Solana are tokens, and every token is defined and held by accounts with well-known shapes, managed by a token program. Every asset you will meet in this book is a token: stablecoins like USDC and USDT, equities like NVDAx, SPCXx, and TSLAx, and the share and receipt tokens the book's own programs mint.
 
-## Every Distinct Token Is a Distinct Mint
+## Every Distinct Token Has Its Own Mint
 
-Each kind of token is defined by its own **mint account**. USDC is one mint; NVDAx is another; the shares a fund issues are a third. Two tokens are the same asset if they come from the same mint address, and different assets if they do not: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account. A program is handed its account addresses by whoever calls it, so it has to check that those addresses are the ones it expects: that is how it knows the asset it is being paid in, or is paying out, is the asset it meant. Every program chapter takes that check seriously.
+Each kind of token is defined by its own **mint account**. One mint defines USDC, another defines NVDAx, and a third defines the shares a fund issues. A mint is not itself a token: it is the account a token comes from, and no amount of anything is held in it. Two tokens are the same asset if they come from the same mint address, and different assets if they do not: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account. Instruction handlers are given account addresses as arguments, and must check them: the mint address has to be right for the asset to be right. Every program chapter takes that check seriously.
 
 The mint account records the token's definition: its current total supply, its decimals, and its authorities.
 
 ## A Mint Is a Factory, and the Mint Authority Is Its Boss
 
-A mint does not just describe a token; it manufactures it. New tokens come into existence when, and only when, the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler: the supply counter rises and the new tokens land in a token account. Burning does the reverse. Nothing else in the system can create or destroy a single unit.
+A mint does not just describe a type of token; it manufactures it. New tokens come into existence when, and only when, the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler: the supply counter rises and the new tokens land in a token account. Burning does the reverse. Nothing else in the system can create or destroy a single unit.
 
 The mint authority is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA, which is how this book's programs use it: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and this is how it is enforced.
 
@@ -22,7 +22,7 @@ A **token account** holds one owner's balance of one token, and its data records
 
 An ATA is a **PDA**: a derived address that sits off the curve, with no private key, so no signature for it can ever exist and only the owning program can move what it holds. The PDAs chapter explains the mechanism.
 
-Not every token account is an ATA. A token account can live at any address, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves: some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *a wallet's* balance of a mint; program-held tokens live wherever the program put them.
+Not every token account is an ATA. A token account can live at any address, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves: some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *a wallet's* balance of a given token; program-held tokens live wherever the program put them.
 
 ![Alice's and Bob's USDC stores are ATAs, derived from the owner's address, the token program, and the mint. A program's vault is derived from seeds the program chose instead. All three sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
@@ -57,7 +57,7 @@ When you build on a token you did not issue, read its extensions first: several 
 
 ## What You Learnt
 
-- Every distinct token is a distinct **mint account**: the address is the identity, the label is decoration.
+- Every distinct token has its own **mint account**, and that account's address is the token's identity: the label is decoration. A mint defines a token; it is not one.
 - The **mint authority** and **freeze authority** are a token's real constitution: who can mint, and who can freeze, are the first questions to ask about any token.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for a wallet, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.

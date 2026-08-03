@@ -32,7 +32,7 @@ Multiplying first creates the second problem: intermediates overflow. Two u64 va
 
 And everywhere, use checked arithmetic: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. Rust release builds wrap silently on plain operators unless overflow checks are enabled; a financial program never gambles on that. Reserve `saturating_*` for cosmetic paths; on a value the accounting relies on, a silent clamp is a correctness bug wearing a seatbelt.
 
-Some formulas need more than the four operations. The classic is the AMM's initial LP mint, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation with a known, bounded, directionally-controlled error.
+Some formulas need more than the four operations. The classic is the AMM's first issuance of LP tokens, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation with a known, bounded, directionally-controlled error.
 
 ## Rounding Is a Policy Decision
 
