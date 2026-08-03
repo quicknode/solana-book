@@ -105,6 +105,36 @@ const breakableIdentifier = (text) =>
     })
     .join("");
 
+// A URL has the same problem for the same reason, and a slash is its legible
+// seam, so it gets the same treatment under the same two limits.
+const breakableUrl = (text) => {
+  let out = "";
+  for (let i = 0; i < text.length; i++) {
+    out += text[i];
+    const kept = i + 1;
+    const carried = text.length - kept;
+    if (text[i] === "/" && kept >= BREAK_MIN_BEFORE && carried >= BREAK_MIN_AFTER) out += "<wbr>";
+  }
+  return out;
+};
+
+// External links, in the two shapes the manuscript writes them. A link whose
+// text is its own address is set as an address; a link whose text is words
+// keeps the words and has its address printed after it, because a reader
+// holding the paper edition cannot click anything. Book-internal
+// cross-references were rewritten to #anchors by prepareMarkdown, so they do
+// not match here and stay plain prose.
+const bareAddress = (href) => href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const markUrls = (html) =>
+  html.replace(/<a href="(https?:[^"]+)">([^<]+)<\/a>/g, (whole, href, text) =>
+    bareAddress(href) === text.replace(/\/$/, "")
+      ? `<a class="url" href="${href}">${breakableUrl(text)}</a>`
+      // The separating space lives inside the span rather than between the two
+      // elements: Paged.js drops a whitespace-only text node during layout, and
+      // the address ends up jammed against the word before it.
+      : `${whole}<span class="url"> (${breakableUrl(bareAddress(href))})</span>`,
+  );
+
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
   const id = idForPath(path);
@@ -113,7 +143,7 @@ const sections = chapterPaths.map((path) => {
     title: cleanTitle(match[1]),
   }));
   let htmlSubIndex = 0;
-  const html = marked
+  const htmlWithCode = marked
     .parse(prepareMarkdown(markdown), { mangle: false, headerIds: false })
     .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
     // Inline SVG figures so the single-file HTML needs no external assets;
@@ -123,6 +153,7 @@ const sections = chapterPaths.map((path) => {
       return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
     })
     .replace(/<code>([^<]+)<\/code>/g, (whole, text) => `<code>${breakableIdentifier(text)}</code>`);
+  const html = markUrls(htmlWithCode);
   const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
   return { id, title, html, path, subsections };
 });
@@ -347,6 +378,11 @@ h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
 
 code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
+/* An address printed as itself is a literal string the reader types, so it is
+   set in the same face and size as program_id, and a URL and an identifier sit
+   identically on the line. Never underlined: underlining is a screen
+   convention, and in a serif face it collides with the descenders. */
+.url { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
 blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }

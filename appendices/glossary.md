@@ -124,7 +124,7 @@ A neutral holder of funds that releases them only when agreed conditions are met
 
 ### faucet
 
-A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or faucet.quicknode.com/solana, USDC from Circle's faucet at faucet.circle.com. Faucets are why nothing in this book needs real money.
+A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
 
 ### fixed point
 

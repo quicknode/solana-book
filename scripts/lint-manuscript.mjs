@@ -44,6 +44,10 @@ const rules = [
   [/\bSolend\b/, "renamed: say Save"],
   [/\bSerum\b/, "collapsed project: cite OpenBook or Phoenix"],
   [/\bfavour|behaviour|\bcancelled\b|\bapologise\b|\blabelled\b/, "American spelling in prose (identifiers like the Cancelled enum are exempt: write them capitalized)"],
+  // An address is only set as an address in the PDF if the build can find it,
+  // and the build finds links. A host written as loose prose prints as prose.
+  [/(?<![([\/`\w.])[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|org|io|dev|net|xyz)\b(?!\w)/,
+    "write an address as a markdown link, [host.tld](https://host.tld), so the build sets it as an address"],
 ];
 
 // Allowed exceptions, matched against the full line.
