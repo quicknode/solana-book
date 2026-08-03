@@ -123,7 +123,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 
 ## The Failure Modes: The Liquidation Engine Is Only as Honest as Its Prices
 
-- **A stale or wrong price is the whole ballgame.** Every health check multiplies by the feed. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and gates who may write them, but the deeper lesson stands: the liquidation engine can only be as honest as its prices, and manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of Financial Programming Concepts in Solana dissects Mango Markets).
+- **A wrong price makes every number wrong.** Every health check multiplies by the feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and gates who may write them, but the deeper lesson stands: the liquidation engine can only be as honest as its prices, and manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of Financial Programming Concepts in Solana dissects Mango Markets).
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
 - **Config foot-guns are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
