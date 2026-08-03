@@ -32,7 +32,7 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 ### authority
 
-The key or account with the right to perform an action: a mint authority may create supply, a freeze authority may freeze token accounts, a market authority may withdraw fees. Recording the authority and verifying it on the way out is the core of access control in every chapter.
+The address whose signature a particular action requires. A program records the authority in an account, and the handler checks that the transaction carries its signature before acting: a mint authority may create supply, a freeze authority may freeze token accounts, an upgrade authority may replace a program's code, a market authority may withdraw fees. Recording an authority and checking it is the core of access control in every chapter.
 
 ### base token
 
