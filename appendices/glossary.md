@@ -24,7 +24,7 @@ An order to sell at or above a stated price. The seller's side of an order book.
 
 ### associated token account (ATA)
 
-The canonical token account for a given wallet and mint, at an address anyone can derive from the two. ATAs are why a program can know where Alice's USDC lives without asking her.
+The canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the token program that manages the mint, and the mint. ATAs are why a program can know where Alice's USDC lives without asking her.
 
 ### AUM (assets under management)
 
