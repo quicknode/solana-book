@@ -2,8 +2,6 @@
 
 Assets on Solana are tokens, and tokens are nothing more than accounts with well-known shapes, managed by a token program. Every asset you will meet in this book is a token: stablecoins like USDC and USDT, equities like NVDAx, SPCXx, and TSLAx, and the share and receipt tokens the book's own programs mint.
 
-> **"SPL tokens."** Tokens other than SOL are often called "SPL tokens", after the Solana Program Library the original token program shipped in, but most people just call them "tokens". This book does too.
-
 ## Every Distinct Token Is a Distinct Mint
 
 Each kind of token is defined by its own **mint account**. USDC is one mint; NVDAx is another; the shares a fund issues are a third. Two tokens are the same asset if they come from the same mint address, and different assets if they do not: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account, and passing the *right* mint is a validation problem every program chapter takes seriously.
