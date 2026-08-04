@@ -78,7 +78,7 @@ The other thing that moves over time is prices. SPCXx rallies from $250 to $300,
 
 ## A Liquidator Closes the Gap, Twice, by the Rules
 
-Dave watches for liquidation opportunities. He is not a villain; he is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler's rules are exact:
+Dave watches for liquidation opportunities. He is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler's rules are exact:
 
 - A healthy obligation cannot be touched: the health gate rejects with `ObligationHealthy` (pinned by `healthy_obligation_cannot_be_liquidated`). A liquidator cannot choose their target; they can only take positions the market has already marked unhealthy.
 - The **close factor** caps one liquidation at 50% of the debt. Dave repays 1.5 SPCXx ($450).
@@ -95,7 +95,7 @@ Dave is one instance of a pattern this market runs on. Some work in a financial 
 
 - **Permissionless: the handler checks state, not identity.** If the work is valid, anyone's signature will do. `refresh_reserve()` and `refresh_obligation()` are the canonical examples: they bring interest and cached prices up to date for whoever asks, no special key required, and gating maintenance on the operator's key would turn the operator's absence into everyone's outage. Anyone can run the crank, so a crank that moves funds must calculate their destination from information the program itself stores (like values in a PDA), never by paying the signer: a crank that pays whoever called has made its funds claimable by strangers.
 - **Idempotent and quiet: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve simply rewrites the same numbers), so a bot on a schedule never needs babysitting and never fails spuriously.
-- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case worth studying closely. He is not a crank operator turning a handle for a fee: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent precisely because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
+- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case worth studying closely. He is not a crank operator turning a handle for a fee: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
 
 ![The crank loop: anyone's scheduled bot calls the permissionless handler, and every outcome is clean: work done, a quiet no-op, or a refusal of work the state does not permit.](figures/crank-loop.svg)
 

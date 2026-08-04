@@ -73,13 +73,13 @@ The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **la
 
 Alice's transaction executes atomically: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. There is no partial state, no "the payment cleared but the delivery failed."
 
-For financial software this is not plumbing; it is a primitive you design with. Settlement risk between steps simply does not exist inside a transaction: the escrow you will build moves Alice's payment and Bob's stock in one atomic unit, and no ordering of failures leaves one side paid and the other empty-handed. Sequencing turns from a race into a pattern: a lending market can require its price refresh in the same transaction as the action that depends on it, so "acting on stale state" is not a bug to chase but a transaction that cannot be built.
+For financial software, atomicity is a primitive you design with. Settlement risk between steps simply does not exist inside a transaction: the escrow you will build moves Alice's payment and Bob's stock in one atomic unit, and no ordering of failures leaves one side paid and the other empty-handed. Sequencing turns from a race into a pattern: a lending market can require its price refresh in the same transaction as the action that depends on it, so "acting on stale state" is not a bug to chase but a transaction that cannot be built.
 
 > **Flash loans are atomicity turned into credit.** A **flash loan** borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
 ![A flash loan is atomicity turned into credit: three instructions across two programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
 
-The budget for all this is metered in **compute units** per transaction, and the meter shapes financial design directly: it is why the order book exchange later in this book credits balances instead of making one transfer per fill, and why work gets consolidated everywhere you look. Compute cost is a design input, not an afterthought.
+The budget for all this is metered in **compute units** per transaction, and the meter shapes financial design directly: it is why the order book exchange later in this book credits balances instead of making one transfer per fill, and why work gets consolidated everywhere you look.
 
 ## Every Transaction Is Signed
 

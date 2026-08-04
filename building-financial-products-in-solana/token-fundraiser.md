@@ -6,7 +6,7 @@ The program lives at `finance/token-fundraiser` in the companion repository. It 
 
 ## Success and Failure Are Both Written Down in Advance
 
-The whole design hangs on two numbers recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two futures. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and critically, no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler simply refuses to run.
+The whole design hangs on two numbers recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two futures. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler simply refuses to run.
 
 This is the state machine discipline from Financial Programming Concepts in Solana in its purest form. The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors.
 
@@ -45,7 +45,7 @@ The cap is not just per call. Carol contributes 450 USDC, then comes back the ne
 
 The cap has an arithmetic consequence: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That is a design statement about what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. It also blunts the obvious manipulation: a single whale filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
-So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here precisely because most of them stopped short of the cap. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
+So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here because most of them stopped short of the cap. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
 
 ![Eleven contributors, none above 900 USDC, each slice as tall as what that backer gave: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
 

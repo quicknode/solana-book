@@ -49,7 +49,7 @@ Every handler that touches money begins the same way: read the oracle, validate 
 - the price is fresh: no older than `MAX_PRICE_STALENESS_SLOTS`, 150 slots, about a minute (`StalePrice`),
 - and the feed's own uncertainty band, divided by the price, is within `max_confidence_bps` (`OracleConfidenceTooWide`). A leveraged venue trading on a price the oracle itself is unsure of is how liquidation cascades start.
 
-A stale price is not an inconvenience here; it is an arbitrage machine. Anyone who can trade a leveraged market at a minute-old price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` pin both refusals.
+A stale price here is an arbitrage machine. Anyone who can trade a leveraged market at a minute-old price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` pin both refusals.
 
 ## Opening a Long, and the Pool Reserves the Best Case
 
