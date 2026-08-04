@@ -45,8 +45,6 @@ The code that reads the chain has to answer that question anyway, because it act
 
 Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading in order to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
 
-A restart works the same way (the Time chapter covers what a halt does to the clocks). The chain resumes from an agreed slot, and a transaction that did not make it into that history did not happen, whatever a bot saw at the time. So a bot resubmits rather than assumes, and that is the second reason the Lending and Borrowing chapter's cranks are built to be idempotent: a handle that is safe to turn twice is safe to turn again after a restart.
-
 ## Admin Power, Pausing, and Upgrades
 
 Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is not a design failure; on Solana even upgrade authority is normal and honest, because programs must be fixable when The Adversary's exploit classes are discovered in yours. The failure is *unbounded* power, and the discipline is to treat the admin as a component with a specification, exactly like an oracle: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?
