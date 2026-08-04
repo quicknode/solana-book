@@ -35,7 +35,7 @@ Before any program in this book's genre touches mainnet, get a **second-opinion 
 
 A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write: a program always executes at the optimistic edge of the chain, and if its block loses, the transaction did not happen and every account it touched goes back with it.
 
-Offchain the question has to be answered, because the code that reads the chain acts on what it finds there: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. Solana gives a reader three answers to choose between, its [commitment levels](https://docs.anza.xyz/consensus/commitments):
+The code that reads the chain has to answer that question anyway, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. Solana gives a reader three answers to choose between, its [commitment levels](https://docs.anza.xyz/consensus/commitments):
 
 | Commitment | What it means | What can still happen to it |
 | --- | --- | --- |
