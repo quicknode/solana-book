@@ -52,7 +52,12 @@ A transaction can invoke your program, which invokes another, which invokes anot
 
 The discipline is **checks-effects-interactions**: validate everything, then update your own state, and only then call out to other programs or move tokens. The order book's settlement zeroes a user's claimed balance *before* the transfer, so even if the token transfer could re-enter (token extensions can attach hooks to transfers), a re-entrant call finds the balance already spent. Solana's runtime forbids re-entering a program through another program, the pattern that plagued EVM contracts; only direct self-recursion is allowed, and its depth is capped. The discipline earns its keep anyway, because it also defends against the failure you cannot see coming: a callee that is upgraded tomorrow, a hook added to a mint next year, an instruction sequenced after yours in the same transaction.
 
-Two more boundary rules. **Validate what a CPI returns and what it was given**: calling a program does not make the accounts it touched trustworthy; the vault strategy computes each swap's minimum output from the oracle precisely because the router it calls is outside its trust boundary. And **assume hostile sequencing**: any invariant your program needs must hold at the end of *your* instruction, not at the end of the transaction, because the instructions after yours belong to someone else. The postcondition asserts from The Arithmetic of Money (re-check K after the transfers land) are exactly this: your state, proven sound, before anyone else gets the keys.
+Two more boundary rules:
+
+- **Validate what a CPI returns and what it was given.** Calling a program does not make the accounts it touched trustworthy; the vault strategy computes each swap's minimum output from the oracle precisely because the router it calls is outside its trust boundary.
+- **Assume hostile sequencing.** Any invariant your program needs must hold at the end of *your* instruction, not at the end of the transaction, because the instructions after yours belong to someone else.
+
+The postcondition asserts from The Arithmetic of Money (re-check K after the transfers land) are exactly this: your state, proven sound, before anyone else gets the keys.
 
 ## What You Learnt
 

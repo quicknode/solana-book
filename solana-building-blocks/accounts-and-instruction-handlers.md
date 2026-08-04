@@ -44,7 +44,11 @@ Meet Bob. Bob has his own key pair, and his public key is another point on the s
 
 Alice wants to send Bob some SOL. The only way to change anything on this computer - move a balance, store data, anything - is to send it a **transaction**.
 
-A transaction carries one or more **instructions**, and each instruction is addressed to an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve. The **System Program** sits at a well-known address and creates accounts and transfers SOL; the **Memo Program** sits at another and writes notes into the transaction log; the programs in this book each get an address of their own the day you deploy them.
+A transaction carries one or more **instructions**, and each instruction is addressed to an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve:
+
+- The **System Program** sits at a well-known address, and creates accounts and transfers SOL.
+- The **Memo Program** sits at another, and writes notes into the transaction log.
+- The programs in this book each get an address of their own the day you deploy them.
 
 ![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
 
@@ -89,7 +93,14 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 
 That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving requires no signature from the recipient - while nothing will ever leave his account until a transaction *he* signs asks for it.
 
-Solana has a general word for a right held this way. An **authority** is the address whose signature a particular action requires: a program records that address in an account, and the handler checks that the transaction carries its signature before doing the work. The word is always qualified by the action it governs, and each one is a separate power held by a separate address. A token's mint authority is the only address that may create new supply of it, and its freeze authority the only one that may freeze a holder's account. A program's upgrade authority is the only one that may replace the program's code. An exchange's market authority sets the market's parameters and collects its fee. Different powers, one mechanism, and underneath all of them the same question: whose signature does this transaction carry?
+Solana has a general word for a right held this way. An **authority** is the address whose signature a particular action requires: a program records that address in an account, and the handler checks that the transaction carries its signature before doing the work. The word is always paired with the action it governs, and each pairing is a separate power held by a separate address:
+
+- A token's **mint authority** is the only address that may create new supply of it.
+- That token's **freeze authority** is the only address that may freeze a holder's account.
+- A program's **upgrade authority** is the only address that may replace the program's code.
+- An exchange's **market authority** sets the market's parameters and collects its fee.
+
+Different powers, one mechanism, and underneath all of them the same question: whose signature does this transaction carry?
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, so an instruction handler can require two, or ten, rather than one. For standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Anywhere this book names an authority (a mint authority, a market's fee authority, a program's upgrade authority), that authority can be a multisig rather than one person's wallet, and for anything holding real money it usually is.
 

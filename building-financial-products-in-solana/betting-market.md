@@ -68,7 +68,12 @@ For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 1
 
 The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last. This is the multiply-before-divide rule and the rounding-policy rule from Financial Programming Concepts in Solana, running in six lines of production arithmetic.
 
-Two orderings in this handler do the security work. First, the bet is removed from the user's index *before* the token transfer: effects before interactions, so no re-entry path can see stale state. Second, the bet account itself closes at the end of the claim, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (pinned by `test_double_claim_fails`). No `claimed` boolean to forget to check; the state machine's exit *is* the account's deletion.
+Two orderings in this handler do the security work:
+
+- **The bet is removed from the user's index before the token transfer.** Effects before interactions, so no re-entry path can see stale state.
+- **The bet account itself closes at the end of the claim**, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (pinned by `test_double_claim_fails`).
+
+No `claimed` boolean to forget to check; the state machine's exit *is* the account's deletion.
 
 ![Alice's claim_winnings(): 447 USDC leaves the vault signed by the event PDA, her bet account closes with rent returning to her, and her user index drops the bet.](figures/betting-alice-claim.svg)
 
@@ -82,7 +87,14 @@ And what if the film festival burns down? An Open event has a second exit: `canc
 
 ## The Math: One Division, Floored Once, Fee Off the Losers
 
-The entire financial surface of this program is four expressions: the losing pool (a subtraction), the fee (u128 multiply, floor-divide by 10,000 basis points), each winner's share (u128 multiply of stake by distributable pool, one floor division by the winning pool), and the payout (stake plus share, checked). Every checked operation maps to `MathOverflow`. There are no rates, no time, no curves; the betting market is the cleanest possible showcase of the arithmetic rules because nothing else is happening.
+The entire financial surface of this program is four expressions:
+
+- **The losing pool**: a subtraction.
+- **The fee**: a u128 multiply, floor-divided by 10,000 basis points.
+- **Each winner's share**: a u128 multiply of stake by distributable pool, then one floor division by the winning pool.
+- **The payout**: stake plus share, checked.
+
+Every checked operation maps to `MathOverflow`. There are no rates, no time, no curves; the betting market is the cleanest possible showcase of the arithmetic rules because nothing else is happening.
 
 ## The Invariants: The Vault Equals the Promises
 

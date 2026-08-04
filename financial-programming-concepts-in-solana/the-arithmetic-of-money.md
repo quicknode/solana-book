@@ -79,7 +79,10 @@ One warning from the same file: an invariant that can hold vacuously is not an i
 
 Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **cumulative index**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New index = old index × (1 + rate per slot × elapsed slots). A debt is stored divided by the index at borrow time, and its live value is that scaled figure times the current index. One multiplication serves every borrower simultaneously, interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The Lending chapter runs this machine in production; the same shape prices any share of a growing pool.
 
-Two numerical points complete the picture. Compounding per slot with a simple multiply is a **binomial approximation** of continuous compounding: (1 + r)ⁿ expanded to first order per step. Updated frequently, the error is negligible and always in a known direction; the tradeoff is a few compute units per update against exactness nobody can measure. And when a formula needs (1 + r)ⁿ for large n in one step, compute it by **exponentiation by squaring**: n multiplications become log₂(n), each one checked, each one floored consistently.
+Two numerical points complete the picture:
+
+- Compounding per slot with a simple multiply is a **binomial approximation** of continuous compounding: (1 + r)ⁿ expanded to first order per step. Updated frequently, the error is negligible and always in a known direction; the tradeoff is a few compute units per update against exactness nobody can measure.
+- When a formula needs (1 + r)ⁿ for large n in one step, compute it by **exponentiation by squaring**: n multiplications become log₂(n), each one checked, each one floored consistently.
 
 Rates themselves are policy, not arithmetic, but one curve shows up everywhere: rates that rise with **utilization**, gently to a target and steeply past it, so a pool that is nearly drained pays depositors more and charges borrowers more until balance returns. Fifteen lines of integer math, doing a central bank's job.
 

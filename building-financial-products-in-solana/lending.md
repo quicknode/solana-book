@@ -107,7 +107,13 @@ Maria runs `collect_protocol_fees()` whenever she likes and receives the accumul
 
 Alice leaves her SPCXx position riding and takes her USDC yield: `redeem_reserve_collateral()` burns her 1,000 shares for about $1,003.50, her half of the supplier interest, since she supplied half the USDC reserve alongside Carol's collateral deposit.
 
-The scoreboard: Alice +$3.50 for five weeks of idle capital. Bob got his liquidity for $8 and kept his stock. Carol turned $1,000 into about $817, most of it lost to the price moving against her short, $33.75 of it paid to Dave. Dave earned $33.75 for watching. Maria earned $0.78 on one small loan in one small market, a number that becomes a business at real scale.
+The scoreboard:
+
+- **Alice**: $3.50 for five weeks of otherwise idle capital.
+- **Bob**: five weeks of liquidity for $8, and he kept his stock.
+- **Carol**: $1,000 became about $817, most of it lost to the price moving against her short, $33.75 of it paid to Dave.
+- **Dave**: $33.75 for watching.
+- **Maria**: $0.78 on one small loan in one small market, a number that becomes a business at real scale.
 
 ## The Math: Two Rounding Helpers and a Rule
 

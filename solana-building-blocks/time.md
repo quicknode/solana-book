@@ -25,7 +25,12 @@ The perpetual futures venue does the same for funding, storing `cumulative_fundi
 
 The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is right to within a few seconds, and validators can nudge it.
 
-This is a different tool, not a broken one. The vault strategy's annual management fee accrues by timestamp, because a few seconds of drift measured against a year is nothing. The vault also checks its price feed's age in seconds rather than slots, because the feed publishes a wall-clock time and the comparison has to be made in the units the number arrived in. Where a program's own deadline is for humans, timestamps are what humans mean.
+This is a different tool, not a broken one. The vault strategy reaches for it twice, for two different reasons:
+
+- **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
+- **It checks its price feed's age in seconds rather than slots**, because the feed publishes a wall-clock time, and the comparison has to be made in the units the number arrived in.
+
+Where a program's own deadline is for humans, timestamps are what humans mean.
 
 ## Every Consumer Sets Its Own Freshness Window
 
