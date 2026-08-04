@@ -1,6 +1,6 @@
 # Chapter 5: Time
 
-Solana has two clocks, and choosing the wrong one is a security decision made by accident.
+Solana has two clocks. Validators can nudge one of them, so measuring the wrong thing with it lets whoever profits from the error shift what your program computes.
 
 | Clock | Source | Guarantee | Use it for |
 | --- | --- | --- | --- |
