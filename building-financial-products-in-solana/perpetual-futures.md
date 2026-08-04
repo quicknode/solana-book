@@ -61,7 +61,7 @@ Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the oppos
 
 That last gate is the solvency design in one line. By reserving the notional, the pool sets aside the most it could ever owe her, because **profit on a close is capped at the position's size**. The cap costs Alice something real: if NVDAx tripled to $300, her raw profit of 10,000 USDC would be paid as 5,000. In exchange, every winner's payout is pre-funded before the position exists; the pool cannot be surprised. The test `test_profit_capped_at_reserved_notional` runs exactly the tripling and asserts the cap. Production venues layer insurance funds and auto-deleveraging above this floor; the floor is the part that must never be missing.
 
-> **Where a loss too big to pay goes.** A leveraged position can lose more than the collateral standing behind it, and the winner on the other side still has to be paid out of something. Venues answer with a waterfall, where each tier takes the shortfall from someone different:
+> **Where a loss too big to pay goes.** A leveraged position can lose more than the collateral standing behind it, and somebody still has to pay the winner on the other side. Venues answer with a waterfall, where each tier takes the shortfall from someone different:
 >
 > - **Liquidation** takes it from the loser, while collateral remains. That is the job `liquidate_position()` does here.
 > - **An insurance fund** takes it from a pot the venue filled out of fees, so that what the collateral could not cover does not come from the LPs.
