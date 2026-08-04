@@ -36,7 +36,7 @@ Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 pe
 
 ## A Seller Trades at the Bid, and the Round Trip Is the Fee
 
-Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 824.175 USDC.
+Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored**, the mirror image of the ask's ceiling, and he receives exactly 824.175 USDC.
 
 Look at the two numbers together. Buying 5 NVDAx cost 825.825; selling them back returned 824.175. The difference, 1.65 USDC, is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
