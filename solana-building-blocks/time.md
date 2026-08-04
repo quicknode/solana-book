@@ -60,7 +60,7 @@ The trap is what "seven days" then means. With day-granularity math the window e
 
 Both clocks arrive in the same sysvar, so it is easy to assume they always move together. They come apart when the chain stops.
 
-Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. Mainnet has spent hours in that state. The [Agave restart guide](https://docs.anza.xyz/operations/guides/restart-cluster) is the procedure that ends one: agree on a slot to restart from, and start producing again once 80% of the stake is back online. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
+Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. Mainnet has spent hours in that state. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart therefore carries a slot roughly where the last one left off and a timestamp hours later: everything measured in slots was paused, and everything measured in seconds was running the whole time. Three consequences, one for each way this book's programs use a clock:
 
