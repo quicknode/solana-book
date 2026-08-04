@@ -16,7 +16,7 @@ Two consequences follow immediately, and both are absences. A trade's unit price
 
 The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
-What is missing is the chapter's real lesson. No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The fundraiser chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are, legitimately, the entire accounting.
+No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The fundraiser chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are, legitimately, the entire accounting.
 
 ## The Market Maker Opens the Market and Stocks It
 

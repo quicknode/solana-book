@@ -28,7 +28,7 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet, along with other clusters stood up to try particular features. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live, not somewhere to find out whether it works.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Further clusters are stood up from time to time to try out one particular new feature. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program is expected to be thoroughly audited before it is released onto it.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the one setting that decides which Solana computer your code is talking to, so moving work from localnet to devnet to mainnet is a change of configuration rather than of code. The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
@@ -48,14 +48,14 @@ A transaction carries one or more **instructions**, and each instruction is addr
 
 ![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
 
-An instruction names which of the program's **instruction handlers** to run (the onchain functions a program exposes), the accounts the handler may touch, and the arguments. Good financial design keeps the mapping strict: one handler, one state transition (deposit, settle, cancel, liquidate), so the program's API is the state machine's edge list.
+An instruction names which of the program's **instruction handlers** to run (the onchain functions a program exposes), the accounts the handler may touch, and the arguments. Good financial design keeps the mapping strict: one handler, one state transition (deposit, settle, cancel, liquidate), so the handlers a program exposes are exactly the moves its state machine allows.
 
-> **One word, two meanings, everywhere but here.** A lot of Solana material uses "instruction" for both things: the function a program exposes, and the input that invokes it. You will read "this program has five instructions" meaning five functions, and the interface file Anchor generates for a program lists its functions under `instructions`. One word for two things confuses everyone, so this book never does it:
+> **An instruction and an instruction handler are two different things.** They are the two halves of every call, and each has its own name:
 >
-> - An "instruction" is always the input a transaction carries: which handler to run, which accounts it may touch, and the arguments.
-> - An "instruction handler" is always the onchain function that runs.
+> - An "instruction" is the input a transaction carries: which handler to run, which accounts it may touch, and the arguments.
+> - An "instruction handler" is the onchain function that runs.
 >
-> Where you meet "instruction" elsewhere and it plainly means a function, read it as "instruction handler".
+> Some material is loose about this and uses "instruction" for both. You will read "this program has five instructions" meaning five functions, and the interface file Anchor generates for a program lists its functions under `instructions`. Where you meet "instruction" and it plainly means a function, read it as "instruction handler".
 
 Watch Alice run her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
@@ -87,7 +87,9 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 - **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
 - **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
 
-That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving requires no signature from the recipient - while nothing will ever leave his account until a transaction *he* signs asks for it. Everything the rest of this book calls "authority" (who may move these funds, who may settle this market) reduces to one question: whose signature does this transaction carry?
+That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving requires no signature from the recipient - while nothing will ever leave his account until a transaction *he* signs asks for it.
+
+Solana has a general word for a right held this way. An **authority** is the address whose signature a particular action requires: a program records that address in an account, and the handler checks that the transaction carries its signature before doing the work. The word is always qualified by the action it governs, and each one is a separate power held by a separate address. A token's mint authority is the only address that may create new supply of it, and its freeze authority the only one that may freeze a holder's account. A program's upgrade authority is the only one that may replace the program's code. An exchange's market authority sets the market's parameters and collects its fee. Different powers, one mechanism, and underneath all of them the same question: whose signature does this transaction carry?
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, so an instruction handler can require two, or ten, rather than one. For standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Anywhere this book names an authority (a mint authority, a market's fee authority, a program's upgrade authority), that authority can be a multisig rather than one person's wallet, and for anything holding real money it usually is.
 
@@ -122,13 +124,15 @@ Because addresses are how everything is found, financial programs lean on *deriv
 
 ## Users Use the Token Program to Send Tokens to Each Other
 
-A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana means **USDC**: a **stablecoin**, a token that tracks the dollar one for one. Every asset on Solana except SOL is a **token**, defined by a program rather than by the network itself; SOL is the one asset the network understands natively. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
+A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean **USDC**, the most popular **stablecoin**: a token that tracks the dollar one for one.
 
-Bob's SOL lives in his own account, but his USDC does not. Token balances live in **token accounts**: accounts whose data records three facts - which token, whose balance, and how much. And Bob's USDC token account sits at an address anyone can compute: the **associated token account** (ATA), derived from a wallet address and a mint address. Put in Bob's address and the USDC mint's address, and out comes the address of Bob's USDC account; put in Alice's, and out comes hers. These derived addresses are the second kind from the last section: an ATA is a PDA, sitting off the curve with no private key, and the PDAs chapter explains the mechanism. What matters here is what derivation buys: Bob does not need to ask Alice where her USDC lives. His wallet computes where her account must be, and sends the tokens there.
+SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
+
+Bob's SOL lives in his own account, but his USDC does not: a token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two, and that is what matters here. Bob does not need to ask Alice where her USDC lives. His wallet computes where her account must be, and sends the tokens there. The Tokens chapter covers token accounts properly.
 
 So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
-![Bob pays Alice 25 USDC: his signed transaction runs the Token Program's transfer handler, and the balance moves between their associated token accounts, each derived from its owner's address and the USDC mint.](figures/bobs-usdc-transaction.svg)
+![Bob pays Alice 25 USDC: his signed transaction runs the Token Program's transfer handler, and the balance moves between their USDC token accounts, each at an address derived from its owner's address, the token program, and the USDC mint.](figures/bobs-usdc-transaction.svg)
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
@@ -143,5 +147,5 @@ Two payments toured every building block the rest of the book uses:
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
-- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds. Every token balance sits in one: an **associated token account**, derived from its owner's address and the mint.
+- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
