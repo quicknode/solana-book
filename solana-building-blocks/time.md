@@ -74,7 +74,7 @@ Anything an adversary would profit from bending is measured in slots. Timestamps
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
 
-Ask a second question too: what does this number do when the chain stops? One clock pauses with it and the other does not, so the answer decides whether a halt is nine hours your program charges for, nine hours it forgives, or nine hours it never notices.
+Another concern: what does this number do when the chain stops? One clock pauses with it and the other does not, so the answer decides whether a halt is nine hours your program charges for, nine hours it forgives, or nine hours it never notices.
 
 ## What You Learnt
 
