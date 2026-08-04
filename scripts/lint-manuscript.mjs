@@ -30,6 +30,15 @@ const rules = [
   [/\boff-chain\b/i, 'write "offchain", unhyphenated'],
   [/\bcross-chain\b/i, 'write "crosschain", unhyphenated'],
   [/—/, "no em-dashes; use a regular dash or rewrite"],
+  // Same category as the em-dash rule above: phrases a reader clocks as
+  // machine-written before they have finished the sentence. Each one also
+  // stands in for a mechanism rather than stating it, so the fix is the same
+  // fix every time: name the thing and say what it does.
+  [/\bload.bearing\b/i, 'say what depends on the thing and what breaks without it'],
+  [/\b(delve|tapestry|intricate|multifaceted|holistic|myriad|seamlessly|seamless|robust|pivotal|crucial|elevate|testament to|deep dive|paradigm shift|game.chang(er|ing)|unlock the power|realm of|landscape of|in today's)\b/i,
+    "reads as machine-written; name the specific thing instead"],
+  [/it(?:'s| is) worth noting/i, "cut it: if the point is worth making, make it"],
+  [/\bunderscor(es|ing) (the|that|how|why|its)\b/i, 'say what it shows (the underscore character in identifiers is fine)'],
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],

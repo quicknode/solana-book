@@ -14,7 +14,12 @@ output = taxed_input × other_reserve ÷ (this_reserve + taxed_input)
 
 The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME removes X and adds Y, so the next buyer pays more. Big trades relative to the pool move the price a lot; that is slippage, made mechanical.
 
-And the truth about K: **K is constant within a single trade and grows over time.** Deposits grow it (more of both tokens, same ratio). The liquidity providers' share of every fee stays in the pool and grows it. And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
+And the truth about K: **K is constant within a single trade and grows over time.** It grows two ways:
+
+- **Deposits** add more of both tokens at the same ratio.
+- **Fees** stay in the pool: the liquidity providers' share of every trade's fee is never paid out to anyone.
+
+And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
 
 ![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
 
@@ -28,7 +33,7 @@ Each trading pair gets a **pool config** PDA, seeded by the config and the two m
 
 The tokens sit in two vaults, `pool_a` and `pool_b`, owned by a **pool authority** PDA, alongside the **LP mint** (`liquidity_provider_mint`), whose tokens are the receipts liquidity providers hold.
 
-The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool config. The admin's share of fees is never transferred during a swap; it accrues in these counters as a *virtual claim* while the tokens physically sit in the vaults. Every piece of LP-facing math therefore runs on **effective reserves**: the raw vault balance minus the admin's owed slice. The admin's fees do not boost LP yield, do not distort the price, and get swept out later in one transfer. Keeping owed-to-whom separate from where-it-sits is the same discipline as the order book's fee vault, implemented as accounting instead of as an account.
+The subtle fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool config. The admin's share of fees is never transferred during a swap; it accrues in these counters as a *virtual claim* while the tokens physically sit in the vaults. Every piece of LP-facing math therefore runs on **effective reserves**: the raw vault balance minus the admin's owed slice. The admin's fees do not boost LP yield, do not distort the price, and get swept out later in one transfer. Keeping who is owed what separate from where it sits is the same discipline as the order book's fee vault, done with accounting instead of an account.
 
 ## Creating the Venue Sets the Launch Price
 
@@ -38,7 +43,7 @@ Maria runs `initialize_config()` with a fee of 30 basis points and an admin shar
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $2.25, so she runs `deposit_liquidity()` with her 400 ACME and 900 USDC, the founder stock and nine-tenths of her cash. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 400, Y = 900, K = 360,000.
 
-Her LP tokens come from a formula this book has been promising since the arithmetic chapter: the **integer square root of X times Y**, computed by `integer_sqrt()`, a hand-rolled Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`, a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address (Uniswap V2's trick); it simply never exists as supply, while the reserves it represents stay in the pool. Its power has nothing to do with its value, which is a fraction of a cent; it comes from always sitting in the divisor. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
+Her LP tokens come from a formula this book has been promising since the arithmetic chapter: the **integer square root of X times Y**, computed by `integer_sqrt()`, a hand-rolled Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`, a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address (Uniswap V2's trick); it simply never exists as supply, while the reserves it represents stay in the pool. What makes it work is not its value, which is a fraction of a cent, but the fact that it is always part of the share supply the pool divides by. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
 ![Maria's initial deposit: 400 ACME and 900 USDC enter the vaults, and the square root of their product, 600 LP tokens, goes to Maria minus the tiny locked MINIMUM_LIQUIDITY floor, 100 minor units of supply minted to nobody.](figures/amm-first-deposit.svg)
 
@@ -80,7 +85,7 @@ Whenever she likes, Maria runs `claim_admin_fees()`. It zeroes both owed counter
 
 Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a pro-rata slice of both effective reserves, with one adjustment: the divisor is the LP supply *plus* `MINIMUM_LIQUIDITY`, because the locked floor is backed by reserves but absent from the supply counter, and forgetting it would overpay every withdrawer.
 
-Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had simply held her original tokens in her wallet: a small number at launch scale, and exactly the number that grows into careers when the pool has six more zeroes.
+Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had simply held her original tokens in her wallet: a small number at launch scale, and the same number becomes serious money once the pool has six more zeroes on it.
 
 That gap is **impermanent loss**, and it is the honest price of being an LP. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP is a bet on trading volume, not on price direction**: if accumulated fees outrun the divergence, LPing wins; if the price runs hard in one direction on thin volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, the loss would have evaporated. Nobody should provide liquidity without being able to draw this diagram.
 

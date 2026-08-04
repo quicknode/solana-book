@@ -8,7 +8,10 @@ Lifinity pioneered the model on Solana; by early 2026, venues like SolFi, Humidi
 
 A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana, and the operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the order book chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
 
-Two consequences follow immediately, and both are absences. A trade's unit price does not depend on its size, so there is no price impact: 500 NVDAx fills at the same price per token as 5, until the inventory runs out. And the price does not depend on the pool's balances, so there is nothing to sandwich: the front-run/back-run attack from The Adversary needs a price that moves with each trade, and this one does not move.
+Two consequences follow immediately, and both are absences:
+
+- **No price impact.** A trade's unit price does not depend on its size, so 500 NVDAx fills at the same price per token as 5, until the inventory runs out.
+- **Nothing to sandwich.** The price does not depend on the pool's balances, and the front-run/back-run attack from The Adversary needs a price that moves with each trade. This one does not move.
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
@@ -30,29 +33,35 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 ![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
 
-Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, the same interrogation the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
+Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn:
+
+- **The oracle read**, with the same checks the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit.
+- **The ask**: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer.
+- **Her output**, floored: 825.825 USDC of her 1,000 buys exactly 5 NVDAx.
+
+Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
 Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
 ## A Seller Trades at the Bid, and the Round Trip Is the Fee
 
-Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored** (the same coin as the ask's ceiling, the other face), and he receives exactly 824.175 USDC.
+Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored**, the mirror image of the ask's ceiling, and he receives exactly 824.175 USDC.
 
 Look at the two numbers together. Buying 5 NVDAx cost 825.825; selling them back returned 824.175. The difference, 1.65 USDC, is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
 ## The Oracle Moves and the Quote Moves With It
 
-NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory got picked off along the way. The curve learns prices by being traded against, and pays tuition every time; the prop AMM reads the price.
+NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory got picked off along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
 
 ![Curve pricing versus quote pricing: on the curve, the effective unit price climbs with trade size; against a quote, the price is flat at the ask whatever the size, until the inventory boundary where the market refuses instead of repricing.](figures/prop-amm-curve-vs-quote.svg)
 
-That word *reads* is carrying the whole design, though. Between oracle updates, even fresh ones inside the 150-slot bound, the market is quoting a number that is seconds old, and anyone who knows where the price went in those seconds can buy below true value or sell above it. Market makers call this **adverse selection**: the flow that finds you when your quote is wrong is precisely the flow you did not want. It is the prop AMM's impermanent loss: the structural cost of the business, borne entirely by Maria.
+Reading the price has its own cost, though. Between oracle updates, even fresh ones inside the 150-slot bound, the market is quoting a number that is seconds old, and anyone who knows where the price went in those seconds can buy below true value or sell above it. Market makers call this **adverse selection**: the flow that finds you when your quote is wrong is precisely the flow you did not want. It is the prop AMM's impermanent loss: the structural cost of the business, borne entirely by Maria.
 
 ## The Market Maker Re-Quotes, and Sometimes Refuses to Quote
 
-Her defense is `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see exactly this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is not an emergency measure for a market maker. It is Tuesday.
+Her defense is `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see exactly this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is routine for a market maker.
 
-The oracle gates are the automated version of the same instinct. A price older than 150 slots is refused (`StalePrice`) because a lagging quote is a free option for whoever notices first, and a price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`) because quoting a tight spread around a number the oracle itself is unsure of is how inventory walks out the door. For every other program in this book the staleness check was hygiene; for a market maker it is the business itself.
+The oracle gates pull the quote automatically, for the same reasons Maria pulls it by hand. A price older than 150 slots is refused (`StalePrice`) because a lagging quote is a free option for whoever notices first, and a price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`) because a tight spread around a number the oracle itself is unsure of will fill at prices well away from the real one, in whichever direction costs Maria money. For every other program in this book the staleness check was hygiene; for a market maker it is the business itself.
 
 ## The Market Maker Leaves, Whole
 
@@ -74,9 +83,9 @@ The unit conversion deserves one honest sentence: prices arrive at the oracle's 
 ## The Failure Modes: What Attacks a Market Maker
 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates sit in front of every single swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The perpetual futures chapter will meet the same enemy with leverage multiplying it.
-- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No require! can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control, not an admin courtesy.
+- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No require! can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
 - **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the perpetual futures chapter makes, with one difference worth noticing: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
-- **What is absent.** Run The Adversary's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares to dilute, so the empty-pool games have no board to play on. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Simplicity is not just elegance here; it is attack surface that was never built.
+- **What is absent.** Run The Adversary's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 
 ## Testing Considerations
 
@@ -89,9 +98,9 @@ A traditional market-making desk quotes two-sided prices on an exchange, hedges 
 The concepts you now have:
 
 - **Oracle-priced quoting.** The price comes from a feed, not from reserves, so there is no price impact and nothing to sandwich; the spread is the entire fee.
-- **The oracle checks as the business itself.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.
+- **For a market maker the oracle checks are the business, not hygiene.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.
 - **Adverse selection.** The flow that finds you when your quote is wrong is exactly the flow you did not want: the market maker's structural cost, mitigated commercially (wider spreads, pulled quotes), never by a `require!`.
 - **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the whole book.
-- **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from The Adversary return "not applicable" because the design never created their board.
+- **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from The Adversary return "not applicable" because each of them needs a mechanism this design does not have.
 
 The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The perpetual futures chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.

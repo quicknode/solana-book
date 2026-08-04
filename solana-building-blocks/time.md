@@ -1,6 +1,6 @@
 # Chapter 5: Time
 
-Solana has two clocks, and choosing the wrong one is a security decision made by accident.
+Solana has two clocks. Validators can nudge one of them, so measuring the wrong thing with it lets whoever profits from the error shift what your program computes.
 
 | Clock | Source | Guarantee | Use it for |
 | --- | --- | --- | --- |
@@ -25,7 +25,12 @@ The perpetual futures venue does the same for funding, storing `cumulative_fundi
 
 The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is right to within a few seconds, and validators can nudge it.
 
-This is a different tool, not a broken one. The vault strategy's annual management fee accrues by timestamp, because a few seconds of drift measured against a year is nothing. The vault also checks its price feed's age in seconds rather than slots, because the feed publishes a wall-clock time and the comparison has to be made in the units the number arrived in. Where a program's own deadline is for humans, timestamps are what humans mean.
+Wall-clock time is still the right tool in places. The vault strategy reaches for it twice, for two different reasons:
+
+- **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
+- **It checks its price feed's age in seconds rather than slots**, because the feed publishes a wall-clock time, and the comparison has to be made in the units the number arrived in.
+
+Where a program's own deadline is for humans, timestamps are what humans mean.
 
 ## Every Consumer Sets Its Own Freshness Window
 
@@ -37,7 +42,7 @@ A price is only usable if it is recent, and how recent is a judgement each progr
 | the prop AMM | 150 slots, about a minute | slots |
 | the vault strategy | 60 seconds | seconds |
 
-The two that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. Offchain Truth covers what else a program interrogates about a price before it uses one.
+The two that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. Offchain Truth covers what else a program checks about a price before it uses one.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
