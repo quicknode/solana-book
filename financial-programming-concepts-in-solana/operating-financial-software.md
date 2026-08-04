@@ -45,7 +45,7 @@ Offchain the question has to be answered, because the code that reads the chain 
 
 Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading in order to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
 
-The same discipline covers the restart after a halt, which the Time chapter describes from the program's side. A cluster resumes from an agreed slot, and transactions that did not make it into that history did not happen, whatever any bot saw at the time. So a bot resubmits rather than assumes, and that is the second reason the Lending and Borrowing chapter's cranks are built to be idempotent: a handle that is safe to turn twice is safe to turn again after a restart.
+A restart works the same way (the Time chapter covers what a halt does to the clocks). The chain resumes from an agreed slot, and a transaction that did not make it into that history did not happen, whatever a bot saw at the time. So a bot resubmits rather than assumes, and that is the second reason the Lending and Borrowing chapter's cranks are built to be idempotent: a handle that is safe to turn twice is safe to turn again after a restart.
 
 ## Admin Power, Pausing, and Upgrades
 
