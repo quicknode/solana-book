@@ -31,11 +31,11 @@ Onchain code that delegates to other programs cannot be symbolically executed en
 
 Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. An audit is the cheapest way to have someone hunt for the same holes an attacker would, because a reviewer hands you the list instead of draining the program.
 
-## Everything Around the Program Decides How Sure It Needs to Be
+## Wait for Finality Before Doing Anything You Cannot Undo
 
-A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write: a program always executes at the optimistic edge of the chain, and if its block loses, the transaction did not happen and every account it touched goes back with it. Onchain that is the whole story, and it is why atomicity is enough.
+A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write: a program always executes at the optimistic edge of the chain, and if its block loses, the transaction did not happen and every account it touched goes back with it.
 
-The question becomes real one step out, because the systems around a program act on what they read, and some of those actions cannot be taken back. Solana gives a reader three answers to choose between, its [commitment levels](https://docs.anza.xyz/consensus/commitments):
+Offchain the question has to be answered, because the code that reads the chain acts on what it finds there: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. Solana gives a reader three answers to choose between, its [commitment levels](https://docs.anza.xyz/consensus/commitments):
 
 | Commitment | What it means | What can still happen to it |
 | --- | --- | --- |
@@ -43,11 +43,9 @@ The question becomes real one step out, because the systems around a program act
 | **confirmed** | A supermajority of stake has voted for that block | It can vanish in theory; no confirmed block has been rolled back on mainnet |
 | **finalized** | So many blocks sit on top that no validator can now vote another way | Nothing. This is the record |
 
-The distance between the last two is a protocol parameter rather than a law of nature: Tower BFT finalizes 32 slots back, about 12.8 seconds, and Anza's [Alpenglow](https://www.anza.xyz/blog/alpenglow-a-new-consensus-for-solana) consensus finalizes one or two slots back instead.
+Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading in order to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
 
-Match the level to how reversible your reaction is. A liquidator bot scanning positions at `processed` is fine, because it is reading in order to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain is allowed to un-happen a `confirmed` transaction, and your bank is not going to un-happen the wire.
-
-The same discipline covers the restart after a halt, which the Time chapter describes from the program's side. A cluster resumes from an agreed slot, and transactions that did not make it into that history did not happen, whatever any bot saw at the time. So the offchain half of a market resubmits rather than assumes, and that is the second reason the Lending and Borrowing chapter's cranks are built to be idempotent: a handle that is safe to turn twice is safe to turn again after a restart.
+The same discipline covers the restart after a halt, which the Time chapter describes from the program's side. A cluster resumes from an agreed slot, and transactions that did not make it into that history did not happen, whatever any bot saw at the time. So a bot resubmits rather than assumes, and that is the second reason the Lending and Borrowing chapter's cranks are built to be idempotent: a handle that is safe to turn twice is safe to turn again after a restart.
 
 ## Admin Power, Pausing, and Upgrades
 
@@ -66,7 +64,7 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - Test the code path the bug lives in: both directions of every symmetric flow, both sides of every boundary, adversarial paths by name, and properties as well as balances.
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
 - Ship with a second-opinion audit; a reviewer hunting the same holes an attacker would hands you the list instead of draining the program.
-- A program cannot see whether its own block is final, so the systems around it choose: read at `processed` when the reaction is another transaction, and wait for `finalized` before anything that leaves the chain and cannot be recalled.
+- A program cannot see whether its own block is final, so whatever reads the chain has to choose: a bot deciding which transaction to send next can read at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
 
 The through-line of the whole chapter, one last time: the arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.
