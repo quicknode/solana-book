@@ -12,7 +12,7 @@ The mint account records the token's definition: its current total supply, its d
 
 A mint does not just describe a type of token; it manufactures it. New tokens come into existence when, and only when, the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler: the supply counter rises and the new tokens land in a token account. Burning does the reverse. Nothing else in the system can create or destroy a single unit.
 
-The mint authority is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA, which is how this book's programs use it: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
+The mint authority is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
 ![The mint is a factory: new tokens exist only when the mint authority signs, burning reverses it, and an authority set to none seals the supply forever.](figures/mint-factory.svg)
 
@@ -38,7 +38,7 @@ The mint's other lever is the **freeze authority**, which can freeze and thaw in
 
 ## Two Token Programs: Classic and Token Extensions
 
-Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core machinery, plus opt-in, per-mint features. Well-written programs support both through a common interface (Anchor's `token_interface`), constraining only that every account in a transaction agrees on which one it is using; every program in this book does so.
+Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core machinery, plus opt-in, per-mint features. Well-written programs support both through a common interface (Anchor's `token_interface`), and only require that every account in one transaction uses the same token program. Every program in this book works that way.
 
 The extensions that matter for financial products:
 

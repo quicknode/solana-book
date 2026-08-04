@@ -76,7 +76,7 @@ Carol also owns NVDAx and also wants out, and she is less patient than Alice: sh
 
 Here is how matching actually runs. The planning function, `plan_fills()`, walks the opposite side of the book in price-time priority and returns the list of fills without mutating anything. Bob's bid is the best (and only) bid, it covers all three shares, so the plan is one fill: three shares against Bob's order. The walk stops at the first resting order that fails to cross, because if the best price fails, every price behind it fails too.
 
-The fill executes at **the resting order's posted price**: 250, not Carol's 245. This is the standard order book rule, and it is worth internalizing. The maker's posted price is the deal on offer; the taker chose to hit it. The surprise always lands in the taker's favor: a taker bid pays less than its limit allowed, and a taker ask, like Carol's, receives more.
+The fill executes at **the resting order's posted price**: 250, not Carol's 245. This is the standard order book rule, and it is worth getting straight. The maker's posted price is the deal on offer; the taker chose to hit it. The surprise always lands in the taker's favor: a taker bid pays less than its limit allowed, and a taker ask, like Carol's, receives more.
 
 One Solana-specific mechanic makes this work: the program cannot load arbitrary accounts mid-instruction, so Carol's transaction must carry the accounts of the makers she will match with, passed as pairs of (order account, market user account) in the order the book would walk them. The program does not trust that list. It plans fills from its own tree, then verifies each supplied pair against the plan: the order IDs must match, the accounts must belong to this market, and each maker order's owner must match its market user. A wrong or missing account fails the transaction with `MakerAccountMismatch`, `MakerOwnerMismatch`, or `MissingMakerAccounts`.
 
@@ -104,7 +104,7 @@ The handler contains one line of discipline worth copying into everything you bu
 
 ## The Market Authority Withdraws the Fees
 
-At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One operational nicety: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is a pattern this book calls a **crank** (the Lending and Borrowing chapter treats it fully), though this handler adds an authority gate because it moves fee money.
+At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One nice touch: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds quietly when there is nothing to do is a pattern this book calls a **crank** (the Lending and Borrowing chapter treats it fully), though this handler adds an authority gate because it moves fee money.
 
 ![withdraw_fees() drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 
@@ -130,7 +130,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 
 - **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is `has_one` constraints binding every vault and mint on every instruction to the addresses recorded on the market at creation, and the test suite proves the attack fails. This is the account-substitution attack from the escrow chapter wearing an exchange costume.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program re-derives the fills from its own book and verifies every supplied account against that plan: order ID, market, and owner all have to line up, or the transaction fails.
-- **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, industrialisable through many tiny fills. Covered above; pinned by a test below.
+- **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, which an attacker turns into a drain with thousands of tiny fills. Covered above; pinned by a test below.
 - **Book spam.** A full tree is a denial-of-service on everyone else's orders. Tick alignment, the minimum order size, the 20-open-orders-per-user cap, and the `OrderBookFull` check are all anti-spam walls, and each rejects with its own named error.
 - **The unauthorized paths.** Cancelling someone else's order rejects with `Unauthorized`; withdrawing fees without being the authority rejects with `NotMarketAuthority`; placing orders on a paused market rejects with `MarketPaused`.
 

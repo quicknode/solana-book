@@ -37,7 +37,7 @@ A price is only usable if it is recent, and how recent is a judgement each progr
 | the prop AMM | 150 slots, about a minute | slots |
 | the vault strategy | 60 seconds | seconds |
 
-The two that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. Offchain Truth covers what else a program interrogates about a price before it uses one.
+The two that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. Offchain Truth covers what else a program checks about a price before it uses one.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 

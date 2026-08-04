@@ -32,7 +32,7 @@ Multiplying first creates the second problem: intermediates overflow. Two u64 va
 
 And everywhere, use checked arithmetic: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. A plain `+` or `*` in a Rust release build **wraps**: when the result is too big for the type, it starts again from zero, so a `u64` balance one lamport past the maximum becomes a balance of almost nothing instead of an error. Overflow checks can be turned on in the build profile, but a financial program never gambles on a build setting. Reserve `saturating_*` for cosmetic paths; on a value the accounting relies on, a silent clamp is a correctness bug wearing a seatbelt.
 
-Some formulas need more than the four operations. The classic is the AMM's first issuance of LP tokens, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation with a known, bounded, directionally-controlled error.
+Some formulas need more than the four operations. The classic is the AMM's first issuance of LP tokens, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation, and you pick one whose error you know the size and the direction of.
 
 ## Rounding Is a Policy Decision
 
@@ -81,7 +81,7 @@ Interest is multiplication repeated over time, and the naive implementation, loo
 
 Two numerical points complete the picture. Compounding per slot with a simple multiply is a **binomial approximation** of continuous compounding: (1 + r)ⁿ expanded to first order per step. Updated frequently, the error is negligible and always in a known direction; the tradeoff is a few compute units per update against exactness nobody can measure. And when a formula needs (1 + r)ⁿ for large n in one step, compute it by **exponentiation by squaring**: n multiplications become log₂(n), each one checked, each one floored consistently.
 
-Rates themselves are policy, not arithmetic, but one curve recurs everywhere: rates that rise with **utilization**, gently to a target and steeply past it, so a pool that is nearly drained pays depositors more and charges borrowers more until balance returns. Fifteen lines of integer math, doing a central bank's job.
+Rates themselves are policy, not arithmetic, but one curve shows up everywhere: rates that rise with **utilization**, gently to a target and steeply past it, so a pool that is nearly drained pays depositors more and charges borrowers more until balance returns. Fifteen lines of integer math, doing a central bank's job.
 
 ## What You Learnt
 

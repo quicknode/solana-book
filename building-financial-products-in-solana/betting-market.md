@@ -94,7 +94,7 @@ The entire financial surface of this program is four expressions: the losing poo
 
 ## The Failure Modes: The Oracle Is a Person, and Everything Downstream of That
 
-- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by fat-finger. The program's design limits the damage to exactly that one decision (she cannot skim beyond the fee or redirect funds), but the decision is hers alone. Growing out of a single-key oracle, and what it costs a trusted party to lie, is a Financial Programming Concepts in Solana topic this program is deliberately the entry point to.
+- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by fat-finger. The program's design limits the damage to exactly that one decision (she cannot skim beyond the fee or redirect funds), but the decision is hers alone. This program is deliberately the simplest case; Financial Programming Concepts in Solana covers what it costs a trusted party to lie, and how to grow out of a single key.
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.
 - **Double claims** die because the bet account dies. There is no flag to desynchronize.
 - **Changing the game mid-play**: adding outcomes after betting starts is rejected; the fee is snapshotted per event.

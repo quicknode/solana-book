@@ -27,7 +27,7 @@ Two roles run through this chapter, and the code names them the same way:
 - **Alice is the maker.** She creates the offer: 250 USDC for 1 TSLAx.
 - **Bob is the taker.** He accepts the offer as it stands.
 
-The deal is denominated the way all Solana money is denominated: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. Identical integers meaning completely different things is exactly why programs track each token's decimals instead of assuming them. The minor-units section of Financial Programming Concepts in Solana covers this in depth; escrow is where you first feel it.
+The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. Identical integers meaning completely different things is exactly why programs track each token's decimals instead of assuming them. The minor-units section of Financial Programming Concepts in Solana covers this in depth; escrow is where you first feel it.
 
 ## The Account Model
 
@@ -47,7 +47,7 @@ The offer account is a **PDA** (program derived address), derived from the seeds
 
 The **vault** is where Alice's USDC waits. It is an ordinary token account with one interesting property: its authority is the offer account. Not Alice, not the program's author. The offer account is a PDA, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
 
-Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's and Bob's token accounts, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow uses Anchor's `token_interface`, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in a transaction is consistent about which one.
+Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's and Bob's token accounts, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow uses Anchor's `token_interface`, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one.
 
 ## The Instruction Handlers
 
@@ -71,7 +71,7 @@ Alice is done. She can close her laptop.
 
 ### The Taker Takes the Offer
 
-Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves, and that is worth dwelling on: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of Financial Programming Concepts in Solana treats in full.
+Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves, and that is worth dwelling on: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of Financial Programming Concepts in Solana covers in full.
 
 Alice does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 

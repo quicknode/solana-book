@@ -1,6 +1,6 @@
 # Chapter 1: Introduction
 
-It may seem odd to release a book - let alone one available in a physical form - for building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
+It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
 
 This isn't a book about how Solana is built. It's about **building on the Solana platform**. We're aiming for it to be the essential reference for creating financial products on the world's most active blockchain.
 
@@ -22,7 +22,7 @@ Open networks use these properties for permissionless markets anyone can join. T
 
 Some technical books die with the release they document. A smaller number live for decades. _TCP/IP Illustrated_ is still the book network engineers hand each other, thirty years on. _The UNIX and Linux System Administration Handbook_ has outlasted every operating system release it ever mentioned. _Mastering Bitcoin_ remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way Stevens drew them. Processes still fork on Unix and Linux. The mental models survive even as every command-line flag dies. This book provides the same long term knowledge for building financial products on Solana.
 
-Solana is a fast-moving space: framework releases, library versions, and tools are known to churn. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
+Solana is a fast-moving space: framework releases, library versions, and tools churn constantly. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
 _Building Financial Software on Solana_ teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
@@ -73,7 +73,7 @@ Like _TCP/IP Illustrated_, this book teaches a way of thinking. Over time, you'l
 
 ## Where to Start, Depending on What You Came For
 
-Reading front to back works: the parts are ordered so that each one uses only what came before. But the book is built to be entered anywhere, so a few honest shortcuts:
+Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here are a few honest shortcuts:
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read [The Arithmetic of Money](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) and [Offchain Truth](../financial-programming-concepts-in-solana/offchain-truth.md), then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
