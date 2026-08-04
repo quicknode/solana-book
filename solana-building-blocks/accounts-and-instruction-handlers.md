@@ -122,14 +122,15 @@ The programs themselves are stored the same way, and it takes more than one acco
 
 > **A deployed program is two accounts, and briefly three.** Under Solana's upgradeable loader, the account at the program's address is a stub of 36 bytes: it is marked executable, and its data is nothing but the address of a second account. That second account, **ProgramData**, holds the compiled code, the slot the program was last deployed in, and the **upgrade authority** permitted to replace it. A third account, the **buffer**, holds the new code while a deploy or an upgrade is being written, and is closed once the write lands so its rent comes back. Newer loaders fold this arrangement back into a single account. What stays true across all of them is that a program's code is not the thing sitting at the address you call.
 
-## Addresses Come in Two Kinds
+## Addresses Come in Three Kinds
 
-Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in two kinds:
+Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in three kinds:
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
 - **PDAs** (program derived addresses). A PDA is computed from a program's address (its **program ID**) and some chosen seeds, and has no private key at all, so no signature for it can ever exist. PDAs can still own accounts, and the program that derived one can act as it by presenting the seeds; the PDAs chapter explains how, and why Solana keeps the word "sign" for something that involves no signature. The escrow program you will build in this book stores each offer at a PDA derived from the maker's address and an offer ID.
+- **Built-in addresses.** The System Program, the two token programs, and the sysvars sit at addresses that were *chosen* rather than computed: somebody picked a readable byte string, and the runtime treats that exact address as the thing it names. There is no private key and no derivation to redo, so the address is a constant your program compares against. `SysvarC1ock11111111111111111111111111111111` is the Clock the Time chapter reads. Some of these byte strings happen to decode to points on the curve and some do not, and it buys nobody anything either way: no key is known for any of them.
 
-![Two kinds of address: public keys sit on the curve, each with a private key that signs for it; PDAs sit off the curve, derived from a program ID and seeds, with no private key: the deriving program "signs" by presenting the seeds.](figures/address-types.svg)
+![Three kinds of address: a public key sits on the curve with a private key behind it, a PDA hangs below it derived from a program ID and seeds, and a built-in address hangs below with neither, fixed by convention.](figures/address-types.svg)
 
 Because addresses are how everything is found, financial programs lean on *derivable* addresses: put the market's pair, the user's key, or the offer's ID into the derivation, and anyone can compute where the account must be, no lookup table required.
 
@@ -158,5 +159,5 @@ Two payments toured every building block the rest of the book uses:
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
-- Addresses come in two kinds: **public keys**, which private keys sign for, and **PDAs**, which have no key: the deriving program "signs" by presenting the seeds.
+- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a key nor seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
