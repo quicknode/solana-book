@@ -1,6 +1,6 @@
 # Chapter 2: The Core Building Blocks of Solana
 
-Nearly every generic blockchain introduction describes it as a "shared ledger". This is vague: to what extent does the "sharing" occur? And what about the vast majority of program data, beyond account balances, that wouldn't appear in a traditional ledger?
+Nearly every generic blockchain introduction describes it as a "shared ledger". This is vague: shared how, and with whom? And most of what a program stores is not a balance at all, so it would never appear in a ledger anyway.
 
 Solana - or more specifically, Solana mainnet and devnet - is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
 
@@ -28,7 +28,7 @@ The curve in the figure is labeled **Solana Devnet**, because there is more than
 | **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Further clusters are stood up from time to time to try out one particular new feature. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program is expected to be thoroughly audited before it is released onto it.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a single new feature. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the one setting that decides which Solana computer your code is talking to, so moving work from localnet to devnet to mainnet is a change of configuration rather than of code. The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
@@ -44,7 +44,11 @@ Meet Bob. Bob has his own key pair, and his public key is another point on the s
 
 Alice wants to send Bob some SOL. The only way to change anything on this computer - move a balance, store data, anything - is to send it a **transaction**.
 
-A transaction carries one or more **instructions**, and each instruction is addressed to an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve. The **System Program** sits at a well-known address and creates accounts and transfers SOL; the **Memo Program** sits at another and writes notes into the transaction log; the programs in this book each get an address of their own the day you deploy them.
+A transaction carries one or more **instructions**, and each instruction is addressed to an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve:
+
+- The **System Program** sits at a well-known address, and creates accounts and transfers SOL.
+- The **Memo Program** sits at another, and writes notes into the transaction log.
+- The programs in this book each get an address of their own the day you deploy them.
 
 ![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
 
@@ -69,13 +73,13 @@ The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **la
 
 Alice's transaction executes atomically: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. There is no partial state, no "the payment cleared but the delivery failed."
 
-For financial software this is not plumbing; it is a primitive you design with. Settlement risk between steps simply does not exist inside a transaction: the escrow you will build moves Alice's payment and Bob's stock in one atomic unit, and no ordering of failures leaves one side paid and the other empty-handed. Sequencing turns from a race into a pattern: a lending market can require its price refresh in the same transaction as the action that depends on it, so "acting on stale state" is not a bug to chase but a transaction that cannot be built.
+For financial software, atomicity is a primitive you design with. Settlement risk between steps simply does not exist inside a transaction: the escrow you will build moves Alice's payment and Bob's stock in one atomic unit, and no ordering of failures leaves one side paid and the other empty-handed. Sequencing turns from a race into a pattern: a lending market can require its price refresh in the same transaction as the action that depends on it, so "acting on stale state" is not a bug to chase but a transaction that cannot be built.
 
 > **Flash loans are atomicity turned into credit.** A **flash loan** borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
 ![A flash loan is atomicity turned into credit: three instructions across two programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
 
-The budget for all this is metered in **compute units** per transaction, and the meter shapes financial design directly: it is why the order book exchange later in this book credits balances instead of making one transfer per fill, and why work gets consolidated everywhere you look. Compute cost is a design input, not an afterthought.
+The budget for all this is metered in **compute units** per transaction, and the meter shapes financial design directly: it is why the order book exchange later in this book credits balances instead of making one transfer per fill, and why work gets consolidated everywhere you look.
 
 ## Every Transaction Is Signed
 
@@ -89,7 +93,14 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 
 That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving requires no signature from the recipient - while nothing will ever leave his account until a transaction *he* signs asks for it.
 
-Solana has a general word for a right held this way. An **authority** is the address whose signature a particular action requires: a program records that address in an account, and the handler checks that the transaction carries its signature before doing the work. The word is always qualified by the action it governs, and each one is a separate power held by a separate address. A token's mint authority is the only address that may create new supply of it, and its freeze authority the only one that may freeze a holder's account. A program's upgrade authority is the only one that may replace the program's code. An exchange's market authority sets the market's parameters and collects its fee. Different powers, one mechanism, and underneath all of them the same question: whose signature does this transaction carry?
+Solana has a general word for a right held this way. An **authority** is the address whose signature a particular action requires: a program records that address in an account, and the handler checks that the transaction carries its signature before doing the work. The word is always paired with the action it governs, and each pairing is a separate power held by a separate address:
+
+- A token's **mint authority** is the only address that may create new supply of it.
+- That token's **freeze authority** is the only address that may freeze a holder's account.
+- A program's **upgrade authority** is the only address that may replace the program's code.
+- An exchange's **market authority** sets the market's parameters and collects its fee.
+
+Different powers, one mechanism, and underneath all of them the same question: whose signature does this transaction carry?
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, so an instruction handler can require two, or ten, rather than one. For standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Anywhere this book names an authority (a mint authority, a market's fee authority, a program's upgrade authority), that authority can be a multisig rather than one person's wallet, and for anything holding real money it usually is.
 
@@ -107,7 +118,7 @@ In a program, the data is a Rust struct; on the chain, it is bytes, with a lampo
 
 Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. The deposit is not a fee: close the account and the lamports come back. It is why part of Alice's balance is spoken for by the space her account occupies, and why a large account costs more to keep than a small one.
 
-The programs themselves are stored the same way, and it takes more than one account to do it. Deploying a program writes its compiled code into an account of its own, separate from the address you call, which is why deploying costs rent in proportion to the size of the binary; every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. A program is pure logic: it reads the accounts it is handed, checks them, and writes new values back, and the only way to change the state it manages is to run its instruction handlers. This split, logic in program accounts and state in data accounts, is what makes financial state legible: to know a market's condition you read its accounts, and to change it there are only the program's declared entry points.
+The programs themselves are stored the same way, and it takes more than one account to do it. Deploying a program writes its compiled code into an account of its own, separate from the address you call, which is why deploying costs rent in proportion to the size of the binary; every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. A program is pure logic: it reads the accounts it is handed, checks them, and writes new values back, and the only way to change the state it manages is to run its instruction handlers. This split, logic in program accounts and state in data accounts, is what makes financial state easy to read: to know a market's condition you read its accounts, and to change it there are only the program's declared entry points.
 
 > **A deployed program is two accounts, and briefly three.** Under Solana's upgradeable loader, the account at the program's address is a stub of 36 bytes: it is marked executable, and its data is nothing but the address of a second account. That second account, **ProgramData**, holds the compiled code, the slot the program was last deployed in, and the **upgrade authority** permitted to replace it. A third account, the **buffer**, holds the new code while a deploy or an upgrade is being written, and is closed once the write lands so its rent comes back. Newer loaders fold this arrangement back into a single account. What stays true across all of them is that a program's code is not the thing sitting at the address you call.
 

@@ -1,6 +1,6 @@
 # Chapter 10: Operating Financial Software
 
-Correct code is the entry fee. This section is the rest of the job: proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
+Correct code is only the start. This section is the rest of the job: proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
 
 ## Testing Financial Software: Test the Code Path the Bug Lives In
 
@@ -29,7 +29,7 @@ Onchain code that delegates to other programs cannot be symbolically executed en
 
 ## Ship With a Second Opinion
 
-Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. The audit is not a stamp; it is the cheapest adversary you will ever face, because this one writes you a report instead of a withdrawal.
+Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. An audit is the cheapest way to have someone hunt for the same holes an attacker would, because a reviewer hands you the list instead of draining the program.
 
 ## Admin Power, Pausing, and Upgrades
 
@@ -40,14 +40,14 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - **Keep admin money and user money in different pots.** The fee vault, the accumulated-fees counter carved out of the exchange rate: the admin's upside is segregated so that collecting it cannot touch what users are owed, and the withdraw path moves only from the segregated pot.
 - **Give the admin no path to principal.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves funds between program-owned vaults; settlement pays by formula. When that property holds, the honest claim is not "non-custodial", it is better and more precise: the rules are the deployed program, and the operator is not in them.
 - **Pausing is for entrances, not exits.** A pause switch that stops new deposits and new positions during an incident protects users; one that blocks withdrawals holds them hostage. Design the pause to narrow the program toward its exits, and remember the state-machine rule: every state needs an exit *even while paused*.
-- **Plan for the admin going silent.** Fees claimable whenever (a no-op when empty, so a cron can run it), nothing user-facing gated on the operator showing up, and an escape hatch for the day the price feed dies: a market that cannot value collateral should be able to enter a wind-down where positions close and deposits leave, rather than freezing everyone in place waiting for truth that is not coming.
+- **Plan for the admin going silent.** Fees claimable whenever (a no-op when empty, so a cron can run it), and nothing user-facing gated on the operator showing up. Add an escape hatch for the day the price feed dies: a market that cannot value collateral should be able to wind down, closing positions and letting deposits leave, rather than freezing everyone in place waiting for truth that is not coming.
 - **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than one laptop key, and say so. Users are not trusting that the code will never change; they are trusting that changing it takes more than one bad day.
 
 ## What You Learnt
 
 - Test the code path the bug lives in: both directions of every symmetric flow, both sides of every boundary, adversarial paths by name, and properties as well as balances.
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
-- Ship with a second-opinion audit; it is the cheapest adversary you will ever face.
+- Ship with a second-opinion audit; a reviewer hunting the same holes an attacker would hands you the list instead of draining the program.
 - Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
 
 The through-line of the whole chapter, one last time: the arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.

@@ -4,7 +4,7 @@ Every bug class in this chapter has drained a real market. The rules are few, an
 
 ## Money Is Integers: No Floats Near Funds
 
-Every validator that executes your program must compute exactly the same result, or the network cannot agree on state. Floating-point math puts that at risk: results can vary with hardware, compiler flags, and operation order, and floats accumulate representation error (0.1 has no exact binary form). Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**, and for money it is not a compromise but the honest representation.
+Every validator that executes your program must compute exactly the same result, or the network cannot agree on state. Floating-point math puts that at risk: results can vary with hardware, compiler flags, and operation order, and floats accumulate representation error (0.1 has no exact binary form). Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For money it is exact, because money really does come in whole units.
 
 So the rule is absolute: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that smuggles them in. When a calculation needs fractions, scale integers up instead (see fixed point, below). When it needs a square root or an exponential, compute it with integer iteration (see the AMM and interest sections). The program chapters contain not one float between them, and yours should not either.
 
@@ -30,9 +30,9 @@ Integer division throws away the remainder, so every division destroys informati
 
 Multiplying first creates the second problem: intermediates overflow. Two u64 values multiply into up to 128 bits, so `price * quantity` can overflow u64 even when the final result, after division, fits easily. This is **phantom overflow**: rejecting or corrupting a perfectly legal trade because the middle of the calculation was too big, not the answer. The fix is mechanical: promote to u128 (or a U256 type for chained multiplications) before multiplying, divide, then narrow back to u64 with an explicit checked conversion, so the only failure mode left is an amount genuinely too large to transfer.
 
-And everywhere, use checked arithmetic: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. A plain `+` or `*` in a Rust release build **wraps**: when the result is too big for the type, it starts again from zero, so a `u64` balance one lamport past the maximum becomes a balance of almost nothing instead of an error. Overflow checks can be turned on in the build profile, but a financial program never gambles on a build setting. Reserve `saturating_*` for cosmetic paths; on a value the accounting relies on, a silent clamp is a correctness bug wearing a seatbelt.
+And everywhere, use checked arithmetic: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. A plain `+` or `*` in a Rust release build **wraps**: when the result is too big for the type, it starts again from zero, so a `u64` balance one lamport past the maximum becomes a balance of almost nothing instead of an error. Overflow checks can be turned on in the build profile, but a financial program never gambles on a build setting. Reserve `saturating_*` for cosmetic paths. On a value the accounting relies on it is worse than wrapping: `saturating_sub` turns 5 minus 10 into 0 rather than an error, so a debt that should have failed the calculation is recorded as no debt at all, and nothing anywhere reports a problem.
 
-Some formulas need more than the four operations. The classic is the AMM's first issuance of LP tokens, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation with a known, bounded, directionally-controlled error.
+Some formulas need more than the four operations. The classic is the AMM's first issuance of LP tokens, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation, and you pick one whose error you know the size and the direction of.
 
 ## Rounding Is a Policy Decision
 
@@ -45,11 +45,11 @@ Every integer division rounds, so every division is a decision about who gets th
 
 Integer division nearly always leaves a remainder, and that remainder is **dust**: a sliver smaller than one minor unit of anything, worth nothing on its own and worth a great deal a million transactions later. The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
 
-This is not stinginess; it is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale: an attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of The Adversary shows exactly that attack succeeding in production.
+This is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale: an attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of The Adversary shows exactly that attack succeeding in production.
 
-> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is not a detail, it is a security boundary, and "closest" is never the answer for money.
+> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is a security boundary, and "closest" is never the answer for money.
 
-Three things follow from that table, and each is worth remembering on its own.
+Three things follow from that table.
 
 ### Safety Checks Round Against the User Too
 
@@ -79,9 +79,12 @@ One warning from the same file: an invariant that can hold vacuously is not an i
 
 Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **cumulative index**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New index = old index × (1 + rate per slot × elapsed slots). A debt is stored divided by the index at borrow time, and its live value is that scaled figure times the current index. One multiplication serves every borrower simultaneously, interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The Lending chapter runs this machine in production; the same shape prices any share of a growing pool.
 
-Two numerical points complete the picture. Compounding per slot with a simple multiply is a **binomial approximation** of continuous compounding: (1 + r)ⁿ expanded to first order per step. Updated frequently, the error is negligible and always in a known direction; the tradeoff is a few compute units per update against exactness nobody can measure. And when a formula needs (1 + r)ⁿ for large n in one step, compute it by **exponentiation by squaring**: n multiplications become log₂(n), each one checked, each one floored consistently.
+Two numerical points complete the picture:
 
-Rates themselves are policy, not arithmetic, but one curve recurs everywhere: rates that rise with **utilization**, gently to a target and steeply past it, so a pool that is nearly drained pays depositors more and charges borrowers more until balance returns. Fifteen lines of integer math, doing a central bank's job.
+- Compounding per slot with a simple multiply is a **binomial approximation** of continuous compounding: (1 + r)ⁿ expanded to first order per step. Updated frequently, the error is negligible and always in a known direction; the tradeoff is a few compute units per update against exactness nobody can measure.
+- When a formula needs (1 + r)ⁿ for large n in one step, compute it by **exponentiation by squaring**: n multiplications become log₂(n), each one checked, each one floored consistently.
+
+Rates themselves are policy, not arithmetic, but one curve shows up everywhere: rates that rise with **utilization**, gently to a target and steeply past it, so a pool that is nearly drained pays depositors more and charges borrowers more until balance returns. Fifteen lines of integer math, doing a central bank's job.
 
 ## What You Learnt
 

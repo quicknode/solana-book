@@ -50,7 +50,7 @@ Some things were left out on purpose, and knowing which is part of knowing the s
 
 The gap between reading this book and being able to ship is one project wide, and it closes faster than you expect. Pick the smallest product you actually want to exist. Draw its state machine before you write a handler. Give every state an exit. Write the tests that drive the machine down every path, especially the exits, and the property tests that assert what must never change.
 
-Then get a second opinion from somebody who was not in the room. Every wall in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor is the cheapest adversary you will ever face, because that one writes you a report instead of a withdrawal.
+Then get a second opinion from somebody who was not in the room. Every wall in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 

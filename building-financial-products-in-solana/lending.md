@@ -58,7 +58,7 @@ The health check behind step 4 is conservative by construction: when `refresh_ob
 
 Carol thinks SpaceX is overvalued and wants to profit if it falls. (Carol, you do you.) Her trade is the classic short, and a lending market is where shorts live: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
-Read her position carefully, because everything later hangs on it: **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves. Remember that.
+Read her position carefully, because everything later hangs on it: **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
 
 ## Interest: One Index, No Transfers
 
@@ -78,24 +78,24 @@ The other thing that moves over time is prices. SPCXx rallies from $250 to $300,
 
 ## A Liquidator Closes the Gap, Twice, by the Rules
 
-Dave watches for liquidation opportunities. He is not a villain; he is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler's rules are exact:
+Dave watches for liquidation opportunities. He is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler's rules are exact:
 
-- A healthy obligation cannot be touched: the health gate rejects with `ObligationHealthy` (pinned by `healthy_obligation_cannot_be_liquidated`). Liquidation is a safety valve, not a hunting license.
+- A healthy obligation cannot be touched: the health gate rejects with `ObligationHealthy` (pinned by `healthy_obligation_cannot_be_liquidated`). A liquidator cannot choose their target; they can only take positions the market has already marked unhealthy.
 - The **close factor** caps one liquidation at 50% of the debt. Dave repays 1.5 SPCXx ($450).
 - The **bonus** prices his service: he seizes $450 × 1.05 = $472.50 of Carol's collateral, paid in USDC shares, every step of the conversion floored toward the borrower.
 - Overreach fails the whole call: asking to seize more collateral than the obligation holds rejects with `LiquidationTooLarge` rather than silently capping, because a silent cap would make the liquidator pay full price for less collateral (pinned by `over_seizing_liquidation_rejected_smaller_succeeds`).
 
-Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Why half at a time? A close factor turns liquidation from an execution into a correction: the borrower loses the minimum collateral needed to restore health, not the whole position.
+Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Why half at a time? The close factor means the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
 ![Liquidation: Dave repays SPCXx into the reserve and seizes discounted USDC collateral shares from Carol's obligation, her health gauge crossing back under the threshold, with the close factor halving what one call may touch.](figures/lending-liquidation.svg)
 
 ## Cranks: Work With No Natural Caller
 
-Step back from Dave for a moment, because this market runs on a pattern worth naming. Some work in a financial product has no natural caller: interest must accrue, cached prices must refresh, and no user's own transaction is obliged to do any of it. The onchain pattern is the **crank**: an instruction handler that anyone may call, safe to call at any time, so that keeping the machine turning is a permissionless job rather than an operator's promise. A good crank has three properties:
+Dave is one instance of a pattern this market runs on. Some work in a financial product has no natural caller: interest must accrue, cached prices must refresh, and no user's own transaction is obliged to do any of it. The onchain pattern is the **crank**: an instruction handler that anyone may call, safe to call at any time, so that keeping the machine turning is a permissionless job rather than an operator's promise. A good crank has three properties:
 
 - **Permissionless: the handler checks state, not identity.** If the work is valid, anyone's signature will do. `refresh_reserve()` and `refresh_obligation()` are the canonical examples: they bring interest and cached prices up to date for whoever asks, no special key required, and gating maintenance on the operator's key would turn the operator's absence into everyone's outage. Anyone can run the crank, so a crank that moves funds must calculate their destination from information the program itself stores (like values in a PDA), never by paying the signer: a crank that pays whoever called has made its funds claimable by strangers.
 - **Idempotent and quiet: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve simply rewrites the same numbers), so a bot on a schedule never needs babysitting and never fails spuriously.
-- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case worth studying closely. He is not a crank operator turning a handle for a fee: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent precisely because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
+- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case worth studying closely. He is not a crank operator turning a handle for a fee: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
 
 ![The crank loop: anyone's scheduled bot calls the permissionless handler, and every outcome is clean: work done, a quiet no-op, or a refusal of work the state does not permit.](figures/crank-loop.svg)
 
@@ -107,11 +107,17 @@ Maria runs `collect_protocol_fees()` whenever she likes and receives the accumul
 
 Alice leaves her SPCXx position riding and takes her USDC yield: `redeem_reserve_collateral()` burns her 1,000 shares for about $1,003.50, her half of the supplier interest, since she supplied half the USDC reserve alongside Carol's collateral deposit.
 
-The scoreboard: Alice +$3.50 for five weeks of idle capital. Bob got his liquidity for $8 and kept his stock. Carol turned $1,000 into about $817, most of it lost to the price moving against her short, $33.75 of it paid to Dave. Dave earned $33.75 for watching. Maria earned $0.78 on one small loan in one small market, a number that becomes a business at real scale.
+The scoreboard:
+
+- **Alice**: $3.50 for five weeks of otherwise idle capital.
+- **Bob**: five weeks of liquidity for $8, and he kept his stock.
+- **Carol**: $1,000 became about $817, most of it lost to the price moving against her short, $33.75 of it paid to Dave.
+- **Dave**: $33.75 for watching.
+- **Maria**: $0.78 on one small loan in one small market, a number that becomes a business at real scale.
 
 ## The Math: Two Rounding Helpers and a Rule
 
-Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use fits in one sentence: **quantities favorable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is a property, not a vibe: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` proves it by trying.
+Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use fits in one sentence: **quantities favorable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is a property the tests can check: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` proves it by trying.
 
 ## The Invariants: Solvency by Construction
 
@@ -143,7 +149,7 @@ The concepts you now have:
 - **Shares as the yield mechanism.** Interest swells the pool while the share supply stays put, so each share redeems for more; no per-lender bookkeeping exists or needs to.
 - **The cumulative index.** One multiplication accrues interest for every borrower simultaneously; debts are stored scaled and revalued on touch. The same shape prices any claim on a growing pool.
 - **Conservative-by-construction valuation.** Collateral floors, debt ceils, so every health check errs against the borrower, and no rounding sub-unit can squeak a position past a boundary.
-- **Liquidation as a paid correction.** The close factor turns it from an execution into a correction; the bonus prices the service; the health gate makes it a safety valve rather than a hunting license.
+- **Liquidation as a paid correction.** The close factor caps each call at part of the debt, so the borrower keeps what health does not require; the bonus pays the liquidator; the health gate means only positions already past the threshold can be touched.
 - **Cranks.** Permissionless, idempotent maintenance whose funds destinations come from stored state, and whose reliability comes from someone being paid.
 - **Freshness as a gate.** Every valuation requires same-transaction refreshes, so acting on stale state is a transaction that cannot be built.
 
