@@ -8,7 +8,10 @@ Lifinity pioneered the model on Solana; by early 2026, venues like SolFi, Humidi
 
 A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana, and the operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the order book chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
 
-Two consequences follow immediately, and both are absences. A trade's unit price does not depend on its size, so there is no price impact: 500 NVDAx fills at the same price per token as 5, until the inventory runs out. And the price does not depend on the pool's balances, so there is nothing to sandwich: the front-run/back-run attack from The Adversary needs a price that moves with each trade, and this one does not move.
+Two consequences follow immediately, and both are absences:
+
+- **No price impact.** A trade's unit price does not depend on its size, so 500 NVDAx fills at the same price per token as 5, until the inventory runs out.
+- **Nothing to sandwich.** The price does not depend on the pool's balances, and the front-run/back-run attack from The Adversary needs a price that moves with each trade. This one does not move.
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
@@ -30,7 +33,13 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 ![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
 
-Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn. The oracle read comes first, with the same checks the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit. Then the ask: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer. Then her output, **floored**: 825.825 USDC of her 1,000 buys exactly 5 NVDAx. Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
+Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn:
+
+- **The oracle read**, with the same checks the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit.
+- **The ask**: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer.
+- **Her output**, floored: 825.825 USDC of her 1,000 buys exactly 5 NVDAx.
+
+Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
 Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 

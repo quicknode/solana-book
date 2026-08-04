@@ -14,7 +14,12 @@ output = taxed_input × other_reserve ÷ (this_reserve + taxed_input)
 
 The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME removes X and adds Y, so the next buyer pays more. Big trades relative to the pool move the price a lot; that is slippage, made mechanical.
 
-And the truth about K: **K is constant within a single trade and grows over time.** Deposits grow it (more of both tokens, same ratio). The liquidity providers' share of every fee stays in the pool and grows it. And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
+And the truth about K: **K is constant within a single trade and grows over time.** It grows two ways:
+
+- **Deposits** add more of both tokens at the same ratio.
+- **Fees** stay in the pool: the liquidity providers' share of every trade's fee is never paid out to anyone.
+
+And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
 
 ![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
 

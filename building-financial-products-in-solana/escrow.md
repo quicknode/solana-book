@@ -63,7 +63,10 @@ Before the handler body runs a single line, the account constraints in `MakeOffe
 
 One constraint is easy to miss. `maker_token_account_b`, Alice's account for the token she *wants*, is created now if it does not exist, and Alice pays for it. This is a deliberate piece of economics. The party who chose to open the offer carries its rent burden, and `take_offer()` can then require the destination for Bob's payment to already exist rather than making Bob pay to create an account that belongs to Alice.
 
-With the structure verified, the handler body is two small steps. `handle_send_offered_tokens_to_vault()` calls the shared `transfer_tokens()` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority. Then `handle_save_offer()` writes the offer's fields, including the saved bump, into the offer account.
+With the structure verified, the handler body is two small steps:
+
+- **`handle_send_offered_tokens_to_vault()`** calls the shared `transfer_tokens()` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority.
+- **`handle_save_offer()`** writes the offer's fields, including the saved bump, into the offer account.
 
 ![make_offer() moves 250,000,000 minor units of USDC from Alice's token account into the vault, while the offer account is written with the maker, the mints, and the wanted amount.](figures/escrow-make-offer.svg)
 
@@ -75,7 +78,12 @@ Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: 
 
 Alice does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
-The handler body runs two steps. First, `handle_send_wanted_tokens_to_maker()` moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it. Second, `handle_withdraw_and_close_vault()` moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump. Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
+The handler body runs two steps:
+
+- **`handle_send_wanted_tokens_to_maker()`** moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it.
+- **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
+
+Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
 
 ![take_offer() moves the TSLAx directly from Bob's token account to Alice's and the USDC from the vault to Bob's token account, then closes the vault and the offer account, with the rent lamports returning to Alice.](figures/escrow-take-offer.svg)
 

@@ -69,7 +69,12 @@ Her transaction ends with the only token movement: 1,000 USDC from Alice's token
 
 A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest honest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. Run the numbers once: with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots (about thirteen minutes) owes 50 USDC.
 
-Two simplifications to notice, both documented in the example. The payment goes to the pool, to the LPs, rather than to the lighter side of traders, and the rate is a constant rather than scaling with how lopsided the book is. Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting shape, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, exactly as the test suite's default market does.
+Two simplifications to notice, both documented in the example:
+
+- **The payment goes to the pool**, to the LPs, rather than to the lighter side of traders.
+- **The rate is a constant**, rather than scaling with how lopsided the book is.
+
+Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting shape, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, exactly as the test suite's default market does.
 
 ![The funding index climbs while longs outweigh shorts and falls when shorts outweigh longs; each position pays or receives the index movement between its entry and its exit.](figures/perps-funding-index.svg)
 
@@ -92,7 +97,15 @@ The pool cannot sell Bob's position; a program never acts on its own, somebody h
 
 At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**, nearly doubling her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool authority's signature. The same handler protects the pool from the other direction: a position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and must exit through liquidation, and any payout the pool arithmetic cannot cover fails closed with `PoolInsolvent` rather than overdrawing the LPs.
 
-Where did everyone end up? Alice turned 1,000 into 1,990 by being right with leverage. Bob turned 1,000 into 195 by being wrong and slow. Dave collected 50 USDC for one well-timed transaction. Maria's `protocol_fees` holds 15 from two opens and one close (Bob's liquidation charges no close fee), which she sweeps with `collect_fees()`, the only handler gated on her signature, and only to zero the fee ledger (`test_collect_fees_requires_authority` pins the gate). And Carol? The pool she owns a twelfth of absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus fees and funding on the next thousand traders. The pool does not need every trade to go its way, only most of them over time.
+Where did everyone end up?
+
+- **Alice** turned 1,000 into 1,990 by being right with leverage.
+- **Bob** turned 1,000 into 195 by being wrong and slow.
+- **Dave** collected 50 USDC for one well-timed transaction.
+- **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, the only handler gated on her signature, and only to zero the fee ledger (`test_collect_fees_requires_authority` pins the gate).
+- **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus fees and funding on the next thousand traders.
+
+The pool does not need every trade to go its way, only most of them over time.
 
 ## The Math: One Formula per Concept, All Floored the Pool's Way
 

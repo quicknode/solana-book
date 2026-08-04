@@ -79,7 +79,14 @@ One exit remains, and it matters more than it looks. The fundraiser PDA is deriv
 
 ## The Math: Three Constants and a Floor
 
-The program's entire financial surface is: the cap, `amount_to_raise × 10 / 100` in u128, floored; the minimum target, `3 × 10^decimals` (`MIN_AMOUNT_TO_RAISE`); the minimum contribution, `10^decimals`; and the deadline, `(now − time_started) / 86,400`, floored. Every addition and subtraction on `current_amount` and the receipts is checked and maps overflow to `MathOverflow`. No rates, no pro-rata, no prices: refunds pay recorded amounts back verbatim, which is why this chapter sits directly after escrow, before any program that has to *compute* what people are owed.
+The program's entire financial surface is four expressions:
+
+- **The cap**: `amount_to_raise × 10 / 100`, in u128, floored.
+- **The minimum target**: `3 × 10^decimals` (`MIN_AMOUNT_TO_RAISE`).
+- **The minimum contribution**: `10^decimals`.
+- **The deadline**: `(now − time_started) / 86,400`, floored.
+
+Every addition and subtraction on `current_amount` and the receipts is checked and maps overflow to `MathOverflow`. No rates, no pro-rata, no prices: refunds pay recorded amounts back verbatim, which is why this chapter sits directly after escrow, before any program that has to *compute* what people are owed.
 
 ## The Invariants: The Counter Balances Like a Ledger
 
