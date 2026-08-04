@@ -36,5 +36,5 @@
   <text x="230" y="224" font-size="9.5">tokens and rent, both the maker&#8217;s</text>
   <text x="230" y="239" font-size="9" font-style="italic" fill="#444">and no handler can return them</text>
   </g>
-  <text x="312" y="270" font-size="10.5" fill="#444" text-anchor="middle">a state with no exit is a stranded deposit: a bug in the program</text>
+  <text x="312" y="270" font-size="10.5" fill="#444" text-anchor="middle">a stranded deposit is a bug in the program</text>
 </svg>

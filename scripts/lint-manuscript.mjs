@@ -33,7 +33,8 @@ const rules = [
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],
-  [/\bsmart contracts?\b/i, 'say "program" (a contrastive mention in the glossary is the one allowed use)'],
+  [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
+  [/Quicknode Press|QuickNode|QuikNode|Quiknode(?! Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode Inc."; there is no Quicknode Press'],
   [/\bgas fees?\b|\bgas costs?\b/i, 'say "transaction fees"'],
   [/\bmempool/i, "Solana has no mempool"],
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
@@ -43,11 +44,16 @@ const rules = [
   [/\bSolend\b/, "renamed: say Save"],
   [/\bSerum\b/, "collapsed project: cite OpenBook or Phoenix"],
   [/\bfavour|behaviour|\bcancelled\b|\bapologise\b|\blabelled\b/, "American spelling in prose (identifiers like the Cancelled enum are exempt: write them capitalized)"],
+  // An address is only set as an address in the PDF if the build can find it,
+  // and the build finds links. A host written as loose prose prints as prose.
+  [/(?<![([\/`\w.])[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|org|io|dev|net|xyz)\b(?!\w)/,
+    "write an address as a markdown link, [host.tld](https://host.tld), so the build sets it as an address"],
 ];
 
 // Allowed exceptions, matched against the full line.
 const exceptions = [
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
+  /other blockchains call the same thing a smart contract/, // the Introduction's contrastive mention
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];

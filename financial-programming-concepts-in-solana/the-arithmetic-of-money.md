@@ -22,17 +22,17 @@ Two conventions build on minor units.
 
 Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the Order Book chapter shows the construction).
 
-Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so 1.05 is stored as 1_050_000_000_000_000_000. The conventional constant is 10^18, and a value at that scale is called a **WAD**; the name comes from Ethereum's DappHub and MakerDAO convention, a "wad" as in a wad of bills, and it has become the standard word for 18-decimal fixed point on every chain. The scale is chosen large enough that the smallest value you care about (one slot's interest) does not truncate to zero, and small enough that intermediates stay inside u128.
+Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so 1.05 is stored as 1_050_000_000_000_000_000. The conventional constant is 10^18, and a value at that scale is called a **WAD**. The convention is borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard; 18 decimals because that is what Ether and most ERC-20 tokens use. It has since become the usual word for 18-decimal fixed point on every chain, Solana included. The scale is chosen large enough that the smallest value you care about (one slot's interest) does not truncate to zero, and small enough that intermediates stay inside u128.
 
 ## Multiply Before Divide, with Wider Intermediates
 
-Integer division throws away the remainder, so every division destroys information. The rule that follows: **do all multiplication before any division, and divide exactly once.** `amount * share / total` is right; `amount / total * share` is catastrophically wrong (the first division usually yields zero). When a formula seems to need two divisions, refactor until it needs one.
+Integer division throws away the remainder, so every division destroys information. The rule that follows: **do all multiplication before any division, and divide exactly once.** `amount * share / total` is right; `amount / total * share` is catastrophically wrong (the first division usually yields zero). When a formula seems to need two divisions, refactor until it needs one. Dividing once is also rounding once, which is why the errors never compound: there is only ever one remainder to lose.
 
 Multiplying first creates the second problem: intermediates overflow. Two u64 values multiply into up to 128 bits, so `price * quantity` can overflow u64 even when the final result, after division, fits easily. This is **phantom overflow**: rejecting or corrupting a perfectly legal trade because the middle of the calculation was too big, not the answer. The fix is mechanical: promote to u128 (or a U256 type for chained multiplications) before multiplying, divide, then narrow back to u64 with an explicit checked conversion, so the only failure mode left is an amount genuinely too large to transfer.
 
-And everywhere, use checked arithmetic: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. Rust release builds wrap silently on plain operators unless overflow checks are enabled; a financial program never gambles on that. Reserve `saturating_*` for cosmetic paths; on a value the accounting relies on, a silent clamp is a correctness bug wearing a seatbelt.
+And everywhere, use checked arithmetic: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. A plain `+` or `*` in a Rust release build **wraps**: when the result is too big for the type, it starts again from zero, so a `u64` balance one lamport past the maximum becomes a balance of almost nothing instead of an error. Overflow checks can be turned on in the build profile, but a financial program never gambles on a build setting. Reserve `saturating_*` for cosmetic paths; on a value the accounting relies on, a silent clamp is a correctness bug wearing a seatbelt.
 
-Some formulas need more than the four operations. The classic is the AMM's initial LP mint, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation with a known, bounded, directionally-controlled error.
+Some formulas need more than the four operations. The classic is the AMM's first issuance of LP tokens, the square root of a product of two u64s: computed with **Newton's method** on integers, a five-line loop that starts high and converges in a few dozen iterations, flooring the result. The lesson generalizes: any real-valued function you need onchain (square roots, exponentials, logs) becomes an integer iteration or approximation with a known, bounded, directionally-controlled error.
 
 ## Rounding Is a Policy Decision
 
@@ -43,13 +43,25 @@ Every integer division rounds, so every division is a decision about who gets th
 | What the program pays out | Down (floor) | Withdrawals, winnings, swap outputs, shares minted |
 | What the user owes | Up (ceil) | Debt, fees |
 
-The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
+Integer division nearly always leaves a remainder, and that remainder is **dust**: a sliver smaller than one minor unit of anything, worth nothing on its own and worth a great deal a million transactions later. The dust stays in the pool, where it belongs to everyone, rather than leaking to whoever transacts most often.
 
 This is not stinginess; it is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale: an attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of The Adversary shows exactly that attack succeeding in production.
 
 > **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is not a detail, it is a security boundary, and "closest" is never the answer for money.
 
-Four corollaries. First, round *once*: floor a value once at the end, not at every intermediate step, or errors compound (this is multiply-before-divide again). Second, when health and safety checks are involved, round so the check is conservative: a lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better. Third, **a ceiled fee is a capped fee**: rounding up must never turn a fee into more than the amount it is charged on (the order book backs its ceiling division with a check that the fee never exceeds the gross), and fee *parameters* are bounded at write time, so no configuration can express a fee above 100% and no manager fee can drain a fund by setting alone. Fourth, **ceiling debt is what "interest is paid in full" means onchain**: the pool never collects less than the interest that accrued, no schedule of tiny repayments can shave it, and no sub-unit of debt is ever forgiven by rounding, while over-repayment clamps to the debt so nobody is overcharged either.
+Three things follow from that table, and each is worth remembering on its own.
+
+### Safety Checks Round Against the User Too
+
+The table covers money changing hands. The same direction applies to the numbers a program checks before it lets money move at all. A lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better. A borrower is refused a loan they could just barely afford, rather than granted one they just barely cannot.
+
+### A Ceiled Fee Is a Capped Fee
+
+Rounding up must never make a fee larger than the amount it is charged on. The order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written, too, so no configuration can express a fee above 100% and no manager can drain a fund by setting one.
+
+### Ceiling Debt Is What "Paid in Full" Means Onchain
+
+The pool never collects less than the interest that accrued, no schedule of tiny repayments can shave it, and no sub-unit of debt is ever forgiven by rounding. Over-repayment clamps to the debt, so nobody is overcharged either.
 
 ## Invariants and Conservation: Assert After the Math
 
@@ -59,7 +71,7 @@ An **invariant** is a property that must hold before and after every state chang
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 
-The discipline that makes invariants worth having: **assert after the math, not just before.** Preconditions catch bad inputs; a postcondition catches *your own bug*. The AMM re-checks its product after the transfers have actually landed, and that single line catches every "I computed the output wrong and overpaid" mistake in the file, including the ones in code that has not been written yet. When an invariant check costs a few hundred compute units and the alternative is an unbounded drain, the check is free.
+Check them **after the math, not just before.** A check on the way in catches bad inputs; a check on the way out catches *your own bug*. The AMM re-checks its product after the transfers have actually landed, and that single line catches every "I computed the output wrong and overpaid" mistake in the file, including the ones in code that has not been written yet. When an invariant check costs a few hundred compute units and the alternative is an unbounded drain, the check is free.
 
 One warning from the same file: an invariant that can hold vacuously is not an invariant. `new_k >= old_k` passes trivially when `old_k` is zero, which is why the empty pool needs its own explicit guard. Know the degenerate values of every property you assert.
 

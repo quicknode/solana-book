@@ -14,7 +14,7 @@ Every program in this book is built from the same six pieces.
 
 **Terms freeze when money commits.** The betting market copies the fee onto the event at creation; the fundraiser stamps its deadline before the first contribution. Whatever an operator can change, they cannot change it retroactively for money already inside.
 
-**Every state has an exit, for every participant's money.** This is the rule that finds missing requirements rather than missing code. Walk each state, ask how each party's money leaves from here, and any state without an answer is a stranded-funds bug that no amount of correct arithmetic will fix.
+**From every state, every participant must be able to get their money out.** This is the rule that finds missing requirements rather than missing code. Walk each state, ask how each party's money leaves from here, and any state without an answer is a stranded-funds bug that no amount of correct arithmetic will fix.
 
 **Arithmetic runs in integers of minor units, multiplying before dividing, rounding against whoever could profit from the rounding.** A sub-unit leaked on every operation is not a rounding error once someone writes the loop.
 

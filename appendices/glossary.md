@@ -24,7 +24,7 @@ An order to sell at or above a stated price. The seller's side of an order book.
 
 ### associated token account (ATA)
 
-The canonical token account for a given wallet and mint, at an address anyone can derive from the two. ATAs are why a program can know where Alice's USDC lives without asking her.
+The canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the token program that manages the mint, and the mint. ATAs are why a program can know where Alice's USDC lives without asking her.
 
 ### AUM (assets under management)
 
@@ -32,7 +32,7 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 ### authority
 
-The key or account with the right to perform an action: a mint authority may create supply, a freeze authority may freeze token accounts, a market authority may withdraw fees. Recording the authority and verifying it on the way out is the core of access control in every chapter.
+The address whose signature a particular action requires. A program records the authority in an account, and the handler checks that the transaction carries its signature before acting: a mint authority may create supply, a freeze authority may freeze token accounts, an upgrade authority may replace a program's code, a market authority may withdraw fees. Recording an authority and checking it is the core of access control in every chapter.
 
 ### base token
 
@@ -53,6 +53,10 @@ A recent block's hash, included in every transaction to bound its lifetime. When
 ### bump
 
 The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address cheaply.
+
+### checked arithmetic
+
+Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on money in this book is checked.
 
 ### checks-effects-interactions
 
@@ -124,7 +128,7 @@ A neutral holder of funds that releases them only when agreed conditions are met
 
 ### faucet
 
-A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or faucet.quicknode.com/solana, USDC from Circle's faucet at faucet.circle.com. Faucets are why nothing in this book needs real money.
+A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
 
 ### fixed point
 
@@ -252,7 +256,7 @@ Maximal extractable value: profit taken by controlling transaction ordering, mos
 
 ### mint (account)
 
-The onchain account that defines a token: its supply, decimals, and authorities. In economic prose this book says "token"; "mint account" appears when describing what gets passed to an instruction.
+The onchain account that defines a type of token: its supply, decimals, and authorities. A mint is a token's factory, not a token itself, and holds no balance of anything; balances live in [token accounts](#token-account). Economic prose names the token ("Alice pays 25 USDC"); "mint" names the account, and is what an instruction is actually passed.
 
 ### multisig
 
@@ -362,13 +366,17 @@ The difference between the price you expected and the price you got, caused by y
 
 Solana's basic unit of time, roughly 400ms, in which a leader may produce a block. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
+### SOL
+
+Solana's **native token**: the asset the network understands without any token program, used to pay transaction fees and to fund the rent deposit on every account. Denominated in [lamports](#lamport), a billionth of a SOL each. Every other token is an [SPL token](#spl-token).
+
 ### spread
 
 The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
 
 ### SPL token
 
-Any token other than SOL, managed by a token program; the name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
+Any token other than [SOL](#sol): one defined by a token program rather than by the network itself. The name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
 
 ### stablecoin
 
@@ -416,11 +424,15 @@ A token account whose authority is a program's PDA, where a program holds funds 
 
 ### WAD
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for interest indexes and rate math. The name comes from Ethereum's DappHub and MakerDAO convention (a "wad" as in a wad of bills) and has become the standard word for 18-decimal fixed point on every chain.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for interest indexes and rate math. Borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard, at 18 decimals because that is what Ether and most ERC-20 tokens use. Now the usual word for 18-decimal fixed point on every chain, Solana included.
 
 ### wallet
 
 A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet.
+
+### wrapping
+
+What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Silent, and catastrophic on a balance, which is why money uses [checked arithmetic](#checked-arithmetic) instead.
 
 ### zero-copy
 

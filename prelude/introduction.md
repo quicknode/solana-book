@@ -1,6 +1,6 @@
 # Chapter 1: Introduction
 
-It might seem strange to release a book - let alone one available in a physical form - for building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
+It may seem odd to release a book - let alone one available in a physical form - for building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
 
 This isn't a book about how Solana is built. It's about **building on the Solana platform**. We're aiming for it to be the essential reference for creating financial products on the world's most active blockchain.
 
@@ -12,7 +12,7 @@ Financial products built on Solana have properties no traditional rail offers:
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed.
 - **Everyone reads the same accounts.** A traditional trade lands in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
 - **Money is programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
-- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it: card payments take roughly 1.5% to 3.5% of each sale plus a fixed 10 to 30 cents, and sending $200 across a border runs from under 1% through a digital service like Wise to over 20% in cash over a Western Union or MoneyGram counter, in the parts of the world where cash over a counter is how money arrives. If your own transfers have always been domestic, or between wealthy countries, that upper figure will look invented: the World Bank prices every corridor quarterly at [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org), and in the third quarter of 2025 thirteen corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. A fee that ignores the amount is a different kind of fee from one that scales with it, and it changes which products are worth building at all.
+- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Card payments take roughly 1.5% to 3.5% of each sale, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and 20% at a Western Union or MoneyGram cash counter in some parts of the world. If your own transfers have always been domestic, or between wealthy countries, that upper figure will look inflated: the World Bank prices every corridor quarterly at [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org), and in the third quarter of 2025 thirteen corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. A fee that ignores the amount is a different kind of fee from one that scales with it, and it changes which products are worth building at all.
 - **Blockchains can move assets of any kind.** Traditional "crypto" assets like BTC and SOL, and real-world assets (RWAs): commodities, equities, real estate, and exotics. As of mid-2026, Solana is the most popular chain for real world asset trading.
 - **Distribution is the deployment.** A traditional fund spends months and a chain of intermediaries reaching its investors: an exchange listing, market makers, brokerage platform approvals, each a gatekeeper with its own cost and lead time. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists. The legal duties of offering a financial product do not change; the infrastructure between you and your investors is what disappears.
 
@@ -51,7 +51,7 @@ Framework-specific code is kept in the companion repository. Where code appears 
 
 ## Prerequisites
 
-This book assumes deep familiarity with neither Solana nor finance, and covers both in enough detail to work from either side with confidence.
+This book does not assume you have written a Solana program, and it does not assume a background in finance. It covers both in enough detail to work from either side with confidence.
 
 Every Solana mechanism is introduced before it is used, starting from the basics of users, accounts, programs, and data. Every financial concept (escrow, collateral, liquidation, market making, interest) is explained from first principles, with the personas and dollar amounts on the page, before any code depends on it.
 
@@ -61,9 +61,9 @@ The diagrams throughout the book share one set of conventions, and each conventi
 
 ## Programs Follow Patterns, Patterns Build Understanding
 
-The book has two parts. **The Fundamentals** is everything you need before writing financial software, in two halves: Building Blocks is what is Solana-mechanical (accounts, tokens, PDAs, rent, atomicity, and time), and Financial Programming Concepts is what is money-specific (the arithmetic, offchain truth, the adversary, testing, and admin power). **Building Financial Products** is the nine program chapters.
+The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to money (the arithmetic, offchain truth, the adversary, testing, and admin power).
 
-Then every program chapter walks one complete financial program. Incentives for admins and individual users are discussed, and we show how individual instruction handlers modify onchain state on behalf of their users.
+**Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a smart contract. Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine. These programs have not been drawn and explained side by side in one place before.
 
 Real incidents appear throughout the book in boxed **War Story** sections: in The Arithmetic of Money, the rounding bug that put about $2.6B at risk; in The Adversary, the Mango Markets incident. History does not go stale, which makes these among the most durable pages in the book, and none of them are told to dunk on the teams involved - the point is the awareness.
 
@@ -77,7 +77,6 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read [The Arithmetic of Money](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) and [Offchain Truth](../financial-programming-concepts-in-solana/offchain-truth.md), then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
-- **Auditing or reviewing?** [The Adversary](../financial-programming-concepts-in-solana/the-adversary.md) first, then the [program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) matching what is in front of you. Always get a second-opinion from a professional auditor before releasing a Solana program to mainnet.
 
 ## An Appendix Meant to Be Worn Out: the Glossary
 

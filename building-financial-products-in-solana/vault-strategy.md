@@ -2,7 +2,7 @@
 
 A **vault strategy** is the onchain equivalent of an index fund. A list of approved assets, a fund manager who picks the allocation, investors who deposit and receive shares, a management fee for the manager's expertise. Symmetry and Kamino are popular vault-strategy platforms on Solana. The program lives at `finance/vault-strategy` in the companion repository, and its story trades stocks: TSLAx and NVDAx, quoted in USDC.
 
-This is the chapter where the original promise of onchain programs pays off most visibly. In a traditional fund, "the manager cannot run off with client money" is enforced by custodians, auditors, and courts. Here it is enforced by the program: **the manager can change the allocation and earn the fee, and can do nothing else.** No instruction in the program moves a vault's tokens to the manager. That sentence is the chapter.
+In a traditional fund, "the manager cannot run off with client money" is enforced by custodians, auditors, and courts. Here it is enforced by the program: **the manager can change the allocation and earn the fee, and can do nothing else.** No instruction in the program moves a vault's tokens to the manager.
 
 One vocabulary note before the story, because the word is overloaded. On Solana, a **vault** is a token account owned by a program; that is how this book has used it in every chapter. Some platforms call the whole fund product "a vault." This book does not: here **the product is the strategy, and the token accounts are the vaults.**
 
@@ -101,7 +101,7 @@ The concepts you now have:
 
 - **The manager as the threat model.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves tokens between program-owned vaults; the fee path mints shares and touches no vault.
 - **A curator separate from a manager.** Victor's approved-asset set binds each asset to its official feed, so a manager can neither list their own token nor pair a real asset with a feed they control.
-- **Oracle-anchored minimums.** When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control; this is the chapter's most transferable idea.
+- **Oracle-anchored minimums.** When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.
 - **NAV as the share price.** Value every vault with a fresh feed or refuse to run; a valuation that can skip an asset is a discount for whoever exploits it.
 - **Fees by dilution, snapshotted.** The fee mints shares against everyone proportionally, accrues by time rather than the manager's diligence, and has no setter, so the deal investors joined under cannot be quietly worsened.
 
