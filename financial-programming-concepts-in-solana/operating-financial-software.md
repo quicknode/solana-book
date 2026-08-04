@@ -29,7 +29,7 @@ Onchain code that delegates to other programs cannot be symbolically executed en
 
 ## Ship With a Second Opinion
 
-Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. The audit is not a stamp. It is the cheapest way to have someone hunt for the same holes an attacker would, because a reviewer hands you the list instead of draining the program.
+Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. An audit is the cheapest way to have someone hunt for the same holes an attacker would, because a reviewer hands you the list instead of draining the program.
 
 ## Admin Power, Pausing, and Upgrades
 

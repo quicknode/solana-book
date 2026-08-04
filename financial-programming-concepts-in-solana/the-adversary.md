@@ -54,7 +54,7 @@ The discipline is **checks-effects-interactions**: validate everything, then upd
 
 Two more boundary rules:
 
-- **Validate what a CPI returns and what it was given.** Calling a program does not make the accounts it touched trustworthy; the vault strategy computes each swap's minimum output from the oracle precisely because the router it calls is outside its trust boundary.
+- **Validate what a CPI returns and what it was given.** Calling a program does not make the accounts it touched trustworthy; the vault strategy computes each swap's minimum output from the oracle because the router it calls is outside its trust boundary.
 - **Assume hostile sequencing.** Any invariant your program needs must hold at the end of *your* instruction, not at the end of the transaction, because the instructions after yours belong to someone else.
 
 The postcondition asserts from The Arithmetic of Money (re-check K after the transfers land) are exactly this: your state, proven sound, before anyone else gets the keys.
