@@ -34,6 +34,10 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 The address whose signature a particular action requires. A program records the authority in an account, and the handler checks that the transaction carries its signature before acting: a mint authority may create supply, a freeze authority may freeze token accounts, an upgrade authority may replace a program's code, a market authority may withdraw fees. Recording an authority and checking it is the core of access control in every chapter.
 
+### auto-deleveraging (ADL)
+
+A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The Perpetual Futures chapter places it at the bottom of the loss waterfall.
+
 ### base token
 
 The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. The base pairs against the [quote token](#quote-token), and the naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" trips people up: in that base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base."
@@ -73,6 +77,10 @@ One running instance of Solana: the same software, a separate world. Mainnet hol
 ### collateral
 
 Assets pledged to secure a loan, seizable on default or on breach of the liquidation threshold.
+
+### commitment level
+
+How sure a reader of the chain is asking to be: `processed` (a leader executed it), `confirmed` (a supermajority of stake voted for the block), or `finalized` (no validator can now vote another way). A program cannot see its own commitment, so the systems around it choose; Operating Financial Software matches the level to how reversible the reaction is.
 
 ### compute unit
 
@@ -130,6 +138,10 @@ A neutral holder of funds that releases them only when agreed conditions are met
 
 A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
 
+### finality
+
+The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when enough blocks have been built on top that no validator can vote for a competing fork; how long that takes is a protocol parameter, not a constant. Distinct from confirmed, which a supermajority has voted for but which the protocol still permits to lose. See [commitment level](#commitment-level).
+
 ### fixed point
 
 Representing fractions as scaled integers: 1.05 stored as 1,050,000,000,000,000,000 at 10^18 scale. How onchain programs do fractional math without floats. See [WAD](#wad).
@@ -141,6 +153,10 @@ A loan borrowed and repaid inside a single transaction, possible only because tr
 ### funding rate
 
 The periodic payment between longs and shorts on a perpetual futures market that tethers the perpetual's price to the index price.
+
+### halt
+
+A stop in block production, which Solana prefers to running two conflicting histories. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the Time chapter covers what that does to accrual, freshness windows, and deadlines.
 
 ### health / health factor
 
