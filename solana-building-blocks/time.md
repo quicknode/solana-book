@@ -72,13 +72,19 @@ No block is produced during a halt, so the slot count does not move. Wall-clock 
 
 The slot-counted window has a companion check that closes its gap. The [`LastRestartSlot` sysvar](https://docs.anza.xyz/runtime/sysvars) carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before the last restart is stale however few slots have passed since. The lending market, the prop AMM, and the perpetual futures venue all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program whose freshness window is counted in slots.
 
-## Choose the Clock by Asking Who Benefits From the Error
+## Which Clock to Use for Each Job
 
-Anything an adversary would profit from bending is measured in slots. Timestamps are for humans and long horizons, where seconds of slack are noise: display, record-keeping, and rates accrued over months. The vault strategy's annual management fee accrues by timestamp, because seconds of drift against a year is nothing; the lending market's per-slot interest does not.
+| What you are measuring | Use | Watch for |
+| --- | --- | --- |
+| interest, funding, anything that accrues and is worth money | **slots** | accrual stops during a halt, so nobody pays for hours they could not trade. That is usually what you want, but say so in your docs rather than finding out during an incident |
+| how fresh a price is | **whichever unit the feed stamps**: slots if it publishes a slot, seconds if it publishes a time | a slot-counted window needs the `LastRestartSlot` check above, because slots stop standing in for elapsed time across a restart. A window counted in seconds already fails closed |
+| a deadline people agreed to: a week to fund, a quarter to redeem | **timestamps** | validators can nudge them by a few seconds, so never let a few seconds decide who gets paid, and compute both sides of the boundary from one stored expression |
+| a rate quoted per year | **timestamps** | it charges straight through a halt. Nine hours against a year is a rounding error; against a week it is not |
+| anything a person reads: receipts, reporting, display | **timestamps** | nothing. This is what wall-clock time is for |
+
+Behind the table is one question: who profits if this number is wrong? Measure in slots anything an adversary would bend, and in timestamps anything only a human would notice. The lending market accrues interest per slot for the first reason; the vault strategy's annual management fee accrues by timestamp for the second.
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
-
-Another concern: what does this number do when the chain stops? One clock pauses with it and the other does not, so the answer decides whether a halt is nine hours your program charges for, nine hours it forgives, or nine hours it never notices.
 
 ## What You Learnt
 
