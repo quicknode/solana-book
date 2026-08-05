@@ -56,11 +56,27 @@ elapsed days = (now − time_started) / 86,400
 
 The trap is what "seven days" then means. With day-granularity math the window ends at the first tick of day seven, not at some intuitive end of the seventh day. That is a fine rule as long as it is the rule you meant and the one you told your users.
 
+## Slots Stop When the Chain Stops, and the Wall Clock Does Not
+
+Both clocks arrive in the same sysvar, so it is easy to assume they always move together. They come apart when the chain stops.
+
+Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. Mainnet has spent hours in that state. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
+
+No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart therefore carries a slot roughly where the last one left off and a timestamp hours later: everything measured in slots was paused, and everything measured in seconds was running the whole time. Three consequences, one for each way this book's programs use a clock:
+
+- **Per-slot accrual pauses with the chain.** The lending market's index advances by elapsed slots, so a nine-hour halt accrues no interest at all: nobody is charged for a market they could not reach. A fee accruing by timestamp charges the full nine hours, because from its point of view nine hours is what happened.
+- **A freshness window measured in seconds is blown at the restart, and one measured in slots is not.** The vault strategy refuses a price older than sixty seconds, so its first call after a halt fails until a publisher posts again. The lending market's 25-slot window sees a price stamped one slot ago, and by the slot count alone it would accept a number that is nine hours old. A price stamped one slot ago is not always a price from four hundred milliseconds ago.
+- **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours, so a contributor with an hour left can find the window shut when the chain returns. That program survives it because its refund path has no deadline; a design whose only exit was a narrow window would have stranded them.
+
+The slot-counted window has a companion check that closes its gap. The [`LastRestartSlot` sysvar](https://docs.anza.xyz/runtime/sysvars) carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before the last restart is stale however few slots have passed since. The lending market, the prop AMM, and the perpetual futures venue all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program whose freshness window is counted in slots.
+
 ## Choose the Clock by Asking Who Benefits From the Error
 
 Anything an adversary would profit from bending is measured in slots. Timestamps are for humans and long horizons, where seconds of slack are noise: display, record-keeping, and rates accrued over months. The vault strategy's annual management fee accrues by timestamp, because seconds of drift against a year is nothing; the lending market's per-slot interest does not.
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
+
+Another concern: what does this number do when the chain stops? One clock pauses with it and the other does not, so the answer decides whether a halt is nine hours your program charges for, nine hours it forgives, or nine hours it never notices.
 
 ## What You Learnt
 
@@ -69,3 +85,4 @@ Anything an adversary would profit from bending is measured in slots. Timestamps
 - Money that accrues accrues per slot, as a **cumulative index** advanced by elapsed slots, so one multiplication replaces a loop over every account.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day.
+- Solana halts rather than run two conflicting histories, and during a halt slots pause while wall-clock time keeps running: per-slot accrual stops, second-measured freshness windows blow past their limit at the restart, slot-measured ones are not blown, and deadlines expire with nobody able to act on them. A slot-counted freshness window is paired with a `LastRestartSlot` check, rejecting any price stamped at or before the restart.
