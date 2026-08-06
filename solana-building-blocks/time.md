@@ -17,9 +17,9 @@ Money that accrues does so per slot, in both programs of this book that accrue a
 new index = old index × (1 + rate per slot × elapsed slots)
 ```
 
-Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Every borrower's debt is their scaled principal times that index, so one multiplication per refresh does the work of looping over every borrower every slot. The *Arithmetic of Money* chapter builds this properly; what matters here is the unit.
+Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Every borrower's debt is their scaled principal times that index, so one multiplication per refresh does the work of looping over every borrower every slot. The *Arithmetic of Money* chapter covers how to build that index safely. It advances by slots, not seconds.
 
-The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both are indexes, both advance by elapsed slots, and both are money. That is the whole reason they count slots: a trader who could stretch a slot could stretch what they owe.
+The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both are indexes, both advance by elapsed slots, and both are money. They count slots because a trader who could stretch a slot could stretch what they owe.
 
 ## Timestamps Are Validator-Reported
 
