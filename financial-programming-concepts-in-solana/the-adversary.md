@@ -32,7 +32,7 @@ The defenses all attack the degenerate zone directly. **Lock a minimum liquidity
 
 ## A True Price Can Still Be a Manipulated Price
 
-Everything in Offchain Truth assumed the fact was honest, and its checks (publisher, freshness, confidence) defend against *fake* facts. This class is nastier: the fact is real, fresh, and correctly verified, and it is an accurate report of a market the attacker just bent. Push a thin market's price up for one slot, and every program consuming that price acts faithfully on it: lending markets extend credit against inflated collateral, exchanges settle at fantasy prices, liquidations fire on positions that were healthy a block ago.
+Everything in the *Offchain Truth* chapter assumed the fact was honest, and its checks (publisher, freshness, confidence) defend against *fake* facts. This class is nastier: the fact is real, fresh, and correctly verified, and it is an accurate report of a market the attacker just bent. Push a thin market's price up for one slot, and every program consuming that price acts faithfully on it: lending markets extend credit against inflated collateral, exchanges settle at fantasy prices, liquidations fire on positions that were healthy a block ago.
 
 > **War Story: Mango Markets, $116M, 2022.** An attacker opened large perpetual positions in Mango's own thinly-traded MNGO token, then bought MNGO aggressively on the spot markets the oracle read from, moving the price up more than twenty-fold in minutes. The oracle reported the manipulated price accurately. Mango's risk engine, believing it, marked the attacker's positions massively profitable, and the attacker borrowed $116M of the platform's deposits against that unrealized profit and left. The attacker described it as "a highly profitable trading strategy," and in the program's terms they were not wrong: no signature was forged and no account spoofed. The input was true, and the market behind it had been manipulated.
 
@@ -40,11 +40,11 @@ The defenses are about making price manipulation expensive and slow. **Time-weig
 
 ## A Rounding Error Is a Faucet Once Someone Finds the Loop
 
-The Arithmetic of Money set the policy: round against the user, floor once, ceil debt. This class is what happens to programs that did not. Each favorable rounding is sub-cent; the exploit is the loop, and the loop's favorite venue is an **empty or near-empty market**, where the attacker controls both sides of the ratio and can shape the divisor to maximize what flooring forgives.
+The *Arithmetic of Money* chapter set the policy: round against the user, floor once, ceil debt. This class is what happens to programs that did not. Each favorable rounding is sub-cent; the exploit is the loop, and the loop's favorite venue is an **empty or near-empty market**, where the attacker controls both sides of the ratio and can shape the divisor to maximize what flooring forgives.
 
 > **War Story: the Hundred and Sonne drains, $7M and $20M.** Hundred Finance (2023) and Sonne Finance (2024), both forks of the same lending design on EVM chains, fell to the same sequence: find or create a freshly-listed, empty market; make a tiny deposit to mint dust-level shares; donate a large sum to skew the exchange rate (the inflation setup); then exploit the rate calculation's rounding direction, redeeming shares sized so the floored share-burn undercounted by one, repeatedly, until the pool drained. Two lending markets, a year apart, with the first post-mortem public the whole time: exploit classes recur because the underlying arithmetic ships again in every fork.
 
-The defense is The Arithmetic of Money applied without exception, plus one test-suite habit: a **round-trip property test**. Deposit then immediately withdraw, swap in then swap back, at adversarial sizes (one minor unit, pool-sized, prime-numbered), and assert the caller never ends with more than they started. The lending example's `deposit_redeem_round_trip_creates_no_value` is eleven lines, and it is the test that would have failed on both protocols above.
+The defense is the *Arithmetic of Money* chapter applied without exception, plus one test-suite habit: a **round-trip property test**. Deposit then immediately withdraw, swap in then swap back, at adversarial sizes (one minor unit, pool-sized, prime-numbered), and assert the caller never ends with more than they started. The lending example's `deposit_redeem_round_trip_creates_no_value` is eleven lines, and it is the test that would have failed on both protocols above.
 
 ## Ordering and Composability: CPI Trust Boundaries
 
@@ -57,7 +57,7 @@ Two more boundary rules:
 - **Validate what a CPI returns and what it was given.** Calling a program does not make the accounts it touched trustworthy; the vault strategy computes each swap's minimum output from the oracle because the router it calls is outside its trust boundary.
 - **Assume hostile sequencing.** Any invariant your program needs must hold at the end of *your* instruction, not at the end of the transaction, because the instructions after yours belong to someone else.
 
-The postcondition asserts from The Arithmetic of Money (re-check K after the transfers land) are exactly this: your state, proven sound, before anyone else gets the keys.
+The postcondition asserts from the *Arithmetic of Money* chapter (re-check K after the transfers land) are exactly this: your state, proven sound, before anyone else gets the keys.
 
 ## What You Learnt
 

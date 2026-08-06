@@ -17,7 +17,7 @@ Two programs in this book accrue value over time, and both count it in slots: th
 new index = old index × (1 + rate per slot × elapsed slots)
 ```
 
-Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared index. A borrower's current debt is their principal multiplied by that index. The Arithmetic of Money covers how to build that index safely. It advances by slots, not seconds.
+Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared index. A borrower's current debt is their principal multiplied by that index. The *Arithmetic of Money* chapter covers how to build that index safely. It advances by slots, not seconds.
 
 The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both are indexes, both advance by elapsed slots, and both decide what somebody owes. They count slots because a trader who could stretch a slot could stretch what they owe.
 
@@ -43,7 +43,7 @@ A program reading a price has two questions to answer:
 - Whether the source can be trusted.
 - Whether the price is recent enough.
 
-Offchain Truth answers the first. This chapter answers the second, and how recent counts as recent enough is a judgement each program makes for itself. Four of this book's programs make it differently:
+The *Offchain Truth* chapter answers the first. This chapter answers the second, and how recent counts as recent enough is a judgement each program makes for itself. Four of this book's programs make it differently:
 
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |
@@ -52,7 +52,7 @@ Offchain Truth answers the first. This chapter answers the second, and how recen
 | the perpetual futures venue | 150 slots, about a minute | slots |
 | the vault strategy | 60 seconds | seconds |
 
-The three that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. Offchain Truth covers what else a program checks about a price before it uses one.
+The three that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. The *Offchain Truth* chapter covers what else a program checks about a price before it uses one.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
@@ -76,7 +76,7 @@ Both clocks arrive in the same sysvar, so it is easy to assume they always move 
 
 Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
 
-Mainnet has spent hours in that state, but a halt is a rare event: at the time of writing, block production has not stopped for years. Write for the one you will probably never see.
+Mainnet has gone down, but a halt is a rare event: at the time of writing, block production has not stopped for years. Write for the one you will probably never see.
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart therefore carries a slot roughly where the last one left off and a timestamp hours later: everything measured in slots was paused, and everything measured in seconds was running the whole time. Three consequences, one for each way this book's programs use a clock:
 
