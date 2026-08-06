@@ -199,12 +199,12 @@
   <text x="472" y="803.37" font-size="9" font-weight="bold">3 NVDAx</text>
   <text x="472" y="815.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
-  <g opacity="0.3">
+  <g>
   <rect x="16" y="640" width="212" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,645)"><circle cx="7" cy="7" r="3.4" fill="none" stroke="#111" stroke-width="1.3"/><circle cx="7" cy="7" r="1.2" fill="none" stroke="#111" stroke-width="1"/><g stroke="#111" stroke-width="1.3"><line x1="7" y1="1" x2="7" y2="3"/><line x1="7" y1="11" x2="7" y2="13"/><line x1="1" y1="7" x2="3" y2="7"/><line x1="11" y1="7" x2="13" y2="7"/><line x1="2.8" y1="2.8" x2="4.2" y2="4.2"/><line x1="9.8" y1="9.8" x2="11.2" y2="11.2"/><line x1="11.2" y1="2.8" x2="9.8" y2="4.2"/><line x1="2.8" y1="11.2" x2="4.2" y2="9.8"/></g></g>
   <text x="44" y="656" font-size="9.5" font-weight="bold">swap router program</text>
   <line x1="24" y1="661" x2="220" y2="661" stroke="#888" stroke-width="0.8"/>
-  <text x="24" y="672" font-size="8.5" font-family="Menlo, monospace">swap_usdc_for_asset()</text>
+  <text x="24" y="672" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">swap_usdc_for_asset()</text>
   <text x="24" y="682" font-size="8.5" font-family="Menlo, monospace">swap_asset_for_usdc()</text>
   <text x="24" y="696" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
@@ -213,10 +213,14 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="138" y="346" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">with her minimum-shares floor</text>
   <path d="M 461,557.37 C 456,557.37 460,545.37 460,521.37 L 460,282 C 460,262 400,258 320,258 C 280,258 250,244 235,235.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="344" y="240" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="middle">4. mint 900 shares</text>
-  <path d="M 461,651.37 C 442,663.37 442,671.37 461,711.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="688" font-size="10" fill="#1e7a3c" font-weight="bold" text-anchor="end">2. 360 USDC &#8594; 1.44 TSLAx</text>
-  <path d="M 461,651.37 C 414,663.37 424.416,741.664 461,791.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="764" font-size="10" fill="#1e7a3c" font-weight="bold" text-anchor="end">3. 540 USDC &#8594; 3 NVDAx</text>
+  <path d="M 461,648 C 400,652 300,656 231,656" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="340" y="638" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="middle">2. 360 USDC out</text>
+  <path d="M 150,703 C 220,740 350,730 461,711" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="752" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="middle">1.44 TSLAx in</text>
+  <path d="M 461,660 C 400,668 300,678 231,682" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="346" y="692" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="middle">3. 540 USDC out</text>
+  <path d="M 60,703 C 110,800 280,820 461,795" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="786" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="middle">3 NVDAx in</text>
   <text x="140" y="400" font-size="9" fill="#444" font-style="italic" text-anchor="start">first it values the fund: every vault balance &#215; its fresh Pyth price,</text>
   <text x="140" y="416" font-size="9" fill="#444" font-style="italic" text-anchor="start">in u128, multiply before divide. On the first deposit the NAV is zero</text>
   <text x="140" y="432" font-size="9" fill="#444" font-style="italic" text-anchor="start">and shares mint one for one, so 900 USDC becomes 900 shares.</text>
@@ -228,6 +232,8 @@
   <text x="140" y="560" font-size="9" fill="#444" font-style="italic" text-anchor="start">floored by max_slippage_bps, so a bad fill reverts the deposit.</text>
   <g class="coin" transform="translate(257.7,325.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(289.1,235.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(264.9,683.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(274.5,759.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(285.5,634.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(251.5,748.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(291.5,688.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(288,782.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
