@@ -56,7 +56,7 @@ A recent block's hash, included in every transaction to bound its lifetime. When
 
 ### built-in address
 
-An address chosen rather than computed: the System Program, the token programs, and the sysvars each sit at a fixed byte string the runtime treats as that thing. Neither a [public key](#address) somebody holds the key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
+An address chosen rather than computed: the System Program, the token programs, and the sysvars each sit at a fixed byte string the runtime treats as that thing. Neither a [public key](#address) somebody holds the private key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
 
 ### bump
 
