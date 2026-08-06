@@ -20,8 +20,8 @@ Code samples appearing in the book are licensed under the **MIT license**, match
 
 The account figures name each account's kind with an icon drawn from a published set, used unmodified apart from being scaled and recoloured to the figures' ink:
 
-- **Person** — [`line-md:person`](https://icon-sets.iconify.design/line-md/person/), from Material Line Icons by Vjacheslav Trushkin (MIT).
-- **Token account / vault** — [`clarity:piggy-bank-line`](https://icon-sets.iconify.design/clarity/piggy-bank-line/), from Clarity by VMware (MIT).
+- **Person** — [`octicon:person-24`](https://icon-sets.iconify.design/octicon/person-24/), from Octicons by GitHub (MIT).
+- **Token account / vault** — [`lucide:vault`](https://icon-sets.iconify.design/lucide/vault/), from Lucide (ISC).
 - **Token mint** — [`boxicons:bank`](https://icon-sets.iconify.design/boxicons/bank/), from Boxicons (MIT).
 - **Data-struct PDA** — [`tabler:table`](https://icon-sets.iconify.design/tabler/table/), from Tabler Icons by Paweł Kuna (MIT).
 - **Program** — [`streamline-flex:cog`](https://icon-sets.iconify.design/streamline-flex/cog/), from Streamline's Flex free icons (**CC BY 4.0**: <https://creativecommons.org/licenses/by/4.0/>).
