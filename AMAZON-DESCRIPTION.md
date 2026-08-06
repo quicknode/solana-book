@@ -1,6 +1,6 @@
 # Amazon product description
 
-*The book description for the Amazon listing, written to fit the field's 4,000 character limit. The long-form summary is [BOOK-SUMMARY.md](BOOK-SUMMARY.md).*
+*The book description for the Amazon listing, written to fit the field's 4,000 character limit.*
 
 ---
 
