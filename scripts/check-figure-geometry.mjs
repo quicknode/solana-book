@@ -7,6 +7,7 @@
 //   3. Every coin mark sits beside an amount label, one coin per amount.
 //   4. Value arrows are smooth: no tangent break where two segments join.
 //   5. Arrowheads point along the stroke they terminate.
+//   6. A box collapsed to its heading centres that heading vertically.
 //
 // Usage: node scripts/check-figure-geometry.mjs
 // Exits nonzero if any check fails.
@@ -153,8 +154,25 @@ for (const file of files) {
       });
     }
 
+    // An account box, the icon glyph inside it, and whether a heading rule
+    // separates a field list from the heading. A box with no rule is collapsed
+    // to icon + title, and that pair centres on the box's middle.
+    const accounts = [...svg.querySelectorAll('rect[rx="6"]')].map((r) => {
+      const b = box(r);
+      const holds = (el) => {
+        const c = box(el);
+        return c.x1 >= b.x1 && c.x2 <= b.x2 && c.y1 >= b.y1 && c.y2 <= b.y2;
+      };
+      const glyph = [...svg.querySelectorAll("g[transform^='translate']")]
+        .filter((g) => g.firstElementChild?.tagName === "g" && holds(g))
+        .map(box)[0];
+      const ruled = [...svg.querySelectorAll('line[stroke="#888"]')].some(holds);
+      return { ...b, glyph, ruled };
+    });
+
     return {
       arrows,
+      accounts,
       coins: [...svg.querySelectorAll("g.coin")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
       rects: [...svg.querySelectorAll("rect")]
@@ -242,6 +260,17 @@ for (const file of files) {
         fail(`arrowhead at ${a.end.map((v) => v.toFixed(0)).join(",")} points ${off.toFixed(0)}deg ` +
              `off its stroke; the line should meet the middle of the head's base`);
       }
+    }
+  }
+
+  // 6. A box faded down to its heading has nothing below the title, so the
+  // icon and title sit in the middle of the box rather than hugging its top.
+  for (const a of fig.accounts) {
+    if (a.ruled || !a.glyph) continue;
+    const off = (a.glyph.y1 + a.glyph.y2) / 2 - (a.y1 + a.y2) / 2;
+    if (Math.abs(off) > 0.75) {
+      fail(`box collapsed to its heading at ${at(a)} sits ${off.toFixed(1)} off centre; ` +
+           `centre the icon and title on the box's middle`);
     }
   }
 }

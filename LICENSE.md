@@ -16,6 +16,18 @@ You are free to read, copy, redistribute, translate, and adapt this book in any 
 
 Code samples appearing in the book are licensed under the **MIT license**, matching the [companion repository](https://github.com/quicknode/solana-program-examples), so nothing stops you from using them in your own software, commercial or otherwise.
 
+## The icons in the figures
+
+The account figures name each account's kind with an icon drawn from a published set, used unmodified apart from being scaled and recoloured to the figures' ink:
+
+- **Person** — [`line-md:person`](https://icon-sets.iconify.design/line-md/person/), from Material Line Icons by Vjacheslav Trushkin (MIT).
+- **Token account / vault** — [`clarity:piggy-bank-line`](https://icon-sets.iconify.design/clarity/piggy-bank-line/), from Clarity by VMware (MIT).
+- **Token mint** — [`boxicons:bank`](https://icon-sets.iconify.design/boxicons/bank/), from Boxicons (MIT).
+- **Data-struct PDA** — [`tabler:table`](https://icon-sets.iconify.design/tabler/table/), from Tabler Icons by Paweł Kuna (MIT).
+- **Program** — [`streamline-flex:cog`](https://icon-sets.iconify.design/streamline-flex/cog/), from Streamline's Flex free icons (**CC BY 4.0**: <https://creativecommons.org/licenses/by/4.0/>).
+
+The Streamline mark carries an attribution requirement the rest do not; reproductions of the figures should keep this section with them.
+
 ## Exclusions
 
 The Quicknode name, the Quicknode logo, and the cover artwork are trademarks and brand assets of Quiknode Inc. and are **not** covered by the licenses above. Reproductions of the book under the CC license may include them only as they appear in faithful copies of the work; they may not be used to imply endorsement of derivatives.

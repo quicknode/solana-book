@@ -5,11 +5,7 @@
   <text x="300" y="78" font-size="11" font-weight="bold" text-anchor="middle">without reading a single position account</text>
   <!-- the pool sits at the centre -->
   <rect x="240" y="102" width="160" height="64" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,107)" stroke="#111" stroke-width="1.2" fill="none">
-    <rect x="1" y="2" width="12" height="10"/>
-    <line x1="1" y1="5.4" x2="13" y2="5.4"/>
-    <line x1="5.5" y1="5.4" x2="5.5" y2="12"/>
-  </g>
+  <g transform="translate(248,107)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="268" y="118" font-size="12" font-weight="bold">the pool</text>
   <line x1="248" y1="123" x2="392" y2="123" stroke="#888" stroke-width="0.8"/>
   <text x="248" y="134" font-size="9" fill="#444" font-style="italic">one vault, one ledger:</text>
@@ -17,10 +13,7 @@
   <text x="248" y="158" font-size="9.5" font-style="italic">counterparty to every trade</text>
   <!-- Carol, first of the liquidity providers -->
   <rect x="28" y="96" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(36,101)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-  </g>
+  <g transform="translate(36,101)"><g transform="translate(-3.886,-3.886) scale(0.907)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.433"><path d="M12 5c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z"/><path d="M12 14c4 0 7 2 7 3v2h-14v-2c0 -1 3 -3 7 -3Z"/></g></g>
   <text x="56" y="112" font-size="10.5" font-weight="bold">Carol (LP)</text>
   <line x1="36" y1="117" x2="132" y2="117" stroke="#888" stroke-width="0.8"/>
   <text x="36" y="128" font-size="9.5" fill="#444">1 SOL</text>
@@ -32,10 +25,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="190" y="185" font-size="9" fill="#444" font-style="italic" text-anchor="middle">priced at AUM marked to market</text>
   <!-- Alice goes long against the pool -->
   <rect x="496" y="44" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(504,49)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-  </g>
+  <g transform="translate(504,49)"><g transform="translate(-3.886,-3.886) scale(0.907)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.433"><path d="M12 5c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z"/><path d="M12 14c4 0 7 2 7 3v2h-14v-2c0 -1 3 -3 7 -3Z"/></g></g>
   <text x="524" y="60" font-size="10.5" font-weight="bold">Alice (long)</text>
   <line x1="504" y1="65" x2="600" y2="65" stroke="#888" stroke-width="0.8"/>
   <text x="504" y="76" font-size="9.5" fill="#444">1 SOL</text>
@@ -43,10 +33,7 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="438" y="74" font-size="10" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1,000 USDC</text>
   <!-- Bob takes the mirror-image short, against the same pool -->
   <rect x="496" y="160" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(504,165)">
-    <circle cx="7" cy="4" r="3.1" fill="none" stroke="#111" stroke-width="1.3"/>
-    <path d="M 1.5,13 Q 1.5,8.4 7,8.4 Q 12.5,8.4 12.5,13" fill="none" stroke="#111" stroke-width="1.3"/>
-  </g>
+  <g transform="translate(504,165)"><g transform="translate(-3.886,-3.886) scale(0.907)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.433"><path d="M12 5c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z"/><path d="M12 14c4 0 7 2 7 3v2h-14v-2c0 -1 3 -3 7 -3Z"/></g></g>
   <text x="524" y="176" font-size="10.5" font-weight="bold">Bob (short)</text>
   <line x1="504" y1="181" x2="600" y2="181" stroke="#888" stroke-width="0.8"/>
   <text x="504" y="192" font-size="9.5" fill="#444">1 SOL</text>
