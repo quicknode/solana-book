@@ -2,24 +2,28 @@
   <defs><marker id="vault-wd-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-wd-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="248" cy="44.8207" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="248" cy="44.8207" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="240" y="8.22021" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(248,16.22)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="268" y="27.22" font-size="9.5" font-weight="bold">TSLAx mint</text>
   </g>
+  <circle cx="360" cy="56" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="360" cy="56" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="352" y="19.0155" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(360,27.02)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="380" y="38.02" font-size="9.5" font-weight="bold">NVDAx mint</text>
   </g>
+  <circle cx="472" cy="73.3639" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="472" cy="73.3639" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="464" y="35.8798" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,43.88)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="492" y="54.88" font-size="9.5" font-weight="bold">USDC mint</text>
   </g>
+  <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="16" y="43.9168" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -52,6 +56,7 @@
   <g transform="translate(24,309.92)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="320.92" font-size="9.5" font-weight="bold">ApprovedAsset</text>
   </g>
+  <circle cx="336" cy="53.138" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="336" cy="53.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="240" y="60.0617" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -76,6 +81,7 @@
   <g transform="translate(248,234.06)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="268" y="245.06" font-size="9.5" font-weight="bold">Bob&#8217;s shares</text>
   </g>
+  <circle cx="448" cy="69.033" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="448" cy="69.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="352" y="76.4364" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

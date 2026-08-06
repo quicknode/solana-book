@@ -2,6 +2,7 @@
   <defs><marker id="perps-open-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="perps-open-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="524" cy="84.0725" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="524" cy="84.0725" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="516" y="46.2989" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -43,6 +44,7 @@
   <text x="24" y="277.542" font-size="8.5" font-weight="bold">entry_funding: 0</text>
   <text x="100" y="253.542" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
+  <circle cx="200" cy="41.5728" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="200" cy="41.5728" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="116" y="48.0562" width="92" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -58,6 +60,7 @@
   <g transform="translate(124,145.06)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="144" y="156.06" font-size="8.5" font-weight="bold">Bob&#8217;s USDC</text>
   </g>
+  <circle cx="300" cy="49.34" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="300" cy="49.34" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="216" y="56.1346" width="92" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -73,6 +76,7 @@
   <g transform="translate(224,153.13)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="244" y="164.13" font-size="8.5" font-weight="bold">Carol&#8217;s USDC</text>
   </g>
+  <circle cx="400" cy="61.4033" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="400" cy="61.4033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="316" y="68.5846" width="92" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -88,6 +92,7 @@
   <g transform="translate(324,165.59)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="344" y="176.59" font-size="8.5" font-weight="bold">Dave&#8217;s USDC</text>
   </g>
+  <circle cx="500" cy="78.8932" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="500" cy="78.8932" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="416" y="86.5729" width="92" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

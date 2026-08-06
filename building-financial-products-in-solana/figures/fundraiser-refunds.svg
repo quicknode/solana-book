@@ -7,6 +7,7 @@
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" fill="#111" text-anchor="end">Solana Devnet</text>
   <!-- USDC mint, above the curve, hugging its dot -->
+  <circle cx="508" cy="80.5729" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="508" cy="80.5729" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="500" y="42.8932" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -114,6 +115,7 @@
   <line x1="344" y1="214.062" x2="240" y2="266.062" stroke="#999" stroke-width="1.6"/>
   </g>
   <!-- Maria, the maker -->
+  <circle cx="448" cy="69.033" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="448" cy="69.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="352" y="76.4364" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
