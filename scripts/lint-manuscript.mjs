@@ -125,16 +125,11 @@ const svgRules = [
   // weight. The M/Q arc against ink #111 is the curve's one shape.
   [/<path d="M 40,[\d.]+ Q 320,[\d.]+ 600,[\d.]+" fill="none" stroke="#111" stroke-width="(?!3\.5")/,
     'the cluster curve is stroke-width="3.5", the heaviest line in the figure'],
-  // The piggy-bank snout is an opaque ellipse (fill="#fff") with nostrils,
-  // drawn after the body; the old transparent-circle snout is a regression.
-  [/<circle cx="12\.6" cy="6\.4" r="1\.7"/,
-    'old piggy snout: use the opaque snout ellipse with nostrils from DIAGRAMS.md'],
-  [/<ellipse cx="12\.9" cy="6\.4"[^>]*fill="none"/,
-    'the piggy snout is opaque: fill="#fff" so the body edge never shows through'],
-  // The table icon's divider sits left of center: the key column is narrower
-  // than the value column.
-  [/<line x1="7" y1="5\.4" x2="7" y2="12"/,
-    'table-icon divider sits at x=5.5 (key column narrower than value column)'],
+  // The five account glyphs come from Iconify and are pasted verbatim from
+  // DIAGRAMS.md. These are the signatures of the hand-drawn set they replaced,
+  // which a figure copied from an older one brings back.
+  [/M 1\.5,13 Q 1\.5,8\.4 7,8\.4|<ellipse cx="8" cy="7" rx="5\.4"|<circle cx="7" cy="7" r="3\.4"|<rect x="1" y="2" width="12" height="10"|M 1,5 L 7,1 L 13,5 Z/,
+    'retired hand-drawn account glyph: use the Iconify mark for the account kind (DIAGRAMS.md)'],
   // A seed list names seeds, and the deriving program stays implied (the
   // escrow's offer PDA is labeled "OFFER" + MAKER'S ADDRESS + ID, with no
   // escrow program in it). An ATA's three seeds are the owner's address, the
