@@ -60,7 +60,9 @@ The trap is what "seven days" then means. With day-granularity math the window e
 
 Both clocks arrive in the same sysvar, so it is easy to assume they always move together. They come apart when the chain stops.
 
-Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. Mainnet has spent hours in that state. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
+Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
+
+Mainnet has spent hours in that state, though not for a long time: the last full outage was on February 6, 2024, when block production stopped for about five hours ([Solana's incident report](https://solana.com/news/02-06-24-solana-mainnet-beta-outage-report)). The networks a bank already runs on stop too. A failed datacenter switch took Visa's European network down for around ten hours on June 1, 2018, and 5.2 million of the 51.2 million transactions attempted during it never went through ([Computer Weekly](https://www.computerweekly.com/news/252443325/Visa-reveals-rare-datacentre-switch-fault-as-root-cause-of-June-2018-outage)). Write for the halt you will probably never see.
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart therefore carries a slot roughly where the last one left off and a timestamp hours later: everything measured in slots was paused, and everything measured in seconds was running the whole time. Three consequences, one for each way this book's programs use a clock:
 
