@@ -11,7 +11,7 @@ Solana has two clocks. Validators can nudge one of them, so measuring the wrong 
 
 The **slot** counts block opportunities, roughly 400ms apart, and its progression is guaranteed by the runtime: slots only go up, at a rate nobody can meaningfully bend. Programs read the current slot from the **Clock sysvar**, a system account the runtime keeps fresh.
 
-Money that accrues does so per slot, in both programs of this book that accrue anything. The lending market carries one number per reserve, a **cumulative index** that grows each time anyone touches the market:
+Two programs in this book accrue value over time, and both count it in slots: the lending market accrues interest on debt, and the perpetual futures venue accrues funding on open positions. The lending market carries one number per reserve, a **cumulative index** that grows each time anyone touches the market:
 
 ```
 new index = old index × (1 + rate per slot × elapsed slots)
@@ -24,6 +24,8 @@ The perpetual futures venue does the same for funding, storing `cumulative_fundi
 ## Timestamps Are Validator-Reported
 
 The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is right to within a few seconds, and validators can nudge it.
+
+Seconds are enough to matter wherever a boundary is worth money. If an auction closes, an option expires, or a penalty starts on a timestamp, whoever can move the clock a little decides which side of that boundary a transaction lands on, and the money follows. So leave a margin wide enough that a few seconds cannot change the answer, and count in slots anything where they could.
 
 Wall-clock time is still the right tool in places. The vault strategy reaches for it twice, for two different reasons:
 
