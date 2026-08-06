@@ -42,7 +42,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 **And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output _from the oracle price_ and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot wave a bad fill through, because the minimum is never theirs to supply. This is the single most transferable idea in the chapter: **when an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
-![Alice's deposit: 900 USDC arrives, the NAV loop reads every vault and feed, two router swaps split it 360/540 into the TSLAx and NVDAx vaults with oracle-anchored minimums, and 900 shares are minted to Alice.](figures/vault-deposit.svg)
+![Alice's deposit: 900 USDC arrives, the NAV loop reads every vault and feed, then two router swaps send 360 and 540 USDC out to the router and bring 1.44 TSLAx and 3 NVDAx back into their vaults at oracle-anchored minimums, and 900 shares are minted to Alice.](figures/vault-deposit.svg)
 
 ## The Market Moves and the Manager Rebalances
 
@@ -50,7 +50,7 @@ NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is wor
 
 But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's actual job. She runs `rebalance()`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums exactly like deposits. The weights return to 40/60. Note where the money went: between strategy-owned vaults, through the approved router, at oracle-checked prices, and nowhere near Maria.
 
-![The drift and the rebalance: NVDAx's rise pushes the weights to 37.5/62.5, and the sell and buy legs through the router restore 40/60, every leg floored by an oracle-computed minimum.](figures/vault-rebalance.svg)
+![The drift and the rebalance: NVDAx's rise pushes the weights to 37.5/62.5, and two legs through the router restore 40/60. 0.12 NVDAx goes out and 24 USDC comes back, then that USDC goes out and 0.096 TSLAx comes back, every leg floored by an oracle-computed minimum.](figures/vault-rebalance.svg)
 
 ## A Later Investor Buys In at the New Price
 
