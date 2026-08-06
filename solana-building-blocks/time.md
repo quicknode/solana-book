@@ -96,7 +96,7 @@ The slot-counted window has a companion check that closes its gap. The [`LastRes
 | a rate quoted per year | **timestamps** | it charges straight through a halt. Nine hours against a year is a rounding error; against a week it is not |
 | anything a person reads: receipts, reporting, display | **timestamps** | nothing. This is what wall-clock time is for |
 
-Behind the table is one question: who profits if this number is wrong? Measure in slots anything an adversary would bend, and in timestamps anything only a human would notice. The lending market accrues interest per slot for the first reason; the vault strategy's annual management fee accrues by timestamp for the second.
+Measure time in slots by default, because validators can nudge the wall clock and nobody can meaningfully bend the slot count. Reach for timestamps in two cases: when the number is one a person reads, like a deadline you promised or a date on a receipt, and when the horizon is long enough that a few seconds are noise, like a fee quoted per year.
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
 
