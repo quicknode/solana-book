@@ -27,7 +27,7 @@ The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock ti
 
 Seconds are enough to matter wherever a boundary is worth money. If an auction closes, an option expires, or a penalty starts on a timestamp, whoever can move the clock a little decides which side of that boundary a transaction lands on, and the money follows. So leave a margin wide enough that a few seconds cannot change the answer, and count in slots anything where they could.
 
-The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, and the example's own comment says what that field is for: not used by matching, kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
+The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
 
 Wall-clock time is still the right tool in places. The vault strategy reaches for it twice, for two different reasons:
 
