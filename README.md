@@ -22,7 +22,7 @@ The book's home is [thesolanabook.com](https://thesolanabook.com), which hosts t
 
 ## Building the PDF
 
-`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a two-column, letter-size textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
+`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at; `PAGE_WIDTH_IN` and `PAGE_HEIGHT_IN` in `scripts/build-pdf.mjs` are the only two numbers to change. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
 
 ## Status
 

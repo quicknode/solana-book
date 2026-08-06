@@ -22,6 +22,17 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
+// Trim size, in inches. 7.44 x 9.69 is the KDP standard trim closest in
+// proportion to the 7 x 9.19 O'Reilly technical books are printed at, which
+// KDP does not offer. Every page dimension below is derived from these two
+// numbers, so changing the trim is changing these two numbers.
+const PAGE_WIDTH_IN = 7.44;
+const PAGE_HEIGHT_IN = 9.69;
+// Side margins clear KDP's 0.75in gutter minimum for books up to 500 pages and
+// leave a 5.74in measure, about 75 characters of 11pt Georgia.
+const SIDE_MARGIN_IN = 0.85;
+const TEXT_WIDTH_IN = +(PAGE_WIDTH_IN - 2 * SIDE_MARGIN_IN).toFixed(2);
+
 const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", `${TITLE}.pdf`));
 mkdirSync(dirname(outputPath), { recursive: true });
 
@@ -252,7 +263,7 @@ async function rasterizeCover(coverPdfPath) {
       pdfjsUrl: pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.mjs")).href,
       workerUrl: pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.worker.mjs")).href,
       pdfB64: readFileSync(coverPdfPath).toString("base64"),
-      targetWidth: 8.5 * 300,
+      targetWidth: PAGE_WIDTH_IN * 300,
     },
   );
   await page.close();
@@ -279,23 +290,25 @@ const html = `<!doctype html>
 @font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
 
 @page {
-  size: 8.5in 11in;
-  margin: 0.9in 1.1in 0.95in 1.1in;
+  size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;
+  margin: 0.8in ${SIDE_MARGIN_IN}in 0.85in ${SIDE_MARGIN_IN}in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
-  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
-  @top-center { content: "PRERELEASE DRAFT"; font-family: Georgia, serif; font-size: 9.5pt; letter-spacing: 0.08em; color: #999; }
-  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
+  /* The draft marker sits in the footer rather than the header: at this trim
+     the measure fits two running heads, and a third box wraps both of them. */
+  @bottom-left { content: "PRERELEASE DRAFT"; font-family: Georgia, serif; font-size: 8pt; letter-spacing: 0.08em; color: #999; }
+  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
 }
-@page :first { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+@page :first { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 /* Pages inserted to push a part title onto a right-hand page carry nothing. */
-@page :blank { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+@page :blank { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
 /* A part title page carries no running head: the chapter it interrupts is over
    and the one it announces has not started. */
-@page part-start { @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
-@page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+@page part-start { @top-left { content: none; } @top-right { content: none; } }
+@page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 .cover { page: cover; break-after: page; }
-.cover img { display: block; width: 8.5in; height: 11in; }
+.cover img { display: block; width: ${PAGE_WIDTH_IN}in; height: ${PAGE_HEIGHT_IN}in; }
 
 html { font-size: 11pt; }
 body {
@@ -403,7 +416,7 @@ th, td {
 }
 th { background: #ececea; font-weight: bold; border-bottom: 1pt solid #666; }
 table p { margin: 0; text-align: left; }
-figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: 4.9in; }
+figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: ${TEXT_WIDTH_IN}in; }
 figure svg { width: 100%; height: auto; }
 figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
 .figure-placeholder {
