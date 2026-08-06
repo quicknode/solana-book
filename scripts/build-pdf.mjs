@@ -270,9 +270,15 @@ async function rasterizeCover(coverPdfPath) {
   return dataUrl;
 }
 
+// Reading and review copies leave the cover off: the art is not what is being
+// read, and the interior's page count is what a printer quotes against.
+// NO_COVER=1 npm run build-pdf
+const includeCover = process.env.NO_COVER !== "1";
 const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
 let coverContent = "&nbsp;";
-if (existsSync(coverPdfPath)) {
+if (!includeCover) {
+  coverContent = "";
+} else if (existsSync(coverPdfPath)) {
   coverContent = `<img src="${await rasterizeCover(coverPdfPath)}" alt="">`;
 } else {
   console.warn("assets/cover.pdf not found; the cover page is blank");
@@ -432,7 +438,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 </style>
 </head>
 <body>
-<div class="cover">${coverContent}</div>
+${includeCover ? `<div class="cover">${coverContent}</div>` : ""}
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
@@ -476,9 +482,11 @@ await page.evaluate(() => {
   }
 });
 
-// The cover is page one of the flow and of the PDF, so odd page numbers are
-// right-hand pages. A part title belongs on one, and so does the chapter that
-// follows it across the blank reverse. A section that runs over several pages
+// Page one of the PDF is page one of the flow, so odd page numbers are
+// right-hand pages whether or not the cover is included. A part title belongs
+// on one, and so does the chapter that follows it across the blank reverse.
+// The recto break rules re-resolve either way, so dropping the cover shifts
+// where paged.js inserts its blanks rather than putting parts on the wrong side. A section that runs over several pages
 // appears once per page it occupies, so keep the lowest number for each: that
 // is the page it opens on.
 const partPages = await page.evaluate(() => {
