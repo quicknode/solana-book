@@ -76,7 +76,7 @@ Both clocks arrive in the same sysvar, so it is easy to assume they always move 
 
 Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
 
-Mainnet has spent hours in that state, but a halt is a rare event: at the time of writing, block production has not stopped for years. Write for the one you will probably never see.
+Mainnet has gone down, but a halt is a rare event: at the time of writing, block production has not stopped for years. Write for the one you will probably never see.
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart therefore carries a slot roughly where the last one left off and a timestamp hours later: everything measured in slots was paused, and everything measured in seconds was running the whole time. Three consequences, one for each way this book's programs use a clock:
 
