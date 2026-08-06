@@ -17,9 +17,9 @@ Two programs in this book accrue value over time, and both count it in slots: th
 new index = old index × (1 + rate per slot × elapsed slots)
 ```
 
-Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Every borrower's debt is their scaled principal times that index, so one multiplication per refresh does the work of looping over every borrower every slot. The Arithmetic of Money covers how to build that index safely. It advances by slots, not seconds.
+Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared index. A borrower's current debt is their principal multiplied by that index. The Arithmetic of Money covers how to build that index safely. It advances by slots, not seconds.
 
-The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both are indexes, both advance by elapsed slots, and both are money. They count slots because a trader who could stretch a slot could stretch what they owe.
+The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both are indexes, both advance by elapsed slots, and both decide what somebody owes. They count slots because a trader who could stretch a slot could stretch what they owe.
 
 ## Timestamps Are Validator-Reported
 
@@ -27,14 +27,14 @@ The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock ti
 
 Seconds are enough to matter wherever a boundary is worth money. If an auction closes, an option expires, or a penalty starts on a timestamp, whoever can move the clock a little decides which side of that boundary a transaction lands on, and the money follows. So leave a margin wide enough that a few seconds cannot change the answer, and count in slots anything where they could.
 
-There is a third answer, and the order book exchange uses it: where a clock would decide something valuable, count instead. Price-time priority has to know who queued first, so the venue stamps each resting order with a sequence number it allocates as the order rests, and matching reads that. It still records a `timestamp` on the order, and the code says what the field is for: not used by matching, kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
+The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, and the example's own comment says what that field is for: not used by matching, kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
 
 Wall-clock time is still the right tool in places. The vault strategy reaches for it twice, for two different reasons:
 
 - **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-Where a program's own deadline is for humans, timestamps are what humans mean.
+When the deadline is one you promised a person, use timestamps. A contributor told they have a week to fund means seven days of wall-clock time, not a count of slots.
 
 ## Every Consumer Sets Its Own Freshness Window
 
