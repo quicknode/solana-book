@@ -8,6 +8,7 @@
 //   4. Value arrows are smooth: no tangent break where two segments join.
 //   5. Arrowheads point along the stroke they terminate.
 //   6. A box collapsed to its heading centres that heading vertically.
+//   7. A faded address dot still occludes the cluster curve.
 //
 // Usage: node scripts/check-figure-geometry.mjs
 // Exits nonzero if any check fails.
@@ -170,9 +171,54 @@ for (const file of files) {
       return { ...b, glyph, ruled };
     });
 
+    // Faded address dots that the cluster curve reaches, and whether an opaque
+    // white disc is drawn behind each one. Group opacity composites the whole
+    // group, so a faded dot's white centre goes translucent with the rest of it
+    // and the heaviest line in the figure shows straight through.
+    const nodes = [...svg.querySelectorAll("*")];
+    const isDot = (c) => {
+      const r = parseFloat(c.getAttribute("r") || "0");
+      return c.tagName === "circle" && (r === 6 || r === 5.5) &&
+        c.getAttribute("stroke-width") === "2";
+    };
+    const curve = [...svg.querySelectorAll("path")].find(
+      (p) => p.getAttribute("stroke") === "#111" && p.getAttribute("stroke-width") === "3.5");
+    const fadedDots = [];
+    if (curve) {
+      const len = curve.getTotalLength();
+      for (const c of nodes.filter(isDot)) {
+        let faded = false;
+        for (let n = c; n && n !== svg; n = n.parentElement)
+          if (n.getAttribute && n.getAttribute("opacity") === "0.3") faded = true;
+        if (!faded) continue;
+        const cx = parseFloat(c.getAttribute("cx")), cy = parseFloat(c.getAttribute("cy"));
+        const r = parseFloat(c.getAttribute("r"));
+        let near = Infinity;
+        for (let i = 0; i <= 400; i += 1) {
+          const p = curve.getPointAtLength((len * i) / 400);
+          near = Math.min(near, Math.hypot(p.x - cx, p.y - cy));
+        }
+        // The curve is 3.5 wide, so it reaches 1.75 either side of its centreline.
+        if (near >= r + 1.75) continue;
+        // The backing disc has to be unfaded, drawn before the dot, and wide
+        // enough to cover the dot's 2-wide ring as well as its centre.
+        const backed = nodes.some((el) => {
+          if (el.tagName !== "circle" || el === c) return false;
+          if ((el.getAttribute("fill") || "") !== "#fff" || el.getAttribute("stroke")) return false;
+          if (parseFloat(el.getAttribute("cx")) !== cx || parseFloat(el.getAttribute("cy")) !== cy) return false;
+          if (parseFloat(el.getAttribute("r") || "0") < r + 1) return false;
+          for (let n = el; n && n !== svg; n = n.parentElement)
+            if (n.getAttribute && n.getAttribute("opacity") === "0.3") return false;
+          return c.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING;
+        });
+        if (!backed) fadedDots.push({ cx, cy });
+      }
+    }
+
     return {
       arrows,
       accounts,
+      fadedDots,
       coins: [...svg.querySelectorAll("g.coin")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
       rects: [...svg.querySelectorAll("rect")]
@@ -272,6 +318,12 @@ for (const file of files) {
       fail(`box collapsed to its heading at ${at(a)} sits ${off.toFixed(1)} off centre; ` +
            `centre the icon and title on the box's middle`);
     }
+  }
+
+  // 7. Fading a dot must not open a hole in the curve behind it.
+  for (const d of fig.fadedDots) {
+    fail(`faded address dot at ${d.cx.toFixed(0)},${d.cy.toFixed(0)} lets the curve through; ` +
+         `draw an opaque white disc behind it, before its faded group`);
   }
 }
 
