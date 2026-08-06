@@ -27,6 +27,8 @@ The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock ti
 
 Seconds are enough to matter wherever a boundary is worth money. If an auction closes, an option expires, or a penalty starts on a timestamp, whoever can move the clock a little decides which side of that boundary a transaction lands on, and the money follows. So leave a margin wide enough that a few seconds cannot change the answer, and count in slots anything where they could.
 
+There is a third answer, and the order book exchange uses it: where a clock would decide something valuable, count instead. Price-time priority has to know who queued first, so the venue stamps each resting order with a sequence number it allocates as the order rests, and matching reads that. It still records a `timestamp` on the order, and the code says what the field is for: not used by matching, kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
+
 Wall-clock time is still the right tool in places. The vault strategy reaches for it twice, for two different reasons:
 
 - **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
@@ -36,15 +38,16 @@ Where a program's own deadline is for humans, timestamps are what humans mean.
 
 ## Every Consumer Sets Its Own Freshness Window
 
-A price is only usable if it is recent, and how recent is a judgement each program makes for itself. Three of this book's programs make it differently:
+A price is only usable if it is recent, and how recent is a judgement each program makes for itself. Four of this book's programs make it differently:
 
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |
 | the lending market | 25 slots, about ten seconds | slots |
 | the prop AMM | 150 slots, about a minute | slots |
+| the perpetual futures venue | 150 slots, about a minute | slots |
 | the vault strategy | 60 seconds | seconds |
 
-The two that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. The *Offchain Truth* chapter covers what else a program checks about a price before it uses one.
+The three that pick the window pick slots. The vault is the exception that shows the rule: its number is in seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. The *Offchain Truth* chapter covers what else a program checks about a price before it uses one.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
@@ -57,6 +60,10 @@ elapsed days = (now − time_started) / 86,400
 `contribute()` requires that count to be *less than* the duration. `refund()` requires it to be *at least* the duration. One expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the count reaches the duration, contributions turn off and refunds turn on, by arithmetic rather than by a second stored flag anybody has to keep in step.
 
 The trap is what "seven days" then means. With day-granularity math the window ends at the first tick of day seven, not at some intuitive end of the seventh day. That is a fine rule as long as it is the rule you meant and the one you told your users.
+
+![A seven-day window counted in whole days: contributions run to the first tick of day 7 and refunds start there, one expression deciding both, so the two windows meet at an instant with no gap and no overlap.](figures/day-boundary.svg)
+
+Say which edge you mean when you write the terms down. "Seven days to fund" reads to a contributor as a window that closes at the end of the seventh day, and this one closes at its start, a full day earlier than they think. Either edge is defensible; only one of them is what your users were told.
 
 ## Slots Stop When the Chain Stops, and the Wall Clock Does Not
 
@@ -88,11 +95,27 @@ Behind the table is one question: who profits if this number is wrong? Measure i
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
 
+## What the Programs in This Book Chose, and How It Holds Up
+
+Every program in Part II that touches time is in this table, with the two questions worth asking of any answer: what happens if validators lean on the seconds, and what happens if the chain stops.
+
+| Program | What it times | Its answer | If the seconds are nudged | If the chain halts |
+| --- | --- | --- | --- | --- |
+| token fundraiser | its funding deadline | whole days from one stored timestamp | a few seconds cannot move a count that floors to whole days | the deadline can pass unattended; refunds have no deadline of their own, so nobody is stranded |
+| lending market | interest accrual, and price freshness | slots for both, 25 slots for the price | nothing to bend | accrual stops, and `LastRestartSlot` rejects a price from before the restart |
+| perpetual futures | funding accrual, and price freshness | slots for both, 150 slots for the price | nothing to bend | the same, and it matters more: leverage multiplies a bad price across the book |
+| prop AMM | price freshness | 150 slots | nothing to bend | the same restart check, and the market refuses to quote until a publisher posts |
+| vault strategy | an annual fee, and price freshness | timestamps for both, 60 seconds for the price | seconds measured against a year are nothing | the fee charges through the halt, and the price check fails closed on its own |
+| order book | who queued first | a sequence number, neither clock | matching never reads a clock, so there is nothing to lean on | queue positions come back exactly as they were |
+
+Two patterns run through the table. Where a number is worth money, it is counted in something nobody can lean on: slots, or a sequence number of the program's own. Where a number is for people, it is a timestamp with enough margin that seconds cannot change the answer.
+
 ## What You Learnt
 
 - Solana has two clocks: the **slot**, whose progression the runtime guarantees, and the **unix timestamp**, which validators report.
 - Choose the clock by asking who benefits from the error: slots for anything an adversary could profit from bending, timestamps for humans and long horizons.
 - Money that accrues accrues per slot, as a **cumulative index** advanced by elapsed slots, so one multiplication replaces a loop over every account.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
-- A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day.
+- A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
+- Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories, and during a halt slots pause while wall-clock time keeps running: per-slot accrual stops, second-measured freshness windows blow past their limit at the restart, slot-measured ones are not blown, and deadlines expire with nobody able to act on them. A slot-counted freshness window is paired with a `LastRestartSlot` check, rejecting any price stamped at or before the restart.
