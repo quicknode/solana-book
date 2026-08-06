@@ -32,13 +32,18 @@ There is a third answer, and the order book exchange uses it: where a clock woul
 Wall-clock time is still the right tool in places. The vault strategy reaches for it twice, for two different reasons:
 
 - **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
-- **It checks its price feed's age in seconds rather than slots**, because the feed publishes a wall-clock time, and the comparison has to be made in the units the number arrived in.
+- **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
 Where a program's own deadline is for humans, timestamps are what humans mean.
 
 ## Every Consumer Sets Its Own Freshness Window
 
-A price is only usable if it is recent, and how recent is a judgement each program makes for itself. Four of this book's programs make it differently:
+A program reading a price has two questions to answer:
+
+- Whether the source can be trusted.
+- Whether the price is recent enough.
+
+Offchain Truth answers the first. This chapter answers the second, and how recent counts as recent enough is a judgement each program makes for itself. Four of this book's programs make it differently:
 
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |
