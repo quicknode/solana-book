@@ -65,7 +65,7 @@ The book has two parts. **The Fundamentals** is everything you need before writi
 
 **Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a smart contract. Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine. These programs have not been drawn and explained side by side in one place before.
 
-Real incidents appear throughout the book in boxed **War Story** sections: in The Arithmetic of Money, the rounding bug that put about $2.6B at risk; in The Adversary, the Mango Markets incident. History does not go stale, which makes these among the most durable pages in the book, and none of them are told to dunk on the teams involved - the point is the awareness.
+Real incidents appear throughout the book in boxed **War Story** sections: in the *Arithmetic of Money* chapter, the rounding bug that put about $2.6B at risk; in the *Adversary* chapter, the Mango Markets incident. History does not go stale, which makes these among the most durable pages in the book, and none of them are told to dunk on the teams involved - the point is the awareness.
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory). When larger sums move, they belong to a firm's treasury or to a crowd, and the chapter says so.
 
@@ -76,7 +76,7 @@ Like _TCP/IP Illustrated_, this book teaches a way of thinking. Over time, you'l
 Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here are a few honest shortcuts:
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
-- **Here to ship one specific thing?** Read [The Arithmetic of Money](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) and [Offchain Truth](../financial-programming-concepts-in-solana/offchain-truth.md), then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
+- **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
 
 ## An Appendix Meant to Be Worn Out: the Glossary
 

@@ -106,6 +106,52 @@ for (const file of [...new Set(files)]) {
     });
 }
 
+// Cross-reference check: a pointer to another chapter says so, and sets the
+// chapter's title in italics, so a reader can tell "the *Offchain Truth*
+// chapter" from a passing mention of offchain truth the concept. A leading
+// "The" is dropped inside the italics, because "the *The Adversary* chapter"
+// reads badly: write "the *Adversary* chapter".
+//
+// Only the distinctive multi-word titles are checked. Time, Tokens, PDAs and
+// Escrow are ordinary words far too often to match mechanically, so the
+// convention covers them and this check does not.
+const chapterTitles = [
+  "Core Building Blocks of Solana",
+  "Arithmetic of Money",
+  "Offchain Truth",
+  "Adversary",
+  "Operating Financial Software",
+  "Token Fundraiser",
+  "Betting Market",
+  "Order Book Exchange",
+  "Constant-Product AMM",
+  "Prop AMM",
+  "Lending and Borrowing",
+  "Vault Strategy",
+  "Perpetual Futures",
+  "Where to Go From Here",
+];
+
+for (const file of [...new Set(files)]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, index) => {
+      // Headings carry chapter titles as their own name, not as references.
+      if (/^#/.test(line)) return;
+      for (const title of chapterTitles) {
+        // The correct form puts the title between asterisks. Flag any other
+        // occurrence, including one still carrying its leading "The".
+        const bare = new RegExp(`(?<!\\*)\\b(?:The )?${title}\\b`);
+        if (!bare.test(line)) continue;
+        failures += 1;
+        console.error(
+          `${file}:${index + 1}: a chapter reference reads "the *${title}* chapter" (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
+        );
+        break;
+      }
+    });
+}
+
 // Figure checks: the mechanically checkable Visual Language conventions.
 // Rounded corners are reserved for accounts and drawn at one radius, the
 // only fade level is 0.3, address dots have white centers, and seed labels
