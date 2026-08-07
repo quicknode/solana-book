@@ -53,7 +53,7 @@ const cleanTitle = (raw) => raw.replace(/[*_`]/g, "");
 
 // Parts come from "## Part N: Title" headings in the table of contents, and a
 // chapter belongs to the part heading above it. Any other H2 (Prelude, the
-// Introduction, Appendices) closes the current part, so those chapters sit
+// Introduction, the Glossary) closes the current part, so those chapters sit
 // outside the numbered parts and get no divider page.
 const partForPath = new Map();
 {
@@ -170,7 +170,6 @@ const isPreludeItem = (path) =>
 // right-aligned and filled in after Paged.js lays the pages out.
 const tocEntries = [];
 let chapterNumber = 0;
-let appendixNumber = 0;
 let tocPart = null;
 for (const section of sections) {
   if (isPreludeItem(section.path)) continue;
@@ -179,18 +178,20 @@ for (const section of sections) {
     tocEntries.push(`<li class="toc-part"><span class="label">${part.label}</span><span class="t">${part.title}</span></li>`);
   }
   tocPart = part;
-  const isAppendix = section.path.startsWith("appendices/");
-  const label = isAppendix
-    ? `Appendix ${String.fromCharCode(65 + appendixNumber++)}`
-    : `Chapter ${++chapterNumber}`;
-  const shortLabel = isAppendix ? String.fromCharCode(64 + appendixNumber) : String(chapterNumber);
+  // Back matter is unnumbered: the Glossary is called the Glossary, not
+  // "Appendix A". Its row keeps the empty label column so its title lines up
+  // with the chapter titles above it.
+  const isBackMatter = section.path.startsWith("appendices/");
+  const label = isBackMatter ? "" : `Chapter ${++chapterNumber}`;
+  const shortLabel = isBackMatter ? "" : String(chapterNumber);
   // The row already prints its own "Chapter N" label, and every chapter's H1
   // carries that prefix too (it is what the running header and the chapter
   // opening page print), so drop it here to avoid "Chapter 2  Chapter 2: ...".
-  const tocTitle = section.title.replace(/^(?:Chapter \d+|Appendix [A-Z]):\s*/, "");
+  const tocTitle = section.title.replace(/^Chapter \d+:\s*/, "");
   tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}"><span class="label">${label}</span><span class="t">${tocTitle}</span><span class="pg"></span></a></li>`);
   for (const [index, subsection] of section.subsections.entries()) {
-    tocEntries.push(`<li class="toc-section"><a href="#${subsection.id}"><span class="label">${shortLabel}.${index + 1}</span><span class="t">${subsection.title}</span><span class="pg"></span></a></li>`);
+    const sectionLabel = shortLabel ? `${shortLabel}.${index + 1}` : "";
+    tocEntries.push(`<li class="toc-section"><a href="#${subsection.id}"><span class="label">${sectionLabel}</span><span class="t">${subsection.title}</span><span class="pg"></span></a></li>`);
   }
 }
 const printedToc = tocEntries.join("\n");

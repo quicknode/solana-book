@@ -18,9 +18,13 @@ A market maker's structural loss: the trades that find you when your quote is wr
 
 A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Token Fundraiser* chapter builds it onchain.
 
+### arbitrage
+
+Buying where an asset is cheap and selling where it is dear until the two prices meet. A constant-product pool has no idea what its asset is worth; its price is only right because arbitrageurs have made it right, and the profit they take comes out of the pool's liquidity providers. See the *Constant-Product AMM* and *Prop AMM* chapters.
+
 ### ask
 
-An order to sell at or above a stated price. The seller's side of an order book.
+An order to sell at or above a stated price. The seller's side of an [order book](#order-book).
 
 ### associated token account (ATA)
 
@@ -90,6 +94,10 @@ The metered unit of onchain execution. Every transaction runs against a compute 
 
 An oracle's own statement of its uncertainty: a price of $250 ± $8 is a different fact than $250 ± $0.10. Production programs should reject prices that are fresh but uncertain.
 
+### counterparty
+
+The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the pool's solvency is the whole design. See the *Perpetual Futures* chapter.
+
 ### CPI (cross-program invocation)
 
 One program calling another onchain, such as any program calling the token program to move tokens. CPIs are how programs compose, and the trust boundary where composition gets dangerous.
@@ -106,17 +114,25 @@ A binary tree keyed on the first bit where entries differ. Used for order books 
 
 A single monotonically growing number per reserve that starts at 1.0 and compounds the interest rate over time. Debts are stored scaled by the index at borrow time, so one multiplication accrues interest for every borrower at once. See the *Lending and Borrowing* chapter.
 
+### curator
+
+In a fund, the authority that decides which assets may be held at all and which price feed prices each one, kept separate from the [manager](#manager) who picks the allocation. The split is what stops a manager listing a token they minted themselves, or pairing a real asset with a feed they control. See the *Vault Strategy* chapter.
+
+### custody
+
+Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. The rule this book repeats about custody is that balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
+
 ### decimals
 
 The number of minor units in one major unit of a token, declared on the mint. USDC has 6, SOL has 9. Programs must read decimals, never assume them.
 
-### discriminator
-
-The 8 bytes Anchor writes at the start of an account's data identifying its type, so a program cannot be fed one kind of account where another belongs.
-
 ### discretization
 
 Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
+
+### discriminator
+
+The 8 bytes Anchor writes at the start of an account's data identifying its type, so a program cannot be fed one kind of account where another belongs.
 
 ### dust
 
@@ -178,9 +194,17 @@ The input a transaction carries to a program: which handler to run, which accoun
 
 The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input, because tooling that uses one word for both confuses every newcomer. Most other material does use one word: "this program has five instructions" means five functions, and Anchor's generated interface file lists a program's functions under `instructions`. Read those as instruction handlers.
 
+### insurance fund
+
+Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. It does not make a venue lose less money; it names, before the loss happens, who pays for it. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
+
 ### invariant
 
 A property that must hold before and after every state change: K must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it.
+
+### inventory
+
+The tokens a [market maker](#market-maker) holds and quotes against. A prop AMM prices from an oracle and fills out of inventory rather than off a curve, so its risk is the inventory's: it ends up holding whatever the flow sold it. See the *Prop AMM* chapter.
 
 ### K
 
@@ -189,6 +213,10 @@ The product of an AMM pool's two reserves. Constant within a trade, growing acro
 ### key pair
 
 Two mathematically linked keys: a private key, kept secret, that signs messages, and a public key, shared freely, that proves who signed. All authority on Solana reduces to signatures from key pairs.
+
+### kink
+
+The bend in a lending reserve's interest rate curve, in this book at 80% [utilization](#utilization): below it the borrow rate climbs gently, above it steeply. The steep leg is the reserve begging for liquidity, pushing borrowers to repay and pulling suppliers in with yield at the same time. See the *Lending and Borrowing* chapter.
 
 ### lamport
 
@@ -222,6 +250,10 @@ Someone who deposits assets into a pool for traders to trade against, earning fe
 
 The fraction of collateral value that may be borrowed against it, e.g. 75%.
 
+### long / short
+
+The two directions a position can face: a long profits when the price rises, a short when it falls. On a perpetual futures venue the side is part of the position's identity, and the two sides pay each other through the [funding rate](#funding-rate). In a lending market a short is assembled by hand: borrow the asset, sell it, buy it back cheaper to repay.
+
 ### lot
 
 The indivisible quantity unit of an order book market. Prices and quantities are stated in lots rather than raw minor units so the numbers stay human-readable regardless of the two mints' decimals. See the *Order Book Exchange* chapter.
@@ -241,6 +273,10 @@ The human-scale denomination of an asset: the dollar, the SOL, the whole share. 
 ### maker / taker
 
 The maker posted the resting order; the taker crossed the spread to hit it. Fills execute at the maker's posted price, and fee schedules usually distinguish the two roles.
+
+### manager
+
+In a fund, the authority that sets the allocation and earns the management fee, and that can do nothing else: no instruction handler gives them a path to the assets. What a careless manager can still cost depositors is churn, rebalancing that pays [slippage](#slippage) for nothing. See [curator](#curator) and the *Vault Strategy* chapter.
 
 ### mantissa
 
@@ -262,13 +298,13 @@ A party that quotes both a buy and a sell price and earns the spread between the
 
 The program at a well-known address whose one job is writing a note into the transaction log. Alice's first transaction in this book pairs a transfer with a memo, which is how the book introduces multi-instruction atomicity.
 
-### minor unit
-
-The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC. This book says minor unit, not "base unit."
-
 ### MEV
 
 Maximal extractable value: profit taken by controlling transaction ordering, most visibly by sandwiching a pending trade. The reason every trade in this book carries a caller-side bound like minimum output. See the *Adversary* chapter.
+
+### minor unit
+
+The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC. This book says minor unit, not "base unit."
 
 ### mint (account)
 
@@ -302,6 +338,10 @@ The total notional of positions currently open on a market, usually tracked per 
 
 A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, exactly as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
 
+### order book
+
+The resting [bids](#bid) and [asks](#ask) for one market, best prices first, plus the matching engine that pairs them under [price-time priority](#price-time-priority). The traditional venue design, the one NYSE, NASDAQ and CME run, and the one an AMM replaces with a formula. See the *Order Book Exchange* chapter.
+
 ### parimutuel
 
 A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. The odds are the pool. See the *Betting Market* chapter.
@@ -318,9 +358,17 @@ A contract paying the price movement of an asset, long or short, with leverage a
 
 What a position has gained or lost. While the position is open the figure is **unrealized PnL**, marked to market against the current price; closing the position realizes it. On the book's perpetual futures venue, PnL is size × price change ÷ entry price.
 
+### price impact
+
+How far your own trade moves the price it is executing against. A trade on a constant-product pool walks along the curve as it fills, so the average price paid is worse than the price quoted before it started, and the pool's [spot price](#spot-price) afterwards is where the next trade begins. It is what the formula charges for instant liquidity, and what a sandwich squeezes. Contrast [slippage](#slippage), which also covers the market moving before you land.
+
 ### price-time priority
 
 The order-matching fairness rule: better-priced orders fill first, and among equal prices, earlier orders fill first.
+
+### pro rata
+
+In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join. The arithmetic is a ratio; the design question is always which denominator is honest, because that is where the [inflation attack](#inflation-attack) lives.
 
 ### program
 
@@ -342,9 +390,21 @@ An automated market maker funded entirely by its operator's own capital and pric
 
 The thing a market states its prices in (USDC), and the unit a **quote amount** is denominated in: 1,000 USDC is a quote amount. The quote is the second half of the [base token](#base-token) pair, and is typically a more stable asset, usually a USD-backed stablecoin like USDC; you quote in the stable asset so the numbers mean dollars. A base amount times a price is a quote amount.
 
+### rebalance
+
+Trading a fund back toward its target weights after prices have moved it away. In this book's fund every leg routes through the same swap program at oracle-anchored minimums, so a rebalance cannot be dressed up as a withdrawal. See the *Vault Strategy* chapter.
+
+### receipt
+
+A per-participant account, usually a PDA, recording what the program owes one person: a contributor's amount, a bettor's stake. The program writes it for itself, and refunds and claims pay what the receipt records rather than what a vault happens to hold. Every receipt needs a closing path, or its rent deposit is stranded once the product it belonged to is gone.
+
 ### rent
 
 The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is real money design.
+
+### reservation
+
+On a perpetual futures pool, the liquidity pledged when a position opens as the most that position could ever be paid: profit is capped at it, liquidity providers cannot withdraw against it, and a position the pool cannot back is refused outright. Pre-funding every win is why the pool can never be surprised by one. See the *Perpetual Futures* chapter.
 
 ### reserve
 
@@ -362,6 +422,14 @@ The URL a program or wallet sends its transactions to: a server holding a [clust
 
 A traditional asset represented as a token onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading.
 
+### sandwich
+
+Wrapping someone's pending trade in two of your own: buy ahead of it to move the price against it, let it fill, then sell behind it. The classic [MEV](#mev) extraction on a public chain, and the reason every trade in this book carries a caller-side bound like a minimum output. See the *Adversary* chapter.
+
+### settlement
+
+Paying out what a contract finally owes, and closing it. A betting market settles when the authority records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances. Before settlement the numbers are marks, not money.
+
 ### share
 
 A token representing proportional ownership of a pool: of a lending reserve, of a fund's holdings, of anything with a NAV. Minted on the way in, burned on the way out, priced by dividing the pool by the supply.
@@ -376,7 +444,7 @@ The digits of a number stated separately from its scale: a price feed holding si
 
 ### slippage
 
-The difference between the price you expected and the price you got, caused by your own trade's impact or by the market moving first. Bounded by minimum-out parameters; unbounded slippage is what sandwich attackers eat.
+The difference between the price you expected and the price you got, caused by your own trade's impact or by the market moving first. Bounded by minimum-out parameters; unbounded slippage is what a [sandwich](#sandwich) eats.
 
 ### slot
 
@@ -386,13 +454,17 @@ Solana's basic unit of time, roughly 400ms, in which a leader may produce a bloc
 
 Solana's **native token**: the asset the network understands without any token program, used to pay transaction fees and to fund the rent deposit on every account. Denominated in [lamports](#lamport), a billionth of a SOL each. Every other token is an [SPL token](#spl-token).
 
-### spread
-
-The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
-
 ### SPL token
 
 Any token other than [SOL](#sol): one defined by a token program rather than by the network itself. The name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
+
+### spot price
+
+What a pool quotes for a trade small enough to move nothing: the ratio of its two reserves. Every real fill comes in worse than the spot price by its own [price impact](#price-impact), and the spot price after a trade is where the next one starts.
+
+### spread
+
+The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
 
 ### stablecoin
 
@@ -401,6 +473,10 @@ A token designed to hold a fixed value, usually one dollar. The quote asset of n
 ### state compression
 
 A technique for storing bulk data offchain with onchain proofs, used for things like very large NFT collections. It is the reason "nearly all", rather than "all", data on Solana lives in accounts; none of the financial state in this book uses it.
+
+### strategy
+
+The fund-shaped product: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Distinct from a [vault](#vault), which in this book is only ever the token account the money sits in. See the *Vault Strategy* chapter.
 
 ### System Program
 
@@ -434,9 +510,13 @@ A time-weighted average price: the average of a market's price over a window, us
 
 In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool is begging for deposits and rates rise.
 
+### validator
+
+A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. A validator reports the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
+
 ### vault
 
-A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a strategy.
+A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a [strategy](#strategy).
 
 ### WAD
 
