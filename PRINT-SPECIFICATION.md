@@ -74,7 +74,7 @@ Its art is 1800 x 2330, an aspect of 0.7727 against the page's 0.7678. The 0.6% 
 
 `--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite the print build. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
 
-It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 183 pages against 233, because the larger page carries more.
+It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 185 pages against 233, because the larger page carries more.
 
 ## Building It
 
@@ -85,8 +85,11 @@ npm run build-pdf -- --size letter         # US Letter
 NO_COVER=1 npm run build-pdf               # interior only
 REVIEWER_NAME="..." npm run build-pdf      # stamped advance copy
 npm run build-pdf -- out.pdf               # explicit output path
+npm run build-pdf -- --help                # the switches, from the script itself
 npm run preview -- <name> "<phrase>"       # rasterize one page to check it
 ```
+
+An unrecognized switch, a `--size` with no value or an unknown one, and more than one output path all print the usage and exit nonzero, rather than taking the stray argument for a filename.
 
 The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cover-less Letter build.
 

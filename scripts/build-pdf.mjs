@@ -37,20 +37,47 @@ const PAGE_SIZES = {
   letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
 };
 
-// Usage: npm run build-pdf -- [--size print|letter] [output.pdf]
-const argv = process.argv.slice(2);
+const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
+
+  --size <name>   Page size; defaults to "print". See PRINT-SPECIFICATION.md.
+  --help          Print this and exit.
+
+Environment:
+  NO_COVER=1      Build the interior without the cover page.
+  REVIEWER_NAME   Stamp the title page as an advance copy for that reviewer.`;
+
+const die = (message) => {
+  console.error(`${message}\n\n${USAGE}`);
+  process.exit(1);
+};
+
+// npm passes everything after its own "--" through, but which npm versions
+// forward the separator itself has changed over the years, so a bare "--" is
+// dropped rather than taken for an output path.
+const argv = process.argv.slice(2).filter((arg) => arg !== "--");
 let sizeName = "print";
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
   const arg = argv[i];
-  const inline = arg.startsWith("--size=") ? arg.slice("--size=".length) : null;
-  if (inline !== null) sizeName = inline;
-  else if (arg === "--size") sizeName = argv[++i];
-  else positional.push(arg);
+  if (arg === "--help" || arg === "-h") {
+    console.log(USAGE);
+    process.exit(0);
+  } else if (arg.startsWith("--size=")) {
+    sizeName = arg.slice("--size=".length);
+  } else if (arg === "--size") {
+    if (i + 1 >= argv.length) die("--size needs a value.");
+    sizeName = argv[++i];
+  } else if (arg.startsWith("-")) {
+    // Without this an unrecognized flag becomes the output path, and the build
+    // succeeds having written a file named "--size".
+    die(`Unknown option ${JSON.stringify(arg)}.`);
+  } else {
+    positional.push(arg);
+  }
 }
+if (positional.length > 1) die(`Expected one output path, got ${positional.length}: ${positional.join(", ")}`);
 if (!Object.hasOwn(PAGE_SIZES, sizeName)) {
-  console.error(`Unknown --size ${JSON.stringify(sizeName)}; expected one of: ${Object.keys(PAGE_SIZES).join(", ")}`);
-  process.exit(1);
+  die(`Unknown --size ${JSON.stringify(sizeName)}; expected one of: ${Object.keys(PAGE_SIZES).join(", ")}`);
 }
 const PAGE_WIDTH_IN = PAGE_SIZES[sizeName].widthIn;
 const PAGE_HEIGHT_IN = PAGE_SIZES[sizeName].heightIn;
