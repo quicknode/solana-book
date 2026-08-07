@@ -11,7 +11,7 @@ A constant-product pool computes its price from its reserves, which means its pr
 Two consequences follow immediately, and both are absences:
 
 - **No price impact.** A trade's unit price does not depend on its size, so 500 NVDAx fills at the same price per token as 5, until the inventory runs out.
-- **Nothing to sandwich.** The price does not depend on the pool's balances, and the front-run/back-run attack from The Adversary needs a price that moves with each trade. This one does not move.
+- **Nothing to sandwich.** The price does not depend on the pool's balances, and the front-run/back-run attack from the *Adversary* chapter needs a price that moves with each trade. This one does not move.
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
@@ -85,7 +85,7 @@ The unit conversion deserves one honest sentence: prices arrive at the oracle's 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates sit in front of every single swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The perpetual futures chapter will meet the same enemy with leverage multiplying it.
 - **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No require! can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
 - **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the perpetual futures chapter makes, with one difference worth noticing: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
-- **What is absent.** Run The Adversary's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
+- **What is absent.** Run the *Adversary* chapter's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 
 ## Testing Considerations
 
@@ -101,6 +101,6 @@ The concepts you now have:
 - **For a market maker the oracle checks are the business, not hygiene.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.
 - **Adverse selection.** The flow that finds you when your quote is wrong is exactly the flow you did not want: the market maker's structural cost, mitigated commercially (wider spreads, pulled quotes), never by a `require!`.
 - **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the whole book.
-- **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from The Adversary return "not applicable" because each of them needs a mechanism this design does not have.
+- **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from the *Adversary* chapter return "not applicable" because each of them needs a mechanism this design does not have.
 
 The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The perpetual futures chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.

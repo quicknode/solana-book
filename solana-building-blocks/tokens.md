@@ -45,7 +45,7 @@ The extensions that matter for financial products:
 | Extension | What it does | What it means for your program |
 | --- | --- | --- |
 | **transfer fees** | A cut is withheld on every transfer, for the issuer to collect | Send 100 and 99 arrives: "I transferred X" no longer delivers X |
-| **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (the ordering section of The Adversary takes this seriously) |
+| **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (the ordering section of the *Adversary* chapter takes this seriously) |
 | **confidential transfers** | Amounts are hidden onchain | Balances are visible only to the parties and an auditor key |
 | **permanent delegate** | An authority can move any holder's tokens | A seizure power some regulated assets require |
 | **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |

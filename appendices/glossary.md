@@ -12,11 +12,11 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are exactly the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The Prop AMM chapter treats it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are exactly the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The *Prop AMM* chapter treats it at length.
 
 ### all-or-nothing
 
-A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The Token Fundraiser chapter builds it onchain.
+A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Token Fundraiser* chapter builds it onchain.
 
 ### ask
 
@@ -28,7 +28,7 @@ The canonical token account for a given wallet and mint, at an address anyone ca
 
 ### AUM (assets under management)
 
-The total value a pool or fund controls, marked to market: on a perpetual futures venue, the LPs' liquidity minus traders' unrealized profit (or plus their unrealized loss). LP shares price against AUM so that entering and leaving the pool is fair at any instant. See the Perpetual Futures chapter.
+The total value a pool or fund controls, marked to market: on a perpetual futures venue, the LPs' liquidity minus traders' unrealized profit (or plus their unrealized loss). LP shares price against AUM so that entering and leaving the pool is fair at any instant. See the *Perpetual Futures* chapter.
 
 ### authority
 
@@ -36,7 +36,7 @@ The address whose signature a particular action requires. A program records the 
 
 ### auto-deleveraging (ADL)
 
-A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The Perpetual Futures chapter places it at the bottom of the loss waterfall.
+A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The *Perpetual Futures* chapter places it at the bottom of the loss waterfall.
 
 ### base token
 
@@ -64,11 +64,11 @@ Arithmetic that reports failure instead of producing a wrong answer: Rust's `che
 
 ### checks-effects-interactions
 
-The ordering discipline for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See The Adversary.
+The ordering discipline for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See the *Adversary* chapter.
 
 ### close factor
 
-In a lending market, the fraction of a debt one liquidation may repay (typically 50%). Turns liquidation into a correction rather than an execution. See the Lending and Borrowing chapter.
+In a lending market, the fraction of a debt one liquidation may repay (typically 50%). Turns liquidation into a correction rather than an execution. See the *Lending and Borrowing* chapter.
 
 ### cluster
 
@@ -80,7 +80,7 @@ Assets pledged to secure a loan, seizable on default or on breach of the liquida
 
 ### commitment level
 
-How sure a reader of the chain is asking to be: `processed` (a leader executed it), `confirmed` (a supermajority of stake voted for the block), or `finalized` (no validator can now vote another way). A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; Operating Financial Software matches the level to how reversible the reaction is.
+How sure a reader of the chain is asking to be: `processed` (a leader executed it), `confirmed` (a supermajority of stake voted for the block), or `finalized` (no validator can now vote another way). A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
 
 ### compute unit
 
@@ -100,11 +100,11 @@ A permissionless instruction handler that performs maintenance work nobody owns 
 
 ### critbit tree
 
-A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it yields price-time priority for free. See the Order Book Exchange chapter.
+A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it yields price-time priority for free. See the *Order Book Exchange* chapter.
 
 ### cumulative interest index
 
-A single monotonically growing number per reserve that starts at 1.0 and compounds the interest rate over time. Debts are stored scaled by the index at borrow time, so one multiplication accrues interest for every borrower at once. See the Lending and Borrowing chapter.
+A single monotonically growing number per reserve that starts at 1.0 and compounds the interest rate over time. Debts are stored scaled by the index at borrow time, so one multiplication accrues interest for every borrower at once. See the *Lending and Borrowing* chapter.
 
 ### decimals
 
@@ -116,7 +116,7 @@ The 8 bytes Anchor writes at the start of an account's data identifying its type
 
 ### discretization
 
-Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and The Arithmetic of Money.
+Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
 
 ### dust
 
@@ -160,15 +160,15 @@ A stop in block production, which Solana prefers to running two conflicting hist
 
 ### health / health factor
 
-A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. At or below the boundary, the position may be liquidated. See Lending and Borrowing.
+A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. At or below the boundary, the position may be liquidated. See the *Lending and Borrowing* chapter.
 
 ### impermanent loss
 
-The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the Constant-Product AMM chapter.
+The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
 
 ### inflation attack
 
-The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. Defenses include locked minimum liquidity, virtual shares, and state-tracked pool size. See The Adversary.
+The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. Defenses include locked minimum liquidity, virtual shares, and state-tracked pool size. See the *Adversary* chapter.
 
 ### instruction
 
@@ -224,7 +224,7 @@ The fraction of collateral value that may be borrowed against it, e.g. 75%.
 
 ### lot
 
-The indivisible quantity unit of an order book market. Prices and quantities are stated in lots rather than raw minor units so the numbers stay human-readable regardless of the two mints' decimals. See the Order Book Exchange chapter.
+The indivisible quantity unit of an order book market. Prices and quantities are stated in lots rather than raw minor units so the numbers stay human-readable regardless of the two mints' decimals. See the *Order Book Exchange* chapter.
 
 ### LP token
 
@@ -268,7 +268,7 @@ The smallest denomination of an asset, and the raw integer programs actually cal
 
 ### MEV
 
-Maximal extractable value: profit taken by controlling transaction ordering, most visibly by sandwiching a pending trade. The reason every trade in this book carries a caller-side bound like minimum output. See The Adversary.
+Maximal extractable value: profit taken by controlling transaction ordering, most visibly by sandwiching a pending trade. The reason every trade in this book carries a caller-side bound like minimum output. See the *Adversary* chapter.
 
 ### mint (account)
 
@@ -284,7 +284,7 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 ### Newton's method (integer square root)
 
-The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the Constant-Product AMM chapter.
+The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the *Constant-Product AMM* chapter.
 
 ### notional
 
@@ -304,7 +304,7 @@ A service that publishes signed statements of offchain facts, most often prices,
 
 ### parimutuel
 
-A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. The odds are the pool. See the Betting Market chapter.
+A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. The odds are the pool. See the *Betting Market* chapter.
 
 ### PDA (program derived address)
 
@@ -336,7 +336,7 @@ The account holding a deployed program's compiled code, the slot it was last dep
 
 ### proprietary AMM (prop AMM)
 
-An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the Prop AMM chapter builds one.
+An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the *Prop AMM* chapter builds one.
 
 ### quote token
 
@@ -372,7 +372,7 @@ An account whose private key signed the transaction. "Is this account a signer" 
 
 ### significand
 
-The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see The Arithmetic of Money). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
+The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
 
 ### slippage
 
@@ -408,7 +408,7 @@ The program at a well-known address that creates accounts and transfers SOL. Eve
 
 ### sysvar
 
-A system account the runtime itself keeps current, readable by any program: the Clock sysvar carries the slot and timestamp. Validating that a passed sysvar really is the sysvar matters; see the Wormhole War Story in The Adversary.
+A system account the runtime itself keeps current, readable by any program: the Clock sysvar carries the slot and timestamp. Validating that a passed sysvar really is the sysvar matters; see the Wormhole War Story in the *Adversary* chapter.
 
 ### tick size
 
@@ -428,7 +428,7 @@ A signed bundle of instructions that executes atomically: all of it lands or non
 
 ### TWAP
 
-A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than rent it for one slot. See The Adversary.
+A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than rent it for one slot. See the *Adversary* chapter.
 
 ### utilization
 
