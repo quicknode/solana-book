@@ -38,6 +38,15 @@ const rules = [
   [/\b(delve|tapestry|intricate|multifaceted|holistic|myriad|seamlessly|seamless|robust|pivotal|crucial|elevate|testament to|deep dive|paradigm shift|game.chang(er|ing)|unlock the power|realm of|landscape of|in today's)\b/i,
     "reads as machine-written; name the specific thing instead"],
   [/it(?:'s| is) worth noting/i, "cut it: if the point is worth making, make it"],
+  // Announcing that a point exists instead of making it. Each of these was
+  // written in this manuscript and each was replaced by the content it was
+  // standing in front of: "what matters here is the unit" became "the index
+  // advances by slots, not seconds". Delete the announcement, keep what
+  // followed it.
+  [/\bwhat matters\b/i, 'say the thing that matters instead of announcing that something does'],
+  [/\bthe point (?:here )?is\b/i, 'state the point rather than pointing at it'],
+  [/\bthat is the whole reason\b/i, 'give the reason without announcing it: "they count slots because ..."'],
+  [/\bdoes the work of\b/i, "describe what the code stores and computes, not how clever the result is"],
   [/\bunderscor(es|ing) (the|that|how|why|its)\b/i, 'say what it shows (the underscore character in identifiers is fine)'],
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],

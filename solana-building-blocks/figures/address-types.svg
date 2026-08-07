@@ -13,8 +13,21 @@
   <text x="78" y="106" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">Alice&#8217;s address</text>
   <text x="78" y="122" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">a public key, on the curve:</text>
   <text x="78" y="137" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">Alice holds the private key</text>
-  <text x="430" y="86" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
-  <text x="430" y="99" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">+ THE ESCROW PROGRAM ID</text>
+  <text x="222" y="99" font-size="8.5" font-family="Menlo, monospace" fill="#555" text-anchor="middle">SysvarC1ock111&#8230;</text>
+  <circle cx="222" cy="132" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g>
+  <rect x="158" y="140" width="128" height="50" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(166,145)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="186" y="156" font-size="10.5" font-weight="bold">Clock sysvar</text>
+  <line x1="166" y1="161" x2="278" y2="161" stroke="#888" stroke-width="0.8"/>
+  <text x="166" y="173" font-size="9.5">slot</text>
+  <text x="166" y="185" font-size="9.5">unix_timestamp</text>
+  </g>
+  <text x="222" y="210" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">a built-in address</text>
+  <text x="222" y="226" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">chosen, not computed:</text>
+  <text x="222" y="241" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">no private key and no seeds</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="430" y="86" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">&#8220;OFFER&#8221; + MAKER&#8217;S ADDRESS + ID</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="430" y="99" font-size="9.5" letter-spacing="0.8" fill="#555" text-anchor="middle">+ THE ESCROW PROGRAM ID</text>
   <path d="M 430,106 L 430,124" stroke="#111" stroke-width="1.4" fill="none" marker-end="url(#addr-types-arr)"/>
   <text x="422" y="119" font-size="10" fill="#777" text-anchor="end" font-style="italic">derives</text>
   <circle cx="430" cy="132" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
