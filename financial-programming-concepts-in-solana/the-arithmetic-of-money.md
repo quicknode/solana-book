@@ -75,9 +75,9 @@ Check them **after the math, not just before.** A check on the way in catches ba
 
 One warning from the same file: an invariant that can hold vacuously is not an invariant. `new_k >= old_k` passes trivially when `old_k` is zero, which is why the empty pool needs its own explicit guard. Know the degenerate values of every property you assert.
 
-## One Index Compounds Interest for Every Borrower at Once
+## One Accumulation Factor Compounds Interest for Every Borrower
 
-Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **cumulative index**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New index = old index × (1 + rate per slot × elapsed slots). A debt is stored divided by the index at borrow time, and its live value is that scaled figure times the current index. One multiplication serves every borrower simultaneously, interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The Lending chapter runs this machine in production; the same shape prices any share of a growing pool.
+Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **accumulation factor**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New factor = old factor × (1 + rate per slot × elapsed slots). Instead of updating every debt, the market stores each borrower's principal and grows the one shared factor; a live debt is that principal multiplied by the current factor. Interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The lending example calls the field `borrow_accumulation_factor`. The Lending chapter runs this machine in production; the same shape prices any share of a growing pool.
 
 Two numerical points complete the picture:
 
@@ -92,4 +92,4 @@ Rates themselves are policy, not arithmetic, but one curve shows up everywhere: 
 - Multiply before divide, promote intermediates to u128, and check every operation with a named overflow error.
 - Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
 - Assert invariants after the math, and know the degenerate values where an invariant can hold vacuously.
-- One cumulative index compounds interest for every borrower at once, and a utilization curve is monetary policy in fifteen lines of integer math.
+- One accumulation factor compounds interest for every borrower at once, and a utilization curve is monetary policy in fifteen lines of integer math.
