@@ -43,6 +43,8 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 
 Products of this kind have been shipped already, several of them with real users and real money behind them. They are worth studying for their shape rather than copying line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
 
+**An account that pays like a market and still wires like a bank.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only send a bank transfer, SWIFT for the ones abroad, and local rails for payroll, so the edges of the product are ordinary banking and the middle is a program. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Vault Strategy* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licences that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
+
 **Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that hold up are the ones honest about the awkward case: when borrowing is high the reserve cannot pay every depositor out at once, and the app has to say so before anyone finds out the hard way.
 
 **Spending against your shares instead of selling them.** Someone holding NVDAx who needs two thousand dollars can sell, ending a position they wanted to keep and in many countries creating a tax bill, or borrow against it and keep it. The second option is the *Lending and Borrowing* chapter in full: shares as collateral, a price from a feed as covered in the *Offchain Truth* chapter, and a liquidation path when the collateral falls. Around it sits a card, a spending limit, and a warning that arrives long before a liquidator does.
@@ -85,7 +87,7 @@ Some things were left out on purpose, and knowing which is part of knowing the s
 
 **Governance** is deliberately absent. Every program here has an operator with a key, and the honest treatment of admin power is in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
-**The interface** is absent too, and for the products in this chapter it is where most of the work is. Nothing in these pages covers wallets, signing, transaction building, or the screen someone actually taps, and a program reachable only through a command line reaches nobody in the paragraphs above.
+**The interface** is absent too. Nothing in these pages covers wallets, signing, transaction building, or the screen someone actually taps. An elegant, well-designed interface is what makes people adopt a financial product and keep using it, and it deserves as much of your attention as the program behind it.
 
 ## Build One, Then Have It Attacked
 
