@@ -1,0 +1,98 @@
+# Print Specification
+
+The physical book: its trim, its type, and why each number is what it is. Everything here is produced by `scripts/build-pdf.mjs`, which is the implementation; this file is the intent, so the two are changed together.
+
+## Trim Size
+
+**7.44 x 9.69 in (189 x 246 mm).**
+
+Technical books are usually printed at 7 x 9.19in (178 x 233mm): O'Reilly's animal books, and, near enough, Manning at 7.38 x 9.25 and Addison-Wesley's *TCP/IP Illustrated* at 7 x 9.25. That is the shelf this book belongs on.
+
+Amazon KDP does not offer 7 x 9.19. Of the trims it does offer, 7.44 x 9.69 is the closest in proportion: 0.768 against 0.762, a difference nobody can see. The alternatives were 7 x 10, which matches the width exactly but reads as a leaner, taller book, and 7.5 x 9.25, which matches the height but is half an inch wider and reads squarer.
+
+The book was previously built at US Letter, 8.5 x 11in. Letter is a printer-paper size rather than a book size: it reads as a manual, it costs more per unit in print on demand, and at 6.3in of measure the lines ran past the length a reader can comfortably track.
+
+`PAGE_SIZES` in `scripts/build-pdf.mjs` holds the trim and its margins. The page box, the cover's display size, the resolution the cover is rasterized at, and the figure width all derive from the entry the build selects, so a size is one object rather than numbers scattered through the CSS.
+
+## The Page
+
+| | |
+| --- | --- |
+| Trim | 7.44 x 9.69 in |
+| Margins | 0.8in top, 0.85in sides, 0.85in bottom |
+| Text block | 5.74 x 8.04 in |
+| Measure | about 75 characters |
+
+The side margins are set by two constraints. KDP requires a gutter of at least 0.75in for a book of 151 to 500 pages, and 0.85in clears it with room for the binding to eat. And the measure that leaves, 5.74in of 11pt type, lands at about 75 characters, the top of the range a reader tracks comfortably. Letter at 1.1in margins gave 6.3in and about 82 characters, which was too long.
+
+Margins are symmetric rather than mirrored. If the interior is ever sent to a printer that wants a larger inside margin than outside, that is a `@page :left` and `@page :right` pair, and the gutter number above is where it starts.
+
+## Type
+
+| Role | Face | Size |
+| --- | --- | --- |
+| Body | Charter, falling back to Bitstream Charter, Georgia, Times New Roman | 11pt / 1.38 |
+| Headings | Denim INK (bundled in `assets/fonts/`) | 17pt chapter, 13pt section, 11pt italic sub-section |
+| Code and addresses | SF Mono, Menlo, Consolas, DejaVu Sans Mono | 0.82em, about 9pt |
+| Figure captions | Body face, italic | 9.5pt |
+| Running heads | Georgia italic | 9pt |
+| Folio | Georgia | 10pt |
+
+Charter is a transitional serif drawn by Matthew Carter for low-resolution output, which makes it hold up at small sizes and on cheap paper. It is not bundled, so a machine without it renders in Georgia; the fallback is deliberate and readable, but a print-ready build should have Charter installed. Denim INK is bundled, so headings are identical everywhere.
+
+## Justification and Hyphenation
+
+**Body text is justified, with automatic hyphenation.** The two go together: justification without hyphenation opens rivers of white space between words, because the only way to fill a line is to stretch its spaces. Hyphenation gives the line breaker somewhere else to give.
+
+**Headings are set ragged right and never hyphenated.** A heading is short enough that justifying it would stretch two or three words across the measure, and a broken word in a heading reads as a typo.
+
+Figure captions and table cells are ragged right for the same reason: they are short, and a justified caption of one line is a caption with holes in it.
+
+## Running Heads and Folios
+
+The header carries two items: the book's title on the left, the current chapter's title on the right, both 9pt Georgia italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered.
+
+Headers and folios are suppressed on the cover, the title page, chapter openers (headers only), part titles, and the blank versos paged.js inserts.
+
+## Structure
+
+A part title opens on a right-hand page, alone in the upper third of an otherwise empty page, and the reverse of that page is left blank so the part's first chapter also opens on a right-hand page. Every chapter starts on a new page.
+
+Page one of the PDF is page one of the flow, so odd page numbers are right-hand pages whether or not the cover is included. The recto break rules re-resolve either way.
+
+## Figures
+
+Every figure is an SVG, inlined into the build so the HTML has no external assets, and set to the full 5.74in measure. Figures do not break across pages. The conventions the drawings themselves follow live in the companion AI skill's `DIAGRAMS.md`, and `scripts/check-figure-geometry.mjs` enforces the mechanically checkable ones.
+
+## Cover
+
+The cover is authored separately as a print-ready PDF at `assets/cover.pdf` and rasterized into the build at 300dpi. Vector covers rendered unreliably through the PDF pipeline, so it is deliberately raster.
+
+Its art is 1800 x 2330, an aspect of 0.7727 against the page's 0.7678. The 0.6% difference is invisible on screen, but **the cover has not been redrawn for this trim**. A file going to a printer needs the cover re-exported at 7.44 x 9.69 with bleed, and with a spine width computed from the final page count and the paper stock, which is a number only the printer can give.
+
+## US Letter
+
+`--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite the print build. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
+
+It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 185 pages against 233, because the larger page carries more.
+
+## Building It
+
+```
+npm install
+npm run build-pdf                          # print size, into build/
+npm run build-pdf -- --size letter         # US Letter
+NO_COVER=1 npm run build-pdf               # interior only
+REVIEWER_NAME="..." npm run build-pdf      # stamped advance copy
+npm run build-pdf -- out.pdf               # explicit output path
+npm run build-pdf -- --help                # the switches, from the script itself
+npm run preview -- <name> "<phrase>"       # rasterize one page to check it
+```
+
+An unrecognized switch, a `--size` with no value or an unknown one, and more than one output path all print the usage and exit nonzero, rather than taking the stray argument for a filename.
+
+The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cover-less Letter build.
+
+The build needs a Chromium binary, found at `/opt/pw-browsers/chromium` or wherever `CHROMIUM_PATH` points.
+
+At the time of writing the manuscript runs to **233 pages** with the cover, which puts it in KDP's 151 to 300 page band for gutter purposes. Every figure is drawn, so that number will move with editing rather than with artwork.
