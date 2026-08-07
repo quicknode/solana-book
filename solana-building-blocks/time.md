@@ -2,10 +2,7 @@
 
 Solana has two clocks: a slot counter that nobody can bend, and a wall clock that validators report and can shift by a few seconds. Measure money with the slot counter.
 
-| Clock | Source | Guarantee |
-| --- | --- | --- |
-| **slot** | The Clock sysvar's count of block opportunities, roughly 400ms apart | Only goes up, at a rate nobody can meaningfully bend |
-| **unix timestamp** | The same Clock sysvar, validator-reported wall time | Right to within a few seconds |
+![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators.](figures/two-clocks.svg)
 
 ## Slots Are Guaranteed to Progress
 
@@ -17,7 +14,7 @@ Two programs in this book accrue value over time, and both count it in slots: th
 new factor = old factor × (1 + rate per slot × elapsed slots)
 ```
 
-Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor. A borrower's current debt is their principal multiplied by that factor. The *Arithmetic of Money* chapter covers how to build that factor safely. The factor advances by slots, not seconds.
+Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor. A borrower's current debt is their principal multiplied by that factor. The *Arithmetic of Money* chapter covers how to build that factor safely.
 
 The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count slots because a trader who could stretch a slot could stretch what they owe.
 
@@ -43,7 +40,7 @@ A program reading a price has two questions to answer:
 - Whether the source can be trusted.
 - Whether the price is recent enough.
 
-The *Offchain Truth* chapter answers the first. This chapter answers the second, and how recent counts as recent enough is a judgement each program makes for itself. Four of this book's programs make it differently:
+The *Offchain Truth* chapter answers the first, along with everything else a program checks about a price before acting on it. This chapter answers the second. Four of this book's programs answer it differently:
 
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |
@@ -52,7 +49,7 @@ The *Offchain Truth* chapter answers the first. This chapter answers the second,
 | the perpetual futures venue | 150 slots, about a minute | slots |
 | the vault strategy | 60 seconds | seconds |
 
-Three of the four count slots. The vault counts seconds because the feed it reads publishes a wall-clock time, so seconds is the unit it was handed. The *Offchain Truth* chapter covers what else a program checks about a price before it uses one.
+Three of the four count slots. The vault counts seconds because that is the unit its feed publishes.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
@@ -86,10 +83,12 @@ A halt is a rare event: at the time of writing, block production has not stopped
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart carries a slot roughly where the last one left off and a timestamp hours later. Three consequences:
 
 - **Per-slot accrual pauses with the chain.** The lending market's factor advances by elapsed slots, so a nine-hour halt accrues no interest: nobody is charged for a market they could not reach. A fee accruing by timestamp charges the full nine hours.
-- **A window counted in seconds refuses the old price. One counted in slots accepts it, which is the dangerous half.** The vault strategy refuses a price older than sixty seconds, so its first call after a halt fails until a publisher posts again. The lending market's 25-slot window sees a price stamped one slot ago and, on the slot count alone, would accept a number nine hours old. A price stamped one slot ago is not always a price from four hundred milliseconds ago.
+- **A window counted in seconds refuses the old price. One counted in slots accepts it, which is the dangerous half.** The vault strategy refuses a price older than sixty seconds, so its first call after a halt fails until a publisher posts again. The lending market's 25-slot window sees a price stamped one slot ago and, on the slot count alone, would accept a number nine hours old. A price stamped one slot ago is not always a price from four hundred milliseconds ago. This bites hardest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
 - **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours, so a contributor with an hour left finds the window shut when the chain returns. That program survives it because its refund path has no deadline; a design whose only exit was a narrow window would have stranded them.
 
 A slot-counted window needs one more check. The [`LastRestartSlot` sysvar](https://docs.anza.xyz/runtime/sysvars) carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, and the perpetual futures venue all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program whose freshness window is counted in slots.
+
+The order book comes through a halt untouched, because it reads neither clock: queue positions resume exactly as they were.
 
 ## Which Clock to Use for Each Job
 
@@ -99,20 +98,18 @@ Three questions, and a default if you answer no to all of them.
 
 The order matters at the third question. A fundraiser's deadline is worth money and a validator would happily move it, which argues for slots, but the deadline is also a promise made to a person in days, and days are wall-clock time. The promise wins, and the margin handles the adversary: leave enough room that a few seconds cannot change who gets paid.
 
-![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
+## What the Programs in This Book Chose
 
-## What the Programs in This Book Chose, and How It Holds Up
+Every program in Part II that touches time, and the clock it settled on.
 
-Every program in Part II that touches time is in this table, with the two questions worth asking of any answer: what happens if validators lean on the seconds, and what happens if the chain stops.
-
-| Program | What it times | Its answer | If the seconds are nudged | If the chain halts |
-| --- | --- | --- | --- | --- |
-| token fundraiser | its funding deadline | whole days from one stored timestamp | a few seconds cannot move a count that floors to whole days | the deadline can pass unattended; refunds have no deadline of their own, so nobody is stranded |
-| lending market | interest accrual, and price freshness | slots for both | nothing to bend | accrual stops, and `LastRestartSlot` rejects a price from before the restart |
-| perpetual futures | funding accrual, and price freshness | slots for both | nothing to bend | the same, and it matters more: leverage multiplies a bad price across the book |
-| prop AMM | price freshness | slots | nothing to bend | the same restart check, and the market refuses to quote until a publisher posts |
-| vault strategy | an annual fee, and price freshness | timestamps for both | seconds measured against a year are nothing | the fee charges through the halt, and the price check fails closed on its own |
-| order book | who queued first | a sequence number, neither clock | matching never reads a clock, so there is nothing to lean on | queue positions come back exactly as they were |
+| Program | What it times | Its answer |
+| --- | --- | --- |
+| token fundraiser | its funding deadline | whole days from one stored timestamp |
+| lending market | interest accrual, and price freshness | slots for both |
+| perpetual futures | funding accrual, and price freshness | slots for both |
+| prop AMM | price freshness | slots |
+| vault strategy | an annual fee, and price freshness | timestamps for both |
+| order book | who queued first | a sequence number, neither clock |
 
 ## What You Learnt
 
