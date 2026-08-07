@@ -1,11 +1,5 @@
 # About the Author
 
-PLACEHOLDER. To be written when the book is complete.
-
-<!--
-Approved draft, held here until the book is complete. Do not render before then.
-
 Mike MacCana leads Solana content at Quicknode, where he maintains the most comprehensive open library of tested Solana programs: the companion repository this book is built on. He previously ran developer education at the Solana Foundation, creating the four-day training program taught to hundreds of students from blockchain clubs in Romania to Ivy League universities, and co-creating and presenting the Solana Foundation Developer Bootcamp, watched more than 350,000 times. He is a top-ten contributor on Solana StackExchange, the author of solana-helpers (30,000 downloads a week), and a two-time winner at the Solana Sandstorm hackathon.
 
 Before Solana, Mike worked at financial giants including Man Group, Credit Suisse, and CMC Invest, and at Google, Microsoft, and Red Hat. He founded CertSimple, used by Mozilla and most London fintechs, and created python-docx, which Microsoft uses in its own AI tools. He is in the top 0.1% of developers on Stack Overflow and has spoken at Solana Breakpoint and Accelerate. He lives in New York City.
--->
