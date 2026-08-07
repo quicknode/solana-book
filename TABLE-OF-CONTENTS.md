@@ -39,10 +39,9 @@ Each chapter walks one complete, tested program from the [companion repository](
 
 ## [Chapter 20: Where to Go From Here](conclusion/where-to-go-from-here.md)
 
-## Appendices
+## [Glossary](appendices/glossary.md)
 
-- [Glossary](appendices/glossary.md)
-- Index (print edition)
+## Index (print edition)
 
 ## Postlude
 
