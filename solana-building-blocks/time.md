@@ -88,9 +88,9 @@ A slot-counted window needs one more check. The [`LastRestartSlot` sysvar](https
 
 ## Which Clock to Use for Each Job
 
-Four questions, asked in order. The first one you answer yes to is your answer.
+Three questions, and a default if you answer no to all of them.
 
-![A decision tree for measuring time: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, a real-world time you promised a person takes the wall clock, and everything else takes the slot count.](figures/clock-decision-tree.svg)
+![The decision tree: each question sends a yes to its answer on the right and a no down to the next question, so order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, a real-world time you promised a person takes the wall clock, and three noes leave the slot count.](figures/clock-decision-tree.svg)
 
 The order matters at the third question. A fundraiser's deadline is worth money and a validator would happily move it, which argues for slots, but the deadline is also a promise made to a person in days, and days are wall-clock time. The promise wins, and the margin handles the adversary: leave enough room that a few seconds cannot change who gets paid.
 
