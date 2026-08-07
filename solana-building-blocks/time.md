@@ -88,15 +88,11 @@ A slot-counted window needs one more check. The [`LastRestartSlot` sysvar](https
 
 ## Which Clock to Use for Each Job
 
-| What you are measuring | Use | Watch for |
-| --- | --- | --- |
-| interest, funding, anything that accrues and is worth money | **slots** | accrual stops during a halt, so nobody pays for hours they could not trade. Say so in your docs |
-| how fresh a price is | **whichever unit the feed stamps**: slots if it publishes a slot, seconds if it publishes a time | a slot-counted window needs the `LastRestartSlot` check above; a seconds-counted one already refuses stale prices on its own |
-| a deadline people agreed to: a week to fund, a quarter to redeem | **timestamps** | validators can nudge them, so never let a few seconds decide who gets paid, and compute both sides of the boundary from one stored expression |
-| a rate quoted per year | **timestamps** | it charges straight through a halt, which against a year is a rounding error and against a week is not |
-| anything a person reads: receipts, reporting, display | **timestamps** | nothing. This is what wall-clock time is for |
+Four questions, asked in order. The first one you answer yes to is your answer.
 
-Measure time in slots by default, because validators can nudge the wall clock and nobody can meaningfully bend the slot count. Reach for timestamps in two cases: when the number is one a person reads, like a deadline you promised or a date on a receipt, and when the horizon is long enough that a few seconds are noise, like a fee quoted per year.
+![A decision tree for measuring time: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, a real-world time you promised a person takes the wall clock, and everything else takes the slot count.](figures/clock-decision-tree.svg)
+
+The order matters at the third question. A fundraiser's deadline is worth money and a validator would happily move it, which argues for slots, but the deadline is also a promise made to a person in days, and days are wall-clock time. The promise wins, and the margin handles the adversary: leave enough room that a few seconds cannot change who gets paid.
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators. Choose by asking who benefits from the error.](figures/two-clocks.svg)
 
@@ -116,7 +112,7 @@ Every program in Part II that touches time is in this table, with the two questi
 ## What You Learnt
 
 - Solana has two clocks: the **slot**, whose progression the runtime guarantees, and the **unix timestamp**, which validators report.
-- Use slots by default. Reach for timestamps in two cases: when a person reads the number, and when the horizon is long enough that a few seconds are noise.
+- Four questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, a real-world time you promised a person takes the wall clock, and everything else takes the slot count.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **cumulative index** that advances by elapsed slots. A current balance is the principal multiplied by the index.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
