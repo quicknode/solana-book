@@ -42,7 +42,7 @@ Some things were left out on purpose, and knowing which is part of knowing the s
 
 **Formal verification** appears here only as a taster. The escrow's proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modelling the parts that cannot be executed symbolically, is a subject the size of this book.
 
-**Governance** is deliberately absent. Every program here has an operator with a key, and the honest treatment of admin power is in Operating Financial Software. Replacing that key with a voting process is a real design problem and a different one.
+**Governance** is deliberately absent. Every program here has an operator with a key, and the honest treatment of admin power is in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
 **The interface** is absent too. Nothing in these pages covers wallets, transaction building, or the frontend, and a program with no interface reaches nobody.
 

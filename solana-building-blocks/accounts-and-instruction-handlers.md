@@ -63,7 +63,7 @@ An instruction names which of the program's **instruction handlers** to run (the
 
 Watch Alice run her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
-The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports - the balance an explorer displays as 1 SOL is the integer 1,000,000,000 - and every asset in this book gets the same treatment. The Arithmetic of Money builds the full discipline on this one idea.
+The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports - the balance an explorer displays as 1 SOL is the integer 1,000,000,000 - and every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the full discipline on this one idea.
 
 > **Why "lamport"?** The unit is named for Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
 
