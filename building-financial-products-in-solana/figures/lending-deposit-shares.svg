@@ -149,8 +149,8 @@
   <text x="32" y="560.34" font-size="9.5" font-weight="bold">USDC reserve</text>
   <line x1="12" y1="565.34" x2="164" y2="565.34" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="576.34" font-size="8.5" font-weight="bold">available_liquidity: 1,000</text>
-  <text x="12" y="588.34" font-size="8.5">borrowed_amount_scaled: 0</text>
-  <text x="12" y="600.34" font-size="8.5">cumulative_borrow_rate_index: 1.0</text>
+  <text x="12" y="588.34" font-size="8.5">borrowed_principal: 0</text>
+  <text x="12" y="600.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
   <text x="12" y="612.34" font-size="8.5">accumulated_protocol_fees: 0</text>
   </g>
   <g>
