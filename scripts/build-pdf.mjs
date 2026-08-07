@@ -22,18 +22,47 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
-// Trim size, in inches. 7.44 x 9.69 is the KDP standard trim closest in
-// proportion to the 7 x 9.19 O'Reilly technical books are printed at, which
-// KDP does not offer. Every page dimension below is derived from these two
-// numbers, so changing the trim is changing these two numbers.
-const PAGE_WIDTH_IN = 7.44;
-const PAGE_HEIGHT_IN = 9.69;
-// Side margins clear KDP's 0.75in gutter minimum for books up to 500 pages and
-// leave a 5.74in measure, about 75 characters of 11pt Georgia.
-const SIDE_MARGIN_IN = 0.85;
+// Page sizes, in inches. "print" is what the book is printed at: 7.44 x 9.69
+// is the KDP standard trim closest in proportion to the 7 x 9.19 technical
+// books are usually printed at, which KDP does not offer. Its side margins
+// clear KDP's 0.75in gutter minimum for books up to 500 pages and leave a
+// 5.74in measure, about 75 characters.
+//
+// "letter" is US Letter, for reading on screen and for printing a draft on an
+// office printer. It is not a book size, and its wider margins only bring the
+// measure down to 6.3in, about 82 characters, which is longer than a reader
+// tracks comfortably. Every page dimension is derived from the chosen size.
+const PAGE_SIZES = {
+  print: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 0.85, topMarginIn: 0.8, bottomMarginIn: 0.85 },
+  letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
+};
+
+// Usage: npm run build-pdf -- [--size print|letter] [output.pdf]
+const argv = process.argv.slice(2);
+let sizeName = "print";
+const positional = [];
+for (let i = 0; i < argv.length; i++) {
+  const arg = argv[i];
+  const inline = arg.startsWith("--size=") ? arg.slice("--size=".length) : null;
+  if (inline !== null) sizeName = inline;
+  else if (arg === "--size") sizeName = argv[++i];
+  else positional.push(arg);
+}
+if (!Object.hasOwn(PAGE_SIZES, sizeName)) {
+  console.error(`Unknown --size ${JSON.stringify(sizeName)}; expected one of: ${Object.keys(PAGE_SIZES).join(", ")}`);
+  process.exit(1);
+}
+const PAGE_WIDTH_IN = PAGE_SIZES[sizeName].widthIn;
+const PAGE_HEIGHT_IN = PAGE_SIZES[sizeName].heightIn;
+const SIDE_MARGIN_IN = PAGE_SIZES[sizeName].sideMarginIn;
+const TOP_MARGIN_IN = PAGE_SIZES[sizeName].topMarginIn;
+const BOTTOM_MARGIN_IN = PAGE_SIZES[sizeName].bottomMarginIn;
 const TEXT_WIDTH_IN = +(PAGE_WIDTH_IN - 2 * SIDE_MARGIN_IN).toFixed(2);
 
-const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", `${TITLE}.pdf`));
+// A size the book is not printed at is labelled in the filename, so two builds
+// can sit in build/ without one quietly overwriting the other.
+const defaultName = sizeName === "print" ? `${TITLE}.pdf` : `${TITLE} (${sizeName}).pdf`;
+const outputPath = resolve(positional[0] ?? join(repoRoot, "build", defaultName));
 mkdirSync(dirname(outputPath), { recursive: true });
 
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
@@ -297,7 +326,7 @@ const html = `<!doctype html>
 
 @page {
   size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;
-  margin: 0.8in ${SIDE_MARGIN_IN}in 0.85in ${SIDE_MARGIN_IN}in;
+  margin: ${TOP_MARGIN_IN}in ${SIDE_MARGIN_IN}in ${BOTTOM_MARGIN_IN}in ${SIDE_MARGIN_IN}in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
   /* The draft marker sits in the footer rather than the header: at this trim
      the measure fits two running heads, and a third box wraps both of them. */

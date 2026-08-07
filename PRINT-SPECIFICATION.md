@@ -12,7 +12,7 @@ Amazon KDP does not offer 7 x 9.19. Of the trims it does offer, 7.44 x 9.69 is t
 
 The book was previously built at US Letter, 8.5 x 11in. Letter is a printer-paper size rather than a book size: it reads as a manual, it costs more per unit in print on demand, and at 6.3in of measure the lines ran past the length a reader can comfortably track.
 
-`PAGE_WIDTH_IN` and `PAGE_HEIGHT_IN` in `scripts/build-pdf.mjs` are the only two numbers to change. The page box, the cover's display size, the resolution the cover is rasterized at, and the figure width all derive from them.
+`PAGE_SIZES` in `scripts/build-pdf.mjs` holds the trim and its margins. The page box, the cover's display size, the resolution the cover is rasterized at, and the figure width all derive from the entry the build selects, so a size is one object rather than numbers scattered through the CSS.
 
 ## The Page
 
@@ -70,15 +70,25 @@ The cover is authored separately as a print-ready PDF at `assets/cover.pdf` and 
 
 Its art is 1800 x 2330, an aspect of 0.7727 against the page's 0.7678. The 0.6% difference is invisible on screen, but **the cover has not been redrawn for this trim**. A file going to a printer needs the cover re-exported at 7.44 x 9.69 with bleed, and with a spine width computed from the final page count and the paper stock, which is a number only the printer can give.
 
+## US Letter
+
+`--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite the print build. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
+
+It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 183 pages against 233, because the larger page carries more.
+
 ## Building It
 
 ```
 npm install
-npm run build-pdf                          # into build/
+npm run build-pdf                          # print size, into build/
+npm run build-pdf -- --size letter         # US Letter
 NO_COVER=1 npm run build-pdf               # interior only
 REVIEWER_NAME="..." npm run build-pdf      # stamped advance copy
+npm run build-pdf -- out.pdf               # explicit output path
 npm run preview -- <name> "<phrase>"       # rasterize one page to check it
 ```
+
+The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cover-less Letter build.
 
 The build needs a Chromium binary, found at `/opt/pw-browsers/chromium` or wherever `CHROMIUM_PATH` points.
 
