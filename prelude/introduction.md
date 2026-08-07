@@ -47,7 +47,13 @@ The book splits the work with two companions. Both are available at [thesolanabo
 
 The AI skill makes your tools better. The book makes you better.
 
-Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page at [thesolanabook.com](https://thesolanabook.com).
+Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page described below.
+
+## Corrections Are Welcome, and Expected
+
+Long-lived technical books are not written once. They are corrected, edition after edition, by readers who found the sentence that was wrong.
+
+The errata page sits alongside the two companions at [thesolanabook.com](https://thesolanabook.com). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck at exactly the wrong moment, that is worth reporting, and contributors are credited by name.
 
 ## Prerequisites
 
