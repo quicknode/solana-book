@@ -22,7 +22,74 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
-const outputPath = resolve(process.argv[2] ?? join(repoRoot, "build", `${TITLE}.pdf`));
+// Page sizes, in inches. "print" is what the book is printed at: 7.44 x 9.69
+// is the KDP standard trim closest in proportion to the 7 x 9.19 technical
+// books are usually printed at, which KDP does not offer. Its side margins
+// clear KDP's 0.75in gutter minimum for books up to 500 pages and leave a
+// 5.74in measure, about 75 characters.
+//
+// "letter" is US Letter, for reading on screen and for printing a draft on an
+// office printer. It is not a book size, and its wider margins only bring the
+// measure down to 6.3in, about 82 characters, which is longer than a reader
+// tracks comfortably. Every page dimension is derived from the chosen size.
+const PAGE_SIZES = {
+  print: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 0.85, topMarginIn: 0.8, bottomMarginIn: 0.85 },
+  letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
+};
+
+const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
+
+  --size <name>   Page size; defaults to "print". See PRINT-SPECIFICATION.md.
+  --help          Print this and exit.
+
+Environment:
+  NO_COVER=1      Build the interior without the cover page.
+  REVIEWER_NAME   Stamp the title page as an advance copy for that reviewer.`;
+
+const die = (message) => {
+  console.error(`${message}\n\n${USAGE}`);
+  process.exit(1);
+};
+
+// npm passes everything after its own "--" through, but which npm versions
+// forward the separator itself has changed over the years, so a bare "--" is
+// dropped rather than taken for an output path.
+const argv = process.argv.slice(2).filter((arg) => arg !== "--");
+let sizeName = "print";
+const positional = [];
+for (let i = 0; i < argv.length; i++) {
+  const arg = argv[i];
+  if (arg === "--help" || arg === "-h") {
+    console.log(USAGE);
+    process.exit(0);
+  } else if (arg.startsWith("--size=")) {
+    sizeName = arg.slice("--size=".length);
+  } else if (arg === "--size") {
+    if (i + 1 >= argv.length) die("--size needs a value.");
+    sizeName = argv[++i];
+  } else if (arg.startsWith("-")) {
+    // Without this an unrecognized flag becomes the output path, and the build
+    // succeeds having written a file named "--size".
+    die(`Unknown option ${JSON.stringify(arg)}.`);
+  } else {
+    positional.push(arg);
+  }
+}
+if (positional.length > 1) die(`Expected one output path, got ${positional.length}: ${positional.join(", ")}`);
+if (!Object.hasOwn(PAGE_SIZES, sizeName)) {
+  die(`Unknown --size ${JSON.stringify(sizeName)}; expected one of: ${Object.keys(PAGE_SIZES).join(", ")}`);
+}
+const PAGE_WIDTH_IN = PAGE_SIZES[sizeName].widthIn;
+const PAGE_HEIGHT_IN = PAGE_SIZES[sizeName].heightIn;
+const SIDE_MARGIN_IN = PAGE_SIZES[sizeName].sideMarginIn;
+const TOP_MARGIN_IN = PAGE_SIZES[sizeName].topMarginIn;
+const BOTTOM_MARGIN_IN = PAGE_SIZES[sizeName].bottomMarginIn;
+const TEXT_WIDTH_IN = +(PAGE_WIDTH_IN - 2 * SIDE_MARGIN_IN).toFixed(2);
+
+// A size the book is not printed at is labelled in the filename, so two builds
+// can sit in build/ without one quietly overwriting the other.
+const defaultName = sizeName === "print" ? `${TITLE}.pdf` : `${TITLE} (${sizeName}).pdf`;
+const outputPath = resolve(positional[0] ?? join(repoRoot, "build", defaultName));
 mkdirSync(dirname(outputPath), { recursive: true });
 
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
@@ -253,16 +320,22 @@ async function rasterizeCover(coverPdfPath) {
       pdfjsUrl: pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.mjs")).href,
       workerUrl: pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.worker.mjs")).href,
       pdfB64: readFileSync(coverPdfPath).toString("base64"),
-      targetWidth: 8.5 * 300,
+      targetWidth: PAGE_WIDTH_IN * 300,
     },
   );
   await page.close();
   return dataUrl;
 }
 
+// Reading and review copies leave the cover off: the art is not what is being
+// read, and the interior's page count is what a printer quotes against.
+// NO_COVER=1 npm run build-pdf
+const includeCover = process.env.NO_COVER !== "1";
 const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
 let coverContent = "&nbsp;";
-if (existsSync(coverPdfPath)) {
+if (!includeCover) {
+  coverContent = "";
+} else if (existsSync(coverPdfPath)) {
   coverContent = `<img src="${await rasterizeCover(coverPdfPath)}" alt="">`;
 } else {
   console.warn("assets/cover.pdf not found; the cover page is blank");
@@ -280,23 +353,25 @@ const html = `<!doctype html>
 @font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
 
 @page {
-  size: 8.5in 11in;
-  margin: 0.9in 1.1in 0.95in 1.1in;
+  size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;
+  margin: ${TOP_MARGIN_IN}in ${SIDE_MARGIN_IN}in ${BOTTOM_MARGIN_IN}in ${SIDE_MARGIN_IN}in;
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
-  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
-  @top-center { content: "PRERELEASE DRAFT"; font-family: Georgia, serif; font-size: 9.5pt; letter-spacing: 0.08em; color: #999; }
-  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9.5pt; font-style: italic; color: #444; }
+  /* The draft marker sits in the footer rather than the header: at this trim
+     the measure fits two running heads, and a third box wraps both of them. */
+  @bottom-left { content: "PRERELEASE DRAFT"; font-family: Georgia, serif; font-size: 8pt; letter-spacing: 0.08em; color: #999; }
+  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
 }
-@page :first { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+@page :first { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 /* Pages inserted to push a part title onto a right-hand page carry nothing. */
-@page :blank { @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+@page :blank { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
 /* A part title page carries no running head: the chapter it interrupts is over
    and the one it announces has not started. */
-@page part-start { @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
-@page cover { margin: 0; @bottom-center { content: none; } @top-left { content: none; } @top-center { content: none; } @top-right { content: none; } }
+@page part-start { @top-left { content: none; } @top-right { content: none; } }
+@page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 .cover { page: cover; break-after: page; }
-.cover img { display: block; width: 8.5in; height: 11in; }
+.cover img { display: block; width: ${PAGE_WIDTH_IN}in; height: ${PAGE_HEIGHT_IN}in; }
 
 html { font-size: 11pt; }
 body {
@@ -404,7 +479,7 @@ th, td {
 }
 th { background: #ececea; font-weight: bold; border-bottom: 1pt solid #666; }
 table p { margin: 0; text-align: left; }
-figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: 4.9in; }
+figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: ${TEXT_WIDTH_IN}in; }
 figure svg { width: 100%; height: auto; }
 figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
 .figure-placeholder {
@@ -420,7 +495,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 </style>
 </head>
 <body>
-<div class="cover">${coverContent}</div>
+${includeCover ? `<div class="cover">${coverContent}</div>` : ""}
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
@@ -464,9 +539,11 @@ await page.evaluate(() => {
   }
 });
 
-// The cover is page one of the flow and of the PDF, so odd page numbers are
-// right-hand pages. A part title belongs on one, and so does the chapter that
-// follows it across the blank reverse. A section that runs over several pages
+// Page one of the PDF is page one of the flow, so odd page numbers are
+// right-hand pages whether or not the cover is included. A part title belongs
+// on one, and so does the chapter that follows it across the blank reverse.
+// The recto break rules re-resolve either way, so dropping the cover shifts
+// where paged.js inserts its blanks rather than putting parts on the wrong side. A section that runs over several pages
 // appears once per page it occupies, so keep the lowest number for each: that
 // is the page it opens on.
 const partPages = await page.evaluate(() => {
