@@ -62,7 +62,12 @@ A clock gives a program seconds, so counting days means dividing by 86,400. That
 elapsed days = (now − time_started) / 86,400
 ```
 
-`contribute()` requires that count to be *less than* the duration. `refund()` requires it to be *at least* the duration. One expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the count reaches the duration, contributions turn off and refunds turn on, by arithmetic rather than by a second stored flag anybody has to keep in step.
+Both handlers compare that one count against the same duration:
+
+- `contribute()` requires it to be *less than* the duration.
+- `refund()` requires it to be *at least* the duration.
+
+One expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund". At the moment the count reaches the duration, contributions turn off and refunds turn on, by arithmetic rather than by a second stored flag anybody has to keep in step.
 
 The trap is what "seven days" then means: the window ends at the first tick of day seven, not at the end of the seventh day.
 
@@ -112,7 +117,7 @@ Every program in Part II that touches time is in this table, with the two questi
 ## What You Learnt
 
 - Solana has two clocks: the **slot**, whose progression the runtime guarantees, and the **unix timestamp**, which validators report.
-- Four questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, a real-world time you promised a person takes the wall clock, and everything else takes the slot count.
+- Three questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, and a real-world time you promised a person takes the wall clock. Three noes leave the slot count.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
