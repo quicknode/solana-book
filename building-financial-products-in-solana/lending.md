@@ -10,7 +10,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
-Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks `available_liquidity` (the un-borrowed pool, and deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate), `borrowed_amount_scaled`, the `cumulative_borrow_rate_index` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate.
+Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks `available_liquidity` (the un-borrowed pool, and deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate), `borrowed_principal`, the `borrow_accumulation_factor` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate.
 
 Each reserve carries a `ReserveConfig`, all in basis points, and its validation rules are a compressed education in credit risk:
 
@@ -33,7 +33,7 @@ Every valuation in this chapter multiplies an amount by a price, and the prices 
 
 ## The Market Owner Opens the Market
 
-Maria runs the market, and her revenue is a cut of the interest: the reserve factor you just met. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `cumulative_borrow_rate_index` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single slot's interest does not truncate to zero while staying far inside u128's ceiling. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
+Maria runs the market, and her revenue is a cut of the interest: the reserve factor you just met. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `borrow_accumulation_factor` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single slot's interest does not truncate to zero while staying far inside u128's ceiling. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
 
 ## Supplying: Tokens In, Shares Out
 
