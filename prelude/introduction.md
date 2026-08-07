@@ -78,6 +78,6 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
 
-## An Appendix Meant to Be Worn Out: the Glossary
+## A Glossary Meant to Be Worn Out
 
 The Glossary is a full vocabulary for Solana-based financial products, covering both the technical and financial vocabulary this field uses daily. When a term in a chapter surprises you, it is defined there.
