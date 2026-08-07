@@ -62,15 +62,15 @@ Read her position carefully, because everything later hangs on it: **Carol's deb
 
 ## Interest: One Index, No Transfers
 
-Weeks pass, and the loans accrue interest without a single token moving. The mechanism is the **cumulative borrow-rate index**, and it is the most reusable idea in this chapter.
+Weeks pass, and the loans accrue interest without a single token moving. The mechanism is the **borrow accumulation factor**, and it is the most reusable idea in this chapter.
 
-Each reserve stores one number that starts at 1.0 and only grows. On every `refresh_reserve()`, the program computes the current borrow rate, multiplies it by the slots elapsed, and grows the index: new index = old index × (1 + rate per slot × elapsed slots). A loan is stored not as an amount but as a *scaled* amount: the amount divided by the index at borrow time. The live debt is always scaled amount × current index, rounded *up*, because debt rounds against the debtor. One multiplication per refresh serves every borrower in the reserve simultaneously; nobody's loan is ever visited individually. The moving of actual tokens is consolidated to the moments people repay or redeem, exactly like the order book's unsettled balances but across time instead of across fills.
+Each reserve stores one number that starts at 1.0 and only grows. On every `refresh_reserve()`, the program computes the current borrow rate, multiplies it by the slots elapsed, and grows the factor: new factor = old factor × (1 + rate per slot × elapsed slots). Rather than updating every loan, the reserve stores each borrower's `borrowed_principal` and grows the one shared `borrow_accumulation_factor`. A live debt is that principal times the current factor, rounded *up*, because debt rounds against the debtor. No loan is ever visited individually. The moving of actual tokens is consolidated to the moments people repay or redeem, exactly like the order book's unsettled balances but across time instead of across fills.
 
 The rate itself comes from a **kinked utilization curve**. Utilization is borrowed ÷ (available + borrowed). Below the kink at 80% utilization, the rate climbs gently from 2% toward 20% APR; above it, steeply toward 150%. The kink is the reserve begging for liquidity: when nearly everything is lent out, the rate spikes, which simultaneously pushes borrowers to repay and pulls new suppliers in with yield. It is monetary policy in fifteen lines of integer math.
 
 Of the interest that accrues, the reserve factor (10%) is skimmed into `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 
-![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the cumulative index compounding across refreshes.](figures/lending-rate-curve.svg)
+![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the accumulation factor compounding across refreshes.](figures/lending-rate-curve.svg)
 
 ## The Shorted Asset Rallies and the Position Becomes Liquidatable
 
@@ -101,7 +101,7 @@ Dave is one instance of a pattern this market runs on. Some work in a financial 
 
 ## Repayment, Fees, and Yield: Everyone Leaves Whole
 
-Five weeks in, Bob's cash crunch has passed. His $750 debt has quietly become about $758 through the index. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal lingers with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never squeak past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
+Five weeks in, Bob's cash crunch has passed. His $750 debt has quietly become about $758 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal lingers with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never squeak past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
 
 Maria runs `collect_protocol_fees()` whenever she likes and receives the accumulated 10% of interest, about 78 cents (`NothingToCollect` guards the empty case, and `protocol_fees_accrue_and_owner_can_collect` pins the flow). Of every dollar of interest Bob paid, ninety cents went to the suppliers, ten to the house.
 
@@ -124,7 +124,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 - Total liquidity = available + borrowed-with-interest − the house's accumulated fees, and the share supply is a claim on exactly that; the exchange rate cannot be moved by donating tokens to the vault (pinned by `raw_token_donation_does_not_inflate_exchange_rate`).
 - No action may leave an obligation past its allowed borrow value, and every valuation is fresh (same transaction) or refused.
 - Loan-to-value ≤ liquidation threshold in every valid config, so there is always a buffer between the most you can borrow and the point you can be liquidated.
-- The index never decreases, and debt computed from it never rounds in the borrower's favor.
+- The factor never decreases, and debt computed from it never rounds in the borrower's favor.
 - Liquidation can only shrink an unhealthy position toward health, by at most the close factor, at exactly the bonus.
 
 ## The Failure Modes: The Liquidation Engine Is Only as Honest as Its Prices
@@ -147,7 +147,7 @@ Strip the branding from a commercial bank and what remains is: pooled deposits e
 The concepts you now have:
 
 - **Shares as the yield mechanism.** Interest swells the pool while the share supply stays put, so each share redeems for more; no per-lender bookkeeping exists or needs to.
-- **The cumulative index.** One multiplication accrues interest for every borrower simultaneously; debts are stored scaled and revalued on touch. The same shape prices any claim on a growing pool.
+- **The accumulation factor.** Store each borrower's principal and one shared factor, and compute a debt by multiplying them. The same shape prices any claim on a growing pool.
 - **Conservative-by-construction valuation.** Collateral floors, debt ceils, so every health check errs against the borrower, and no rounding sub-unit can squeak a position past a boundary.
 - **Liquidation as a paid correction.** The close factor caps each call at part of the debt, so the borrower keeps what health does not require; the bonus pays the liquidator; the health gate means only positions already past the threshold can be touched.
 - **Cranks.** Permissionless, idempotent maintenance whose funds destinations come from stored state, and whose reliability comes from someone being paid.
