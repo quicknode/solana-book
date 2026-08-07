@@ -13,6 +13,16 @@ npm run build-pdf                   # the whole book, and the page count is a us
 `npm run preview -- <chapter> "<phrase>"` renders a single chapter around a phrase, which is faster than
 building the book when checking one edit.
 
+## A merged PR's branch is dead
+
+**Never push new commits to a branch whose PR has merged.** The push succeeds, GitHub shows the
+commits on the closed PR, and the work silently never reaches `main` because nobody merges a closed
+PR twice. This has happened here; do not repeat it.
+
+Every new piece of work after a merge starts on a fresh branch off `origin/main` and gets its own PR.
+Before pushing anywhere, check whether the branch's PR has already merged; if it has, cherry-pick onto
+a fresh branch instead.
+
 ## Stacked pull requests
 
 A stacked PR is one whose base is another PR's branch rather than `main`. They have stranded work here
