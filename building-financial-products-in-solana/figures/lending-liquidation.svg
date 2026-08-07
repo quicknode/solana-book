@@ -246,8 +246,8 @@
   <text x="32" y="560.34" font-size="9.5" font-weight="bold">USDC reserve</text>
   <line x1="12" y1="565.34" x2="164" y2="565.34" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="576.34" font-size="8.5">available_liquidity: 1,250</text>
-  <text x="12" y="588.34" font-size="8.5">borrowed_amount_scaled: 750</text>
-  <text x="12" y="600.34" font-size="8.5">cumulative_borrow_rate_index: 1.0</text>
+  <text x="12" y="588.34" font-size="8.5">borrowed_principal: 750</text>
+  <text x="12" y="600.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
   <text x="12" y="612.34" font-size="8.5">accumulated_protocol_fees: 0</text>
   </g>
   <g>
@@ -317,8 +317,8 @@
   <text x="496" y="560.34" font-size="9.5" font-weight="bold">SPCXx reserve</text>
   <line x1="476" y1="565.34" x2="628" y2="565.34" stroke="#888" stroke-width="0.8"/>
   <text x="476" y="576.34" font-size="8.5" font-weight="bold">available_liquidity: 3.25</text>
-  <text x="476" y="588.34" font-size="8.5" font-weight="bold">borrowed_amount_scaled: 0.75</text>
-  <text x="476" y="600.34" font-size="8.5">cumulative_borrow_rate_index: 1.0</text>
+  <text x="476" y="588.34" font-size="8.5" font-weight="bold">borrowed_principal: 0.75</text>
+  <text x="476" y="600.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
   <text x="476" y="612.34" font-size="8.5">accumulated_protocol_fees: 0</text>
   </g>
   <g>

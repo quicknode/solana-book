@@ -54,6 +54,10 @@ An order to buy at or below a stated price. The buyer's side of an order book.
 
 A recent block's hash, included in every transaction to bound its lifetime. When it expires, the transaction can never land.
 
+### borrow accumulation factor
+
+A single number per reserve that starts at 1.0 and only grows, compounding the borrow rate over elapsed slots. A borrower's live debt is their stored principal multiplied by it, so interest accrues for everyone without any loan being touched. The lending example calls the field `borrow_accumulation_factor`; see the *Lending and Borrowing* chapter.
+
 ### built-in address
 
 An address chosen rather than computed: the System Program, the token programs, and the sysvars each sit at a fixed byte string the runtime treats as that thing. Neither a [public key](#address) somebody holds the private key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
@@ -105,10 +109,6 @@ A permissionless instruction handler that performs maintenance work nobody owns 
 ### critbit tree
 
 A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it yields price-time priority for free. See the *Order Book Exchange* chapter.
-
-### cumulative interest index
-
-A single monotonically growing number per reserve that starts at 1.0 and compounds the interest rate over time. Debts are stored scaled by the index at borrow time, so one multiplication accrues interest for every borrower at once. See the *Lending and Borrowing* chapter.
 
 ### decimals
 
@@ -444,7 +444,7 @@ A token account whose authority is a program's PDA, where a program holds funds 
 
 ### WAD
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for interest indexes and rate math. Borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard, at 18 decimals because that is what Ether and most ERC-20 tokens use. Now the usual word for 18-decimal fixed point on every chain, Solana included.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for accumulation factors and rate math. Borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard, at 18 decimals because that is what Ether and most ERC-20 tokens use. Now the usual word for 18-decimal fixed point on every chain, Solana included.
 
 ### wallet
 
