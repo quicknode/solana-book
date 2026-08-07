@@ -1,6 +1,6 @@
 # Chapter 5: Time
 
-Solana has two clocks. Validators can nudge one of them, so if you measure money with that one, somebody else can move your numbers.
+Solana has two clocks: a slot counter that nobody can bend, and a wall clock that validators report and can shift by a few seconds. Measure money with the slot counter.
 
 | Clock | Source | Guarantee |
 | --- | --- | --- |
