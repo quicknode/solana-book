@@ -358,7 +358,7 @@ const html = `<!doctype html>
   @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
   /* The draft marker sits in the footer rather than the header: at this trim
      the measure fits two running heads, and a third box wraps both of them. */
-  @bottom-left { content: "PRERELEASE DRAFT"; font-family: Georgia, serif; font-size: 8pt; letter-spacing: 0.08em; color: #999; }
+  @bottom-left { content: "PRERELEASE DRAFT (${buildDate}) - NOT FOR DISTRIBUTION"; font-family: Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
   @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
   @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
 }
