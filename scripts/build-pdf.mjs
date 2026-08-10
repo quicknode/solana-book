@@ -286,8 +286,16 @@ const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "di
 const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
 
 const workDir = mkdtempSync(join(tmpdir(), "solana-book-pdf-"));
+const defaultChromiumPath = existsSync("/opt/pw-browsers/chromium")
+  ? "/opt/pw-browsers/chromium"
+  : "/opt/homebrew/bin/chromium";
+const resolvedChromiumPath = process.env.CHROMIUM_PATH ?? defaultChromiumPath;
+if (!existsSync(resolvedChromiumPath) && process.platform === "darwin") {
+  console.error(`Chromium not found at ${resolvedChromiumPath}. Run:\n  brew install chromium\n  xattr -cr /Applications/Chromium.app`);
+  process.exit(1);
+}
 const browser = await chromium.launch({
-  executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium",
+  executablePath: resolvedChromiumPath,
   args: ["--allow-file-access-from-files"],
 });
 
