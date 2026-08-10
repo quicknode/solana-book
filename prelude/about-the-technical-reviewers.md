@@ -1,3 +1,5 @@
 # About the Technical Reviewers
 
-PLACEHOLDER until reviewers are recruited. See the review process in WRITING-PLAN.md.
+As reviews land, each reviewer is credited here with their name, title, and project. Corrections that land in the manuscript are additionally credited in the Acknowledgements.
+
+The reviewer guide sent with each advance copy covers what feedback matters most and how to file it.
