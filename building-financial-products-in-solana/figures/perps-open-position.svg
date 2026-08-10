@@ -198,8 +198,5 @@
   <text x="224" y="352" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">plus her acceptable-price bound: a long opening above it fails</text>
   <text x="224" y="392" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">open fee: 10 bps of the 5,000 notional = 5 USDC,</text>
   <text x="224" y="408" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">so 995 is her working collateral</text>
-  <text x="224" y="512" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">the gates, in order &#8212; leverage: 5,000 &#8804; 995 &#215; 10 &#183; born healthy: 995 &gt; the</text>
-  <text x="224" y="528" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">250 maintenance margin &#183; the reservation: reserved_liquidity + 5,000 &#8804; liquidity,</text>
-  <text x="224" y="544" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">so the most the pool could ever owe her is set aside before she owns anything</text>
   <g class="coin" transform="translate(111.5,295.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
