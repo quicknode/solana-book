@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 896" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 913" font-family="Georgia, serif" fill="#111">
   <defs><marker id="vault-dep-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-dep-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
   <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -238,3 +237,4 @@
   <g class="coin" transform="translate(291.5,688.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(288,782.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
+  <text x="16" y="901" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>

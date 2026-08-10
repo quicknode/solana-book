@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 462" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 476" font-family="Georgia, serif" fill="#111">
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
   <g>
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="16" y="43.9168" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -143,3 +142,4 @@
   <text x="240" y="514" font-size="9" fill="#444" font-style="italic" text-anchor="start">Victor&#8217;s registry says nothing about it</text>
   </g>
 </svg>
+  <text x="16" y="464" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
