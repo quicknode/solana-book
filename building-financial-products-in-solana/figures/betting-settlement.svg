@@ -198,7 +198,7 @@
   <text x="472" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   </g>
   <path d="M 464,617.37 C 432,603.37 408,580 408,470 C 408,360 408,260 408,199.436" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-settle-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="420" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">4 USDC (the fee)</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="324.49" y="420" font-size="10.5" font-weight="bold" fill="#1e7a3c">4 USDC (the fee)</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="436" font-size="9" font-style="italic" fill="#444" text-anchor="end">signed by the event PDA</text>
   <text x="196" y="372" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs settle_event(): Toy Story 5 wins</text>
   <text x="30" y="470" font-size="9" fill="#444" font-style="italic">losing pool: total_pool 600 &#8722; winning_pool 400 = 200</text>

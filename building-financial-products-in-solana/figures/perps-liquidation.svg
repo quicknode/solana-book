@@ -201,15 +201,15 @@
   </g>
   <path d="M 509,503.37 C 400,470 112,460 112,420 L 112,168.056 C 112,160.056 112.938,158.054 113,157.056" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
   <path d="M 509,487.37 C 450,440 312,420 312,360 L 312,188.585 C 312,180.585 312.938,178.583 313,177.585" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="316" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. 195 USDC back to Bob</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="316" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. Bob is refunded 195 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="332" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">his equity, less the liquidator&#8217;s fee</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="326" y="284" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. 50 USDC to Dave</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="326" y="284" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. Dave takes 50 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="326" y="300" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">1% of the 5,000 notional, capped at equity</text>
   <path d="M 208,282.056 C 212,276.056 212,270.056 212,262.056 L 212,88.0562 C 212,80.056 209.261,75.021 209,74.056" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#perps-liq-arr-grey)"/>
   <text x="220" y="276.056" font-size="8" fill="#444" font-style="italic" text-anchor="start">rent refund</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="124" y="386" font-size="10" fill="#111" font-weight="bold" text-anchor="start">1. equity 995 &#8722; 750 = 245,</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="124" y="386" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. equity 995 &#8722; 750 = 245,</text>
   <text x="124" y="402" font-size="9" fill="#444" font-style="italic" text-anchor="start">at or under the 250 maintenance margin</text>
-  <text x="124" y="424" font-size="9" fill="#444" font-style="italic" text-anchor="start">4. the position account closes</text>
+  <text x="124" y="424" font-size="10.5" fill="#1e7a3c" font-style="italic" text-anchor="start" font-weight="bold">4. the position account closes</text>
   <text x="224" y="500" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">no authority gates liquidate_position(): the health</text>
   <text x="224" y="516" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">check is the only permission, so Dave is paid to be</text>
   <text x="224" y="532" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">whoever shows up first.</text>

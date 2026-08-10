@@ -13,6 +13,11 @@ npm run build-pdf                   # the whole book, and the page count is a us
 `npm run preview -- <chapter> "<phrase>"` renders a single chapter around a phrase, which is faster than
 building the book when checking one edit.
 
+`node scripts/check-figure-bands.mjs` reports horizontal dead space in the figures — the hole a
+deletion leaves when the columns around it stay put. It is advisory, not a gate: it over-reports on
+figures whose content is a curve rather than boxes, so each hit needs a look. Run it after removing
+anything from a figure.
+
 ## A merged PR's branch is dead
 
 **Never push new commits to a branch whose PR has merged.** The push succeeds, GitHub shows the

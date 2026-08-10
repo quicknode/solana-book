@@ -23,13 +23,13 @@
   <text x="248" y="138" font-size="9" font-style="italic" fill="#444">rules are the deployed bytecode</text>
   <!-- USDC lane: Alice's token A rests in the program's vault until Bob takes -->
   <path d="M 152,100 L 236,100" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="194" y="82" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">250 USDC</text>
+  <text x="170.52" y="82" font-size="10.5" font-weight="bold" fill="#1e7a3c">250 USDC</text>
   <path d="M 404,100 L 488,100" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="446" y="68" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">250 USDC</text>
+  <text x="422.52" y="68" font-size="10.5" font-weight="bold" fill="#1e7a3c">250 USDC</text>
   <text x="446" y="81" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(all of it)</text>
   <!-- TSLAx lane: one unbroken arrow, Bob straight to Alice; the program never holds token B -->
   <path d="M 548,132 C 552,174 510,190 440,190 C 340,192 240,192 150,190 C 106,190 94.258,173.939 92,132" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-program-swap-arr)"/>
-  <text x="320" y="216" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1 TSLAx</text>
+  <text x="299.82" y="216" font-size="10.5" font-weight="bold" fill="#1e7a3c">1 TSLAx</text>
   <text x="320" y="229" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(all of it, straight to Alice; the program never holds token B)</text>
   <text x="320" y="251" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">no percentage kept; the network fee is a fraction of a cent</text>
   <g class="coin" transform="translate(156,77.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>

@@ -236,7 +236,7 @@
   <text x="24" y="696" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
   <path d="M 224,235.644 C 260,249.644 280,270 320,270 L 436,270 C 460,270 460,290 460,320 L 460,535.37 C 460,549.37 460.254,546.395 461,557.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="448" y="294" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="end">1. burn her 900 shares first</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="327.08" y="294" font-size="10.5" fill="#1e7a3c" font-weight="bold">1. burn her 900 shares first</text>
   <path d="M 461,711.37 C 408,701.37 348,680 348,640 L 348,328.644 C 348,312.644 262,304.644 235,304.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="362" y="470" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. &#8776;1.52 TSLAx</text>
   <path d="M 461,791.37 C 296,781.37 236,740 236,700 L 236,405.644 C 236,389.644 240.923,407.986 235,381.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>

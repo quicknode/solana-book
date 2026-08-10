@@ -126,8 +126,8 @@
   <line x1="244" y1="304" x2="436" y2="330" stroke="#999" stroke-width="1.6"/>
   <line x1="244" y1="330" x2="436" y2="304" stroke="#999" stroke-width="1.6"/>
   <text x="340" y="348" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority approves</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="250" font-size="10" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. initialize_registry(), once</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="250" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. initialize_registry(), once</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
   <text x="240" y="282" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">each call binds one mint to one Pyth feed</text>
   <g transform="translate(0,-90)">
   <g opacity="0.3">

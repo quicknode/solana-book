@@ -160,14 +160,14 @@
   </g>
   <!-- the claim: the vault-s whole balance to Maria, then both accounts close -->
   <path d="M 464,398 C 420,420 380,400 366,340 C 358,300 368.004,230.736 380,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-succ-a)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="352" y="350" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1. check_contributions() &#183; 9,000 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="179.95" y="350" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. check_contributions() &#183; 9,000 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="352" y="364" font-size="9" font-style="italic" fill="#444" text-anchor="end">the vault&#8217;s entire balance, signed by the fundraiser PDA</text>
   <path d="M 466,364 C 461,332 460,290 460,250 C 460,200 459,150 458,118 C 458,108 456.593,100.08 456,96" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-succ-g)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="468" y="100" font-size="8.5" font-style="italic" fill="#444" text-anchor="start">rent from both</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="468" y="110" font-size="8.5" font-style="italic" fill="#444" text-anchor="start">closed accounts</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="452" y="246" font-size="9" font-weight="bold" fill="#111" text-anchor="end">3. fundraiser</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="452" y="246" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">3. fundraiser</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="452" y="258" font-size="9" font-weight="bold" fill="#111" text-anchor="end">closed</text>
-  <text x="464" y="428" font-size="9" font-weight="bold">2. vault closed</text>
+  <text x="464" y="428" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. vault closed</text>
   <!-- the honest loose end -->
   <text x="180" y="264" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">the ten receipts are left standing: their only</text>
   <text x="180" y="278" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">closer, refund(), needs a fundraiser that no</text>
