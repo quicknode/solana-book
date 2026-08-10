@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Gelasio, Georgia, serif" fill="#111">
   <defs><marker id="order-book-critbit-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <text x="30" y="28" font-size="12" font-weight="bold">key = price bits &#183; sequence bits</text>
   <text x="30" y="44" font-size="10.5" font-style="italic" fill="#444">the tree branches at the first bit where keys differ</text>
@@ -24,16 +24,16 @@
   <text x="532" y="198" font-size="10" font-weight="bold">1</text>
   <!-- four leaves: resting orders -->
   <rect x="50" y="230" width="110" height="58" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="105" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="Menlo, monospace">0100</text>
+  <text x="105" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">0100</text>
   <text x="105" y="270" font-size="10" font-style="italic" fill="#444" text-anchor="middle">price 01, seq 00</text>
   <rect x="190" y="230" width="110" height="58" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="245" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="Menlo, monospace">0101</text>
+  <text x="245" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">0101</text>
   <text x="245" y="270" font-size="10" font-style="italic" fill="#444" text-anchor="middle">price 01, seq 01</text>
   <rect x="360" y="230" width="110" height="58" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="415" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="Menlo, monospace">1000</text>
+  <text x="415" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">1000</text>
   <text x="415" y="270" font-size="10" font-style="italic" fill="#444" text-anchor="middle">price 10, seq 00</text>
   <rect x="500" y="230" width="110" height="58" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="555" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="Menlo, monospace">1100</text>
+  <text x="555" y="252" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">1100</text>
   <text x="555" y="270" font-size="10" font-style="italic" fill="#444" text-anchor="middle">price 11, seq 00</text>
   <!-- walk order -->
   <text x="105" y="308" font-size="11" font-weight="bold" text-anchor="middle">1st</text>

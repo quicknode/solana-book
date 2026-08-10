@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Gelasio, Georgia, serif" fill="#111">
   <defs><marker id="lending-rate-curve-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <!-- panel divider -->
   <line x1="342" y1="30" x2="342" y2="300" stroke="#999" stroke-width="1" stroke-dasharray="2 4"/>
