@@ -2,6 +2,8 @@
   <!-- the lending market's account map: one market, three reserves, an obligation per borrower -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text x="308" y="432" font-size="8.5" fill="#444" font-style="italic">a share is a claim on a reserve&#8217;s pool, not a fixed amount of it:</text>
+  <text x="308" y="446" font-size="8.5" fill="#444" font-style="italic">no box here can show what one is worth, only the pool it claims.</text>
   <g>
   <circle cx="148" cy="38.9615" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="140" y="2.63815" width="92" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -393,9 +395,4 @@
   <text x="476" y="843.34" font-size="8.5" fill="#444">supply: 4</text>
   <text x="476" y="855.34" font-size="8" font-style="italic">authority: the reserve</text>
   </g>
-  <text x="308" y="432" font-size="8.5" fill="#444" font-style="italic">each reserve owns its liquidity vault and its share mint;</text>
-  <text x="308" y="446" font-size="8.5" fill="#444" font-style="italic">each obligation owns a collateral vault of pledged shares</text>
-  <text x="308" y="470" font-size="8.5" fill="#444" font-style="italic">a share is a supplier&#8217;s claim on a reserve&#8217;s pool: interest</text>
-  <text x="308" y="484" font-size="8.5" fill="#444" font-style="italic">swells the pool while the share supply stays put, so the</text>
-  <text x="308" y="498" font-size="8.5" fill="#444" font-style="italic">same shares redeem for more of the asset than they cost</text>
 </svg>
