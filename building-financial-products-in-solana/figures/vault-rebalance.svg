@@ -2,8 +2,7 @@
   <defs><marker id="vault-reb-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-reb-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints &#8212;</text>
-  <text x="240" y="30" font-size="9" fill="#444" font-style="italic" text-anchor="start">every account that names them does so as a seed.</text>
+  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
   <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -217,16 +216,9 @@
   <line x1="244" y1="474" x2="436" y2="500" stroke="#999" stroke-width="1.6"/>
   <line x1="244" y1="500" x2="436" y2="474" stroke="#999" stroke-width="1.6"/>
   <text x="340" y="518" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">no such instruction exists</text>
-  <text x="16" y="396" font-size="9" fill="#444" font-style="italic" text-anchor="start">NVDAx rises $180 &#8594; $200. The fund is now worth $960 and each share about</text>
-  <text x="16" y="412" font-size="9" fill="#444" font-style="italic" text-anchor="start">$1.07 &#8212; nothing had to happen for that to be true, because the share price is</text>
-  <text x="16" y="428" font-size="9" fill="#444" font-style="italic" text-anchor="start">NAV divided by supply, recomputed from the feeds every time it matters.</text>
-  <text x="16" y="564" font-size="9" fill="#444" font-style="italic" text-anchor="start">but the weights drifted to 37.5 / 62.5 against the 40 / 60 target, and that is</text>
-  <text x="16" y="580" font-size="9" fill="#444" font-style="italic" text-anchor="start">Maria&#8217;s actual job: sell the over-weighted asset, buy the under-weighted one,</text>
-  <text x="16" y="596" font-size="9" fill="#444" font-style="italic" text-anchor="start">both legs through the fixed router, both floored at the oracle price less 1%.</text>
-  <text x="16" y="712" font-size="9" fill="#444" font-style="italic" text-anchor="start">Maria signs rebalance(); no token passes anywhere near her.</text>
-  <text x="16" y="728" font-size="9" fill="#444" font-style="italic" text-anchor="start">What a careless manager can still do is churn &#8212; pointless</text>
-  <text x="16" y="744" font-size="9" fill="#444" font-style="italic" text-anchor="start">rebalancing that pays market slippage. That hurts depositors</text>
-  <text x="16" y="760" font-size="9" fill="#444" font-style="italic" text-anchor="start">without enriching her, the design&#8217;s honest boundary.</text>
+  <text x="16" y="546" font-size="9" fill="#444" font-style="italic" text-anchor="start">Maria signs rebalance(); no token passes anywhere near her. What a</text>
+  <text x="16" y="562" font-size="9" fill="#444" font-style="italic" text-anchor="start">careless manager can still do is churn: rebalancing that pays market</text>
+  <text x="16" y="578" font-size="9" fill="#444" font-style="italic" text-anchor="start">slippage, which hurts depositors without enriching her.</text>
   <g class="coin" transform="translate(337.5,748.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(278,611.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(297.5,646.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>

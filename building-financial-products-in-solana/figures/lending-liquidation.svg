@@ -4,6 +4,9 @@
   <defs><pattern id="lend-liq-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#888" stroke-width="1.4"/></pattern></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text x="460" y="434" font-size="8.5" fill="#444" font-style="italic">the health gate comes first: a healthy</text>
+  <text x="460" y="448" font-size="8.5" fill="#444" font-style="italic">obligation cannot be touched at all, so Dave</text>
+  <text x="460" y="462" font-size="8.5" fill="#444" font-style="italic">corrects the market, he does not hunt in it.</text>
   <circle cx="148" cy="38.9615" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="148" cy="38.9615" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -358,9 +361,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="308" y="296" font-size="9.5" font-weight="bold" fill="#1e7a3c">seizes 708.75</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="308" y="310" font-size="9.5" font-weight="bold" fill="#1e7a3c">USDC shares</text>
   <text x="308" y="326" font-size="7.5" fill="#444" font-style="italic">= $675 &#215; 1.05, the 5% bonus</text>
-  <text x="460" y="434" font-size="8.5" fill="#444" font-style="italic">the health gate first: a healthy obligation</text>
-  <text x="460" y="448" font-size="8.5" fill="#444" font-style="italic">cannot be touched, so this is a correction</text>
-  <text x="460" y="462" font-size="8.5" fill="#444" font-style="italic">and not a hunting licence</text>
   <text x="8" y="893.34" font-size="8.5" fill="#111" font-weight="bold">the close factor caps each call at 50% of the debt</text>
   <rect x="8" y="901.34" width="120" height="14" fill="url(#lend-liq-hatch)" stroke="none"/>
   <rect x="8" y="901.34" width="240" height="14" fill="none" stroke="#111" stroke-width="1.2"/>
@@ -378,7 +378,6 @@
   <text x="500" y="910.34" font-size="8"><tspan font-weight="bold">before:</tspan> 90%, liquidatable</text>
   <text x="500" y="928.34" font-size="8"><tspan font-weight="bold">after:</tspan> 77%, healthy</text>
   <text x="500" y="892.34" font-size="7.5" fill="#444">threshold 80%</text>
-  <text x="8" y="949.34" font-size="8.5" fill="#444" font-style="italic">two passes: $675 of debt repaid, $708.75 of collateral shares seized, $33.75 of it Dave&#8217;s fee for keeping the market solvent</text>
   <g class="coin" transform="translate(445.5,399.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(376.4,299)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

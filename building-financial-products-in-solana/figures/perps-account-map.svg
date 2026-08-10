@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 620.37" font-family="Georgia, serif" fill="#111">
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text x="16" y="340" font-size="9" fill="#444" font-style="italic" text-anchor="start">one vault holds everyone&#8217;s money: LP liquidity, trader collateral</text>
+  <text x="16" y="356" font-size="9" fill="#444" font-style="italic" text-anchor="start">and protocol fees are kept apart by ledger fields, not by accounts.</text>
   <g>
   <circle cx="524" cy="84.0725" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="516" y="46.2989" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -223,14 +225,4 @@
   <text x="24" y="532" font-size="8.5">NVDAx: $100</text>
   <text x="24" y="544" font-size="7.5" font-style="italic" fill="#444">external; pinned at pool creation</text>
   </g>
-  <text x="16" y="340" font-size="9" fill="#444" font-style="italic" text-anchor="start">one position per (pool, owner, side): the seeds are the cap, and the</text>
-  <text x="16" y="356" font-size="9" fill="#444" font-style="italic" text-anchor="start">entry snapshot is what makes settlement account-local &#8212; closing or</text>
-  <text x="16" y="372" font-size="9" fill="#444" font-style="italic" text-anchor="start">liquidating one position touches that position and the pool, never a third</text>
-  <text x="16" y="404" font-size="9" fill="#444" font-style="italic" text-anchor="start">reserved_liquidity is the LPs&#8217; promise to the winners: an LP can never</text>
-  <text x="16" y="420" font-size="9" fill="#444" font-style="italic" text-anchor="start">withdraw it, and profit on a close is capped at the size it reserved</text>
-  <text x="16" y="452" font-size="9" fill="#444" font-style="italic" text-anchor="start">the vault mixes custody; the three ledger fields keep the ownership straight:</text>
-  <text x="16" y="468" font-size="9" fill="#444" font-style="italic" text-anchor="start">the vault balance is always liquidity + total_collateral + protocol_fees</text>
-  <text x="224" y="528" font-size="9" fill="#444" font-style="italic" text-anchor="start">per-side scaled accumulators price the whole book</text>
-  <text x="224" y="544" font-size="9" fill="#444" font-style="italic" text-anchor="start">in two multiplications, so solvency, AUM and LP</text>
-  <text x="224" y="560" font-size="9" fill="#444" font-style="italic" text-anchor="start">share pricing never iterate the open positions</text>
 </svg>

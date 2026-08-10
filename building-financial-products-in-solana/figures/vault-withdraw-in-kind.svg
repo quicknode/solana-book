@@ -2,8 +2,7 @@
   <defs><marker id="vault-wd-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-wd-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints &#8212;</text>
-  <text x="240" y="30" font-size="9" fill="#444" font-style="italic" text-anchor="start">every account that names them does so as a seed.</text>
+  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
   <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -242,22 +241,8 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="362" y="470" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. &#8776;1.52 TSLAx</text>
   <path d="M 461,791.37 C 296,781.37 236,740 236,700 L 236,405.644 C 236,389.644 240.923,407.986 235,381.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="250" y="540" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. &#8776;2.85 NVDAx</text>
-  <text x="16" y="420" font-size="9" fill="#444" font-style="italic" text-anchor="start">the share count falls before any token</text>
-  <text x="16" y="436" font-size="9" fill="#444" font-style="italic" text-anchor="start">moves &#8212; checks, effects, interactions.</text>
-  <text x="16" y="452" font-size="9" fill="#444" font-style="italic" text-anchor="start">The program sells nothing to pay her:</text>
-  <text x="16" y="468" font-size="9" fill="#444" font-style="italic" text-anchor="start">she is handed her proportional slice of</text>
-  <text x="16" y="484" font-size="9" fill="#444" font-style="italic" text-anchor="start">every vault, each amount floored, each</text>
-  <text x="16" y="500" font-size="9" fill="#444" font-style="italic" text-anchor="start">destination account verified to be hers</text>
-  <text x="16" y="516" font-size="9" fill="#444" font-style="italic" text-anchor="start">and of the right mint.</text>
-  <text x="16" y="532" font-size="9" fill="#444" font-style="italic" text-anchor="start">her USDC slice is zero &#8212; every deposit</text>
-  <text x="16" y="548" font-size="9" fill="#444" font-style="italic" text-anchor="start">deployed fully, so nothing idle waits to</text>
-  <text x="16" y="564" font-size="9" fill="#444" font-style="italic" text-anchor="start">be paid out &#8212; and her min_usdc_out floor</text>
-  <text x="16" y="580" font-size="9" fill="#444" font-style="italic" text-anchor="start">still guards that leg.</text>
   <text x="16" y="604" font-size="9" fill="#444" font-style="italic" text-anchor="start">no feed is passed to withdraw(): each leg is</text>
   <text x="16" y="620" font-size="9" fill="#444" font-style="italic" text-anchor="start">vault balance &#215; shares &#247; supply, in kind.</text>
-  <text x="16" y="736" font-size="9" fill="#444" font-style="italic" text-anchor="start">she entered with $900, rode NVIDIA up, paid</text>
-  <text x="16" y="752" font-size="9" fill="#444" font-style="italic" text-anchor="start">Maria 1% by dilution and left with about $950</text>
-  <text x="16" y="768" font-size="9" fill="#444" font-style="italic" text-anchor="start">of assets. Bob still holds 450 shares.</text>
   <g class="coin" transform="translate(312.6,289.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(347.5,465.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(235.5,535.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
