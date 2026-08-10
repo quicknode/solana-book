@@ -31,14 +31,19 @@ Margins are symmetric rather than mirrored. If the interior is ever sent to a pr
 
 | Role | Face | Size |
 | --- | --- | --- |
-| Body | Charter, falling back to Bitstream Charter, Georgia, Times New Roman | 11pt / 1.38 |
+| Body | Gelasio (bundled in `assets/fonts/`) | 11pt / 1.38 |
 | Headings | Denim INK (bundled in `assets/fonts/`) | 17pt chapter, 13pt section, 11pt italic sub-section |
-| Code and addresses | SF Mono, Menlo, Consolas, DejaVu Sans Mono | 0.82em, about 9pt |
+| Code and addresses | DejaVu Sans Mono (bundled in `assets/fonts/`) | 0.82em, about 9pt |
+| Figures | Gelasio, with DejaVu Sans Mono for handler names | 7-10.5pt |
 | Figure captions | Body face, italic | 9.5pt |
-| Running heads | Georgia italic | 9pt |
-| Folio | Georgia | 10pt |
+| Running heads | Gelasio italic | 9pt |
+| Folio | Gelasio | 10pt |
 
-Charter is a transitional serif drawn by Matthew Carter for low-resolution output, which makes it hold up at small sizes and on cheap paper. It is not bundled, so a machine without it renders in Georgia; the fallback is deliberate and readable, but a print-ready build should have Charter installed. Denim INK is bundled, so headings are identical everywhere.
+**Every face is bundled, so a build is identical on any machine.** This used not to be true: the body asked for Charter and fell back to Georgia, and the figures asked for Georgia and fell back to whatever generic serif the machine had. Two machines produced two different books, and `check-figure-geometry.mjs` measured clearances against a face the printed book would never use — which is how a coin mark sitting on top of a label passed the check.
+
+Gelasio is metrically compatible with Georgia, which is what the figures were drawn against, so pinning it kept every figure's geometry as designed. It is [OFL](https://openfontlicense.org/), as is DejaVu Sans Mono; both licences sit beside the fonts in `assets/fonts/`. Denim INK is licensed to Quicknode.
+
+**Bundle static instances, not variable fonts.** Chromium's print-to-PDF silently drops a variable font and falls back to a system serif, with no warning and no error — the PDF simply comes out in the wrong face. Gelasio ships as a variable font; the four static instances are what this build embeds. If a face is ever swapped, check the result with `/BaseFont` in the PDF rather than trusting the page.
 
 ## Justification and Hyphenation
 

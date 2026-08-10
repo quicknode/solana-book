@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 258" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 258" font-family="Gelasio, Georgia, serif" fill="#111">
   <defs><marker id="addr-types-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
@@ -13,7 +13,7 @@
   <text x="78" y="106" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">Alice&#8217;s address</text>
   <text x="78" y="122" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">a public key, on the curve:</text>
   <text x="78" y="137" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">Alice holds the private key</text>
-  <text x="222" y="99" font-size="8.5" font-family="Menlo, monospace" fill="#555" text-anchor="middle">SysvarC1ock111&#8230;</text>
+  <text x="222" y="99" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#555" text-anchor="middle">SysvarC1ock111&#8230;</text>
   <circle cx="222" cy="132" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="158" y="140" width="128" height="50" rx="6" fill="#f4f4f2" stroke="#888"/>
