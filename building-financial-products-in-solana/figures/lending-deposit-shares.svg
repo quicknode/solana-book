@@ -245,8 +245,8 @@
   <text x="496" y="711.34" font-size="9.5" font-weight="bold">SPCXx share mint</text>
   </g>
   <path d="M 94,157 C 140,168 185.279,189.886 190,250 C 195.49,319.899 192,521 192,581 C 192,615 180.967,634.817 176,644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="182" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">deposit_reserve_liquidity()</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="182" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1,000 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="73.58" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c">deposit_reserve_liquidity()</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="73.58" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c">1,000 USDC</text>
   <path d="M 172,715 C 206,715 224,693 224,631 C 224,481 227.126,329.883 222,286 C 217.078,243.86 150,232 98,226" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-dep-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="238" y="330" font-size="9.5" font-weight="bold" fill="#1e7a3c">1,000 USDC shares</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="238" y="344" font-size="9.5" font-weight="bold" fill="#1e7a3c">minted to Alice</text>

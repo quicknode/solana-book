@@ -18,9 +18,9 @@
   <text x="536" y="152" font-size="11" font-style="italic" fill="#444" text-anchor="middle">wants 250 USDC</text>
   <!-- intended swap -->
   <path d="M 164,82 L 476,82" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-swap-intent-arr)"/>
-  <text x="320" y="72" font-size="12" font-weight="bold" fill="#1e7a3c" text-anchor="middle">250 USDC</text>
+  <text x="293.19" y="72" font-size="12" font-weight="bold" fill="#1e7a3c">250 USDC</text>
   <path d="M 476,106 L 164,106" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-swap-intent-arr)"/>
-  <text x="320" y="126" font-size="12" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1 TSLAx</text>
+  <text x="296.95" y="126" font-size="12" font-weight="bold" fill="#1e7a3c">1 TSLAx</text>
   <text x="320" y="214" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">each holds what the other wants; neither wants to send first</text>
   <g class="coin" transform="translate(278.7,67.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(282.4,121.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
