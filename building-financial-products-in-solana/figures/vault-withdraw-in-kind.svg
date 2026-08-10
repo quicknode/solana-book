@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 835.37" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 896" font-family="Georgia, serif" fill="#111">
   <defs><marker id="vault-wd-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-wd-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
@@ -151,80 +151,85 @@
   <g>
   <circle cx="472" cy="248.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="252.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;STRATEGY&#8221; + INDEX</text>
-  <rect x="464" y="258.37" width="168" height="88" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="464" y="258.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,263.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="274.37" font-size="10.5" font-weight="bold">strategy</text>
   <line x1="472" y1="279.37" x2="624" y2="279.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="290.37" font-size="9">manager: Maria &#183; registry: Victor&#8217;s</text>
-  <text x="472" y="302.37" font-size="9">fee_bps: 100 &#183; max_slippage_bps: 100</text>
-  <text x="472" y="314.37" font-size="9" font-weight="bold">total_shares: 463.5 &#183; asset_count: 2</text>
-  <text x="472" y="326.37" font-size="9">total_weight_bps: 10,000</text>
-  <text x="472" y="338.37" font-size="7.5" font-style="italic" fill="#444">swap_router and fee_bps fixed at creation</text>
+  <text x="472" y="290.37" font-size="9">manager: Maria</text>
+  <text x="472" y="302.37" font-size="9">registry: Victor&#8217;s</text>
+  <text x="472" y="314.37" font-size="9">fee_bps: 100</text>
+  <text x="472" y="326.37" font-size="9">max_slippage_bps: 100</text>
+  <text x="472" y="338.37" font-size="9" font-weight="bold">total_shares: 463.5</text>
+  <text x="472" y="350.37" font-size="9" font-weight="bold">asset_count: 2</text>
+  <text x="472" y="362.37" font-size="9">total_weight_bps: 10,000</text>
+  <text x="472" y="374.37" font-size="7.5" font-style="italic" fill="#444">swap_router and fee_bps fixed at creation</text>
   </g>
   <g>
-  <circle cx="472" cy="355.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="359.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
-  <rect x="464" y="365.37" width="168" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,370.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="381.37" font-size="10.5" font-weight="bold">asset config 0</text>
-  <line x1="472" y1="386.37" x2="624" y2="386.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="397.37" font-size="9">mint: TSLAx &#183; weight_bps: 4,000</text>
-  <text x="472" y="409.37" font-size="9">vault: the TSLAx vault</text>
-  <text x="472" y="421.37" font-size="7.5" font-style="italic" fill="#444">price_feed copied from its ApprovedAsset</text>
+  <circle cx="472" cy="391.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="395.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
+  <rect x="464" y="401.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,406.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="417.37" font-size="10.5" font-weight="bold">asset config 0</text>
+  <line x1="472" y1="422.37" x2="624" y2="422.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="433.37" font-size="9">mint: TSLAx</text>
+  <text x="472" y="445.37" font-size="9">weight_bps: 4,000</text>
+  <text x="472" y="457.37" font-size="9">vault: the TSLAx vault</text>
+  <text x="472" y="469.37" font-size="7.5" font-style="italic" fill="#444">price_feed copied from its ApprovedAsset</text>
   </g>
   <g>
-  <circle cx="472" cy="438.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="442.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
-  <rect x="464" y="448.37" width="168" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,453.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="464.37" font-size="10.5" font-weight="bold">asset config 1</text>
-  <line x1="472" y1="469.37" x2="624" y2="469.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="480.37" font-size="9">mint: NVDAx &#183; weight_bps: 6,000</text>
-  <text x="472" y="492.37" font-size="9">vault: the NVDAx vault</text>
-  <text x="472" y="504.37" font-size="7.5" font-style="italic" fill="#444">price_feed copied from its ApprovedAsset</text>
+  <circle cx="472" cy="486.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="490.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
+  <rect x="464" y="496.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,501.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="512.37" font-size="10.5" font-weight="bold">asset config 1</text>
+  <line x1="472" y1="517.37" x2="624" y2="517.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="528.37" font-size="9">mint: NVDAx</text>
+  <text x="472" y="540.37" font-size="9">weight_bps: 6,000</text>
+  <text x="472" y="552.37" font-size="9">vault: the NVDAx vault</text>
+  <text x="472" y="564.37" font-size="7.5" font-style="italic" fill="#444">price_feed copied from its ApprovedAsset</text>
   </g>
   <g>
-  <circle cx="472" cy="521.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="525.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + STRATEGY</text>
-  <rect x="464" y="531.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,536.37)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="492" y="547.37" font-size="10.5" font-weight="bold">share mint</text>
-  <line x1="472" y1="552.37" x2="624" y2="552.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="563.37" font-size="9" font-weight="bold">supply: 463.5 shares</text>
-  <text x="472" y="575.37" font-size="7.5" font-style="italic" fill="#444">mint authority: the strategy PDA</text>
+  <circle cx="472" cy="581.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="585.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + STRATEGY</text>
+  <rect x="464" y="591.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,596.37)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="492" y="607.37" font-size="10.5" font-weight="bold">share mint</text>
+  <line x1="472" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="623.37" font-size="9" font-weight="bold">supply: 463.5 shares</text>
+  <text x="472" y="635.37" font-size="7.5" font-style="italic" fill="#444">mint authority: the strategy PDA</text>
   </g>
   <g>
-  <circle cx="472" cy="597.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="596.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
-  <text x="482" y="605.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + USDC MINT</text>
-  <rect x="464" y="611.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,616.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="627.37" font-size="10.5" font-weight="bold">USDC vault</text>
-  <line x1="472" y1="632.37" x2="624" y2="632.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="643.37" font-size="9" fill="#444">0 USDC</text>
-  <text x="472" y="655.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <circle cx="472" cy="657.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="656.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
+  <text x="482" y="665.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + USDC MINT</text>
+  <rect x="464" y="671.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,676.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="687.37" font-size="10.5" font-weight="bold">USDC vault</text>
+  <line x1="472" y1="692.37" x2="624" y2="692.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="703.37" font-size="9" fill="#444">0 USDC</text>
+  <text x="472" y="715.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
   <g>
-  <circle cx="472" cy="677.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="676.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
-  <text x="482" y="685.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
-  <rect x="464" y="691.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,696.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="707.37" font-size="10.5" font-weight="bold">TSLAx vault</text>
-  <line x1="472" y1="712.37" x2="624" y2="712.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="723.37" font-size="9" font-weight="bold">&#8776;0.78 TSLAx</text>
-  <text x="472" y="735.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <circle cx="472" cy="737.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="736.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
+  <text x="482" y="745.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
+  <rect x="464" y="751.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,756.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="767.37" font-size="10.5" font-weight="bold">TSLAx vault</text>
+  <line x1="472" y1="772.37" x2="624" y2="772.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="783.37" font-size="9" font-weight="bold">&#8776;0.78 TSLAx</text>
+  <text x="472" y="795.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
   <g>
-  <circle cx="472" cy="757.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="756.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
-  <text x="482" y="765.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
-  <rect x="464" y="771.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,776.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="787.37" font-size="10.5" font-weight="bold">NVDAx vault</text>
-  <line x1="472" y1="792.37" x2="624" y2="792.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="803.37" font-size="9" font-weight="bold">&#8776;1.47 NVDAx</text>
-  <text x="472" y="815.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <circle cx="472" cy="817.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="816.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
+  <text x="482" y="825.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
+  <rect x="464" y="831.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,836.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="847.37" font-size="10.5" font-weight="bold">NVDAx vault</text>
+  <line x1="472" y1="852.37" x2="624" y2="852.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="863.37" font-size="9" font-weight="bold">&#8776;1.47 NVDAx</text>
+  <text x="472" y="875.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
   <g opacity="0.3">
   <rect x="16" y="640" width="212" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -235,11 +240,11 @@
   <text x="24" y="682" font-size="8.5" font-family="Menlo, monospace">swap_asset_for_usdc()</text>
   <text x="24" y="696" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
-  <path d="M 224,235.644 C 260,249.644 280,270 320,270 L 436,270 C 460,270 460,290 460,320 L 460,535.37 C 460,549.37 460.254,546.395 461,557.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <path d="M 224,235.644 C 260,249.644 280,270 320,270 L 436,270 C 460,270 460,290 460,356 L 460,595.37 C 460,609.37 460.254,606.395 461,617.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="327.08" y="294" font-size="10.5" fill="#1e7a3c" font-weight="bold">1. burn her 900 shares first</text>
-  <path d="M 461,711.37 C 408,701.37 348,680 348,640 L 348,328.644 C 348,312.644 262,304.644 235,304.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <path d="M 461,771.37 C 408,701.37 348,680 348,640 L 348,328.644 C 348,312.644 262,304.644 235,304.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="362" y="470" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. &#8776;1.52 TSLAx</text>
-  <path d="M 461,791.37 C 296,781.37 236,740 236,700 L 236,405.644 C 236,389.644 240.923,407.986 235,381.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <path d="M 461,851.37 C 296,781.37 236,740 236,700 L 236,405.644 C 236,389.644 240.923,407.986 235,381.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="250" y="540" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. &#8776;2.85 NVDAx</text>
   <text x="16" y="604" font-size="9" fill="#444" font-style="italic" text-anchor="start">no feed is passed to withdraw(): each leg is</text>
   <text x="16" y="620" font-size="9" fill="#444" font-style="italic" text-anchor="start">vault balance &#215; shares &#247; supply, in kind.</text>

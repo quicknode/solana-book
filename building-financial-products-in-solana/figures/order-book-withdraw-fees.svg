@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 680" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 706" font-family="Georgia, serif" fill="#111">
   <!-- withdraw_fees(): the fee vault drains to Maria, gated on the recorded authority -->
   <!-- Maria withdraws the fee vault to her own USDC account, authority-gated -->
   <defs><marker id="order-book-withdraw-fees-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
@@ -184,7 +184,7 @@
   <circle cx="472" cy="223.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="222.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;MARKET&#8221; + NVDAX MINT +</text>
   <text x="482" y="231.37" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
-  <rect x="464" y="237.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="464" y="237.37" width="168" height="148" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,242.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="253.37" font-size="10.5" font-weight="bold">market</text>
   <line x1="472" y1="258.37" x2="624" y2="258.37" stroke="#888" stroke-width="0.8"/>
@@ -192,44 +192,46 @@
   <text x="472" y="281.37" font-size="9.5">base_mint: NVDAx</text>
   <text x="472" y="293.37" font-size="9.5">quote_mint: USDC</text>
   <text x="472" y="305.37" font-size="9.5">fee_basis_points: 25</text>
-  <text x="472" y="317.37" font-size="9.5">tick_size: 1 &#183; min_order_size: 1</text>
-  <text x="472" y="329.37" font-size="9.5">base_lot_size: 100 &#183; quote_lot_size: 1</text>
-  <text x="472" y="341.37" font-size="9.5">is_active: true</text>
-  <text x="472" y="353.37" font-size="9" font-style="italic" fill="#444">+ vault and order_book addresses</text>
+  <text x="472" y="317.37" font-size="9.5">tick_size: 1</text>
+  <text x="472" y="329.37" font-size="9.5">min_order_size: 1</text>
+  <text x="472" y="341.37" font-size="9.5">base_lot_size: 100</text>
+  <text x="472" y="353.37" font-size="9.5">quote_lot_size: 1</text>
+  <text x="472" y="365.37" font-size="9.5">is_active: true</text>
+  <text x="472" y="377.37" font-size="9" font-style="italic" fill="#444">+ vault and order_book addresses</text>
   </g>
   <g opacity="0.3">
-  <circle cx="472" cy="370.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="374.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
-  <rect x="464" y="380.37" width="168" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,388.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="399.37" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
+  <circle cx="472" cy="394.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="398.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="404.37" width="168" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,412.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="423.37" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
   </g>
   <g opacity="0.3">
-  <circle cx="472" cy="465.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="469.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
-  <rect x="464" y="475.37" width="168" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,483.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="494.37" font-size="10.5" font-weight="bold">base vault</text>
+  <circle cx="472" cy="489.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="493.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="499.37" width="168" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,507.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="518.37" font-size="10.5" font-weight="bold">base vault</text>
   </g>
   <g opacity="0.3">
-  <circle cx="472" cy="536.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="540.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
-  <rect x="464" y="546.37" width="168" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,554.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="565.37" font-size="10.5" font-weight="bold">quote vault</text>
+  <circle cx="472" cy="560.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="564.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="570.37" width="168" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,578.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="589.37" font-size="10.5" font-weight="bold">quote vault</text>
   </g>
   <g>
-  <circle cx="472" cy="607.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="611.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
-  <rect x="464" y="617.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,622.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="633.37" font-size="10.5" font-weight="bold">fee vault</text>
-  <line x1="472" y1="638.37" x2="624" y2="638.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="649.37" font-size="9.5" font-weight="bold">0 USDC &#183; drained to Maria</text>
-  <text x="472" y="661.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
+  <circle cx="472" cy="631.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="635.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <rect x="464" y="641.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,646.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="657.37" font-size="10.5" font-weight="bold">fee vault</text>
+  <line x1="472" y1="662.37" x2="624" y2="662.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="673.37" font-size="9.5" font-weight="bold">0 USDC &#183; drained to Maria</text>
+  <text x="472" y="685.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
   </g>
   <!-- the fee transfer, signed by the market PDA -->
-  <path d="M 458,644 C 430,644 411.234,626.036 410,592 L 399.423,300.164 C 399.178,239.743 404,214 404,197" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-withdraw-fees-arr)"/>
+  <path d="M 458,668 C 430,644 411.234,626.036 410,592 L 399.423,300.164 C 399.178,239.743 404,214 404,197" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-withdraw-fees-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="339.18" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">1.875 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="394" y="486" font-size="9.5" font-style="italic" fill="#444" text-anchor="end">the handler compares the signer against the authority</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="394" y="502" font-size="9.5" font-style="italic" fill="#444" text-anchor="end">recorded on the market: anyone else &#8594; NotMarketAuthority</text>
