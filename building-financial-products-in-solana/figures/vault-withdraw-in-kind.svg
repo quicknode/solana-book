@@ -2,27 +2,8 @@
   <defs><marker id="vault-wd-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-wd-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <circle cx="248" cy="44.8207" r="7" fill="#fff"/>
-  <g opacity="0.3">
-  <circle cx="248" cy="44.8207" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="240" y="8.22021" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,16.22)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="268" y="27.22" font-size="9.5" font-weight="bold">TSLAx mint</text>
-  </g>
-  <circle cx="360" cy="56" r="7" fill="#fff"/>
-  <g opacity="0.3">
-  <circle cx="360" cy="56" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="352" y="19.0155" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,27.02)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="380" y="38.02" font-size="9.5" font-weight="bold">NVDAx mint</text>
-  </g>
-  <circle cx="472" cy="73.3639" r="7" fill="#fff"/>
-  <g opacity="0.3">
-  <circle cx="472" cy="73.3639" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="464" y="35.8798" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,43.88)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="492" y="54.88" font-size="9.5" font-weight="bold">USDC mint</text>
-  </g>
+  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints &#8212;</text>
+  <text x="240" y="30" font-size="9" fill="#444" font-style="italic" text-anchor="start">every account that names them does so as a seed.</text>
   <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -272,6 +253,8 @@
   <text x="16" y="548" font-size="9" fill="#444" font-style="italic" text-anchor="start">deployed fully, so nothing idle waits to</text>
   <text x="16" y="564" font-size="9" fill="#444" font-style="italic" text-anchor="start">be paid out &#8212; and her min_usdc_out floor</text>
   <text x="16" y="580" font-size="9" fill="#444" font-style="italic" text-anchor="start">still guards that leg.</text>
+  <text x="16" y="604" font-size="9" fill="#444" font-style="italic" text-anchor="start">no feed is passed to withdraw(): each leg is</text>
+  <text x="16" y="620" font-size="9" fill="#444" font-style="italic" text-anchor="start">vault balance &#215; shares &#247; supply, in kind.</text>
   <text x="16" y="736" font-size="9" fill="#444" font-style="italic" text-anchor="start">she entered with $900, rode NVIDIA up, paid</text>
   <text x="16" y="752" font-size="9" fill="#444" font-style="italic" text-anchor="start">Maria 1% by dilution and left with about $950</text>
   <text x="16" y="768" font-size="9" fill="#444" font-style="italic" text-anchor="start">of assets. Bob still holds 450 shares.</text>

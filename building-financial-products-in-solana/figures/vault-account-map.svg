@@ -1,24 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 835.37" font-family="Georgia, serif" fill="#111">
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <g>
-  <circle cx="248" cy="44.8207" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="240" y="8.22021" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,16.22)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="268" y="27.22" font-size="9.5" font-weight="bold">TSLAx mint</text>
-  </g>
-  <g>
-  <circle cx="360" cy="56" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="352" y="19.0155" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,27.02)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="380" y="38.02" font-size="9.5" font-weight="bold">NVDAx mint</text>
-  </g>
-  <g>
-  <circle cx="472" cy="73.3639" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="464" y="35.8798" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,43.88)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="492" y="54.88" font-size="9.5" font-weight="bold">USDC mint</text>
-  </g>
+  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints &#8212;</text>
+  <text x="240" y="30" font-size="9" fill="#444" font-style="italic" text-anchor="start">every account that names them does so as a seed.</text>
   <!-- Victor, the curator -->
   <g>
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -137,6 +121,23 @@
   <text x="360" y="108.436" font-size="8.5" font-style="italic" fill="#444">fund manager</text>
   <text x="360" y="120.436" font-size="9" fill="#444">1 SOL</text>
   </g>
+  <!-- the Pyth feeds: external accounts, neither derived by this program nor built in -->
+  <g>
+  <rect x="352" y="140" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,145)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="380" y="156" font-size="9.5" font-weight="bold">Pyth TSLA</text>
+  <line x1="360" y1="161" x2="448" y2="161" stroke="#888" stroke-width="0.8"/>
+  <text x="360" y="172" font-size="9">price: $250</text>
+  <text x="360" y="183" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
+  </g>
+  <g>
+  <rect x="352" y="206" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,211)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="380" y="222" font-size="9.5" font-weight="bold">Pyth NVDA</text>
+  <line x1="360" y1="227" x2="448" y2="227" stroke="#888" stroke-width="0.8"/>
+  <text x="360" y="238" font-size="9">price: $200</text>
+  <text x="360" y="249" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
+  </g>
   <!-- the program column -->
   <g>
   <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -241,6 +242,25 @@
   <text x="24" y="682" font-size="8.5" font-family="Menlo, monospace">swap_asset_for_usdc()</text>
   <text x="24" y="696" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
+  <!-- the router's rate records: the fifth account per asset a deposit pulls -->
+  <g>
+  <circle cx="24" cy="712" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="715.5" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RATE&#8221; + TSLAX MINT</text>
+  <rect x="16" y="721" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,726)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="737" font-size="9.5" font-weight="bold">AssetRate</text>
+  <line x1="24" y1="742" x2="112" y2="742" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="753" font-size="9">usdc_per_token: 250</text>
+  </g>
+  <g>
+  <circle cx="144" cy="712" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="154" y="715.5" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RATE&#8221; + NVDAX MINT</text>
+  <rect x="136" y="721" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(144,726)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="164" y="737" font-size="9.5" font-weight="bold">AssetRate</text>
+  <line x1="144" y1="742" x2="232" y2="742" stroke="#888" stroke-width="0.8"/>
+  <text x="144" y="753" font-size="9">usdc_per_token: 200</text>
+  </g>
   <text x="16" y="404" font-size="9" fill="#444" font-style="italic" text-anchor="start">the strategy PDA owns all three vaults and is the share mint&#8217;s only mint</text>
   <text x="16" y="420" font-size="9" fill="#444" font-style="italic" text-anchor="start">authority. No handler moves a vault&#8217;s tokens to the manager: rebalancing</text>
   <text x="16" y="436" font-size="9" fill="#444" font-style="italic" text-anchor="start">moves them between strategy-owned vaults, and the fee path mints shares</text>
@@ -260,6 +280,7 @@
   <text x="240" y="676" font-size="9" fill="#444" font-style="italic" text-anchor="start">or the handler refuses to run: a valuation</text>
   <text x="240" y="692" font-size="9" fill="#444" font-style="italic" text-anchor="start">that could skip an asset would be a discount</text>
   <text x="240" y="708" font-size="9" fill="#444" font-style="italic" text-anchor="start">for whoever noticed.</text>
-  <text x="16" y="740" font-size="9" fill="#444" font-style="italic" text-anchor="start">a retired asset keeps its index forever rather than being reused, so the</text>
-  <text x="16" y="756" font-size="9" fill="#444" font-style="italic" text-anchor="start">contiguous range the valuation loop depends on stays intact.</text>
+  <text x="16" y="777" font-size="9" fill="#444" font-style="italic" text-anchor="start">the router&#8217;s own rate records: a real Jupiter route would pull its own, larger set.</text>
+  <text x="16" y="801" font-size="9" fill="#444" font-style="italic" text-anchor="start">a retired asset keeps its index forever rather than being reused, so the</text>
+  <text x="16" y="817" font-size="9" fill="#444" font-style="italic" text-anchor="start">contiguous range the valuation loop depends on stays intact.</text>
 </svg>
