@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 896" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 913" font-family="Georgia, serif" fill="#111">
   <defs><marker id="vault-wd-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-wd-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <text x="240" y="16" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
   <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -241,14 +240,15 @@
   <text x="24" y="696" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
   <path d="M 224,235.644 C 260,249.644 280,270 320,270 L 436,270 C 460,270 460,290 460,356 L 460,595.37 C 460,609.37 460.254,606.395 461,617.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="327.08" y="294" font-size="10.5" fill="#1e7a3c" font-weight="bold">1. burn her 900 shares first</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="303.08" y="294" font-size="10.5" fill="#1e7a3c" font-weight="bold">1. burn her 900 shares first</text>
   <path d="M 461,771.37 C 408,701.37 348,680 348,640 L 348,328.644 C 348,312.644 262,304.644 235,304.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="362" y="470" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. &#8776;1.52 TSLAx</text>
   <path d="M 461,851.37 C 296,781.37 236,740 236,700 L 236,405.644 C 236,389.644 240.923,407.986 235,381.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="250" y="540" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. &#8776;2.85 NVDAx</text>
   <text x="16" y="604" font-size="9" fill="#444" font-style="italic" text-anchor="start">no feed is passed to withdraw(): each leg is</text>
   <text x="16" y="620" font-size="9" fill="#444" font-style="italic" text-anchor="start">vault balance &#215; shares &#247; supply, in kind.</text>
-  <g class="coin" transform="translate(312.6,289.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(288.6,289.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(347.5,465.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(235.5,535.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
+  <text x="16" y="901" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
