@@ -360,15 +360,28 @@ const html = `<!doctype html>
 @font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-Bold.ttf")}"); font-weight: bold; font-style: normal; }
 @font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
 
+/* Gelasio is metric-compatible with Georgia, which is what the figures were
+   drawn against, and it is bundled so every machine sets the same widths.
+   Static instances, not the variable build: Chromium's print-to-PDF
+   silently drops a variable font and falls back. */
+@font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Regular.ttf")}"); font-weight: normal; font-style: normal; }
+@font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Italic.ttf")}"); font-weight: normal; font-style: italic; }
+@font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Bold.ttf")}"); font-weight: bold; font-style: normal; }
+@font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
+@font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono.ttf")}"); font-weight: normal; font-style: normal; }
+@font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-Bold.ttf")}"); font-weight: bold; font-style: normal; }
+@font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-Oblique.ttf")}"); font-weight: normal; font-style: italic; }
+@font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-BoldOblique.ttf")}"); font-weight: bold; font-style: italic; }
+
 @page {
   size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;
   margin: ${TOP_MARGIN_IN}in ${SIDE_MARGIN_IN}in ${BOTTOM_MARGIN_IN}in ${SIDE_MARGIN_IN}in;
-  @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 10pt; }
+  @bottom-center { content: counter(page); font-family: Gelasio, Georgia, serif; font-size: 10pt; }
   /* The draft marker sits in the footer rather than the header: at this trim
      the measure fits two running heads, and a third box wraps both of them. */
-  @bottom-left { content: "PRERELEASE DRAFT (${buildDate}) - NOT FOR DISTRIBUTION"; font-family: Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
-  @top-left { content: "${TITLE}"; font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
-  @top-right { content: string(chapter); font-family: Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
+  @bottom-left { content: "PRERELEASE DRAFT (${buildDate}) - NOT FOR DISTRIBUTION"; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
+  @top-left { content: "${TITLE}"; font-family: Gelasio, Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Gelasio, Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
 }
 @page :first { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
 /* Pages inserted to push a part title onto a right-hand page carry nothing. */
@@ -383,7 +396,7 @@ const html = `<!doctype html>
 
 html { font-size: 11pt; }
 body {
-  font-family: Charter, "Bitstream Charter", Georgia, "Times New Roman", serif;
+  font-family: Gelasio, Georgia, "Times New Roman", serif;
   line-height: 1.38;
   color: #111;
   text-rendering: optimizeLegibility;
@@ -461,12 +474,12 @@ h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
 h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
 
-code { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
+code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
 /* An address printed as itself is a literal string the reader types, so it is
    set in the same face and size as program_id, and a URL and an identifier sit
    identically on the line. Never underlined: underlining is a screen
    convention, and in a serif face it collides with the descenders. */
-.url { font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.82em; }
+.url { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
 blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }

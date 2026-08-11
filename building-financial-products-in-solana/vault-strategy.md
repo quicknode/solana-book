@@ -14,13 +14,13 @@ Victor runs `initialize_registry()` once, creating the **registry**: the curator
 
 The approved set is stocks, bonds, whatever investors actually want. It is not the manager's own personal token, and structurally cannot be: `add_asset()` checks approval by deriving the `ApprovedAsset` address for the mint it is handed, so adding an unapproved asset fails because the account simply does not exist (pinned by `test_add_asset_rejects_unapproved`).
 
-![The registry is the curator record at the root of the approved set: Victor's authority creates one ApprovedAsset account per approved mint, each binding the mint to one Pyth feed, and a manager can select from the set but cannot add to it.](figures/vault-registry.svg)
+![The registry is the curator record at the root of the approved set: Victor's authority creates one ApprovedAsset account per approved mint, each binding the mint to the Pyth price account beside it, and a manager can select from the set but cannot add to it.](figures/vault-registry.svg)
 
 ## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
 
-![The account map: the strategy PDA owns a USDC vault, one vault per basket asset, and the share mint; each asset config account records a mint, a feed, a weight, and a vault; Victor's registry and ApprovedAsset accounts sit behind them, and Alice's and Bob's share accounts hang off the share mint.](figures/vault-account-map.svg)
+![The account map: the strategy PDA owns a USDC vault, one vault per basket asset, and the share mint; each asset config records a mint, a weight, a vault, and one of the two Pyth price accounts drawn beside them; Victor's registry and ApprovedAsset accounts sit behind, and the router's rate records complete the set of accounts a deposit pulls for every asset.](figures/vault-account-map.svg)
 
-The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA with the strategy as mint authority: shares only come into existence when the program's own math says so.
+The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA (seeds: `"share_mint"`, the strategy) with the strategy as mint authority: shares only come into existence when the program's own math says so.
 
 Each basket asset gets an **asset config** PDA (seeds: `"asset"`, the strategy, an index byte) recording its mint, its feed (copied from its `ApprovedAsset` account), its weight in basis points, and its **vault**, a strategy-owned token account. The strategy holds up to `MAX_ASSETS` (16), and the cap is not about storage. A deposit has to reference every asset's accounts at once, five per asset, so a full basket runs to 94 accounts. That fits inside Solana's account-lock limit, but it is far past what a legacy transaction can hold, so clients of big baskets send v0 transactions with an address lookup table. Data model decisions are transaction-format decisions.
 
@@ -42,7 +42,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 **And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output _from the oracle price_ and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot wave a bad fill through, because the minimum is never theirs to supply. This is the single most transferable idea in the chapter: **when an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
-![Alice's deposit: 900 USDC arrives, the NAV loop reads every vault and feed, then two router swaps send 360 and 540 USDC out to the router and bring 1.44 TSLAx and 3 NVDAx back into their vaults at oracle-anchored minimums, and 900 shares are minted to Alice.](figures/vault-deposit.svg)
+![Alice's deposit: 900 USDC arrives, the NAV loop reads every vault and the two Pyth price accounts, then two router swaps send 360 and 540 USDC out and bring 1.44 TSLAx and 3 NVDAx back into their vaults at minimums computed from those same prices, and 900 shares are minted to Alice.](figures/vault-deposit.svg)
 
 ## The Market Moves and the Manager Rebalances
 
@@ -50,7 +50,7 @@ NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is wor
 
 But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's actual job. She runs `rebalance()`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums exactly like deposits. The weights return to 40/60. Note where the money went: between strategy-owned vaults, through the approved router, at oracle-checked prices, and nowhere near Maria.
 
-![The drift and the rebalance: NVDAx's rise pushes the weights to 37.5/62.5, and two legs through the router restore 40/60. 0.12 NVDAx goes out and 24 USDC comes back, then that USDC goes out and 0.096 TSLAx comes back, every leg floored by an oracle-computed minimum.](figures/vault-rebalance.svg)
+![The drift and the rebalance: the NVDA price account now reads $200, pushing the weights to 37.5/62.5, and two legs through the router restore 40/60. 0.12 NVDAx goes out and 24 USDC comes back, then that USDC goes out and 0.096 TSLAx comes back, every leg floored by a minimum computed from the two feeds the handler takes by name.](figures/vault-rebalance.svg)
 
 ## A Later Investor Buys In at the New Price
 
@@ -68,7 +68,7 @@ Alice takes profit with `withdraw()`, burning her 900 shares. The program does n
 
 She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. And Victor took no fee on any of it; what he earned is the only thing his platform sells, a track record of funds that cannot be rugged.
 
-![In-kind withdrawal: Alice's 900 shares are burned first, then proportional slices of the TSLAx and NVDAx vaults flow to her accounts; the fully deployed USDC vault has nothing to pay, though her min_usdc_out floor still guards that leg.](figures/vault-withdraw-in-kind.svg)
+![In-kind withdrawal: Alice's 900 shares are burned first, then proportional slices of the TSLAx and NVDAx vaults flow to her accounts; no price account appears because every leg is a proportion of a vault balance, and the fully deployed USDC vault has nothing to pay, though her min_usdc_out floor still guards that leg.](figures/vault-withdraw-in-kind.svg)
 
 ## The Math: One Valuation Loop, Floors Toward the Fund
 

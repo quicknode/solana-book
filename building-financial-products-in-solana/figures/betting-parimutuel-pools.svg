@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Gelasio, Georgia, serif" fill="#111">
   <defs><marker id="betting-pools-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <!-- winning pool -->
   <text x="150" y="40" font-size="12" font-weight="bold" text-anchor="middle">Toy Story 5 pool: 400 USDC</text>
@@ -16,10 +16,10 @@
   <text x="500" y="114" font-size="10.5" fill="#444" text-anchor="middle">loses her stake</text>
   <!-- settlement flows -->
   <path d="M 418,88 C 350,84 300,96 246,108" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="78" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">+147 to Alice</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="299.69" y="78" font-size="11" font-weight="bold" fill="#1e7a3c">+147 to Alice</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="378" y="105" font-size="10" fill="#444" font-style="italic" text-anchor="middle">at settlement</text>
   <path d="M 418,116 C 350,128 300,158 246,176" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330" y="128" font-size="11" font-weight="bold" fill="#1e7a3c" text-anchor="middle">+49 to Bob</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="304.57" y="128" font-size="11" font-weight="bold" fill="#1e7a3c">+49 to Bob</text>
   <!-- fee to the house -->
   <path d="M 500,136 L 500,192" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-pools-arr)"/>
   <text x="512" y="156" font-size="10.5">fee: 2% of 200</text>
