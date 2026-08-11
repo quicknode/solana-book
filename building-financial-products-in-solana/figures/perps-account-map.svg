@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 620.37" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Every account a position touches</text>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <text x="16" y="340" font-size="9" fill="#444" font-style="italic" text-anchor="start">one vault holds everyone&#8217;s money: LP liquidity, trader collateral</text>
-  <text x="16" y="356" font-size="9" fill="#444" font-style="italic" text-anchor="start">and protocol fees are kept apart by ledger fields, not by accounts.</text>
   <g>
   <circle cx="524" cy="84.0725" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="516" y="46.2989" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

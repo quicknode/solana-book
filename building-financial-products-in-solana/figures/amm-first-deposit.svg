@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 734" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria seeds the pool</text>
   <defs><marker id="amm-first-deposit-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="amm-first-deposit-arrk" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <!-- the curve on top: every on-curve address dot sits on it -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
@@ -219,9 +220,6 @@
   <text x="330" y="254" font-size="9" fill="#444" font-style="italic" text-anchor="middle">the ratio she deposits <tspan font-style="normal">is</tspan> the ratio, 900 &#247; 400 = $2.25</text>
   <text x="330" y="268" font-size="9" fill="#444" font-style="italic" text-anchor="middle">K = 360,000, and &#8730;K = 600 LP</text>
   <!-- MINIMUM_LIQUIDITY: a constant, not account state -->
-  <text x="238" y="600" font-size="9" fill="#444" font-style="italic" text-anchor="middle">MINIMUM_LIQUIDITY holds back 100 minor units</text>
-  <text x="238" y="614" font-size="9" fill="#444" font-style="italic" text-anchor="middle">(0.0001 LP) of that 600: locked forever, minted to</text>
-  <text x="238" y="628" font-size="9" fill="#444" font-style="italic" text-anchor="middle">nobody, and always sitting in the share divisor</text>
   <g class="coin" transform="translate(135.5,337.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(235.5,472.1)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(185.5,664.1)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>

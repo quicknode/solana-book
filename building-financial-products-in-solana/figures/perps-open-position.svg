@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 598" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Alice opens a long</text>
   <defs><marker id="perps-open-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="perps-open-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
@@ -195,7 +196,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="300" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1,000 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="316" font-size="9" fill="#444" font-style="italic" text-anchor="start">collateral in</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="224" y="336" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">open_position() &#183; side Long, 5,000 size</text>
-  <text x="224" y="352" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">plus her acceptable-price bound: a long opening above it fails</text>
   <text x="224" y="392" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">open fee: 10 bps of the 5,000 notional = 5 USDC,</text>
   <text x="224" y="408" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">so 995 is her working collateral</text>
   <g class="coin" transform="translate(111.5,295.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>

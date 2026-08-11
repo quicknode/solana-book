@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 622" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 647" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Every account the quote touches</text>
+<g transform="translate(0,25)">
   <!-- the curve on top: every on-curve address dot sits on it -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="-1" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- NVDAx mint, above the curve -->
   <g>
   <circle cx="178" cy="40.3578" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -166,4 +168,5 @@
   <line x1="478" y1="332" x2="442" y2="332" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3"/>
   <text x="240" y="430" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no LP mint, no fee ledger, no reserves the price depends on:</text>
   <text x="240" y="445" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">with one depositor, the vault balances <tspan font-style="normal">are</tspan> the accounting</text>
+</g>
 </svg>
