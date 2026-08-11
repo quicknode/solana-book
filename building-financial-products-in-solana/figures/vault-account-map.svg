@@ -271,5 +271,5 @@
   <text x="16" y="612" font-size="9" fill="#444" font-style="italic" text-anchor="start">no handler moves a vault&#8217;s tokens to the manager: rebalancing moves them between</text>
   <text x="16" y="628" font-size="9" fill="#444" font-style="italic" text-anchor="start">strategy-owned vaults, and the fee path mints shares and touches no vault at all.</text>
   <text x="16" y="644" font-size="9" fill="#444" font-style="italic" text-anchor="start">The instruction that would let Maria drain the fund does not exist.</text>
-</svg>
   <text x="16" y="666" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
+</svg>
