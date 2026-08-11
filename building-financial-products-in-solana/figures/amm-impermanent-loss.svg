@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 394" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Withdrawing realizes the loss</text>
+<g transform="translate(0,14)">
   <defs>
     <marker id="amm-impermanent-loss-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto">
       <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
@@ -31,4 +33,5 @@
   <path d="M 346,232 L 325,193" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
   <text x="350" y="238" font-size="10.5" font-style="italic" fill="#444">at withdrawal (spot &#8776; $2.64):</text>
   <text x="350" y="253" font-size="10.5" font-style="italic" fill="#444">&#8776; $1.50 behind just holding</text>
+</g>
 </svg>

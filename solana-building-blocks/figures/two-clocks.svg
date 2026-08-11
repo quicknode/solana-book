@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 289" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">The two clocks</text>
+<g transform="translate(0,29)">
   <defs><marker id="clocks" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <line x1="50" y1="80" x2="590" y2="80" stroke="#111" stroke-width="2"/>
   <g stroke="#111" stroke-width="1.6"><line x1="90" y1="70" x2="90" y2="90"/><line x1="170" y1="70" x2="170" y2="90"/><line x1="250" y1="70" x2="250" y2="90"/><line x1="330" y1="70" x2="330" y2="90"/><line x1="410" y1="70" x2="410" y2="90"/><line x1="490" y1="70" x2="490" y2="90"/></g>
@@ -22,4 +24,5 @@
   <path d="M 430,196 C 350,200 260,196 165,188" stroke="#111" stroke-width="1.3" marker-end="url(#clocks)" fill="none"/>
   <text x="436" y="192" font-size="10.5">display, records, a year&#8217;s</text>
   <text x="436" y="206" font-size="10.5" font-weight="bold">management fee: human time</text>
+</g>
 </svg>

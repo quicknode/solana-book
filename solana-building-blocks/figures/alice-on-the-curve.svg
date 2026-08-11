@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 176" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 203" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Alice’s address on the curve</text>
+<g transform="translate(0,27)">
   <path d="M 0,2 Q 400,2 640,36" fill="none" stroke="#e0e0e0" stroke-width="1.2"/>
   <path d="M 0,10 Q 400,10 640,70" fill="none" stroke="#cccccc" stroke-width="1.2"/>
   <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="52" font-size="10" fill="#bbb" text-anchor="end" font-style="italic">Localnet</text>
@@ -18,4 +20,5 @@
   <text x="352" y="122" font-size="10.5" fill="#444" font-style="italic">stays on her device, and signs for this address</text>
   <path d="M 297,104 C 240,92 180,64 138,41" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <text x="320" y="158" font-size="11.5" fill="#444" text-anchor="middle" font-style="italic">a dot on the curve is an address someone holds the private key for</text>
+</g>
 </svg>

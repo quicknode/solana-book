@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 562" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 588" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">How programs store records</text>
+<g transform="translate(0,26)">
   <text x="16" y="12" font-size="9.5" fill="#555" font-style="italic">the seeds are the key</text>
   <text x="334" y="12" font-size="9.5" fill="#555" font-style="italic">different key = different record</text>
   <g transform="translate(0,18)">
@@ -134,4 +136,5 @@
   <text x="342" y="534" font-size="9.5">collateral: 1,000</text>
 
   </g>
+</g>
 </svg>

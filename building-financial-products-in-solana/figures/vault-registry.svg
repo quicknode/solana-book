@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 476" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Victor approves the assets</text>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <g>
@@ -127,7 +128,6 @@
   <text x="340" y="348" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority approves</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="250" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. initialize_registry(), once</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
-  <text x="240" y="282" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">each call binds one mint to one Pyth feed</text>
   <g transform="translate(0,-90)">
   <g opacity="0.3">
   <rect x="16" y="476" width="212" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -136,10 +136,7 @@
   <line x1="24" y1="497" x2="220" y2="497" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="508" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_usdc_for_asset()</text>
   <text x="24" y="518" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_asset_for_usdc()</text>
-  <text x="24" y="532" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
-  <text x="240" y="498" font-size="9" fill="#444" font-style="italic" text-anchor="start">the route Maria&#8217;s strategy will be fixed to;</text>
-  <text x="240" y="514" font-size="9" fill="#444" font-style="italic" text-anchor="start">Victor&#8217;s registry says nothing about it</text>
   </g>
-  <text x="16" y="464" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
+  <text x="16" y="464" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
 </svg>

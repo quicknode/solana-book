@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 684" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Settlement pays Bob and Carol</text>
   <!-- settle_funds(): the vaults pay out both traders once their counters are zeroed -->
   <!-- settle_funds() for Bob and for Carol: counters zeroed, then the market PDA signs -->
   <defs><marker id="order-book-settle-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
