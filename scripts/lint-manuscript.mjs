@@ -210,7 +210,17 @@ for (const dir of figureDirs) {
 }
 
 for (const file of svgFiles) {
-  const lines = readFileSync(file, "utf8").split("\n");
+  const source = readFileSync(file, "utf8");
+  // Anything after </svg> is not in the drawing. The browser lays it out as
+  // loose text after the figure, so a footnote added below the canvas renders
+  // outside the SVG, breaks to the next page on its own, and lands above the
+  // caption. A footnote at the foot of a figure goes inside the root element.
+  const trailing = source.split(/<\/svg>/).pop().trim();
+  if (trailing) {
+    failures += 1;
+    console.error(`${file}: markup after </svg> is not part of the figure; move it inside the root element\n    ${trailing.slice(0, 160)}`);
+  }
+  const lines = source.split("\n");
   lines.forEach((line, index) => {
     for (const [pattern, reason] of svgRules) {
       if (pattern.test(line)) {
