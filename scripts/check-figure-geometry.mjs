@@ -16,7 +16,7 @@
 import { chromium } from "playwright-core";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const figureDirs = [
@@ -75,10 +75,25 @@ const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromi
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
 let failures = 0;
 
+// The figures name the same bundled faces the PDF embeds. Without these
+// @font-face rules the page falls back to whatever generic serif the machine
+// has, and every clearance below is measured against a face the book will
+// never print in - which is how a coin sitting on a label passed this check.
+const fontFace = (family, file, extra = "") =>
+  `@font-face{font-family:"${family}";src:url("${pathToFileURL(join(repoRoot, "assets", "fonts", file)).href}");${extra}}`;
+const FONTS = [
+  fontFace("Gelasio", "Gelasio-Regular.ttf", "font-weight:normal;font-style:normal;"),
+  fontFace("Gelasio", "Gelasio-Bold.ttf", "font-weight:bold;font-style:normal;"),
+  fontFace("Gelasio", "Gelasio-Italic.ttf", "font-weight:normal;font-style:italic;"),
+  fontFace("DejaVu Sans Mono", "DejaVuSansMono.ttf", "font-weight:normal;font-style:normal;"),
+  fontFace("DejaVu Sans Mono", "DejaVuSansMono-Bold.ttf", "font-weight:bold;font-style:normal;"),
+].join("");
+
 for (const file of files) {
   await page.setContent(
-    `<!doctype html><style>body{margin:0}</style>${readFileSync(file, "utf8")}`,
+    `<!doctype html><style>body{margin:0}${FONTS}</style>${readFileSync(file, "utf8")}`,
   );
+  await page.evaluate(() => document.fonts.ready);
   const fig = await page.evaluate(() => {
     const svg = document.querySelector("svg");
     const inv = svg.getScreenCTM().inverse();

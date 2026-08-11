@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 562" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 562" font-family="Gelasio, Georgia, serif" fill="#111">
   <text x="16" y="12" font-size="9.5" fill="#555" font-style="italic">the seeds are the key</text>
-  <text x="334" y="12" font-size="9.5" fill="#555" font-style="italic">the same key shape, a different record</text>
+  <text x="334" y="12" font-size="9.5" fill="#555" font-style="italic">different key = different record</text>
   <g transform="translate(0,18)">
 
   <circle cx="24" cy="21.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

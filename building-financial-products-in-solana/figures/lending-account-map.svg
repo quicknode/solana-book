@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 877.34" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 877.34" font-family="Gelasio, Georgia, serif" fill="#111">
   <!-- the lending market's account map: one market, three reserves, an obligation per borrower -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text x="308" y="432" font-size="8.5" fill="#444" font-style="italic">a share is a claim on a reserve&#8217;s pool, not a fixed amount of it:</text>
+  <text x="308" y="446" font-size="8.5" fill="#444" font-style="italic">no box here can show what one is worth, only the pool it claims.</text>
   <g>
   <circle cx="148" cy="38.9615" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="140" y="2.63815" width="92" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -227,21 +229,21 @@
   <g transform="translate(476,125.676)"><g transform="translate(-0.113,-0.112) scale(1.016)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="496" y="136.676" font-size="9.5" font-weight="bold">lending program</text>
   <line x1="476" y1="141.676" x2="628" y2="141.676" stroke="#888" stroke-width="0.8"/>
-  <text x="476" y="152.676" font-size="7.5" font-family="Menlo, monospace">init_lending_market()</text>
-  <text x="476" y="162.676" font-size="7.5" font-family="Menlo, monospace">init_reserve()</text>
-  <text x="476" y="172.676" font-size="7.5" font-family="Menlo, monospace">update_reserve_config()</text>
-  <text x="476" y="182.676" font-size="7.5" font-family="Menlo, monospace">set_price()</text>
-  <text x="476" y="192.676" font-size="7.5" font-family="Menlo, monospace">refresh_reserve()</text>
-  <text x="476" y="202.676" font-size="7.5" font-family="Menlo, monospace">refresh_obligation()</text>
-  <text x="476" y="212.676" font-size="7.5" font-family="Menlo, monospace">deposit_reserve_liquidity()</text>
-  <text x="476" y="222.676" font-size="7.5" font-family="Menlo, monospace">redeem_reserve_collateral()</text>
-  <text x="476" y="232.676" font-size="7.5" font-family="Menlo, monospace">init_obligation()</text>
-  <text x="476" y="242.676" font-size="7.5" font-family="Menlo, monospace">deposit_obligation_collateral()</text>
-  <text x="476" y="252.676" font-size="7.5" font-family="Menlo, monospace">withdraw_obligation_collateral()</text>
-  <text x="476" y="262.676" font-size="7.5" font-family="Menlo, monospace">borrow_obligation_liquidity()</text>
-  <text x="476" y="272.676" font-size="7.5" font-family="Menlo, monospace">repay_obligation_liquidity()</text>
-  <text x="476" y="282.676" font-size="7.5" font-family="Menlo, monospace">liquidate_obligation()</text>
-  <text x="476" y="292.676" font-size="7.5" font-family="Menlo, monospace">collect_protocol_fees()</text>
+  <text x="476" y="152.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">init_lending_market()</text>
+  <text x="476" y="162.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">init_reserve()</text>
+  <text x="476" y="172.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">update_reserve_config()</text>
+  <text x="476" y="182.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">set_price()</text>
+  <text x="476" y="192.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">refresh_reserve()</text>
+  <text x="476" y="202.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">refresh_obligation()</text>
+  <text x="476" y="212.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">deposit_reserve_liquidity()</text>
+  <text x="476" y="222.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">redeem_reserve_collateral()</text>
+  <text x="476" y="232.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">init_obligation()</text>
+  <text x="476" y="242.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">deposit_obligation_collateral()</text>
+  <text x="476" y="252.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">withdraw_obligation_collateral()</text>
+  <text x="476" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">borrow_obligation_liquidity()</text>
+  <text x="476" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">repay_obligation_liquidity()</text>
+  <text x="476" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">liquidate_obligation()</text>
+  <text x="476" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace">collect_protocol_fees()</text>
   </g>
   <g>
   <circle cx="476" cy="314.676" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -393,9 +395,4 @@
   <text x="476" y="843.34" font-size="8.5" fill="#444">supply: 4</text>
   <text x="476" y="855.34" font-size="8" font-style="italic">authority: the reserve</text>
   </g>
-  <text x="308" y="432" font-size="8.5" fill="#444" font-style="italic">each reserve owns its liquidity vault and its share mint;</text>
-  <text x="308" y="446" font-size="8.5" fill="#444" font-style="italic">each obligation owns a collateral vault of pledged shares</text>
-  <text x="308" y="470" font-size="8.5" fill="#444" font-style="italic">a share is a supplier&#8217;s claim on a reserve&#8217;s pool: interest</text>
-  <text x="308" y="484" font-size="8.5" fill="#444" font-style="italic">swells the pool while the share supply stays put, so the</text>
-  <text x="308" y="498" font-size="8.5" fill="#444" font-style="italic">same shares redeem for more of the asset than they cost</text>
 </svg>

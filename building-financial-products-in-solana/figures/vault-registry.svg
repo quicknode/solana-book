@@ -1,25 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 548" font-family="Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 476" font-family="Gelasio, Georgia, serif" fill="#111">
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <g>
-  <circle cx="248" cy="44.8207" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="240" y="8.22021" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,16.22)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="268" y="27.22" font-size="9.5" font-weight="bold">TSLAx mint</text>
-  </g>
-  <g>
-  <circle cx="360" cy="56" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="352" y="19.0155" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,27.02)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="380" y="38.02" font-size="9.5" font-weight="bold">NVDAx mint</text>
-  </g>
-  <circle cx="472" cy="73.3639" r="7" fill="#fff"/>
-  <g opacity="0.3">
-  <circle cx="472" cy="73.3639" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="464" y="35.8798" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,43.88)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="492" y="54.88" font-size="9.5" font-weight="bold">USDC mint</text>
-  </g>
   <g>
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="16" y="43.9168" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -67,6 +48,23 @@
   <text x="24" y="345.917" font-size="9" font-weight="bold">price_feed: Pyth NVDA</text>
   <text x="112" y="333.917" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
+  <!-- the feeds each ApprovedAsset binds to: external, neither derived here nor built in -->
+  <g>
+  <rect x="128" y="212.917" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,217.917)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="156" y="228.917" font-size="9.5" font-weight="bold">Pyth TSLA</text>
+  <line x1="136" y1="233.917" x2="224" y2="233.917" stroke="#888" stroke-width="0.8"/>
+  <text x="136" y="244.917" font-size="9">price: $250</text>
+  <text x="136" y="255.917" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
+  </g>
+  <g>
+  <rect x="128" y="301.917" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,306.917)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="156" y="317.917" font-size="9.5" font-weight="bold">Pyth NVDA</text>
+  <line x1="136" y1="322.917" x2="224" y2="322.917" stroke="#888" stroke-width="0.8"/>
+  <text x="136" y="333.917" font-size="9">price: $180</text>
+  <text x="136" y="344.917" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
+  </g>
   <circle cx="224" cy="43.0914" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="224" cy="43.0914" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -112,37 +110,36 @@
   <g transform="translate(472,124.37)"><g transform="translate(-0.113,-0.112) scale(1.016)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="492" y="135.37" font-size="10.5" font-weight="bold">vault-strategy program</text>
   <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="151.37" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_registry()</text>
-  <text x="472" y="161.37" font-size="8.5" font-family="Menlo, monospace" font-weight="bold" fill="#1e7a3c">approve_asset()</text>
-  <text x="472" y="171.37" font-size="8.5" font-family="Menlo, monospace">initialize_strategy()</text>
-  <text x="472" y="181.37" font-size="8.5" font-family="Menlo, monospace">add_asset()</text>
-  <text x="472" y="191.37" font-size="8.5" font-family="Menlo, monospace">set_weight()</text>
-  <text x="472" y="201.37" font-size="8.5" font-family="Menlo, monospace">deposit()</text>
-  <text x="472" y="211.37" font-size="8.5" font-family="Menlo, monospace">rebalance()</text>
-  <text x="472" y="221.37" font-size="8.5" font-family="Menlo, monospace">collect_fees()</text>
-  <text x="472" y="231.37" font-size="8.5" font-family="Menlo, monospace">withdraw()</text>
+  <text x="472" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_registry()</text>
+  <text x="472" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">approve_asset()</text>
+  <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_strategy()</text>
+  <text x="472" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">add_asset()</text>
+  <text x="472" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">set_weight()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">deposit()</text>
+  <text x="472" y="211.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">rebalance()</text>
+  <text x="472" y="221.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">collect_fees()</text>
+  <text x="472" y="231.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">withdraw()</text>
   </g>
   <rect x="240" y="300" width="200" height="34" fill="#fff" stroke="#888"/>
-  <text x="340" y="321" font-size="9.5" text-anchor="middle" font-family="Menlo, monospace">approve_asset() by Maria</text>
+  <text x="340" y="321" font-size="9.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">approve_asset() by Maria</text>
   <line x1="244" y1="304" x2="436" y2="330" stroke="#999" stroke-width="1.6"/>
   <line x1="244" y1="330" x2="436" y2="304" stroke="#999" stroke-width="1.6"/>
   <text x="340" y="348" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority approves</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="250" font-size="10" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. initialize_registry(), once</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="250" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. initialize_registry(), once</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
   <text x="240" y="282" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">each call binds one mint to one Pyth feed</text>
-  <text x="16" y="396" font-size="9" fill="#444" font-style="italic" text-anchor="start">Victor is not a fund manager: he curates the set of assets managers may invest in at all,</text>
-  <text x="16" y="412" font-size="9" fill="#444" font-style="italic" text-anchor="start">and the feed that is the truth for each. Maria will select from this set with add_asset(),</text>
-  <text x="16" y="428" font-size="9" fill="#444" font-style="italic" text-anchor="start">which derives the ApprovedAsset address for the mint it is handed and fails if the account</text>
-  <text x="16" y="444" font-size="9" fill="#444" font-style="italic" text-anchor="start">is missing; the feed she can never supply is copied out of the account she points at.</text>
+  <g transform="translate(0,-90)">
   <g opacity="0.3">
   <rect x="16" y="476" width="212" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,481)"><g transform="translate(-0.113,-0.112) scale(1.016)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="44" y="492" font-size="9.5" font-weight="bold">swap router program</text>
   <line x1="24" y1="497" x2="220" y2="497" stroke="#888" stroke-width="0.8"/>
-  <text x="24" y="508" font-size="8.5" font-family="Menlo, monospace">swap_usdc_for_asset()</text>
-  <text x="24" y="518" font-size="8.5" font-family="Menlo, monospace">swap_asset_for_usdc()</text>
+  <text x="24" y="508" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_usdc_for_asset()</text>
+  <text x="24" y="518" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_asset_for_usdc()</text>
   <text x="24" y="532" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
   <text x="240" y="498" font-size="9" fill="#444" font-style="italic" text-anchor="start">the route Maria&#8217;s strategy will be fixed to;</text>
   <text x="240" y="514" font-size="9" fill="#444" font-style="italic" text-anchor="start">Victor&#8217;s registry says nothing about it</text>
+  </g>
 </svg>
+  <text x="16" y="464" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
