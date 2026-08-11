@@ -587,10 +587,6 @@ await browser.close();
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
 
-for (const { name, number } of partPages) {
-  const side = number % 2 === 1 ? "right" : "LEFT";
-  console.log(`  page ${number} (${side}): ${name}`);
-}
 const strays = partPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
 if (strays.length > 0) {
   console.error(`\n${strays.length} part page(s) did not land on a right-hand page:`);
