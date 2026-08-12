@@ -3,7 +3,7 @@
 <g transform="translate(0,26)">
   <!-- the lending market's account map: one market, three reserves, an obligation per borrower -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="-2" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <g>
   <circle cx="148" cy="38.9615" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="140" y="2.63815" width="92" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
