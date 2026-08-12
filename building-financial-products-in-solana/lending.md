@@ -6,7 +6,9 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ## The Account Model: A Market of Reserves, and an Obligation per Borrower
 
-![One market, three reserves; each reserve owns a liquidity vault and a share mint, and points at a price feed.](figures/lending-account-map.svg)
+![One market, and an obligation per borrower holding a collateral vault of share tokens.](figures/lending-account-map.svg)
+
+![Each reserve owns a liquidity vault and a share mint and points at a price feed, so a token's pool, its receipt and its price all hang off one account.](figures/lending-reserves.svg)
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
