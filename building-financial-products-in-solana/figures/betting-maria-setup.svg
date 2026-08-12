@@ -115,7 +115,7 @@
   <text x="472" y="395.37" font-size="9.5">total_pool: 0</text>
   <text x="472" y="407.37" font-size="9.5">fee_bps: 200</text>
   <text x="472" y="419.37" font-size="9" font-style="italic" fill="#444">snapshotted at creation</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="383.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="387.87" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <g>
   <circle cx="472" cy="441.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -149,7 +149,7 @@
   <line x1="472" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="623.37" font-size="9.5" fill="#444">0 USDC</text>
   <text x="472" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="623.37" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="624.87" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <text x="230" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria&#8217;s signature against config.admin;</text>
   <text x="230" y="316" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">anyone else gets Unauthorized</text>

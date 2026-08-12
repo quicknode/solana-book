@@ -12,12 +12,12 @@
   </g>
   <g>
   <circle cx="100" cy="37.3167" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="16" y="43.5425" width="92" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="16" y="43.5425" width="92" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,48.5425)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="44" y="59.5425" font-size="9.5" font-weight="bold">Alice</text>
   <line x1="24" y1="64.5425" x2="100" y2="64.5425" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="75.5425" font-size="8.5" font-style="italic" fill="#444">long</text>
-  <text x="24" y="87.5425" font-size="8.5" fill="#444">1 SOL</text>
+  <text x="24" y="86.0425" font-size="8.5" fill="#444">1 SOL</text>
   </g>
   <g>
   <circle cx="24" cy="114.042" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -185,12 +185,12 @@
   <text x="540" y="575.37" font-size="10.5" font-weight="bold">LP share mint</text>
   </g>
   <g>
-  <rect x="16" y="500" width="192" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="16" y="500" width="192" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,505)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="516" font-size="10.5" font-weight="bold">oracle feed</text>
   <line x1="24" y1="521" x2="200" y2="521" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="532" font-size="8.5">NVDAx: $100</text>
-  <text x="24" y="544" font-size="7.5" font-style="italic" fill="#444">external; pinned at pool creation</text>
+  <text x="24" y="542.5" font-size="7.5" font-style="italic" fill="#444">external; pinned at pool creation</text>
   </g>
   <path d="M 100,152.542 C 112,164.542 112,176.542 112,300 C 112,372 200,424 320,452 C 400,470 460,480 509,497.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-open-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="126" y="300" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1,000 USDC</text>
