@@ -87,7 +87,9 @@ Dave watches for liquidation opportunities. He is the reason the market stays so
 
 Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Why half at a time? The close factor means the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
-![The close factor halves what one call may touch, so health crosses back under the threshold in two steps, not one.](figures/lending-liquidation.svg)
+![Dave repays SPCXx into the reserve and seizes discounted USDC collateral shares from Carol's obligation, twice, with the market PDA signing every leg.](figures/lending-liquidation.svg)
+
+![Each call may touch only half the debt, so 2.25 SPCXx of the 3 goes in two passes and Carol crosses back under the threshold rather than losing the whole position.](figures/lending-liquidation-health.svg)
 
 ## Cranks: Work With No Natural Caller
 
