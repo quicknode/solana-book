@@ -206,14 +206,10 @@ const svgRules = [
 // its aspect ratio: h/w beyond about 1.22 cannot fit the text block once the
 // caption is counted, and Paged.js then breaks the page inside the figure -
 // which cost this book roughly 75 pages of blank and fragmented pages before
-// the figures were reflowed. The three lending figures are still over and are
-// named here rather than left to be rediscovered.
+// the figures were reflowed. Nothing is exempt: the lending figures were the
+// last three over, and splitting them by handler brought them under.
 const MAX_ASPECT = 1.22;
-const aspectExceptions = new Set([
-  "lending-account-map.svg",   // three reserve stacks, four boxes deep
-  "lending-borrow-ltv.svg",
-  "lending-liquidation.svg",
-]);
+const aspectExceptions = new Set();  // every figure fits; keep it that way
 
 const svgFiles = [];
 for (const dir of figureDirs) {
