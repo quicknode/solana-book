@@ -6,7 +6,7 @@
 // Usage: node scripts/lint-manuscript.mjs
 
 import { readFileSync } from "node:fs";
-import { join, dirname, resolve } from "node:path";
+import { join, dirname, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -202,6 +202,19 @@ const svgRules = [
     'the coin mark carries no currency symbol; the amount label names the asset'],
 ];
 
+// A figure is reproduced at the text width, so its printed height follows from
+// its aspect ratio: h/w beyond about 1.22 cannot fit the text block once the
+// caption is counted, and Paged.js then breaks the page inside the figure -
+// which cost this book roughly 75 pages of blank and fragmented pages before
+// the figures were reflowed. The three lending figures are still over and are
+// named here rather than left to be rediscovered.
+const MAX_ASPECT = 1.22;
+const aspectExceptions = new Set([
+  "lending-account-map.svg",   // three reserve stacks, four boxes deep
+  "lending-borrow-ltv.svg",
+  "lending-liquidation.svg",
+]);
+
 const svgFiles = [];
 for (const dir of figureDirs) {
   for (const name of readdirSync(join(repoRoot, dir))) {
@@ -211,6 +224,15 @@ for (const dir of figureDirs) {
 
 for (const file of svgFiles) {
   const source = readFileSync(file, "utf8");
+  const viewBox = source.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+  if (viewBox && !aspectExceptions.has(basename(file))) {
+    const [w, h] = [Number(viewBox[1]), Number(viewBox[2])];
+    if (h / w > MAX_ASPECT) {
+      failures += 1;
+      console.error(`${file}: ${w}x${h} is ${(h / w).toFixed(2)} times as tall as it is wide, ` +
+        `over the ${MAX_ASPECT} that fits the text block (prints ${(5.74 * h / w).toFixed(2)}in against 8.04in)`);
+    }
+  }
   // Anything after </svg> is not in the drawing. The browser lays it out as
   // loose text after the figure, so a footnote added below the canvas renders
   // outside the SVG, breaks to the next page on its own, and lands above the
