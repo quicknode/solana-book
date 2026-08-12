@@ -320,21 +320,24 @@
   <path d="M 236,834 C 214,834 230,812 230,750 C 230,600 232.969,299.815 228,244 C 225.492,215.827 211.051,213.783 200,209" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
   <path d="M 195,231 C 208,231 216,240 216,264 C 216,340 217.171,430.138 214,452 C 211.073,472.185 203.768,473.779 199,479" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
   <path d="M 172,766 C 188,766 202,756 202,720 C 202,600 202,340 202,312 C 202,300 199.188,298.982 199,298" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="214" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. deposit_reserve_liquidity()</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="228" font-size="9.5" font-weight="bold" fill="#1e7a3c">5 NVDAx in, 5 NVDAx shares out</text>
-  <text x="246" y="252" font-size="10.5" fill="#1e7a3c" font-style="italic" font-weight="bold">2. init_obligation() opens Bob&#8217;s loan file</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="276" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. deposit_obligation_collateral()</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="290" font-size="9.5" font-weight="bold" fill="#1e7a3c">5 NVDAx shares pledged</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="314" font-size="10.5" font-weight="bold" fill="#1e7a3c">4. borrow_obligation_liquidity()</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="246" y="328" font-size="9.5" font-weight="bold" fill="#1e7a3c">750 USDC to Bob</text>
   <text x="246" y="364" font-size="8.5" fill="#111" font-weight="bold">Bob&#8217;s position, marked to market</text>
   <rect x="246" y="372" width="135" height="14" fill="url(#lend-bor-hatch)" stroke="#111" stroke-width="1.2"/>
   <rect x="246" y="372" width="180" height="14" fill="none" stroke="#111" stroke-width="1.2"/>
   <line x1="390" y1="366" x2="390" y2="392" stroke="#111" stroke-width="1.4" stroke-dasharray="5 3"/>
   <text x="246" y="404" font-size="8.5" fill="#111">debt $750 = the 75% maximum</text>
   <text x="246" y="418" font-size="8.5" fill="#111">liquidation threshold 80% = $800</text>
-  <g class="coin" transform="translate(231.5,217)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(231.5,279)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(231.5,317)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </g>
+  <rect class="marker" x="208.2" y="369.8" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="216.2" y="381.4" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(216.2,397.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="430.0" y="378.6" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="438.0" y="390.2" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(416.0,386.6)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="222.7" y="536.6" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="230.7" y="548.2" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(208.7,544.6)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="216" y="448" width="249" height="70" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="224" y="458.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="470.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="250" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">Supply 5 NVDAx, receive 5 NVDAx shares</text>
+  <rect class="marker" x="224" y="476.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="488.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="250" y="488" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pledge the 5 NVDAx shares as collateral</text>
+  <rect class="marker" x="224" y="494.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="506.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="250" y="506" font-size="10.5" font-weight="bold" fill="#1e7a3c">Borrow 750 USDC against them</text>
 </svg>

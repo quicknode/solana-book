@@ -249,16 +249,23 @@
   </g>
   <!-- the base vault pays Bob his three shares -->
   <path d="M 460,516 C 412,474 356,452 300,446 C 262,442 237.539,444.018 237,424 L 230.056,166.092 C 230.101,152.617 233.459,150.17 234,148" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300.27" y="434" font-size="10.5" font-weight="bold" fill="#1e7a3c">3 NVDAx</text>
   <!-- the quote vault pays Carol her net proceeds -->
   <path d="M 460,580 C 436,550 420,528 420,500 L 420,268 C 420,250 410.052,239.525 394,238 L 348.109,233.639" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="414" y="330" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">748.125 USDC</text>
   <!-- the quote vault pays Bob back the lock his cancel released -->
   <path d="M 460,608 C 392,608 190,602 140,576 C 126,569 124,556 124,536 L 124,240 C 124,230 124.728,227.234 125,223" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="212.52" y="566" font-size="10.5" font-weight="bold" fill="#1e7a3c">250 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="634" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">each handler zeroes the counters before it makes the transfers:</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="236" y="650" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">checks-effects-interactions, so a re-entrant caller finds nothing left</text>
-  <g class="coin" transform="translate(285.8,429.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(428.5,325.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(198,561.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="248.5" y="433.4" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="256.5" y="445.0" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(234.5,441.4)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="119.7" y="555.4" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="127.7" y="567.0" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(105.7,563.4)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="412.0" y="376.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="420.0" y="388.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(398.0,384.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="192" y="456" width="238" height="70" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="200" y="466.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="208" y="478.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="226" y="478" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Bob 3 NVDAx from the base vault</text>
+  <rect class="marker" x="200" y="484.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="208" y="496.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="226" y="496" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Bob 250 USDC from the quote vault</text>
+  <rect class="marker" x="200" y="502.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="208" y="514.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="226" y="514" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Carol 748.125 USDC in quote</text>
 </svg>
