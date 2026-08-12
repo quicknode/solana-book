@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 903.34" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 735" font-family="Gelasio, Georgia, serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Bob borrows against collateral</text>
 <g transform="translate(0,26)">
   <!-- Bob borrows against his NVIDIA: deposit, pledge, borrow, at 75% LTV -->
@@ -177,10 +177,10 @@
   <text x="476" y="182.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_price()</text>
   <text x="476" y="192.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
   <text x="476" y="202.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
-  <text x="476" y="212.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">deposit_reserve_liquidity()</text>
+  <text x="476" y="212.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#444">deposit_reserve_liquidity()</text>
   <text x="476" y="222.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">redeem_reserve_collateral()</text>
-  <text x="476" y="232.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">init_obligation()</text>
-  <text x="476" y="242.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">deposit_obligation_collateral()</text>
+  <text x="476" y="232.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#444">init_obligation()</text>
+  <text x="476" y="242.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#444">deposit_obligation_collateral()</text>
   <text x="476" y="252.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
   <text x="476" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">borrow_obligation_liquidity()</text>
   <text x="476" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
@@ -208,18 +208,7 @@
   <text x="12" y="597.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
   <text x="12" y="607.84" font-size="8.5">accumulated_protocol_fees: 0</text>
   </g>
-  <g>
-  <circle cx="12" cy="634.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="633.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; + MARKET +</text>
-  <text x="22" y="642.34" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
-  <rect x="4" y="648.34" width="168" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(12,653.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="32" y="664.34" font-size="9.5" font-weight="bold">USDC price feed</text>
-  <line x1="12" y1="669.34" x2="164" y2="669.34" stroke="#888" stroke-width="0.8"/>
-  <text x="12" y="680.34" font-size="8.5">price_mantissa: 1</text>
-  <text x="12" y="690.84" font-size="8.5">exponent: 0</text>
-  </g>
-  <g>
+<g transform="translate(0,-100.34)">  <g>
   <circle cx="12" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="22" y="725.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
   <text x="22" y="734.34" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
@@ -229,14 +218,7 @@
   <line x1="12" y1="761.34" x2="164" y2="761.34" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="772.34" font-size="8.5" font-weight="bold">250 USDC</text>
   <text x="12" y="784.34" font-size="8" font-style="italic">authority: the reserve</text>
-  </g>
-  <g opacity="0.3">
-  <circle cx="12" cy="801.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="805.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + RESERVE</text>
-  <rect x="4" y="811.34" width="168" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(12,815.34)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="32" y="825.74" font-size="9.5" font-weight="bold">USDC share mint</text>
-  </g>
+  </g></g>
   <g>
   <circle cx="244" cy="530.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="254" y="529.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RESERVE&#8221; + MARKET +</text>
@@ -250,18 +232,7 @@
   <text x="244" y="597.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
   <text x="244" y="607.84" font-size="8.5">accumulated_protocol_fees: 0</text>
   </g>
-  <g>
-  <circle cx="244" cy="634.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="254" y="633.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; + MARKET +</text>
-  <text x="254" y="642.34" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT ADDRESS</text>
-  <rect x="236" y="648.34" width="168" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(244,653.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="264" y="664.34" font-size="9.5" font-weight="bold">NVDAx price feed</text>
-  <line x1="244" y1="669.34" x2="396" y2="669.34" stroke="#888" stroke-width="0.8"/>
-  <text x="244" y="680.34" font-size="8.5">price_mantissa: 200</text>
-  <text x="244" y="690.84" font-size="8.5">exponent: 0</text>
-  </g>
-  <g>
+<g transform="translate(0,-100.34)">  <g>
   <circle cx="244" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="254" y="725.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
   <text x="254" y="734.34" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
@@ -271,17 +242,7 @@
   <line x1="244" y1="761.34" x2="396" y2="761.34" stroke="#888" stroke-width="0.8"/>
   <text x="244" y="772.34" font-size="8.5" font-weight="bold">5 NVDAx</text>
   <text x="244" y="784.34" font-size="8" font-style="italic">authority: the reserve</text>
-  </g>
-  <g>
-  <circle cx="244" cy="801.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="254" y="805.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + RESERVE</text>
-  <rect x="236" y="811.34" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(244,816.34)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="264" y="827.34" font-size="9.5" font-weight="bold">NVDAx share mint</text>
-  <line x1="244" y1="832.34" x2="396" y2="832.34" stroke="#888" stroke-width="0.8"/>
-  <text x="244" y="843.34" font-size="8.5" font-weight="bold">supply: 5</text>
-  <text x="244" y="855.34" font-size="8" font-style="italic">authority: the reserve</text>
-  </g>
+  </g></g>
   <g opacity="0.3">
   <circle cx="476" cy="530.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="486" y="529.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;RESERVE&#8221; + MARKET +</text>
@@ -290,51 +251,15 @@
   <g transform="translate(476,548.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="496" y="558.74" font-size="9.5" font-weight="bold">SPCXx reserve</text>
   </g>
-  <g opacity="0.3">
-  <circle cx="476" cy="634.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="486" y="633.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; + MARKET +</text>
-  <text x="486" y="642.34" font-size="7" letter-spacing="0.3" fill="#555">SPCXX MINT ADDRESS</text>
-  <rect x="468" y="648.34" width="168" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(476,652.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="496" y="662.74" font-size="9.5" font-weight="bold">SPCXx price feed</text>
-  </g>
-  <g opacity="0.3">
+<g transform="translate(0,-100.34)">  <g opacity="0.3">
   <circle cx="476" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="486" y="725.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LIQUIDITY_VAULT&#8221;</text>
   <text x="486" y="734.34" font-size="7" letter-spacing="0.3" fill="#555">+ RESERVE</text>
   <rect x="468" y="740.34" width="168" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(476,744.34)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="496" y="754.74" font-size="9.5" font-weight="bold">SPCXx liquidity vault</text>
-  </g>
-  <g opacity="0.3">
-  <circle cx="476" cy="801.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="486" y="805.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + RESERVE</text>
-  <rect x="468" y="811.34" width="168" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(476,815.34)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="496" y="825.74" font-size="9.5" font-weight="bold">SPCXx share mint</text>
-  </g>
-  <path d="M 186,164 C 208,176 228,188 264,190 C 340,194 418.235,184.195 434,206 C 443.447,219.067 436,300 436,700 C 436,736 422.347,751.864 410,765" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <path d="M 236,834 C 214,834 230,812 230,750 C 230,600 232.969,299.815 228,244 C 225.492,215.827 211.051,213.783 200,209" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <path d="M 195,231 C 208,231 216,240 216,264 C 216,340 217.171,430.138 214,452 C 211.073,472.185 203.768,473.779 199,479" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <path d="M 172,766 C 188,766 202,756 202,720 C 202,600 202,340 202,312 C 202,300 199.188,298.982 199,298" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
-  <text x="246" y="364" font-size="8.5" fill="#111" font-weight="bold">Bob&#8217;s position, marked to market</text>
-  <rect x="246" y="372" width="135" height="14" fill="url(#lend-bor-hatch)" stroke="#111" stroke-width="1.2"/>
-  <rect x="246" y="372" width="180" height="14" fill="none" stroke="#111" stroke-width="1.2"/>
-  <line x1="390" y1="366" x2="390" y2="392" stroke="#111" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <text x="246" y="404" font-size="8.5" fill="#111">debt $750 = the 75% maximum</text>
-  <text x="246" y="418" font-size="8.5" fill="#111">liquidation threshold 80% = $800</text>
-</g>
-  <rect class="marker" x="208.2" y="369.8" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="216.2" y="381.4" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <g class="coin" transform="translate(216.2,397.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="430.0" y="378.6" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="438.0" y="390.2" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
-  <g class="coin" transform="translate(416.0,386.6)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="222.7" y="536.6" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="230.7" y="548.2" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <g class="coin" transform="translate(208.7,544.6)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect x="216" y="448" width="249" height="70" fill="#fff" stroke="#888" class="key"/>
-  <rect class="marker" x="224" y="458.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="470.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <text x="250" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">Supply 5 NVDAx, receive 5 NVDAx shares</text>
-  <rect class="marker" x="224" y="476.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="488.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
-  <text x="250" y="488" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pledge the 5 NVDAx shares as collateral</text>
-  <rect class="marker" x="224" y="494.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="506.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <text x="250" y="506" font-size="10.5" font-weight="bold" fill="#1e7a3c">Borrow 750 USDC against them</text>
+  </g></g>
+  <path d="M 172,666 C 188,666 202,656 202,620 C 202,600 202,340 202,312 C 202,300 199.188,298.982 199,298" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-bor-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="252" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">Borrow 750 USDC against the pledged shares</text>
+  <g class="coin" transform="translate(238,466)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
