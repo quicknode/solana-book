@@ -236,7 +236,10 @@ for (const file of files) {
       fadedDots,
       coins: [...svg.querySelectorAll("g.coin")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
-      rects: [...svg.querySelectorAll("rect")]
+      // A key box is a legend, not an account: its whole job is to hold the
+      // step labels and their coin marks, so the "no text inside a box it does
+      // not belong to" and "no coin over a box" rules would fire on every row.
+      rects: [...svg.querySelectorAll("rect:not(.key)")]
         .filter((r) => (r.getAttribute("fill") || "") !== "none")
         .map(box),
       amounts: amounts.filter((a) => hasAmount(a.lines.join(" "))),
