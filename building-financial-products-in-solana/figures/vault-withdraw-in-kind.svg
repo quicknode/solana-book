@@ -216,7 +216,7 @@
   <text x="472" y="715.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
 </g>
-<g transform="translate(-224,-351.37)">
+<g transform="translate(-200,-351.37)">
   <g>
   <circle cx="472" cy="737.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="736.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
@@ -229,7 +229,7 @@
   <text x="472" y="795.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
 </g>
-<g transform="translate(-224,-351.37)">
+<g transform="translate(-200,-351.37)">
   <g>
   <circle cx="472" cy="817.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="816.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
@@ -251,13 +251,20 @@
   <text x="24" y="682" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_asset_for_usdc()</text>
   </g>
   <text x="16" y="706" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
-  <path d="M 235,238 C 330,248 400,258 424,300 C 441,329 430,380 430,450 L 430,522 C 430,550 436,569 448,569 L 461,569" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="288" y="292" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. burn her 900 shares first</text>
-  <g class="coin" transform="translate(274,288)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <path d="M 262,400 C 258,372 250,342 238,318" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="272" y="338" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. &#8776;1.52 TSLAx</text>
-  <g class="coin" transform="translate(258,334)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <path d="M 300,480 C 292,444 272,412 238,396" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="272" y="364" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. &#8776;2.85 NVDAx</text>
-  <g class="coin" transform="translate(258,360)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <path d="M 235,238 C 330,248 400,258 430,300 C 443,318 440,380 440,450 L 440,545 C 440,558 440,569 444,569 L 461,569" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <path d="M 286,400 C 280,370 262,340 238,318" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <path d="M 286,480 C 262,450 246,420 238,394" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <rect class="marker" x="431.0" y="330.0" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="439.0" y="341.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(417.0,338.0)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="247.1" y="328.3" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="255.1" y="339.9" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(255.1,316.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="246.2" y="424.2" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="254.2" y="435.8" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(232.2,432.2)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="216" y="536" width="196" height="70" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="224" y="546.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="558.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="250" y="558" font-size="10.5" font-weight="bold" fill="#1e7a3c">Burn Alice’s 900 shares first</text>
+  <rect class="marker" x="224" y="564.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="576.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="250" y="576" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay out &#8776;1.52 TSLAx in kind</text>
+  <rect class="marker" x="224" y="582.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="232" y="594.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="250" y="594" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay out &#8776;2.85 NVDAx in kind</text>
 </svg>
