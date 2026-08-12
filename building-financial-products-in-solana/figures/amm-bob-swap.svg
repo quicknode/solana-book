@@ -164,7 +164,7 @@
   <circle cx="488" cy="304.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="498" y="303.37" font-size="7" letter-spacing="0.3" fill="#555">CONFIG&#8217;S ADDRESS +</text>
   <text x="498" y="312.37" font-size="7" letter-spacing="0.3" fill="#555">ACME &amp; USDC MINTS</text>
-  <rect x="480" y="318.37" width="152" height="100" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="480" y="318.37" width="152" height="71.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(488,323.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="508" y="334.37" font-size="9.5" font-weight="bold">pool config</text>
   <line x1="488" y1="339.37" x2="624" y2="339.37" stroke="#888" stroke-width="0.8"/>
@@ -172,8 +172,6 @@
   <text x="488" y="360.87" font-size="8.5">mint_b: USDC</text>
   <text x="488" y="371.37" font-size="8.5">admin_fees_owed_a: 0</text>
   <text x="488" y="381.87" font-size="8.5" font-weight="bold">admin_fees_owed_b: 0.05</text>
-  <text x="488" y="398.37" font-size="8" font-style="italic" fill="#444">pool_a and pool_b are ATAs of the</text>
-  <text x="488" y="410.37" font-size="8" font-style="italic" fill="#444">pool authority, not fields here</text>
   </g>
   <g>
   <circle cx="488" cy="432.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

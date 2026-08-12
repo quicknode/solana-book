@@ -8,19 +8,17 @@
   <g transform="translate(24,48.9168)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="44" y="59.9168" font-size="9.5" font-weight="bold">Victor</text>
   <line x1="24" y1="64.9168" x2="112" y2="64.9168" stroke="#888" stroke-width="0.8"/>
-  <text x="24" y="75.9168" font-size="8.5" font-style="italic" fill="#444">curator</text>
   <text x="24" y="86.4168" font-size="9" fill="#444">1 SOL</text>
   </g>
   <g>
   <circle cx="24" cy="109.917" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="108.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;REGISTRY&#8221; +</text>
   <text x="34" y="117.917" font-size="7" letter-spacing="0.3" fill="#555">VICTOR&#8217;S ADDRESS</text>
-  <rect x="16" y="123.917" width="104" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="16" y="123.917" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(24,128.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="139.917" font-size="9.5" font-weight="bold">registry</text>
   <line x1="24" y1="144.917" x2="112" y2="144.917" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="155.917" font-size="9">authority: Victor</text>
-  <text x="24" y="167.917" font-size="8" font-style="italic" fill="#444">holds no list</text>
   <text x="112" y="155.917" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <g>
@@ -51,20 +49,18 @@
   </g>
   <!-- the feeds each ApprovedAsset binds to: external, neither derived here nor built in -->
   <g>
-  <rect x="128" y="212.917" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="128" y="212.917" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(136,217.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="156" y="228.917" font-size="9.5" font-weight="bold">Pyth TSLA</text>
   <line x1="136" y1="233.917" x2="224" y2="233.917" stroke="#888" stroke-width="0.8"/>
   <text x="136" y="244.917" font-size="9">price: $250</text>
-  <text x="136" y="255.917" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
   </g>
   <g>
-  <rect x="128" y="301.917" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="128" y="301.917" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(136,306.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="156" y="317.917" font-size="9.5" font-weight="bold">Pyth NVDA</text>
   <line x1="136" y1="322.917" x2="224" y2="322.917" stroke="#888" stroke-width="0.8"/>
   <text x="136" y="333.917" font-size="9">price: $180</text>
-  <text x="136" y="344.917" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
   </g>
   <circle cx="224" cy="43.0914" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -130,7 +126,7 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
   <g transform="translate(0,-90)">
   <g opacity="0.3">
-  <rect x="16" y="476" width="212" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="16" y="476" width="212" height="50" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,481)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="44" y="492" font-size="9.5" font-weight="bold">swap router program</text>
   <line x1="24" y1="497" x2="220" y2="497" stroke="#888" stroke-width="0.8"/>

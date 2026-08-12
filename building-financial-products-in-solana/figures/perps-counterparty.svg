@@ -5,13 +5,10 @@
   <text x="300" y="62" font-size="11" font-weight="bold" text-anchor="middle">&#8220;can I pay every winner?&#8221; must be answerable</text>
   <text x="300" y="78" font-size="11" font-weight="bold" text-anchor="middle">without reading a single position account</text>
   <!-- the pool sits at the centre -->
-  <rect x="240" y="102" width="160" height="64" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="1.8"/>
+  <rect x="240" y="102" width="160" height="24" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(248,107)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="268" y="118" font-size="12" font-weight="bold">the pool</text>
   <line x1="248" y1="123" x2="392" y2="123" stroke="#888" stroke-width="0.8"/>
-  <text x="248" y="134" font-size="9" fill="#444" font-style="italic">one vault, one ledger:</text>
-  <text x="248" y="146" font-size="8" fill="#444" font-style="italic">liquidity + total_collateral + protocol_fees</text>
-  <text x="248" y="158" font-size="9.5" font-style="italic">counterparty to every trade</text>
   <!-- Carol, first of the liquidity providers -->
   <rect x="28" y="96" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(36,101)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
