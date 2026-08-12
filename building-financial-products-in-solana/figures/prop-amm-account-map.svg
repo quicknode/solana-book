@@ -3,7 +3,7 @@
 <g transform="translate(0,25)">
   <!-- the curve on top: every on-curve address dot sits on it -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="-1" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- NVDAx mint, above the curve -->
   <g>
   <circle cx="178" cy="40.3578" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
