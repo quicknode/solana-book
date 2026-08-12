@@ -261,7 +261,7 @@
   <text x="32" y="664.34" font-size="9.5" font-weight="bold">USDC price feed</text>
   <line x1="12" y1="669.34" x2="164" y2="669.34" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="680.34" font-size="8.5">price_mantissa: 1</text>
-  <text x="12" y="692.34" font-size="8.5">exponent: 0</text>
+  <text x="12" y="690.84" font-size="8.5">exponent: 0</text>
   <text x="12" y="704.34" font-size="8" font-style="italic">$1 per USDC</text>
   </g>
   <g opacity="0.3">
@@ -332,7 +332,7 @@
   <text x="496" y="664.34" font-size="9.5" font-weight="bold">SPCXx price feed</text>
   <line x1="476" y1="669.34" x2="628" y2="669.34" stroke="#888" stroke-width="0.8"/>
   <text x="476" y="680.34" font-size="8.5" font-weight="bold">price_mantissa: 300</text>
-  <text x="476" y="692.34" font-size="8.5">exponent: 0</text>
+  <text x="476" y="690.84" font-size="8.5">exponent: 0</text>
   <text x="476" y="704.34" font-size="8" font-style="italic">$300 per SPCXx, was $250</text>
   </g>
   <g>

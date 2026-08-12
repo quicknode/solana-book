@@ -44,12 +44,12 @@
   <text x="34" y="241.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BET&#8221; +</text>
   <text x="34" y="250.917" font-size="7" letter-spacing="0.3" fill="#555">OUTCOME ADDRESS +</text>
   <text x="34" y="259.917" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
-  <rect x="16" y="265.917" width="104" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="16" y="265.917" width="104" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(24,270.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="281.917" font-size="10.5" font-weight="bold">Alice&#8217;s bet</text>
   <line x1="24" y1="286.917" x2="112" y2="286.917" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="297.917" font-size="9">outcome_index: 0</text>
-  <text x="24" y="309.917" font-size="9">amount: 300</text>
+  <text x="24" y="308.417" font-size="9">amount: 300</text>
   </g>
   <!-- Bob -->
   <g>
@@ -86,12 +86,12 @@
   <text x="146" y="247.644" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BET&#8221; +</text>
   <text x="146" y="256.644" font-size="7" letter-spacing="0.3" fill="#555">OUTCOME ADDRESS +</text>
   <text x="146" y="265.644" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
-  <rect x="128" y="271.644" width="104" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="128" y="271.644" width="104" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(136,276.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="156" y="287.644" font-size="10.5" font-weight="bold">Bob&#8217;s bet</text>
   <line x1="136" y1="292.644" x2="224" y2="292.644" stroke="#888" stroke-width="0.8"/>
   <text x="136" y="303.644" font-size="9">outcome_index: 0</text>
-  <text x="136" y="315.644" font-size="9">amount: 100</text>
+  <text x="136" y="314.144" font-size="9">amount: 100</text>
   </g>
   <!-- Carol -->
   <g>
@@ -128,12 +128,12 @@
   <text x="258" y="258.062" font-size="7" letter-spacing="0.3" fill="#555">&#8220;BET&#8221; +</text>
   <text x="258" y="267.062" font-size="7" letter-spacing="0.3" fill="#555">OUTCOME ADDRESS +</text>
   <text x="258" y="276.062" font-size="7" letter-spacing="0.3" fill="#555">BETTOR ADDRESS</text>
-  <rect x="240" y="282.062" width="104" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="240" y="282.062" width="104" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(248,287.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="268" y="298.062" font-size="10.5" font-weight="bold">Carol&#8217;s bet</text>
   <line x1="248" y1="303.062" x2="336" y2="303.062" stroke="#888" stroke-width="0.8"/>
   <text x="248" y="314.062" font-size="9">outcome_index: 1</text>
-  <text x="248" y="326.062" font-size="9">amount: 200</text>
+  <text x="248" y="324.562" font-size="9">amount: 200</text>
   </g>
   <!-- Maria (admin) -->
   <g>
