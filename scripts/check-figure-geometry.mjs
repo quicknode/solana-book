@@ -235,6 +235,7 @@ for (const file of files) {
       accounts,
       fadedDots,
       coins: [...svg.querySelectorAll("g.coin")].map(box),
+      markers: [...svg.querySelectorAll("circle.marker")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
       // A key box is a legend, not an account: its whole job is to hold the
       // step labels and their coin marks, so the "no text inside a box it does
@@ -295,9 +296,14 @@ for (const file of files) {
     for (const r of fig.rects) {
       if (overlaps(c, r, 0.5)) fail(`coin at ${at(c)} overlaps a box`);
     }
-    const beside = fig.amounts.some((a) =>
-      Math.hypot(Math.max(a.x1 - c.x2, 0, c.x1 - a.x2), Math.max(a.y1 - c.y2, 0, c.y1 - a.y2)) < 9);
-    if (!beside) fail(`coin at ${at(c)} is not beside an amount label`);
+    // The coin belongs where the value moves. That is beside the amount when
+    // the amount is written on the canvas, and beside the step marker when the
+    // words have moved into a key box and only the number is left on the line.
+    const near = (z) =>
+      Math.hypot(Math.max(z.x1 - c.x2, 0, c.x1 - z.x2), Math.max(z.y1 - c.y2, 0, c.y1 - z.y2)) < 14;
+    if (!fig.amounts.some(near) && !fig.markers.some(near)) {
+      fail(`coin at ${at(c)} is beside neither an amount label nor a step marker`);
+    }
   }
 
   // 4 and 5. Arrows read as one smooth stroke, ending in a head that points
