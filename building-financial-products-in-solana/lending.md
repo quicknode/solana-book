@@ -6,7 +6,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 ## The Account Model: A Market of Reserves, and an Obligation per Borrower
 
-![The account map: one lending market account, three reserve accounts (USDC, NVDAx, SPCXx) each owning a liquidity vault and a share mint and pointing at a price feed, and Bob's and Carol's obligation accounts holding collateral share vaults and borrow entries.](figures/lending-account-map.svg)
+![One market, three reserves; each reserve owns a liquidity vault and a share mint, and points at a price feed.](figures/lending-account-map.svg)
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
@@ -39,7 +39,7 @@ Maria runs the market, and her revenue is a cut of the interest: the reserve fac
 
 Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity()` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest swells the pool while the share supply stays put, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
 
-![Alice's deposit: 1,000 USDC into the reserve's liquidity vault mints 1,000 shares from the share mint, one to one; interest later swells the pool while the share supply stays put, so the same shares redeem for more USDC.](figures/lending-deposit-shares.svg)
+![Interest swells the pool while the share supply stays put, so the same shares redeem for more USDC later.](figures/lending-deposit-shares.svg)
 
 ## Borrowing Against Deposited Collateral
 
@@ -52,7 +52,7 @@ Bob needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each
 
 The health check behind step 4 is conservative by construction: when `refresh_obligation()` values his position, collateral value is *floored* and debt value is *ceiled*, so every health evaluation errs against the borrower. Borrowing one unit past the allowance fails (`BorrowTooLarge`), and the test `borrow_up_to_max_ltv_then_one_more_fails` pins the boundary from both sides. His NVDAx is not sold, and he gets it back the moment he repays.
 
-![Bob's borrow: NVDAx shares locked in his obligation's collateral vault, $750 USDC flowing out of the USDC reserve to Bob, and his debt at 75% of collateral value with the liquidation threshold at 80% just above it.](figures/lending-borrow-ltv.svg)
+![Debt sits at 75% of collateral value, with the liquidation threshold at 80% just above it.](figures/lending-borrow-ltv.svg)
 
 ## Shorting an Asset by Borrowing It
 
@@ -87,7 +87,7 @@ Dave watches for liquidation opportunities. He is the reason the market stays so
 
 Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Why half at a time? The close factor means the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
-![Liquidation: Dave repays SPCXx into the reserve and seizes discounted USDC collateral shares from Carol's obligation, her health gauge crossing back under the threshold, with the close factor halving what one call may touch.](figures/lending-liquidation.svg)
+![The close factor halves what one call may touch, so health crosses back under the threshold in two steps, not one.](figures/lending-liquidation.svg)
 
 ## Cranks: Work With No Natural Caller
 

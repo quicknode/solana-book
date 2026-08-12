@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-![The account map: each trader's accounts stacked in a column beneath their spot on the Devnet curve, and the program's column on the right holding the market account, the order book account, and the base, quote, and fee vaults.](figures/order-book-accounts.svg)
+![One market account, one book, three vaults; every trader’s accounts hang beneath their spot on the curve.](figures/order-book-accounts.svg)
 
 The **market** is a PDA holding one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). Its seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 
@@ -82,7 +82,7 @@ One Solana-specific mechanic makes this work: the program cannot load arbitrary 
 
 Now the money moves, in the unsettled-balance style. Gross proceeds are 3 × 250 = 750 USDC. Maria's fee is 25 basis points of that: 1.875 USDC, computed with ceiling division so any rounding goes to the market rather than leaking value one minor unit per fill (the fee section below returns to this). Carol's `unsettled_quote` is credited with the net 748.125 USDC. Bob's `unsettled_base` is credited with three shares. The fee moves from the quote vault to the fee vault in a single program-signed transfer at the end, aggregated across all fills in the order. Bob's order account is stamped PartiallyFilled with three of four filled, and the leaf in the bid tree has its remaining quantity reduced to one in place. Carol's order account is stamped Filled; nothing of hers rests.
 
-![The match: Carol's incoming ask meets Bob's resting bid and fills at 250, crediting 748.125 USDC to Carol's unsettled quote and 3 shares to Bob's unsettled base, while 1.875 USDC flows from the quote vault to the fee vault.](figures/order-book-match.svg)
+![Nothing transfers at match time: both sides get unsettled balances, and 1.875 USDC goes to the fee vault.](figures/order-book-match.svg)
 
 Notice who did nothing: Bob. Like Alice in the escrow chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
 

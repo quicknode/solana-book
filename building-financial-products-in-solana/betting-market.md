@@ -14,7 +14,7 @@ The consequence the chapter's story will make concrete: **parimutuel markets rew
 
 ## The Account Model: One Config, One Event, Its Outcomes, and a Bet per Bettor
 
-![The account map: each bettor's column stacks their wallet, USDC account, user index, and bet, while the program's column stacks the config, the event with its vault (an associated token account owned by the event), and the two outcome PDAs.](figures/betting-account-map.svg)
+![The event owns its vault as an associated token account, so no operator key stands between the bettors and the pool.](figures/betting-account-map.svg)
 
 The **config** is a single PDA (seed `"config"`) created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `fee_bps`, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
