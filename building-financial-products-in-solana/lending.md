@@ -52,7 +52,9 @@ Bob needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each
 
 The health check behind step 4 is conservative by construction: when `refresh_obligation()` values his position, collateral value is *floored* and debt value is *ceiled*, so every health evaluation errs against the borrower. Borrowing one unit past the allowance fails (`BorrowTooLarge`), and the test `borrow_up_to_max_ltv_then_one_more_fails` pins the boundary from both sides. His NVDAx is not sold, and he gets it back the moment he repays.
 
-![Debt sits at 75% of collateral value, with the liquidation threshold at 80% just above it.](figures/lending-borrow-ltv.svg)
+![borrow_obligation_liquidity() sends 750 USDC out of the reserve's liquidity vault to Bob, against collateral already pledged.](figures/lending-borrow-ltv.svg)
+
+![Debt sits at 75% of collateral value, with the liquidation threshold at 80% just above it: the gap is Bob's headroom before a price move makes him liquidatable.](figures/lending-borrow-ltv-headroom.svg)
 
 ## Shorting an Asset by Borrowing It
 
