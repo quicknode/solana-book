@@ -101,12 +101,11 @@
   <text x="258" y="190.062" font-size="7" letter-spacing="0.3" fill="#555">&#8220;CONTRIBUTOR&#8221; +</text>
   <text x="258" y="199.062" font-size="7" letter-spacing="0.3" fill="#555">THE FUNDRAISER +</text>
   <text x="258" y="208.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS</text>
-  <rect x="240" y="214.062" width="104" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="240" y="214.062" width="104" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(248,219.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="268" y="230.062" font-size="9.5" font-weight="bold">Carol&#8217;s receipt</text>
   <line x1="248" y1="235.062" x2="336" y2="235.062" stroke="#888" stroke-width="0.8"/>
   <text x="248" y="246.062" font-size="9.5">amount: 900 USDC</text>
-  <text x="248" y="258.062" font-size="8.5" font-style="italic" fill="#444">two contributions of 450</text>
   </g>
   <!-- Maria, the maker -->
   <g>

@@ -73,13 +73,12 @@
   <text x="117" y="331.282" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OBLIGATION&#8221; +</text>
   <text x="117" y="340.282" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
   <text x="117" y="349.282" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS</text>
-  <rect x="99" y="355.282" width="96" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="99" y="355.282" width="96" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(107,360.282)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="127" y="371.282" font-size="8.5" font-weight="bold">obligation</text>
   <line x1="107" y1="376.282" x2="187" y2="376.282" stroke="#888" stroke-width="0.8"/>
   <text x="107" y="387.282" font-size="8" font-weight="bold">deposited_value: $1,000</text>
   <text x="107" y="399.282" font-size="8" font-weight="bold">borrowed_value: $750</text>
-  <text x="107" y="411.282" font-size="8" font-style="italic">owes 750 USDC</text>
   </g>
   <g>
   <circle cx="107" cy="437.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -213,13 +212,12 @@
   <circle cx="12" cy="634.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="22" y="633.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; + MARKET +</text>
   <text x="22" y="642.34" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
-  <rect x="4" y="648.34" width="168" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="4" y="648.34" width="168" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(12,653.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="32" y="664.34" font-size="9.5" font-weight="bold">USDC price feed</text>
   <line x1="12" y1="669.34" x2="164" y2="669.34" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="680.34" font-size="8.5">price_mantissa: 1</text>
   <text x="12" y="690.84" font-size="8.5">exponent: 0</text>
-  <text x="12" y="704.34" font-size="8" font-style="italic">$1 per USDC</text>
   </g>
   <g>
   <circle cx="12" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -256,13 +254,12 @@
   <circle cx="244" cy="634.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="254" y="633.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;PRICE_FEED&#8221; + MARKET +</text>
   <text x="254" y="642.34" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT ADDRESS</text>
-  <rect x="236" y="648.34" width="168" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="236" y="648.34" width="168" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(244,653.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="264" y="664.34" font-size="9.5" font-weight="bold">NVDAx price feed</text>
   <line x1="244" y1="669.34" x2="396" y2="669.34" stroke="#888" stroke-width="0.8"/>
   <text x="244" y="680.34" font-size="8.5">price_mantissa: 200</text>
   <text x="244" y="690.84" font-size="8.5">exponent: 0</text>
-  <text x="244" y="704.34" font-size="8" font-style="italic">$200 per NVDAx</text>
   </g>
   <g>
   <circle cx="244" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

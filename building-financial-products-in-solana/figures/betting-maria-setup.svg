@@ -107,14 +107,13 @@
   <g>
   <circle cx="472" cy="341.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="345.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;EVENT&#8221; + EVENT ID</text>
-  <rect x="464" y="351.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="464" y="351.37" width="168" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,356.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="367.37" font-size="10.5" font-weight="bold">event</text>
   <line x1="472" y1="372.37" x2="624" y2="372.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="383.37" font-size="9.5">status: Open</text>
   <text x="472" y="395.37" font-size="9.5">total_pool: 0</text>
   <text x="472" y="407.37" font-size="9.5">fee_bps: 200</text>
-  <text x="472" y="419.37" font-size="9" font-style="italic" fill="#444">snapshotted at creation</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="387.87" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <g>
