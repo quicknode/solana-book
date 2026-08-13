@@ -129,8 +129,22 @@ for (const file of files) {
     for (const t of svg.querySelectorAll("text")) {
       const accent = (t.getAttribute("fill") || "").toLowerCase() === "#1e7a3c";
       const bold = (t.getAttribute("font-weight") || "") === "bold";
-      if (!accent || !bold) { run = null; continue; }
       const b = box(t);
+      // A parenthetical set under an amount - "(all of it)", "(250,000,000
+      // minor units)" - is part of that label and travels with it, so the
+      // amount reaches to the bottom of the aside. Measuring the accent line
+      // alone reads a coin tucked under the pair as 30 units from any amount.
+      // The aside is usually centred on the label and wider than it, so its
+      // centre landing within the line above is what marks it as a follower.
+      if (!accent || !bold) {
+        if (run) {
+          const mid = (b.x1 + b.x2) / 2;
+          if (mid > run.x1 - 4 && mid < run.x2 + 4 && b.y1 - run.y2 > -4 && b.y1 - run.y2 < 10)
+            run.y2 = Math.max(run.y2, b.y2);
+        }
+        run = null;
+        continue;
+      }
       const anchor = t.getAttribute("text-anchor") || "start";
       const edge = (z) => (anchor === "end" ? z.x2 : z.x1);
       if (run && run.anchor === anchor && Math.abs(edge(run) - edge(b)) < 3 &&

@@ -199,12 +199,12 @@
   <text x="472" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   </g>
   <path d="M 464,617.37 C 432,603.37 408,580 408,470 C 408,360 408,260 408,199.436" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-settle-arr)"/>
-  <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="408.49" y="420" font-size="10.5" font-weight="bold" fill="#1e7a3c">4 USDC (the fee)</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="400" y="436" font-size="9" font-style="italic" fill="#444" text-anchor="end">signed by the event PDA</text>
+  <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="395" y="420.72" font-size="10.5" font-weight="bold" fill="#1e7a3c">4 USDC (the fee)</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="386.51" y="436.72" font-size="9" font-style="italic" fill="#444" text-anchor="end">signed by the event PDA</text>
   <text x="196" y="372" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs settle_event(): Toy Story 5 wins</text>
   <text x="30" y="470" font-size="9" fill="#444" font-style="italic">losing pool: total_pool 600 &#8722; winning_pool 400 = 200</text>
   <text x="30" y="484" font-size="9" fill="#444" font-style="italic">fee: 2% of 200 = 4 (u128, floored once)</text>
   <text x="30" y="498" font-size="9" fill="#444" font-style="italic">distributable: 200 &#8722; 4 = 196</text>
   <text x="230" y="675" font-size="10" font-weight="bold" font-style="italic" text-anchor="middle">the fee only touches the losing side: a winner never receives less than they staked</text>
-  <g class="coin" transform="translate(421.49,415.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(408,416.52)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
