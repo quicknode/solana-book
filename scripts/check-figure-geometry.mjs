@@ -21,6 +21,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const figureDirs = [
   "solana-building-blocks/figures",
+  "financial-programming-concepts-in-solana/figures",
   "building-financial-products-in-solana/figures",
 ];
 
