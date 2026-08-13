@@ -175,11 +175,11 @@
   </g>
   <!-- three pull-based refunds: each pays exactly its own receipt -->
   <path d="M 464,392 C 372,404 197.254,391.245 140,340 C 125.247,326.796 124,314 124,300 C 124,240 124,205 124,186 C 124,178 116.357,168.482 112,162" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="71.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
+  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="113.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
   <path d="M 464,378 C 400,376 300,368 262,340 C 244,326 236,312 236,296 C 236,250 236,215 236,192 C 236,184 228.357,174.482 224,168" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="183.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
+  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="225.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
   <path d="M 464,366 C 432,356 378.238,345.641 356,320 C 349.448,312.445 348,304 348,296 C 348,260 348,224 348,202 C 348,194 340.357,184.482 336,178" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="295.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
+  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="337.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
   <path d="M 16,214 C 6,209 4,198 4,180 C 4,140 5,100 8,86 C 10,80 12.392,76.227 14,73" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-g)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="2" y="258" font-size="8.5" font-style="italic" fill="#444" text-anchor="start">each closed receipt</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="2" y="268" font-size="8.5" font-style="italic" fill="#444" text-anchor="start">returns its rent</text>
@@ -188,7 +188,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="456" y="246" font-size="9" font-style="italic" fill="#444" text-anchor="end">3,600 was raised, less</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="456" y="258" font-size="9" font-style="italic" fill="#444" text-anchor="end">three 900 refunds; one</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="456" y="270" font-size="9" font-style="italic" fill="#444" text-anchor="end">900 receipt is still open</text>
-  <g class="coin" transform="translate(56.6,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(168.6,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(280.6,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(126.04,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(238.04,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(350.04,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

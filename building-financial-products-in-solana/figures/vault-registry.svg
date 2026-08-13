@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 476" font-family="Gelasio, Georgia, serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Victor approves the assets</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Victor approves the assets, and Maria cannot</text>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <g>
@@ -119,11 +119,6 @@
   <text x="472" y="221.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">collect_fees()</text>
   <text x="472" y="231.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">withdraw()</text>
   </g>
-  <rect x="240" y="300" width="200" height="34" fill="#fff" stroke="#888"/>
-  <text x="340" y="321" font-size="9.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">approve_asset() by Maria</text>
-  <line x1="244" y1="304" x2="436" y2="330" stroke="#999" stroke-width="1.6"/>
-  <line x1="244" y1="330" x2="436" y2="304" stroke="#999" stroke-width="1.6"/>
-  <text x="340" y="348" font-size="8.5" fill="#444" font-style="italic" text-anchor="middle">fails: only the registry authority approves</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="250" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. initialize_registry(), once</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="240" y="266" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. approve_asset() &#215;2</text>
   <g transform="translate(0,-90)">
