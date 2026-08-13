@@ -144,7 +144,7 @@ Sub-unit remainders left over by integer division. Rounding policy decides who o
 
 ### epoch
 
-A period of roughly two days (432,000 slots) over which a validator schedule holds. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots over which a validator schedule holds, so its length in days falls as the slot time falls. Mostly relevant to staking; application logic usually counts slots.
 
 ### equity (position)
 
@@ -452,7 +452,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time, roughly 400ms, in which a leader may produce a block. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time, a fixed value in the range of hundreds of milliseconds, in which a leader may produce a block. The protocol has shortened it before and intends to shorten it again, so a slot count converts to seconds only at the current slot time. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
 ### SOL
 
