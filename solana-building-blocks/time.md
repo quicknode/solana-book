@@ -6,7 +6,7 @@ Solana has two clocks: a slot counter that nobody can bend, and a wall clock tha
 
 ## Slots Are Guaranteed to Progress
 
-The **slot** counts block opportunities, roughly 400ms apart. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
+The **slot** counts block opportunities. A slot lasts a fixed value in the range of hundreds of milliseconds, chosen by the protocol rather than by anything a program can read, and the protocol has shortened it before and intends to shorten it again. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
 
 Two programs in this book accrue value over time, and both count it in slots: the lending market accrues interest on debt, and the perpetual futures venue accrues funding on open positions. The lending market carries one number per reserve, a **borrow accumulation factor** that grows each time anyone touches the market:
 
@@ -17,6 +17,16 @@ new factor = old factor × (1 + rate per slot × elapsed slots)
 Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor. A borrower's current debt is their principal multiplied by that factor. The *Arithmetic of Money* chapter covers how to build that factor safely.
 
 The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count slots because a trader who could stretch a slot could stretch what they owe.
+
+## Deriving the Current Slot Time When You Need It
+
+Multiplying a slot count by a remembered duration is the one piece of arithmetic in this chapter the protocol can invalidate underneath you. Solana has shortened the slot before and has a staged plan to shorten it further, published at [Solana's reduced slot times page](https://solana.com/upgrades/reduced-slot-times).
+
+A shorter slot pulls the two uses of that arithmetic in opposite directions. A freshness window sized in slots gets stricter: a 150-slot window refuses more prices than it used to, which costs availability and never safety. A rate expressed per slot accrues more often, and that one is silent. An annual rate divided by a fixed slots-per-year number has a slot duration baked into it, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
+
+No sysvar reports the slot duration, and the SDK's `DEFAULT_MS_PER_SLOT` is a compile-time constant that the reductions do not update, so a reader who reaches for it gets the old number. A program that needs the realized figure can derive it from the Clock sysvar: divide the seconds since `epoch_start_timestamp` by the slots since the first slot of the current epoch, which the `EpochSchedule` sysvar supplies. Guard that division, because the divisor is zero at the first slot of an epoch and small for a while after. Offchain, [`getBlockTime`](https://solana.com/docs/rpc/http/getblocktime) on two blocks a known distance apart answers the same question.
+
+Prefer not to need it. The derivation rests on the validator-reported timestamp, so running it inside a handler puts a bendable number back into the accrual path that counts slots precisely to keep it out. Hold a slots-per-year figure as a stored value the market owner can update rather than a constant compiled in, and a change to the protocol becomes a change of configuration. A freshness window counted in slots needs no conversion at all.
 
 ## Timestamps Are Validator-Reported
 
@@ -44,12 +54,12 @@ The *Offchain Truth* chapter answers the first, along with everything else a pro
 
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |
-| the lending market | 25 slots, about ten seconds | slots |
-| the prop AMM | 150 slots, about a minute | slots |
-| the perpetual futures venue | 150 slots, about a minute | slots |
+| the lending market | 25 slots | slots |
+| the prop AMM | 150 slots | slots |
+| the perpetual futures venue | 150 slots | slots |
 | the vault strategy | 60 seconds | seconds |
 
-Three of the four count slots. The vault counts seconds because that is the unit its feed publishes.
+Three of the four count slots. The vault counts seconds because that is the unit its feed publishes. What the three slot counts come to in seconds moves with the slot time, so a window sized once in slots tightens as the protocol shortens the slot.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
@@ -83,7 +93,7 @@ A halt is a rare event: at the time of writing, block production has not stopped
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart carries a slot roughly where the last one left off and a timestamp hours later. Three consequences:
 
 - **Per-slot accrual pauses with the chain.** The lending market's factor advances by elapsed slots, so a nine-hour halt accrues no interest: nobody is charged for a market they could not reach. A fee accruing by timestamp charges the full nine hours.
-- **A window counted in seconds refuses the old price. One counted in slots accepts it, which is the dangerous half.** The vault strategy refuses a price older than sixty seconds, so its first call after a halt fails until a publisher posts again. The lending market's 25-slot window sees a price stamped one slot ago and, on the slot count alone, would accept a number nine hours old. A price stamped one slot ago is not always a price from four hundred milliseconds ago. This bites hardest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
+- **A window counted in seconds refuses the old price. One counted in slots accepts it, which is the dangerous half.** The vault strategy refuses a price older than sixty seconds, so its first call after a halt fails until a publisher posts again. The lending market's 25-slot window sees a price stamped one slot ago and, on the slot count alone, would accept a number nine hours old. A price stamped one slot ago is not always a price from a fraction of a second ago. This bites hardest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
 - **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours, so a contributor with an hour left finds the window shut when the chain returns. That program survives it because its refund path has no deadline; a design whose only exit was a narrow window would have stranded them.
 
 A slot-counted window needs one more check. The [`LastRestartSlot` sysvar](https://docs.anza.xyz/runtime/sysvars) carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, and the perpetual futures venue all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program whose freshness window is counted in slots.
@@ -117,6 +127,7 @@ Every program in Part II that touches time, and the clock it settled on.
 - Three questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, and a real-world time you promised a person takes the wall clock. Three noes leave the slot count.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
+- A slot count converts to wall-clock time only at the current slot duration, which the protocol shortens and no sysvar reports. Derive a per-slot rate from a slot time you measured, or better, from a figure you can update without a redeploy.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
 - Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
