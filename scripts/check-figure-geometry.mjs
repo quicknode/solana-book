@@ -282,6 +282,20 @@ for (const file of files) {
       }
     }
   }
+  // A label that reaches the border reads as running out of its box, even
+  // though it is technically inside: the heading rule stops at the padding, so
+  // a heading that outruns the rule is the thing the eye catches. Half the
+  // 8-unit padding is the line - "Carol's user index" came within 2.3 of the
+  // stroke and the column had to widen.
+  for (const t of fig.texts) {
+    const home = fig.rects.find((r) => contains(r, t));
+    if (!home || t.x2 <= home.x2 - 4) continue;
+    const key = `pad:${t.s}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    fail(`"${t.s.slice(0, 40)}" reaches within ${(home.x2 - t.x2).toFixed(1)} of its box edge; widen the column`);
+  }
+
   for (let i = 0; i < fig.texts.length; i += 1) {
     for (let j = i + 1; j < fig.texts.length; j += 1) {
       if (overlaps(fig.texts[i], fig.texts[j], 1.5)) {
