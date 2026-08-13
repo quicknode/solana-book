@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 502" font-family="Gelasio, Georgia, serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Two futures, written in advance</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Future A: the target is met</text>
   <defs>
-    <marker id="fund-exit-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker>
-    <marker id="fund-exit-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
+    <marker id="fund-faa" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker>
+    <marker id="fund-fag" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker>
   </defs>
   <!-- the cluster curve: the heaviest line; nothing crosses it -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
@@ -170,27 +170,10 @@
   <text x="472" y="406.37" font-size="9" font-style="italic" fill="#444">authority: the fundraiser PDA</text>
   </g>
   <!-- exit one: the target is reached and the vault drains to Maria -->
-  <path d="M 464,366 C 446,338 445.298,269.356 436,215 C 434.077,203.761 430.874,199.635 429,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-exit-a)"/>
+  <path d="M 464,366 C 446,338 445.298,269.356 436,215 C 434.077,203.761 430.874,199.635 429,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-faa)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="426" y="240" font-size="9" font-style="italic" fill="#444" text-anchor="end">target met:</text>
   <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="424.04" y="252" font-size="9" font-weight="bold" fill="#1e7a3c">9,000 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="426" y="264" font-size="9" font-style="italic" fill="#444" text-anchor="end">the whole vault</text>
   <!-- exit two: the deadline passes and each receipt is paid back -->
-  <path d="M 464,404 C 372,404 197.254,391.245 140,340 C 125.247,326.796 124,314 124,300 C 124,240 124,205 124,186 C 124,178 116.357,168.482 112,162" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-exit-a)"/>
-  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="113.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <path d="M 464,392 C 400,376 300,368 262,340 C 244,326 236,312 236,296 C 236,250 236,215 236,192 C 236,184 228.357,174.482 224,168" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-exit-a)"/>
-  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="225.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <path d="M 464,380 C 432,356 378.238,345.641 356,320 C 349.448,312.445 348,304 348,296 C 348,260 348,224 348,202 C 348,194 340.357,184.482 336,178" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-exit-a)"/>
-  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="337.04" y="285" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="118" y="259" font-size="9" font-style="italic" fill="#444" text-anchor="end">deadline passed,</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="118" y="271" font-size="9" font-style="italic" fill="#444" text-anchor="end">target missed:</text>
-  <!-- one comparison, two futures -->
-  <text x="16" y="428" font-size="10.5" font-weight="bold">One comparison, two futures</text>
-  <text x="16" y="444" font-size="9.5" fill="#444">day &#60; 7 &#183; contribute() fills the vault and raises <tspan font-family="'DejaVu Sans Mono', Menlo, monospace" font-size="8.5">current_amount</tspan></text>
-  <text x="16" y="458" font-size="9.5" fill="#444"><tspan font-family="'DejaVu Sans Mono', Menlo, monospace" font-size="8.5">current_amount &#8805; amount_to_raise</tspan> &#183; check_contributions() pays Maria and closes the machine</text>
-  <text x="16" y="472" font-size="9.5" fill="#444">day &#8805; 7 and <tspan font-family="'DejaVu Sans Mono', Menlo, monospace" font-size="8.5">current_amount &#60; amount_to_raise</tspan> &#183; refund() pays each receipt back</text>
-  <text x="16" y="488" font-size="9.5" font-style="italic" fill="#444">the two gates are the same comparison with opposite signs, so only one door is ever open</text>
   <g class="coin" transform="translate(437.04,248.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(126.04,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(238.04,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(350.04,280.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

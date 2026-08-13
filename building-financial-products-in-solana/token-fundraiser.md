@@ -10,7 +10,9 @@ The whole design hangs on two numbers recorded the moment the fundraiser opens: 
 
 This is the state machine discipline from Financial Programming Concepts in Solana in its purest form. The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors.
 
-![The fundraiser's two futures: at the target the vault drains to Maria, and past the deadline it drains back to the contributors; one comparison decides, so only one exit is ever open.](figures/fundraiser-two-exits.svg)
+![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
+
+![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that opened the first future closes this one.](figures/fundraiser-failure-future.svg)
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
