@@ -265,7 +265,7 @@
   </g>
   <!-- Carol&#8217;s three shares lock in the base vault -->
   <path d="M 345,158 C 352,162 348,200 348,268 L 348,476 C 348,500 358,516 382,516 L 456,516" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="358" y="300" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">3 NVDAx</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="362" y="363.6" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">3 NVDAx</text>
   <!-- the aggregated taker fee, quote vault to fee vault, program-signed -->
   <path d="M 460,590 C 442,588 434,602 434,622 C 434,644 445.221,654.212 456,664" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-match-arr)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="423.68" y="590" font-size="10.5" font-weight="bold" fill="#1e7a3c">1.875 USDC</text>
@@ -273,6 +273,6 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="524" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the fill executes at 250, Bob&#8217;s resting price, not Carol&#8217;s 245</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="540" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">ledger credits, not transfers: the tokens stay in the vaults until</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="200" y="556" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">each side calls settle_funds()</text>
-  <g class="coin" transform="translate(416,295.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(436.68,585.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(348,360)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(443.6,594.2)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

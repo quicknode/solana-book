@@ -171,9 +171,9 @@
   </g>
   <!-- exit one: the target is reached and the vault drains to Maria -->
   <path d="M 464,366 C 446,338 445.298,269.356 436,215 C 434.077,203.761 430.874,199.635 429,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-faa)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="426" y="240" font-size="9" font-style="italic" fill="#444" text-anchor="end">target met:</text>
-  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="424.04" y="252" font-size="9" font-weight="bold" fill="#1e7a3c">9,000 USDC</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="426" y="264" font-size="9" font-style="italic" fill="#444" text-anchor="end">the whole vault</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="429.69" y="240.42" font-size="9" font-style="italic" fill="#444" text-anchor="end">target met:</text>
+  <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="427.73" y="252.42" font-size="9" font-weight="bold" fill="#1e7a3c">9,000 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="429.69" y="264.42" font-size="9" font-style="italic" fill="#444" text-anchor="end">the whole vault</text>
   <!-- exit two: the deadline passes and each receipt is paid back -->
-  <g class="coin" transform="translate(437.04,248.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(440.73,248.72)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
