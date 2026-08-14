@@ -10,7 +10,7 @@ One word needs defusing before anything else. This chapter's market trades stock
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
-Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks `available_liquidity` (the un-borrowed pool, and deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate), `borrowed_principal`, the `borrow_accumulation_factor` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate.
+Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks four things: `available_liquidity`, `borrowed_principal`, the `borrow_accumulation_factor` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate. `available_liquidity` is the un-borrowed pool, and it is deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate.
 
 Each reserve carries a `ReserveConfig`, all in basis points, and its validation rules are a compressed education in credit risk:
 
@@ -23,7 +23,7 @@ Each reserve carries a `ReserveConfig`, all in basis points, and its validation 
 | `reserve_factor_bps` | 10% | The house's cut of interest. |
 | `min/optimal/max_borrow_rate_bps` | 2% / 20% / 150% | The interest curve, kinked at `optimal_utilization_bps` (80%), which must sit strictly inside (0%, 100%). |
 
-Finally, each borrower gets one **obligation** PDA per market (seeds: `"obligation"`, the market, the owner): their loan file, listing collateral deposits and borrows (up to four reserves each), with cached values (`deposited_value`, `borrowed_value`, `allowed_borrow_value`, `unhealthy_borrow_value`) and a `stale` flag that forces revaluation before anything financial happens.
+Finally, each borrower gets one **obligation** PDA per market (seeds: `"obligation"`, the market, the owner): their loan file, listing collateral deposits and borrows (up to four reserves each). It also caches values (`deposited_value`, `borrowed_value`, `allowed_borrow_value`, `unhealthy_borrow_value`) behind a `stale` flag that forces revaluation before anything financial happens.
 
 ## Prices Come In by Signature: The Feed, Freshness, and Slots
 
@@ -129,7 +129,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 
 ## The Failure Modes: The Liquidation Engine Is Only as Honest as Its Prices
 
-- **A wrong price makes every number wrong.** Every health check multiplies by the feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and gates who may write them, but the deeper lesson stands: the liquidation engine can only be as honest as its prices, and manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of Financial Programming Concepts in Solana dissects Mango Markets).
+- **A wrong price makes every number wrong.** Every health check multiplies by the feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and gates who may write them, but the deeper lesson stands: the liquidation engine can only be as honest as its prices. Manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of Financial Programming Concepts in Solana dissects Mango Markets).
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
 - **Config foot-guns are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
@@ -138,7 +138,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 
 ## Testing Considerations
 
-The suite is organized by risk, one file per class: rounding (the round-trip-creates-no-value property and the withdraw-at-the-boundary-then-one-more-unit test, which is the "test both sides of every boundary" rule made literal), deposits and redemptions, interest over time (using slot-warping to make weeks pass), liquidation (healthy rejected, unhealthy corrected with bonus and close factor, over-seizure refused), borrowing (every rejection path), and security (cross-market and unauthorized-price attempts). All of it drives the program's own handlers, with each action bundling its refresh instructions into the same transaction exactly as a production client would.
+The suite is organized by risk, one file per class. Rounding comes first: the round-trip-creates-no-value property, and the withdraw-at-the-boundary-then-one-more-unit test, which is the "test both sides of every boundary" rule made literal. Then deposits and redemptions, interest over time (using slot-warping to make weeks pass), liquidation (healthy rejected, unhealthy corrected with bonus and close factor, over-seizure refused), borrowing (every rejection path), and security (cross-market and unauthorized-price attempts). All of it drives the program's own handlers, with each action bundling its refresh instructions into the same transaction exactly as a production client would.
 
 ## What You Learnt from Building the Lending Market
 

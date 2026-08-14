@@ -22,7 +22,7 @@ A **token account** holds one owner's balance of one token, and its data records
 
 An ATA is a **PDA**: a derived address that sits off the curve, with no private key, so no signature for it can ever exist and only the owning program can move what it holds. The PDAs chapter explains the mechanism.
 
-Not every token account is an ATA. A token account can live at any address, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves: some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *a wallet's* balance of a given token; program-held tokens live wherever the program put them.
+Not every token account is an ATA. A token account can live at any address, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *a wallet's* balance of a given token; program-held tokens live wherever the program put them.
 
 ![Alice's and Bob's USDC stores are ATAs, derived from the owner's address, the token program, and the mint. A program's vault is derived from seeds the program chose instead. All three sit off the curve, with no private key.](figures/token-accounts-off-the-curve.svg)
 
