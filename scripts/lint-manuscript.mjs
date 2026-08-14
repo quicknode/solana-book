@@ -6,7 +6,7 @@
 // Usage: node scripts/lint-manuscript.mjs
 
 import { readFileSync } from "node:fs";
-import { join, dirname, resolve } from "node:path";
+import { join, dirname, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -273,7 +273,7 @@ const figureDirs = [
 ];
 
 const svgRules = [
-  [/<rect[^>]*\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
+  [/<rect(?![^>]*class="marker")[^>]*\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
   [/<rect[^>]*\bry="/, "set rx only on rects; ry duplicates it (ellipse glyphs are exempt)"],
   [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],
   // The cluster curve is the heaviest line in every figure: 3.5, no other
@@ -302,6 +302,15 @@ const svgRules = [
     'the coin mark carries no currency symbol; the amount label names the asset'],
 ];
 
+// A figure is reproduced at the text width, so its printed height follows from
+// its aspect ratio: h/w beyond about 1.22 cannot fit the text block once the
+// caption is counted, and Paged.js then breaks the page inside the figure -
+// which cost this book roughly 75 pages of blank and fragmented pages before
+// the figures were reflowed. Nothing is exempt: the lending figures were the
+// last three over, and splitting them by handler brought them under.
+const MAX_ASPECT = 1.22;
+const aspectExceptions = new Set();  // every figure fits; keep it that way
+
 const svgFiles = [];
 for (const dir of figureDirs) {
   for (const name of readdirSync(join(repoRoot, dir))) {
@@ -310,7 +319,26 @@ for (const dir of figureDirs) {
 }
 
 for (const file of svgFiles) {
-  const lines = readFileSync(file, "utf8").split("\n");
+  const source = readFileSync(file, "utf8");
+  const viewBox = source.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+  if (viewBox && !aspectExceptions.has(basename(file))) {
+    const [w, h] = [Number(viewBox[1]), Number(viewBox[2])];
+    if (h / w > MAX_ASPECT) {
+      failures += 1;
+      console.error(`${file}: ${w}x${h} is ${(h / w).toFixed(2)} times as tall as it is wide, ` +
+        `over the ${MAX_ASPECT} that fits the text block (prints ${(5.74 * h / w).toFixed(2)}in against 8.04in)`);
+    }
+  }
+  // Anything after </svg> is not in the drawing. The browser lays it out as
+  // loose text after the figure, so a footnote added below the canvas renders
+  // outside the SVG, breaks to the next page on its own, and lands above the
+  // caption. A footnote at the foot of a figure goes inside the root element.
+  const trailing = source.split(/<\/svg>/).pop().trim();
+  if (trailing) {
+    failures += 1;
+    console.error(`${file}: markup after </svg> is not part of the figure; move it inside the root element\n    ${trailing.slice(0, 160)}`);
+  }
+  const lines = source.split("\n");
   lines.forEach((line, index) => {
     for (const [pattern, reason] of svgRules) {
       if (pattern.test(line)) {

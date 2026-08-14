@@ -1,88 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 913" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 716" font-family="Gelasio, Georgia, serif" fill="#111">
   <defs><marker id="vault-dep-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-dep-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="24" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text x="16" y="24" font-size="15" font-weight="bold">Alice&#8217;s deposit</text>
   <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="16" y="43.9168" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,51.92)"><g transform="translate(-1.607,-1.079) scale(1.076)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="44" y="62.92" font-size="9.5" font-weight="bold">Victor</text>
+  <rect x="16" y="43.9168" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,47.9168)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="44" y="58.3168" font-size="9.5" font-weight="bold">Victor</text>
   </g>
   <g opacity="0.3">
   <circle cx="24" cy="109.917" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="108.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;REGISTRY&#8221; +</text>
   <text x="34" y="117.917" font-size="7" letter-spacing="0.3" fill="#555">VICTOR&#8217;S ADDRESS</text>
-  <rect x="16" y="123.917" width="104" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(24,131.92)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="44" y="142.92" font-size="9.5" font-weight="bold">registry</text>
+  <rect x="16" y="123.917" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,127.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="138.317" font-size="9.5" font-weight="bold">registry</text>
   </g>
   <g opacity="0.3">
   <circle cx="24" cy="194.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="188.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
   <text x="34" y="197.917" font-size="7" letter-spacing="0.3" fill="#555">REGISTRY +</text>
   <text x="34" y="206.917" font-size="7" letter-spacing="0.3" fill="#555">TSLAX MINT</text>
-  <rect x="16" y="212.917" width="104" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(24,220.92)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="44" y="231.92" font-size="9.5" font-weight="bold">ApprovedAsset</text>
+  <rect x="16" y="212.917" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,216.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="227.317" font-size="9.5" font-weight="bold">ApprovedAsset</text>
   </g>
   <g opacity="0.3">
   <circle cx="24" cy="283.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="277.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
   <text x="34" y="286.917" font-size="7" letter-spacing="0.3" fill="#555">REGISTRY +</text>
   <text x="34" y="295.917" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
-  <rect x="16" y="301.917" width="104" height="30" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(24,309.92)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="44" y="320.92" font-size="9.5" font-weight="bold">ApprovedAsset</text>
+  <rect x="16" y="301.917" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,305.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="316.317" font-size="9.5" font-weight="bold">ApprovedAsset</text>
   </g>
   <circle cx="336" cy="53.138" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="336" cy="53.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="240" y="60.0617" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,68.06)"><g transform="translate(-1.607,-1.079) scale(1.076)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="268" y="79.06" font-size="9.5" font-weight="bold">Bob</text>
+  <rect x="240" y="60.0617" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,64.0617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="268" y="74.4617" font-size="9.5" font-weight="bold">Bob</text>
   </g>
   <g opacity="0.3">
   <circle cx="248" cy="130.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="258" y="125.062" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
   <text x="258" y="134.062" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="258" y="143.062" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="240" y="149.062" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,157.06)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="268" y="168.06" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <rect x="240" y="149.062" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,153.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="268" y="163.462" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
   </g>
   <circle cx="448" cy="69.033" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="448" cy="69.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="352" y="76.4364" width="104" height="30" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,84.44)"><g transform="translate(-1.607,-1.079) scale(1.076)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="380" y="95.44" font-size="9.5" font-weight="bold">Maria</text>
+  <rect x="352" y="76.4364" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,80.4364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="380" y="90.8364" font-size="9.5" font-weight="bold">Maria</text>
   </g>
   <!-- the feeds the NAV loop reads and the slippage floors are computed from -->
   <g>
-  <rect x="348" y="112" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(356,117)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <rect x="348" y="112" width="104" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(356,117)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="376" y="128" font-size="9.5" font-weight="bold">Pyth TSLA</text>
   <line x1="356" y1="133" x2="444" y2="133" stroke="#888" stroke-width="0.8"/>
   <text x="356" y="144" font-size="9">price: $250</text>
-  <text x="356" y="155" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
   </g>
   <g>
-  <rect x="348" y="170" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(356,175)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="356" y="154.5" font-size="9">owner: Pyth Receiver</text>
+  <rect x="348" y="170" width="104" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(356,175)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="376" y="186" font-size="9.5" font-weight="bold">Pyth NVDA</text>
   <line x1="356" y1="191" x2="444" y2="191" stroke="#888" stroke-width="0.8"/>
   <text x="356" y="202" font-size="9">price: $180</text>
-  <text x="356" y="213" font-size="7.5" font-style="italic" fill="#444">external: Pyth Receiver</text>
   </g>
   <g>
   <circle cx="224" cy="43.0914" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="128" y="49.6439" width="104" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(136,54.6439)"><g transform="translate(-1.607,-1.079) scale(1.076)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="356" y="212.5" font-size="9">owner: Pyth Receiver</text>
+  <rect x="128" y="49.6439" width="104" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(136,54.6439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="156" y="65.6439" font-size="9.5" font-weight="bold">Alice</text>
   <line x1="136" y1="70.6439" x2="224" y2="70.6439" stroke="#888" stroke-width="0.8"/>
-  <text x="136" y="81.6439" font-size="8.5" font-style="italic" fill="#444">investor</text>
-  <text x="136" y="93.6439" font-size="9" fill="#444">1 SOL</text>
+  <text x="136" y="92.1439" font-size="9" fill="#444">1 SOL</text>
   </g>
   <g>
   <circle cx="136" cy="120.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -90,7 +90,7 @@
   <text x="146" y="123.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="146" y="132.644" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="128" y="138.644" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(136,143.644)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <g transform="translate(136,143.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="156" y="154.644" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
   <line x1="136" y1="159.644" x2="224" y2="159.644" stroke="#888" stroke-width="0.8"/>
   <text x="136" y="170.644" font-size="9" font-weight="bold">100 USDC</text>
@@ -101,7 +101,7 @@
   <text x="146" y="200.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="146" y="209.644" font-size="7" letter-spacing="0.3" fill="#555">SHARE MINT</text>
   <rect x="128" y="215.644" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(136,220.644)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <g transform="translate(136,220.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="156" y="231.644" font-size="9.5" font-weight="bold">Alice&#8217;s shares</text>
   <line x1="136" y1="236.644" x2="224" y2="236.644" stroke="#888" stroke-width="0.8"/>
   <text x="136" y="247.644" font-size="9" font-weight="bold">900 shares</text>
@@ -110,7 +110,7 @@
   <g>
   <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="464" y="119.37" width="168" height="120" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,124.37)"><g transform="translate(-0.113,-0.112) scale(1.016)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <g transform="translate(472,124.37)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="492" y="135.37" font-size="10.5" font-weight="bold">vault-strategy program</text>
   <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_registry()</text>
@@ -123,118 +123,138 @@
   <text x="472" y="221.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">collect_fees()</text>
   <text x="472" y="231.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">withdraw()</text>
   </g>
-  <g>
+  <g transform="translate(0,-3)">
+<g>
   <circle cx="472" cy="248.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="252.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;STRATEGY&#8221; + INDEX</text>
-  <rect x="464" y="258.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,263.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <rect x="464" y="258.37" width="168" height="103" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,263.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="274.37" font-size="10.5" font-weight="bold">strategy</text>
   <line x1="472" y1="279.37" x2="624" y2="279.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="290.37" font-size="9">manager: Maria</text>
-  <text x="472" y="302.37" font-size="9">registry: Victor&#8217;s</text>
-  <text x="472" y="314.37" font-size="9">fee_bps: 100</text>
-  <text x="472" y="326.37" font-size="9">max_slippage_bps: 100</text>
-  <text x="472" y="338.37" font-size="9" font-weight="bold">total_shares: 900</text>
-  <text x="472" y="350.37" font-size="9" font-weight="bold">asset_count: 2</text>
-  <text x="472" y="362.37" font-size="9">total_weight_bps: 10,000</text>
-  <text x="472" y="374.37" font-size="7.5" font-style="italic" fill="#444">swap_router and fee_bps fixed at creation</text>
+  <text x="472" y="300.87" font-size="9">registry: Victor&#8217;s</text>
+  <text x="472" y="311.37" font-size="9">fee_bps: 100</text>
+  <text x="472" y="321.87" font-size="9">max_slippage_bps: 100</text>
+  <text x="472" y="332.37" font-size="9" font-weight="bold">total_shares: 900</text>
+  <text x="472" y="342.87" font-size="9" font-weight="bold">asset_count: 2</text>
+  <text x="472" y="353.37" font-size="9">total_weight_bps: 10,000</text>
   </g>
-  <g>
+</g>
+  <g transform="translate(0,-18)">
+<g>
   <circle cx="472" cy="391.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="395.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
-  <rect x="464" y="401.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,406.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <rect x="464" y="401.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,406.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="417.37" font-size="10.5" font-weight="bold">asset config 0</text>
   <line x1="472" y1="422.37" x2="624" y2="422.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="433.37" font-size="9">mint: TSLAx</text>
-  <text x="472" y="445.37" font-size="9">weight_bps: 4,000</text>
-  <text x="472" y="457.37" font-size="9">vault: the TSLAx vault</text>
-  <text x="472" y="469.37" font-size="7.5" font-style="italic" fill="#444">price_feed copied from its ApprovedAsset</text>
+  <text x="472" y="443.87" font-size="9">weight_bps: 4,000</text>
+  <text x="472" y="454.37" font-size="9">vault: the TSLAx vault</text>
   </g>
-  <g>
+</g>
+  <g transform="translate(0,-33)">
+<g>
   <circle cx="472" cy="486.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="490.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
-  <rect x="464" y="496.37" width="168" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,501.37)"><g transform="translate(-1.467,-1.467) scale(0.706)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <rect x="464" y="496.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,501.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="512.37" font-size="10.5" font-weight="bold">asset config 1</text>
   <line x1="472" y1="517.37" x2="624" y2="517.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="528.37" font-size="9">mint: NVDAx</text>
-  <text x="472" y="540.37" font-size="9">weight_bps: 6,000</text>
-  <text x="472" y="552.37" font-size="9">vault: the NVDAx vault</text>
-  <text x="472" y="564.37" font-size="7.5" font-style="italic" fill="#444">price_feed copied from its ApprovedAsset</text>
+  <text x="472" y="538.87" font-size="9">weight_bps: 6,000</text>
+  <text x="472" y="549.37" font-size="9">vault: the NVDAx vault</text>
   </g>
-  <g>
+</g>
+  <g transform="translate(0,-48)">
+<g>
   <circle cx="472" cy="581.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="585.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + STRATEGY</text>
-  <rect x="464" y="591.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,596.37)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <rect x="464" y="591.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,596.37)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="492" y="607.37" font-size="10.5" font-weight="bold">share mint</text>
   <line x1="472" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="623.37" font-size="9" font-weight="bold">supply: 900 shares</text>
-  <text x="472" y="635.37" font-size="7.5" font-style="italic" fill="#444">mint authority: the strategy PDA</text>
+  <text x="472" y="633.87" font-size="7.5" font-style="italic" fill="#444">mint authority: the strategy PDA</text>
   </g>
-  <g>
+</g>
+  <g transform="translate(-224,-271.37)">
+<g>
   <circle cx="472" cy="657.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="656.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
   <text x="482" y="665.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + USDC MINT</text>
-  <rect x="464" y="671.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,676.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <rect x="464" y="671.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,676.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="492" y="687.37" font-size="10.5" font-weight="bold">USDC vault</text>
   <line x1="472" y1="692.37" x2="624" y2="692.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="703.37" font-size="9" fill="#444">0 USDC</text>
-  <text x="472" y="715.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <text x="472" y="713.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
-  <g>
+</g>
+  <g transform="translate(-224,-271.37)">
+<g>
   <circle cx="472" cy="737.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="736.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
   <text x="482" y="745.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
-  <rect x="464" y="751.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,756.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <rect x="464" y="751.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,756.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="492" y="767.37" font-size="10.5" font-weight="bold">TSLAx vault</text>
   <line x1="472" y1="772.37" x2="624" y2="772.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="783.37" font-size="9" font-weight="bold">1.44 TSLAx</text>
-  <text x="472" y="795.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <text x="472" y="793.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
-  <g>
+</g>
+  <g transform="translate(-224,-271.37)">
+<g>
   <circle cx="472" cy="817.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="816.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
   <text x="482" y="825.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
-  <rect x="464" y="831.37" width="168" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,836.37)"><g transform="translate(-0.62,-0.62) scale(0.635)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <rect x="464" y="831.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,836.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="492" y="847.37" font-size="10.5" font-weight="bold">NVDAx vault</text>
   <line x1="472" y1="852.37" x2="624" y2="852.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="863.37" font-size="9" font-weight="bold">3 NVDAx</text>
-  <text x="472" y="875.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <text x="472" y="873.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
+</g>
   <g>
-  <rect x="16" y="640" width="212" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,645)"><g transform="translate(-0.113,-0.112) scale(1.016)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <rect x="16" y="640" width="212" height="50" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,645)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="44" y="656" font-size="9.5" font-weight="bold">swap router program</text>
   <line x1="24" y1="661" x2="220" y2="661" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="672" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">swap_usdc_for_asset()</text>
   <text x="24" y="682" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_asset_for_usdc()</text>
-  <text x="24" y="696" font-size="7.5" font-style="italic" fill="#444">a mock Jupiter, fixed at strategy creation</text>
   </g>
-  <path d="M 136,158.644 C 124,170.644 124,182.644 124,198.644 L 124,560 C 124,590 240,600 340,612 C 400,620 439.406,629.464 461,697.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="157" y="330" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. deposit() &#183; 900 USDC</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="157" y="346" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">with her minimum-shares floor</text>
-  <text x="140" y="470" font-size="9" fill="#444" font-style="italic" text-anchor="start">each leg&#8217;s minimum out is computed from the feed, never supplied by</text>
-  <text x="140" y="486" font-size="9" fill="#444" font-style="italic" text-anchor="start">the manager: the price she cannot choose is what makes a bad fill revert.</text>
-  <path d="M 461,617.37 C 456,617.37 460,605.37 460,581.37 L 460,282 C 460,262 400,258 320,258 C 280,258 250,244 235,235.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="303.56" y="240" font-size="10.5" fill="#1e7a3c" font-weight="bold">4. mint 900 shares</text>
-  <path d="M 461,708 C 400,652 300,656 231,656" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="302.67" y="638" font-size="10.5" fill="#1e7a3c" font-weight="bold">2. spend 360 USDC</text>
-  <path d="M 150,703 C 220,740 350,730 461,771" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="267.57" y="752" font-size="10.5" fill="#1e7a3c" font-weight="bold">1.44 TSLAx in</text>
-  <path d="M 461,720 C 400,668 300,678 231,682" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="308.67" y="692" font-size="10.5" fill="#1e7a3c" font-weight="bold">3. spend 540 USDC</text>
-  <path d="M 60,703 C 110,800 280,820 461,855" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="302.59" y="786" font-size="10.5" fill="#1e7a3c" font-weight="bold">3 NVDAx in</text>
-  <g class="coin" transform="translate(143.5,325.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(289.1,235.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(285.5,634.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(251.5,748.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(291.5,688.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <g class="coin" transform="translate(288,782.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <text x="16" y="706" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
+  <path d="M 136,158.644 C 124,170.644 124,182.644 124,198.644 L 124,340 C 124,380 160,412 234,426" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <path d="M 461,569.37 C 456,569.37 460,557.37 460,533.37 L 460,282 C 460,262 400,258 320,258 C 280,258 250,244 235,235.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <path d="M 237,424 C 170,440 90,520 52,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <path d="M 237,444 C 190,470 130,545 98,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <path d="M 170,637 C 160,570 190,522 234,508" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <path d="M 205,637 C 215,620 220,602 234,590" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <rect class="marker" x="136.0" y="263.9" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="144.0" y="275.5" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(124.0,289.9)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="132.3" y="482.3" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="140.3" y="493.9" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(120.3,508.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="144.3" y="541.2" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="152.3" y="552.8" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(152.3,529.2)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="192.3" y="551.9" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="200.3" y="563.5" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
+  <g class="coin" transform="translate(178.3,559.9)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="187.7" y="604.3" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="195.7" y="615.9" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">5</text>
+  <g class="coin" transform="translate(217.7,612.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="410.6" y="258.7" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="418.6" y="270.3" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">6</text>
+  <g class="coin" transform="translate(440.6,266.7)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="24" y="336" width="207" height="124" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="32" y="346.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="40" y="358.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="58" y="358" font-size="10.5" font-weight="bold" fill="#1e7a3c">Take in Alice’s 900 USDC</text>
+  <rect class="marker" x="32" y="364.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="40" y="376.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="58" y="376" font-size="10.5" font-weight="bold" fill="#1e7a3c">Spend 360 USDC on the TSLAx leg</text>
+  <rect class="marker" x="32" y="382.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="40" y="394.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="58" y="394" font-size="10.5" font-weight="bold" fill="#1e7a3c">Receive 1.44 TSLAx back</text>
+  <rect class="marker" x="32" y="400.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="40" y="412.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
+  <text x="58" y="412" font-size="10.5" font-weight="bold" fill="#1e7a3c">Spend 540 USDC on the NVDAx leg</text>
+  <rect class="marker" x="32" y="418.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="40" y="430.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">5</text>
+  <text x="58" y="430" font-size="10.5" font-weight="bold" fill="#1e7a3c">Receive 3 NVDAx back</text>
+  <rect class="marker" x="32" y="436.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="40" y="448.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">6</text>
+  <text x="58" y="448" font-size="10.5" font-weight="bold" fill="#1e7a3c">Mint 900 shares to Alice, last</text>
 </svg>
-  <text x="16" y="901" font-size="9" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>

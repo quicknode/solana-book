@@ -15,7 +15,7 @@ Two consequences follow immediately, and both are absences:
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
-![The account map: the market account pinned to its oracle feed, the dataless authority PDA that owns the base and quote vaults, and columns for Maria the operator and the traders who swap against the vaults.](figures/prop-amm-account-map.svg)
+![The authority PDA holds no data at all; it exists only to sign for the two vaults.](figures/prop-amm-account-map.svg)
 
 The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
@@ -31,7 +31,7 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 ## A Buyer Trades at the Ask
 
-![The quote band: the ask sits 10 basis points above the oracle price and the bid 10 below it; buyers cross the band downward from the ask, sellers upward from the bid, and the band itself is the operator's revenue.](figures/prop-amm-quote-band.svg)
+![The band itself is the operator’s revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn:
 
@@ -53,7 +53,7 @@ Look at the two numbers together. Buying 5 NVDAx cost 825.825; selling them back
 
 NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory got picked off along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
 
-![Curve pricing versus quote pricing: on the curve, the effective unit price climbs with trade size; against a quote, the price is flat at the ask whatever the size, until the inventory boundary where the market refuses instead of repricing.](figures/prop-amm-curve-vs-quote.svg)
+![Against a quote the price is flat whatever the size, until the inventory boundary, where the market refuses rather than reprices.](figures/prop-amm-curve-vs-quote.svg)
 
 Reading the price has its own cost, though. Between oracle updates, even fresh ones inside the 150-slot bound, the market is quoting a number that is seconds old, and anyone who knows where the price went in those seconds can buy below true value or sell above it. Market makers call this **adverse selection**: the flow that finds you when your quote is wrong is precisely the flow you did not want. It is the prop AMM's impermanent loss: the structural cost of the business, borne entirely by Maria.
 

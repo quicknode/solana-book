@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 176" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 203" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Alice’s address on the curve</text>
+<g transform="translate(0,27)">
   <path d="M 0,2 Q 400,2 640,36" fill="none" stroke="#e0e0e0" stroke-width="1.2"/>
   <path d="M 0,10 Q 400,10 640,70" fill="none" stroke="#cccccc" stroke-width="1.2"/>
   <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="52" font-size="10" fill="#bbb" text-anchor="end" font-style="italic">Localnet</text>
@@ -8,7 +10,7 @@
   <circle cx="132" cy="38.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="16" y="50.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,55.6382)"><g transform="translate(-1.607,-1.079) scale(1.076)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <g transform="translate(24,55.6382)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="44" y="66.6382" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
   <line x1="24" y1="71.6382" x2="132" y2="71.6382" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="82.6382" font-size="9.5" fill="#444">1 SOL</text>
@@ -18,4 +20,5 @@
   <text x="352" y="122" font-size="10.5" fill="#444" font-style="italic">stays on her device, and signs for this address</text>
   <path d="M 297,104 C 240,92 180,64 138,41" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
   <text x="320" y="158" font-size="11.5" fill="#444" text-anchor="middle" font-style="italic">a dot on the curve is an address someone holds the private key for</text>
+</g>
 </svg>

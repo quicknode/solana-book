@@ -33,7 +33,7 @@ The deal is priced the way all Solana money is priced: in **minor units**, the s
 
 Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard cast of accounts every token-handling program touches.
 
-![The account map: Alice's and Bob's wallets and their token accounts, the offer account (a PDA) with authority over its vault, the USDC and TSLAx mints, the escrow program with its three instruction handlers, and the offer account's authority over the vault.](figures/escrow-account-map.svg)
+![The offer PDA holds authority over its own vault, so no person can move the escrowed tokens.](figures/escrow-account-map.svg)
 
 The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
 
@@ -85,7 +85,7 @@ The handler body runs two steps:
 
 Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
 
-![take_offer() moves the TSLAx directly from Bob's token account to Alice's and the USDC from the vault to Bob's token account, then closes the vault and the offer account, with the rent lamports returning to Alice.](figures/escrow-take-offer.svg)
+![Both accounts close in the same instruction, and the rent lamports return to Alice.](figures/escrow-take-offer.svg)
 
 Both sides now hold exactly what the other offered. No percentage went to anyone.
 

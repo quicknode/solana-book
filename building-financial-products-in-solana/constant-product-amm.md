@@ -25,7 +25,7 @@ And the deeper K gets, the less any individual trade moves the price. Watch K in
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
-![The account map: the config account, the pool config account for ACME/USDC, and the pool authority PDA that owns the two vaults and the LP mint, whose receipts sit in LP token accounts held by Maria and Alice.](figures/amm-account-map.svg)
+![The pool authority PDA owns both vaults and the LP mint, so no person can move pool tokens.](figures/amm-account-map.svg)
 
 The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 
@@ -45,7 +45,7 @@ Empty pools cannot price anything, so Maria seeds it. She believes a fair launch
 
 Her LP tokens come from a formula this book has been promising since the arithmetic chapter: the **integer square root of X times Y**, computed by `integer_sqrt()`, a hand-rolled Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`. That is a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address (Uniswap V2's trick); it simply never exists as supply, while the reserves it represents stay in the pool. What makes it work is not its value, which is a fraction of a cent, but the fact that it is always part of the share supply the pool divides by. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
-![Maria's initial deposit: 400 ACME and 900 USDC enter the vaults, and the square root of their product, 600 LP tokens, goes to Maria minus the tiny locked MINIMUM_LIQUIDITY floor, 100 minor units of supply minted to nobody.](figures/amm-first-deposit.svg)
+![√(400 × 900) = 600 LP, less the 100 minor units of MINIMUM_LIQUIDITY minted to nobody and locked forever.](figures/amm-first-deposit.svg)
 
 > **A square root with no floats.** `integer_sqrt()` is **Newton's method** running on integers: start with a guess, then repeatedly replace it with the average of the guess and the target divided by the guess. The sequence homes in on the square root in a few dozen iterations, and the result is floored. The trick generalizes: any real-valued function a program needs onchain (roots, exponentials, logs) becomes an integer iteration with a known, bounded error, because floats can never touch funds.
 
@@ -67,7 +67,7 @@ Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a t
 
 K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is K's second way of growing, the one the toy explanations lie about.
 
-![Bob's swap: 100 USDC comes in, the 30-cent fee splits into Maria's roughly 5-cent virtual claim and the LPs' roughly 25 cents that stays in the vault, the 99.70 taxed input is priced by the curve, and about 40.7 ACME goes out as the spot price slides from $2.25 to $2.67.](figures/amm-bob-swap.svg)
+![The 30-cent fee splits: about 5 cents to Maria’s virtual claim, about 25 to the LPs, which never leaves the vault.](figures/amm-bob-swap.svg)
 
 ## The Next Trader Pays the Price the Last One Made
 
