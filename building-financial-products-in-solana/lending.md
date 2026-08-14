@@ -68,6 +68,8 @@ Each reserve stores one number that starts at 1.0 and only grows. On every `refr
 
 The rate itself comes from a **kinked utilization curve**. Utilization is borrowed ÷ (available + borrowed). Below the kink at 80% utilization, the rate climbs gently from 2% toward 20% APR; above it, steeply toward 150%. The kink is the reserve begging for liquidity: when nearly everything is lent out, the rate spikes, which simultaneously pushes borrowers to repay and pulls new suppliers in with yield. It is monetary policy in fifteen lines of integer math.
 
+Those percentages are annual, and the accrual is per slot, so the conversion divides by a slots-per-year figure the reserve stores as `slots_per_year`. That divisor is the cluster's slot time written as a count, which is why it sits in the config rather than in the code: shorten the slot and the same curve charges more per day, with no number in the program changed to say so. The *Time* chapter covers where the current figure comes from.
+
 Of the interest that accrues, the reserve factor (10%) is skimmed into `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 
 ![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the accumulation factor compounding across refreshes.](figures/lending-rate-curve.svg)
