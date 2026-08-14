@@ -43,7 +43,7 @@ The code that reads the chain has to answer that question anyway, because it act
 | **confirmed** | A supermajority of stake has voted for that block | It can vanish in theory; no confirmed block has been rolled back on mainnet |
 | **finalized** | So many blocks sit on top that no validator can now vote another way | Nothing. This is the record |
 
-Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading in order to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
+Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
 
 ## Admin Power, Pausing, and Upgrades
 
@@ -62,7 +62,7 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - Test the code path the bug lives in: both directions of every symmetric flow, both sides of every boundary, adversarial paths by name, and properties as well as balances.
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
 - Ship with a second-opinion audit; a reviewer hunting the same holes an attacker would hands you the list instead of draining the program.
-- A program cannot see whether its own block is final, so whatever reads the chain has to choose: a bot deciding which transaction to send next can read at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
+- A program cannot see whether its own block is final, so whatever reads the chain has to choose. A bot deciding which transaction to send next can read at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
 
-The through-line of the whole chapter, one last time: the arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.
+The through-line of the whole chapter, one last time. The arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.

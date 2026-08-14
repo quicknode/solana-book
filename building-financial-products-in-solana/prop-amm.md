@@ -6,7 +6,7 @@ Lifinity pioneered the model on Solana; by early 2026, venues like SolFi, Humidi
 
 ## The Oracle Is the Price, the Spread Is the Fee
 
-A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana, and the operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the order book chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
+A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana. The operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the order book chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
 
 Two consequences follow immediately, and both are absences:
 
@@ -61,7 +61,7 @@ Reading the price has its own cost, though. Between oracle updates, even fresh o
 
 Her defense is `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see exactly this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is routine for a market maker.
 
-The oracle gates pull the quote automatically, for the same reasons Maria pulls it by hand. A price older than 150 slots is refused (`StalePrice`) because a lagging quote is a free option for whoever notices first, and a price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`) because a tight spread around a number the oracle itself is unsure of will fill at prices well away from the real one, in whichever direction costs Maria money. For every other program in this book the staleness check was hygiene; for a market maker it is the business itself.
+The oracle gates pull the quote automatically, for the same reasons Maria pulls it by hand. A price older than 150 slots is refused (`StalePrice`), because a lagging quote is a free option for whoever notices first. A price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`), because a tight spread around a number the oracle itself is unsure of will fill at prices well away from the real one, in whichever direction costs Maria money. For every other program in this book the staleness check was hygiene; for a market maker it is the business itself.
 
 ## The Market Maker Leaves, Whole
 

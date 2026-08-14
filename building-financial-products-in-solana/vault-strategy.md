@@ -36,7 +36,7 @@ She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. 
 
 Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `deposit()` with 900 USDC and a `minimum_shares` floor. The handler does three jobs in one transaction, and the order is the security model.
 
-**First it values the fund.** It walks every asset: reads the vault balance, loads the Pyth price (rejecting a feed that is not the one recorded in the asset config, a price that is not positive, or a price older than 60 seconds), and accumulates value in u128: amount × price ÷ 10^8, multiply before divide. Plus the USDC vault. That total is the **net asset value**, the NAV. On the fund's first deposit the NAV is zero and shares are minted one-to-one: Alice's 900 USDC becomes 900 shares.
+**First it values the fund.** It walks every asset: reads the vault balance, loads the Pyth price, and accumulates value in u128 as amount × price ÷ 10^8, multiply before divide. The price load rejects a feed that is not the one recorded in the asset config, a price that is not positive, or a price older than 60 seconds. Plus the USDC vault. That total is the **net asset value**, the NAV. On the fund's first deposit the NAV is zero and shares are minted one-to-one: Alice's 900 USDC becomes 900 shares.
 
 **Then it deploys the money at the weights.** 40% of 900, $360, buys TSLAx at $250: 1.44 TSLAx into the TSLAx vault. 60%, $540, buys NVDAx at $180: exactly 3 NVDAx. The swaps run through the router fixed at strategy creation (the example ships a mock router standing in for Jupiter; a router that is not the configured one is rejected, pinned by `test_deposit_rejects_unregistered_router`), and the strategy PDA signs.
 
@@ -64,7 +64,7 @@ Traditional funds sell assets to pay the management fee. This program does what 
 
 ## Withdrawing In Kind
 
-Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it hands her **her proportional slice of every vault, in kind**: her share of the USDC vault, of the TSLAx vault (about 1.5), of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
+Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it hands her **her proportional slice of every vault, in kind**. That is her share of the USDC vault, of the TSLAx vault (about 1.5), and of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
 
 She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. And Victor took no fee on any of it; what he earned is the only thing his platform sells, a track record of funds that cannot be rugged.
 
@@ -91,7 +91,7 @@ Every formula in the program is a proportion, and they all lean the same way. Sh
 
 ## Testing Considerations
 
-The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`) and then pins each wall separately: under-allocated strategies refuse deposits, unapproved assets refuse listing, weight overflows refuse, the 17th asset refuses, non-managers cannot set weights, unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be honestly tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
+The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`). It then pins each wall separately. Under-allocated strategies refuse deposits, unapproved assets refuse listing, weight overflows refuse, the 17th asset refuses, and non-managers cannot set weights. Unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be honestly tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
 
 ## What You Learnt from Building the Vault Strategy
 

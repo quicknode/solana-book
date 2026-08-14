@@ -25,7 +25,7 @@ The habit to build: an oracle's publication is *input*, exactly as untrusted as 
 
 Who signs the fact is a design decision with a full spectrum of answers, and the honest way to make it is to ask three questions: who publishes, what does it cost them to lie, and what happens when they stop publishing?
 
-At one end sits the **single trusted key**. The betting market's admin settles the event with one signature; her word becomes the onchain truth. For a small market whose operator's business is its reputation, this can be the right design, and the program's job is to make the trust *visible and narrow*: the admin picks the winning outcome, but she cannot touch the pro-rata math, exceed the snapshotted fee, or reach the vault by any other path. A reader of the code can see exactly what her signature can and cannot do.
+At one end sits the **single trusted key**. The betting market's admin settles the event with one signature; her word becomes the onchain truth. For a small market whose operator's business is its reputation, this can be the right design, and the program's job is to make the trust *visible and narrow*. The admin picks the winning outcome, but she cannot touch the pro-rata math, exceed the snapshotted fee, or reach the vault by any other path. A reader of the code can see exactly what her signature can and cannot do.
 
 In the middle sit **committees and multi-party resolution**: several parties must agree before a fact lands, so lying requires collusion and any single defector breaks the lie. The cost is coordination and latency.
 
