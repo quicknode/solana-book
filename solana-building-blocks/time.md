@@ -68,7 +68,7 @@ One expression, compared both ways, so there is no gap and no overlap between "y
 
 The trap is what "seven days" then means: the window ends at the first tick of day seven, not at the end of the seventh day.
 
-![A seven-day window counted in whole days: contributions run to the first tick of day 7 and refunds start there, one expression deciding both, so the two windows meet at an instant with no gap and no overlap.](figures/day-boundary.svg)
+![One expression decides both windows, so they meet at an instant with no gap and no overlap.](figures/day-boundary.svg)
 
 Say which edge you mean when you write the terms down. A contributor reads "seven days to fund" as a window closing at the end of the seventh day, and this one closes at its start, a full day earlier than they think. Either edge is defensible; only one is what your users were told.
 
@@ -94,7 +94,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 Three questions, and a default if you answer no to all of them.
 
-![The decision tree: each question sends a yes to its answer on the right and a no down to the next question, so order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, a real-world time you promised a person takes the wall clock, and three noes leave the slot count.](figures/clock-decision-tree.svg)
+![Yes goes right to an answer, no goes down to the next question; three noes leave the slot count.](figures/clock-decision-tree.svg)
 
 The order matters at the third question. A fundraiser's deadline is worth money and a validator would happily move it, which argues for slots, but the deadline is also a promise made to a person in days, and days are wall-clock time. The promise wins, and the margin handles the adversary: leave enough room that a few seconds cannot change who gets paid.
 

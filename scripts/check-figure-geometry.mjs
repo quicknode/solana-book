@@ -21,6 +21,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const figureDirs = [
   "solana-building-blocks/figures",
+  "financial-programming-concepts-in-solana/figures",
   "building-financial-products-in-solana/figures",
 ];
 
@@ -128,8 +129,22 @@ for (const file of files) {
     for (const t of svg.querySelectorAll("text")) {
       const accent = (t.getAttribute("fill") || "").toLowerCase() === "#1e7a3c";
       const bold = (t.getAttribute("font-weight") || "") === "bold";
-      if (!accent || !bold) { run = null; continue; }
       const b = box(t);
+      // A parenthetical set under an amount - "(all of it)", "(250,000,000
+      // minor units)" - is part of that label and travels with it, so the
+      // amount reaches to the bottom of the aside. Measuring the accent line
+      // alone reads a coin tucked under the pair as 30 units from any amount.
+      // The aside is usually centred on the label and wider than it, so its
+      // centre landing within the line above is what marks it as a follower.
+      if (!accent || !bold) {
+        if (run) {
+          const mid = (b.x1 + b.x2) / 2;
+          if (mid > run.x1 - 4 && mid < run.x2 + 4 && b.y1 - run.y2 > -4 && b.y1 - run.y2 < 10)
+            run.y2 = Math.max(run.y2, b.y2);
+        }
+        run = null;
+        continue;
+      }
       const anchor = t.getAttribute("text-anchor") || "start";
       const edge = (z) => (anchor === "end" ? z.x2 : z.x1);
       if (run && run.anchor === anchor && Math.abs(edge(run) - edge(b)) < 3 &&
@@ -235,8 +250,12 @@ for (const file of files) {
       accounts,
       fadedDots,
       coins: [...svg.querySelectorAll("g.coin")].map(box),
+      markers: [...svg.querySelectorAll(".marker")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
-      rects: [...svg.querySelectorAll("rect")]
+      // A key box is a legend, not an account: its whole job is to hold the
+      // step labels and their coin marks, so the "no text inside a box it does
+      // not belong to" and "no coin over a box" rules would fire on every row.
+      rects: [...svg.querySelectorAll("rect:not(.key):not(.marker)")]
         .filter((r) => (r.getAttribute("fill") || "") !== "none")
         .map(box),
       amounts: amounts.filter((a) => hasAmount(a.lines.join(" "))),
@@ -263,6 +282,20 @@ for (const file of files) {
       }
     }
   }
+  // A label that reaches the border reads as running out of its box, even
+  // though it is technically inside: the heading rule stops at the padding, so
+  // a heading that outruns the rule is the thing the eye catches. Half the
+  // 8-unit padding is the line - "Carol's user index" came within 2.3 of the
+  // stroke and the column had to widen.
+  for (const t of fig.texts) {
+    const home = fig.rects.find((r) => contains(r, t));
+    if (!home || t.x2 <= home.x2 - 4) continue;
+    const key = `pad:${t.s}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    fail(`"${t.s.slice(0, 40)}" reaches within ${(home.x2 - t.x2).toFixed(1)} of its box edge; widen the column`);
+  }
+
   for (let i = 0; i < fig.texts.length; i += 1) {
     for (let j = i + 1; j < fig.texts.length; j += 1) {
       if (overlaps(fig.texts[i], fig.texts[j], 1.5)) {
@@ -292,9 +325,14 @@ for (const file of files) {
     for (const r of fig.rects) {
       if (overlaps(c, r, 0.5)) fail(`coin at ${at(c)} overlaps a box`);
     }
-    const beside = fig.amounts.some((a) =>
-      Math.hypot(Math.max(a.x1 - c.x2, 0, c.x1 - a.x2), Math.max(a.y1 - c.y2, 0, c.y1 - a.y2)) < 9);
-    if (!beside) fail(`coin at ${at(c)} is not beside an amount label`);
+    // The coin belongs where the value moves. That is beside the amount when
+    // the amount is written on the canvas, and beside the step marker when the
+    // words have moved into a key box and only the number is left on the line.
+    const near = (z) =>
+      Math.hypot(Math.max(z.x1 - c.x2, 0, c.x1 - z.x2), Math.max(z.y1 - c.y2, 0, c.y1 - z.y2)) < 14;
+    if (!fig.amounts.some(near) && !fig.markers.some(near)) {
+      fail(`coin at ${at(c)} is beside neither an amount label nor a step marker`);
+    }
   }
 
   // 4 and 5. Arrows read as one smooth stroke, ending in a head that points
