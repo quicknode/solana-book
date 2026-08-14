@@ -46,10 +46,10 @@ Every handler that touches money begins the same way: read the oracle, validate 
 - the account is long enough to contain a price (`OracleDataTooShort`),
 - the price is positive (`NonPositivePrice`),
 - the feed's decimal scale equals the one the pool recorded at creation (`OracleScaleMismatch`), so a feed migration cannot silently shift every price by powers of ten,
-- the price is fresh: no older than `MAX_PRICE_STALENESS_SLOTS`, 150 slots, about a minute (`StalePrice`),
+- the price is fresh: no older than `MAX_PRICE_STALENESS_SLOTS`, 150 slots (`StalePrice`),
 - and the feed's own uncertainty band, divided by the price, is within `max_confidence_bps` (`OracleConfidenceTooWide`). A leveraged venue trading on a price the oracle itself is unsure of is how liquidation cascades start.
 
-A stale price here is an arbitrage machine. Anyone who can trade a leveraged market at a minute-old price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` pin both refusals.
+A stale price here is an arbitrage machine. Anyone who can trade a leveraged market at a stale price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` pin both refusals.
 
 ## Opening a Long, and the Pool Reserves the Best Case
 
@@ -75,14 +75,16 @@ Her transaction ends with the only token movement: 1,000 USDC from Alice's token
 
 ## Funding Is the Rent the Crowded Side Pays
 
-A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest honest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. Run the numbers once: with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots (about thirteen minutes) owes 50 USDC.
+A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest honest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. Run the numbers once: with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots owes 50 USDC.
 
 Two simplifications to notice, both documented in the example:
 
 - **The payment goes to the pool**, to the LPs, rather than to the lighter side of traders.
-- **The rate is a constant**, rather than scaling with how lopsided the book is.
+- **The rate is flat**, rather than scaling with how lopsided the book is.
 
 Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting shape, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, exactly as the test suite's default market does.
+
+Flat is not the same as fixed. The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate, and a pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool authority bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
 
 ![The funding index climbs while longs outweigh shorts and falls when shorts outweigh longs; each position pays or receives the index movement between its entry and its exit.](figures/perps-funding-index.svg)
 
