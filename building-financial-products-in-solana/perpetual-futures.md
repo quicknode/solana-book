@@ -80,9 +80,11 @@ A perpetual never expires, so what stops its price drifting away from the asset 
 Two simplifications to notice, both documented in the example:
 
 - **The payment goes to the pool**, to the LPs, rather than to the lighter side of traders.
-- **The rate is a constant**, rather than scaling with how lopsided the book is.
+- **The rate is flat**, rather than scaling with how lopsided the book is.
 
 Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting shape, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, exactly as the test suite's default market does.
+
+Flat is not the same as fixed. The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate, and a pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool authority bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
 
 ![The funding index climbs while longs outweigh shorts and falls when shorts outweigh longs; each position pays or receives the index movement between its entry and its exit.](figures/perps-funding-index.svg)
 
