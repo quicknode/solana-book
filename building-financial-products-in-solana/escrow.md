@@ -99,7 +99,7 @@ The constraints make it maker-only: the signer must be the maker, and `has_one =
 
 ## The Math
 
-Escrow is the one program in this book whose arithmetic is nearly invisible, because the offer is all-or-nothing: there are no partial fills, no division, and therefore no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication hiding in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
+Escrow is the one program in this book whose arithmetic is nearly invisible, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication hiding in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
 
 The money math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). On either exit path, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
@@ -119,7 +119,7 @@ What must hold, before and after every handler:
 - **Account substitution.** The classic escrow attack is a taker who passes his own account where the maker's payment account should be, or a foreign vault, or a mismatched mint. Every one of these is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, `has_one` binds the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter dissects what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
 - **The abandoned offer.** The failure mode that is a missing feature: without `cancel_offer()`, an untaken offer strands the maker's tokens permanently. Every state needs an exit.
-- **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks are worth adding to any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same, since a swap of a token for a different amount of itself means someone is about to be ripped off.
+- **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks are worth adding to any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same. A swap of a token for a different amount of itself means someone is about to be ripped off.
 
 ## Testing Considerations
 

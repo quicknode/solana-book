@@ -36,7 +36,7 @@ The total value a pool or fund controls, marked to market: on a perpetual future
 
 ### authority
 
-The address whose signature a particular action requires. A program records the authority in an account, and the handler checks that the transaction carries its signature before acting: a mint authority may create supply, a freeze authority may freeze token accounts, an upgrade authority may replace a program's code, a market authority may withdraw fees. Recording an authority and checking it is the core of access control in every chapter.
+The address whose signature a particular action requires. A program records the authority in an account, and the handler checks that the transaction carries its signature before acting. A mint authority may create supply, a freeze authority may freeze token accounts, an upgrade authority may replace a program's code, and a market authority may withdraw fees. Recording an authority and checking it is the core of access control in every chapter.
 
 ### auto-deleveraging (ADL)
 
@@ -352,7 +352,7 @@ A betting structure with no bookmaker: all stakes pool together, and winners spl
 
 ### PDA (program derived address)
 
-An address computed from a program's ID and chosen seeds. A PDA is not a public key and thus has no private key, so no signature for it can ever exist. Only the deriving program can "sign" as it, by presenting the seeds for the runtime to recheck, which is what makes program-owned vaults trustworthy.
+An address computed from a program's ID and chosen seeds. A PDA is not a public key, so it has no private key, and no signature for it can ever exist. Only the deriving program can "sign" as it, by presenting the seeds for the runtime to recheck, which is what makes program-owned vaults trustworthy.
 
 ### perpetual future
 

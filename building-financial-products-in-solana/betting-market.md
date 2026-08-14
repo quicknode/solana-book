@@ -39,7 +39,7 @@ One rule protects the bettors: **the outcome list locks the moment betting start
 
 Three bettors take a view, each from the standard wallet of one SOL and 1,000 USDC, and all in USDC, the token the config designates. Alice is confident about school holidays and puts $300 on Toy Story 5. Bob agrees but has less to spend: $100 on Toy Story 5. Carol believes in word of mouth and puts $200 on Backrooms.
 
-Each bettor calls `place_bet()` with an amount. Zero-amount bets reject with `ZeroAmount`. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA gymnastics needed on the way in), creates the bet account if this is the bettor's first bet on this outcome, and bumps the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is exactly how the handler tells a first bet from a top-up and gates the per-outcome bookkeeping.
+Each bettor calls `place_bet()` with an amount. Zero-amount bets reject with `ZeroAmount`. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA gymnastics needed on the way in). It then creates the bet account if this is the bettor's first bet on this outcome, and bumps the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is exactly how the handler tells a first bet from a top-up and gates the per-outcome bookkeeping.
 
 After all three bets, the vault holds 600 USDC: 400 staked on Toy Story 5, 200 on Backrooms.
 

@@ -161,6 +161,106 @@ for (const file of [...new Set(files)]) {
     });
 }
 
+// Sentence length. Not a style preference: past about forty-five words a
+// reader has to hold too many clauses open to reach the verb, and every one
+// of the sentences this rule first caught was a list that had been glued into
+// a paragraph, or two claims joined by a colon. The fix is almost always to
+// split at the colon or semicolon that is already there, so the ceiling is
+// deliberately loose. This is the one ASD-STE100 rule the book adopts whole;
+// its sentence-per-idea and approved-dictionary rules are written for aircraft
+// maintenance procedures and would flatten a book that teaches with a story.
+//
+// The limit counts words after markdown is reduced to prose, so a link counts
+// as its text and a code span as one word.
+const sentenceWordLimit = 45;
+
+// Words with a plain equivalent and no meaning of their own in this domain.
+// Deliberately short: "execute", "yield", "provide", "present" and "operate"
+// all read as bureaucratic in a generic style guide and are exact here (a
+// transaction executes, a supplier earns yield, a maker provides liquidity, a
+// program signs by presenting seeds), so they are not on the list.
+const wordinessRules = [
+  [/\butili[sz]e[sd]?\b/i, 'say "use"'],
+  [/\bcommence[sd]?\b/i, 'say "start"'],
+  [/\bprior to\b/i, 'say "before"'],
+  [/\bsubsequent to\b/i, 'say "after"'],
+  [/\bin order to\b/i, 'just "to"'],
+  [/\bin the event that\b/i, 'say "if"'],
+  [/\bdue to the fact that\b/i, 'say "because"'],
+  [/\b(?:whilst|amongst)\b/i, 'say "while" and "among"'],
+  [/\b(?:thus|hence|therefore)\b/i, 'say "so", or start the sentence with the consequence'],
+  [/\bapproximately\b/i, 'say "about"'],
+  [/\bnumerous\b/i, 'say "many"'],
+  [/\bsufficient(?:ly)?\b/i, 'say "enough"'],
+  // "confirmed" is one of Solana's three commitment levels, alongside
+  // processed and finalized. Using "confirm" loosely for "check" puts a
+  // reserved word on an unrelated idea, in a book that teaches the levels.
+  [/\bconfirms?\b(?! that a supermajority)/i,
+    'say "check": "confirmed" is a commitment level in this book, not a synonym for checking'],
+];
+
+// Reduce a manuscript line to the prose a reader reads, so both checks above
+// count what is on the page rather than the markup around it.
+function toProse(line) {
+  return line
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ") // figures carry their own captions
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/`[^`]*`/g, "CODE")
+    .replace(/[*_]{1,2}/g, "");
+}
+
+// Split prose into sentences without breaking on the abbreviations and
+// decimals this manuscript is full of: 0.3, $165.50, 25 slots (about 10s),
+// e.g., i.e.
+function toSentences(text) {
+  const dot = "\u0000"; // stands in for a period that does not end a sentence
+  const masked = text
+    .replace(/\b(e\.g|i\.e|etc|vs|Mr|Mrs|Dr|Inc|St|No|Fig)\./gi, `$1${dot}`)
+    .replace(/(\d)\.(\d)/g, `$1${dot}$2`);
+  return masked
+    .split(/(?<=[.!?])["')\]]*\s+(?=["'(“]?[A-Z0-9])/)
+    .map((sentence) => sentence.split(dot).join(".").trim())
+    .filter(Boolean);
+}
+
+for (const file of [...new Set(files)]) {
+  let inFence = false;
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, index) => {
+      if (/^\s*```/.test(line)) {
+        inFence = !inFence;
+        return;
+      }
+      if (inFence) return;
+
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("|")) return;
+
+      // Blockquote and list markers are not part of the sentence.
+      const body = toProse(trimmed)
+        .replace(/^>\s*/, "")
+        .replace(/^(?:[-*]|\d+\.)\s+/, "");
+      if (!body || body.startsWith("#")) return;
+
+      for (const [pattern, reason] of wordinessRules) {
+        if (pattern.test(body)) {
+          failures += 1;
+          console.error(`${file}:${index + 1}: ${reason}\n    ${trimmed.slice(0, 160)}`);
+        }
+      }
+
+      for (const sentence of toSentences(body)) {
+        const words = sentence.split(/\s+/).length;
+        if (words <= sentenceWordLimit) continue;
+        failures += 1;
+        console.error(
+          `${file}:${index + 1}: ${words}-word sentence (limit ${sentenceWordLimit}); split it at the colon or semicolon already in it\n    ${sentence.slice(0, 160)}`,
+        );
+      }
+    });
+}
+
 // Figure checks: the mechanically checkable Visual Language conventions.
 // Rounded corners are reserved for accounts and drawn at one radius, the
 // only fade level is 0.3, address dots have white centers, and seed labels

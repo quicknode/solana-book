@@ -25,4 +25,4 @@ Rent is small, but it is somebody's, and the design rule is simple: **whoever wa
 - Every financial product is a small state machine: draw it before writing any handler, name every state and transition, and make sure every participant can get their money out of every state.
 - One handler, one transition, guarded by state and not just by signer; an exit empties the vault, closes the accounts, and sends the rent home to whoever paid it.
 
-Hold a program's state machine in your head and the rest of this part slots into place: the arithmetic governs what the transitions compute, offchain truth governs which transitions the outside world may trigger, the adversary attacks the transitions you forgot to guard, and testing means driving the machine down every path, especially the exits.
+Hold a program's state machine in your head and the rest of this part slots into place. The arithmetic governs what the transitions compute, and offchain truth governs which transitions the outside world may trigger. The adversary attacks the transitions you forgot to guard, and testing means driving the machine down every path, especially the exits.
