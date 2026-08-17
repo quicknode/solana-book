@@ -32,7 +32,7 @@ There is also **testnet**, where future versions of the Solana software itself a
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the one setting that decides which Solana computer your code is talking to, so moving work from localnet to devnet to mainnet is a change of configuration rather than of code. The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
-Alice's SOL is devnet SOL: think of it as the pretend money from a board game, which spends exactly like the real thing inside the game and buys nothing outside it. It cost her nothing: the `solana airdrop` command, or the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), sends free devnet SOL to any address, and Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC. Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
+Alice's SOL is devnet SOL: think of it as the pretend money from a board game, which spends exactly like the real thing inside the game and buys nothing outside it. It cost her nothing: devnet SOL and devnet USDC are given away free, to any address that asks.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
 
 ## Receiving Needs No Signature, Spending Does
 
@@ -110,7 +110,7 @@ A **wallet** is a key pair being used this way, with the private key stored some
 
 ## Accounts Store Data, Not Just SOL
 
-Alice's account holds a balance and nothing else, and so does Bob's. That is the smallest an account gets. An account in full is some data with an address, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and every record a financial program keeps. (The "nearly" is State Compression, a technique for storing bulk data offchain with onchain proofs; none of the financial state in this book uses it.) A financial program's whole ledger is a set of accounts.
+Alice's account holds a balance and nothing else, and so does Bob's. That is the smallest an account gets. An account in full is some data with an address, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and every record a financial program keeps.[^state-compression] A financial program's whole ledger is a set of accounts.
 
 In a program, the data is a Rust struct; on the chain, it is bytes, with a lamport balance and an **owner program** that can change this account: users (or other programs) invoke that program to modify the account. Alice's account is the simplest case: no data to speak of, a lamport balance that *is* her SOL, and the System Program as its owner, which is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
@@ -161,3 +161,7 @@ Two payments toured every building block the rest of the book uses:
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
 - Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a key nor seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
+
+[^faucets]: The `solana airdrop` command sends devnet SOL, as does the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana). Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC.
+
+[^state-compression]: The "nearly" is State Compression, a technique for storing bulk data offchain with onchain proofs. None of the financial state in this book uses it.
