@@ -108,12 +108,41 @@ const chapterPaths = [...toc.matchAll(/\]\(((?!https?:)[^)#]+\.md)\)/g)]
 
 const idForPath = (path) => "ch-" + path.replace(/\.md$/, "").replace(/[^a-z0-9]+/gi, "-");
 
+// Footnotes are written in the syntax GitHub renders: a [^label] call in the
+// prose, and a [^label]: line at the foot of the chapter carrying the note.
+// Paged.js sets a note at the bottom of whatever page its call lands on, and
+// it finds the note by looking where the call is, so the note's text is
+// spliced back in at the call site as a span the stylesheet floats. The
+// definition line itself is dropped: it is a place to write the note, not a
+// place it is printed.
+const footnoteCall = /\[\^([^\]\s]+)\]/g;
+const footnoteDefinition = /^\[\^([^\]\s]+)\]:[ \t]*(.*)$\n?/gm;
+
+function inlineFootnotes(markdown, path) {
+  const notes = new Map();
+  const prose = markdown.replace(footnoteDefinition, (whole, label, text) => {
+    if (notes.has(label)) throw new Error(`${path}: footnote [^${label}] is defined twice`);
+    notes.set(label, text.trim());
+    return "";
+  });
+  const used = new Set();
+  const withNotes = prose.replace(footnoteCall, (whole, label) => {
+    if (!notes.has(label)) throw new Error(`${path}: footnote [^${label}] has no definition`);
+    used.add(label);
+    return `<span class="footnote">${notes.get(label)}</span>`;
+  });
+  for (const label of notes.keys()) {
+    if (!used.has(label)) throw new Error(`${path}: footnote [^${label}] is defined but never called`);
+  }
+  return withNotes;
+}
+
 // Rewrite intra-book links to in-document anchors, and mark FIGURE
 // placeholders so the stylesheet can box them.
-function prepareMarkdown(markdown) {
-  return markdown
+function prepareMarkdown(markdown, path) {
+  return inlineFootnotes(markdown, path)
     .replace(/\*\*\[FIGURE: ([^\]]+)\]\*\*/g, '<div class="figure-placeholder">FIGURE: $1</div>')
-    .replace(/\]\(((?:\.\.\/)?(?!https?:)[^)#]+\.md)(#[^)]*)?\)/g, (whole, path) => "](#" + idForPath(path.replace(/^\.\.\//, "")) + ")");
+    .replace(/\]\(((?:\.\.\/)?(?!https?:)[^)#]+\.md)(#[^)]*)?\)/g, (whole, link) => "](#" + idForPath(link.replace(/^\.\.\//, "")) + ")");
 }
 
 const cleanTitle = (raw) => raw.replace(/[*_`]/g, "");
@@ -211,7 +240,7 @@ const sections = chapterPaths.map((path) => {
   }));
   let htmlSubIndex = 0;
   const htmlWithCode = marked
-    .parse(prepareMarkdown(markdown), { mangle: false, headerIds: false })
+    .parse(prepareMarkdown(markdown, path), { mangle: false, headerIds: false })
     .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
     // Inline SVG figures so the single-file HTML needs no external assets;
     // the image's alt text becomes the printed caption.
@@ -503,6 +532,50 @@ table p { margin: 0; text-align: left; }
 figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: ${TEXT_WIDTH_IN}in; }
 figure svg { width: 100%; height: auto; }
 figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
+/* Footnotes. A note is an aside a reader can take or leave, so it is set at
+   the foot of the page its call sits on, under a short rule and two points
+   smaller than the text: small enough that the eye passes over it while
+   reading the measure, large enough to read when the eye goes looking. Paged.js
+   moves the span out of the flow and into the page's footnote area. Numbering
+   runs from 1 through the whole book rather than restarting each chapter. */
+.footnote {
+  float: footnote;
+  font-size: 9pt;
+  line-height: 1.3;
+  /* The measure a note is set to is short and its text is small, so justifying
+     it would open rivers of white space between the words. */
+  text-align: left;
+  hyphens: none;
+  margin-bottom: 0.2em;
+}
+/* The rule above the notes is painted as a background rather than drawn as a
+   border, so it can be a third of the measure rather than all of it. The
+   footnote module sizes the area from this element's margins, padding and
+   borders; a background costs no height, and anything the module cannot
+   measure gets clipped off the bottom of the page. */
+.pagedjs_footnote_content {
+  margin-top: 0.16in;
+  padding-top: 0.1in;
+  background-image: linear-gradient(#999, #999);
+  background-size: 1.2in 0.5pt;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+/* The call is the superscript number in the text, the marker is the number in
+   front of the note itself. Paged.js will set the call with
+   font-variant-position where the browser claims to support it, which leaves
+   the number full size in a face with no superscript figures, so the size and
+   the raise are set here instead. */
+::footnote-call {
+  content: counter(footnote);
+  font-variant-position: normal;
+  vertical-align: super;
+  font-size: 0.62em;
+  line-height: 0;
+}
+::footnote-marker {
+  content: counter(footnote-marker) ". ";
+}
 .figure-placeholder {
   border: 0.75pt dashed #888;
   padding: 0.45em 0.6em;
