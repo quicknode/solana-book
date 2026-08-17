@@ -13,7 +13,7 @@ Financial products built on Solana have properties no traditional rail offers:
 - **Everyone reads the same accounts.** A traditional trade lands in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
 - **Money is programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
 - **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Card payments take roughly 1.5% to 3.5% of each sale, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and 20% at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A fee that ignores the amount is a different kind of fee from one that scales with it, and it changes which products are worth building at all.
-- **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real world assets, ie equities, bonds, commodities, real estate, exotics.[^rwa-scope] In addition Solana is one of the most active places to trade traditional "crypto" assets like BTC and SOL.[^btc-scope]
+- **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] In addition Solana is one of the most active places to trade traditional "crypto" assets like BTC and SOL.[^btc-scope]
 - **Distribution is the deployment.** A traditional fund spends months and a chain of intermediaries reaching its investors: an exchange listing, market makers, brokerage platform approvals, each a gatekeeper with its own cost and lead time. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
 
 Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
@@ -30,7 +30,7 @@ In this book you'll learn how each of the classic financial products actually wo
 
 ## Why Write a Book in the Age of AI?
 
-An LLM can write a Solana program on request, and we fully expect you to use an AI to do exactly that - this book includes a companion AI skill, introduced below, to help you do this correctly.
+An LLM can write a Solana program on request, and we fully expect you to use an AI to do exactly that - this book includes a companion AI plugin, introduced below, to help you do this correctly.
 
 However **no AI can understand a program on your behalf.** The value of this book is the knowledge it leaves in your head: how financial products exist as Solana programs, so you can design your own programs, understand their implementation, incentives and trust decisions, and have confidence in what you have built. After reading it, you will be able to:
 
@@ -51,7 +51,7 @@ Framework-specific code is kept in the companion repository. Where code appears 
 
 ## Corrections Are Welcome, and Expected
 
-Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [thesolanabook.com](https://thesolanabook.com). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck at exactly the wrong moment, we could love to hear it, and contributors are credited by name.
+Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [thesolanabook.com](https://thesolanabook.com). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck at exactly the wrong moment, we would love to hear it, and contributors are credited by name.
 
 ## Prerequisites
 
@@ -67,7 +67,7 @@ The diagrams throughout the book share one set of conventions, and each conventi
 
 The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to money (the arithmetic, offchain truth, the adversary, testing, and admin power).
 
-**Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a 'smart contract' or 'protocol'. Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine. These programs have not been drawn and explained side by side in one place before.
+**Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine. These programs have not been drawn and explained side by side in one place before.
 
 Real incidents appear throughout the book in boxed **War Story** sections. History does not go stale, which makes these among the most durable pages in the book. None of them are told to dunk on the teams involved - rather, they are here so you recognize the same shape in your own code before it costs you.
 
@@ -75,9 +75,9 @@ To keep the money easy to track, every character starts every chapter with the s
 
 Like _TCP/IP Illustrated_, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit.
 
-## How this book was produced
+## How This Book Was Produced
 
-It is reasonable for readers to be concerned about AI slop. This book is the culmination of three years of work: the visual mechanism used to describe Solana accounts and their changes, and the order and mechanisms of introducing Solana clusters, transactions, instructions and the Escrow program was originally conceived for the Professional Education Program at Solana Foundation. All Financal Programs other than Escrow were created as videos for Quicknode, and this book originally began as transcriptions of that video content. The book was edited and reviewed by hand. Claude Fable 5 and Opus 4.8, and Opus 5 were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state. Quicknode stand by the contents of _Building Financial Software on Solana_.
+It is reasonable for readers to be concerned about AI slop. This book is the culmination of three years of work. The visual mechanism that describes Solana accounts and their changes, and the order in which clusters, transactions, instructions and the escrow program are introduced, were conceived for the Professional Education Program at Solana Foundation. Every financial program other than the escrow was first made as a video for Quicknode, and this book began as transcriptions of that video content. The book was edited and reviewed by hand. Claude Fable 5, Opus 4.8 and Opus 5 were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state. Quicknode stands by the contents of _Building Financial Software on Solana_.
 
 ## Where to Start, Depending on What You Came For
 
@@ -88,7 +88,7 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 
 ## The Glossary
 
-All technical and financial vocabulary this book uses is defiend in the Glossary. If a term in a chapter surprises you, look there.
+All technical and financial vocabulary this book uses is defined in the Glossary. If a term in a chapter surprises you, look there.
 
 [^remittance-scope]: If your own transfers have always been domestic, or between wealthy countries, that upper figure will look inflated. The World Bank prices every corridor quarterly at [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org): in the third quarter of 2025 thirteen corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%.
 
