@@ -161,6 +161,40 @@ for (const file of [...new Set(files)]) {
     });
 }
 
+// Footnote check: every [^label] call in a chapter has a [^label]: definition
+// at the foot of the same file, and every definition is called. The PDF build
+// splices a note into the text at its call, so a call with nothing behind it
+// prints as literal brackets and a note nobody calls never prints at all.
+// Labels are file-scoped, because the number a reader sees is assigned at
+// layout and the label is only how the two halves find each other.
+for (const file of [...new Set(files)]) {
+  const source = readFileSync(file, "utf8");
+  const defined = new Map();
+  for (const match of source.matchAll(/^\[\^([^\]\s]+)\]:/gm)) {
+    if (defined.has(match[1])) {
+      failures += 1;
+      console.error(`${file}: footnote [^${match[1]}] is defined twice`);
+    }
+    defined.set(match[1], false);
+  }
+  // A definition line carries the label in the same shape as a call, so count
+  // calls in the prose that is left once the definitions are taken out.
+  const prose = source.replace(/^\[\^[^\]\s]+\]:.*$/gm, "");
+  for (const match of prose.matchAll(/\[\^([^\]\s]+)\]/g)) {
+    if (!defined.has(match[1])) {
+      failures += 1;
+      console.error(`${file}: footnote [^${match[1]}] is called but never defined`);
+      continue;
+    }
+    defined.set(match[1], true);
+  }
+  for (const [label, called] of defined) {
+    if (called) continue;
+    failures += 1;
+    console.error(`${file}: footnote [^${label}] is defined but never called`);
+  }
+}
+
 // Sentence length. Not a style preference: past about forty-five words a
 // reader has to hold too many clauses open to reach the verb, and every one
 // of the sentences this rule first caught was a list that had been glued into
@@ -203,6 +237,8 @@ const wordinessRules = [
 // count what is on the page rather than the markup around it.
 function toProse(line) {
   return line
+    .replace(/^\[\^[^\]\s]+\]:\s*/, "") // a note is linted as the prose it is
+    .replace(/\[\^[^\]\s]+\]/g, "") // a footnote call is a number on the page
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ") // figures carry their own captions
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/`[^`]*`/g, "CODE")
