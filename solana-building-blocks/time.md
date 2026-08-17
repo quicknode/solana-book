@@ -20,7 +20,7 @@ The perpetual futures venue does the same for funding, storing `cumulative_fundi
 
 ## Deriving the Current Slot Time When You Need It
 
-Multiplying a slot count by a remembered duration is the one piece of arithmetic in this chapter the protocol can invalidate underneath you. Solana has shortened the slot before and has a staged plan to shorten it further, published at [Solana's reduced slot times page](https://solana.com/upgrades/reduced-slot-times).
+Multiplying a slot count by a remembered duration is the one piece of arithmetic in this chapter the protocol can invalidate underneath you. Solana has shortened the slot before and has a staged plan to shorten it further.[^slot-times]
 
 A shorter slot pulls the two uses of that arithmetic in opposite directions. A freshness window sized in slots gets stricter: a 150-slot window refuses more prices than it used to, which costs availability and never safety. A rate expressed per slot accrues more often, and that one is silent. An annual rate divided by a fixed slots-per-year number has a slot duration baked into it, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was. The lending market carries that divisor as `slots_per_year`, a config value its owner can retune, for exactly this reason.
 
@@ -132,3 +132,5 @@ Every program in Part II that touches time, and the clock it settled on.
 - Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
+
+[^slot-times]: The stages, and how far each one has got, are published at [solana.com/upgrades/reduced-slot-times](https://solana.com/upgrades/reduced-slot-times).

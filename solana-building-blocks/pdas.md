@@ -4,7 +4,7 @@ You have been using PDAs since the Tokens chapter. Every wallet's token balance 
 
 Generalize that and you have the mechanism. A **program derived address** (PDA) is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: it tries one extra byte after another, called the **bump**, until the result lands off the curve where keys live. Programs usually store the bump they found, so nobody has to search for it again. Only the program whose ID derived the address can "sign" as the PDA, and what that really means gets its own boxout below.
 
-The Associated Token Program made one choice of seeds for one job: where a wallet's balance of a given token lives. Every other program picks seeds for its own records and gets the same three properties, which is why **PDAs are how Solana programs store data**. Taken together, a program's PDAs behave like a **key/value store**: the seeds are the key, and the account's data is the value. ("Key" here means *identifier*, the same word a database would use; it has nothing to do with public or private keys.) Every program in this book keeps its state this way:
+The Associated Token Program made one choice of seeds for one job: where a wallet's balance of a given token lives. Every other program picks seeds for its own records and gets the same three properties, which is why **PDAs are how Solana programs store data**. Taken together, a program's PDAs behave like a **key/value store**: the seeds are the key, and the account's data is the value.[^key-meaning] Every program in this book keeps its state this way:
 
 - The escrow stores each offer at an address made from `"offer"` + the maker's address + an ID.
 - The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contributor"` + the fundraiser + the backer's address.
@@ -38,3 +38,5 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 - The associated token accounts you already use are PDAs of the Associated Token Program, and a program's own records work the same way with seeds it chooses.
 - A program's PDAs form a **key/value store**: the seeds are the identifier, the account's data is the value.
 - Seeds make data findable and relationships verifiable, and PDA authority over a vault is what "the program holds the funds" means.
+
+[^key-meaning]: "Key" here means *identifier*, the same word a database would use. It has nothing to do with public or private keys.
