@@ -94,4 +94,4 @@ All technical and financial vocabulary this book uses is defined in the Glossary
 
 [^rwa-scope]: [app.rwa.xyz](https://app.rwa.xyz) prices tokenized assets by class and by network, and [defillama.com/rwa/chains](https://defillama.com/rwa/chains) ranks the chains.
 
-[^btc-scope]: Most bitcoin still trades on centralized exchanges, and Blockworks Research puts Solana under 1% of BTC spot volume worldwide. Against the other chains it is a different picture, near $80M a day to their $422M between them, on about 6,700 tokenized BTC. Both figures are theirs, at [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin) and [blockworks.com/analytics/solana/solana-tokens-on-solana/solana-spot-volume-for-majors-compared-to-cexs-and-other-chains](https://blockworks.com/analytics/solana/solana-tokens-on-solana/solana-spot-volume-for-majors-compared-to-cexs-and-other-chains).
+[^btc-scope]: Blockworks Research put BTC spot volume on Solana near $80M in a day in August 2026, on about 6,700 tokenized BTC, at [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin).
