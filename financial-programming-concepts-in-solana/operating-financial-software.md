@@ -17,7 +17,7 @@ The mechanics are cheap: LiteSVM runs the real program in-process in millisecond
 
 ## Proving Goes Further Than Testing
 
-A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the discipline above, driving every code path with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like [Kani](https://github.com/model-checking/kani) explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
+A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the discipline above, driving every code path with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like Kani[^kani] explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
 
 The escrow program in the companion repository ships a set of Kani harnesses that do precisely this for its verifiable core:
 
@@ -35,7 +35,7 @@ Before any program in this book's genre touches mainnet, get a **second-opinion 
 
 A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write: a program always executes at the optimistic edge of the chain, and if its block loses, the transaction did not happen and every account it touched goes back with it.
 
-The code that reads the chain has to answer that question anyway, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. Solana gives a reader three answers to choose between, its [commitment levels](https://docs.anza.xyz/consensus/commitments):
+The code that reads the chain has to answer that question anyway, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. Solana gives a reader three answers to choose between, its commitment levels:[^commitment-levels]
 
 | Commitment | What it means | What can still happen to it |
 | --- | --- | --- |
@@ -66,3 +66,7 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
 
 The through-line of the whole chapter, one last time. The arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.
+
+[^kani]: Kani is a Rust model checker from the AWS-backed model-checking project, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
+
+[^commitment-levels]: The three levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
