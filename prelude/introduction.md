@@ -90,8 +90,8 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 
 All technical and financial vocabulary this book uses is defined in the Glossary. If a term in a chapter surprises you, look there.
 
-[^remittance-scope]: The World Bank prices every corridor quarterly at [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org): in the third quarter of 2025 thirteen corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%.
+[^remittance-scope]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. Source: The World Bank, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 
 [^rwa-scope]: [app.rwa.xyz](https://app.rwa.xyz) prices tokenized assets by class and by network, and [defillama.com/rwa/chains](https://defillama.com/rwa/chains) ranks the chains.
 
-[^btc-scope]: Blockworks Research put BTC spot volume on Solana near $80M in a day in August 2026, on about 6,700 tokenized BTC, at [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin).
+[^btc-scope]: Blockworks Research put BTC spot volume on Solana near $80M in a day in August 2026. See [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin).
