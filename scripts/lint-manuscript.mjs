@@ -71,7 +71,7 @@ const rules = [
 // Allowed exceptions, matched against the full line.
 const exceptions = [
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
-  /other blockchains call the same thing a smart contract/, // the Introduction's contrastive mention
+  /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
