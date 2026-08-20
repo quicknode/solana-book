@@ -105,4 +105,4 @@ The concepts you now have:
 
 The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The perpetual futures chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.
 
-[^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, and with wherever the aggregators are routing that week, so read it there rather than trusting a number printed here.
+[^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, and with wherever the aggregators are routing that week.
