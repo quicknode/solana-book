@@ -47,7 +47,7 @@ Integer division nearly always leaves a remainder, and that remainder is **dust*
 
 This is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale. An attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of the *Adversary* chapter shows exactly that attack succeeding in production.
 
-> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed. The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is a security boundary, and "closest" is never the answer for money.
+> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed.[^spl-lending] The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is a security boundary, and "closest" is never the answer for money.
 
 Three things follow from that table.
 
@@ -93,3 +93,5 @@ Rates themselves are policy, not arithmetic, but one curve shows up everywhere: 
 - Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
 - Assert invariants after the math, and know the degenerate values where an invariant can hold vacuously.
 - One accumulation factor compounds interest for every borrower at once, and a utilization curve is monetary policy in fifteen lines of integer math.
+
+[^spl-lending]: Neodyme published the bug, the exploit, and the coordinated disclosure in December 2021, at [neodyme.io/en/blog/lending_disclosure](https://neodyme.io/en/blog/lending_disclosure/). The $2.6B is the total value locked across the forks at the time, not a loss: the fix shipped before anyone else found it.
