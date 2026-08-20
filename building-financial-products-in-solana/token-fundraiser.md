@@ -22,7 +22,7 @@ The program calls the fundraiser's creator the **maker**: Maria here, and her in
 
 The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the entire terms sheet:
 
-- `maker` and `mint_to_raise`: who is raising, and in what token (USDC here; the program accepts any mint, including Token Extensions mints, because every account is declared through the token interface).
+- `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so degenerate dust raises cannot exist.
 - `current_amount`: the running total the program itself has counted, which is deliberately not the same number as the vault's balance.
 - `time_started` and `duration`: the clock's unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
@@ -126,3 +126,5 @@ The concepts you now have, on top of the escrow's:
 - **Name the closer for every account.** The stranded contributor receipts after a successful raise are this chapter's honest omission, and the habit that catches it.
 
 An escrow held two strangers to one deal. The fundraiser holds eleven strangers to one condition, and paid for it with exactly one new mechanism: a deadline that flips which exit is open. Every program in the rest of this part is this same shape under increasing pressure: a vault owned by a data account, terms frozen at entry, and an exit from every state for every participant's money. The next chapter opens the shape to a crowd and asks the question this one never had to: who decides what happened in the real world?
+
+[^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
