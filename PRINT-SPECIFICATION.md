@@ -71,15 +71,19 @@ Every figure is an SVG, inlined into the build so the HTML has no external asset
 
 ## Cover
 
-The cover is authored separately as a print-ready PDF at `assets/cover.pdf` and rasterized into the build at 300dpi. Vector covers rendered unreliably through the PDF pipeline, so it is deliberately raster.
+The cover is authored separately as a print-ready PDF at `assets/cover.pdf` and rasterized into the build at 300dpi. Vector covers rendered unreliably through the PDF pipeline, so the page the book carries is deliberately raster.
 
-Its art is 1800 x 2330, an aspect of 0.7727 against the page's 0.7678. The 0.6% difference is invisible on screen, but **the cover has not been redrawn for this trim**. A file going to a printer needs the cover re-exported at 7.44 x 9.69 with bleed, and with a spine width computed from the final page count and the paper stock, which is a number only the printer can give.
+Its art is 744 x 969, an aspect of 0.7678, which is the page's exactly, so nothing is stretched. That the two match is the whole requirement on the file: `.cover img` pins both dimensions, so art of any other proportion is squashed to fit rather than fitted inside the page, and the squash is silent. Absolute size does not matter, because the build scales page one to 2232 pixels wide whatever the MediaBox says; only the ratio does.
+
+The drawing is vector throughout and its type is outlined, so the file embeds no fonts and nothing in it depends on a face being found at build time. The 300dpi rasterization is the only thing that limits it. An export from Figma carrying a layer blur, a non-normal blend mode, or a placed photograph would not have that property, because Figma flattens those regions to bitmap at frame resolution and its PDF export has no scale multiplier; such an export needs its frame scaled to 2232 x 2907 first, so the flattened parts land at 300dpi.
+
+**The cover is still not press-ready.** A file going to a printer needs bleed, and a spine width computed from the final page count and the paper stock, which is a number only the printer can give. Both belong in a separate export alongside the back cover, not in `assets/cover.pdf`, which is the front cover at trim and nothing else.
 
 ## US Letter
 
 `--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite the print build. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
 
-It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 185 pages against 233, because the larger page carries more.
+It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 205 pages against 234, because the larger page carries more.
 
 ## Building It
 
@@ -100,4 +104,4 @@ The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cov
 
 The build needs a Chromium binary, found at `/opt/pw-browsers/chromium` or wherever `CHROMIUM_PATH` points.
 
-At the time of writing the manuscript runs to **233 pages** with the cover, which puts it in KDP's 151 to 300 page band for gutter purposes. Every figure is drawn, so that number will move with editing rather than with artwork.
+At the time of writing the manuscript runs to **234 pages** with the cover, which puts it in KDP's 151 to 300 page band for gutter purposes. Every figure is drawn, so that number will move with editing rather than with artwork.
