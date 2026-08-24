@@ -130,7 +130,7 @@ Every account sits at a 32-byte **address**, usually shown base58-encoded. Addre
 - **PDAs** (program derived addresses). A PDA is computed from a program's address (its **program ID**) and some chosen seeds, and has no private key at all, so no signature for it can ever exist. PDAs can still own accounts, and the program that derived one can act as it by presenting the seeds; the PDAs chapter explains how, and why Solana keeps the word "sign" for something that involves no signature. The escrow program you will build in this book stores each offer at a PDA derived from the maker's address and an offer ID.
 - **Built-in addresses.** The System Program, the two token programs, and the sysvars sit at addresses that were *chosen* rather than computed: somebody picked a readable byte string, and the runtime treats that exact address as the thing it names. There is no private key and no derivation to redo, so the address is a constant your program compares against. `SysvarC1ock11111111111111111111111111111111` is the Clock the Time chapter reads. Some of these byte strings happen to decode to points on the curve and some do not, and it buys nobody anything either way: no private key is known for any of them.
 
-![Only the first has a private key behind it; the other two are derived, and nobody can sign for them.](figures/address-types.svg)
+![Only the first has a private key behind it; the other two are derived, and nobody can use a private key to sign for them.](figures/address-types.svg)
 
 Because addresses are how everything is found, financial programs lean on *derivable* addresses: put the market's pair, the user's key, or the offer's ID into the derivation, and anyone can compute where the account must be, no lookup table required.
 
