@@ -77,7 +77,7 @@ For financial software, atomicity is a primitive you design with. Settlement ris
 
 > **Flash loans are atomicity turned into credit.** A **flash loan** borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
-![A flash loan is atomicity turned into credit: three instructions across two programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
+![A flash loan is atomicity turned into credit: four instructions across three programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
 
 The budget for all this is metered in **compute units** per transaction, and the meter shapes financial design directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill, and why work gets consolidated everywhere you look.
 
