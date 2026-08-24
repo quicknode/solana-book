@@ -20,7 +20,7 @@ That drawing sets a convention this book keeps for every figure that follows. **
 
 ## There Is More Than One Solana Computer
 
-The curve in the figure is labeled **Solana Devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate world.
+The curve in the figure is labeled **Solana devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate world.
 
 | Cluster      | Purpose                                       | Assets have value?  | Where it runs                |
 | ------------ | --------------------------------------------- | ------------------- | ---------------------------- |
