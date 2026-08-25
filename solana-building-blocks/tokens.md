@@ -55,7 +55,7 @@ The extensions that matter for financial products:
 
 When you build on a token you did not issue, read its extensions first: several of them change what "I transferred X" means.
 
-![A transfer through the Token Extensions Program: a fee peeled off, a transfer hook running the issuer's program, and 99 arriving where 100 was sent.](figures/transfer-through-extensions.svg)
+![A transfer through the Token Extensions Program: a fee peeled off, a transfer hook running the issuer's program, and 99 arriving where 100 was sent.](figures/transfer-using-transfer-hook-extension.svg)
 
 ## What You Learnt
 
