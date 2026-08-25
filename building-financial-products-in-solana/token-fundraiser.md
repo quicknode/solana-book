@@ -8,7 +8,7 @@ The program lives at `finance/token-fundraiser` in the companion repository. It 
 
 The whole design hangs on two numbers recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two futures. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler simply refuses to run.
 
-This is the state machine discipline from Financial Programming Concepts in Solana in its purest form. The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors.
+The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors: the state machine discipline of the *Financial Programming Concepts in Solana* chapter, at its purest.
 
 ![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
 

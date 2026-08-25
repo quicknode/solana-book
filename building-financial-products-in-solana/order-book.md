@@ -114,7 +114,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 
 **Wider intermediates.** The bid lock and the gross fill amount both multiply three u64 values (price × quantity × lot size), which can genuinely overflow 64 bits with high-decimal mints. The program promotes to u128 for the multiplication and narrows back down afterward, so the failure mode is an explicit error on an amount too large to transfer, never silently wrong arithmetic.
 
-**The fee rounds up.** Fee = gross × fee basis points ÷ 10,000, computed with ceiling division. Rounding down would hand up to one minor unit of quote back per fill, and one minor unit per fill is not small when an attacker can manufacture thousands of tiny fills; rounding against the user, in the program's favor, closes the leak. A defensive check that the fee never exceeds the gross backs the arithmetic up. The rounding section of Financial Programming Concepts in Solana is this paragraph, generalized.
+**The fee rounds up.** Fee = gross × fee basis points ÷ 10,000, computed with ceiling division. Rounding down would hand up to one minor unit of quote back per fill, and one minor unit per fill is not small when an attacker can manufacture thousands of tiny fills; rounding against the user, in the program's favor, closes the leak. A defensive check that the fee never exceeds the gross backs the arithmetic up. The rounding section of the *Arithmetic of Money* chapter is this paragraph, generalized.
 
 **Price improvement is computed, not assumed.** When a taker bid locks at its own limit but fills at a better resting price, the difference between the lock and the gross is credited back to the taker's unsettled quote, calculated per fill with the same u128 care.
 
