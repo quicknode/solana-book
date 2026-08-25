@@ -38,7 +38,7 @@ An account that claims to be "the vault for this market" either derives from the
 
 ## PDA Authority Makes Custody Programmatic
 
-A vault whose authority is a PDA is a vault whose funds move only along the code paths the program defines. When people say that "the program holds the funds", they mean that the funds are stored in a token account that the program controls, and that moving them means invoking the program's instruction handlers. That arrangement is the foundation of every escrow, pool, and market in the book.
+A vault whose authority is a PDA is a vault whose funds move only along the code paths the program defines. When people say that "the program holds the funds", they mean that the funds are stored in a token account that the program controls, and that moving them means invoking the program's instruction handlers. 
 
 > **"Signing" with a PDA is not cryptographic signing.** No digital signature is ever produced for a PDA, because there is no private key to produce one; nothing like the cryptographic proof behind Alice's and Bob's transactions exists here. This book still says "sign with the PDA", because that is how Solana itself uses the word, in the runtime and in every library you will touch. When you read about "signing for a PDA", here or anywhere else, translate it to something plainer: the program specifies the seeds of the PDA that controls the token account, the runtime recomputes the derivation, and the movement is allowed.
 
@@ -49,4 +49,5 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 - A **PDA** is derived from a program's ID and seeds and has no private key; only the deriving program can "sign" as it, by presenting the seeds.
 - The associated token accounts you already use are PDAs of the Associated Token Program, and a program's own records work the same way with seeds it chooses.
 - A program's PDAs form a **key/value store**: the seeds are the identifier, the account's data is the value.
-- Seeds make data findable and relationships verifiable, and PDA authority over a vault is what "the program holds the funds" means.
+- Seeds make data findable and relationships verifiable.
+- PDAs can own token accounts, this is what "the program holds the funds" means.
