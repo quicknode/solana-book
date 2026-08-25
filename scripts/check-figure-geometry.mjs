@@ -198,7 +198,11 @@ for (const file of files) {
         .filter((g) => g.firstElementChild?.tagName === "g" && holds(g))
         .map(box)[0];
       const ruled = [...svg.querySelectorAll('line[stroke="#888"]')].some(holds);
-      return { ...b, glyph, ruled };
+      // The heading only counts as one when it is the box's whole content: a
+      // second label means the box is a list, and rule 6 leaves it alone.
+      const labels = [...svg.querySelectorAll("text")].filter(holds);
+      const heading = labels.length === 1 ? box(labels[0]) : undefined;
+      return { ...b, glyph, heading, ruled };
     });
 
     // Faded address dots that the cluster curve reaches, and whether an opaque
@@ -364,12 +368,18 @@ for (const file of files) {
 
   // 6. A box faded down to its heading has nothing below the title, so the
   // icon and title sit in the middle of the box rather than hugging its top.
+  // Both halves are measured. The icon and the title are placed by separate
+  // numbers, so a figure copied from a neighbour can carry a centred icon over
+  // a title that sits low, which is how 173 of these boxes came to be wrong.
   for (const a of fig.accounts) {
-    if (a.ruled || !a.glyph) continue;
-    const off = (a.glyph.y1 + a.glyph.y2) / 2 - (a.y1 + a.y2) / 2;
-    if (Math.abs(off) > 0.75) {
-      fail(`box collapsed to its heading at ${at(a)} sits ${off.toFixed(1)} off centre; ` +
-           `centre the icon and title on the box's middle`);
+    if (a.ruled) continue;
+    for (const [part, what] of [[a.glyph, "icon"], [a.heading, "title"]]) {
+      if (!part) continue;
+      const off = (part.y1 + part.y2) / 2 - (a.y1 + a.y2) / 2;
+      if (Math.abs(off) > 0.75) {
+        fail(`box collapsed to its heading at ${at(a)} sits its ${what} ${off.toFixed(1)} off centre; ` +
+             `centre the icon and title on the box's middle`);
+      }
     }
   }
 
