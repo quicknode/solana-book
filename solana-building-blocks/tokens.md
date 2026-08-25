@@ -40,7 +40,7 @@ A **token account** holds one owner's balance of a particular type of token, and
 
 The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the mint, and token program used for that token mint. Put in Alice's address and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a program knows where Alice's USDC lives without asking her, and how account constraints can verify that a supplied token account really is hers.
 
-An ATA is a **PDA**: a derived address that sits off the curve, with no private key, so no signature for it can ever exist and only the owning program can move what it holds. The PDAs chapter explains the mechanism.
+An ATA is a **PDA**: a derived address that sits off the curve, with no private key, so no signature for it can ever exist and only the owning program can move what it holds. The *PDAs* chapter explains the mechanism.
 
 ![Every ATA is a token account, and what makes it an ATA is only its address: the one anyone can derive from the owner, the token program, and the mint.](figures/token-accounts-and-atas.svg)
 
