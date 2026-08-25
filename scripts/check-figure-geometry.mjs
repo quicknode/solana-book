@@ -118,7 +118,7 @@ for (const file of files) {
     // An amount label states a quantity of some asset. A step-numbered handler
     // name ("4. borrow_obligation_liquidity()") only looks like one, and a
     // label wrapped over two lines is still one amount.
-    const UNITS = /(USDC|ACME|AJAX|SOL|LP|NVDAx|TSLAx|SPCXx|shares|lamports|USD)\b/i;
+    const UNITS = /(USDC|ACME|SOL|LP|NVDAx|TSLAx|SPCXx|shares|lamports|USD)\b/i;
     const hasAmount = (raw) => {
       const body = raw.trim().replace(/^\d+\.\s*/, "");
       return /\d/.test(body) && (UNITS.test(body) || /[+−-]?[\d,.]+\s+to\s+\w/.test(body));
