@@ -1,12 +1,12 @@
 # Chapter 16: The Prop AMM
 
-The constant-product chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: *proprietary* trading is trading the firm's own money.
+The *Constant-Product AMM* chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: *proprietary* trading is trading the firm's own money.
 
 Lifinity pioneered the model on Solana; by early 2026, venues like SolFi, HumidiFi, ZeroFi, Tessera, and Obric were trading among the highest volumes on the network.[^prop-amm-share] You have probably never visited any of them, because they have no user interfaces. Their flow arrives through Jupiter, the aggregator that routes each swap to whichever venue quotes best, and a firm quoting live oracle prices with its own inventory usually quotes best. The program lives at `finance/prop-amm` in the companion repository.
 
 ## The Oracle Is the Price, the Spread Is the Fee
 
-A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana. The operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the order book chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
+A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana. The operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the *Order Book Exchange* chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
 
 Two consequences follow immediately, and both are absences:
 
@@ -23,11 +23,11 @@ No LP mint: there are no depositors to issue receipts to. No fee ledger: the spr
 
 ## The Market Maker Opens the Market and Stocks It
 
-Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. The market trades NVDAx, the NVIDIA stock the order book chapter traded, against USDC, and the oracle quotes NVDAx at $165.
+Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's, which is what *proprietary* means. The market trades NVDAx, the NVIDIA stock the *Order Book Exchange* chapter traded, against USDC, and the oracle quotes NVDAx at $165.
 
 Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
-Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the constant-product chapter needed exists to protect depositors from each other, and there is exactly one depositor.
+Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the *Constant-Product AMM* chapter needed exists to protect depositors from each other, and there is exactly one depositor.
 
 ## A Buyer Trades at the Ask
 
@@ -35,7 +35,7 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn:
 
-- **The oracle read**, with the same checks the offchain-truth chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit.
+- **The oracle read**, with the same checks the *Offchain Truth* chapter demanded: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit.
 - **The ask**: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer.
 - **Her output**, floored: 825.825 USDC of her 1,000 buys exactly 5 NVDAx.
 
@@ -82,9 +82,9 @@ The unit conversion deserves one honest sentence: prices arrive at the oracle's 
 
 ## The Failure Modes: What Attacks a Market Maker
 
-- **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates sit in front of every single swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The perpetual futures chapter will meet the same enemy with leverage multiplying it.
+- **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates sit in front of every single swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter will meet the same enemy with leverage multiplying it.
 - **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No require! can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
-- **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the perpetual futures chapter makes, with one difference worth noticing: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
+- **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the *Perpetual Futures* chapter makes, with one difference worth noticing: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 
 ## Testing Considerations
@@ -103,6 +103,6 @@ The concepts you now have:
 - **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the whole book.
 - **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from the *Adversary* chapter return "not applicable" because each of them needs a mechanism this design does not have.
 
-The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The perpetual futures chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.
+The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The *Perpetual Futures* chapter takes the same oracle discipline somewhere far more dangerous: the same feed, the same staleness paranoia, but with leverage, other people's collateral, and positions that stay open after the transaction ends.
 
 [^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, and with wherever the aggregators are routing that week.

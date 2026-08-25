@@ -8,7 +8,7 @@
   <circle cx="524" cy="84.0725" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="516" y="46.2989" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(524,50.2989)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="544" y="65.3" font-size="10.5" font-weight="bold">USDC mint</text>
+  <text x="544" y="60.8" font-size="10.5" font-weight="bold">USDC mint</text>
   </g>
   <g>
   <circle cx="100" cy="37.3167" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -58,7 +58,7 @@
   <text x="134" y="131.056" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="116" y="137.056" width="92" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(124,141.056)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="144" y="156.06" font-size="8.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <text x="144" y="150.81" font-size="8.5" font-weight="bold">Bob&#8217;s USDC</text>
   </g>
   <circle cx="300" cy="49.34" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -74,7 +74,7 @@
   <text x="234" y="139.135" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="216" y="145.135" width="92" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(224,149.135)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="244" y="164.13" font-size="8.5" font-weight="bold">Carol&#8217;s USDC</text>
+  <text x="244" y="158.88" font-size="8.5" font-weight="bold">Carol&#8217;s USDC</text>
   </g>
   <circle cx="400" cy="61.4033" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -90,7 +90,7 @@
   <text x="334" y="151.585" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="316" y="157.585" width="92" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(324,161.585)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="344" y="176.59" font-size="8.5" font-weight="bold">Dave&#8217;s USDC</text>
+  <text x="344" y="171.34" font-size="8.5" font-weight="bold">Dave&#8217;s USDC</text>
   </g>
   <circle cx="500" cy="78.8932" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -106,7 +106,7 @@
   <text x="434" y="169.573" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="416" y="175.573" width="92" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(424,179.573)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="444" y="194.57" font-size="8.5" font-weight="bold">Maria&#8217;s USDC</text>
+  <text x="444" y="189.32" font-size="8.5" font-weight="bold">Maria&#8217;s USDC</text>
   </g>
   <g opacity="0.3">
   <circle cx="124" cy="195.556" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -124,7 +124,7 @@
   <text x="234" y="216.135" font-size="7" letter-spacing="0.3" fill="#555">LP SHARE MINT</text>
   <rect x="216" y="222.135" width="92" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(224,226.135)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="244" y="241.13" font-size="8.5" font-weight="bold">Carol&#8217;s shares</text>
+  <text x="244" y="235.88" font-size="8.5" font-weight="bold">Carol&#8217;s shares</text>
   </g>
   <g>
   <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -161,7 +161,7 @@
   <text x="530" y="396.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;AUTHORITY&#8221; + POOL</text>
   <rect x="512" y="402.37" width="120" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(520,406.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="540" y="421.37" font-size="10.5" font-weight="bold">pool authority</text>
+  <text x="540" y="416.87" font-size="10.5" font-weight="bold">pool authority</text>
   </g>
   <g>
   <circle cx="520" cy="463.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -178,7 +178,7 @@
   <text x="530" y="550.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LP_MINT&#8221; + POOL</text>
   <rect x="512" y="556.37" width="120" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(520,560.37)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="540" y="575.37" font-size="10.5" font-weight="bold">LP share mint</text>
+  <text x="540" y="570.87" font-size="10.5" font-weight="bold">LP share mint</text>
   </g>
   <g>
   <rect x="16" y="500" width="192" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
