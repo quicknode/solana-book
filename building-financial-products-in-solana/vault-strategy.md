@@ -58,7 +58,7 @@ Bob, the second investor, deposits 480 USDC of his standard wallet. He is not ea
 
 ## The Manager's Fee Arrives by Dilution
 
-Traditional funds sell assets to pay the management fee. This program does what large onchain fund products do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees()` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be quietly worsened. The *Escrow* chapter snapshotted a fee per offer; the same principle, at fund scale.
+Traditional funds sell assets to pay the management fee. This program does what large onchain fund products do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees()` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be quietly worsened. The escrow chapter snapshotted a fee per offer; the same principle, at fund scale.
 
 ![Fee by dilution: the share supply grows by 13.5 shares into Maria's account, every other holder's slice of the same pie shrinks proportionally, and no tokens leave any vault.](figures/vault-fee-dilution.svg)
 
@@ -105,4 +105,4 @@ The concepts you now have:
 - **NAV as the share price.** Value every vault with a fresh feed or refuse to run; a valuation that can skip an asset is a discount for whoever exploits it.
 - **Fees by dilution, snapshotted.** The fee mints shares against everyone proportionally, accrues by time rather than the manager's diligence, and has no setter, so the deal investors joined under cannot be quietly worsened.
 
-The *Perpetual Futures* chapter closes the book by combining everything: vaults, shares, oracles, funding, margin, and liquidation, in the one program that uses all of it at once.
+The perpetual futures chapter closes the book by combining everything: vaults, shares, oracles, funding, margin, and liquidation, in the one program that uses all of it at once.

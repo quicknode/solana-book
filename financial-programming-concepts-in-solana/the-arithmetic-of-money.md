@@ -20,7 +20,7 @@ Programs calculate in **minor units**, the smallest denomination of each token: 
 
 Two conventions build on minor units.
 
-Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the *Order Book Exchange* chapter shows the construction).
+Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the Order Book chapter shows the construction).
 
 Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so 1.05 is stored as 1_050_000_000_000_000_000. The conventional constant is 10^18, and a value at that scale is called a **WAD**. The convention is borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard; 18 decimals because that is what Ether and most ERC-20 tokens use. It has since become the usual word for 18-decimal fixed point on every chain, Solana included. The scale is chosen large enough that the smallest value you care about (one slot's interest) does not truncate to zero, and small enough that intermediates stay inside u128.
 
@@ -77,7 +77,7 @@ One warning from the same file: an invariant that can hold vacuously is not an i
 
 ## One Accumulation Factor Compounds Interest for Every Borrower
 
-Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **accumulation factor**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New factor = old factor × (1 + rate per slot × elapsed slots). Instead of updating every debt, the market stores each borrower's principal and grows the one shared factor; a live debt is that principal multiplied by the current factor. Interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The lending example calls the field `borrow_accumulation_factor`. The *Lending and Borrowing* chapter runs this machine in production; the same shape prices any share of a growing pool.
+Interest is multiplication repeated over time, and the naive implementation, looping over every borrower every slot, is impossible onchain. The standard solution is the **accumulation factor**: one fixed-point number per market that starts at 1.0 and grows by the current rate each time anyone touches the market. New factor = old factor × (1 + rate per slot × elapsed slots). Instead of updating every debt, the market stores each borrower's principal and grows the one shared factor; a live debt is that principal multiplied by the current factor. Interest compounds across updates automatically, and no tokens move until someone actually repays or withdraws. The lending example calls the field `borrow_accumulation_factor`. The Lending chapter runs this machine in production; the same shape prices any share of a growing pool.
 
 Two numerical points complete the picture:
 
