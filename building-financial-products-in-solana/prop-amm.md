@@ -6,7 +6,7 @@ Lifinity pioneered the model on Solana; by early 2026, venues like SolFi, Humidi
 
 ## The Oracle Is the Price, the Spread Is the Fee
 
-A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the offchain-truth machinery from Financial Programming Concepts in Solana. The operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the *Order Book Exchange* chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
+A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts the whole arrangement. The price comes from an **oracle feed**, the machinery from the *Offchain Truth* chapter. The operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the *Order Book Exchange* chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
 
 Two consequences follow immediately, and both are absences:
 
@@ -47,7 +47,7 @@ Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 pe
 
 Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored**, the mirror image of the ask's ceiling, and he receives exactly 824.175 USDC.
 
-Look at the two numbers together. Buying 5 NVDAx cost 825.825; selling them back returned 824.175. The difference, 1.65 USDC, is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
+A round trip costs 1.65 USDC: buying 5 NVDAx cost 825.825 and selling them back returned 824.175. That difference is the round-trip spread, and it is the venue's entire revenue model, sitting in the quote vault as slightly-more-USDC rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
 ## The Oracle Moves and the Quote Moves With It
 
