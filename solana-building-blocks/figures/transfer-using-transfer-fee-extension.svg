@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 254" font-family="Gelasio, Georgia, serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">A token transfer using the &#8220;transfer hook&#8221; extension</text>
-  <defs><marker id="transfer-ext-i" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="transfer-ext-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker><marker id="transfer-ext-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 238" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">A token transfer using the &#8220;transfer fee&#8221; extension</text>
+  <defs><marker id="transfer-ext-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker><marker id="transfer-ext-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <circle cx="412" cy="63.1884" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -35,7 +35,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="295.42" y="148.87" font-size="11" fill="#1e7a3c" font-weight="bold">100 USDC</text>
   <path d="M 400,114.423 L 400,156" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-g)"/>
   <text x="320" y="196" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint&#8217;s transfer fee withholds 1 USDC for the issuer</text>
-  <text x="320" y="212" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint&#8217;s transfer hook runs the issuer&#8217;s program on the way</text>
-  <text x="320" y="238" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions change what &#8220;I transferred 100&#8221; means</text>
+  <text x="320" y="222" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions change what &#8220;I transferred 100&#8221; means</text>
   <g class="coin" transform="translate(320,162)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
