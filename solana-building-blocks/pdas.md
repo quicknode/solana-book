@@ -12,7 +12,7 @@ As a result:
 - A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it.
 - No private key exists for the result, so tokens can only leave the account via the program that owns the token account.
 
-These rules apply to any **program derived address**, or PDA. A PDA is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live.  Only the program whose ID derived the address can "sign" as the PDA - note that what "sign" really means gets its own boxout below.
+These rules apply to any **program derived address**, or PDA. A PDA is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so nobody has to search for it again. Only the program whose ID derived the address can "sign" as the PDA - what "sign" really means gets its own boxout below.
 
 **PDAs are how Solana programs store data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs and gets the same three properties. A program's PDAs behave like a **key/value store**: the seeds are the key, and the account's data is the value. Every program in this book keeps its state this way:
 
@@ -38,11 +38,11 @@ An account that claims to be "the vault for this market" either derives from the
 
 ## PDA Authority Makes Custody Programmatic
 
-A vault whose authority is a PDA is a vault whose funds move only along the code paths the program defines. When people say that "the program holds the funds", they mean that the funds are stored in a token account that the program controls, and that moving them means invoking the program's instruction handlers. 
+A vault whose authority is a PDA is a vault whose funds move only along the code paths the program defines. When people say that "the program holds the funds", they mean that the funds are stored in a token account that the program controls, and that moving them means invoking the program's instruction handlers.
 
 > **"Signing" with a PDA is not cryptographic signing.** No digital signature is ever produced for a PDA, because there is no private key to produce one; nothing like the cryptographic proof behind Alice's and Bob's transactions exists here. This book still says "sign with the PDA", because that is how Solana itself uses the word, in the runtime and in every library you will touch. When you read about "signing for a PDA", here or anywhere else, translate it to something plainer: the program specifies the seeds of the PDA that controls the token account, the runtime recomputes the derivation, and the movement is allowed.
 
-![Seeds plus the program ID derive an address off the curve, where no private key exists. The offer account holds a vault, and the escrow program moves what is in it by presenting the same seeds: that is the entire act of "signing" as a PDA.](figures/pda-derivation.svg)
+![Seeds plus the program ID derive an address off the curve, where no private key exists. Alice's offer holds a vault, and the escrow program moves what is in it by specifying the same seeds: that is the entire act of "signing" as a PDA.](figures/pda-derivation.svg)
 
 ## What You Learnt
 
