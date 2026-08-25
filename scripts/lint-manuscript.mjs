@@ -124,6 +124,7 @@ for (const file of [...new Set(files)]) {
 // Only the distinctive multi-word titles are checked. Time, Tokens, PDAs and
 // Escrow are ordinary words far too often to match mechanically, so the
 // convention covers them and this check does not.
+
 const chapterTitles = [
   "Core Building Blocks of Solana",
   "Arithmetic of Money",
@@ -158,6 +159,31 @@ for (const file of [...new Set(files)]) {
         );
         break;
       }
+    });
+}
+
+// "Financial Programming Concepts in Solana" heads a section of five chapters,
+// and is also chapter 6's title. A reference to it lands the reader on a
+// section rather than a subject: thirteen of them meant the *Adversary* or
+// *Arithmetic of Money* chapter. It is not in the title list above because the
+// message there would tell an author to call a five-chapter section a chapter.
+const sectionName = "Financial Programming Concepts in Solana";
+const sectionMention = new RegExp(`(?<!\\*)\\b${sectionName}\\b`);
+const sectionLink = new RegExp(`\\[${sectionName}\\]\\(`);
+
+for (const file of [...new Set(files)]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, index) => {
+      // The heading naming the section, and the Introduction's reading path,
+      // which links the section's landing page rather than referring to it.
+      if (/^#/.test(line) || sectionLink.test(line)) return;
+      if (!sectionMention.test(line)) return;
+      failures += 1;
+      console.error(
+        `${file}:${index + 1}: name the chapter that holds the material; ` +
+          `"${sectionName}" is a section of five chapters (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
+      );
     });
 }
 
@@ -213,6 +239,18 @@ const sentenceWordLimit = 45;
 // all read as bureaucratic in a generic style guide and are exact here (a
 // transaction executes, a supplier earns yield, a maker provides liquidity, a
 // program signs by presenting seeds), so they are not on the list.
+// A paragraph that opens by asserting something about an unnamed antecedent
+// makes the reader carry it across the break: "This is the only stable policy"
+// was "keeping the dust in the pool is the only stable policy". Mid-paragraph
+// the antecedent is a clause away and reads fine, so only the opener is
+// checked. "That is why ..." is a connective, not an assertion, and passes.
+const openerRules = [
+  [/^(?:This|That|It) (?:is|was) (?:the|a|an) /,
+    "name what the sentence is about: a paragraph cannot open by pointing back"],
+  [/(?:^|\. )Look (?:at|again|once)\b/,
+    "state what the reader would see: \"a round trip costs 1.65 USDC\", not \"look at the two numbers\""],
+];
+
 const wordinessRules = [
   [/\butili[sz]e[sd]?\b/i, 'say "use"'],
   [/\bcommence[sd]?\b/i, 'say "start"'],
@@ -279,7 +317,7 @@ for (const file of [...new Set(files)]) {
         .replace(/^(?:[-*]|\d+\.)\s+/, "");
       if (!body || body.startsWith("#")) return;
 
-      for (const [pattern, reason] of wordinessRules) {
+      for (const [pattern, reason] of [...openerRules, ...wordinessRules]) {
         if (pattern.test(body)) {
           failures += 1;
           console.error(`${file}:${index + 1}: ${reason}\n    ${trimmed.slice(0, 160)}`);
