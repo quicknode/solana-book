@@ -42,7 +42,7 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 
 > **"Signing" with a PDA is not cryptographic signing.** No digital signature is ever produced for a PDA, because there is no private key to produce one; nothing like the cryptographic proof behind Alice's and Bob's transactions exists here. This book still says "sign with the PDA", because that is how Solana itself uses the word, in the runtime and in every library you will touch. When you read about "signing for a PDA", here or anywhere else, translate it to something plainer: the program specifies the seeds of the PDA that controls the token account, the runtime recomputes the derivation, and the movement is allowed.
 
-![Seeds plus the program ID derive an address off the curve, where no private key exists. Alice's offer holds a vault, and the escrow program moves what is in it by specifying the same seeds: that is the entire act of "signing" as a PDA.](figures/pda-derivation.svg)
+![Seeds plus the program ID derive an address off the curve, where no private key exists. Alice's offer holds a vault, and the escrow program moves the tokens inside the vault by specifying the same seeds: that is what "signing as a PDA" means.](figures/pda-derivation.svg)
 
 ## What You Learnt
 
