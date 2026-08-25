@@ -1,56 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 337" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 312" font-family="Gelasio, Georgia, serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Seeds derive the address</text>
   <defs><marker id="pda-derivation-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <circle cx="24" cy="101.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="96.0" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OFFER&#8221; +</text>
-  <text x="34" y="105.0" font-size="7" letter-spacing="0.3" fill="#555">MAKER&#8217;S ADDRESS +</text>
-  <text x="34" y="114.0" font-size="7" letter-spacing="0.3" fill="#555">ID</text>
+  <circle cx="140" cy="38.6" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
-  <rect x="16" y="120" width="170" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(24,125)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="44" y="136" font-size="10.5" font-weight="bold">the offer account</text>
-  <line x1="24" y1="141" x2="176" y2="141" stroke="#888" stroke-width="0.8"/>
-  <text x="24" y="153" font-size="9.5">maker: Alice</text>
-  <text x="24" y="165" font-size="9.5">token_mint_a: USDC</text>
-  <text x="24" y="177" font-size="9.5">token_mint_b: TSLAx</text>
+  <rect x="24" y="44.9" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(32,49.9)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="52" y="60.9" font-size="10.5" font-weight="bold">Alice&#8217;s Account</text>
+  <line x1="32" y1="65.9" x2="140" y2="65.9" stroke="#888" stroke-width="0.8"/>
+  <text x="32" y="76.9" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <text x="101" y="198" font-size="10" fill="#444" text-anchor="middle" font-style="italic">off the curve: no private key exists</text>
-  <circle cx="238" cy="101.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="248" y="96.0" font-size="7" letter-spacing="0.3" fill="#555">OFFER&#8217;S ADDRESS +</text>
-  <text x="248" y="105.0" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="248" y="114.0" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <circle cx="330" cy="52.5" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
-  <rect x="230" y="120" width="160" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(238,125)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="258" y="136" font-size="10.5" font-weight="bold">vault: the offer&#8217;s USDC</text>
-  <line x1="238" y1="141" x2="380" y2="141" stroke="#888" stroke-width="0.8"/>
-  <text x="238" y="153" font-size="9.5" font-weight="bold">250 &#8594; 0 USDC</text>
-  <text x="238" y="165" font-size="9" fill="#444" font-style="italic">authority: the offer account</text>
+  <rect x="188" y="58.8" width="150" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(196,63.8)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="216" y="74.8" font-size="10.5" font-weight="bold">the escrow program</text>
+  <line x1="196" y1="79.8" x2="328" y2="79.8" stroke="#888" stroke-width="0.8"/>
+  <text x="196" y="90.8" font-size="9" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">take_offer()</text>
   </g>
-  <circle cx="560" cy="92.7" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="616" cy="108.3" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
-  <rect x="418" y="99" width="150" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(426,104)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
-  <text x="446" y="115" font-size="10.5" font-weight="bold">the escrow program</text>
-  <line x1="426" y1="120" x2="558" y2="120" stroke="#888" stroke-width="0.8"/>
-  <text x="426" y="131" font-size="9" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">take_offer()</text>
+  <rect x="500" y="114.6" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(508,119.6)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="528" y="130.6" font-size="10.5" font-weight="bold">Bob&#8217;s Account</text>
+  <line x1="508" y1="135.6" x2="616" y2="135.6" stroke="#888" stroke-width="0.8"/>
+  <text x="508" y="146.6" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <circle cx="438" cy="231.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="448" y="226.0" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-  <text x="448" y="235.0" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="448" y="244.0" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <circle cx="24" cy="125.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="120.0" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OFFER&#8221; +</text>
+  <text x="34" y="129.0" font-size="7" letter-spacing="0.3" fill="#555">MAKER&#8217;S ADDRESS +</text>
+  <text x="34" y="138.0" font-size="7" letter-spacing="0.3" fill="#555">ID</text>
   <g>
-  <rect x="430" y="250" width="150" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(438,255)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="458" y="266" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
-  <line x1="438" y1="271" x2="570" y2="271" stroke="#888" stroke-width="0.8"/>
-  <text x="438" y="282" font-size="9.5" font-weight="bold">0 &#8594; 250 USDC</text>
+  <rect x="16" y="144" width="170" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,149)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="160" font-size="10.5" font-weight="bold">the offer account</text>
+  <line x1="24" y1="165" x2="176" y2="165" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="177" font-size="9.5">maker: Alice</text>
+  <text x="24" y="189" font-size="9.5">token_mint_a: USDC</text>
+  <text x="24" y="201" font-size="9.5">token_mint_b: TSLAx</text>
   </g>
-  <path d="M 300,178 C 320,215 360,245 424,262" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#pda-derivation-a)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="336" y="222" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">250 USDC</text>
-  <g class="coin" transform="translate(354,218)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <text x="320" y="308" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the escrow program presents the same seeds, and the runtime lets it move the vault&#8217;s tokens</text>
-  <text x="320" y="326" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">key-pair addresses live on the curve; PDAs float off it</text>
+  <text x="101" y="222" font-size="10" fill="#444" text-anchor="middle" font-style="italic">off the curve: no private key exists</text>
+  <circle cx="238" cy="125.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="248" y="120.0" font-size="7" letter-spacing="0.3" fill="#555">OFFER&#8217;S ADDRESS +</text>
+  <text x="248" y="129.0" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="248" y="138.0" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <g>
+  <rect x="230" y="144" width="160" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(238,149)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="258" y="160" font-size="10.5" font-weight="bold">vault: the offer&#8217;s USDC</text>
+  <line x1="238" y1="165" x2="380" y2="165" stroke="#888" stroke-width="0.8"/>
+  <text x="238" y="177" font-size="9.5" font-weight="bold">250 &#8594; 0 USDC</text>
+  <text x="238" y="189" font-size="9" fill="#444" font-style="italic">authority: the offer account</text>
+  </g>
+  <circle cx="438" cy="190" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="448" y="184.5" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="448" y="193.5" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="448" y="202.5" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <g>
+  <rect x="430" y="208" width="150" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(438,213)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="458" y="224" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <line x1="438" y1="229" x2="570" y2="229" stroke="#888" stroke-width="0.8"/>
+  <text x="438" y="240" font-size="9.5" font-weight="bold">0 &#8594; 250 USDC</text>
+  </g>
+  <path d="M 300,200 C 336,222 380,230 424,232" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#pda-derivation-a)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="350" y="228" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">250 USDC</text>
+  <g class="coin" transform="translate(368,224)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <text x="320" y="280" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the escrow program presents the same seeds, and the runtime lets it move the vault&#8217;s tokens</text>
+  <text x="320" y="298" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">key-pair addresses live on the curve; PDAs float off it</text>
 </svg>
