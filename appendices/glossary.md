@@ -176,7 +176,7 @@ The periodic payment between longs and shorts on a perpetual futures market that
 
 ### halt
 
-A stop in block production, which Solana prefers to running two conflicting histories. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the Time chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
+A stop in block production, which Solana prefers to running two conflicting histories. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the *Time* chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
 
 ### health / health factor
 
