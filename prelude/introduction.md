@@ -22,7 +22,7 @@ Open networks use these properties for permissionless markets anyone can join. T
 
 Some technical books die with the release they document. A smaller number live for decades. _TCP/IP Illustrated_ is still the book network engineers hand each other, thirty years on. _The UNIX and Linux System Administration Handbook_ has outlasted every operating system release it ever mentioned. _Mastering Bitcoin_ remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way _TCP/IP Illustrated_ drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long term knowledge for building financial products on Solana.
 
-Solana is a fast-moving space: validator framework releases, library versions, and tools churn constantly. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
+Solana is a fast-moving space: network releases, framework versions, chain constants, and tools churn frequently. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
 _Building Financial Software on Solana_ teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
