@@ -167,7 +167,7 @@
   <text x="482" y="585.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + STRATEGY</text>
   <rect x="464" y="591.37" width="168" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,595.37)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="492" y="605.87" font-size="10.5" font-weight="bold">share mint</text>
+  <text x="492" y="610.37" font-size="10.5" font-weight="bold">share mint</text>
   </g>
 </g>
 <g transform="translate(-224,-271.37)">
