@@ -22,7 +22,7 @@ Open networks use these properties for permissionless markets anyone can join. T
 
 Some technical books die with the release they document. A smaller number live for decades. _TCP/IP Illustrated_ is still the book network engineers hand each other, thirty years on. _The UNIX and Linux System Administration Handbook_ has outlasted every operating system release it ever mentioned. _Mastering Bitcoin_ remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way _TCP/IP Illustrated_ drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long term knowledge for building financial products on Solana.
 
-Solana is a fast-moving space: validator framework releases, library versions, and tools churn constantly. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
+Solana is a fast-moving space: network releases, framework versions, chain constants, and tools churn frequently. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
 _Building Financial Software on Solana_ teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
@@ -77,7 +77,7 @@ Like _TCP/IP Illustrated_, this book teaches a way of thinking. Over time, you'l
 
 ## How This Book Was Produced
 
-It is reasonable for readers to be concerned about AI slop. This book is the culmination of three years of work. The visual mechanism that describes Solana accounts and their changes, and the order in which clusters, transactions, instructions and the escrow program are introduced, were conceived for the Professional Education Program at Solana Foundation. Every financial program other than the escrow was first made as a video for Quicknode, and this book began as transcriptions of that video content. The book was edited and reviewed by hand. Claude Fable 5, Opus 4.8 and Opus 5 were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state. Quicknode stands by the contents of _Building Financial Software on Solana_.
+This book was written and edited by hand. The visual mechanism that describes Solana accounts and their changes, and the order in which Solana concepts are introduced, were conceived for the Professional Education Program at Solana Foundation. Every financial program other than the escrow was first made as a video for Quicknode, and this book began as transcriptions of that video content. AI tools were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state. Quicknode stands by the contents of _Building Financial Software on Solana_.
 
 ## Where to Start, Depending on What You Came For
 
