@@ -27,7 +27,7 @@ Two roles run through this chapter, and the code names them the same way:
 - **Alice is the maker.** She creates the offer: 250 USDC for 1 TSLAx.
 - **Bob is the taker.** He accepts the offer as it stands.
 
-The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. Identical integers meaning completely different things is exactly why programs track each token's decimals instead of assuming them. The minor-units section of Financial Programming Concepts in Solana covers this in depth; escrow is where you first feel it.
+The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. Identical integers meaning completely different things is exactly why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth; escrow is where you first feel it.
 
 ## The Account Model
 
@@ -74,7 +74,7 @@ Alice is done. She can close her laptop.
 
 ### The Taker Takes the Offer
 
-Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of Financial Programming Concepts in Solana covers in full.
+Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
 
 Alice does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
@@ -130,7 +130,7 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in; the path where money goes to the wrong person is the one that matters.
 
-The testing section of Financial Programming Concepts in Solana builds the general method; this suite is the method at its smallest useful size. And escrow goes one rung further: the `kani-proofs` crate in the companion repository proves the conservation properties formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
+The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one rung further: the `kani-proofs` crate in the companion repository proves the conservation properties formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
 
 ## What You Learnt from Building the Escrow
 
@@ -144,4 +144,4 @@ The concepts you now have:
 - **An exit from every state.** `take_offer()` and `cancel_offer()` both drain and close everything, returning rent to whoever paid it.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
-That is the whole pattern, and you will now see it everywhere. The fundraiser in the next chapter is an escrow with many depositors and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome. Once you have built an escrow, everything else looks like an escrow.
+Every program after this one is an escrow with a different exit. The fundraiser in the next chapter is an escrow with many depositors and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome. Once you have built an escrow, everything else looks like an escrow.

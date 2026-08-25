@@ -66,7 +66,7 @@ payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
 For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 100 + 49 = **149 USDC**. Alice staked three times what Bob staked and won exactly three times the winnings. Carol staked 200 and receives nothing; had Backrooms won, she alone would have taken the entire 400-dollar losing side, minus the fee.
 
-The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last. This is the multiply-before-divide rule and the rounding-policy rule from Financial Programming Concepts in Solana, running in six lines of production arithmetic.
+The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last. This is the multiply-before-divide rule and the rounding-policy rule from the *Arithmetic of Money* chapter, running in six lines of production arithmetic.
 
 Two orderings in this handler do the security work:
 
@@ -106,7 +106,7 @@ Every checked operation maps to `MathOverflow`. There are no rates, no time, no 
 
 ## The Failure Modes: The Oracle Is a Person, and Everything Downstream of That
 
-- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by fat-finger. The program's design limits the damage to exactly that one decision (she cannot skim beyond the fee or redirect funds), but the decision is hers alone. This program is deliberately the simplest case; Financial Programming Concepts in Solana covers what it costs a trusted party to lie, and how to grow out of a single key.
+- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by fat-finger. The program's design limits the damage to exactly that one decision (she cannot skim beyond the fee or redirect funds), but the decision is hers alone. This program is deliberately the simplest case; the *Offchain Truth* chapter covers what it costs a trusted party to lie, and how to grow out of a single key.
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.
 - **Double claims** die because the bet account dies. There is no flag to desynchronize.
 - **Changing the game mid-play**: adding outcomes after betting starts is rejected; the fee is snapshotted per event.
