@@ -14,7 +14,7 @@ A mint does not just describe a type of token; it manufactures it. New tokens co
 
 The mint authority is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
-![The mint is a factory: new tokens exist only when the mint authority signs, burning reverses it, and an authority set to none seals the supply forever.](figures/mint-factory.svg)
+![The mint is a factory: new tokens exist only when the mint authority signs, and the supply and the holder’s balance rise together. AJAX is a fictional token from a fictional company.](figures/mint-factory.svg)
 
 ## Token Accounts Hold Tokens
 
