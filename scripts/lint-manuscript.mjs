@@ -124,13 +124,8 @@ for (const file of [...new Set(files)]) {
 // Only the distinctive multi-word titles are checked. Time, Tokens, PDAs and
 // Escrow are ordinary words far too often to match mechanically, so the
 // convention covers them and this check does not.
-//
-// "Financial Programming Concepts in Solana" names both a chapter and the
-// section holding five of them, which is why thirteen references pointed at
-// it while meaning the *Adversary* or *Arithmetic of Money* chapter. Naming a
-// section is not a chapter reference, so the title is checked like the rest.
+
 const chapterTitles = [
-  "Financial Programming Concepts in Solana",
   "Core Building Blocks of Solana",
   "Arithmetic of Money",
   "Offchain Truth",
@@ -158,16 +153,37 @@ for (const file of [...new Set(files)]) {
         // occurrence, including one still carrying its leading "The".
         const bare = new RegExp(`(?<!\\*)\\b(?:The )?${title}\\b`);
         if (!bare.test(line)) continue;
-        // A title that is a whole link's text is navigation, not a reference:
-        // the Introduction's reading path links each section's landing page.
-        // A prose reference keeps its italics inside the link brackets.
-        if (new RegExp(`\\[(?:The )?${title}\\]\\(`).test(line)) continue;
         failures += 1;
         console.error(
           `${file}:${index + 1}: a chapter reference reads "the *${title}* chapter" (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
         );
         break;
       }
+    });
+}
+
+// "Financial Programming Concepts in Solana" heads a section of five chapters,
+// and is also chapter 6's title. A reference to it lands the reader on a
+// section rather than a subject: thirteen of them meant the *Adversary* or
+// *Arithmetic of Money* chapter. It is not in the title list above because the
+// message there would tell an author to call a five-chapter section a chapter.
+const sectionName = "Financial Programming Concepts in Solana";
+const sectionMention = new RegExp(`(?<!\\*)\\b${sectionName}\\b`);
+const sectionLink = new RegExp(`\\[${sectionName}\\]\\(`);
+
+for (const file of [...new Set(files)]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, index) => {
+      // The heading naming the section, and the Introduction's reading path,
+      // which links the section's landing page rather than referring to it.
+      if (/^#/.test(line) || sectionLink.test(line)) return;
+      if (!sectionMention.test(line)) return;
+      failures += 1;
+      console.error(
+        `${file}:${index + 1}: name the chapter that holds the material; ` +
+          `"${sectionName}" is a section of five chapters (WRITING-PLAN.md)\n    ${line.trim().slice(0, 160)}`,
+      );
     });
 }
 
