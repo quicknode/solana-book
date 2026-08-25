@@ -2,7 +2,7 @@
 
 NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. By the end of this chapter you will have walked through one, end to end: how orders come in, how they rest, how they match, where the money waits, and how the operator collects fees.
 
-The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the Escrow chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement gated by who signed. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
+The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the *Escrow* chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement gated by who signed. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
 
 ## A Limit Order Is a Price You Refuse to Cross
 
@@ -84,7 +84,7 @@ Now the money moves, in the unsettled-balance style. Gross proceeds are 3 × 250
 
 ![Nothing transfers at match time: both sides get unsettled balances, and 1.875 USDC goes to the fee vault.](figures/order-book-match.svg)
 
-Notice who did nothing: Bob. Like Alice in the escrow chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
+Notice who did nothing: Bob. Like Alice in the *Escrow* chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
 
 ## Canceling Returns the Unfilled Lock
 
@@ -128,7 +128,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 
 ## The Failure Modes: Vault Swaps, Fake Makers, and Book Spam
 
-- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is `has_one` constraints binding every vault and mint on every instruction to the addresses recorded on the market at creation, and the test suite proves the attack fails. This is the same account-substitution attack the escrow chapter described, against a bigger program.
+- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is `has_one` constraints binding every vault and mint on every instruction to the addresses recorded on the market at creation, and the test suite proves the attack fails. This is the same account-substitution attack the *Escrow* chapter described, against a bigger program.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program re-derives the fills from its own book and verifies every supplied account against that plan: order ID, market, and owner all have to line up, or the transaction fails.
 - **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, which an attacker turns into a drain with thousands of tiny fills. Covered above; pinned by a test below.
 - **Book spam.** A full tree is a denial-of-service on everyone else's orders. Tick alignment, the minimum order size, the 20-open-orders-per-user cap, and the `OrderBookFull` check are all anti-spam walls, and each rejects with its own named error.
