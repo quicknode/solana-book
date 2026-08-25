@@ -13,8 +13,8 @@
   <text x="78" y="106" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">Alice&#8217;s address</text>
   <text x="78" y="122" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">a public key, on the curve:</text>
   <text x="78" y="137" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">Alice holds the private key</text>
-  <text x="232" y="135" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#555">SysvarC1ock111&#8230;</text>
-  <circle cx="222" cy="132" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="176" y="135" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#555">SysvarC1ock111&#8230;</text>
+  <circle cx="166" cy="132" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="158" y="140" width="128" height="50" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(166,145)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
@@ -26,10 +26,10 @@
   <text x="222" y="210" font-size="12.5" fill="#111" text-anchor="middle" font-weight="bold">a built-in address</text>
   <text x="222" y="226" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">chosen, not computed:</text>
   <text x="222" y="241" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">no private key and no seeds</text>
-  <text x="440" y="116" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OFFER&#8221; +</text>
-  <text x="440" y="125" font-size="7" letter-spacing="0.3" fill="#555">MAKER&#8217;S ADDRESS +</text>
-  <text x="440" y="134" font-size="7" letter-spacing="0.3" fill="#555">ID</text>
-  <circle cx="430" cy="121.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="368" y="116" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OFFER&#8221; +</text>
+  <text x="368" y="125" font-size="7" letter-spacing="0.3" fill="#555">MAKER&#8217;S ADDRESS +</text>
+  <text x="368" y="134" font-size="7" letter-spacing="0.3" fill="#555">ID</text>
+  <circle cx="358" cy="121.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="350" y="140" width="160" height="62" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(358,145)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
