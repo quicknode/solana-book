@@ -1,6 +1,6 @@
 # Chapter 2: The Core Building Blocks of Solana
 
-Nearly every generic introduction describes blockchain as a "shared ledger". This is vague: shared how, and with whom? Additonally, most of the a program's data is not a balance, and would not appear in a traditional accounting ledger.
+Nearly every generic introduction describes blockchain as a "shared ledger". This is vague: shared how, and with whom? Additionally, most of a program's data is not a balance, and would not appear in a traditional accounting ledger.
 
 Solana - or more specifically, Solana mainnet and devnet - is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
 
@@ -20,7 +20,7 @@ This figure is the first example of how this book shows people, programs and dat
 
 ## There Is More Than One Solana Computer
 
-The curve in the figure is labeled **Solana Devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can (and usually is) completely different to what appears at the same address in a different cluster.
+The curve in the figure is labeled **Solana devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
 
 | Cluster      | Purpose                                       | Assets have value?  | Where it runs                |
 | ------------ | --------------------------------------------- | ------------------- | ---------------------------- |
@@ -49,7 +49,7 @@ Alice wants to send Bob some SOL. The only way to change anything on this comput
 A transaction carries one or more **instructions**, and each instruction is input for a public function called an **instruction handler** that is part of an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve:
 
 - The **System Program** sits at a well-known address, and has instruction handlers to create accounts and transfer SOL.
-- The **Memo Program** sits at another, and has instruction handler that writes notes into the transaction log.
+- The **Memo Program** sits at another, and has an instruction handler that writes notes into the transaction log.
 - The programs in this book each get an address of their own the day you deploy them.
 
 ![Programs sit on the same curve as people: the System Program and the Memo Program each have an address, and each exposes its instruction handlers.](figures/programs-on-the-curve.svg)
@@ -83,7 +83,7 @@ For financial software, atomicity is a primitive you design with. Settlement ris
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
-![A flash loan is atomicity turned into credit: three instructions across two programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
+![A flash loan is atomicity turned into credit: four instructions across three programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
 
 The budget for work done by instructions is metered in **compute units** per transaction, and you pay for CUs directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill - later, all those funds can be collected in a single step - and why work gets consolidated everywhere you look.
 
@@ -126,29 +126,29 @@ In a program, the data is a struct; on the chain, it is bytes, with a lamport ba
 
 ![One account, dissected: an address, an owner program, a lamport balance, and data bytes that the owning program reads as a Rust struct.](figures/account-dissected.svg)
 
-Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. Close the account and the lamports and refunded. A tiny part of Alice's SOL balance is therefore used by the space her account occupies, and why a large account costs more to keep than a small one.
+Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is held by the space her account occupies, which is why a large account costs more to keep than a small one.
 
 The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts [^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. 
 
-Like the programs on your regular computer and the files they work with, Solana programs use their instruction handlers to read the accounts they are handed, and write new values back. This split - logic in program accounts and state in data accounts - is what makes financial state easy to read. To know a market's condition you read its accounts, and the only way to change those accounts are the owning program's instruction handlers.
+Like the programs on your regular computer and the files they work with, Solana programs use their instruction handlers to read the accounts they are handed, and write new values back. This split - logic in program accounts and state in data accounts - is what makes financial state easy to read. To know a market's condition you read its accounts, and the only way to change those accounts is through the owning program's instruction handlers.
 
 ## Addresses Come in Three Kinds
 
 Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in three kinds:
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
-- **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds - you'll learn more about these in the PDAs chapter. Since PDA addresses aren't public keys, they don't have private keys. 
-- **Built-in addresses.** The System Program, the two token programs, and the sysvars sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `SysvarC1ock11111111111111111111111111111111` is the Clock the Time chapter reads, `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` is the Token Extensions program. Some of these byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them.
+- **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds - you'll learn more about these in the *PDAs* chapter. Since PDA addresses aren't public keys, they don't have private keys. 
+- **Built-in addresses.** The System Program, the two token programs, and the sysvars sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads, `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` is the Token Extensions program. Some of these byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them.
 
-![Only the first has a private key behind it; the other two are derived, and nobody can sign for them.](figures/address-types.svg)
+![Only the first has a private key behind it; the other two are derived, and nobody can use a private key to sign for them.](figures/address-types.svg)
 
 ## Users Use the Token Program to Send Tokens to Each Other
 
-A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean a **stablecoin** a token that tracks the dollar one for one, , like **USDC**, typically backed by treasury bills or other assets tied to the country.
+A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean a **stablecoin**, a token that tracks the dollar one for one, like **USDC**, typically backed by treasury bills or other assets tied to the currency.
 
-SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the Tokens chapter covers mints properly.
+SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the *Tokens* chapter covers mints properly.
 
-Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two. Bob does not need to ask Alice where her USDC lives. Bob's wallet computes where Alice's USDC account must be, and sends the tokens there. The Tokens chapter covers token accounts properly.
+Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two. Bob does not need to ask Alice where her USDC lives. Bob's wallet computes where Alice's USDC account must be, and sends the tokens there. The *Tokens* chapter covers token accounts properly.
 
 So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
@@ -156,7 +156,7 @@ So Bob signs a transaction carrying one instruction: the **Token Program**'s `tr
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
-Bob's transfer instruction names every account it touches - Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. The consequence that shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specifiesd in an instruction in is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's - the validation section in *Financial Programming Concepts in Solana* chapter cover this in more detail.
+Bob's transfer instruction names every account it touches - Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. The consequence that shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's - the validation section of the *Adversary* chapter covers this in more detail.
 
 ## What You Learnt
 

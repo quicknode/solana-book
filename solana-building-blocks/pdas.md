@@ -1,6 +1,6 @@
 # Chapter 4: PDAs: How Solana Programs Store Data
 
-You have been using PDAs since the Tokens chapter. Every wallet's token balance in this book lives in an associated token account, and nobody ever generated that account's address: the Associated Token Program computes it from three seeds: 
+You have been using PDAs since the *Tokens* chapter. Every wallet's token balance in this book lives in an associated token account, and nobody ever generated that account's address: the Associated Token Program computes it from three seeds:
 
 - the owner's address
 - the mint
@@ -8,9 +8,9 @@ You have been using PDAs since the Tokens chapter. Every wallet's token balance 
 
 As a result:
 
- - Anyone can recompute this address, so a program can find Alice's USDC without asking her where it is. 
- - A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it. 
- - No private key exists for the result, so tokens can only leave the account via the program that owns the token account.
+- Anyone can recompute this address, so a program can find Alice's USDC without asking her where it is.
+- A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it.
+- No private key exists for the result, so tokens can only leave the account via the program that owns the token account.
 
 Generalize that and you have the mechanism. A **program derived address** (PDA) is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: it tries one extra byte after another, called the **bump**, until the result lands off the curve where keys live. Programs usually store the bump they found, so nobody has to search for it again. Only the program whose ID derived the address can "sign" as the PDA, and what that really means gets its own boxout below.
 
