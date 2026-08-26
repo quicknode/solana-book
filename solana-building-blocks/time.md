@@ -27,11 +27,11 @@ Nobody is quoted a rate per slot, so both programs convert. Divide an annual bor
 
 Multiply the slot count by the length of a slot in milliseconds. Nothing onchain reports that length today. The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day. Anza's Brennan Watt has said this is meant to change, and that these parameters will go onchain where any client can read them.[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
 
-Until it does, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are. An activated feature does not take effect straight away, so count it only once a full epoch, 432,000 slots, has passed since the slot it activated at. Dean Little's `check_slot_time.rs` is a working implementation, one function to pick the length and one to test a feature.[^check-slot-time]
+Until it does, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
 
-That gives the length the network intends. To measure what it delivered, divide the seconds since `epoch_start_timestamp` in the Clock sysvar by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division. The divisor is zero on the epoch's first slot and small for a while after. Offchain, call `getBlockTime` on two blocks a known distance apart and divide.[^get-block-time]
+That gives the time of a slot in milliseconds the network currently uses. Slots can run slower than that, and to measure the real average, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
 
-Better still, need neither. The measurement reads the validator-reported timestamp, so a handler that runs it hands the bendable clock a say in an accrual that counts slots to keep it out. A freshness window counted in slots needs no conversion at all. A rate with a slot time baked into it belongs in config, where a transaction can change it, which the section on a shortened slot covers.
+Better still, need neither. That measurement reads the validator-reported timestamp, the clock these accruals count slots to avoid, so running it inside a handler puts it back. A freshness window counted in slots needs no conversion at all. A rate with a slot time baked into it belongs in config, where a transaction can change it, which the section on a shortened slot covers.
 
 ## Timestamps Are Validator-Reported
 
