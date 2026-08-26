@@ -25,13 +25,13 @@ Nobody is quoted a rate per slot, so both programs convert. Divide an annual bor
 
 ## How to Turn Slots Into Seconds
 
-Multiply the slot count by the slot time. Nothing onchain tells a program what that is.
+Multiply the slot count by the length of a slot in milliseconds. Nothing onchain reports that length today. The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day. Anza's Brennan Watt has said this is meant to change: "longer term, we will put these parameters onchain so they are client queryable."[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
 
-The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day, and no sysvar reports the live figure. A program can work it out from two sysvars: take the seconds since `epoch_start_timestamp` from the Clock, and divide by the slots since this epoch began, which `EpochSchedule` gives you. Guard that division. The divisor is zero on the epoch's first slot and small for a while after. Offchain, call `getBlockTime` on two blocks a known distance apart and divide.[^get-block-time]
+Until it does, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are. Two rules make that check correct: a feature counts only after a full epoch of warmup from its activation slot, and a missing feature account never activated at all. Dean Little's `check_slot_time.rs` is a working implementation, one function to pick the length and one to test a feature.[^check-slot-time]
 
-Check before you copy any of that. It is the part of this chapter most likely to date, because a later runtime may report the slot time directly. Anza's documentation[^anza-docs] has the current milliseconds per slot, and says whether the runtime publishes it yet. The companion repository shows how these programs get the number today.
+That gives the length the network intends. To measure what it delivered, divide the seconds since `epoch_start_timestamp` in the Clock sysvar by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division. The divisor is zero on the epoch's first slot and small for a while after. Offchain, call `getBlockTime` on two blocks a known distance apart and divide.[^get-block-time]
 
-Better still, do not need it. The derivation reads the validator-reported timestamp, so a handler that runs it hands the bendable clock a say in an accrual that counts slots to keep it out. A freshness window counted in slots needs no conversion at all. A rate with a slot time baked into it belongs in config, where a transaction can change it, which the section on a shortened slot covers.
+Better still, need neither. The measurement reads the validator-reported timestamp, so a handler that runs it hands the bendable clock a say in an accrual that counts slots to keep it out. A freshness window counted in slots needs no conversion at all. A rate with a slot time baked into it belongs in config, where a transaction can change it, which the section on a shortened slot covers.
 
 ## Timestamps Are Validator-Reported
 
@@ -145,7 +145,7 @@ Every program in Part II that touches time, and the clock it settled on.
 - Three questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, and a real-world time you promised a person takes the wall clock. Three noes leave the slot count.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
-- A slot count converts to wall-clock time only at the current slot duration, which no sysvar reports today. Derive a per-slot rate from a slot time you measured, or better, from a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to obtain it.
+- A slot count converts to wall-clock time only at the current slot length, which nothing onchain reports today. Read it from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - A shortened slot is rare and arrives all at once: every slot-counted window tightens, and every per-slot rate accrues faster without saying so. Keep both where a transaction can retune them.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
 - Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
@@ -157,5 +157,9 @@ Every program in Part II that touches time, and the clock it settled on.
 [^get-block-time]: `getBlockTime`, in Solana's RPC HTTP reference at [solana.com/docs/rpc/http/getblocktime](https://solana.com/docs/rpc/http/getblocktime).
 
 [^anza-docs]: Anza maintains the validator client and its documentation, at [docs.anza.xyz](https://docs.anza.xyz).
+
+[^onchain-params]: Brennan Watt of Anza, at [x.com/bw_solana/status/2089740425695535300](https://x.com/bw_solana/status/2089740425695535300).
+
+[^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
