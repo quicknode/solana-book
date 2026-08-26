@@ -25,9 +25,9 @@ Nobody is quoted a rate per slot, so both programs convert. Divide an annual bor
 
 ## How to Turn Slots Into Seconds
 
-Multiply the slot count by the length of a slot in milliseconds. Nothing onchain reports that length today. The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day. Anza's Brennan Watt has said this is meant to change: "longer term, we will put these parameters onchain so they are client queryable."[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
+Multiply the slot count by the length of a slot in milliseconds. Nothing onchain reports that length today. The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day. Anza's Brennan Watt has said this is meant to change, and that these parameters will go onchain where any client can read them.[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
 
-Until it does, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are. Two rules make that check correct: a feature counts only after a full epoch of warmup from its activation slot, and a missing feature account never activated at all. Dean Little's `check_slot_time.rs` is a working implementation, one function to pick the length and one to test a feature.[^check-slot-time]
+Until it does, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are. An activated feature does not take effect straight away, so count it only once a full epoch, 432,000 slots, has passed since the slot it activated at. Dean Little's `check_slot_time.rs` is a working implementation, one function to pick the length and one to test a feature.[^check-slot-time]
 
 That gives the length the network intends. To measure what it delivered, divide the seconds since `epoch_start_timestamp` in the Clock sysvar by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division. The divisor is zero on the epoch's first slot and small for a while after. Offchain, call `getBlockTime` on two blocks a known distance apart and divide.[^get-block-time]
 
@@ -158,7 +158,7 @@ Every program in Part II that touches time, and the clock it settled on.
 
 [^anza-docs]: Anza maintains the validator client and its documentation, at [docs.anza.xyz](https://docs.anza.xyz).
 
-[^onchain-params]: Brennan Watt of Anza, at [x.com/bw_solana/status/2089740425695535300](https://x.com/bw_solana/status/2089740425695535300).
+[^onchain-params]: "Longer term, we will put these parameters onchain so they are client queryable." Brennan Watt of Anza, at [x.com/bw_solana/status/2089740425695535300](https://x.com/bw_solana/status/2089740425695535300).
 
 [^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
 
