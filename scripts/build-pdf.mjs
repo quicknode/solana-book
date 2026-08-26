@@ -201,34 +201,24 @@ const breakableIdentifier = (text) =>
     })
     .join("");
 
-// A URL has the same problem for the same reason, and a slash is its legible
-// seam, so it gets the same treatment under the same two limits.
-const breakableUrl = (text) => {
-  let out = "";
-  for (let i = 0; i < text.length; i++) {
-    out += text[i];
-    const kept = i + 1;
-    const carried = text.length - kept;
-    if (text[i] === "/" && kept >= BREAK_MIN_BEFORE && carried >= BREAK_MIN_AFTER) out += "<wbr>";
-  }
-  return out;
-};
-
 // External links, in the two shapes the manuscript writes them. A link whose
 // text is its own address is set as an address; a link whose text is words
 // keeps the words and has its address printed after it, because a reader
 // holding the paper edition cannot click anything. Book-internal
 // cross-references were rewritten to #anchors by prepareMarkdown, so they do
-// not match here and stay plain prose.
+// not match here and stay plain prose. Either shape puts the address itself in
+// an .address element, which the stylesheet keeps on one line and the build
+// checks after layout.
 const bareAddress = (href) => href.replace(/^https?:\/\//, "").replace(/\/$/, "");
 const markUrls = (html) =>
   html.replace(/<a href="(https?:[^"]+)">([^<]+)<\/a>/g, (whole, href, text) =>
     bareAddress(href) === text.replace(/\/$/, "")
-      ? `<a class="url" href="${href}">${breakableUrl(text)}</a>`
+      ? `<a class="url address" href="${href}">${text}</a>`
       // The separating space lives inside the span rather than between the two
       // elements: Paged.js drops a whitespace-only text node during layout, and
-      // the address ends up jammed against the word before it.
-      : `${whole}<span class="url"> (${breakableUrl(bareAddress(href))})</span>`,
+      // the address ends up jammed against the word before it. It stays outside
+      // .address, so the line may break there and carry the whole address over.
+      : `${whole}<span class="url"> (<span class="address">${bareAddress(href)}</span>)</span>`,
   );
 
 const sections = chapterPaths.map((path) => {
@@ -509,6 +499,14 @@ code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; f
    identically on the line. Never underlined: underlining is a screen
    convention, and in a serif face it collides with the descenders. */
 .url { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
+/* An address is one thing, so it sets as one thing. Left to itself the line
+   breaks after a slash or a hyphen and the first line ends up reading as a
+   whole address -- news.example.com/p/ is a page, and so is
+   .../explained-the-hundred-finance- -- which is a destination a reader can
+   reach and is not the one the note meant. Unbreakable, an address that does
+   not fit the room left on its line carries over whole to the next one. It
+   declares no size of its own: nested in .url it would compound with it. */
+.address { white-space: nowrap; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
 blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }
@@ -633,6 +631,21 @@ await page.evaluate(() => {
   }
 });
 
+// An address that wraps is an address a reader cannot act on. Its PDF link
+// annotation still carries the whole href, so a viewer that honours
+// annotations opens the right page; but the first line ends at a slash or a
+// hyphen and reads as a complete address, so anything working from the text
+// rather than the annotation -- a viewer's own URL detection, a copy and
+// paste, a reader retyping it off the printed page -- lands on a truncated
+// destination that often exists. Addresses are set unbreakable so this cannot
+// happen; an address too long for its measure has nowhere to go, and fails the
+// build here rather than printing broken.
+const wrappedAddresses = await page.evaluate(() =>
+  [...document.querySelectorAll(".address")]
+    .filter((el) => el.getClientRects().length > 1)
+    .map((el) => el.textContent),
+);
+
 // Page one of the PDF is page one of the flow, so odd page numbers are
 // right-hand pages whether or not the cover is included. A part title belongs
 // on one, and so does the chapter that follows it across the blank reverse.
@@ -659,6 +672,13 @@ await browser.close();
 
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
+
+if (wrappedAddresses.length > 0) {
+  console.error(`\n${wrappedAddresses.length} address(es) wrapped across lines:`);
+  for (const address of wrappedAddresses) console.error(`  ${address}`);
+  console.error("An address must fit its measure whole. Shorten it, or move it to a note with more room.");
+  process.exitCode = 1;
+}
 
 const strays = partPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
 if (strays.length > 0) {
