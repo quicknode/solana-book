@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 238" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">A token transfer using the &#8220;transfer fee&#8221; extension</text>
+  <defs><marker id="transfer-ext-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker><marker id="transfer-ext-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
+  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="412" cy="63.1884" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="240" y="70.4227" width="180" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(248,75.4227)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="268" y="86.4227" font-size="10.5" font-weight="bold">Token Extensions Program</text>
+  <line x1="248" y1="91.4227" x2="412" y2="91.4227" stroke="#888" stroke-width="0.8"/>
+  <text x="248" y="102.423" font-size="9" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">transfer_checked()</text>
+  <circle cx="24" cy="123.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="118" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="34" y="127" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="136" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <g>
+  <rect x="16" y="142" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,147)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="158" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <line x1="24" y1="163" x2="132" y2="163" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="174" font-size="9.5" font-weight="bold">1,000 &#8594; 900 USDC</text>
+  </g>
+  <circle cx="508" cy="123.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="518" y="118" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="518" y="127" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="518" y="136" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <g>
+  <rect x="500" y="142" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(508,147)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="528" y="158" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <line x1="508" y1="163" x2="616" y2="163" stroke="#888" stroke-width="0.8"/>
+  <text x="508" y="174" font-size="9.5" font-weight="bold">300 &#8594; 399 USDC</text>
+  </g>
+  <path d="M 144,162 L 496,162" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-a)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="295.42" y="148.87" font-size="11" fill="#1e7a3c" font-weight="bold">100 USDC</text>
+  <path d="M 400,114.423 L 400,156" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-g)"/>
+  <text x="320" y="196" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint&#8217;s transfer fee withholds 1 USDC for the issuer</text>
+  <text x="320" y="222" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">extensions change what &#8220;I transferred 100&#8221; means</text>
+  <g class="coin" transform="translate(320,162)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+</svg>

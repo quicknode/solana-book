@@ -1,0 +1,99 @@
+# Writing Plan
+
+How the manuscript gets produced, verified, reviewed, and kept alive. The table of contents lives in [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md), and each chapter is a file under its section's folder. Within this document, chapters are referenced by name so reordering never breaks it; the manuscript's chapter titles carry sequential numbers ("Chapter 11: Escrow"), and the table of contents is the source of truth for the numbering.
+
+## Principles
+
+- The book prints the durable layer. Every code claim is verified against the companion repository before it lands: the skill's "grep before naming" rule, applied to a manuscript.
+- Diagrams are the longest-lived medium. Every chapter budget includes them: account map, state machine, flow.
+- Style is inherited wholesale from the [companion AI plugin](https://github.com/quicknode/solana-finance-claude-plugin): onchain and offchain unhyphenated, "instruction handlers" for the functions and "instructions" for their input, "minor unit" not "base unit", "network" for Solana and "program" for onchain code with "protocol" never used for either, one name per role enforced within each chapter, concrete two-asset examples, real handler names in lifecycle prose, persona-driven walkthroughs. Also from the skill, and deliberately not repeated below: handler naming (`initialize_x()` for setup, the domain's verb otherwise), PDA versus account, mint versus token, example assets, plain language and concrete definitions, emphasis, stating the mechanism rather than gesturing at it, and talking to readers rather than about the document. **A rule that would apply to any Solana finance writing belongs in the skill; this file adds only what is specific to the book.** `scripts/lint-manuscript.mjs` still enforces several of the skill's rules over the manuscript, so a rule can live there and be guarded here.
+- Banned phrases, enforced by `scripts/lint-manuscript.mjs` (`npm run lint`) over the manuscript files: "the oracle problem", "instrument" (say "financial software" or "program"), the hyphenated chain words, and em-dashes. The lint also bans a group of phrases that read as machine-written, on the same grounds as the em-dash: a reader clocks them before finishing the sentence, and every one of them stands in for a mechanism rather than stating it. "Load-bearing" is the type specimen; say what depends on the thing and what breaks without it. The rest are "delve", "tapestry", "intricate", "multifaceted", "holistic", "myriad", "seamless", "robust", "pivotal", "crucial", "elevate", "testament to", "deep dive", "paradigm shift", "game-changer", "unlock the power", "realm of", "landscape of", "in today's", "it is worth noting", and "underscores the". A second group is banned for announcing that a point exists instead of making it, each one written in this manuscript and each replaced by the content it stood in front of: "what matters", "the point is", "that is the whole reason", and "does the work of". "What matters here is the unit" became "the index advances by slots, not seconds"; delete the announcement and keep what followed it. The lint also rejects negative framing of offchain truth (any "cannot verify the price" phrasing): the manuscript teaches the positive mechanism, checking a fact's provenance, freshness, and confidence against a source the program trusts. "Smart contract" is banned in favour of "program", with exactly two exceptions, both contrastive: the Introduction's line telling a reader arriving from another chain what a Solana program is, and the glossary's definition.
+- No sentence runs past forty-five words, enforced by `scripts/lint-manuscript.mjs` over prose, list items, and boxouts. The ceiling is deliberately loose, because it is catching a specific failure rather than policing rhythm: every sentence it first caught was a list that had been glued into a paragraph, or two separate claims joined by a colon, and the fix each time was to split at the punctuation already sitting there. The same pass bans a short list of words that have a plain equivalent and carry no meaning of their own here: "utilize", "commence", "prior to", "subsequent to", "in order to", "in the event that", "due to the fact that", "whilst", "amongst", "thus", "hence", "therefore", "approximately", "numerous", and "sufficient". Words that only *look* bureaucratic stay, because they are exact in this domain: a transaction **executes**, a supplier earns **yield**, a maker **provides** liquidity, a program signs by **presenting** seeds, and a firm **operates** a venue. "Confirm" is banned as a loose synonym for "check", because `confirmed` is one of Solana's three commitment levels and the book teaches them. This is the one rule taken from ASD-STE100 Simplified Technical English; the rest of that standard is written for aircraft maintenance procedures, and its bans on direct address, rhetorical questions, and metaphor would flatten a book that teaches with a story.
+- An address is written as a markdown link, `[host.tld](https://host.tld)`, never as loose prose, because the PDF build only reaches links. It prints in the monospace face `program_id` uses, never underlined: underlining is a screen convention and collides with descenders in a serif face. A link whose text is words rather than an address gets that address printed after it in parentheses, since nobody can click a printed page. Both are done by `scripts/build-pdf.mjs`; the lint catches an address written as prose. But an address does not belong in running prose at all: it sets in a monospace face inside a justified serif measure, and a reader holding the book cannot act on it while reading the sentence anyway. It goes in a footnote, which names the page it points at, so the sentence keeps its words and the address waits at the foot of the page for a reader who wants it. Two things stay inline. `thesolanabook.com` is short and is the thing its sentence is naming, and the Glossary is reference matter already, whose entries would read oddly with notes hanging off them.
+- The publisher is **Quicknode**, one word, that capitalization. The legal entity is **Quiknode Inc.**, and it appears only where the entity is what is meant: the copyright holder, the liability disclaimer, the trademark owner, and the exclusive right to sell editions. There is no "Quicknode Press" imprint. `scripts/lint-manuscript.mjs` guards the spellings across the manuscript; `LICENSE.md` and `README.md` sit outside its globs and are checked by eye.
+- Numbers from outside the companion repository (fees, incident losses, market sizes) name their source in the text, link the primary publisher, and say where and when they apply. A figure that contradicts a reader's own experience is the normal case rather than the exception, because a cost that is typical in one country is unheard of in another: state the scope, so a reader whose transfers have all been domestic can check the claim in one click instead of concluding the book made it up.
+- Nothing in the book disparages other Solana resources or projects. Where other content is referenced, it is as a neutral pointer, and preferably to a primary source (a project's own docs or repo) rather than to an aggregator or list.
+- Chapter titles are numbered traditional short names: "Chapter 3: Tokens", "Chapter 11: Escrow", "Chapter 9: The Adversary". Headings *inside* a chapter carry the content, so a reader skimming only the headings learns the chapter's actual claims: "A Mint Is a Factory, and the Mint Authority Is Its Boss", not "Mint Authority". A heading is close to a summary of its section, and has to work read alone, because the printed table of contents lists every one of them out of context. It states what the reader gets, not the mechanism that delivers it: "Seeds Make Data Findable", not "Seeds Make Addresses Derivable", because derivability is how it works and findability is what it buys. Title Case throughout. No numbered headings.
+- Headings never name characters, in any part of the book. A heading is close to a summary of its section and has to work read alone, so it states the general mechanism and the characters stay in the prose beneath: "A User's Public Key Is Their Address", not "Alice's Public Key Is Her Address"; "A Crossing Ask Fills Against the Resting Bid", not "Carol's Ask at 245 Crosses Bob's Bid". The program chapters are walkthroughs, so their headings still track the story's order and keep the specific mechanism ("The Shorted Asset Rallies and the Position Becomes Liquidatable"); it is the proper nouns that go, never the specificity. Where a role is what acts, name the role: the maker, the taker, the market authority, a liquidator. `scripts/lint-manuscript.mjs` enforces this across the manuscript.
+- A chapter's What You Learnt list states what the reader now knows, not what the characters did, so it is written generally even when the chapter that taught it was a story: "a user's account holds their balance of SOL", not "Alice's holds her balance". The same goes for its opening line.
+- A section lives in the chapter its subject belongs to, not the chapter where it was first needed. If a section would sit equally well in a different chapter, it is in the wrong one: rent is a property of every account, so it belongs with accounts, even though PDAs is where the escrow's rent lifecycle first made it matter. Each concept is taught once, in full, in the chapter that owns it; everywhere else it gets a clause and that chapter's name, never a second explanation. When a section turns out to be two things, split it and send each half home.
+- A forward reference names the thing being deferred, and never routes through a concept the reader has not met yet: "covered later in this part", never "covered with PDAs later in this part", because a reader meeting rent in the opening pages has never heard of a PDA and now has two unknowns instead of one. Most deferrals need no pointer at all: name the concept, say what it does in a clause, and move on.
+- Cross-references in prose name the chapter and say that it is one: **the *Offchain Truth* chapter**, italics on the title and the word "chapter" after it. Without both, a reader cannot tell a pointer to another chapter from a passing mention of the subject, and half this book's chapters are named after ordinary things (Time, Tokens, Escrow, Offchain Truth). Drop a leading "The" inside the italics, because "the *The Adversary* chapter" reads badly: write "the *Adversary* chapter". A reference that is also a markdown link keeps the same shape, `the [*Arithmetic of Money*](path) chapter`. Never use chapter numbers: those appear only in chapter titles and the table of contents, so renumbering never rewrites prose. `scripts/lint-manuscript.mjs` checks the distinctive multi-word titles; the single-word ones are ordinary words too often to match mechanically, so the convention covers them and the lint does not.
+- Characters are introduced at the point they first act, never in a separate cast section.
+- Boxouts (rendered as blockquotes) hold self-contained asides a reader can skip without losing the thread: War Stories, origin stories, and mechanism deep-dives like the flash-loan and keypair-collision boxes.
+- Footnotes hold the aside that is worth keeping but not worth a sentence in the argument: the caveat a reader in one country needs and a reader in another does not, the scope of a number, the pointer to where a claim can be checked. A boxout is the device for an aside a reader can sit down with; a footnote is for the one they take in at a glance and leave. Anything a reader must have to follow the sentence stays in the sentence. Write them in the syntax GitHub renders, so both the printed book and the repository set them properly: a `[^label]` call in the prose, and a `[^label]: ` line at the foot of the chapter file carrying the note. Labels name the subject rather than counting (`[^remittance-scope]`, not `[^1]`), because the number a reader sees is assigned at layout and the label is only how the two halves find each other. `scripts/lint-manuscript.mjs` checks that every call has a definition in the same file and every definition is called; `scripts/build-pdf.mjs` splices the note in at its call, and Paged.js sets it at the foot of whatever page the call lands on, small, under a short rule, numbered from 1 through the whole book.
+- Facts that form a grid go in a table (the cluster table, the token-extensions table, the rounding-direction table), not in a comma-packed paragraph. This one stays here rather than moving to the skill, which bans markdown tables because they render badly on chat surfaces. A printed book is the case that rule excepts, so the two are not in conflict, but do not "unify" them.
+- The two companions have fixed names in the book's prose: solana-program-examples is "the companion repository" and solana-finance-claude-plugin is "the companion AI plugin". Each is introduced once, with a link, in the Introduction; everywhere else the fixed name is used, never the repo name.
+
+## The Program Chapter Template
+
+Each program chapter runs the same eight beats:
+
+- **Concept** - what this financial software does in the real world, with personas, real assets, and each party's incentive (the Introduction promises readers that admin and user incentives are discussed in every program chapter). Personas are introduced where they first act, not in a cast list.
+- **Account model** - the accounts, their owners, their PDAs, with the account-relationship diagram.
+- **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use, each step followed by a diagram of what moved and what changed; no flat reference section.
+- **The math** - the calculations, in minor units, with rounding directions stated.
+- **The invariants** - what must hold before and after every handler.
+- **The failure modes** - how this program gets attacked or bricked, with the inline War Story where an incident matches.
+- **Testing considerations** - the property or scenario tests from the example's own suite that would catch each failure mode, described without dwelling on test libraries (the tooling is covered once, in Operating Financial Software).
+- **What you learnt** - a closing summary of the concepts the chapter taught and the traditional-finance roles and processes the program replaced.
+
+The chapters in the two Fundamentals sections (Solana Building Blocks; Financial Programming Concepts in Solana) use a lighter per-section template: claim, mechanism, consequence, War Story where applicable, and a short "What You Learnt" list closing each chapter.
+
+## Generation Pipeline (per chapter)
+
+- Gather inputs: the example's program source, README, and tests from the [companion repository](https://github.com/quicknode/solana-program-examples); the relevant rules from the companion AI plugin; War Story primary sources.
+- Draft against the template.
+- Verify: grep every named identifier against the repo; check every number against the source it came from; run the banned-phrase lint.
+- List the figures the chapter needs. Figures are drawn later in a single visual pass so the visual language stays consistent.
+- Review against the companion AI plugin's rules and the Glossary.
+
+## War Story Register
+
+Each incident is researched from primary sources and placed inside the chapter named here:
+
+- SPL token-lending rounding (about $2.6B at risk): the rounding section of The Arithmetic of Money
+- Cashio ($52M, unvalidated account chain): the validation section of The Adversary
+- Wormhole ($325M, bypassed signature verification): the validation section of The Adversary
+- First-depositor inflation incidents (the ERC-4626 class): named incidents are the Hundred and Sonne stories below (their setup is the inflation attack); the empty-pool section of The Adversary teaches the class, and The Constant-Product AMM chapter teaches the locked-minimum defense without an incident box
+- Mango Markets ($116M): the price-manipulation section of The Adversary
+- The Hundred and Sonne precision drains: the precision-exploits section of The Adversary
+
+## The Visual Language
+
+**The conventions themselves live in the companion AI plugin's [DIAGRAMS.md](https://github.com/quicknode/solana-finance-claude-plugin/blob/main/skills/solana/DIAGRAMS.md)**, which is the single source of truth for the cluster curve and its canonical path, dot placement, column layout, rounded corners, icons, the `0.3` fade, the one accent green, coin marks, smooth arrows, and where seeds are drawn. `scripts/lint-manuscript.mjs` and `scripts/check-figure-geometry.mjs` enforce the mechanically checkable ones over this repository's figures, so those two scripts and DIAGRAMS.md must be changed together; do not restate a convention here.
+
+What is specific to the book: the conventions are fixed during the single visual pass that draws every figure, and each is taught to the reader by the first figure that uses it, with a small legend on that figure. Every chapter's budget includes an account map, a state machine, and a flow. And:
+
+- **Every walkthrough step ("Alice does X", "Bob does Y") is followed by a diagram** showing the token movements, account creations and closures, and value changes that step caused.
+
+Steps currently missing their per-step diagram, to be drawn in the visual pass:
+
+- Lending and Borrowing: Carol's short; Bob's repayment and collateral withdrawal.
+- Perpetual Futures: Alice's `close_position` payout.
+- The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
+- The Vault Strategy: Bob's deposit at the new share price.
+
+## Reviewers, Feedback, and Editions
+
+- **Named technical reviewers**: recruit respected Solana engineers early, so review happens per part rather than as one giant pass at the end. Their names fill the About the Technical Reviewers section. Visible peer review is part of how fundamentals titles earn their standing.
+- **Public pre-print feedback loop**: release chapters early, as posts or an early-access build, collect corrections, and credit contributors in Acknowledgements.
+- **Errata and editions**: a public errata page from day one, and a stated edition cadence. The durable layer changes slowly, but "long-lived" is only credible if the maintenance process is visible.
+
+## Milestones
+
+- **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
+- The remaining program chapters, one per example, in table-of-contents order (all nine drafted: Escrow, Token Fundraiser, The Betting Market, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, Lending and Borrowing, The Vault Strategy, Perpetual Futures). They run as three groups of three: custody and pooling, then market making, then credit and leverage. A chapter's place is set by what it assumes the reader already has, so The Betting Market sits third, where its only prerequisite is Escrow.
+- The two Fundamentals sections (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
+- The remaining appendices. The Glossary is drafted.
+- The placeholder front-matter pages last.
+- A single visual pass producing all diagrams in one consistent style.
+- Public early-access release and errata page live before print.
+
+## Future Chapters
+
+Added if and when a matching example ships in the companion repository, keeping the one-chapter-per-tested-example rule:
+
+- Staking and Rewards (reward-per-token accounting currently appears inside Lending and Borrowing, and The Betting Market)
+- Vesting and streaming payments
+- Formal proving (Kani), as its own section placed after the testing material: every companion example carries proofs, and proofs are the step after tests

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">The band around the oracle</text>
+  <defs><marker id="propamm-band-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
+  <!-- the band -->
+  <rect x="115" y="80" width="335" height="90" fill="#f4f4f2"/>
+  <!-- ask line -->
+  <line x1="115" y1="80" x2="450" y2="80" stroke="#111" stroke-width="2.2"/>
+  <text x="105" y="84" font-size="11" font-weight="bold" text-anchor="end">ask $165.165</text>
+  <!-- oracle line -->
+  <line x1="115" y1="125" x2="450" y2="125" stroke="#111" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="105" y="129" font-size="10.5" text-anchor="end">oracle $165.00</text>
+  <!-- bid line -->
+  <line x1="115" y1="170" x2="450" y2="170" stroke="#111" stroke-width="2.2"/>
+  <text x="105" y="174" font-size="11" font-weight="bold" text-anchor="end">bid $164.835</text>
+  <!-- spread annotations inside band -->
+  <text x="282" y="102" font-size="9.5" fill="#444" text-anchor="middle">+10 bps, rounded up</text>
+  <text x="282" y="158" font-size="9.5" fill="#444" text-anchor="middle">&#8722;10 bps, rounded down</text>
+  <text x="282" y="140" font-size="9" fill="#888" text-anchor="middle" stroke="#f4f4f2" stroke-width="4" paint-order="stroke" stroke-linejoin="round">the band is Maria&#8217;s revenue</text>
+  <!-- buyer arrow -->
+  <path d="M 490,40 L 490,74" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#propamm-band-arr)"/>
+  <text x="490" y="30" font-size="10.5" font-weight="bold" text-anchor="middle">buyers pay the ask</text>
+  <text x="504.5" y="59.42" font-size="9.5" font-weight="bold" fill="#1e7a3c">825.825 USDC</text>
+  <text x="504.5" y="72.42" font-size="9.5" font-weight="bold" fill="#1e7a3c">&#8594; 5 NVDAx</text>
+  <!-- seller arrow -->
+  <path d="M 490,210 L 490,176" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#propamm-band-arr)"/>
+  <text x="490" y="228" font-size="10.5" font-weight="bold" text-anchor="middle">sellers receive the bid</text>
+  <text x="504.5" y="185.38" font-size="9.5" font-weight="bold" fill="#1e7a3c">5 NVDAx &#8594;</text>
+  <text x="504.5" y="198.38" font-size="9.5" font-weight="bold" fill="#1e7a3c">824.175 USDC</text>
+  <!-- round trip note -->
+  <rect x="70" y="196" width="300" height="40" fill="#fff" stroke="#888" stroke-width="1"/>
+  <text x="220" y="213" font-size="10" font-weight="bold" text-anchor="middle">round trip: 825.825 in, 824.175 back</text>
+  <text x="220" y="228" font-size="9.5" fill="#444" text-anchor="middle">the 1.65 USDC difference is the whole fee</text>
+  <g class="coin" transform="translate(490,62.01)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(490,187.99)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+</svg>

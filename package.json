@@ -1,0 +1,26 @@
+{
+  "name": "solana-book",
+  "version": "1.0.0",
+  "description": "Manuscript and build tooling for Building Financial Software on Solana",
+  "scripts": {
+    "build-pdf": "node scripts/build-pdf.mjs",
+    "lint": "node scripts/lint-manuscript.mjs",
+    "preview": "node scripts/preview-page.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quicknode/solana-book.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quicknode/solana-book/issues"
+  },
+  "homepage": "https://github.com/quicknode/solana-book#readme",
+  "devDependencies": {
+    "marked": "^18.0.5",
+    "pagedjs": "^0.4.3",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.1.200",
+    "playwright-core": "^1.61.1"
+  },
+  "private": true
+}

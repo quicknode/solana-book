@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Two orders, one spread</text>
+  <!-- the ask side -->
+  <text x="185" y="61" font-size="11" font-weight="bold" text-anchor="end">asks</text>
+  <text x="185" y="75" font-size="10" font-style="italic" fill="#444" text-anchor="end">lowest first</text>
+  <rect x="200" y="45" width="250" height="34" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="325" y="66" font-size="11.5" text-anchor="middle"><tspan font-weight="bold">Alice&#8217;s ask:</tspan> 10 shares @ 265</text>
+  <!-- the spread -->
+  <path d="M 465,79 L 475,79 L 475,150 L 465,150" fill="none" stroke="#111" stroke-width="1.5"/>
+  <text x="487" y="108" font-size="11" font-weight="bold">the spread</text>
+  <text x="487" y="123" font-size="10" font-style="italic" fill="#444">bid 250 / ask 265</text>
+  <!-- the bid side -->
+  <rect x="200" y="150" width="250" height="34" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
+  <text x="325" y="171" font-size="11.5" text-anchor="middle"><tspan font-weight="bold">Bob&#8217;s bid:</tspan> 4 shares @ 250</text>
+  <text x="185" y="166" font-size="11" font-weight="bold" text-anchor="end">bids</text>
+  <text x="185" y="180" font-size="10" font-style="italic" fill="#444" text-anchor="end">highest first</text>
+  <text x="320" y="218" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">neither limit reaches across the gap, so both orders rest</text>
+</svg>

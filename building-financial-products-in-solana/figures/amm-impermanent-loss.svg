@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 394" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Withdrawing realizes the loss</text>
+<g transform="translate(0,14)">
+  <defs>
+    <marker id="amm-impermanent-loss-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
+    </marker>
+  </defs>
+  <!-- fee band (drawn first, under the lines) -->
+  <path d="M 150,260 Q 215,226 288,198 Q 360,170 430,147 L 430,134 Q 360,157 288,184 Q 215,212 150,246 Z" fill="#f4f4f2" stroke="none"/>
+  <path d="M 150,246 Q 215,212 288,184 Q 360,157 430,134" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <!-- axes -->
+  <line x1="80" y1="330" x2="80" y2="38" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
+  <line x1="80" y1="330" x2="614" y2="330" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
+  <text x="88" y="28" font-size="13" font-weight="bold">value of Alice&#8217;s position</text>
+  <text x="612" y="352" font-size="13" font-weight="bold" text-anchor="end">ACME price</text>
+  <!-- just holding: a straight line -->
+  <line x1="80" y1="279" x2="600" y2="76" stroke="#111" stroke-width="1.6"/>
+  <text x="598" y="60" font-size="12" font-weight="bold" text-anchor="end">just holding 100 ACME + 225 USDC</text>
+  <!-- LP position: tangent below the line everywhere else -->
+  <path d="M 80,296 C 115,275 149,258 184,242 C 219,226 253,212 288,198 C 323,184 357,172 392,160 C 427,148 461,136 496,125 C 531,114 565,104 600,94" fill="none" stroke="#111" stroke-width="2.2"/>
+  <text x="96" y="320" font-size="12" font-weight="bold">LP position</text>
+  <!-- deposit price: the touching point -->
+  <line x1="288" y1="204" x2="288" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="288" cy="198" r="5" fill="#111"/>
+  <text x="288" y="348" font-size="12" font-weight="bold" text-anchor="middle">$2.25 deposit</text>
+  <text x="230" y="148" font-size="11" font-style="italic" fill="#444" text-anchor="middle">touches only at the deposit price</text>
+  <!-- fee band label -->
+  <text x="105" y="182" font-size="11" font-style="italic" fill="#444">fees offset the gap</text>
+  <path d="M 172,188 L 210,216" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-impermanent-loss-arr)"/>
+  <!-- Alice's withdrawal -->
+  <circle cx="319" cy="186" r="4" fill="#111"/>
+  <path d="M 346,232 L 325,193" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="350" y="238" font-size="10.5" font-style="italic" fill="#444">at withdrawal (spot &#8776; $2.64):</text>
+  <text x="350" y="253" font-size="10.5" font-style="italic" fill="#444">&#8776; $1.50 behind just holding</text>
+</g>
+</svg>
