@@ -37,14 +37,16 @@ The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock ti
 
 A few seconds decide real money wherever a boundary sits on a timestamp. If an auction closes, an option expires, or a penalty starts on one, whoever moves the clock decides which side a transaction lands on. Leave a margin wide enough that seconds cannot change the answer, and count in slots anything where they could.
 
-The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
-
 Wall-clock time is still the right tool in places. The vault strategy uses it twice, for two different reasons:
 
 - **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
 When the deadline is one you promised a person, use timestamps. A contributor told they have a week to fund means seven days of wall-clock time, not a count of slots.
+
+## Who Fills First Is a Counter, Not a Clock
+
+The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
 
 ## Every Consumer Sets Its Own Freshness Window
 
