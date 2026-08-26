@@ -31,19 +31,19 @@ The length of a slot is a static value, usually in the range of hundreds of mill
 
 How to get it:
 
-- **From Anza's documentation, written into your program.**[^anza-docs] Good while no reduction is pending, and stale from the moment one activates, so keep it somewhere a transaction can update.
+- **From Anza's documentation, written into your program.**[^anza-docs] Good while no reduction is pending, and stale from the moment one activates. Keep any rate that depends on the slot length in config, where a transaction can change it, which the section on a shortened slot covers.
 - **From the feature gates.** Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case that day has come.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
-The gates give the length the network aims for, and slots can run slower than that. The difference is money: interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
+The gates give the length the network aims for, and the network can run slower than that. When slots take longer than the configured length, the difference is money. Interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
 
-To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time] That measurement reads the validator-reported clock, the one these accruals count slots to avoid, so keep it out of a handler.
+To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. That measurement reads the validator-reported clock, the one these accruals count slots to avoid, so keep it out of a handler.
 
 > **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. No further reductions are planned once the network reaches 200 milliseconds.
 
-A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
+A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
 
 ## Timestamps Are Validator-Reported
 
@@ -165,8 +165,6 @@ Every program in Part II that touches time, and the clock it settled on.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
 [^slot-times]: The stages, and how far each one has got, are published at [solana.com/upgrades/reduced-slot-times](https://solana.com/upgrades/reduced-slot-times).
-
-[^get-block-time]: `getBlockTime`, in Solana's RPC HTTP reference at [solana.com/docs/rpc/http/getblocktime](https://solana.com/docs/rpc/http/getblocktime).
 
 [^anza-docs]: Anza maintains the validator client and its documentation, at [docs.anza.xyz](https://docs.anza.xyz).
 
