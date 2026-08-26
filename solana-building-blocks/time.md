@@ -37,7 +37,9 @@ The gates give the length the network aims for, and slots can run slower than th
 
 To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
 
-Better still, avoid converting slots to milliseconds at all. That measurement reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers.
+One multiplication only covers a stretch where the length held. The reduction is staged, one feature per step, so a slot count reaching back past a step spans more than one length, and multiplying it by today's figure understates the time that passed. Converting such a span honestly means splitting it at each step and converting each piece at the length that applied to it.
+
+Better still, avoid converting slots to milliseconds at all. That measurement reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
 
 ## Timestamps Are Validator-Reported
 
@@ -151,7 +153,7 @@ Every program in Part II that touches time, and the clock it settled on.
 - Three questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, and a real-world time you promised a person takes the wall clock. Three noes leave the slot count.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
-- A slot count converts to wall-clock time only at the current slot length, which nothing onchain reports today. Read it from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
+- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held, and nothing onchain reports it today. Read it from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - A shortened slot is rare and arrives all at once: every slot-counted window tightens, and every per-slot rate accrues faster without saying so. Keep both where a transaction can retune them.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
 - Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
