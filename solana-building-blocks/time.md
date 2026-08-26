@@ -33,7 +33,7 @@ How to get it:
 
 - **From Anza's documentation, written into your program.**[^anza-docs] Good while no reduction is pending, and stale from the moment one activates, so keep it somewhere a transaction can update.
 - **From the feature gates.** Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
-- **From the network itself, in future.** No account reports it today, and this is meant to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case that day has come.
+- **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case that day has come.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
