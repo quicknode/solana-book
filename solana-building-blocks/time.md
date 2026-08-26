@@ -8,15 +8,18 @@ Solana has two clocks: a slot counter that nobody can bend, and a wall clock tha
 
 The **slot** counts block opportunities. A slot lasts a fixed value in the range of hundreds of milliseconds, chosen by the protocol rather than by anything a program can read, and the protocol has shortened it before and intends to shorten it again. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
 
-Two programs in this book accrue value over time, and both count it in slots: the lending market accrues interest on debt, and the perpetual futures venue accrues funding on open positions. The lending market carries one number per reserve, a **borrow accumulation factor** that grows each time anyone touches the market:
+Two programs in this book accrue value over time, and both count it in slots:
 
-```
-new factor = old factor × (1 + rate per slot × elapsed slots)
-```
+- **The lending market accrues interest on debt.** It carries one number per reserve, a **borrow accumulation factor** that grows each time anyone touches the market:
 
-Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor. A borrower's current debt is their principal multiplied by that factor. The *Arithmetic of Money* chapter covers how to build that factor safely.
+  ```
+  new factor = old factor × (1 + rate per slot × elapsed slots)
+  ```
 
-The perpetual futures venue does the same for funding, storing `cumulative_funding` alongside `last_funding_slot`. Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count slots because a trader who could stretch a slot could stretch what they owe.
+  Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. The *Arithmetic of Money* chapter covers how to build that factor safely.
+- **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`.
+
+Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
 ## Deriving the Current Slot Time When You Need It
 
