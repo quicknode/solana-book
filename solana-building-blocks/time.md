@@ -31,9 +31,11 @@ At the time this book was published, there is not a direct way to query this fro
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
-Until then, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
+Until then, you can get the time of a slot in milliseconds by checking the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
 
-That gives the time of a slot in milliseconds the network currently uses. Slots can run slower than that, and to measure the real average, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
+The gates give the length the network aims for, and slots can run slower than that. The difference is money: interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
+
+To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
 
 Better still, avoid converting slots to milliseconds at all. That measurement reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers.
 
