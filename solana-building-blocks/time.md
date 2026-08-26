@@ -27,11 +27,11 @@ Nobody is quoted a rate per slot, so both programs convert. Divide an annual bor
 
 Multiply the slot count by the length of a slot in milliseconds.
 
-At the time this book was published, there is not a direct way to query this from a Solana program. Anza's Brennan Watt has said this is meant to change, and that these parameters will go onchain where any client can read them.[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
-
-Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
+At the time this book was published, there is not a direct way to query this from a Solana program. This will change in future,[^onchain-params] so check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
 
 Until then, you can get the time of a slot in milliseconds by checking the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
+
+Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
 The gates give the length the network aims for, and slots can run slower than that. The difference is money: interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
 
@@ -39,7 +39,7 @@ To measure the average the network is actually delivering, take the seconds sinc
 
 One multiplication only covers a stretch where the length held. The reduction is staged, one feature per step, so a slot count reaching back past a step spans more than one length, and multiplying it by today's figure understates the time that passed. Converting such a span honestly means splitting it at each step and converting each piece at the length that applied to it.
 
-Better still, avoid converting slots to milliseconds at all. That measurement reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
+Better still, avoid converting slots to milliseconds at all. The epoch measurement above reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
 
 ## Timestamps Are Validator-Reported
 
