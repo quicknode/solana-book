@@ -25,9 +25,13 @@ Nobody is quoted a rate per slot, so both programs convert. Divide an annual bor
 
 ## How to Turn Slots Into Seconds
 
-Multiply the slot count by the length of a slot in milliseconds. Nothing onchain reports that length today. The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day. Anza's Brennan Watt has said this is meant to change, and that these parameters will go onchain where any client can read them.[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
+Multiply the slot count by the length of a slot in milliseconds.
 
-Until it does, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
+At the time this book was published, there is not a direct way to query this from a Solana program. Anza's Brennan Watt has said this is meant to change, and that these parameters will go onchain where any client can read them.[^onchain-params] Check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
+
+Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
+
+Until then, read the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
 
 That gives the time of a slot in milliseconds the network currently uses. Slots can run slower than that, and to measure the real average, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
 
