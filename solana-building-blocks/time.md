@@ -4,9 +4,11 @@ Solana has two clocks: a slot counter that nobody can bend, and a wall clock tha
 
 ![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators.](figures/two-clocks.svg)
 
-## Slots Are Guaranteed to Progress
+## Measure Time in Slots
 
 The **slot** counts block opportunities. A slot lasts a fixed value in the range of hundreds of milliseconds, chosen by the network rather than by anything a program can read. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
+
+That guarantee is why money is measured in slots here rather than in seconds. Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. A window counted in slots needs no conversion at the moment it is checked, and no clock anyone can move.
 
 Two programs in this book accrue value over time, and both count it in slots:
 
@@ -16,21 +18,16 @@ Two programs in this book accrue value over time, and both count it in slots:
   new factor = old factor × (1 + rate per slot × elapsed slots)
   ```
 
-  Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. The *Arithmetic of Money* chapter covers how to build that factor safely.
-- **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`.
+  Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. Its rates are quoted annually, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The *Arithmetic of Money* chapter covers how to build that factor safely.
+- **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`. Its funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour.
 
 Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
-## How to Turn Slots Into Time
+## How to Turn Slots Into Milliseconds
 
-The best way to turn slots into time is not to do it at all: measure time in slots instead. Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. The two programs that accrue meet the slot time from opposite sides:
+Slot counts have to come from somewhere. A freshness window is agreed in seconds, a borrower is quoted a rate per year, a trader reads what a position costs per hour, and each of those becomes a slot count before a program can use it. That conversion is where the slot length is needed, and it is needed again to check what a per-slot number really charges a person.
 
-- **The perpetual futures venue's funding rate is set per slot**, so the slot time is what decides the cost of an hour.
-- **The lending market's rates are annual**, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out.
-
-A freshness window counted in slots needs no conversion.
-
-When a program does need the figure, multiply the slot count by the length of a slot in milliseconds. This is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
+Multiply the slot count by the length of a slot in milliseconds. This is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
 
 How to get it:
 
