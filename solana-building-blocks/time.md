@@ -23,11 +23,11 @@ Two programs in this book accrue value over time, and both count it in slots:
 
 Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
-## How to Turn Slots Into Milliseconds
+## How to Turn Time Into Slots
 
-Slot counts have to come from somewhere. A freshness window is agreed in seconds, a borrower is quoted a rate per year, a trader reads what a position costs per hour, and each of those becomes a slot count before a program can use it. That conversion is where the slot length is needed, and it is needed again to check what a per-slot number really charges a person.
+Slot counts have to come from somewhere. A freshness window is agreed in seconds, a borrower is quoted a rate per year, and each of those has to become a slot count before a program can use it. Divide the time by the length of a slot in milliseconds. Multiplying runs the same arithmetic backwards, for telling a person what a slot count or a per-slot rate comes to in their own units.
 
-Multiply the slot count by the length of a slot in milliseconds. This is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
+The length of a slot is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
 
 How to get it:
 
@@ -41,7 +41,7 @@ The gates give the length the network aims for, and slots can run slower than th
 
 To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time] That measurement reads the validator-reported clock, the one these accruals count slots to avoid, so keep it out of a handler.
 
-> **One multiplication covers one slot time.** Multiplying only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. At the time of writing, no further reductions were planned once the network reaches 200 milliseconds.
+> **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. At the time of writing, no further reductions were planned once the network reaches 200 milliseconds.
 
 A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
 
