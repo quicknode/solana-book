@@ -27,7 +27,7 @@ Both accumulate, both advance by elapsed slots, and both decide what somebody ow
 
 Slot counts have to come from somewhere. A freshness window is agreed in seconds, a borrower is quoted a rate per year, and each of those has to become a slot count before a program can use it. Divide the time by the length of a slot in milliseconds. Multiplying runs the same arithmetic backwards, for telling a person what a slot count or a per-slot rate comes to in their own units.
 
-The length of a slot is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
+The length of a slot is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds.[^slot-simd]
 
 How to get it:
 
@@ -174,6 +174,6 @@ Every program in Part II that touches time, and the clock it settled on.
 
 [^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
 
-[^slot-simd]: SIMD-0525, which defines the four steps and ends at 200 milliseconds, at [github.com/solana-foundation/solana-improvement-documents](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
+[^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
