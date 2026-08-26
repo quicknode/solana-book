@@ -25,11 +25,13 @@ The two programs meet the slot time from opposite sides. The lending market's ra
 
 ## How to Turn Slots Into Milliseconds
 
-Multiply the slot count by the length of a slot in milliseconds.
+Multiply the slot count by the length of a slot in milliseconds. This is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
 
-At the time this book was published, there is not a direct way to query this from a Solana program. This will change in future,[^onchain-params] so check Anza's documentation[^anza-docs] and the companion repository first, in case that day has come.
+How to get it:
 
-Until then, you can get the time of a slot in milliseconds by checking the feature gates. Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
+- **From Anza's documentation, written into your program.**[^anza-docs] Good while no reduction is pending, and stale from the moment one activates, so keep it somewhere a transaction can update.
+- **From the feature gates.** Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time]
+- **From the network itself, in future.** No account reports it today, and this is meant to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case that day has come.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
@@ -169,5 +171,7 @@ Every program in Part II that touches time, and the clock it settled on.
 [^onchain-params]: "Longer term, we will put these parameters onchain so they are client queryable." Brennan Watt of Anza, at [x.com/bw_solana/status/2089740425695535300](https://x.com/bw_solana/status/2089740425695535300).
 
 [^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
+
+[^slot-simd]: SIMD-0525, which defines the four steps and ends at 200 milliseconds, at [github.com/solana-foundation/solana-improvement-documents](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
