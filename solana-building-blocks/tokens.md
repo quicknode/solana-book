@@ -1,6 +1,6 @@
 # Chapter 3: Tokens
 
-Assets on Solana are **tokens**, and every token is defined by a mint account and held in token accounts - accounts formatted in a particular way to hold token balances - both managed by a token program. Every asset in this book is a token: 
+Assets on Solana are **tokens**, and every token is defined by a mint account and held in token accounts (accounts formatted in a particular way to hold token balances), both managed by a token program. Every asset in this book is a token: 
 
 - stablecoins like USDC and USDT
 - equities like NVDAx, SPCXx, and TSLAx

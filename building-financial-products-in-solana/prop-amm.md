@@ -77,7 +77,7 @@ The unit conversion is the part that does not stay clean. Prices arrive at the o
 
 - The quote brackets the oracle: bid at or below the price, ask at or above it, with each side's rounding pointing away from the trader.
 - No swap hands out more value, at the raw oracle price, than it takes in, enforced onchain after the math, per fill.
-- Only the operator moves inventory, and the operator can always move all of it: `has_one = operator` on both inventory handlers is the whole of the access control.
+- Only the operator moves inventory, and the operator can always move all of it: `has_one = operator` on both inventory handlers is the entire access control.
 - Traders carry no custody risk. A swap is a single atomic transaction against visible prices; nobody deposits anything into a prop AMM, so there is nothing of theirs to lose. Every risk in this design (stale quotes, adverse selection, a bad oracle) lands on Maria.
 
 ## The Failure Modes: What Attacks a Market Maker
@@ -100,7 +100,7 @@ The concepts you now have:
 - **Oracle-priced quoting.** The price comes from a feed, not from reserves, so there is no price impact and nothing to sandwich; the spread is the entire fee.
 - **For a market maker the oracle checks protect its own capital.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.
 - **Adverse selection.** The flow that finds you when your quote is wrong is exactly the flow you did not want: the market maker's structural cost, mitigated commercially (wider spreads, pulled quotes), never by a `require!`.
-- **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the whole book.
+- **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the ledger.
 - **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from the *Adversary* chapter return "not applicable" because each of them needs a mechanism this design does not have.
 
 The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The *Perpetual Futures* chapter takes the same oracle checks somewhere more dangerous: the same feed and the same staleness checks, but with leverage, other people's collateral, and positions that stay open after the transaction ends.

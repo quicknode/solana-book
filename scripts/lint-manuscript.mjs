@@ -38,6 +38,24 @@ const rules = [
   [/\b(delve|tapestry|intricate|multifaceted|holistic|myriad|seamlessly|seamless|robust|pivotal|crucial|elevate|testament to|deep dive|paradigm shift|game.chang(er|ing)|unlock the power|realm of|landscape of|in today's)\b/i,
     "reads as machine-written; name the specific thing instead"],
   [/it(?:'s| is) worth noting/i, "cut it: if the point is worth making, make it"],
+  // The em-dash rule above, enforced on the punctuation the manuscript
+  // reached for once the em-dash was banned. A spaced hyphen between clauses
+  // is the same rhythm crutch in a different character, and sixteen of them
+  // had accumulated: use a comma, a colon, parentheses, or a full stop.
+  [/\w - \w/, "no spaced hyphen between clauses; use a comma, parentheses, or a full stop"],
+  // Announcing that a point exists instead of making it, second group: these
+  // point the reader at the sentence that follows rather than letting it land.
+  [/\bnote (what|that|how)\b/i, "state the fact; do not tell the reader to notice it"],
+  [/(?:^|[.!?]\s+|\band )here(?:'s| is) (?:the|what|why) \w/i, "cut the setup and make the claim stand on its own"],
+  [/\bfits in one sentence\b/i, "just write the sentence"],
+  // Ranking the book's own passages against each other. Two of these awarded
+  // the same superlative to different passages, which a reader who notices
+  // both stops trusting.
+  [/\bthe (?:single )?most [\w-]+(?: [\w-]+)? (?:section|part|pages?|idea|chapter|thing) in (?:the|this) (?:book|chapter)\b/i,
+    "cut the ranking and keep the claim"],
+  // Filler that delays the point, on the same grounds as "in today's" above.
+  [/\bin the (?:age|world) of\b|\bat its core\b|\bat the end of the day\b|\bwhen it comes to\b/i,
+    "cut the phrase and start at the point"],
   // Announcing that a point exists instead of making it. Each of these was
   // written in this manuscript and each was replaced by the content it was
   // standing in front of: "what matters here is the unit" became "the index
@@ -52,9 +70,9 @@ const rules = [
   // after the plain forms above were banned, and each was cut without losing a
   // word of content: "which is exactly the point" and "that is the point" both
   // sat after the sentence that already made the point.
-  [/\b(?:that|this|which|it) is (?:exactly )?the (?:whole )?point\b/i,
+  [/\b(?:that|this|which|it)(?:'s| is) (?:exactly )?the (?:whole )?point\b/i,
     'the sentence before it already made the point; delete the announcement'],
-  [/\bis the one that matters\b|\bmatters more than it looks\b/i,
+  [/\bis the one that matters\b|\bmatters more than it (?:looks|sounds)\b/i,
     'say why: "the path an attacker will drive", not "the one that matters"'],
   [/\bit is worth being\b/i, "cut it: if the point is worth making, make it"],
   // Words that rate the writing instead of doing it. "Honest" appeared twenty

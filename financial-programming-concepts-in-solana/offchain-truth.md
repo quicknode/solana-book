@@ -35,7 +35,7 @@ The third question, **what happens when publication stops**, is the one designs 
 
 One more rule: **the fact's meaning must be pinned when the money commits, not when the fact arrives.** The betting market locks its outcome list the moment the first bet lands and snapshots its fee at event creation, so the question bettors staked on cannot be rewritten before it is answered. Whatever the source, the terms are fixed when the money enters, and only the answer arrives later.
 
-The price-manipulation section of the *Adversary* chapter covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered* - a true report of a market the attacker just bent.
+The price-manipulation section of the *Adversary* chapter covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered*, a true report of a market the attacker just bent.
 
 ## What You Learnt
 
