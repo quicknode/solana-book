@@ -21,11 +21,16 @@ Two programs in this book accrue value over time, and both count it in slots:
 
 Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
-The two programs meet the slot time from opposite sides. The lending market's rates are annual, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The perpetual futures venue's funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour. Either way the slot time is in the arithmetic, which the next section covers.
+## How to Turn Slots Into Time
 
-## How to Turn Slots Into Milliseconds
+The best way to turn slots into time is not to do it at all: measure time in slots instead. Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. The two programs that accrue meet the slot time from opposite sides:
 
-Multiply the slot count by the length of a slot in milliseconds. This is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
+- **The perpetual futures venue's funding rate is set per slot**, so the slot time is what decides the cost of an hour.
+- **The lending market's rates are annual**, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out.
+
+A freshness window counted in slots needs no conversion.
+
+When a program does need the figure, multiply the slot count by the length of a slot in milliseconds. This is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds, in four steps.[^slot-simd]
 
 How to get it:
 
@@ -37,11 +42,11 @@ Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is
 
 The gates give the length the network aims for, and slots can run slower than that. The difference is money: interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
 
-To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
+To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time] That measurement reads the validator-reported clock, the one these accruals count slots to avoid, so keep it out of a handler.
 
 > **One multiplication covers one slot time.** Multiplying only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. At the time of writing, no further reductions were planned once the network reaches 200 milliseconds.
 
-Better still, avoid converting slots to milliseconds at all. The epoch measurement above reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
+A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers. A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
 
 ## Timestamps Are Validator-Reported
 
