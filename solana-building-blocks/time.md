@@ -21,17 +21,17 @@ Two programs in this book accrue value over time, and both count it in slots:
 
 Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
-Money is quoted in human time, so both programs have to cross between the two. An annual borrow rate becomes a per-slot rate by dividing by the slots in a year, which is a year's seconds divided by the slot time. The lending market stores that divisor as `slots_per_year` rather than computing it. The perpetual futures venue's funding rate is set per slot to begin with, so what a position costs per hour is that rate multiplied by the slots in an hour. Either direction needs the slot time, and that number is the subject of the next section.
+Nobody is quoted a rate per slot, so both programs convert. Divide an annual borrow rate by the slots in a year to get the per-slot rate; the lending market stores that divisor as `slots_per_year` rather than working it out. The perpetual futures venue sets its funding rate per slot already, so what a position costs per hour is that rate multiplied by the slots in an hour. Both need the slot time, which the next section covers.
 
-## A Slot Count Becomes Seconds Only at the Current Slot Time
+## How to Turn Slots Into Seconds
 
-A slot count is not a duration. It becomes one by multiplying by the slot time, and that multiplication is the one piece of arithmetic in this chapter that rests on a number the program cannot read.
+Multiply the slot count by the slot time. Nothing onchain tells a program what that is.
 
-No sysvar reports the slot duration at the time of writing, and the SDK's `DEFAULT_MS_PER_SLOT` is a compile-time constant, so a program reaching for it gets whatever was true when its binary was built. A program that needs the realized figure can derive it from the Clock sysvar: divide the seconds since `epoch_start_timestamp` by the slots since the first slot of the current epoch, which the `EpochSchedule` sysvar supplies. Guard that division, because the divisor is zero at the first slot of an epoch and small for a while after. Offchain, `getBlockTime` on two blocks a known distance apart answers the same question.[^get-block-time]
+The SDK's `DEFAULT_MS_PER_SLOT` is compiled in, so it holds whatever was true on build day, and no sysvar reports the live figure. A program can work it out from two sysvars: take the seconds since `epoch_start_timestamp` from the Clock, and divide by the slots since this epoch began, which `EpochSchedule` gives you. Guard that division. The divisor is zero on the epoch's first slot and small for a while after. Offchain, call `getBlockTime` on two blocks a known distance apart and divide.[^get-block-time]
 
-How to get the figure is the part of this chapter most likely to age. The derivation above is what a program does today, and a future runtime may report the slot time directly, turning the calculation into a read. Check Anza's documentation[^anza-docs] for the current milliseconds per slot and for whether the runtime has since begun publishing it. Check the companion repository for how its programs obtain the number, which tracks whatever the network offers.
+Check before you copy any of that. It is the part of this chapter most likely to date, because a later runtime may report the slot time directly. Anza's documentation[^anza-docs] has the current milliseconds per slot, and says whether the runtime publishes it yet. The companion repository shows how these programs get the number today.
 
-Prefer not to need it. The derivation rests on the validator-reported timestamp, so running it inside a handler puts a bendable number back into the accrual path that counts slots precisely to keep it out. A freshness window counted in slots needs no conversion at all, and a rate that has a slot time baked into it is better held where it can be changed without a redeploy, which the section on a shortened slot covers.
+Better still, do not need it. The derivation reads the validator-reported timestamp, so a handler that runs it hands the bendable clock a say in an accrual that counts slots to keep it out. A freshness window counted in slots needs no conversion at all. A rate with a slot time baked into it belongs in config, where a transaction can change it, which the section on a shortened slot covers.
 
 ## Timestamps Are Validator-Reported
 
@@ -109,7 +109,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 ## A Shorter Slot Tightens Every Window and Speeds Up Every Rate
 
-The slot time is a network parameter, and the network has shortened it before. A further staged reduction is published.[^slot-times] Treat it as a rare event rather than a drift: the figure holds for years, moves once, and holds again. What makes it worth writing for is that a program which anticipated the move rides through it, and one that did not needs a redeploy to keep charging what its owner intended.
+The network has shortened the slot before, and a further staged reduction is published.[^slot-times] This is a rare event rather than a drift: the number holds for years, then moves once. It is still worth writing for. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
 
 A shorter slot pulls the two uses of a slot count in opposite directions:
 
