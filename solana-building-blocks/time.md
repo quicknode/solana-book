@@ -27,7 +27,9 @@ Money is quoted in human time, so both programs have to cross between the two. A
 
 A slot count is not a duration. It becomes one by multiplying by the slot time, and that multiplication is the one piece of arithmetic in this chapter that rests on a number the program cannot read.
 
-No sysvar reports the slot duration, and the SDK's `DEFAULT_MS_PER_SLOT` is a compile-time constant, so a program reaching for it gets whatever was true when its binary was built. A program that needs the realized figure can derive it from the Clock sysvar: divide the seconds since `epoch_start_timestamp` by the slots since the first slot of the current epoch, which the `EpochSchedule` sysvar supplies. Guard that division, because the divisor is zero at the first slot of an epoch and small for a while after. Offchain, `getBlockTime` on two blocks a known distance apart answers the same question.[^get-block-time]
+No sysvar reports the slot duration at the time of writing, and the SDK's `DEFAULT_MS_PER_SLOT` is a compile-time constant, so a program reaching for it gets whatever was true when its binary was built. A program that needs the realized figure can derive it from the Clock sysvar: divide the seconds since `epoch_start_timestamp` by the slots since the first slot of the current epoch, which the `EpochSchedule` sysvar supplies. Guard that division, because the divisor is zero at the first slot of an epoch and small for a while after. Offchain, `getBlockTime` on two blocks a known distance apart answers the same question.[^get-block-time]
+
+How to get the figure is the part of this chapter most likely to age. The derivation above is what a program does today, and a future runtime may report the slot time directly, turning the calculation into a read. Check Anza's documentation[^anza-docs] for the current milliseconds per slot and for whether the runtime has since begun publishing it. Check the companion repository for how its programs obtain the number, which tracks whatever the network offers.
 
 Prefer not to need it. The derivation rests on the validator-reported timestamp, so running it inside a handler puts a bendable number back into the accrual path that counts slots precisely to keep it out. A freshness window counted in slots needs no conversion at all, and a rate that has a slot time baked into it is better held where it can be changed without a redeploy, which the section on a shortened slot covers.
 
@@ -143,7 +145,7 @@ Every program in Part II that touches time, and the clock it settled on.
 - Three questions decide the clock, asked in order: order of arrival takes a counter of your own, the age of a published number takes whatever unit its publisher stamped, and a real-world time you promised a person takes the wall clock. Three noes leave the slot count.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
-- A slot count converts to wall-clock time only at the current slot duration, which no sysvar reports. Derive a per-slot rate from a slot time you measured, or better, from a figure you can update without a redeploy.
+- A slot count converts to wall-clock time only at the current slot duration, which no sysvar reports today. Derive a per-slot rate from a slot time you measured, or better, from a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to obtain it.
 - A shortened slot is rare and arrives all at once: every slot-counted window tightens, and every per-slot rate accrues faster without saying so. Keep both where a transaction can retune them.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
 - Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
@@ -153,5 +155,7 @@ Every program in Part II that touches time, and the clock it settled on.
 [^slot-times]: The stages, and how far each one has got, are published at [solana.com/upgrades/reduced-slot-times](https://solana.com/upgrades/reduced-slot-times).
 
 [^get-block-time]: `getBlockTime`, in Solana's RPC HTTP reference at [solana.com/docs/rpc/http/getblocktime](https://solana.com/docs/rpc/http/getblocktime).
+
+[^anza-docs]: Anza maintains the validator client and its documentation, at [docs.anza.xyz](https://docs.anza.xyz).
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
