@@ -21,6 +21,8 @@ Two programs in this book accrue value over time, and both count it in slots:
 
 Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
+Money is quoted in human time, so both programs have to cross between the two. An annual borrow rate becomes a per-slot rate by dividing by the slots in a year, which is a year's seconds divided by the slot time. The lending market stores that divisor as `slots_per_year` rather than computing it. The perpetual futures venue's funding rate is set per slot to begin with, so what a position costs per hour is that rate multiplied by the slots in an hour. Either direction needs the slot time, and that number is the subject of the next section.
+
 ## A Slot Count Becomes Seconds Only at the Current Slot Time
 
 A slot count is not a duration. It becomes one by multiplying by the slot time, and that multiplication is the one piece of arithmetic in this chapter that rests on a number the program cannot read.
