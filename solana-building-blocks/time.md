@@ -21,7 +21,7 @@ Two programs in this book accrue value over time, and both count it in slots:
 
 Both accumulate, both advance by elapsed slots, and both decide what somebody owes. They count in slots rather than wall-clock seconds because anyone who could bend the wall clock could bend what a trader owes.
 
-Nobody is quoted a rate per slot, so both programs convert. Divide an annual borrow rate by the slots in a year to get the per-slot rate; the lending market stores that divisor as `slots_per_year` rather than working it out. The perpetual futures venue sets its funding rate per slot already, so what a position costs per hour is that rate multiplied by the slots in an hour. Both need the slot time, which the next section covers.
+The two programs meet the slot time from opposite sides. The lending market's rates are annual, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The perpetual futures venue's funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour. Either way the slot time is in the arithmetic, which the next section covers.
 
 ## How to Turn Slots Into Milliseconds
 
