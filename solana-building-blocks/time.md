@@ -23,7 +23,7 @@ Both accumulate, both advance by elapsed slots, and both decide what somebody ow
 
 Nobody is quoted a rate per slot, so both programs convert. Divide an annual borrow rate by the slots in a year to get the per-slot rate; the lending market stores that divisor as `slots_per_year` rather than working it out. The perpetual futures venue sets its funding rate per slot already, so what a position costs per hour is that rate multiplied by the slots in an hour. Both need the slot time, which the next section covers.
 
-## How to Turn Slots Into Seconds
+## How to Turn Slots Into Milliseconds
 
 Multiply the slot count by the length of a slot in milliseconds.
 
@@ -35,7 +35,7 @@ Until then, read the feature gates. Each shortening of the slot ships as a featu
 
 That gives the time of a slot in milliseconds the network currently uses. Slots can run slower than that, and to measure the real average, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. Offchain, `getBlockTime` on two blocks a known distance apart gives the same answer.[^get-block-time]
 
-Better still, need neither. That measurement reads the validator-reported timestamp, the clock these accruals count slots to avoid, so running it inside a handler puts it back. A freshness window counted in slots needs no conversion at all. A rate with a slot time baked into it belongs in config, where a transaction can change it, which the section on a shortened slot covers.
+Better still, avoid converting slots to milliseconds at all. That measurement reads the validator-reported clock, the one these accruals count slots to avoid. A freshness window counted in slots needs no conversion. A rate that depends on the slot length belongs in config, where a transaction can change it, which the section on a shortened slot covers.
 
 ## Timestamps Are Validator-Reported
 
