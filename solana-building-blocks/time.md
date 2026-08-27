@@ -6,7 +6,7 @@ Solana has two clocks: a slot counter that nobody can bend, and a wall clock tha
 
 ## Measure Time in Slots
 
-The **slot** counts block opportunities. The network sets a target slot length in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter than that target. A slot count is exact as a count, and only approximate as a duration. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
+The **slot** counts block opportunities. The network sets a target slot length in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter than that target.[^slot-time-live] Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
 
 That guarantee is why money is measured in slots here rather than in seconds. Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. A window counted in slots needs no conversion at the moment it is checked, and no clock anyone can move.
 
@@ -56,7 +56,7 @@ Wall-clock time is still the right tool in places. The vault strategy uses it tw
 - **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. Why not convert the week into slots? Because a slot count is exact as a count and only approximate as a duration. Nobody can bend it, but a slot rarely takes exactly the length the network aims for, so a week's worth of slots runs long or short by a share of that week, which is hours rather than seconds. The wall clock's error is the other shape: a few seconds a validator can nudge, whether the span is ten seconds or seven days.
+When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. Why not convert the week into slots? Nobody can bend a slot count, but a slot rarely takes exactly the length the network aims for, so a week's worth of slots runs long or short by a share of that week, which is hours rather than seconds. The wall clock's error is the other shape: a few seconds a validator can nudge, whether the span is ten seconds or seven days.
 
 ## Who Fills First Is a Counter, Not a Clock
 
@@ -173,5 +173,7 @@ Every program in Part II that touches time, and the clock it settled on.
 [^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
 
 [^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
+
+[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). In late August 2026 it read about 360 milliseconds against a 350 millisecond target.
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
