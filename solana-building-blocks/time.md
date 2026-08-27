@@ -73,7 +73,7 @@ A program that needs a long span in wall-clock time should store a timestamp bes
 
 The wall clock wins where its few seconds are small against the span being measured, and where no boundary in that span is worth a few seconds to anybody. The vault strategy uses it twice:
 
-- **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
+- **Its annual management fee accrues by timestamp**, because a few seconds either way, measured against a year, are nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
 When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by hours, which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
@@ -141,7 +141,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 ## A Shorter Slot Tightens Every Window and Speeds Up Every Rate
 
-The network has shortened the slot before, and a further staged reduction is published.[^slot-times] This is a rare event rather than a drift: the number holds for years, then moves once. It is still worth writing for. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
+The network has shortened the slot before, and a further staged reduction is published.[^slot-times] This is a rare event rather than a slow slide: the number holds for years, then moves once. It is still worth writing for. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
 
 A shorter slot pulls the two uses of a slot count in opposite directions:
 
@@ -169,7 +169,7 @@ Every program in Part II that touches time, and the clock it settled on.
 - Compare those two errors against the span in front of you. Short spans and tight boundaries take slots, and days or years take the wall clock with a margin. Order of arrival takes a counter of your own, and the age of a published number takes whatever unit its publisher stamped.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
-- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held, and nothing onchain reports it today. Read it from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
+- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - A shortened slot is rare and arrives all at once: every slot-counted window tightens, and every per-slot rate accrues faster without saying so. Keep both where a transaction can retune them.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
 - Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
