@@ -56,7 +56,7 @@ Wall-clock time is still the right tool in places. The vault strategy uses it tw
 - **Its annual management fee accrues by timestamp**, because a few seconds of drift measured against a year is nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund means seven days of wall-clock time. A week counted in slots is a week only while the network runs at the length it aims for, and hours out when it does not.
+When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. Converting the week into slots is the wrong trade here, because the two errors scale in opposite directions. A validator can bend the clock by a few seconds whatever the span. A slot count drifts by as much as the network's real pace differs from the length it aims for, which across a week can be hours. Against a price window measured in seconds the bend is the larger error; against a week it is nothing.
 
 ## Who Fills First Is a Counter, Not a Clock
 
