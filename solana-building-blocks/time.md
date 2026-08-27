@@ -10,7 +10,7 @@ The **slot** counts block opportunities. Programs read the current one from the 
 
 Counting slots is safe. Turning a slot count into seconds is not, and it goes wrong in three ways:
 
-- **A step is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter.[^slot-time-live] A count of them is out by a share of itself, so the longer the span, the further out it is.
+- **A step is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, and real slots run a little longer or shorter.[^slot-time-live] A count of them is out by a share of itself, so the longer the span, the further out it is.
 - **A leader can stretch its own slots, though it cannot shorten them.** Proof of history fixes the hashes in a tick, so nobody outruns it. What a leader can do is produce its slots slowly, or not at all, which makes those slots take longer in wall-clock time. That loosens a slot-counted window rather than tightening it, and the lever is one leader's turn wide, four slots, unless somebody holds a great deal of stake.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which never is.
 
