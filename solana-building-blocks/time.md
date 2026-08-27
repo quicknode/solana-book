@@ -1,18 +1,20 @@
 # Chapter 5: Time
 
-Solana has two clocks, and they go wrong in opposite ways. Which one a program should reach for follows from which of the two errors is bigger for the job in front of it.
+Solana has two clocks, and a program reads both from the same account. The **slot** counts block opportunities and only goes up. The **unix timestamp** is wall-clock time reported by validators, right to within a few seconds.
+
+The jobs in this book split cleanly between them. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Who queued first uses neither, and takes a counter the program keeps itself.
 
 ## The Slot Counter
 
-The **slot** counts block opportunities. Programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
+A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
 ![The slot counter steps evenly and only forward; what a step is worth in milliseconds is a target rather than a promise.](figures/slot-counter.svg)
 
 Three things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know all three:
 
-- **A step is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, and real slots run a little longer or shorter.[^slot-time-live] A count of them is out by a share of itself, so the longer the span, the further out it is.
-- **A leader can stretch its own slots, though it cannot shorten them.** Proof of history fixes the hashes in a tick, so nobody outruns it. What a leader can do is produce its slots slowly, or not at all, which makes those slots take longer in wall-clock time. That loosens a slot-counted window rather than tightening it, and the lever is one leader's turn wide, four slots, unless somebody holds a great deal of stake.
-- **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which never is.
+- **A slot is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, and real slots run a little longer or shorter.[^slot-time-live] Multiply a slot count by the target and the answer is off by a percent or two, and that error grows with the count.
+- **A leader can stretch its own slots, though it cannot shorten them.** Proof of history fixes the hashes in a tick, so nobody can run ahead of it. What a leader can do is produce its slots slowly, or not at all, which makes those slots take longer in wall-clock time. That loosens a slot-counted window rather than tightening it. A leader holds four slots in a row, so that is as far as one of them can stretch anything, unless somebody holds a great deal of stake.
+- **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
 ## The Unix Timestamp
 
@@ -20,17 +22,17 @@ The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock ti
 
 ![The wall clock, right to within a few seconds, and nudgeable by whoever reports it.](figures/unix-timestamp.svg)
 
-Its error is the other shape: a few seconds, whatever the span, and seconds somebody chose. That is what makes a boundary sitting on a timestamp worth attacking. If an auction closes, an option expires, or a penalty starts on one, whoever moves the clock decides which side a transaction lands on.
+A validator can nudge it by a few seconds, and a few seconds is what it stays however long the span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction closes, an option expires, or a penalty starts on one, whoever moves the clock decides which side a transaction lands on.
 
-## Pick the Clock Whose Error Is Smaller
+## Which Clock for Which Job
 
 Four questions, and a default if you answer no to all of them.
 
 ![Yes goes right to an answer, no goes down to the next question; four noes leave the slot count.](figures/clock-decision-tree.svg)
 
-The third question asks what the seconds are worth. A price three seconds stale can be worth a liquidation to whoever kept it alive, so that boundary counts slots. A contribution three seconds late is worth one contribution, which a margin covers, so the fundraiser's week falls through to the fourth question.
+A price three seconds stale can be worth a liquidation to whoever kept it alive, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. The vault's annual fee runs on the wall clock too, because a few seconds against a year change it by nothing anybody can see.
 
-The fourth question is the arithmetic. A few seconds stay a few seconds however long the span runs, while a percent or two of a slot count grows with it, until across a week it is hours. That is why the vault's annual fee accrues by timestamp while the lending market's interest, which decides who can be liquidated, does not.
+Underneath the four questions is one comparison. A few seconds of wall clock stay a few seconds however long the span runs, while a percent or two of a slot count grows with the span, until across a week it is hours.
 
 ## Interest and Funding Accrue by Slot
 
@@ -45,7 +47,7 @@ Two programs in this book accrue value over time, and both count it in slots:
   Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. Its rates are quoted annually, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The *Arithmetic of Money* chapter covers how to build that factor safely.
 - **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`. Its funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour.
 
-Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. A few seconds at that line are worth money to whoever moves them, so the accrual counts slots. The slot count's own error, a percent or two across a year, is a calibration its owner retunes in config.
+Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. A few seconds at that line are worth money to whoever moves them, so the accrual counts slots. The slot count's own error, a percent or two across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
 
 ## How to Turn Time Into Slots
 
@@ -61,26 +63,26 @@ How to get it:
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
-The gates give the length the network aims for, and the network can run slower than that. When slots take longer than the configured length, the difference is money. Interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
+The gates give the length the network aims for, and the network can run slower than that. When slots take longer than the configured length, interest that accrues per slot earns less over a real year than its annual rate implies, and a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
 
-To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. That measurement reads the validator-reported clock, the one these accruals count slots to avoid, so keep it out of a handler.
+To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. That measurement reads the validator-reported clock. Keep it out of a handler, where it would put that clock back into an accrual that counts slots to avoid it.
 
 > **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. No further reductions are planned once the network reaches 200 milliseconds.
 
-A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
+A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract.
 
 ## The Wall Clock Measures Human Time
 
-The wall clock wins where its few seconds are small against the span being measured, and where no boundary in that span is worth a few seconds to anybody. The vault strategy uses it twice:
+The vault strategy uses the wall clock twice:
 
 - **Its annual management fee accrues by timestamp**, because a few seconds either way, measured against a year, are nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by hours, which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
+When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by hours, which breaks that promise, while a week of wall clock is out by seconds, which the margin covers. Each of these is a span where a few seconds change nothing worth taking.
 
 ## Who Fills First Is a Counter, Not a Clock
 
-The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. A number that decides who fills first is not a number to let anyone influence.
+The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. Two orders can arrive in the same slot and carry the same timestamp, so neither clock can separate them, and a validator can nudge one of the two. The counter can be neither.
 
 ## Every Consumer Sets Its Own Freshness Window
 
@@ -125,7 +127,7 @@ Say which edge you mean when you write the terms down. A contributor reads "seve
 
 Both clocks arrive in the same sysvar, so it is easy to assume they always move together. They come apart when the chain stops.
 
-Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. That is the trade financial software wants, because a chain that kept producing blocks through a disagreement could settle the same balance twice.
+Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. A chain that kept producing blocks through a disagreement could settle the same balance twice.
 
 A halt is a rare event: at the time of writing, block production has not stopped for years. Write for the one you will probably never see.
 
@@ -141,7 +143,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 ## A Shorter Slot Tightens Every Window and Speeds Up Every Rate
 
-The network has shortened the slot before, and a further staged reduction is published.[^slot-times] This is a rare event rather than a slow slide: the number holds for years, then moves once. It is still worth writing for. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
+The network has shortened the slot before, and a further staged reduction is published.[^slot-times] This is a rare event rather than a slow slide: the number holds for years, then moves once. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
 
 A shorter slot pulls the two uses of a slot count in opposite directions:
 
@@ -165,14 +167,14 @@ Every program in Part II that touches time, and the clock it settled on.
 
 ## What You Learnt
 
-- Solana has two clocks, and they go wrong in opposite ways. The **unix timestamp** validators report is out by a few seconds however long the span, and by seconds somebody chose. Nobody bends the **slot** count, but it is out by a share of the span, because a slot is only roughly as long as the network intends.
-- Compare those two errors against the span in front of you. Short spans and tight boundaries take slots, and days or years take the wall clock with a margin. Order of arrival takes a counter of your own, and the age of a published number takes whatever unit its publisher stamped.
+- Solana has two clocks. The **slot** count only goes up and nobody can move it, though what it comes to in seconds varies a little, stops in a halt, and stretches under the leader of the moment. The **unix timestamp** is validator-reported wall-clock time, out by a few seconds somebody chose, however long the span.
+- Count slots for price freshness, for accrual, and for anything a few seconds could move money across. Use the wall clock for a span of days or years quoted to a person, with a margin. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - A shortened slot is rare and arrives all at once: every slot-counted window tightens, and every per-slot rate accrues faster without saying so. Keep both where a transaction can retune them.
 - A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
-- Where a clock would decide something valuable and neither clock is safe enough, count instead: the order book settles who queued first with a sequence number, and keeps its timestamp for display only.
+- For order of arrival, use a number of your own: the order book gives each resting order the next number from a counter it keeps, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
