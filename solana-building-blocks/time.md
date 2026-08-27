@@ -1,14 +1,37 @@
 # Chapter 5: Time
 
-Solana has two clocks, and they go wrong in opposite ways. The wall clock validators report is out by a few seconds whatever you measure with it, and by seconds somebody chose. Nobody can bend the slot counter, but a slot is only roughly as long as the network intends, so a span of slots is out by a share of itself, and it stops counting when the chain does. Short spans and tight boundaries take the slot counter; long stretches of human time take the wall clock, with a margin.
+Solana has two clocks, and they go wrong in opposite ways. Which one a program should reach for follows from which of the two errors is bigger for the job in front of it.
 
-![The two clocks: the slot counter steps evenly and only forward; the wall clock wobbles with its validators.](figures/two-clocks.svg)
+## The Slot Counter
 
-## Measure Time in Slots
+The **slot** counts block opportunities. Programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh, and slots only go up, at a rate nobody can meaningfully bend. That is what makes the count safe to hang money on.
 
-The **slot** counts block opportunities. The network sets a target slot length in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter than that target.[^slot-time-live] Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
+![The slot counter steps evenly and only forward; what a step is worth in milliseconds is a target rather than a promise.](figures/slot-counter.svg)
 
-Over a short span the slot counter wins, because a few seconds of wall clock are most of the span while a percent of the slot count is nothing. Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. Nobody can move that boundary, and the check needs no conversion.
+It goes wrong in two ways, and neither of them is an adversary:
+
+- **A step is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter.[^slot-time-live] A count of them is out by a share of itself, so the longer the span, the further out it is.
+- **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which never is.
+
+## The Unix Timestamp
+
+The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is right to within a few seconds, and validators can nudge it.
+
+![The wall clock, right to within a few seconds, and nudgeable by whoever reports it.](figures/unix-timestamp.svg)
+
+Its error is the other shape: a few seconds, whatever the span, and seconds somebody chose. That is what makes a boundary sitting on a timestamp worth attacking. If an auction closes, an option expires, or a penalty starts on one, whoever moves the clock decides which side a transaction lands on.
+
+## Pick the Clock Whose Error Is Smaller
+
+Four questions, and a default if you answer no to all of them.
+
+![Yes goes right to an answer, no goes down to the next question; four noes leave the slot count.](figures/clock-decision-tree.svg)
+
+The third question asks what the seconds are worth. A price three seconds stale can be worth a liquidation to whoever kept it alive, so that boundary counts slots. A contribution three seconds late is worth one contribution, which a margin covers, so the fundraiser's week falls through to the fourth question.
+
+The fourth question is the arithmetic. A few seconds stay a few seconds however long the span runs, while a percent or two of a slot count grows with it, until across a week it is hours. That is why the vault's annual fee accrues by timestamp while the lending market's interest, which decides who can be liquidated, does not.
+
+## Interest and Funding Accrue by Slot
 
 Two programs in this book accrue value over time, and both count it in slots:
 
@@ -45,11 +68,7 @@ To measure the average the network is actually delivering, take the seconds sinc
 
 A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract, which is not a conversion at all.
 
-## Timestamps Are Validator-Reported
-
-The **unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is right to within a few seconds, and validators can nudge it.
-
-A few seconds decide real money wherever a boundary sits on a timestamp. If an auction closes, an option expires, or a penalty starts on one, whoever moves the clock decides which side a transaction lands on. Leave a margin wide enough that seconds cannot change the answer, and count in slots anything where they could.
+## The Wall Clock Measures Human Time
 
 The wall clock wins where its few seconds are small against the span being measured, and where no boundary in that span is worth a few seconds to anybody. The vault strategy uses it twice:
 
@@ -78,7 +97,7 @@ The *Offchain Truth* chapter answers the first, along with everything else a pro
 | the perpetual futures venue | 150 slots | slots |
 | the vault strategy | 60 seconds | seconds |
 
-Three of the four count slots, because a window this short is exactly where a few seconds of clock would be most of the margin. The vault counts seconds because that is the unit its feed publishes, and a program cannot compare someone else's seconds against its own slots without assuming a slot length. What the three slot counts come to in seconds depends on that length, so a window sized once in slots covers less wall-clock time if the slot is ever shortened.
+Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. Nobody can move that boundary, and the check needs no conversion. Three of the four count slots, because a window this short is exactly where a few seconds of clock would be most of the margin. The vault counts seconds because that is the unit its feed publishes, and a program cannot compare someone else's seconds against its own slots without assuming a slot length. What the three slot counts come to in seconds depends on that length, so a window sized once in slots covers less wall-clock time if the slot is ever shortened.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
@@ -129,16 +148,6 @@ A shorter slot pulls the two uses of a slot count in opposite directions:
 - **A rate expressed per slot accrues faster, and that one is silent.** An annual rate divided by a fixed slots-per-year number has a slot duration baked into it, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
 
 The defense is the same for both: keep the number where a transaction can reach it. The lending market holds its divisor as `slots_per_year`, a config value its owner can retune for exactly this reason. The perpetual futures venue's `set_funding_rate()` does the same job for a per-slot rate, advancing the index at the old rate before storing the new one, so the slots already elapsed are charged at the rate that applied to them. A change to the slot time is then an afternoon's configuration rather than a release.
-
-## Which Clock to Use for Each Job
-
-Four questions, and a default if you answer no to all of them.
-
-![Yes goes right to an answer, no goes down to the next question; four noes leave the slot count.](figures/clock-decision-tree.svg)
-
-The third question asks what the seconds are worth. A price three seconds stale can be worth a liquidation to whoever kept it alive, so that boundary counts slots. A contribution three seconds late is worth one contribution, which a margin covers, so the fundraiser's week falls through to the fourth question.
-
-The fourth question is the arithmetic. A few seconds stay a few seconds however long the span runs, while a percent or two of a slot count grows with it, until across a week it is hours. That is why the vault's annual fee accrues by timestamp while the lending market's interest, which decides who can be liquidated, does not.
 
 ## What the Programs in This Book Chose
 
