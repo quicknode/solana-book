@@ -4,13 +4,14 @@ Solana has two clocks, and they go wrong in opposite ways. Which one a program s
 
 ## The Slot Counter
 
-The **slot** counts block opportunities. Programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh, and slots only go up, at a rate nobody can meaningfully bend. That is what makes the count safe to hang money on.
+The **slot** counts block opportunities. Programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward, which is what makes it safe to hang money on.
 
 ![The slot counter steps evenly and only forward; what a step is worth in milliseconds is a target rather than a promise.](figures/slot-counter.svg)
 
-It goes wrong in two ways, and neither of them is an adversary:
+The count is solid. What a count of them is worth in wall-clock time is not, and it goes wrong in three ways:
 
 - **A step is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter.[^slot-time-live] A count of them is out by a share of itself, so the longer the span, the further out it is.
+- **A leader can stretch its own slots, though it cannot shorten them.** Proof of history fixes the hashes in a tick, so nobody outruns it. What a leader can do is produce its slots slowly, or not at all, which makes those slots take longer in wall-clock time. That loosens a slot-counted window rather than tightening it, and the lever is one leader's turn wide, four slots, unless somebody holds a great deal of stake.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which never is.
 
 ## The Unix Timestamp
