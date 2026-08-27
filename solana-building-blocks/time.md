@@ -6,7 +6,7 @@ Solana has two clocks: a slot counter that nobody can bend, and a wall clock tha
 
 ## Measure Time in Slots
 
-The **slot** counts block opportunities. A slot lasts a fixed value in the range of hundreds of milliseconds, chosen by the network rather than by anything a program can read. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
+The **slot** counts block opportunities. The network sets a target slot length in the range of hundreds of milliseconds, which no program can read, and real slots run a little longer or shorter than that target. A slot count is exact as a count, and only approximate as a duration. Slots only go up, at a rate nobody can meaningfully bend, and programs read the current one from the **Clock sysvar**, a system account the runtime keeps fresh.
 
 That guarantee is why money is measured in slots here rather than in seconds. Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. A window counted in slots needs no conversion at the moment it is checked, and no clock anyone can move.
 
