@@ -1,6 +1,6 @@
 # Chapter 20: Where to Go From Here
 
-Nine programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
+Nine programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault strategy, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
 
 The Introduction promised a set of properties: markets that never close, settlement that is atomic and global, one set of accounts that every party reads. It promised rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those have stopped being reasons to consider a platform. They are materials you can now work with, on the world's most active blockchain.
 
@@ -12,7 +12,7 @@ You can take a financial product you understand in the real world and lay it out
 
 You can read somebody else's program and ask the questions that matter: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state has no exit. That is the same checklist an auditor opens with.
 
-You can work with an AI as a peer rather than an oracle. The companion AI skill will apply this book's rules to code your tools generate, and you can now tell when the output is wrong, which is the only thing that makes generated financial code safe to use.
+You can work with an AI as a peer rather than an oracle. The companion AI plugin will apply this book's rules to code your tools generate, and you can now tell when the output is wrong, which is the only thing that makes generated financial code safe to use.
 
 You can reason about who earns what, and why anyone shows up. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
