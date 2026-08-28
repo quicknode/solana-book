@@ -65,13 +65,13 @@ Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a t
 
 **The invariant is re-checked.** After the transfers land, the handler reloads both vaults and requires the new effective product to be at least the old one, failing with `InvariantViolated` otherwise. The program's own comment calls this the most important defensive check in the file, and it is: it catches any bug in the math above it that would hand a user too much. The check tolerates growth, because growth is just LP fees enriching the pool. Assert after the math, not just before.
 
-K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is K's second way of growing, the one the toy explanations lie about.
+K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is K's second way of growing.
 
-![The 30-cent fee splits: about 5 cents to Maria’s virtual claim, about 25 to the LPs, which never leaves the vault.](figures/amm-bob-swap.svg)
+![The 30-cent fee splits: about 5 cents to Maria's virtual claim, about 25 to the LPs, which never leaves the vault.](figures/amm-bob-swap.svg)
 
 ## The Next Trader Pays the Price the Last One Made
 
-Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
+Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
 
 ## Selling Back Pays the Fee in the Input Token
 

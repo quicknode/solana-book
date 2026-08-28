@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-![One market account, one book, three vaults; every trader’s accounts hang beneath their spot on the curve.](figures/order-book-accounts.svg)
+![One market account, one book, three vaults; every trader's accounts hang beneath their spot on the curve.](figures/order-book-accounts.svg)
 
 The **market** is a PDA holding one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). Its seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 
@@ -132,7 +132,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program re-derives the fills from its own book and verifies every supplied account against that plan: order ID, market, and owner all have to line up, or the transaction fails.
 - **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, which an attacker turns into a drain with thousands of tiny fills. Covered above; pinned by a test below.
 - **Book spam.** A full tree is a denial-of-service on everyone else's orders. Tick alignment, the minimum order size, the 20-open-orders-per-user cap, and the `OrderBookFull` check are all anti-spam walls, and each rejects with its own named error.
-- **The unauthorized paths.** Cancelling someone else's order rejects with `Unauthorized`; withdrawing fees without being the authority rejects with `NotMarketAuthority`; placing orders on a paused market rejects with `MarketPaused`.
+- **The unauthorized paths.** Canceling someone else's order rejects with `Unauthorized`; withdrawing fees without being the authority rejects with `NotMarketAuthority`; placing orders on a paused market rejects with `MarketPaused`.
 
 ## Testing Considerations
 

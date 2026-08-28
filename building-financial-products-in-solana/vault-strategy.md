@@ -14,7 +14,7 @@ Victor runs `initialize_registry()` once, creating the **registry**: the curator
 
 The approved set is stocks, bonds, whatever investors actually want. It is not the manager's own personal token, and structurally cannot be: `add_asset()` checks approval by deriving the `ApprovedAsset` address for the mint it is handed, so adding an unapproved asset fails because the account simply does not exist (pinned by `test_add_asset_rejects_unapproved`).
 
-![A manager may select from the approved set but never add to it; only Victor’s authority creates an ApprovedAsset.](figures/vault-registry.svg)
+![A manager may select from the approved set but never add to it; only Victor's authority creates an ApprovedAsset.](figures/vault-registry.svg)
 
 ## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
 
@@ -28,7 +28,7 @@ The indexes do real work: every handler that computes the fund's value walks ind
 
 ## The Manager Creates the Strategy and Sets the Weights
 
-Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy()` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund _by configuration_, and the cap is the program refusing to make that a parameter.
+Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy()` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund *by configuration*, and the cap is the program refusing to make that a parameter.
 
 She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and here is the rule that shapes the whole design: **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight()`, and only Maria: the manager gate is pinned by `test_set_weight_rejects_non_manager`.
 
@@ -40,15 +40,15 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 **Then it deploys the money at the weights.** 40% of 900, $360, buys TSLAx at $250: 1.44 TSLAx into the TSLAx vault. 60%, $540, buys NVDAx at $180: exactly 3 NVDAx. The swaps run through the router fixed at strategy creation (the example ships a mock router standing in for Jupiter; a router that is not the configured one is rejected, pinned by `test_deposit_rejects_unregistered_router`), and the strategy PDA signs.
 
-**And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output _from the oracle price_ and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot wave a bad fill through, because the minimum is never theirs to supply. This is the single most transferable idea in the chapter: **when an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
+**And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output *from the oracle price* and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot wave a bad fill through, because the minimum is never theirs to supply. **When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
 ![900 USDC in, 900 shares out, and every swap minimum comes from the same feeds the NAV loop reads.](figures/vault-deposit.svg)
 
 ## The Market Moves and the Manager Rebalances
 
-NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is worth about $1.07, and nothing needs to happen for that to be true: the share price _is_ NAV divided by supply, recomputed from feeds every time it matters.
+NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is worth about $1.07, and nothing needs to happen for that to be true: the share price *is* NAV divided by supply, recomputed from feeds every time it matters.
 
-But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's actual job. She runs `rebalance()`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums exactly like deposits. The weights return to 40/60. Note where the money went: between strategy-owned vaults, through the approved router, at oracle-checked prices, and nowhere near Maria.
+But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's actual job. She runs `rebalance()`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums exactly like deposits. The weights return to 40/60. The money moved between strategy-owned vaults, through the approved router, at oracle-checked prices, and nowhere near Maria.
 
 ![A $200 NVDA print drifts the weights to 37.5/62.5; two router legs restore 40/60 at feed-computed minimums.](figures/vault-rebalance.svg)
 
@@ -72,7 +72,7 @@ She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with 
 
 ## The Math: One Valuation Loop, Floors Toward the Fund
 
-Every formula in the program is a proportion, and they all lean the same way. Shares minted: deposit × supply ÷ NAV, floored. Withdrawal legs: vault balance × shares ÷ supply, floored per asset. Fee shares: supply × rate × time over a year, floored. Deployment per leg: deposit × weight ÷ 10,000, floored. All u128 intermediates, all multiply-before-divide, remainders resting with the fund rather than the transactor. The one multiplication that is not a proportion is the valuation itself, amount × price at the feed's 10^8 precision, and the whole chapter's integrity reduces to that line being run over _every_ asset, _every_ time, with a _fresh_ price.
+Every formula in the program is a proportion, and they all lean the same way. Shares minted: deposit × supply ÷ NAV, floored. Withdrawal legs: vault balance × shares ÷ supply, floored per asset. Fee shares: supply × rate × time over a year, floored. Deployment per leg: deposit × weight ÷ 10,000, floored. All u128 intermediates, all multiply-before-divide, remainders resting with the fund rather than the transactor. The one multiplication that is not a proportion is the valuation itself, amount × price at the feed's 10^8 precision, and the whole chapter's integrity reduces to that line being run over *every* asset, *every* time, with a *fresh* price.
 
 ## The Invariants: Custody Never Moves
 
@@ -84,9 +84,9 @@ Every formula in the program is a proportion, and they all lean the same way. Sh
 
 ## The Failure Modes: The Manager, the Feed, and the First Deposit
 
-- **The manager is the threat model**, and the program treats her as such: assets only from Victor's list, feeds only from Victor's entries, swaps only through the fixed router, minimums only from the oracle, fee capped and immutable, custody never hers. What remains to a careless manager is churn: pointless rebalancing that pays market slippage. That hurts depositors, but it does not enrich the manager, which is the design's honest boundary. Aligning _that_ incentive is what the fee-on-assets structure is for.
+- **The manager is the threat model**, and the program treats her as such: assets only from Victor's list, feeds only from Victor's entries, swaps only through the fixed router, minimums only from the oracle, fee capped and immutable, custody never hers. What remains to a careless manager is churn: pointless rebalancing that pays market slippage. That hurts depositors, but it does not enrich the manager, which is the design's honest boundary. Aligning *that* incentive is what the fee-on-assets structure is for.
 - **Every number in the fund depends on the feed.** A stale price fails closed (`StalePriceFeed`, 60-second window), a non-positive price fails (`NegativePrice`), a substituted feed account fails (`InvalidPriceFeed`). What this example does not check is the feed's confidence interval; a production strategy should, and the *Offchain Truth* chapter explains what confidence means and why "fresh but uncertain" is its own failure mode.
-- **The first deposit has no dead-shares guard**: the empty-fund deposit mints one-to-one, with no locked minimum like the AMM's `MINIMUM_LIQUIDITY`. The design leans on two mitigations: deposits only open at full allocation, and every deposit deploys immediately, so there is no idle pot to donate into and skew. That narrows the classic inflation attack without formally closing it; a production strategy should add virtual shares or a dead-shares floor, and the empty-pool section of the *Adversary* chapter shows exactly how. Naming the gap is the chapter's last lesson: knowing which defense your program relies on, and which it lacks, is the difference between a design decision and an accident.
+- **The first deposit has no dead-shares guard**: the empty-fund deposit mints one-to-one, with no locked minimum like the AMM's `MINIMUM_LIQUIDITY`. The design leans on two mitigations: deposits only open at full allocation, and every deposit deploys immediately, so there is no idle pot to donate into and skew. That narrows the classic inflation attack without formally closing it; a production strategy should add virtual shares or a dead-shares floor, and the empty-pool section of the *Adversary* chapter shows exactly how. Knowing which defense your program relies on, and which it lacks, is the difference between a design decision and an accident.
 - **Partial baskets are refused**, on deposit, withdrawal, and valuation alike (`IncompleteAssetAccounts`): an attacker who could get the fund valued without its best-performing vault could buy shares at a discount.
 
 ## Testing Considerations

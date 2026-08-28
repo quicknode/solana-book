@@ -416,7 +416,7 @@ In a lending market, the per-asset pool: its liquidity vault, its share mint, it
 
 ### resting order
 
-A limit order that did not match on arrival and now waits on the book, funded and cancellable.
+A limit order that did not match on arrival and now waits on the book, funded and cancelable.
 
 ### RPC endpoint
 

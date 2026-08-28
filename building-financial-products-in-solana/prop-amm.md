@@ -27,11 +27,11 @@ Maria runs the market-making firm that operates the venue: she stocks it, sets t
 
 Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
-Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the *Constant-Product AMM* chapter needed exists to protect depositors from each other, and there is exactly one depositor.
+Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. No shares are minted, no deposit is recorded, and no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the *Constant-Product AMM* chapter needed exists to protect depositors from each other, and there is exactly one depositor.
 
 ## A Buyer Trades at the Ask
 
-![The band itself is the operator’s revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
+![The band itself is the operator's revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn:
 
