@@ -44,7 +44,8 @@ const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).joi
 
 Environment:
   NO_COVER=1      Build the interior without the cover page.
-  REVIEWER_NAME   Stamp the title page as an advance copy for that reviewer.`;
+  REVIEWER_NAME   Stamp as an advance copy for that reviewer: named on the
+                  title page, and in the footer of every page carrying a folio.`;
 
 const die = (message) => {
   console.error(`${message}\n\n${USAGE}`);
@@ -92,12 +93,27 @@ const defaultName = sizeName === "print" ? `${TITLE}.pdf` : `${TITLE} (${sizeNam
 const outputPath = resolve(positional[0] ?? join(repoRoot, "build", defaultName));
 mkdirSync(dirname(outputPath), { recursive: true });
 
+// A reviewer's name is the one build input that does not come from the
+// repository, and it lands in an HTML element and a CSS content string, so it
+// is escaped for each. A name carrying a quote would otherwise end the CSS
+// string and take the rest of the footer rule with it.
+const escapeHtml = (text) =>
+  text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escapeCssString = (text) =>
+  text.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/[\r\n]+/g, " ");
+
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
-const reviewerName = process.env.REVIEWER_NAME ?? "";
+const reviewerName = (process.env.REVIEWER_NAME ?? "").trim();
 const buildDate = new Date().toISOString().slice(0, 10);
 const advanceNote = reviewerName
-  ? `Advance review copy for ${reviewerName}. Please don't redistribute. Built ${buildDate}.`
+  ? `Advance review copy for ${escapeHtml(reviewerName)}. Please don't redistribute. Built ${buildDate}.`
   : `Prerelease draft, built ${buildDate}.`;
+// The title page names the reviewer once; the footer names them on every page,
+// so a single printed or photographed leaf still says whose copy it came from.
+const reviewerFooter = reviewerName
+  ? `@bottom-right { content: "${escapeCssString(reviewerName)}"; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }`
+  : "";
+const suppressReviewerFooter = reviewerName ? " @bottom-right { content: none; }" : "";
 
 // Chapter order comes from the reader-facing table of contents: every
 // relative .md link, in document order.
@@ -409,17 +425,18 @@ const html = `<!doctype html>
   /* The draft marker sits in the footer rather than the header: at this trim
      the measure fits two running heads, and a third box wraps both of them. */
   @bottom-left { content: "PRERELEASE DRAFT (${buildDate}) - NOT FOR DISTRIBUTION"; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
+  ${reviewerFooter}
   @top-left { content: "${TITLE}"; font-family: Gelasio, Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
   @top-right { content: string(chapter); font-family: Gelasio, Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
 }
-@page :first { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page :first { @bottom-center { content: none; } @bottom-left { content: none; }${suppressReviewerFooter} @top-left { content: none; } @top-right { content: none; } }
 /* Pages inserted to push a part title onto a right-hand page carry nothing. */
-@page :blank { @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page :blank { @bottom-center { content: none; } @bottom-left { content: none; }${suppressReviewerFooter} @top-left { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
 /* A part title page carries no running head: the chapter it interrupts is over
    and the one it announces has not started. */
 @page part-start { @top-left { content: none; } @top-right { content: none; } }
-@page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; } @top-left { content: none; } @top-right { content: none; } }
+@page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; }${suppressReviewerFooter} @top-left { content: none; } @top-right { content: none; } }
 .cover { page: cover; break-after: page; }
 .cover img { display: block; width: ${PAGE_WIDTH_IN}in; height: ${PAGE_HEIGHT_IN}in; }
 
@@ -483,9 +500,13 @@ section.part-divider h1 {
 }
 
 section.chapter { break-before: page; }
-/* Paged.js resolves break rules in source order rather than by specificity,
-   so the part opener's recto rule has to come after the plain chapter rule. */
-section.chapter.part-opening { break-before: recto; }
+/* Every chapter opens on a right-hand page, which is how a reader flipping
+   through finds where one ends and the next starts. Paged.js fills the verso
+   it skips with a blank page, so this costs pages: roughly one for every two
+   chapters. Front-matter placeholders are exempt, because they share one flow
+   until they have real content. Paged.js resolves break rules in source order
+   rather than by specificity, so this has to come after the rule it overrides. */
+section.chapter:not(.prelude-item) { break-before: recto; }
 /* Paged.js keeps the running headers on the pages it inserts; @page :blank is
    the standard suppression, and this is the belt-and-braces version of it. */
 .pagedjs_blank_page .pagedjs_margin-content { display: none; }
@@ -638,19 +659,19 @@ await page.evaluate(() => {
 
 // Page one of the PDF is page one of the flow, so odd page numbers are
 // right-hand pages whether or not the cover is included. A part title belongs
-// on one, and so does the chapter that follows it across the blank reverse.
+// on one, and so does every chapter.
 // The recto break rules re-resolve either way, so dropping the cover shifts
 // where paged.js inserts its blanks rather than putting parts on the wrong side. A section that runs over several pages
 // appears once per page it occupies, so keep the lowest number for each: that
 // is the page it opens on.
-const partPages = await page.evaluate(() => {
+const openingPages = await page.evaluate(() => {
   const opening = new Map();
-  for (const section of document.querySelectorAll("section.part-divider, section.chapter.part-opening")) {
+  for (const section of document.querySelectorAll("section.part-divider, section.chapter:not(.prelude-item)")) {
     const number = Number(section.closest(".pagedjs_page")?.getAttribute("data-page-number"));
     const key = section.dataset.ref ?? section.id;
     const name = section.classList.contains("part-divider")
       ? `part title: ${section.querySelector("h1")?.textContent ?? "?"}`
-      : `part opens with ${section.querySelector("h1")?.textContent ?? "?"}`;
+      : `chapter: ${section.querySelector("h1")?.textContent ?? "?"}`;
     const seen = opening.get(key);
     if (!seen || number < seen.number) opening.set(key, { name, number });
   }
@@ -663,9 +684,13 @@ await browser.close();
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
 
-const strays = partPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
+const strays = openingPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
 if (strays.length > 0) {
-  console.error(`\n${strays.length} part page(s) did not land on a right-hand page:`);
+  console.error(`\n${strays.length} opening page(s) did not land on a right-hand page:`);
   for (const { name, number } of strays) console.error(`  page ${number}: ${name}`);
   process.exitCode = 1;
+} else {
+  // Printed rather than kept silent, because a selector that stops matching
+  // would otherwise turn this check into a no-op that still reports success.
+  console.log(`${openingPages.length} part and chapter openings, all on right-hand pages.`);
 }
