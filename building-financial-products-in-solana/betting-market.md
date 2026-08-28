@@ -115,7 +115,7 @@ Every checked operation maps to `MathOverflow`. There are no rates, no time, no 
 
 ## Testing Considerations
 
-The suite builds all state through the program's own handlers, and its centrepiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: admin gating, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and both properties of losing-bet closure. When you write your own market, copy the shape: the happy path proves the math, and every adversarial code path gets a test whose name says what it refuses to allow.
+The suite builds all state through the program's own handlers, and its centerpiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: admin gating, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and both properties of losing-bet closure. When you write your own market, copy the shape: the happy path proves the math, and every adversarial code path gets a test whose name says what it refuses to allow.
 
 ## What You Learnt from Building the Betting Market
 
