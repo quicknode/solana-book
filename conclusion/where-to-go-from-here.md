@@ -51,7 +51,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **A pot your friends collect when you skip a week.** Five friends stake fifty USDC each at the start of the month, and whoever misses their target forfeits a share to the ones who did not. That is the parimutuel pool of the *Betting Market* chapter: stakes in a vault, one settlement, winners split the pot, with the fact of who actually ran arriving the way every offchain fact does. Money in escrow is the oldest commitment device there is, and people go running when it is their own fifty in the pot.
 
-**A savings club with no bookkeeper.** Tanda, susu, hui, chit fund, ROSCA: everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, and the thing that goes wrong is always the organizer holding the pot between rounds. Contributions to a vault, the rotation as a state machine, the schedule against the clock as covered in the *Time* chapter, and the *Escrow* chapter's custody pattern underneath.
+**A savings club with no bookkeeper.** Tanda, susu, hui, chit fund, ROSCA: everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, and the thing that goes wrong is always the organizer holding the pot between rounds.[^rosca-scope] Contributions to a vault, the rotation as a state machine, the schedule against the clock as covered in the *Time* chapter, and the *Escrow* chapter's custody pattern underneath.
 
 **A rent deposit that pays its interest to the tenant.** A month or two of rent sits for a year in the landlord's account or an agency's, earning for whoever holds it. In a vault neither party controls it can pay the tenant instead, and still be released to either side by the rules. The design work is the state where the two sides disagree about damage, and giving that state an exit for both of them.
 
@@ -98,3 +98,5 @@ Then get a second opinion from somebody who was not in the room. Every wall in t
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 
 Nine programs in, the machinery is no longer the hard part. Choosing whose problem to solve is. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+
+[^rosca-scope]: The World Bank's Global Findex measures informal saving-club membership country by country, at [globalfindex.worldbank.org](https://globalfindex.worldbank.org). The practice is commonest where formal bank accounts are least available.
