@@ -47,9 +47,7 @@ Integer division nearly always leaves a remainder, and that remainder is **dust*
 
 Keeping the dust in the pool is the only stable policy. One minor unit of rounding in the user's favor is invisible in a test and industrial at scale. An attacker who can loop a transaction thousands of times turns a sub-cent leak into a drain, and the precision-exploit section of the *Adversary* chapter shows exactly that attack succeeding in production.
 
-> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed.[^spl-lending] The fix that shipped was one word: `round` became `floor`. The lesson is the whole section: rounding direction is a security boundary, and "closest" is never the answer for money.
-
-Three things follow from that table.
+> **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed.[^spl-lending] The fix that shipped was one word: `round` became `floor`. Rounding direction is a security boundary, and "closest" is never the answer for money.
 
 ### Safety Checks Round Against the User Too
 

@@ -8,7 +8,7 @@ A fact becomes onchain truth when a key the program trusts has vouched for it. P
 
 The first is **signed straight to you**: the trusted key signs the transaction carrying the fact. The betting market's admin settling an event is this, and the program checks a signer, and which key it is.
 
-The second is **published to an account**: the key signs its statement offchain, an oracle program verifies that signature onchain and records the fact in an account it owns, and your program reads that account in a later transaction. Pyth, Switchboard, and Chainlink all work this way, and it is worth being clear about what your own program does here, because it is not what most people expect: it verifies no signature at all. The signature was checked already, in somebody else's transaction. What your program establishes is where the account came from.
+The second is **published to an account**: the key signs its statement offchain, an oracle program verifies that signature onchain and records the fact in an account it owns, and your program reads that account in a later transaction. Pyth, Switchboard, and Chainlink all work this way, and your own program does something most readers do not expect here: it verifies no signature at all. The signature was checked already, in somebody else's transaction. What your program establishes is where the account came from.
 
 Either way, by the time your program sees the fact it is an ordinary instruction argument or ordinary account data, and it can be held to the same standard as every other input:
 
@@ -35,7 +35,7 @@ The third question, **what happens when publication stops**, is the one designs 
 
 One more consequence of taking trust seriously: **the fact's meaning must be pinned when the money commits, not when the fact arrives.** The betting market locks its outcome list the moment the first bet lands and snapshots its fee at event creation, so the question bettors staked on cannot be quietly rewritten before it is answered. Whatever the source, the deal is: the terms were fixed when you entered; only the answer arrives later.
 
-the *Adversary* chapter's price-manipulation section covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered* - a true report of a market the attacker just bent.
+The price-manipulation section of the *Adversary* chapter covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered* - a true report of a market the attacker just bent.
 
 ## What You Learnt
 

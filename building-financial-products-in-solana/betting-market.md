@@ -8,7 +8,7 @@ The program lives at `finance/betting-market` in the companion repository. Struc
 
 In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk at all. All stakes on all outcomes pool together. When the event settles, the losing side's money (minus the house fee) is distributed to the winning side, pro rata by stake. Your payout odds are simply the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
-The consequence the chapter's story will make concrete: **parimutuel markets reward conviction**. Bet three times as much as the next winner and you win three times as much of the losing pool.
+**Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
 ![The parimutuel split: at settlement the losing pool flows to the winners in proportion to their stakes, with a fee slice diverted to the house.](figures/betting-parimutuel-pools.svg)
 
@@ -47,7 +47,7 @@ After all three bets, the vault holds 600 USDC: 400 staked on Toy Story 5, 200 o
 
 ## The Film Grosses: The Operator Settles the Event
 
-The month ends. In the real world, Toy Story 5 wins. Note what just happened in program terms: the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it the simplest honest way there is: a designated trusted party signs. Maria calls `settle_event()` with the winning outcome's index, her signature is checked against the config's admin, and her word becomes the onchain truth. That is a **trust decision made visible**. The *Offchain Truth* chapter covers the full spectrum, from a single admin key like this one, through multi-party resolution, to signed price feeds. This program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
+The month ends. In the real world, Toy Story 5 wins. In program terms, the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it the simplest honest way there is: a designated trusted party signs. Maria calls `settle_event()` with the winning outcome's index, her signature is checked against the config's admin, and her word becomes the onchain truth. The *Offchain Truth* chapter covers the full spectrum, from a single admin key like this one, through multi-party resolution, to signed price feeds. This program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
 
 Settlement does four things, none of which involve paying bettors yet:
 
@@ -115,7 +115,7 @@ Every checked operation maps to `MathOverflow`. There are no rates, no time, no 
 
 ## Testing Considerations
 
-The suite builds all state through the program's own handlers, and its centrepiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: admin gating, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and both properties of losing-bet closure. When you write your own market, copy the shape: the happy path proves the math, and every adversarial code path gets a test whose name says what it refuses to allow.
+The suite builds all state through the program's own handlers, and its centerpiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: admin gating, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and both properties of losing-bet closure. When you write your own market, copy the shape: the happy path proves the math, and every adversarial code path gets a test whose name says what it refuses to allow.
 
 ## What You Learnt from Building the Betting Market
 
@@ -129,6 +129,6 @@ The concepts you now have:
 - **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize; the state machine's exit is the account's deletion.
 - **An exit from every state.** Open events can be canceled and refunded in full, so a burned-down film festival strands nobody's stake.
 
-The pooled payout formula and the honest look at offchain truth both return at full scale in the lending and perpetual futures chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
+The pooled payout formula and the honest look at offchain truth both return at full scale in the *Lending and Borrowing* and *Perpetual Futures* chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
 
 The next chapter puts the shape on a trading floor. Everyone here bet into one pool and took a share of it; from here on, the parties quote prices at each other instead, and the price stops being a pool's arithmetic and starts being a commitment somebody posted.
