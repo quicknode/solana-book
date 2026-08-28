@@ -48,6 +48,37 @@ const rules = [
   [/\bthat is the whole reason\b/i, 'give the reason without announcing it: "they count slots because ..."'],
   [/\bdoes the work of\b/i, "describe what the code stores and computes, not how clever the result is"],
   [/\bunderscor(es|ing) (the|that|how|why|its)\b/i, 'say what it shows (the underscore character in identifiers is fine)'],
+  // The same announcement, wearing a pronoun. Each of these was written here
+  // after the plain forms above were banned, and each was cut without losing a
+  // word of content: "which is exactly the point" and "that is the point" both
+  // sat after the sentence that already made the point.
+  [/\b(?:that|this|which|it) is (?:exactly )?the (?:whole )?point\b/i,
+    'the sentence before it already made the point; delete the announcement'],
+  [/\bis the one that matters\b|\bmatters more than it looks\b/i,
+    'say why: "the path an attacker will drive", not "the one that matters"'],
+  [/\bit is worth being\b/i, "cut it: if the point is worth making, make it"],
+  // Pointing the reader at the page instead of telling them what is on it.
+  // "Note what is pledged: shares" is one word longer than "what he pledges is
+  // shares". Watching a real market, or looking away from the chain, is the
+  // reader doing something in the world, and stays.
+  [/\bNote (?:what|who|where|the order)\b|\bNotice (?:what|who|how)\b|\bWatch \w+ in the (?:story|chapter|section|table|figure)\b/,
+    'state what the reader would see, rather than telling them to look at it'],
+  // American spelling, second batch: the doubled-l forms and the noun/verb
+  // pairs British English splits. Identifiers keep whatever the code shipped.
+  [/\b(?:cancelling|modelling|labelling|signalling|travelling)\b/i,
+    "American spelling doubles the l only when the stress falls on the last syllable: canceling, modeling"],
+  [/\bcancellable\b|\bcentre\b|\bcentrepiece\b|\blicence(?:s|d)?\b/i,
+    'American spelling in prose: cancelable, center, centerpiece, license'],
+  // One apostrophe and one set of quotes across the manuscript. A curly
+  // apostrophe reached six figure captions by way of a word processor; the
+  // build sets whichever it is given, so the two forms print differently.
+  [/[\u2018\u2019\u201c\u201d]/,
+    "use a straight apostrophe (') and straight quotes (\"), as the rest of the manuscript does"],
+  // One italic marker. Underscores also blind the chapter-reference check
+  // below, because an underscore is a word character, so `\b` never fires
+  // against the start of _Arithmetic of Money_ and the reference reads clean.
+  [/(?<![\w`*_])_[^_`\n]{1,80}_(?![\w`*_])/,
+    'italics are *asterisks* book-wide; underscores also hide chapter references from the check below'],
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],
@@ -106,7 +137,7 @@ for (const file of [...new Set(files)]) {
 // Heading check: a heading states the general mechanism and the characters
 // stay in the prose beneath, in every part of the book. Walkthrough chapters
 // keep the story's order and the specific mechanism; only the names go.
-const characterHeading = /^#{2,6} .*\b(Alice|Bob|Carol|Dave|Maria)\b/;
+const characterHeading = /^#{2,6} .*\b(Alice|Bob|Carol|Dave|Maria|Victor)\b/;
 
 for (const file of [...new Set(files)]) {
   readFileSync(file, "utf8")
@@ -173,7 +204,9 @@ for (const file of [...new Set(files)]) {
 // *Arithmetic of Money* chapter. It is not in the title list above because the
 // message there would tell an author to call a five-chapter section a chapter.
 const sectionName = "Financial Programming Concepts in Solana";
-const sectionMention = new RegExp(`(?<!\\*)\\b${sectionName}\\b`);
+// No lookbehind here: italicizing the section name is the commonest way to
+// write it as though it were a chapter, which is the mistake being caught.
+const sectionMention = new RegExp(`\\b${sectionName}\\b`);
 const sectionLink = new RegExp(`\\[${sectionName}\\]\\(`);
 
 for (const file of [...new Set(files)]) {
