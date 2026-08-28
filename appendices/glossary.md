@@ -144,7 +144,7 @@ Sub-unit remainders left over by integer division. Rounding policy decides who o
 
 ### epoch
 
-A period of 432,000 slots over which a validator schedule holds, so its length in days falls as the slot time falls. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots over which a validator schedule holds, so its length in days depends on the slot time. Mostly relevant to staking; application logic usually counts slots.
 
 ### equity (position)
 
@@ -160,7 +160,7 @@ A service that gives away free test tokens on devnet: SOL from the `solana airdr
 
 ### finality
 
-The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when enough blocks have been built on top that no validator can vote for a competing fork; how long that takes is set by the consensus protocol and moves when the protocol does. Distinct from confirmed, which a supermajority has voted for but which the protocol still permits to lose. See [commitment level](#commitment-level).
+The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when enough blocks have been built on top that no validator can vote for a competing fork; how long that takes is set by the network's consensus and moves when it does. Distinct from confirmed, which a supermajority has voted for but which the network still permits to lose. See [commitment level](#commitment-level).
 
 ### fixed point
 
@@ -452,7 +452,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time, a fixed value in the range of hundreds of milliseconds, in which a leader may produce a block. The protocol has shortened it before and intends to shorten it again, so a slot count converts to seconds only at the current slot time. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time, a fixed value in the range of hundreds of milliseconds, in which a leader may produce a block. The network has shortened it before, so a slot count converts to seconds only at the current slot time. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
 ### SOL
 
