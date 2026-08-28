@@ -6,7 +6,7 @@ In a traditional fund, "the manager cannot run off with client money" is enforce
 
 One vocabulary note before the story, because the word is overloaded. On Solana, a **vault** is a token account owned by a program; that is how this book has used it in every chapter. Some platforms call the whole fund product "a vault." This book does not: here **the product is the strategy, and the token accounts are the vaults.**
 
-## Victor's Registry: What Managers May Touch at All
+## A Curator Decides What Managers May Touch at All
 
 Two different people hold power in this program, and their separation is its first security decision. Victor runs the registry: he is not a fund manager, but the curator who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is worth exactly as much as its reputation for funds not blowing up, so vetting feeds is his product. Maria, the fund manager you will meet shortly, gets to pick allocations only from what Victor has approved.
 

@@ -1,6 +1,6 @@
 # Chapter 10: Operating Financial Software
 
-Correct code is only the start. This section is the rest of the job: proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
+Correct code is only the start. The rest of the job is proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
 
 ## Testing Financial Software: Test the Code Path the Bug Lives In
 
@@ -25,7 +25,7 @@ The escrow program in the companion repository ships a set of Kani harnesses tha
 - `proof_cancel_offer_returns_all_to_maker` proves the refund path whole.
 - `proof_offer_id_seed_injective` proves two different offer IDs can never derive the same address.
 
-Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. When a chapter of this book says an invariant "must hold," this is what taking that sentence literally looks like.
+Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. An invariant that "must hold" is a claim a proof can settle.
 
 ## Ship With a Second Opinion
 
@@ -47,7 +47,7 @@ Match the level to how reversible your reaction is. A liquidator bot can scan at
 
 ## Admin Power, Pausing, and Upgrades
 
-Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is not a design failure; on Solana even upgrade authority is normal and honest, because programs must be fixable when the *Adversary* chapter's exploit classes are discovered in yours. The failure is *unbounded* power, and the discipline is to treat the admin as a component with a specification, exactly like an oracle: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?
+Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is not a design failure; on Solana even upgrade authority is normal and honest, because programs must be fixable when the *Adversary* chapter's exploit classes are discovered in yours. The failure is *unbounded* power, and the discipline is to write the admin a specification as tight as an oracle's: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?
 
 - **Bound what configuration can express.** Validate every parameter at write time against limits that make abuse structurally impossible: the fee that cannot exceed 10,000 basis points, the loan-to-value that cannot exceed the liquidation threshold, the manager fee capped because an uncapped one drains the vault *by configuration*. A config the admin cannot make dangerous is worth more than an admin promise.
 - **Snapshot terms when money commits.** The betting market copies the fee onto each event at creation; the vault strategy's fee has no setter at all. Whatever the admin can change, they cannot change it retroactively for funds already inside.
@@ -63,9 +63,9 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
 - Ship with a second-opinion audit; a reviewer hunting the same holes an attacker would hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain has to choose. A bot deciding which transaction to send next can read at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
-- Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
+- Admin power runs on a written specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
 
-The through-line of the whole chapter, one last time. The arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.
+The arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.
 
 [^kani]: Kani is a Rust model checker from the AWS-backed model-checking project, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
 

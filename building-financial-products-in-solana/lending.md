@@ -49,7 +49,7 @@ Bob needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each
 
 1. `deposit_reserve_liquidity()`: his five NVDAx go into the NVDAx reserve; he receives five NVDAx shares.
 2. `initialize_obligation()`: creates his loan file.
-3. `deposit_obligation_collateral()`: moves his five NVDAx shares into a collateral vault owned by his obligation. Note what is pledged: *shares*, not raw tokens, so his collateral keeps earning supplier yield while pledged.
+3. `deposit_obligation_collateral()`: moves his five NVDAx shares into a collateral vault owned by his obligation. What he pledges is *shares*, not raw tokens, so his collateral keeps earning supplier yield while it is pledged.
 4. `borrow_obligation_liquidity()`: with his collateral worth $1,000 and loan-to-value at 75%, he may borrow up to $750 of USDC, which he does, drawn from the USDC reserve's available liquidity.
 
 The health check behind step 4 is conservative by construction: when `refresh_obligation()` values his position, collateral value is *floored* and debt value is *ceiled*, so every health evaluation errs against the borrower. Borrowing one unit past the allowance fails (`BorrowTooLarge`), and the test `borrow_up_to_max_ltv_then_one_more_fails` pins the boundary from both sides. His NVDAx is not sold, and he gets it back the moment he repays.
@@ -62,11 +62,11 @@ The health check behind step 4 is conservative by construction: when `refresh_ob
 
 Carol thinks SpaceX is overvalued and wants to profit if it falls. (Carol, you do you.) Her trade is the classic short, and a lending market is where shorts live: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
-Read her position carefully, because everything later hangs on it: **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
+Everything later hangs on one line of her position: **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
 
 ## Interest: One Index, No Transfers
 
-Weeks pass, and the loans accrue interest without a single token moving. The mechanism is the **borrow accumulation factor**, and it is the most reusable idea in this chapter.
+Weeks pass, and the loans accrue interest without a single token moving. The mechanism is the **borrow accumulation factor**.
 
 Each reserve stores one number that starts at 1.0 and only grows. On every `refresh_reserve()`, the program computes the current borrow rate, multiplies it by the slots elapsed, and grows the factor: new factor = old factor × (1 + rate per slot × elapsed slots). Rather than updating every loan, the reserve stores each borrower's `borrowed_principal` and grows the one shared `borrow_accumulation_factor`. A live debt is that principal times the current factor, rounded *up*, because debt rounds against the debtor. No loan is ever visited individually. The moving of actual tokens is consolidated to the moments people repay or redeem, exactly like the order book's unsettled balances but across time instead of across fills.
 

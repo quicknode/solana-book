@@ -8,7 +8,7 @@ A fact becomes onchain truth when a key the program trusts has vouched for it. P
 
 The first is **signed straight to you**: the trusted key signs the transaction carrying the fact. The betting market's admin settling an event is this, and the program checks a signer, and which key it is.
 
-The second is **published to an account**: the key signs its statement offchain, an oracle program verifies that signature onchain and records the fact in an account it owns, and your program reads that account in a later transaction. Pyth, Switchboard, and Chainlink all work this way, and it is worth being clear about what your own program does here, because it is not what most people expect: it verifies no signature at all. The signature was checked already, in somebody else's transaction. What your program establishes is where the account came from.
+The second is **published to an account**: the key signs its statement offchain, an oracle program verifies that signature onchain and records the fact in an account it owns, and your program reads that account in a later transaction. Pyth, Switchboard, and Chainlink all work this way, and your own program does something most readers do not expect here: it verifies no signature at all. The signature was checked already, in somebody else's transaction. What your program establishes is where the account came from.
 
 Either way, by the time your program sees the fact it is an ordinary instruction argument or ordinary account data, and it can be held to the same standard as every other input:
 
