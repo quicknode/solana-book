@@ -1,6 +1,6 @@
 # Chapter 14: The Order Book Exchange
 
-NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. By the end of this chapter you will have walked through one, end to end: how orders come in, how they rest, how they match, where the money waits, and how the operator collects fees.
+NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. All of them run the same machinery: orders arrive carrying a price their owner refuses to cross, wait in two sorted lists, trade when one order reaches across the gap, and settle out of vaults the venue's operator cannot reach.
 
 The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the *Escrow* chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement gated by who signed. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
 
@@ -10,7 +10,7 @@ A **limit order** is an order with a line drawn on it. A **bid** says "I will bu
 
 ![The NVDAx/USDC order book: asks stacked lowest price first, bids highest first, and the spread between the best bid and best ask.](figures/order-book-bids-asks-spread.svg)
 
-The other model for an exchange is the automated market maker, where there are no limit orders and every trade fills immediately against a pooled formula; that is the next chapter. An order book is better at price discovery, because every price on it is a real commitment someone funded. An AMM is better for new assets without much liquidity around them. Real markets need both, which is why this book builds both.
+The other model for an exchange is the automated market maker, where there are no limit orders and every trade fills immediately against a pooled formula; that is the next chapter. An order book is better at price discovery, because every price on it is a real commitment someone funded. An AMM is better for new assets without much liquidity around them. Real markets need both.
 
 One naming note: this design is traditionally called a *central limit* order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network. Slightly strange, entirely workable.
 
@@ -84,7 +84,7 @@ Now the money moves, in the unsettled-balance style. Gross proceeds are 3 × 250
 
 ![Nothing transfers at match time: both sides get unsettled balances, and 1.875 USDC goes to the fee vault.](figures/order-book-match.svg)
 
-Notice who did nothing: Bob. Like Alice in the *Escrow* chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
+Bob did nothing at all. Like Alice in the *Escrow* chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
 
 ## Canceling Returns the Unfilled Lock
 

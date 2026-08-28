@@ -71,7 +71,7 @@ When Maria wants her capital back, `withdraw_inventory()` hands her both vaults,
 
 The quote arithmetic is four small functions (`quote_math.rs`), all checked u128, multiply before divide, one floor per quantity. The ask rounds **up**; the bid rounds **down**; both outputs floor. Every rounding direction favors the market, so the composite property, that value out never exceeds value in measured at the raw oracle price, holds by construction. The handler still asserts it after computing each fill, cross-multiplied so the check itself does no rounding, and fails with `InvariantViolated` if a future refactor breaks a rounding direction. Assert after the math, not just before: the same discipline as the constant-product pool's post-trade K check, guarding a much simpler formula.
 
-The unit conversion deserves one honest sentence: prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals, and the program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program does not get to assume its tokens are that polite.
+The unit conversion is the part that does not stay clean. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program does not get to assume its tokens are that polite.
 
 ## The Invariants: What the Market Promises
 

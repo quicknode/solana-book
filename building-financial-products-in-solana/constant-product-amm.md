@@ -4,7 +4,7 @@ The *Order Book Exchange* chapter built an exchange where every price is a commi
 
 AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
-A warning about most AMM explanations: they use two toy tokens, no admin fees, no liquidity providers, and they tell you "K never changes," which is false. This chapter does a genuine launch, with an operator, fees, LPs, and the true story of X, Y, and K after every single trade.
+K does change. It is constant only inside a single trade, and it grows every time a deposit lands or a fee stays behind. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every single trade.
 
 ## X Times Y Equals K, and What K Is Actually For
 
@@ -19,7 +19,7 @@ And the truth about K: **K is constant within a single trade and grows over time
 - **Deposits** add more of both tokens at the same ratio.
 - **Fees** stay in the pool: the liquidity providers' share of every trade's fee is never paid out to anyone.
 
-And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
+And the deeper K gets, the less any individual trade moves the price. In the story below, K never once stays still.
 
 ![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
 
@@ -104,7 +104,7 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 ## The Failure Modes: Empty Pools, First Deposits, and the Vacuous Invariant
 
-- **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other). Here is the vicious part: the invariant check would not catch it, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A guard requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs. An invariant that can go vacuously true is not an invariant.
+- **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other). The invariant check would not catch it either, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A guard requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs. An invariant that can go vacuously true is not an invariant.
 - **The inflation attack.** The empty-pool attack from the *Adversary* chapter, in its native habitat: a first depositor minting dust-level LP supply, donating tokens to skew the share price, and rounding later depositors down to zero. The `MINIMUM_LIQUIDITY` floor makes the attack uneconomic: because the locked units always sit in the supply, share supply can never be dust-sized relative to the pool, and inflating the value behind each share means inflating the value behind units the attacker can never own.
 - **The first deposit sets the price, and anyone can be first.** The program's own source is candid that pool creation can be front-run with a bad ratio. The floor bounds the share-math games, but a launch operator should still expect arbitrage traffic (or hostile seeding) until the pool's price matches the market's, and seed with size. An honest limitation, stated as one.
 - **Slippage and sandwiches.** Every trade and deposit carries a caller-supplied minimum (`min_output_amount`, `minimum_lp_tokens_out`, the withdrawal minimums), and the tests prove each one rejects (`SlippageExceeded`, `DepositBelowMinimum`, `WithdrawalBelowMinimum`). What the program cannot do is choose the number for you; a zero minimum is legal and is exactly what a sandwich attacker hopes you send.
