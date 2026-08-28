@@ -444,7 +444,10 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc ol { list-style: none; padding: 0; }
 .book-toc li { font-size: 10.5pt; }
 .book-toc li a { display: flex; align-items: baseline; }
-.book-toc .label { flex: 0 0 5.4em; }
+/* "Chapter 20" sets the width: at 5.4em the two-digit labels wrapped, so the
+   number printed on a line of its own under the word. Never wrap a label, and
+   let one wider than the column push its own title rather than folding. */
+.book-toc .label { flex: 0 0 auto; min-width: 6.4em; white-space: nowrap; }
 .book-toc .t { flex: 1; padding-right: 1em; }
 .book-toc .pg { flex: 0 0 auto; }
 .book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }

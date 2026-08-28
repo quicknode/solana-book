@@ -43,7 +43,7 @@ The code that reads the chain has to answer that question anyway, because it act
 | **confirmed** | A supermajority of stake has voted for that block | It can vanish in theory; no confirmed block has been rolled back on mainnet |
 | **finalized** | So many blocks sit on top that no validator can now vote another way | Nothing. This is the record |
 
-Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
+Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rather than by any number worth memorizing.
 
 ## Admin Power, Pausing, and Upgrades
 
