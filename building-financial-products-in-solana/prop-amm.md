@@ -19,7 +19,7 @@ Two consequences follow immediately, and both are absences:
 
 The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
-No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The fundraiser chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are, legitimately, the entire accounting.
+No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The *Token Fundraiser* chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are, legitimately, the entire accounting.
 
 ## The Market Maker Opens the Market and Stocks It
 
@@ -27,11 +27,11 @@ Maria runs the market-making firm that operates the venue: she stocks it, sets t
 
 Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
-Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. Note what does not happen: no shares are minted, no deposit is recorded, no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the *Constant-Product AMM* chapter needed exists to protect depositors from each other, and there is exactly one depositor.
+Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's treasury into the vaults. No shares are minted, no deposit is recorded, and no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the *Constant-Product AMM* chapter needed exists to protect depositors from each other, and there is exactly one depositor.
 
 ## A Buyer Trades at the Ask
 
-![The band itself is the operator’s revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
+![The band itself is the operator's revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps that echo this book's arithmetic chapter at every turn:
 
@@ -41,7 +41,7 @@ Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the 
 
 Her `minimum_amount_out` guards the fill, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
-Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The curve chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
+Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The *Constant-Product AMM* chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
 ## A Seller Trades at the Bid, and the Round Trip Is the Fee
 
@@ -71,7 +71,7 @@ When Maria wants her capital back, `withdraw_inventory()` hands her both vaults,
 
 The quote arithmetic is four small functions (`quote_math.rs`), all checked u128, multiply before divide, one floor per quantity. The ask rounds **up**; the bid rounds **down**; both outputs floor. Every rounding direction favors the market, so the composite property, that value out never exceeds value in measured at the raw oracle price, holds by construction. The handler still asserts it after computing each fill, cross-multiplied so the check itself does no rounding, and fails with `InvariantViolated` if a future refactor breaks a rounding direction. Assert after the math, not just before: the same discipline as the constant-product pool's post-trade K check, guarding a much simpler formula.
 
-The unit conversion deserves one honest sentence: prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals, and the program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program does not get to assume its tokens are that polite.
+The unit conversion is the part that does not stay clean. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program does not get to assume its tokens are that polite.
 
 ## The Invariants: What the Market Promises
 
@@ -83,7 +83,7 @@ The unit conversion deserves one honest sentence: prices arrive at the oracle's 
 ## The Failure Modes: What Attacks a Market Maker
 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates sit in front of every single swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter will meet the same enemy with leverage multiplying it.
-- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No require! can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
+- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
 - **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the *Perpetual Futures* chapter makes, with one difference worth noticing: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and watch entire categories return "not applicable." No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 

@@ -1,6 +1,6 @@
 # Chapter 20: Where to Go From Here
 
-Nine programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
+Nine programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault strategy, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
 
 The Introduction promised a set of properties: markets that never close, settlement that is atomic and global, one set of accounts that every party reads. It promised rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those have stopped being reasons to consider a platform. They are materials you can now work with, on the world's most active blockchain.
 
@@ -12,7 +12,7 @@ You can take a financial product you understand in the real world and lay it out
 
 You can read somebody else's program and ask the questions that matter: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state has no exit. That is the same checklist an auditor opens with.
 
-You can work with an AI as a peer rather than an oracle. The companion AI skill will apply this book's rules to code your tools generate, and you can now tell when the output is wrong, which is the only thing that makes generated financial code safe to use.
+You can work with an AI as a peer rather than an oracle. The companion AI plugin will apply this book's rules to code your tools generate, and you can now tell when the output is wrong, which is the only thing that makes generated financial code safe to use.
 
 You can reason about who earns what, and why anyone shows up. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
@@ -43,7 +43,7 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 
 Products of this kind have been shipped already, several of them with real users and real money behind them. They are worth studying for their shape rather than copying line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
 
-**An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The edges of the product move at the speed of the banking system, while everything between them moves at the speed of the chain. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Vault Strategy* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licences that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
+**An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The edges of the product move at the speed of the banking system, while everything between them moves at the speed of the chain. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Vault Strategy* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licenses that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
 
 **Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that hold up are the ones honest about the awkward case: when borrowing is high the reserve cannot pay every depositor out at once, and the app has to say so before anyone finds out the hard way.
 
@@ -51,7 +51,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **A pot your friends collect when you skip a week.** Five friends stake fifty USDC each at the start of the month, and whoever misses their target forfeits a share to the ones who did not. That is the parimutuel pool of the *Betting Market* chapter: stakes in a vault, one settlement, winners split the pot, with the fact of who actually ran arriving the way every offchain fact does. Money in escrow is the oldest commitment device there is, and people go running when it is their own fifty in the pot.
 
-**A savings club with no bookkeeper.** Tanda, susu, hui, chit fund, ROSCA: everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, and the thing that goes wrong is always the organizer holding the pot between rounds. Contributions to a vault, the rotation as a state machine, the schedule against the clock as covered in the *Time* chapter, and the *Escrow* chapter's custody pattern underneath.
+**A savings club with no bookkeeper.** Tanda, susu, hui, chit fund, ROSCA: everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, and the thing that goes wrong is always the organizer holding the pot between rounds.[^rosca-scope] Contributions to a vault, the rotation as a state machine, the schedule against the clock as covered in the *Time* chapter, and the *Escrow* chapter's custody pattern underneath.
 
 **A rent deposit that pays its interest to the tenant.** A month or two of rent sits for a year in the landlord's account or an agency's, earning for whoever holds it. In a vault neither party controls it can pay the tenant instead, and still be released to either side by the rules. The design work is the state where the two sides disagree about damage, and giving that state an exit for both of them.
 
@@ -83,7 +83,7 @@ Some things were left out on purpose, and knowing which is part of knowing the s
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
-**Formal verification** appears here only as a taster. The escrow's proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modelling the parts that cannot be executed symbolically, is a subject the size of this book.
+**Formal verification** appears here only as a taster. The escrow's proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
 
 **Governance** is deliberately absent. Every program here has an operator with a key, and the honest treatment of admin power is in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
@@ -98,3 +98,5 @@ Then get a second opinion from somebody who was not in the room. Every wall in t
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 
 Nine programs in, the machinery is no longer the hard part. Choosing whose problem to solve is. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+
+[^rosca-scope]: The World Bank's Global Findex measures informal saving-club membership country by country, at [globalfindex.worldbank.org](https://globalfindex.worldbank.org). The practice is commonest where formal bank accounts are least available.

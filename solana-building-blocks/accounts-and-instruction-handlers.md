@@ -152,7 +152,7 @@ Bob's SOL lives in his own account, but his USDC does not: each token balance li
 
 So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
-![Each token account’s address is derived from its owner, the token program and the mint, so nobody chose it.](figures/bobs-usdc-transaction.svg)
+![Each token account's address is derived from its owner, the token program and the mint, so nobody chose it.](figures/bobs-usdc-transaction.svg)
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 

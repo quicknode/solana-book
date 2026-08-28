@@ -1,6 +1,6 @@
 # Chapter 19: Perpetual Futures
 
-Alice thinks NVIDIA is about to have a very good quarter. She could buy NVDAx and wait, but she wants more exposure than her 1,000 USDC buys. Bob thinks the run is over and wants to profit if NVIDIA falls, which owning the stock cannot give him. A **perpetual future** serves them both: a contract that pays the price movement of an asset, long or short, with leverage, without either trader ever holding the asset, and, unlike a traditional future, without an expiry date. Perpetuals are the highest-volume product in crypto trading, and they are this book's capstone because building one honestly requires everything: tokens, PDAs, vault custody, pool shares, offchain truth, liquidation, time, and arithmetic that must round the right way under leverage.
+Alice thinks NVIDIA is about to have a very good quarter. She could buy NVDAx and wait, but she wants more exposure than her 1,000 USDC buys. Bob thinks the run is over and wants to profit if NVIDIA falls, which owning the stock cannot give him. A **perpetual future** serves them both: a contract that pays the price movement of an asset, long or short, with leverage, without either trader ever holding the asset, and, unlike a traditional future, without an expiry date. Perpetuals trade more volume than any other product in crypto.[^perps-volume] Building one honestly requires everything this book has covered: tokens, PDAs, vault custody, pool shares, offchain truth, liquidation, time, and arithmetic that must round the right way under leverage.
 
 The program lives at `finance/perpetual-futures` in the companion repository. It follows the pool-as-counterparty design of Jupiter Perpetuals rather than an order-book design like Drift: no matching engine, no resting orders, one liquidity pool on the other side of every trade.
 
@@ -99,7 +99,7 @@ At $115, Bob's equity is 995 − 750 = 245, under the 250 maintenance line. He s
 - Bob is refunded the rest: 195 USDC, plus the rent from his position account, which closes.
 - The LPs absorb the difference between Bob's collateral and what walked out: 995 − 245 = 750 USDC to `liquidity`.
 
-The pool cannot sell Bob's position; a program never acts on its own, somebody has to call it, so the design pays outsiders to call it at exactly the right moment. Dave is the crank pattern from the *Lending and Borrowing* chapter with a profit motive. And notice the honest gap, documented in the example: the liquidation fee comes out of *remaining equity*, so a position that gaps straight through zero pays Dave nothing, and unattended zombie positions become losses the LPs eat. Production venues fund the liquidator from an insurance fund precisely so the incentive never dies. When your design relies on someone showing up, check what happens when showing up stops paying.
+The pool cannot sell Bob's position; a program never acts on its own, somebody has to call it, so the design pays outsiders to call it at exactly the right moment. Dave is the crank pattern from the *Lending and Borrowing* chapter with a profit motive. The example documents one honest gap: the liquidation fee comes out of *remaining equity*, so a position that gaps straight through zero pays Dave nothing, and unattended zombie positions become losses the LPs eat. Production venues fund the liquidator from an insurance fund precisely so the incentive never dies. When your design relies on someone showing up, check what happens when showing up stops paying.
 
 ![Bob's liquidation at $115: his 245 of remaining equity splits 50 to Dave and 195 back to Bob, while the LPs keep the 750 his position lost.](figures/perps-liquidation.svg)
 
@@ -123,7 +123,7 @@ Every calculation is checked u128 integer arithmetic, multiply before divide, an
 
 ## The Invariants: Percolator's Three, Simplified
 
-The example's design notes point at percolator, Anatoly Yakovenko's formally verified perp risk engine, and the three invariants it enforces are the ones to memorize, because this program is a simplified working model of each:
+The example's design notes point at Percolator, Anatoly Yakovenko's formally verified perp risk engine, and the three invariants it enforces are the ones to memorize, because this program is a simplified working model of each:
 
 - **Realizable credit**: every payout the system may ever owe is backed before it can be owed. Here: reservations at open, the profit cap, the free-liquidity gate on withdrawals, and the fail-closed `PoolInsolvent` checks.
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
@@ -156,4 +156,6 @@ The concepts this capstone added:
 - **Funding.** A pool-wide index plus a per-position entry snapshot charges the crowded side rent, the same accounting shape every production venue uses.
 - **Mark-to-market share pricing.** LP shares price against AUM including traders' unrealized PnL, so entering and leaving the pool is fair at any instant.
 
-And look back at what this chapter spent without explaining: mints and token accounts, PDAs as vault authorities, shares priced against a pool, state-not-balances, checks-effects-interactions. Then exits from every state, a signed external price checked before it is used, cranks run by profit-seekers, and integer arithmetic that rounds toward the house. Every one was a chapter, and every one showed up here as a single sentence doing its job. That is the shape of financial software on Solana: a small number of hard-won disciplines, composed. You now have all of them. The companion repository holds the code; the rest is what you build.
+This chapter spent, without stopping to explain any of them, mints and token accounts, PDAs as vault authorities, shares priced against a pool, state-not-balances, and checks-effects-interactions. Then exits from every state, a signed external price checked before it is used, cranks run by profit-seekers, and integer arithmetic that rounds toward the house. Every one was a chapter, and every one showed up here as a single sentence doing its job. That is the shape of financial software on Solana: a small number of hard-won disciplines, composed. You now have all of them. The companion repository holds the code; the rest is what you build.
+
+[^perps-volume]: [defillama.com](https://defillama.com) tracks spot and perpetual volumes side by side, so the gap between the two is one click away. It moves with the market.

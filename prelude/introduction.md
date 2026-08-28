@@ -20,11 +20,11 @@ Open networks use these properties for permissionless markets anyone can join. T
 
 ## A Long-Lived Technical Book for Solana
 
-Some technical books die with the release they document. A smaller number live for decades. _TCP/IP Illustrated_ is still the book network engineers hand each other, thirty years on. _The UNIX and Linux System Administration Handbook_ has outlasted every operating system release it ever mentioned. _Mastering Bitcoin_ remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way _TCP/IP Illustrated_ drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long term knowledge for building financial products on Solana.
+Some technical books die with the release they document. A smaller number live for decades. *TCP/IP Illustrated* is still the book network engineers hand each other, thirty years on. *The UNIX and Linux System Administration Handbook* has outlasted every operating system release it ever mentioned. *Mastering Bitcoin* remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way *TCP/IP Illustrated* drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long term knowledge for building financial products on Solana.
 
 Solana is a fast-moving space: network releases, framework versions, chain constants, and tools churn frequently. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
-_Building Financial Software on Solana_ teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
+*Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
 In this book you'll learn how each of the classic financial products actually works as a Solana program, how to handle assets without losing a penny, and how to prove your program works. These long term concepts are what this book is for.
 
@@ -73,18 +73,18 @@ Real incidents appear throughout the book in boxed **War Story** sections. Histo
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory).
 
-Like _TCP/IP Illustrated_, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit.
+Like *TCP/IP Illustrated*, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit.
 
 ## How This Book Was Produced
 
-This book was written and edited by hand. The visual mechanism that describes Solana accounts and their changes, and the order in which Solana concepts are introduced, were conceived for the Professional Education Program at Solana Foundation. Every financial program other than the escrow was first made as a video for Quicknode, and this book began as transcriptions of that video content. AI tools were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state. Quicknode stands by the contents of _Building Financial Software on Solana_.
+This book was written and edited by hand. The visual mechanism that describes Solana accounts and their changes, and the order in which Solana concepts are introduced, were conceived for the Professional Education Program at Solana Foundation. Every financial program other than the escrow was first made as a video for Quicknode, and this book began as transcriptions of that video content. AI tools were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state. Quicknode stands by the contents of *Building Financial Software on Solana*.
 
 ## Where to Start, Depending on What You Came For
 
 Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here are a few honest shortcuts:
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
-- **Here to ship one specific thing?** Read the [_Arithmetic of Money_](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [_Offchain Truth_](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
+- **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
 
 ## The Glossary
 

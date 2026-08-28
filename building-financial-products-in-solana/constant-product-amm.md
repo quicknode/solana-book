@@ -4,7 +4,7 @@ The *Order Book Exchange* chapter built an exchange where every price is a commi
 
 AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
-A warning about most AMM explanations: they use two toy tokens, no admin fees, no liquidity providers, and they tell you "K never changes," which is false. This chapter does a genuine launch, with an operator, fees, LPs, and the true story of X, Y, and K after every single trade.
+K does change. It is constant only inside a single trade, and it grows every time a deposit lands or a fee stays behind. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every single trade.
 
 ## X Times Y Equals K, and What K Is Actually For
 
@@ -19,7 +19,7 @@ And the truth about K: **K is constant within a single trade and grows over time
 - **Deposits** add more of both tokens at the same ratio.
 - **Fees** stay in the pool: the liquidity providers' share of every trade's fee is never paid out to anyone.
 
-And the deeper K gets, the less any individual trade moves the price. Watch K in the story below; it never once stays still.
+And the deeper K gets, the less any individual trade moves the price. In the story below, K never once stays still.
 
 ![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
 
@@ -65,13 +65,13 @@ Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a t
 
 **The invariant is re-checked.** After the transfers land, the handler reloads both vaults and requires the new effective product to be at least the old one, failing with `InvariantViolated` otherwise. The program's own comment calls this the most important defensive check in the file, and it is: it catches any bug in the math above it that would hand a user too much. The check tolerates growth, because growth is just LP fees enriching the pool. Assert after the math, not just before.
 
-K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is K's second way of growing, the one the toy explanations lie about.
+K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is K's second way of growing.
 
-![The 30-cent fee splits: about 5 cents to Maria’s virtual claim, about 25 to the LPs, which never leaves the vault.](figures/amm-bob-swap.svg)
+![The 30-cent fee splits: about 5 cents to Maria's virtual claim, about 25 to the LPs, which never leaves the vault.](figures/amm-bob-swap.svg)
 
 ## The Next Trader Pays the Price the Last One Made
 
-Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here, and that is the point: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
+Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. Nothing new happened here: the second trader's numbers are fully determined by the first trader's footprint. Price impact compounds.
 
 ## Selling Back Pays the Fee in the Input Token
 
@@ -104,7 +104,7 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 ## The Failure Modes: Empty Pools, First Deposits, and the Vacuous Invariant
 
-- **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other). Here is the vicious part: the invariant check would not catch it, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A guard requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs. An invariant that can go vacuously true is not an invariant.
+- **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other). The invariant check would not catch it either, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A guard requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs. An invariant that can go vacuously true is not an invariant.
 - **The inflation attack.** The empty-pool attack from the *Adversary* chapter, in its native habitat: a first depositor minting dust-level LP supply, donating tokens to skew the share price, and rounding later depositors down to zero. The `MINIMUM_LIQUIDITY` floor makes the attack uneconomic: because the locked units always sit in the supply, share supply can never be dust-sized relative to the pool, and inflating the value behind each share means inflating the value behind units the attacker can never own.
 - **The first deposit sets the price, and anyone can be first.** The program's own source is candid that pool creation can be front-run with a bad ratio. The floor bounds the share-math games, but a launch operator should still expect arbitrage traffic (or hostile seeding) until the pool's price matches the market's, and seed with size. An honest limitation, stated as one.
 - **Slippage and sandwiches.** Every trade and deposit carries a caller-supplied minimum (`min_output_amount`, `minimum_lp_tokens_out`, the withdrawal minimums), and the tests prove each one rejects (`SlippageExceeded`, `DepositBelowMinimum`, `WithdrawalBelowMinimum`). What the program cannot do is choose the number for you; a zero minimum is legal and is exactly what a sandwich attacker hopes you send.

@@ -8,7 +8,7 @@ The program lives at `finance/token-fundraiser` in the companion repository. It 
 
 The whole design hangs on two numbers recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two futures. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler simply refuses to run.
 
-The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors: the state machine discipline of the *Financial Programming Concepts in Solana* chapter, at its purest.
+The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both doors: one handler, one transition, guarded by state, at its purest.
 
 ![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
 
@@ -63,7 +63,7 @@ The trade-off is honest bookkeeping in both directions. Tokens donated straight 
 
 `check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The state machine does not mark itself finished; it **ceases to exist**, which is the strongest possible "finished" and makes double-claiming a structural impossibility rather than a flag check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
 
-One loose end survives success, and it is worth being honest about because you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone. The program omits it, and the omission is the kind you should notice by habit: *for every account your program creates, name the handler that eventually closes it.*
+One loose end survives success, and you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone. The program omits it, and the omission is the kind you should notice by habit: *for every account your program creates, name the handler that eventually closes it.*
 
 ![Success: one transaction drains the vault to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
 
@@ -71,11 +71,11 @@ One loose end survives success, and it is worth being honest about because you w
 
 Run the alternative. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure; the deadline arithmetic simply flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
-Note the order inside that handler, because it is the checks-effects-interactions pattern doing real work: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and by now you should expect it anywhere money exits.
+The order inside that handler is checks-effects-interactions doing real work: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and by now you should expect it anywhere money exits.
 
 Refunds are per-contributor and pull-based: each backer collects their own, whenever they like, with no deadline. The contributors are left exactly whole; the all-or-nothing promise was kept by the cheapest mechanism on the chain: an integer comparison.
 
-One exit remains, and it matters more than it looks. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so while the failed fundraiser's account exists, Maria can never open another raise from that wallet. Once every contribution has been refunded, she calls `close_fundraiser()`. It checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so no refund can ever be stranded). It then sweeps any stray direct donations in the vault to her token account, and closes both the vault and the fundraiser, returning her rent. The machine is fully dismantled, and Maria can try again next quarter with a smaller target. Every account this program creates has a named closer on the failure path.
+One exit remains. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so while the failed fundraiser's account exists, Maria can never open another raise from that wallet. Once every contribution has been refunded, she calls `close_fundraiser()`. It checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so no refund can ever be stranded). It then sweeps any stray direct donations in the vault to her token account, and closes both the vault and the fundraiser, returning her rent. The machine is fully dismantled, and Maria can try again next quarter with a smaller target. Every account this program creates has a named closer on the failure path.
 
 ![Failure: after the deadline each contributor pulls back exactly their recorded amount, and each receipt closes as it pays.](figures/fundraiser-refunds.svg)
 
@@ -88,7 +88,7 @@ The program's entire financial surface is four expressions:
 - **The minimum contribution**: `10^decimals`.
 - **The deadline**: `(now − time_started) / 86,400`, floored.
 
-Every addition and subtraction on `current_amount` and the receipts is checked and maps overflow to `MathOverflow`. No rates, no pro-rata, no prices: refunds pay recorded amounts back verbatim, which is why this chapter sits directly after escrow, before any program that has to *compute* what people are owed.
+Every addition and subtraction on `current_amount` and the receipts is checked and maps overflow to `MathOverflow`. No rates, no pro-rata, no prices: refunds pay recorded amounts back verbatim, so no program before this one has had to *compute* what people are owed.
 
 ## The Invariants: The Counter Balances Like a Ledger
 
