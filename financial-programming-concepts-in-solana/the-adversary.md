@@ -48,7 +48,7 @@ The defense is the *Arithmetic of Money* chapter applied without exception, plus
 
 ## Ordering and Composability: CPI Trust Boundaries
 
-A transaction can invoke your program, which invokes another, which invokes another. Composability is Solana's superpower (Solana Building Blocks made that case), and every composition is also a trust boundary: mid-transaction, between your instructions, or inside a CPI you make, code you did not write gets to run.
+A transaction can invoke your program, which invokes another, which invokes another. Composability is Solana's superpower, as the *Core Building Blocks of Solana* chapter showed, and every composition is also a trust boundary: mid-transaction, between your instructions, or inside a CPI you make, code you did not write gets to run.
 
 The discipline is **checks-effects-interactions**: validate everything, then update your own state, and only then call out to other programs or move tokens. The order book's settlement zeroes a user's claimed balance *before* the transfer, so even if the token transfer could re-enter (token extensions can attach hooks to transfers), a re-entrant call finds the balance already spent. Solana's runtime forbids re-entering a program through another program, the pattern that plagued EVM contracts; only direct self-recursion is allowed, and its depth is capped. The discipline earns its keep anyway, because it also defends against the failure you cannot see coming: a callee that is upgraded tomorrow, a hook added to a mint next year, an instruction sequenced after yours in the same transaction.
 

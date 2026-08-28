@@ -129,6 +129,6 @@ The concepts you now have:
 - **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize; the state machine's exit is the account's deletion.
 - **An exit from every state.** Open events can be canceled and refunded in full, so a burned-down film festival strands nobody's stake.
 
-The pooled payout formula and the honest look at offchain truth both return at full scale in the lending and perpetual futures chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
+The pooled payout formula and the honest look at offchain truth both return at full scale in the *Lending and Borrowing* and *Perpetual Futures* chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
 
 The next chapter puts the shape on a trading floor. Everyone here bet into one pool and took a share of it; from here on, the parties quote prices at each other instead, and the price stops being a pool's arithmetic and starts being a commitment somebody posted.
