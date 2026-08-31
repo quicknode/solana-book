@@ -15,7 +15,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
 import { chromium } from "playwright-core";
-import { PDFDocument } from "pdf-lib";
+import { PDFArray, PDFDocument, PDFName } from "pdf-lib";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -201,24 +201,34 @@ const breakableIdentifier = (text) =>
     })
     .join("");
 
+// A URL has the same problem for the same reason, and a slash is its legible
+// seam, so it gets the same treatment under the same two limits.
+const breakableUrl = (text) => {
+  let out = "";
+  for (let i = 0; i < text.length; i++) {
+    out += text[i];
+    const kept = i + 1;
+    const carried = text.length - kept;
+    if (text[i] === "/" && kept >= BREAK_MIN_BEFORE && carried >= BREAK_MIN_AFTER) out += "<wbr>";
+  }
+  return out;
+};
+
 // External links, in the two shapes the manuscript writes them. A link whose
 // text is its own address is set as an address; a link whose text is words
 // keeps the words and has its address printed after it, because a reader
 // holding the paper edition cannot click anything. Book-internal
 // cross-references were rewritten to #anchors by prepareMarkdown, so they do
-// not match here and stay plain prose. Either shape puts the address itself in
-// an .address element, which the stylesheet keeps on one line and the build
-// checks after layout.
+// not match here and stay plain prose.
 const bareAddress = (href) => href.replace(/^https?:\/\//, "").replace(/\/$/, "");
 const markUrls = (html) =>
   html.replace(/<a href="(https?:[^"]+)">([^<]+)<\/a>/g, (whole, href, text) =>
     bareAddress(href) === text.replace(/\/$/, "")
-      ? `<a class="url address" href="${href}">${text}</a>`
+      ? `<a class="url" href="${href}">${breakableUrl(text)}</a>`
       // The separating space lives inside the span rather than between the two
       // elements: Paged.js drops a whitespace-only text node during layout, and
-      // the address ends up jammed against the word before it. It stays outside
-      // .address, so the line may break there and carry the whole address over.
-      : `${whole}<span class="url"> (<span class="address">${bareAddress(href)}</span>)</span>`,
+      // the address ends up jammed against the word before it.
+      : `${whole}<span class="url"> (${breakableUrl(bareAddress(href))})</span>`,
   );
 
 const sections = chapterPaths.map((path) => {
@@ -499,14 +509,6 @@ code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; f
    identically on the line. Never underlined: underlining is a screen
    convention, and in a serif face it collides with the descenders. */
 .url { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
-/* An address is one thing, so it sets as one thing. Left to itself the line
-   breaks after a slash or a hyphen and the first line ends up reading as a
-   whole address -- news.example.com/p/ is a page, and so is
-   .../explained-the-hundred-finance- -- which is a destination a reader can
-   reach and is not the one the note meant. Unbreakable, an address that does
-   not fit the room left on its line carries over whole to the next one. It
-   declares no size of its own: nested in .url it would compound with it. */
-.address { white-space: nowrap; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
 blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }
@@ -631,20 +633,27 @@ await page.evaluate(() => {
   }
 });
 
-// An address that wraps is an address a reader cannot act on. Its PDF link
-// annotation still carries the whole href, so a viewer that honours
-// annotations opens the right page; but the first line ends at a slash or a
-// hyphen and reads as a complete address, so anything working from the text
-// rather than the annotation -- a viewer's own URL detection, a copy and
-// paste, a reader retyping it off the printed page -- lands on a truncated
-// destination that often exists. Addresses are set unbreakable so this cannot
-// happen; an address too long for its measure has nowhere to go, and fails the
-// build here rather than printing broken.
-const wrappedAddresses = await page.evaluate(() =>
-  [...document.querySelectorAll(".address")]
-    .filter((el) => el.getClientRects().length > 1)
-    .map((el) => el.textContent),
-);
+// An address may break across lines; where it points may not. A wrapped link
+// is printed as an annotation per line, and the whole href belongs on every
+// one of them, so that a reader clicking the second line of an address arrives
+// where a reader clicking the first line arrives. Count the lines here, while
+// the layout still exists; the annotations the print actually produced are
+// checked against the count below.
+//
+// A break opportunity splits the text into several boxes on one line, so the
+// lines are the distinct tops among those boxes, not the boxes themselves.
+// Paged.js also leaves the source content in the document, unrendered, beside
+// the pages it laid out: those copies have no boxes at all and were not
+// printed, so they are not lines either.
+const linkLines = await page.evaluate(() => {
+  const counts = {};
+  for (const link of document.querySelectorAll('a[href^="http"]')) {
+    const tops = new Set([...link.getClientRects()].map((rect) => Math.round(rect.top)));
+    if (tops.size === 0) continue;
+    counts[link.href] = (counts[link.href] ?? 0) + tops.size;
+  }
+  return counts;
+});
 
 // Page one of the PDF is page one of the flow, so odd page numbers are
 // right-hand pages whether or not the cover is included. A part title belongs
@@ -673,10 +682,42 @@ await browser.close();
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
 
-if (wrappedAddresses.length > 0) {
-  console.error(`\n${wrappedAddresses.length} address(es) wrapped across lines:`);
-  for (const address of wrappedAddresses) console.error(`  ${address}`);
-  console.error("An address must fit its measure whole. Shorten it, or move it to a note with more room.");
+// Every URI action in the finished PDF, with the number of annotations
+// carrying it. A viewer follows these, not the printed characters.
+const printedDestinations = new Map();
+for (const pdfPage of (await PDFDocument.load(readFileSync(outputPath))).getPages()) {
+  const annotations = pdfPage.node.get(PDFName.of("Annots"));
+  if (!annotations) continue;
+  for (const entry of pdfPage.node.context.lookup(annotations, PDFArray).asArray()) {
+    const action = pdfPage.node.context.lookup(entry).get(PDFName.of("A"));
+    const uri = action && pdfPage.node.context.lookup(action).get(PDFName.of("URI"));
+    if (!uri) continue; // an internal cross-reference, which names a page rather than an address
+    const destination = uri.decodeText();
+    printedDestinations.set(destination, (printedDestinations.get(destination) ?? 0) + 1);
+  }
+}
+
+// A destination the book does not contain is a destination something split:
+// the address broke over two lines and one of the pieces was written as if it
+// were the whole thing.
+const splitDestinations = [...printedDestinations.keys()].filter((destination) => !(destination in linkLines));
+if (splitDestinations.length > 0) {
+  console.error(`\n${splitDestinations.length} link(s) point somewhere the book does not:`);
+  for (const destination of splitDestinations) console.error(`  ${destination}`);
+  process.exitCode = 1;
+}
+
+// And a line box with no annotation on it is a line of an address that is not
+// clickable at all, which sends a reader to whatever their viewer makes of the
+// characters it can see.
+const unlinkedLines = Object.entries(linkLines)
+  .map(([href, lines]) => ({ href, lines, annotations: printedDestinations.get(href) ?? 0 }))
+  .filter(({ lines, annotations }) => annotations < lines);
+if (unlinkedLines.length > 0) {
+  console.error(`\n${unlinkedLines.length} link(s) are not clickable on every line they occupy:`);
+  for (const { href, lines, annotations } of unlinkedLines) {
+    console.error(`  ${href}: ${lines} line(s), ${annotations} annotation(s)`);
+  }
   process.exitCode = 1;
 }
 
