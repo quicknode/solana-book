@@ -100,7 +100,7 @@ The *Offchain Truth* chapter answers the first, along with everything else a pro
 | the perpetual futures venue | 150 slots | slots |
 | the vault strategy | 60 seconds | seconds |
 
-Need a price fresh to within two seconds? Turn that into a slot count once, and check every price against that number of slots. Nobody can move that boundary, and the check needs no conversion. Three of the four count slots, because a window this short is exactly where a few seconds of clock would be most of the margin. The vault counts seconds because that is the unit its feed publishes, and a program cannot compare someone else's seconds against its own slots without assuming a slot length. What the three slot counts come to in seconds depends on that length, so a window sized once in slots covers less wall-clock time if the slot is ever shortened.
+For a price fresh to within two seconds, turn that into a slot count once, and check every price against that number of slots. Nobody can move that boundary, and the check needs no conversion. Three of the four count slots, because in a window this short a few seconds of clock would be most of the margin. The vault counts seconds because that is the unit its feed publishes, and a program cannot compare someone else's seconds against its own slots without assuming a slot length. What the three slot counts come to in seconds depends on that length, so a window sized once in slots covers less wall-clock time if the slot is ever shortened.
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
@@ -127,9 +127,9 @@ Say which edge you mean when you write the terms down. A contributor reads "seve
 
 Both clocks arrive in the same sysvar, so it is easy to assume they always move together. They come apart when the chain stops.
 
-Solana would rather stop than be wrong. When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. A chain that kept producing blocks through a disagreement could settle the same balance twice.
+When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. A chain that kept producing blocks through a disagreement could settle the same balance twice.
 
-A halt is a rare event: at the time of writing, block production has not stopped for years. Write for the one you will probably never see.
+A halt is a rare event: at the time of writing, block production has not stopped for years. Write for it anyway.
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart carries a slot roughly where the last one left off and a timestamp hours later. Three consequences:
 
@@ -148,9 +148,9 @@ The network has shortened the slot before, and a further staged reduction is pub
 A shorter slot pulls the two uses of a slot count in opposite directions:
 
 - **A freshness window sized in slots gets stricter.** A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That costs availability and never safety, and it announces itself the first time a price is refused.
-- **A rate expressed per slot accrues faster, and that one is silent.** An annual rate divided by a fixed slots-per-year number has a slot duration baked into it, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
+- **A rate expressed per slot accrues faster, and gives no warning.** An annual rate divided by a fixed slots-per-year number has a slot duration baked into it, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
 
-The defense is the same for both: keep the number where a transaction can reach it. The lending market holds its divisor as `slots_per_year`, a config value its owner can retune for exactly this reason. The perpetual futures venue's `set_funding_rate()` does the same job for a per-slot rate, advancing the index at the old rate before storing the new one, so the slots already elapsed are charged at the rate that applied to them. A change to the slot time is then an afternoon's configuration rather than a release.
+The defense is the same for both: keep the number where a transaction can reach it. The lending market holds its divisor as `slots_per_year`, a config value its owner can retune for this reason. The perpetual futures venue's `set_funding_rate()` does the same job for a per-slot rate, advancing the index at the old rate before storing the new one, so the slots already elapsed are charged at the rate that applied to them. A change to the slot time is then an afternoon's configuration rather than a release.
 
 ## What the Programs in This Book Chose
 
