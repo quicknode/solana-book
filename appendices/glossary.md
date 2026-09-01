@@ -4,7 +4,7 @@ The vocabulary of this book, in one place: Solana's terms alongside the financia
 
 ### account
 
-Some data with an [address](#address). In a program, the data is a Rust struct. Wallets, token balances, program code, and everything a program stores are all accounts; each also has a lamport balance and an owner program that may change it. Financial state is accounts; this is the first idea in the book.
+Some data with an [address](#address). In a program, the data is a Rust struct. Wallets, token balances, program code, and everything a program stores are all accounts; each also has a lamport balance and an owner program that may change it. Financial state is accounts.
 
 ### address
 
@@ -12,7 +12,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are exactly the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The *Prop AMM* chapter treats it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The *Prop AMM* chapter treats it at length.
 
 ### all-or-nothing
 
@@ -76,7 +76,7 @@ Arithmetic that reports failure instead of producing a wrong answer: Rust's `che
 
 ### checks-effects-interactions
 
-The ordering discipline for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See the *Adversary* chapter.
+The ordering rule for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See the *Adversary* chapter.
 
 ### close factor
 
@@ -104,7 +104,7 @@ An oracle's own statement of its uncertainty: a price of $250 ± $8 is a differe
 
 ### counterparty
 
-The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the pool's solvency is the whole design. See the *Perpetual Futures* chapter.
+The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the design is organized around the pool's solvency. See the *Perpetual Futures* chapter.
 
 ### CPI (cross-program invocation)
 
@@ -124,7 +124,7 @@ In a fund, the authority that decides which assets may be held at all and which 
 
 ### custody
 
-Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. The rule this book repeats about custody is that balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
+Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. Balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
 
 ### decimals
 
@@ -220,7 +220,7 @@ Two mathematically linked keys: a private key, kept secret, that signs messages,
 
 ### kink
 
-The bend in a lending reserve's interest rate curve, in this book at 80% [utilization](#utilization): below it the borrow rate climbs gently, above it steeply. The steep leg is the reserve begging for liquidity, pushing borrowers to repay and pulling suppliers in with yield at the same time. See the *Lending and Borrowing* chapter.
+The bend in a lending reserve's interest rate curve, in this book at 80% [utilization](#utilization): below it the borrow rate climbs gently, above it steeply. The steep leg pushes borrowers to repay and pulls suppliers in with yield. See the *Lending and Borrowing* chapter.
 
 ### lamport
 
@@ -292,7 +292,7 @@ On a perpetual futures market, the index price is the oracle's statement of the 
 
 ### mark to market
 
-Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because yesterday's valuation is an opinion and today's is the one money moves on.
+Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because money moves on today's valuation.
 
 ### market maker
 
@@ -340,7 +340,7 @@ The total notional of positions currently open on a market, usually tracked per 
 
 ### oracle
 
-A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, exactly as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
+A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
 
 ### order book
 
@@ -372,7 +372,7 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 ### pro rata
 
-In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join. The arithmetic is a ratio; the design question is always which denominator is honest, because that is where the [inflation attack](#inflation-attack) lives.
+In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join. The arithmetic is a ratio; the design question is which denominator to use, because the [inflation attack](#inflation-attack) skews it.
 
 ### program
 
@@ -404,7 +404,7 @@ A per-participant account, usually a PDA, recording what the program owes one pe
 
 ### rent
 
-The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is real money design.
+The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is part of the design.
 
 ### reservation
 
@@ -452,7 +452,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time, a fixed value in the range of hundreds of milliseconds, in which a leader may produce a block. The network has shortened it before, so a slot count converts to seconds only at the current slot time. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time: a window of a few hundred milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
 ### SOL
 
