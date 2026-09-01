@@ -10,7 +10,7 @@ What is left is deciding what to build with them.
 
 You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it nine times.
 
-You can read somebody else's program and ask the questions that matter: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state has no exit. That is the same checklist an auditor opens with.
+You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state has no exit. That is the same checklist an auditor opens with.
 
 You can work with an AI as a peer rather than an oracle. The companion AI plugin will apply this book's rules to code your tools generate, and you can now tell when the output is wrong, which is the only thing that makes generated financial code safe to use.
 
@@ -41,11 +41,11 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 
 ## The Shape of a Product Worth Building
 
-Products of this kind have been shipped already, several of them with real users and real money behind them. They are worth studying for their shape rather than copying line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
+Products of this kind have been shipped already, several of them with real users and real money behind them. Study them for their shape rather than copying them line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
 
 **An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The edges of the product move at the speed of the banking system, while everything between them moves at the speed of the chain. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Vault Strategy* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licenses that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
 
-**Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that hold up are the ones honest about the awkward case: when borrowing is high the reserve cannot pay every depositor out at once, and the app has to say so before anyone finds out the hard way.
+**Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that hold up are the ones that state the awkward case: when borrowing is high the reserve cannot pay every depositor out at once, and the app has to say so before anyone finds out the hard way.
 
 **Spending against your shares instead of selling them.** Someone holding NVDAx who needs two thousand dollars can sell, ending a position they wanted to keep and in many countries creating a tax bill, or borrow against it and keep it. The second option is the *Lending and Borrowing* chapter in full: shares as collateral, a price from a feed as covered in the *Offchain Truth* chapter, and a liquidation path when the collateral falls. Around it sits a card, a spending limit, and a warning that arrives long before a liquidator does.
 
@@ -85,15 +85,15 @@ Some things were left out on purpose, and knowing which is part of knowing the s
 
 **Formal verification** appears here only as a taster. The escrow's proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
 
-**Governance** is deliberately absent. Every program here has an operator with a key, and the honest treatment of admin power is in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
+**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is treated in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
-**The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. An elegant interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
+**The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
 
 ## Build One, Then Have It Attacked
 
 The gap between reading this book and shipping is one project wide, and it closes faster than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Give every state an exit, so every participant can get their money out from wherever the program stops. Write the tests that drive the machine down every path, especially the exits, and the property tests that assert what must never change.
 
-Then get a second opinion from somebody who was not in the room. Every wall in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
+Then get a second opinion from somebody who was not in the room. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 
