@@ -16,7 +16,7 @@ At Alice's address lives Alice's **account**: some data with an address. Her acc
 
 This figure is the first example of how this book shows people, programs and data on Solana. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. The figures never label those dots, because the dot's place on the curve already says it. Later you will see addresses drawn *off* the curve, listed instead with the **seeds** (the inputs) they were derived from; those have no private key.
 
-> **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be billions of times the age of the universe. When this book says an address "belongs" to Alice, that is the entire basis of the claim: nobody else will ever roll her number.
+> **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be billions of times the age of the universe. When this book says an address "belongs" to Alice, that is the basis of the claim: nobody else will ever generate her number.
 
 ## There Is More Than One Solana Computer
 
@@ -63,9 +63,9 @@ Every instruction names which of the program's **instruction handlers** to run, 
 >
 > Older Solana content is loose about this and uses "instruction" for both. You may read or hear "this program has five instructions" - in cases like this "instruction" plainly means a function, and you should understand it means "instruction handler".
 
-Watch Alice run her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
+Alice runs her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
-The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports - the balance an explorer displays as 1 SOL is the integer 1,000,000,000 - and every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the full discipline on this one idea.
+The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports - the balance an explorer displays as 1 SOL is the integer 1,000,000,000 - and every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds on this one idea.
 
 > **Why "lamport"?** Lamports are named after Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
 
@@ -91,7 +91,7 @@ The budget for work done by instructions is metered in **compute units** per tra
 
 One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction - not a similar one, not an edited one. Anyone can use Alice's public key to verify a signature that claims to be from Alice.
 
- You already use digutal signatures daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh signature that the card is genuine and issued by your bank.
+ You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh signature that the card is genuine and issued by your bank.
 
 The signature is also a grant of authority. By signing, Alice authorizes what the transaction does in her name:
 
@@ -112,7 +112,7 @@ Different authorities in the same program can be given to different accounts.
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, but for standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Any authority can be a multisig address rather than one person's wallet. 
 
-A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Stripped of its apps and branding, a saved wallet is startlingly small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet, which is the entire custody problem in one sentence.
+A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Stripped of its apps and branding, a saved wallet is startlingly small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet.
 
 > **64 bytes, but only 32 are secret.** An `id.json` keypair file holds the 32-byte private key followed by the 32-byte public key. The second half is a convenience, not a necessity: the public key is mathematically derived from the private key, so software can recompute it from the first 32 bytes at any time. The private key is the only secret, and the only part that needs protecting.
 
@@ -150,13 +150,13 @@ SOL is the network's **native token**, the asset it understands without any prog
 
 Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two. Bob does not need to ask Alice where her USDC lives. Bob's wallet computes where Alice's USDC account must be, and sends the tokens there. The *Tokens* chapter covers token accounts properly.
 
-So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer discipline as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
+So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer rule as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
 ![Each token account's address is derived from its owner, the token program and the mint, so nobody chose it.](figures/bobs-usdc-transaction.svg)
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
-Bob's transfer instruction names every account it touches - Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. The consequence that shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's - the validation section of the *Adversary* chapter covers this in more detail.
+Bob's transfer instruction names every account it touches - Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's - the validation section of the *Adversary* chapter covers this in more detail.
 
 ## What You Learnt
 
@@ -173,4 +173,4 @@ Two payments toured every building block the rest of the book uses:
 [^faucets]: The `solana airdrop` command sends devnet SOL, as does the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana). Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC.
 
 [^state-compression]: The "nearly" is State Compression, a technique for storing bulk data offchain with onchain proofs. None of the financial state in this book uses it.
-[^loader-version]: at the time of writing the Loader version 3 uses mutiple accounts to store a program, and the upcoming Loader version 4 proposes to use a single account.
+[^loader-version]: At the time of writing, Loader version 3 uses multiple accounts to store a program, and the upcoming Loader version 4 proposes to use a single account.
