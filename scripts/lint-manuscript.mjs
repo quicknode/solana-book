@@ -70,6 +70,11 @@ const rules = [
   [/\bthe discipline\b|\bhygiene\b/i, 'name the rule instead of its category: "the rules below", "the staleness check"'],
   [/\bworth (?:stealing|copying|noticing|printing|studying|memorizing)\b|\bby now you\b/i,
     "do not rate the next sentence; cut the rating and keep the content"],
+  // "Fail open" means "stop working" to an electrician (an open circuit) and
+  // "let everything through" to everyone else (an open door), and "fail
+  // closed" flips the same way, so half the readers take each one backwards.
+  [/\bfail(?:s|ed|ing)?[ -](?:open|closed)\b/i,
+    'say what happens: "refuses the transaction", "rejects the price", "lets every request through"'],
   // Pointing the reader at the page instead of telling them what is on it.
   // "Note what is pledged: shares" is one word longer than "what he pledges is
   // shares". Watching a real market, or looking away from the chain, is the
