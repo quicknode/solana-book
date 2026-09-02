@@ -4,7 +4,7 @@ Every bug class in this chapter has drained a real market. The rules are few, an
 
 ## Money Is Integers: No Floats Near Funds
 
-Every validator that executes your program must compute exactly the same result, or the network cannot agree on state. Floating-point math puts that at risk: results can vary with hardware, compiler flags, and operation order, and floats accumulate representation error (0.1 has no exact binary form). Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For money it is exact, because money really does come in whole units.
+Every validator that executes your program must compute exactly the same result, or the network cannot agree on state, so a program's float operations are emulated in software rather than run on the hardware. That makes them slow. They also accumulate representation error (0.1 has no exact binary form) and round to nearest, a direction nobody chose. Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For money it is exact, because money really does come in whole units.
 
 So the rule is: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that smuggles them in. When a calculation needs fractions, scale integers up instead (see fixed point, below). When it needs a square root or an exponential, compute it with integer iteration (see the AMM and interest sections). None of the programs in this book uses a float, and yours should not either.
 
