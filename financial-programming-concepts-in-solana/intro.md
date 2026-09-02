@@ -4,23 +4,34 @@ This part covers the money: calculating with it, bringing facts about assets onc
 
 ## Financial Software Is a State Machine
 
-Every financial product in this book is a small number of states and the legal transitions between them. An escrow offer is open, then taken or canceled. A bet is placed, then paid, refunded, or closed. An order is open, partially filled, filled, or canceled. A loan is healthy, unhealthy, repaid, or liquidated. Before writing any handler, draw this machine: name the states, name every legal transition, and check that nothing is missing.
+Every financial product in this book is a state machine.
 
-The design rules fall straight out of the drawing:
+- An escrow offer is open, then taken or canceled.
+- A bet is placed, then paid, refunded, or closed.
+- An order is open, partially filled, filled, or canceled.
+- A loan is healthy, unhealthy, repaid, or liquidated.
 
-- **One instruction handler, one transition.** `take_offer()` moves an offer from open to taken and does nothing else. Handlers that perform two transitions, or half of one, are where partial-state bugs live.
-- **Make the state explicit.** A status enum on the account, or, often better, the account's own existence: the betting market's bet account closes when the position ends, so "already claimed" is not a flag that can desynchronize but an account that is gone.
-- **Guard every transition by state, not just by signer.** Betting on a settled event, canceling a filled order, and liquidating a healthy loan must fail because the *state* forbids them, with an error that names the rule.
+Before writing any handler, draw this machine: name the states, name every legal transition, and check that nothing is missing.
+
+Most programs are conceptually simple, with design rules fall that come straight from the state drawing:
+
+- **One instruction handler per transition.** `take_offer()` moves an offer from open to taken and does nothing else. Handlers that perform two transitions, or half of one, create bugs.
+- **Make the state explicit.** A `status` enum on the account, or, often better, the account's own existence: the betting market's `Bet` account closes when the position ends, so "already claimed" is simply that athe account is gone. Using existence rather than a status is better since the state is recorded in one place rather than two.
+- **Check state, not just signers.** Betting on a settled event, canceling a filled order, and liquidating a healthy loan must fail because the _state_ forbids them, with an error that names the rule.
 - **From every state, every participant must be able to get their money out.** Walking the states with this rule turns up the handler nobody wrote. An escrow with no cancel handler strands the maker's tokens the day nobody takes the offer. A betting market with no cancel-and-refund path strands every stake the day the event is called off. Walk each state and ask: how does each party's money leave from here? If any state has no answer, the program strands funds, and correct arithmetic will not fix that.
 - **An exit is not finished until nothing is left behind.** The vault is empty, the accounts are closed, and the rent is back with whoever paid it.
 
-## Every Deposit Finds Its Way Home
+## Whoever Wants the Account Pays the Rent Desposit, and Gets it Back When The Account is Closed
 
-Rent is small, but it is somebody's, and one rule settles who carries it: **whoever wants the account pays for it**. The maker funds their offer account and vault; the taker funds their own token account if they never held that token. Rent burdens follow the party who chose to create the state, and the deposit comes home on every path (take, cancel, claim, refund); a program that leaves fragments of state behind on some paths has a slow leak of other people's lamports. An account that can never close is a deposit stranded forever, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker's lamports round-trip exactly, and yours should too.
+Rent desposits are small, but they belong to somebody. Two rules settles who pays it:
+
+- Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds own token account (if it didn't exist already) to recieve what the maker offered. Rent burdens follow the party who chose to create the state.
+
+- The deposit comes back to whoever paid it when the account is closed (eg, during after a 'take', 'cancel', 'claim', 'refund' etc). A program that leaves accounts unclosed when no longer needed has a slow leak of other people's lamports, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker's lamports round-trip exactly, and yours should too.
 
 ![Both exits refund every lamport; the third path strands tokens and rent in an account with no handler to close it.](figures/rent-lifecycle.svg)
 
 ## What You Learnt
 
 - Every financial product is a small state machine: draw it before writing any handler, name every state and transition, and make sure every participant can get their money out of every state.
-- One handler, one transition, guarded by state and not just by signer; an exit empties the vault, closes the accounts, and sends the rent home to whoever paid it.
+- One handler, one transition, check the account state, and not just the signers. An exit empties the vault, closes the accounts, and sends the rent deposit back to whoever paid it.
