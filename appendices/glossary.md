@@ -6,6 +6,10 @@ The vocabulary of this book, in one place: Solana's terms alongside the financia
 
 Some data with an [address](#address). In a program, the data is a Rust struct. Wallets, token balances, program code, and everything a program stores are all accounts; each also has a lamport balance and an owner program that may change it. Financial state is accounts.
 
+### accumulation factor
+
+See [borrow accumulation factor](#borrow-accumulation-factor).
+
 ### address
 
 The 32-byte identifier of an account, usually shown base58-encoded. Most addresses are public keys; PDAs are addresses without private keys.
@@ -70,6 +74,10 @@ An address chosen rather than computed: the System Program, the token programs, 
 
 The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address cheaply.
 
+### ceil (ceiling)
+
+Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, so debts and fees never round down into a shortfall the program absorbs. The opposite of [floor](#floor). See [rounding](#rounding).
+
 ### checked arithmetic
 
 Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on money in this book is checked.
@@ -130,6 +138,10 @@ Holding assets that belong to someone else. A program takes custody when tokens 
 
 The number of minor units in one major unit of a token, declared on the mint. USDC has 6, SOL has 9. Programs must read decimals, never assume them.
 
+### degenerate value
+
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it is structurally valid and worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
+
 ### discretization
 
 Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
@@ -140,7 +152,7 @@ The 8 bytes Anchor writes at the start of an account's data identifying its type
 
 ### dust
 
-Sub-unit remainders left over by integer division. Rounding policy decides who owns it; the correct answer is the program, never whoever transacts most often.
+Sub-unit remainders left over by integer division: a sliver smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
 
 ### epoch
 
@@ -153,6 +165,10 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 ### escrow
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
+
+### exponentiation by squaring
+
+Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed slots in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
 
 ### faucet
 
@@ -170,9 +186,17 @@ Representing fractions as scaled integers: 1.05 stored as 1,050,000,000,000,000,
 
 A loan borrowed and repaid inside a single transaction, possible only because transactions are atomic: if the repayment fails, the borrow never happened.
 
+### floor
+
+Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never promise a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
+
 ### funding rate
 
 The periodic payment between longs and shorts on a perpetual futures market that tethers the perpetual's price to the index price.
+
+### half-up
+
+Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on money here: it rounds in the user's favor half the time, and a caller can size a deposit and withdrawal pair to collect that half repeatedly. The 2021 SPL token-lending bug was this. See [rounding](#rounding).
 
 ### halt
 
@@ -358,6 +382,10 @@ An address computed from a program's ID and chosen seeds. A PDA is not a public 
 
 A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The capstone chapter of this book.
 
+### phantom overflow
+
+An overflow in the middle of a calculation whose final answer would have fit: `price * quantity` passes u64 before the division that brings it back down. A legal transaction is rejected or corrupted for a reason the result never justified. The fix is to promote to u128 before multiplying and narrow back with a checked conversion. See the *Arithmetic of Money* chapter.
+
 ### PnL (profit and loss)
 
 What a position has gained or lost. While the position is open the figure is **unrealized PnL**, marked to market against the current price; closing the position realizes it. On the book's perpetual futures venue, PnL is size × price change ÷ entry price.
@@ -418,6 +446,10 @@ In a lending market, the per-asset pool: its liquidity vault, its share mint, it
 
 A limit order that did not match on arrival and now waits on the book, funded and cancelable.
 
+### rounding
+
+The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder always settles with the program. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
+
 ### RPC endpoint
 
 The URL a program or wallet sends its transactions to: a server holding a [cluster](#cluster)'s state and relaying transactions into it. The endpoint is what decides which cluster the code is talking to. The Solana Foundation's public endpoints are rate limited and meant for development; applications with real users buy a dedicated endpoint from an RPC provider.
@@ -429,6 +461,10 @@ A traditional asset represented as a token onchain: commodities, equities, real 
 ### sandwich
 
 Wrapping someone's pending trade in two of your own: buy ahead of it to move the price against it, let it fill, then sell behind it. The classic [MEV](#mev) extraction on a public chain, and the reason every trade in this book carries a caller-side bound like a minimum output. See the *Adversary* chapter.
+
+### saturating
+
+What Rust's `saturating_add` and `saturating_mul` do when a result will not fit: clamp to the type's maximum or minimum and continue. Less silent than [wrapping](#wrapping) and still wrong on a balance, because the number returned is not the answer. Money uses [checked arithmetic](#checked-arithmetic).
 
 ### settlement
 
@@ -524,7 +560,7 @@ A token account whose authority is a program's PDA, where a program holds funds 
 
 ### WAD
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for accumulation factors and rate math. Borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard, at 18 decimals because that is what Ether and most ERC-20 tokens use. Now the usual word for 18-decimal fixed point on every chain, Solana included.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for accumulation factors and rate math. Borrowed from the Ethereum blockchain, and now the usual word for 18-decimal fixed point on every chain, Solana included.
 
 ### wallet
 
