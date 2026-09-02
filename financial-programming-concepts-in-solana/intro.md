@@ -16,7 +16,7 @@ The design rules fall straight out of the drawing:
 
 ## Every Deposit Finds Its Way Home
 
-Rent is small, but it is somebody's, and one rule settles who carries it: **whoever wants the account pays for it**. The maker funds her offer account and vault; the taker funds his own token account if he never held that token. Rent burdens follow the party who chose to create the state, and the deposit comes home on every path (take, cancel, claim, refund); a program that leaves fragments of state behind on some paths has a slow leak of other people's lamports. An account that can never close is a deposit stranded forever, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker's lamports round-trip exactly, and yours should too.
+Rent is small, but it is somebody's, and one rule settles who carries it: **whoever wants the account pays for it**. The maker funds their offer account and vault; the taker funds their own token account if they never held that token. Rent burdens follow the party who chose to create the state, and the deposit comes home on every path (take, cancel, claim, refund); a program that leaves fragments of state behind on some paths has a slow leak of other people's lamports. An account that can never close is a deposit stranded forever, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker's lamports round-trip exactly, and yours should too.
 
 ![Both exits refund every lamport; the third path strands tokens and rent in an account with no handler to close it.](figures/rent-lifecycle.svg)
 
