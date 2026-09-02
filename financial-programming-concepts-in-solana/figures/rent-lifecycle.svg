@@ -25,7 +25,8 @@
   <text x="474" y="90" font-size="11" font-weight="bold">taken</text>
   <path d="M 378,130 L 466,130" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
   <text x="474" y="134" font-size="11" font-weight="bold">canceled</text>
-  <path d="M 556,108 C 562,40 300,32 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <path d="M 506,86 L 530,86 L 530,130 L 520,130" fill="none" stroke="#777" stroke-width="1.2"/>
+  <path d="M 530,86 C 534,34 300,30 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
   <text x="330" y="22" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">both exits close the accounts and refund every lamport to the maker</text>
   <path d="M 312,150 L 312,186" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#rent-x)"/>
   <text x="322" y="172" font-size="10" fill="#444" font-style="italic">no handler closes it</text>
