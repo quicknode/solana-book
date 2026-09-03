@@ -127,7 +127,7 @@ The scoreboard:
 
 ## The Math: Two Rounding Helpers and a Rule
 
-Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use: **quantities favorable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is a property the tests can check: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` proves it by trying.
+Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use: **quantities favorable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is an invariant the tests can check: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` proves it by trying.
 
 ## The Invariants: Solvency by Construction
 
@@ -148,7 +148,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 
 ## Testing Considerations
 
-The suite is organized by risk, one file per class. Rounding comes first: the round-trip-creates-no-value property, and the withdraw-at-the-boundary-then-one-more-unit test, which is the "test both sides of every boundary" rule. Then deposits and redemptions, interest over time (using slot-warping to make weeks pass), liquidation (healthy rejected, unhealthy corrected with bonus and close factor, over-seizure refused), borrowing (every rejection path), and security (cross-market and unauthorized-price attempts). All of it drives the program's own handlers, with each action bundling its refresh instructions into the same transaction as a production client would.
+The suite is organized by risk, one file per class. Rounding comes first: the round-trip-creates-no-value invariant, and the withdraw-at-the-boundary-then-one-more-unit test, which is the "test both sides of every boundary" rule. Then deposits and redemptions, interest over time (using slot-warping to make weeks pass), liquidation (healthy rejected, unhealthy corrected with bonus and close factor, over-seizure refused), borrowing (every rejection path), and security (cross-market and unauthorized-price attempts). All of it drives the program's own handlers, with each action bundling its refresh instructions into the same transaction as a production client would.
 
 ## What You Learnt from Building the Lending Market
 
