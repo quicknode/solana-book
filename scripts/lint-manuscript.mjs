@@ -130,12 +130,6 @@ const rules = [
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
   [/\bbase units?\b/i, 'say "minor unit"'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
-  // "Property" also names an account's fields, so "property test" reads two
-  // ways in a book about accounts. The book's word for what a test or proof
-  // pins is "invariant", which the program chapters already use for their
-  // invariants sections. The one allowed mention names the testing libraries'
-  // own term so a reader can find them.
-  [/\bpropert(?:y|ies)(?:-based)? tests?\b|\bproperty-based\b/i, 'say "invariant test": "property" also names an account\'s fields'],
   // The trailing "=" exempts a URL query parameter (?id=43495 in a footnote's
   // link), which is part of an address rather than prose.
   [/(?<!`)\bids?\b(?!`|\.json|=)/, 'write "ID"/"IDs" in capitals in prose (code identifiers like `program_id` and the `id.json` filename keep lowercase)'],
@@ -153,7 +147,6 @@ const exceptions = [
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
-  /call this property-based testing/, // the one pointer to the testing libraries' own term
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
 
