@@ -95,7 +95,7 @@ One project separates reading this book from shipping, and it takes less time th
 
 Then get a second (and third) opinion from an expert that did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 
-Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
+Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
 Nine programs in, choosing whose problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
 
