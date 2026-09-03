@@ -56,7 +56,7 @@ The mint's **decimals** set the **minor unit**, the raw integer everything actua
 
 ## The Freeze Authority Can Stop Any Holder Cold
 
-The mint's other lever is the **freeze authority**, which can freeze and thaw individual token accounts: a frozen account can neither send nor receive. It is the compliance mechanism behind regulated assets (sanctions, court orders, fraud response), and it applies to holders one at a time, not to the token as a whole. Before building on someone else's token, check both authorities: who can mint, and who can freeze, is the token's real constitution.
+The mint's other lever is the **freeze authority**, which can freeze and thaw individual token accounts: a frozen account can neither send nor receive. It is the compliance mechanism behind regulated assets (sanctions, court orders, fraud response), and it applies to holders one at a time, not to the token as a whole. Before building on someone else's token, check both authorities: who can mint, and who can freeze.
 
 ## Two Token Programs: Classic and Token Extensions
 
@@ -80,7 +80,7 @@ When you build on a token you did not issue, read its extensions first: several 
 ## What You Learnt
 
 - Every distinct token has its own **mint account**, and that account's address is the token's identity: the label is decoration. A mint defines a token; it is not one.
-- The **mint authority** and **freeze authority** are a token's real constitution: who can mint, and who can freeze, are the first questions to ask about any token.
+- The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
 - Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**, and extensions can change what a transfer means: check a token's extensions before building on it.

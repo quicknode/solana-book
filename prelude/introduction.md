@@ -81,7 +81,7 @@ This book was written and edited by hand. The visual mechanism that describes So
 
 ## Where to Start, Depending on What You Came For
 
-Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here are a few honest shortcuts:
+Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here are a few shortcuts:
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
