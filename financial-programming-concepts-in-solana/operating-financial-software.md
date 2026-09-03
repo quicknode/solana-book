@@ -7,7 +7,7 @@ Correct code is only the start. The rest of the job is proving that code on ever
 Financial code fails at the edges the happy path never reaches: the refund, the second claim, the withdrawal that lands exactly on the health boundary. A suite that covers only the happy path proves the demo works. The rules below push every test to an edge.
 
 - **Build state through the program's own instruction handlers, never by injecting accounts.** A hand-built fixture skips the constraints under test, so a program can pass every fixture-based test and still be unusable, or unsafe, onchain. The one exception is an account a foreign program would have created, like a price feed. The harness builds that one as a fixture, so a test can set the price it needs.
-- **Test both directions of every symmetric flow.** Deposit and withdraw, bid and ask, borrow and repay. A bug that favors one side is invisible when the test asserts only the other: a swap that works from USDC to NVDAx can fail from NVDAx to USDC.
+- **Test the mirror image of every flow.** Withdraw as well as deposit, the ask as well as the bid, repay as well as borrow. The mirror is separate code, so a test of one copy says nothing about the other: a swap that works from USDC to NVDAx can fail from NVDAx to USDC.
 - **Use nonzero, asymmetric values.** A test with `duration: 0`, or the same amount on both sides, sits at the one value where `<=` and `>=` both hold, so it passes with the comparison written backwards. Use unequal, memorable numbers instead, like 1,000 USDC against 3 NVDAx, so a formula with its operands swapped produces a total the assertion rejects.
 - **Test both sides of every boundary.** The withdrawal that lands exactly on the loan-to-value limit must succeed, and the same withdrawal plus one minor unit must fail. The lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is that pair: a withdrawal that leaves borrowing power exactly equal to the debt passes, and one more minor unit is refused.
 - **Test every attack by name.** Every rule in a program chapter's failure-modes section gets a test that tries to break it: the non-maker canceling an offer, the fee vault passed in place of the user vault, the second claim on a settled event.
@@ -63,7 +63,7 @@ Every market in this book has an operator with real power: withdrawing fees, set
 
 ## What You Learnt
 
-- Bugs live at the boundaries, so a test suite pushes to every one: both directions of every symmetric flow, both sides of every limit, every attack by name, and properties as well as balances.
+- Bugs live at the boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and properties as well as balances.
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, a screen that can be redrawn reads at `confirmed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
