@@ -73,7 +73,7 @@ The better ideas are in the places where the machinery exists and no product has
 
 **Rent that rises without you.** Rent tracks the housing market and a renter's savings do not, so every increase is a loss with nothing on the other side of it. Put a monthly amount into an asset that moves with the same market, and the asset's gain covers part of the next rise. The machinery is the *Vault Strategy* chapter, deposits and a share price and a basket held against target weights, priced as the *Offchain Truth* chapter describes. The challenge is not the program. One city's rents and any tradable index of housing move together only loosely, and a renter told their rent is covered when it might not be is worse off than one never offered the product. The work is in the disclosure and the product design: saying how much of the next rise the asset is likely to cover, and how much it might not.
 
-**Credit for people with no collateral to post.** Every program in this book lends against collateral worth more than the loan, because that is the only kind of credit a program can enforce by itself. The credit most people actually need is the other kind, and the things that make it work, an income record, a reputation, somewhere to take a defaulter, all live offchain. That makes it a problem where the program is the easy half, and it is the largest one on this list.
+**Credit for people with no collateral to post.** Every program in this book lends against collateral worth more than the loan, because that is the only kind of credit a program can enforce by itself. The credit most people actually need is the other kind, and the things that make it work, an income record, a reputation, somewhere to take a defaulter, all live offchain.
 
 ## What This Book Left Out
 
