@@ -99,7 +99,7 @@ An index fund needs a custodian, a compliance officer, a fee schedule in a prosp
 
 The concepts you now have:
 
-- **The manager as the threat model.** The invariant every program in this book keeps: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves tokens between program-owned vaults; the fee path mints shares and touches no vault.
+- **The manager as the threat model.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves tokens between program-owned vaults; the fee path mints shares and touches no vault.
 - **A curator separate from a manager.** Victor's approved-asset set binds each asset to its official feed, so a manager can neither list their own token nor pair a real asset with a feed they control.
 - **Oracle-anchored minimums.** When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.
 - **NAV as the share price.** Value every vault with a fresh feed or refuse to run; a valuation that can skip an asset is a discount for whoever exploits it.
