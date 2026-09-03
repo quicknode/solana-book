@@ -1,6 +1,6 @@
 # Chapter 17: Lending and Borrowing
 
-Start with a commercial bank. Savers deposit money and earn interest. Borrowers take loans and pay interest. The bank sits in the middle, collecting from the borrowers, paying most of it to the savers, and keeping a slice for itself. The onchain equivalent is a borrow-lend market, usually just called a **lending market**: Save, Kamino Lend, and MarginFi are popular lending markets on Solana, and lending is one of the largest categories of capital on the network.[^lending-size] The program for this chapter lives at `finance/lending`, and it is the biggest machine in the book so far: interest that compounds by the slot, collateral that gets marked to market, and a liquidation engine that keeps the whole thing solvent when prices move.
+Start with a commercial bank. Savers deposit money and earn interest. Borrowers take loans and pay interest. The bank sits in the middle, collecting from the borrowers, paying most of it to the savers, and keeping a slice for itself. The onchain equivalent is a borrow-lend market, usually just called a **lending market**: Save, Kamino Lend, and MarginFi are popular lending markets on Solana, and lending is one of the largest categories of capital on the network.[^lending-size] The program for this chapter lives at `finance/lending`, and it is the largest program in the book so far: interest that compounds by the slot, collateral that gets marked to market, and a liquidation engine that keeps the whole thing solvent when prices move.
 
 One word is overloaded. This chapter's market trades stocks like NVDAx and SPCXx, which people colloquially call "shares." **In this chapter, a share is a share of a reserve**: a token minted by the program representing your claim on a pool of deposited assets, including the interest it earns. The stocks are just tokens.
 
@@ -14,7 +14,7 @@ The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `
 
 Each asset gets a **reserve** PDA (seeds: `"reserve"`, the market, the asset's mint). A reserve owns two accounts: a **liquidity vault** holding deposited tokens, and a **share mint** whose tokens are suppliers' claims on the vault plus its accrued interest. The reserve tracks four things: `available_liquidity`, `borrowed_principal`, the `borrow_accumulation_factor` that makes interest work (below), and `accumulated_protocol_fees`, Maria's slice, carved out so it never inflates the suppliers' exchange rate. `available_liquidity` is the un-borrowed pool, and it is deliberately the source of truth instead of the vault's raw balance, so donating tokens to the vault cannot move the exchange rate.
 
-Each reserve carries a `ReserveConfig`, all in basis points, and its validation rules are where the credit risk lives:
+Each reserve carries a `ReserveConfig`, all in basis points, and its validation rules are the credit-risk controls:
 
 | Parameter | This market | Meaning |
 | --- | --- | --- |
@@ -31,7 +31,7 @@ Finally, each borrower gets one **obligation** PDA per market (seeds: `"obligati
 
 Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors a Switchboard On-Demand pull feed; in production the account would *be* the Switchboard feed, decoded and verified by the program, and a production read should also reject prices whose confidence interval is too wide. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` pins that), which keeps the tests deterministic and makes the trust arrangement unusually visible: this market's prices are true because a named key signed them recently.
 
-"Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots makes the reading handler fail with `StalePriceFeed`, slots being the clock the *Time* chapter reaches for whenever an adversary would profit from stretching the window. Every handler that values anything requires a `refresh_reserve()` and `refresh_obligation()` to have run in the same transaction, with `ReserveStale` and `ObligationStale` rejecting anyone who skips it.
+"Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots makes the reading handler fail with `StalePriceFeed`, slots being the clock the *Time* chapter recommends whenever an adversary would profit from stretching the window. Every handler that values anything requires a `refresh_reserve()` and `refresh_obligation()` to have run in the same transaction, with `ReserveStale` and `ObligationStale` rejecting anyone who skips it.
 
 ## The Market Owner Opens the Market
 
@@ -39,9 +39,9 @@ Maria runs the market, and her revenue is a cut of the interest: the reserve fac
 
 ## Supplying: Tokens In, Shares Out
 
-Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity()` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest swells the pool while the share supply stays put, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
+Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity()` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest grows the pool while the share supply is unchanged, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
 
-![Interest swells the pool while the share supply stays put, so the same shares redeem for more USDC later.](figures/lending-deposit-shares.svg)
+![Interest grows the pool while the share supply is unchanged, so the same shares redeem for more USDC later.](figures/lending-deposit-shares.svg)
 
 ## Borrowing Against Deposited Collateral
 
@@ -60,7 +60,7 @@ The health check behind step 4 is conservative by construction: when `refresh_ob
 
 ## Shorting an Asset by Borrowing It
 
-Carol thinks SpaceX is overvalued and wants to profit if it falls. (Carol, you do you.) Her trade is the classic short, and a lending market is where shorts live: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
+Carol thinks SpaceX is overvalued and wants to profit if it falls. Her trade is the classic short, and a lending market is where shorts are built: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
 One line of her position decides everything later: **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
 
@@ -74,7 +74,7 @@ The rate itself comes from a **kinked utilization curve**. Utilization is borrow
 
 Those percentages are annual, and the accrual is per slot, so the conversion divides by a slots-per-year figure the reserve stores as `slots_per_year`. That divisor is the cluster's slot time written as a count, which is why it sits in the config rather than in the code: shorten the slot and the same curve charges more per day, with no number in the program changed to say so. The *Time* chapter covers where the current figure comes from.
 
-Of the interest that accrues, the reserve factor (10%) is skimmed into `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
+Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 
 ![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the accumulation factor compounding across refreshes.](figures/lending-rate-curve.svg)
 
@@ -101,23 +101,23 @@ Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5
 
 ## Cranks: Work With No Natural Caller
 
-Dave is one instance of a pattern this market runs on. Some work in a financial product has no natural caller: interest must accrue, cached prices must refresh, and no user's own transaction is obliged to do any of it. The onchain pattern is the **crank**: an instruction handler that anyone may call, safe to call at any time, so that keeping the machine turning is a permissionless job rather than an operator's promise. A good crank has three properties:
+Dave is one instance of a pattern this market runs on. Some work in a financial product has no natural caller: interest must accrue, cached prices must refresh, and no user's own transaction is obliged to do any of it. The onchain pattern is the **crank**: an instruction handler that anyone may call, safe to call at any time, so that keeping the market's state current is a permissionless job rather than an operator's promise. A good crank has three properties:
 
 - **Permissionless: the handler checks state, not identity.** If the work is valid, anyone's signature will do. `refresh_reserve()` and `refresh_obligation()` are the canonical examples: they bring interest and cached prices up to date for whoever asks, no special key required, and gating maintenance on the operator's key would turn the operator's absence into everyone's outage. Anyone can run the crank, so a crank that moves funds must calculate their destination from information the program itself stores (like values in a PDA), never by paying the signer: a crank that pays whoever called has made its funds claimable by strangers.
-- **Idempotent: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve rewrites the same numbers), so a bot on a schedule never needs babysitting and never fails spuriously.
-- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator turning a handle for a fee: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
+- **Idempotent: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve rewrites the same numbers), so a bot on a schedule never needs attention and never fails spuriously.
+- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator paid per call: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
 
-![The crank loop: anyone's scheduled bot calls the permissionless handler, and every outcome is clean: work done, a quiet no-op, or a refusal of work the state does not permit.](figures/crank-loop.svg)
+![The crank loop: anyone's scheduled bot calls the permissionless handler, and every outcome is clean: work done, a no-op, or a refusal of work the state does not permit.](figures/crank-loop.svg)
 
 ## Repayment, Fees, and Yield: Everyone Leaves Whole
 
-Five weeks in, Bob's cash crunch has passed. His $750 debt has become about $758 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal lingers with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never squeak past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
+Five weeks in, Bob's cash crunch has passed. His $750 debt has become about $758 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
 
 Maria runs `collect_protocol_fees()` whenever she likes and receives the accumulated 10% of interest, about 78 cents (`NothingToCollect` guards the empty case, and `protocol_fees_accrue_and_owner_can_collect` pins the flow). Of every dollar of interest Bob paid, ninety cents went to the suppliers, ten to the house.
 
-Alice leaves her SPCXx position riding and takes her USDC yield: `redeem_reserve_collateral()` burns her 1,000 shares for about $1,003.50, her half of the supplier interest, since she supplied half the USDC reserve alongside Carol's collateral deposit.
+Alice leaves her SPCXx position in place and takes her USDC yield: `redeem_reserve_collateral()` burns her 1,000 shares for about $1,003.50, her half of the supplier interest, since she supplied half the USDC reserve alongside Carol's collateral deposit.
 
-The scoreboard:
+The final balances:
 
 - **Alice**: $3.50 for five weeks of otherwise idle capital.
 - **Bob**: five weeks of liquidity for $8, and he kept his stock.
@@ -142,7 +142,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 - **A wrong price makes every number wrong.** Every health check multiplies by the feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and gates who may write them, but the lesson stands: the liquidation engine can only be as good as its prices. Manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of the *Adversary* chapter dissects Mango Markets).
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
-- **Config foot-guns are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
+- **Dangerous configurations are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
 - **The donation attack** dies against `available_liquidity` being the source of truth rather than the vault balance.
 - **Self-liquidation** is allowed, deliberately: it is only possible while unhealthy and is economically pointless, matching how Save and Kamino Lend behave. Not every strange-looking path needs a check; this one is harmless because it never pays.
 
@@ -152,13 +152,13 @@ The suite is organized by risk, one file per class. Rounding comes first: the ro
 
 ## What You Learnt from Building the Lending Market
 
-Strip the branding from a commercial bank and what remains is: pooled deposits earning a rate, loans against collateral marked to market, a margin call when the mark moves, and a spread for the house. This chapter built all four out of PDAs, one growing index, two rounding helpers, and a price that is true only because a named key signed it recently. The loan officer became a loan-to-value check, the risk committee became a config validator that refuses foot-gun parameters, the margin clerk became any bot willing to claim a liquidation bonus, and the bank's interest ledger became a single number that only grows.
+Strip the branding from a commercial bank and what remains is: pooled deposits earning a rate, loans against collateral marked to market, a margin call when the mark moves, and a spread for the house. This chapter built all four out of PDAs, one growing index, two rounding helpers, and a price that is true only because a named key signed it recently. The loan officer became a loan-to-value check, the risk committee became a config validator that refuses dangerous parameters, the margin clerk became any bot willing to claim a liquidation bonus, and the bank's interest ledger became a single number that only grows.
 
 The concepts you now have:
 
-- **Shares as the yield mechanism.** Interest swells the pool while the share supply stays put, so each share redeems for more; no per-lender bookkeeping exists or needs to.
-- **The accumulation factor.** Store each borrower's principal and one shared factor, and compute a debt by multiplying them. The same shape prices any claim on a growing pool.
-- **Conservative-by-construction valuation.** Collateral floors, debt ceils, so every health check errs against the borrower, and no rounding sub-unit can squeak a position past a boundary.
+- **Shares as the yield mechanism.** Interest grows the pool while the share supply is unchanged, so each share redeems for more; no per-lender bookkeeping exists or needs to.
+- **The accumulation factor.** Store each borrower's principal and one shared factor, and compute a debt by multiplying them. The same structure prices any claim on a growing pool.
+- **Conservative-by-construction valuation.** Collateral floors, debt ceils, so every health check errs against the borrower, and no rounding sub-unit can slip a position past a boundary.
 - **Liquidation as a paid correction.** The close factor caps each call at part of the debt, so the borrower keeps what health does not require; the bonus pays the liquidator; the health gate means only positions already past the threshold can be touched.
 - **Cranks.** Permissionless, idempotent maintenance whose funds destinations come from stored state, and whose reliability comes from someone being paid.
 - **Freshness as a gate.** Every valuation requires same-transaction refreshes, so acting on stale state is a transaction that cannot be built.
