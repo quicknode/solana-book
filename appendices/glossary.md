@@ -569,7 +569,7 @@ A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 follow
 
 ### wallet
 
-A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet. **Wallet software** is the tool that holds those keys, signs transactions with them, and shows the balances they control, whether a browser extension, a phone app, or a hardware device.
+A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet. **Wallet software** is the tool that holds those keys, signs transactions with them, and shows the balances they control, whether a phone or desktop app or browser extension.
 
 ### wrapping
 
