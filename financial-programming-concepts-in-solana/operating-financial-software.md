@@ -1,35 +1,35 @@
 # Chapter 10: Operating Financial Software
 
-Correct code is only the start. This section is the rest of the job: proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
+Correct code is only the start. The rest of the job is proving the code is correct in the ways money demands, and holding power over a live market without becoming its biggest risk.
 
 ## Testing Financial Software: Test the Code Path the Bug Lives In
 
-Financial code fails in the code paths nobody drives: the refund path, the second claim, the withdrawal that lands exactly at the health boundary. Coverage of the happy path proves a demo; the discipline below proves a market.
+Financial code fails in the code paths nobody drives: the refund path, the second claim, the withdrawal that lands exactly at the health boundary. Covering the happy path proves a demo. The rules below are what it takes to prove a market.
 
-- **Build state through the program's own instruction handlers, never by injecting accounts.** Hand-built fixtures skip the very constraints under test; a program can pass every fixture-based test while being unusable, or unsafe, onchain. The only exception is accounts a foreign program would have created, like a price feed, which the harness builds deliberately as a controllable fixture, because valuation code cannot be honestly tested against prices you cannot move.
-- **Test both directions of every symmetric flow.** Deposit and withdraw. Bid and ask. Borrow and repay. A bug that favors one side is invisible if you only assert the other, and the swap that works A-to-B routinely fails B-to-A.
+- **Build state through the program's own instruction handlers, never by injecting accounts.** Hand-built fixtures skip the very constraints under test; a program can pass every fixture-based test while being unusable, or unsafe, onchain. The only exception is accounts a foreign program would have created, like a price feed, which the harness builds deliberately as a controllable fixture, because valuation code cannot be tested against prices you cannot move.
+- **Test both directions of every symmetric flow.** Deposit and withdraw, bid and ask, borrow and repay. A bug that favors one side is invisible if you only assert the other, and the swap that works A-to-B routinely fails B-to-A.
 - **Use nonzero, asymmetric values.** A test with `duration: 0` or equal amounts on both sides sits exactly where opposite comparisons coincide, so it passes with the inequality written backwards. Prime-ish, unequal, memorable numbers make wrong math produce wrong answers.
-- **Test both sides of every boundary.** The borrow at maximum loan-to-value must succeed, and the same borrow plus one minor unit must fail. Two tests, one unit apart; the lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is the pattern's name made literal.
-- **Test the adversarial code path by name.** Every rule in the failure-modes section of a program chapter earns a test that tries to break it: the non-maker canceling, the fee vault substituted for the user vault, the double claim. A wall that has never been pushed on is a hypothesis.
+- **Test both sides of every boundary.** The borrow at maximum loan-to-value must succeed, and the same borrow plus one minor unit must fail. The lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is that pair of tests.
+- **Test the adversarial code path by name.** Every rule in the failure-modes section of a program chapter earns a test that tries to break it: the non-maker canceling, the fee vault substituted for the user vault, the double claim.
 - **Assert properties, not just balances.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). Property tests catch whole bug classes; balance assertions catch instances.
 
-The mechanics are cheap: LiteSVM runs the real program in-process in milliseconds, slot-warping makes weeks of interest pass in a test, and injected feed accounts make prices a fixture. Nothing about the discipline is expensive except deciding to have it.
+The mechanics are cheap: LiteSVM runs the real program in-process in milliseconds, slot-warping makes weeks of interest pass in a test, and injected feed accounts make prices a fixture.
 
 ## Proving Goes Further Than Testing
 
-A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the discipline above, driving every code path with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like Kani[^kani] explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
+A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the rules above, driving every code path with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like Kani[^kani] explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
 
-The escrow program in the companion repository ships a set of Kani harnesses that do precisely this for its verifiable core:
+The escrow program in the companion repository ships a set of Kani harnesses that do this for the parts of it a proof can reach:
 
 - `proof_take_offer_conserves_value` proves that taking an offer conserves both tokens' totals on every input, not just the tested ones.
 - `proof_cancel_offer_returns_all_to_maker` proves the refund path whole.
 - `proof_offer_id_seed_injective` proves two different offer IDs can never derive the same address.
 
-Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. When a chapter of this book says an invariant "must hold," this is what taking that sentence literally looks like.
+Onchain code that delegates to other programs cannot be symbolically executed end to end, so the technique is to mirror the program's arithmetic and ordering in pure functions and prove those: the same shape the Percolator perpetuals engine uses. An invariant that "must hold" is a claim a proof can settle.
 
 ## Ship With a Second Opinion
 
-Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every wall in the failure-modes sections exists because someone's first opinion missed it. An audit is the cheapest way to have someone hunt for the same holes an attacker would, because a reviewer hands you the list instead of draining the program.
+Before any program in this book's genre touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the adversary's checklist against your code. Every check in the failure-modes sections exists because someone's first opinion missed it. An audit is the cheapest way to have someone hunt for the same holes an attacker would, because a reviewer hands you the list instead of draining the program.
 
 ## Wait for Finality Before Doing Anything You Cannot Undo
 
@@ -43,16 +43,16 @@ The code that reads the chain has to answer that question anyway, because it act
 | **confirmed** | A supermajority of stake has voted for that block | It can vanish in theory; no confirmed block has been rolled back on mainnet |
 | **finalized** | So many blocks sit on top that no validator can now vote another way | Nothing. This is the record |
 
-Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading to decide what transaction to send, and a transaction aimed at a state that evaporated simply fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the consensus protocol rather than by any number worth memorizing.
+Match the level to how reversible your reaction is. A liquidator bot can scan at `processed`, because it is reading to decide what transaction to send, and a transaction aimed at a state that evaporated fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus.
 
 ## Admin Power, Pausing, and Upgrades
 
-Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is not a design failure; on Solana even upgrade authority is normal and honest, because programs must be fixable when the *Adversary* chapter's exploit classes are discovered in yours. The failure is *unbounded* power, and the discipline is to treat the admin as a component with a specification, exactly like an oracle: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?
+Every market in this book has an operator with real power: Maria withdraws fees, settles events, sets prices, changes weights. Admin power is normal; on Solana even upgrade authority is expected, because programs must be fixable when the *Adversary* chapter's exploit classes are discovered in yours. The failure is *unbounded* power. Write the admin a specification as tight as an oracle's: what can this key do, what can it never do, and what happens if it goes rogue or goes silent?
 
 - **Bound what configuration can express.** Validate every parameter at write time against limits that make abuse structurally impossible: the fee that cannot exceed 10,000 basis points, the loan-to-value that cannot exceed the liquidation threshold, the manager fee capped because an uncapped one drains the vault *by configuration*. A config the admin cannot make dangerous is worth more than an admin promise.
 - **Snapshot terms when money commits.** The betting market copies the fee onto each event at creation; the vault strategy's fee has no setter at all. Whatever the admin can change, they cannot change it retroactively for funds already inside.
 - **Keep admin money and user money in different pots.** The fee vault, the accumulated-fees counter carved out of the exchange rate: the admin's upside is segregated so that collecting it cannot touch what users are owed, and the withdraw path moves only from the segregated pot.
-- **Give the admin no path to principal.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves funds between program-owned vaults; settlement pays by formula. When that property holds, the honest claim is not "non-custodial", it is better and more precise: the rules are the deployed program, and the operator is not in them.
+- **Give the admin no path to principal.** The strongest property in the book's programs: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves funds between program-owned vaults; settlement pays by formula. When that property holds, say so precisely rather than claiming "non-custodial": the rules are the deployed program, and the operator is not in them.
 - **Pausing is for entrances, not exits.** A pause switch that stops new deposits and new positions during an incident protects users; one that blocks withdrawals holds them hostage. Design the pause to narrow the program toward its exits, and remember the state-machine rule: every state needs an exit *even while paused*.
 - **Plan for the admin going silent.** Fees claimable whenever (a no-op when empty, so a cron can run it), and nothing user-facing gated on the operator showing up. Add an escape hatch for the day the price feed dies: a market that cannot value collateral should be able to wind down, closing positions and letting deposits leave, rather than freezing everyone in place waiting for truth that is not coming.
 - **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than one laptop key, and say so. Users are not trusting that the code will never change; they are trusting that changing it takes more than one bad day.
@@ -63,9 +63,7 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
 - Ship with a second-opinion audit; a reviewer hunting the same holes an attacker would hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain has to choose. A bot deciding which transaction to send next can read at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
-- Admin power is a component with a specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
-
-The through-line of the whole chapter, one last time. The arithmetic decides what transitions compute, offchain truth decides what the world may trigger, the adversary is loose in every code path, and the operator is just one more account whose powers are checked like everyone else's. Programs built that way are the ones the next nine chapters walk through.
+- Admin power runs on a written specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
 
 [^kani]: Kani is a Rust model checker from the AWS-backed model-checking project, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
 

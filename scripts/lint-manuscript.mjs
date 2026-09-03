@@ -48,17 +48,73 @@ const rules = [
   [/\bthat is the whole reason\b/i, 'give the reason without announcing it: "they count slots because ..."'],
   [/\bdoes the work of\b/i, "describe what the code stores and computes, not how clever the result is"],
   [/\bunderscor(es|ing) (the|that|how|why|its)\b/i, 'say what it shows (the underscore character in identifiers is fine)'],
+  // The same announcement, wearing a pronoun. Each of these was written here
+  // after the plain forms above were banned, and each was cut without losing a
+  // word of content: "which is exactly the point" and "that is the point" both
+  // sat after the sentence that already made the point.
+  [/\b(?:that|this|which|it) is (?:exactly )?the (?:whole )?point\b/i,
+    'the sentence before it already made the point; delete the announcement'],
+  [/\bis the one that matters\b|\bmatters more than it looks\b/i,
+    'say why: "the path an attacker will drive", not "the one that matters"'],
+  [/\bit is worth being\b/i, "cut it: if the point is worth making, make it"],
+  // Words that rate the writing instead of doing it. "Honest" appeared twenty
+  // times in this manuscript and never once meant honesty ("the honest way to
+  // make it", "an honest limitation, stated as one"); "quietly" dressed up a
+  // value that changed; "the discipline" and "hygiene" named a category where
+  // the rule itself was shorter; "worth stealing" and "by now you know" told
+  // the reader how to feel about the next sentence. The paragraph-closing
+  // maxim is the same tell with no regex, so the companion AI plugin
+  // describes it and this file cannot catch it.
+  [/\bhonest(?:ly)?\b/i, 'say what the sentence means without the word: accurate, stated, plain, or nothing'],
+  [/\bquietly\b/i, "the value changed, so say it changed; the adverb adds only tone"],
+  [/\bthe discipline\b|\bhygiene\b/i, 'name the rule instead of its category: "the rules below", "the staleness check"'],
+  [/\bworth (?:stealing|copying|noticing|printing|studying|memorizing)\b|\bby now you\b/i,
+    "do not rate the next sentence; cut the rating and keep the content"],
+  // "Fail open" means "stop working" to an electrician (an open circuit) and
+  // "let everything through" to everyone else (an open door), and "fail
+  // closed" flips the same way, so half the readers take each one backwards.
+  [/\bfail(?:s|ed|ing)?[ -](?:open|closed)\b/i,
+    'say what happens: "refuses the transaction", "rejects the price", "lets every request through"'],
+  // Pointing the reader at the page instead of telling them what is on it.
+  // "Note what is pledged: shares" is one word longer than "what he pledges is
+  // shares". Watching a real market, or looking away from the chain, is the
+  // reader doing something in the world, and stays.
+  [/\bNote (?:what|who|where|the order)\b|\bNotice (?:what|who|how)\b|\bWatch \w+ in the (?:story|chapter|section|table|figure)\b/,
+    'state what the reader would see, rather than telling them to look at it'],
+  // American spelling, second batch: the doubled-l forms and the noun/verb
+  // pairs British English splits. Identifiers keep whatever the code shipped.
+  [/\b(?:cancelling|modelling|labelling|signalling|travelling)\b/i,
+    "American spelling doubles the l only when the stress falls on the last syllable: canceling, modeling"],
+  [/\bcancellable\b|\bcentre\b|\bcentrepiece\b|\blicence(?:s|d)?\b/i,
+    'American spelling in prose: cancelable, center, centerpiece, license'],
+  // One apostrophe and one set of quotes across the manuscript. A curly
+  // apostrophe reached six figure captions by way of a word processor; the
+  // build sets whichever it is given, so the two forms print differently.
+  [/[\u2018\u2019\u201c\u201d]/,
+    "use a straight apostrophe (') and straight quotes (\"), as the rest of the manuscript does"],
+  // One italic marker. Underscores also blind the chapter-reference check
+  // below, because an underscore is a word character, so `\b` never fires
+  // against the start of _Arithmetic of Money_ and the reference reads clean.
+  [/(?<![\w`*_])_[^_`\n]{1,80}_(?![\w`*_])/,
+    'italics are *asterisks* book-wide; underscores also hide chapter references from the check below'],
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],
   [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
+  // "protocol" names the network and the programs on it, so it tells a reader
+  // neither. Identifiers that ship with the word keep it: the lookarounds skip
+  // anything backticked or joined by an underscore.
+  [/(?<![`\w])protocols?\b(?![\w`])/i,
+    'say "network" for Solana and the rules it enforces, "program" for onchain code; "protocol" names both (identifiers like `accumulated_protocol_fees` are exempt)'],
   [/Quicknode Press|QuickNode|QuikNode|Quiknode(?! Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode Inc."; there is no Quicknode Press'],
   [/\bgas fees?\b|\bgas costs?\b/i, 'say "transaction fees"'],
   [/\bmempool/i, "Solana has no mempool"],
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
   [/\bbase units?\b/i, 'say "minor unit"'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
-  [/(?<!`)\bids?\b(?!`|\.json)/, 'write "ID"/"IDs" in capitals in prose (code identifiers like `program_id` and the `id.json` filename keep lowercase)'],
+  // The trailing "=" exempts a URL query parameter (?id=43495 in a footnote's
+  // link), which is part of an address rather than prose.
+  [/(?<!`)\bids?\b(?!`|\.json|=)/, 'write "ID"/"IDs" in capitals in prose (code identifiers like `program_id` and the `id.json` filename keep lowercase)'],
   [/\bSolend\b/, "renamed: say Save"],
   [/\bSerum\b/, "collapsed project: cite OpenBook or Phoenix"],
   [/\bfavour|behaviour|\bcancelled\b|\bapologise\b|\blabelled\b/, "American spelling in prose (identifiers like the Cancelled enum are exempt: write them capitalized)"],
@@ -71,7 +127,7 @@ const rules = [
 // Allowed exceptions, matched against the full line.
 const exceptions = [
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
-  /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention
+  /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
@@ -101,7 +157,7 @@ for (const file of [...new Set(files)]) {
 // Heading check: a heading states the general mechanism and the characters
 // stay in the prose beneath, in every part of the book. Walkthrough chapters
 // keep the story's order and the specific mechanism; only the names go.
-const characterHeading = /^#{2,6} .*\b(Alice|Bob|Carol|Dave|Maria)\b/;
+const characterHeading = /^#{2,6} .*\b(Alice|Bob|Carol|Dave|Maria|Victor)\b/;
 
 for (const file of [...new Set(files)]) {
   readFileSync(file, "utf8")
@@ -168,7 +224,9 @@ for (const file of [...new Set(files)]) {
 // *Arithmetic of Money* chapter. It is not in the title list above because the
 // message there would tell an author to call a five-chapter section a chapter.
 const sectionName = "Financial Programming Concepts in Solana";
-const sectionMention = new RegExp(`(?<!\\*)\\b${sectionName}\\b`);
+// No lookbehind here: italicizing the section name is the commonest way to
+// write it as though it were a chapter, which is the mistake being caught.
+const sectionMention = new RegExp(`\\b${sectionName}\\b`);
 const sectionLink = new RegExp(`\\[${sectionName}\\]\\(`);
 
 for (const file of [...new Set(files)]) {

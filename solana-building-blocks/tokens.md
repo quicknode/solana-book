@@ -28,7 +28,7 @@ As well as the current total supply, the mint account also stores the token's de
 
 The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
-![The mint is a factory: new tokens exist only when the mint authority signs, and the supply and the holder’s balance rise together. ACME is the stock of a fictional company.](figures/mint-factory.svg)
+![The mint is a factory: new tokens exist only when the mint authority signs, and the supply and the holder's balance rise together. ACME is the stock of a fictional company.](figures/mint-factory.svg)
 
 ## Token Accounts Hold Tokens
 
@@ -44,7 +44,7 @@ An ATA is a **PDA**: a derived address that sits off the curve, with no private 
 
 ![Every ATA is a token account, and what makes it an ATA is only its address: the one anyone can derive from the owner, the token program, and the mint.](figures/token-accounts-and-atas.svg)
 
-Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *an address’s* balance of a given token; program-held tokens live wherever the program put them.
+Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
 
 ![All three sit off the curve with no private key behind them; only the derivation differs.](figures/token-accounts-off-the-curve.svg)
 
@@ -56,7 +56,7 @@ The mint's **decimals** set the **minor unit**, the raw integer everything actua
 
 ## The Freeze Authority Can Stop Any Holder Cold
 
-The mint's other lever is the **freeze authority**, which can freeze and thaw individual token accounts: a frozen account can neither send nor receive. It is the compliance mechanism behind regulated assets (sanctions, court orders, fraud response), and it applies to holders one at a time, not to the token as a whole. Before building on someone else's token, check both authorities: who can mint, and who can freeze, is the token's real constitution.
+The mint's other lever is the **freeze authority**, which can freeze and thaw individual token accounts: a frozen account can neither send nor receive. It is the compliance mechanism behind regulated assets (sanctions, court orders, fraud response), and it applies to holders one at a time, not to the token as a whole. Before building on someone else's token, check both authorities: who can mint, and who can freeze.
 
 ## Two Token Programs: Classic and Token Extensions
 
@@ -80,7 +80,7 @@ When you build on a token you did not issue, read its extensions first: several 
 ## What You Learnt
 
 - Every distinct token has its own **mint account**, and that account's address is the token's identity: the label is decoration. A mint defines a token; it is not one.
-- The **mint authority** and **freeze authority** are a token's real constitution: who can mint, and who can freeze, are the first questions to ask about any token.
+- The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
 - Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**, and extensions can change what a transfer means: check a token's extensions before building on it.

@@ -63,3 +63,15 @@ should resolve to a real definition there.
 
 `WRITING-PLAN.md` holds the house style and the conventions the linter enforces. Read it before editing
 prose.
+
+It is deliberately partial. Style is inherited from the
+[companion AI plugin](https://github.com/quicknode/solana-finance-claude-plugin), which holds every rule
+that would apply to any Solana finance writing; `WRITING-PLAN.md` adds only what is specific to this
+book, and `scripts/lint-manuscript.mjs` enforces some but not all of the plugin's rules. Without the
+plugin's rules you are working from half the style guide.
+
+Where Claude Code supports plugins, install it at the Claude Code prompt (not the shell) with
+`/plugin marketplace add quicknode/solana-finance-claude-plugin`. That command is unavailable in some
+environments, including the VS Code panel; there, read the plugin's rules from its repository before
+editing prose. The figure conventions live there too, in `DIAGRAMS.md`, which is the source of truth
+for anything `scripts/check-figure-geometry.mjs` checks.
