@@ -11,7 +11,7 @@ Financial code fails at the edges the happy path never reaches: the refund, the 
 - **Use nonzero, asymmetric values.** A test with `duration: 0`, or the same amount on both sides, sits at the one value where `<=` and `>=` both hold, so it passes with the comparison written backwards. Equal amounts hide a second bug: a formula with its operands swapped computes the same total either way. Use unequal amounts you can recognize in a failed assertion's output, like 1,000 USDC against 3 NVDAx, so a wrong total tells you which input it was built from.
 - **Test both sides of every numerical boundary.** The withdrawal that lands exactly on the loan-to-value limit must succeed, and the same withdrawal plus one minor unit must fail. The lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is that pair: a withdrawal that leaves borrowing power exactly equal to the debt passes, and one more minor unit is refused.
 - **Test every attack by name.** Every rule in a program chapter's failure-modes section gets a test that tries to break it: the non-maker canceling an offer, the fee vault passed in place of the user vault, the second claim on a settled event.
-- **Assert properties, not just balances.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). A property test catches a whole bug class; a balance assertion catches one instance of it.
+- **Assert properties, not just account values.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). A property test catches a whole bug class; an assertion on one account's value catches one instance of it.
 
 None of this needs a validator. LiteSVM runs the compiled program in-process in milliseconds, warping the slot makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs.
 
@@ -63,7 +63,7 @@ Every market in this book has an operator with real power: withdrawing fees, set
 
 ## What You Learnt
 
-- Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and properties as well as balances.
+- Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and properties as well as account values.
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, a screen that can be redrawn reads at `confirmed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
