@@ -35,16 +35,17 @@ A handler that moves tokens through the Token Program cannot be model-checked en
 
 A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write, because a program always executes in a block no validator has voted on yet. If that block is skipped or loses a fork, the transaction did not happen, and every account it touched goes back with it.
 
-The code that reads the chain has to answer that question, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. A reader of the chain asks for one of two states, by the commitment level it passes with the request:[^commitment-levels]
+The code that reads the chain has to answer that question, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. A reader of the chain asks for one of two states,[^confirmed] by the commitment level it passes with the request:[^commitment-levels]
 
 | Commitment | What it means | What can still happen to it |
 | --- | --- | --- |
 | **processed** | A leader executed the transaction and put it in a block | It can vanish: the block may be skipped or lose a fork |
 | **finalized** | The validators have voted the block final, and no fork can replace it | Nothing. This is the record |
 
-The request also accepts a third level, `confirmed`, which now means the same as `finalized`.[^confirmed]
+- **A liquidator bot scans at `processed`**, because it is reading only to decide which transaction to send next, and a transaction aimed at a state that vanished fails.
+- **Anything that leaves the chain and cannot be recalled waits for `finalized`**: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books.
 
-A liquidator bot scans at `processed`, because it is reading only to decide which transaction to send next, and a transaction aimed at a state that vanished fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The rule underneath is to match the level to how reversible your reaction is, because the chain can drop a block that is not final, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rules, not by anything in your code.
+The rule underneath is to match the level to how reversible your reaction is, because the chain can drop a block that is not final, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rules, not by anything in your code.
 
 ## Admin Power Runs on a Written Specification
 
@@ -74,4 +75,4 @@ Before a program that holds other people's money touches mainnet, get a **second
 
 [^commitment-levels]: The commitment levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
 
-[^confirmed]: A third state, `confirmed`, was available under the older Tower BFT mechanism that was replaced with Alpenglow: a block a supermajority of stake had voted for, which the network still permitted to lose and which was never lost on mainnet. Alpenglow's first round of votes finalizes the block, so the middle state is gone. Alpenglow is SIMD-0326, at [github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0326-alpenglow.md](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0326-alpenglow.md), whose Impact section says optimistic confirmation is superseded by finality. That `confirmed` equals `finalized` is from Brennan Watt of Anza, in a message to the author on August 28, 2026.
+[^confirmed]: The request also accepts a third level, `confirmed`, which now means the same as `finalized`. Under the older Tower BFT mechanism, which Alpenglow replaced, it named a block a supermajority of stake had voted for, which the network still permitted to lose and which was never lost on mainnet. Alpenglow's first round of votes finalizes the block, so the middle state is gone. Alpenglow is SIMD-0326, at [github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0326-alpenglow.md](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0326-alpenglow.md), whose Impact section says optimistic confirmation is superseded by finality. That `confirmed` equals `finalized` is from Brennan Watt of Anza, in a message to the author on August 28, 2026.
