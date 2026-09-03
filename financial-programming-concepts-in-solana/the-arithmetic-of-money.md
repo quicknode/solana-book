@@ -6,13 +6,13 @@ Every bug class in this chapter has shipped in a real program, and the worst of 
 
 Every validator that executes your program must compute exactly the same result, or the network cannot agree on state, so a program's float operations are emulated in software rather than run on the hardware. That makes them slow. They also accumulate representation error (0.1 has no exact binary form) and round to nearest, a direction nobody chose. Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For money it is exact, because money really does come in whole units.
 
-So the rule is: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that smuggles them in. When a calculation needs fractions, scale integers up instead, as the WADs and Lots section below describes. When it needs a square root or an exponential, compute it with integer iteration: Newton's method for the square root, which the *Constant-Product AMM* chapter runs for real, and exponentiation by squaring for a power, both covered later in this chapter. None of the programs in this book uses a float, and your programs should not either.
+So the rule is: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that uses them internally. When a calculation needs fractions, scale integers up instead, as the WADs and Lots section below describes. When it needs a square root or an exponential, compute it with integer iteration: Newton's method for the square root, which the *Constant-Product AMM* chapter runs for real, and exponentiation by squaring for a power, both covered later in this chapter. None of the programs in this book uses a float, and your programs should not either.
 
 ## Every Amount Is an Integer at a Declared Scale
 
 Programs calculate in **minor units**, the smallest denomination of each token: the raw integer the token program actually moves. The **decimals** declared on each mint say how many minor units make one **major unit**: USDC has 6, so $10 is 10,000,000; TSLAx (Tesla stock) has 8, so a tenth of a share is also 10,000,000. The same integer means two different things, and three rules keep them straight:
 
-- **Read decimals from the mint; never assume them.** Hard-coding 10^9 because SOL has 9 decimals is a bug waiting for the first token that has 6.
+- **Read decimals from the mint; never assume them.** Hard-coding 10^9 because SOL has 9 decimals is a bug that the first token with 6 decimals will expose.
 - **Never mix scales in one calculation.** An amount in USDC minor units times a price per whole share is nonsense with a plausible magnitude, which is the hardest kind of bug to notice. Name variables with their unit and scale.
 - **Use `transfer_checked()`**, which makes every transfer state the decimals it believes and fails if the mint disagrees.
 
@@ -40,14 +40,14 @@ Some formulas need more than the four operations. The classic is the AMM's first
 
 ## Rounding Is a Policy Decision
 
-Integer division nearly always leaves a remainder, and that remainder is **dust**: a sliver smaller than one minor unit. One transaction's dust is worth nothing; a million transactions' dust is worth taking. So every division rounds one way, **against the user, in favor of the program.**
+Integer division nearly always leaves a remainder, and that remainder is **dust**: a fraction smaller than one minor unit. One transaction's dust is worth nothing; a million transactions' dust is worth taking. So every division rounds one way, **against the user, in favor of the program.**
 
 | What is being computed | Round | Examples |
 | --- | --- | --- |
 | What the program pays out | Down (floor) | Withdrawals, winnings, swap outputs, shares minted |
 | What the user owes | Up (ceil) | Debt, fees |
 
-Is this greedy? Keeping the dust in the pool is the only policy that holds up: the pool belongs to its depositors, so the sliver stays with everyone rather than leaking to whoever transacts most often. One minor unit of rounding in the user's favor is invisible in a test, and an attacker who can loop a transaction thousands of times turns it into a drain; the precision-exploit section of the *Adversary* chapter shows that attack succeeding in production.
+Is this greedy? Keeping the dust in the pool is the only policy that holds up: the pool belongs to its depositors, so the remainder stays with everyone rather than leaking to whoever transacts most often. One minor unit of rounding in the user's favor is invisible in a test, and an attacker who can loop a transaction thousands of times turns it into a drain; the precision-exploit section of the *Adversary* chapter shows that attack succeeding in production.
 
 > **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed.[^spl-lending] The fix that shipped was one word: `round` became `floor`.
 
@@ -65,7 +65,7 @@ Debt is ceiled wherever the program computes it. Three guarantees follow:
 
 - The pool never collects less than the interest that accrued.
 - No schedule of tiny repayments can shave the debt.
-- No sub-unit of debt is forgiven by rounding; it lingers with the borrower.
+- No sub-unit of debt is forgiven by rounding; it stays with the borrower.
 
 Over-repayment clamps to the debt, so nobody is overcharged either.
 
@@ -96,7 +96,7 @@ Each loan stores only its principal, and a live debt is that principal multiplie
 That update is an approximation of compounding, and it is the one the lending market runs. The exact form exists for the day a formula needs it:
 
 - **The everyday update approximates.** Multiplying by (1 + rate × elapsed slots) is simple interest over the interval. True compounding over n slots is (1 + rate)ⁿ, a power; the approximation is a multiply. The lending market grows `borrow_accumulation_factor` this way in `refresh_reserve()`, and every handler that moves money requires that refresh to have run first, so the intervals stay short. With a tiny per-slot rate and short intervals, the difference from true compounding is smaller than anything a borrower could measure.
-- **When a formula needs the exact power, square.** For (1 + rate)ⁿ with a large n, do not multiply n times. Square your way there: (1 + rate)⁸ is three squarings rather than seven multiplications, and in general about log₂(n) of them, each with checked math and floored the same way. This is **exponentiation by squaring**. No program in this book needs it, because the lending market refreshes often enough that the approximation stays closer than the rounding. It is the tool for a market that can sit untouched for a long stretch, where one catch-up update would otherwise treat months of interest as simple interest.
+- **When a formula needs the exact power, square.** For (1 + rate)ⁿ with a large n, do not multiply n times. Use repeated squaring instead: (1 + rate)⁸ is three squarings rather than seven multiplications, and in general about log₂(n) of them, each with checked math and floored the same way. This is **exponentiation by squaring**. No program in this book needs it, because the lending market refreshes often enough that the approximation stays closer than the rounding. It is the tool for a market that can sit untouched for a long stretch, where one catch-up update would otherwise treat months of interest as simple interest.
 
 The rate itself is a policy choice; the arithmetic above only applies whatever rate the market sets. Nearly every lending market sets it the same way, though: as a function of **utilization**, the share of the pool that is lent out. The rate rises gently up to a target utilization and steeply beyond it, so a pool that is nearly drained pays depositors more and charges borrowers more until deposits come back or loans are repaid.
 

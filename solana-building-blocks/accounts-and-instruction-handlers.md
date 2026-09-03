@@ -8,7 +8,7 @@ Solana (or more specifically, Solana mainnet and devnet) is better understood as
 
 Meet Alice. Alice has a **key pair**: two mathematically linked keys. Her **private key** is kept secret, stored securely on her device, and is used to sign. The matching **public key** can be shared with everyone, and is used to check those signatures: a valid signature proves that the holder of the private key that matches this public key, and nobody else, produced the signature.
 
-On Solana, as with most blockchains, the public key does double duty: it is also Alice's **address**, the identifier anyone can use to find her and transact with her. Solana public keys are points on a cryptographic curve, so this book draws them exactly that way: as addresses positioned on a curve.
+On Solana, as with most blockchains, the public key is also Alice's **address**, the identifier anyone can use to find her and transact with her. Solana public keys are points on a cryptographic curve, so this book draws them exactly that way: as addresses positioned on a curve.
 
 At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called rent) and the fees on her future transactions. Anyone who knows Alice's address can look up her account, see that balance, and send her more SOL. However, nobody can spend Alice's SOL without her private key.
 
@@ -38,7 +38,7 @@ Alice's SOL is devnet SOL: think of it as the pretend money from a board game: i
 
 ## Receiving Doesn't Need A Signature, Spending Does
 
-Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of SOL from the same faucet. To send something to Bob, Alice needs only his address. To spend whatever arrives there, Bob needs the private key that matches his address. That asymmetry is the whole payment model: receiving needs no signature, spending does.
+Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of SOL from the same faucet. To send something to Bob, Alice needs only his address. To spend whatever arrives there, Bob needs the private key that matches his address.
 
 ![Bob joins the curve: his public key is his address, alongside Alice's.](figures/alice-and-bob-on-the-curve.svg)
 
@@ -83,9 +83,9 @@ For financial software, atomicity is a primitive you design with. Settlement ris
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
-![A flash loan is atomicity turned into credit: four instructions across three programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
+![A flash loan: four instructions across three programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
 
-The budget for work done by instructions is metered in **compute units** per transaction, and you pay for CUs directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill, so all those funds can be collected later in a single step, and why work gets consolidated everywhere you look.
+The budget for work done by instructions is metered in **compute units** per transaction, and you pay for CUs directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill, so all those funds can be collected later in a single step, and why the programs in this book consolidate work wherever they can.
 
 ## Every Transaction Is Signed
 
@@ -101,7 +101,7 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 
 That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything, because receiving requires no signature from the recipient, while nothing will ever leave his account until a transaction *he* signs asks for it.
 
-Solana used the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
+Solana uses the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
 - A token's **mint authority** is the only address that may create new supply of it.
 - That token's **freeze authority** is the only address that may freeze a holder's account.
@@ -112,7 +112,7 @@ Different authorities in the same program can be given to different accounts.
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, but for standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Any authority can be a multisig address rather than one person's wallet. 
 
-A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Stripped of its apps and branding, a saved wallet is startlingly small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet.
+A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Without its apps and branding, a saved wallet is small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet.
 
 > **64 bytes, but only 32 are secret.** An `id.json` keypair file holds the 32-byte private key followed by the 32-byte public key. The second half is a convenience, not a necessity: the public key is mathematically derived from the private key, so software can recompute it from the first 32 bytes at any time. The private key is the only secret, and the only part that needs protecting.
 
@@ -156,7 +156,7 @@ So Bob signs a transaction carrying one instruction: the **Token Program**'s `tr
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
-Bob's transfer instruction names every account it touches: Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's. The validation section of the *Adversary* chapter covers this in more detail.
+Bob's transfer instruction names every account it touches: Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence applies to every program in this book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's. The validation section of the *Adversary* chapter covers this in more detail.
 
 ## What You Learnt
 
