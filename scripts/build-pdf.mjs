@@ -241,10 +241,12 @@ const markUrls = (html) =>
   html.replace(/<a href="(https?:[^"]+)">([^<]+)<\/a>/g, (whole, href, text) =>
     bareAddress(href) === text.replace(/\/$/, "")
       ? `<a class="url" href="${href}">${breakableUrl(text)}</a>`
-      // The separating space lives inside the span rather than between the two
-      // elements: Paged.js drops a whitespace-only text node during layout, and
-      // the address ends up jammed against the word before it.
-      : `${whole}<span class="url"> (${breakableUrl(bareAddress(href))})</span>`,
+      // The parentheses belong to the sentence, not to the address, so they
+      // stay outside .url and set roman around the italic. They also keep the
+      // separating space company: Paged.js drops a whitespace-only text node
+      // during layout, which would jam the address against the word before it,
+      // and " (" is not whitespace-only.
+      : `${whole} (<span class="url">${breakableUrl(bareAddress(href))}</span>)`,
   );
 
 const sections = chapterPaths.map((path) => {
@@ -528,11 +530,16 @@ h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
 
 code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
-/* An address printed as itself is a literal string the reader types, so it is
-   set in the same face and size as program_id, and a URL and an identifier sit
-   identically on the line. Never underlined: underlining is a screen
-   convention, and in a serif face it collides with the descenders. */
-.url { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
+/* An address sets in italic, which is what technical publishing does with one:
+   it is O'Reilly's house style and No Starch's, and a reader needs no machine
+   face to tell them an address is copied exactly. The monospace face stays
+   with program_id, where it distinguishes code from the prose around it; an
+   address is not code. Never underlined: underlining is a screen convention,
+   and in a serif face it collides with the descenders. No size of its own
+   either, because the italic is doing the work the smaller mono size was there
+   to compensate for. Hyphenation is off: body text hyphenates, and a soft
+   hyphen dropped into an address is a character the reader would retype. */
+.url { font-style: italic; hyphens: none; }
 pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
 blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }
