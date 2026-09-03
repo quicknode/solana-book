@@ -15,7 +15,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
 import { chromium } from "playwright-core";
-import { PDFDocument } from "pdf-lib";
+import { PDFArray, PDFDocument, PDFName } from "pdf-lib";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -657,6 +657,28 @@ await page.evaluate(() => {
   }
 });
 
+// An address may break across lines; where it points may not. A wrapped link
+// is printed as an annotation per line, and the whole href belongs on every
+// one of them, so that a reader clicking the second line of an address arrives
+// where a reader clicking the first line arrives. Count the lines here, while
+// the layout still exists; the annotations the print actually produced are
+// checked against the count below.
+//
+// A break opportunity splits the text into several boxes on one line, so the
+// lines are the distinct tops among those boxes, not the boxes themselves.
+// Paged.js also leaves the source content in the document, unrendered, beside
+// the pages it laid out: those copies have no boxes at all and were not
+// printed, so they are not lines either.
+const linkLines = await page.evaluate(() => {
+  const counts = {};
+  for (const link of document.querySelectorAll('a[href^="http"]')) {
+    const tops = new Set([...link.getClientRects()].map((rect) => Math.round(rect.top)));
+    if (tops.size === 0) continue;
+    counts[link.href] = (counts[link.href] ?? 0) + tops.size;
+  }
+  return counts;
+});
+
 // Page one of the PDF is page one of the flow, so odd page numbers are
 // right-hand pages whether or not the cover is included. A part title belongs
 // on one, and so does every chapter.
@@ -683,6 +705,45 @@ await browser.close();
 
 const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
+
+// Every URI action in the finished PDF, with the number of annotations
+// carrying it. A viewer follows these, not the printed characters.
+const printedDestinations = new Map();
+for (const pdfPage of (await PDFDocument.load(readFileSync(outputPath))).getPages()) {
+  const annotations = pdfPage.node.get(PDFName.of("Annots"));
+  if (!annotations) continue;
+  for (const entry of pdfPage.node.context.lookup(annotations, PDFArray).asArray()) {
+    const action = pdfPage.node.context.lookup(entry).get(PDFName.of("A"));
+    const uri = action && pdfPage.node.context.lookup(action).get(PDFName.of("URI"));
+    if (!uri) continue; // an internal cross-reference, which names a page rather than an address
+    const destination = uri.decodeText();
+    printedDestinations.set(destination, (printedDestinations.get(destination) ?? 0) + 1);
+  }
+}
+
+// A destination the book does not contain is a destination something split:
+// the address broke over two lines and one of the pieces was written as if it
+// were the whole thing.
+const splitDestinations = [...printedDestinations.keys()].filter((destination) => !(destination in linkLines));
+if (splitDestinations.length > 0) {
+  console.error(`\n${splitDestinations.length} link(s) point somewhere the book does not:`);
+  for (const destination of splitDestinations) console.error(`  ${destination}`);
+  process.exitCode = 1;
+}
+
+// And a line box with no annotation on it is a line of an address that is not
+// clickable at all, which sends a reader to whatever their viewer makes of the
+// characters it can see.
+const unlinkedLines = Object.entries(linkLines)
+  .map(([href, lines]) => ({ href, lines, annotations: printedDestinations.get(href) ?? 0 }))
+  .filter(({ lines, annotations }) => annotations < lines);
+if (unlinkedLines.length > 0) {
+  console.error(`\n${unlinkedLines.length} link(s) are not clickable on every line they occupy:`);
+  for (const { href, lines, annotations } of unlinkedLines) {
+    console.error(`  ${href}: ${lines} line(s), ${annotations} annotation(s)`);
+  }
+  process.exitCode = 1;
+}
 
 const strays = openingPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
 if (strays.length > 0) {
