@@ -100,7 +100,7 @@ Assets pledged to secure a loan, seizable on default or on breach of the liquida
 
 ### commitment level
 
-How sure a reader of the chain is asking to be. `processed` means a leader executed the transaction and put it in a block, which can still vanish. `finalized` means the validators have voted the block final and no fork can replace it. `confirmed` named a middle state under Tower BFT, a block a supermajority of stake had voted for; Alpenglow folds it into `finalized`. A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
+How sure a reader of the chain is asking to be. `processed` means a leader executed the transaction and put it in a block, which can still vanish. `finalized` means the validators have voted the block final and no fork can replace it.[^confirmed] A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
 
 ### compute unit
 
@@ -573,3 +573,5 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 ### zero-copy
 
 Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs afford large accounts like a 180 KB order book.
+
+[^confirmed]: A third state, `confirmed`, was available under the older Tower BFT mechanism that was replaced with Alpenglow: a block a supermajority of stake had voted for, which the network still permitted to lose. Alpenglow's first round of votes finalizes the block, so `confirmed` now means the same as `finalized`.
