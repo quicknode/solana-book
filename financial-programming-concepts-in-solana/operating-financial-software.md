@@ -31,10 +31,6 @@ The escrow program in the companion repository ships Kani harnesses for the part
 
 A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and proves those. Percolator, Anatoly Yakovenko's Kani-verified perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole. Each invariant in a program chapter's invariants section is a claim a harness like these can settle.
 
-## Ship With a Second Opinion
-
-Before a program that holds other people's money touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. Every check in the program chapters' failure-modes sections exists because someone's first opinion missed it. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
-
 ## Wait for Finality Before Doing Anything You Cannot Undo
 
 A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write, because a program always executes in a block no validator has voted on yet. If that block is skipped or loses a fork, the transaction did not happen, and every account it touched goes back with it.
@@ -62,13 +58,17 @@ Every market in this book has an operator with real power: withdrawing fees, set
 - **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And add a way out for the day the price feed dies. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than freezing every user in place until a price arrives.
 - **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than a single key on one person's laptop, and say so where users can read it. A user who reads that knows a change to the code takes several named people to sign, and that one stolen laptop cannot ship one.
 
+## Ship To Mainnet With a Second (or Third) Opinion
+
+Before a program that holds other people's money touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. Every check in the program chapters' failure-modes sections exists because someone's first opinion missed it. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
+
 ## What You Learnt
 
 - Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
 - Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
-- Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, admin money kept apart from user money, and no path to principal. A pause stops entrances and leaves exits open, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
+- Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 
 [^kani]: Kani is a Rust model checker, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
 
