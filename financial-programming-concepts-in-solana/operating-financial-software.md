@@ -2,9 +2,9 @@
 
 Correct code is only the start. The rest of the job is proving that code on every path money can take, waiting for the chain's answer to become final before acting on it, and holding power over a live market without becoming its biggest risk.
 
-## Test the Code Path the Bug Lives In
+## Bugs Live at the Boundaries, So Test Both Sides of Every One
 
-Financial code fails in the code paths nobody drives: the refund, the second claim, the withdrawal that lands exactly on the health boundary. A suite that covers only the happy path proves the demo works. The rules below drive the other paths.
+Financial code fails at the edges the happy path never reaches: the refund, the second claim, the withdrawal that lands exactly on the health boundary. A suite that covers only the happy path proves the demo works. The rules below push every test to an edge.
 
 - **Build state through the program's own instruction handlers, never by injecting accounts.** A hand-built fixture skips the constraints under test, so a program can pass every fixture-based test and still be unusable, or unsafe, onchain. The one exception is an account a foreign program would have created, like a price feed. The harness builds that one as a fixture, so a test can set the price it needs.
 - **Test both directions of every symmetric flow.** Deposit and withdraw, bid and ask, borrow and repay. A bug that favors one side is invisible when the test asserts only the other: a swap that works from USDC to NVDAx can fail from NVDAx to USDC.
@@ -63,7 +63,7 @@ Every market in this book has an operator with real power: withdrawing fees, set
 
 ## What You Learnt
 
-- Test the code path the bug lives in: both directions of every symmetric flow, both sides of every boundary, every attack by name, and properties as well as balances.
+- Bugs live at the boundaries, so a test suite pushes to every one: both directions of every symmetric flow, both sides of every limit, every attack by name, and properties as well as balances.
 - Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, a screen that can be redrawn reads at `confirmed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
