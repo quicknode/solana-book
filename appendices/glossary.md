@@ -16,7 +16,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The *Prop AMM* chapter treats it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow captures the difference. The *Prop AMM* chapter treats it at length.
 
 ### all-or-nothing
 
@@ -24,7 +24,7 @@ A fundraising rule under which contributions bind only if the full target is rea
 
 ### arbitrage
 
-Buying where an asset is cheap and selling where it is dear until the two prices meet. A constant-product pool has no idea what its asset is worth; its price is only right because arbitrageurs have made it right, and the profit they take comes out of the pool's liquidity providers. See the *Constant-Product AMM* and *Prop AMM* chapters.
+Buying where an asset is cheap and selling where it is dear until the two prices meet. A constant-product pool does not know what its asset is worth; its price is only right because arbitrageurs have made it right, and the profit they take comes out of the pool's liquidity providers. See the *Constant-Product AMM* and *Prop AMM* chapters.
 
 ### ask
 
@@ -48,7 +48,7 @@ A perpetual futures venue's last resort when a loss exceeds the collateral behin
 
 ### base token
 
-The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. The base pairs against the [quote token](#quote-token), and the naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" trips people up: in that base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base."
+The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. The base pairs against the [quote token](#quote-token), and the naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" is easy to misread: in that base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base."
 
 ### basis point (bps)
 
@@ -152,7 +152,7 @@ The 8 bytes Anchor writes at the start of an account's data identifying its type
 
 ### dust
 
-Sub-unit remainders left over by integer division: a sliver smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
+Sub-unit remainders left over by integer division: a fraction smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
 
 ### epoch
 
@@ -436,7 +436,7 @@ The deposit an account holds to pay for its own storage. Rent-exempt accounts ho
 
 ### reservation
 
-On a perpetual futures pool, the liquidity pledged when a position opens as the most that position could ever be paid: profit is capped at it, liquidity providers cannot withdraw against it, and a position the pool cannot back is refused outright. Pre-funding every win is why the pool can never be surprised by one. See the *Perpetual Futures* chapter.
+On a perpetual futures pool, the liquidity pledged when a position opens as the most that position could ever be paid: profit is capped at it, liquidity providers cannot withdraw against it, and a position the pool cannot back is refused outright. Pre-funding every win is why the pool can never owe more than it holds. See the *Perpetual Futures* chapter.
 
 ### reserve
 
@@ -484,7 +484,7 @@ The digits of a number stated separately from its scale: a price feed holding si
 
 ### slippage
 
-The difference between the price you expected and the price you got, caused by your own trade's impact or by the market moving first. Bounded by minimum-out parameters; unbounded slippage is what a [sandwich](#sandwich) eats.
+The difference between the price you expected and the price you got, caused by your own trade's impact or by the market moving first. Bounded by minimum-out parameters; unbounded slippage is what a [sandwich](#sandwich) takes.
 
 ### slot
 
@@ -548,7 +548,7 @@ A time-weighted average price: the average of a market's price over a window, us
 
 ### utilization
 
-In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool is begging for deposits and rates rise.
+In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
 
 ### validator
 

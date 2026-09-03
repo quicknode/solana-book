@@ -6,7 +6,7 @@ This isn't a book about how Solana is built. It's about **building on the Solana
 
 ## Why Build Financial Programs on Solana?
 
-Financial products built on Solana have properties no traditional rail offers:
+Financial products built on Solana have properties no traditional payment system offers:
 
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed.
@@ -14,15 +14,15 @@ Financial products built on Solana have properties no traditional rail offers:
 - **Money is programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
 - **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Card payments take roughly 1.5% to 3.5% of each sale, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and 20% at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A fee that ignores the amount is a different kind of fee from one that scales with it, and it changes which products are worth building at all.
 - **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] In addition Solana is one of the most active chains for trading traditional "crypto" assets like BTC and SOL.[^btc-scope]
-- **Distribution is the deployment.** A traditional fund spends months and a chain of intermediaries reaching its investors: an exchange listing, market makers, brokerage platform approvals, each a gatekeeper with its own cost and lead time. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
+- **A deployed program reaches every user at once.** A traditional fund spends months and a chain of intermediaries reaching its investors: an exchange listing, market makers, brokerage platform approvals, each a gatekeeper with its own cost and lead time. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
 
 Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
 ## A Long-Lived Technical Book for Solana
 
-Some technical books die with the release they document. A smaller number live for decades. *TCP/IP Illustrated* is still the book network engineers hand each other, thirty years on. *The UNIX and Linux System Administration Handbook* has outlasted every operating system release it ever mentioned. *Mastering Bitcoin* remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way *TCP/IP Illustrated* drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long term knowledge for building financial products on Solana.
+Some technical books are out of date as soon as the release they document is. A smaller number stay useful for decades. *TCP/IP Illustrated* is still the book network engineers hand each other, thirty years on. *The UNIX and Linux System Administration Handbook* has outlasted every operating system release it ever mentioned. *Mastering Bitcoin* remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way *TCP/IP Illustrated* drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long term knowledge for building financial products on Solana.
 
-Solana is a fast-moving space: network releases, framework versions, chain constants, and tools churn frequently. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
+Solana changes quickly: network releases, framework versions, chain constants, and tools churn frequently. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
 *Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
@@ -45,7 +45,7 @@ The book splits the work with two companions. Both are available at [thesolanabo
 - The **companion repository** holds the complete, tested programs that the program chapters walk through, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
 - The **companion AI plugin** distills this book's rules into a form AI coding tools apply automatically.
 
-The AI plugin makes your tools better. The book makes **you** better.
+The AI plugin improves the code your tools write. The book improves your own understanding of it.
 
 Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page described next.
 
@@ -69,7 +69,7 @@ The book has two parts. **The Fundamentals** is everything you need before writi
 
 **Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine.
 
-Real incidents appear throughout the book in boxed **War Story** sections. History does not go stale. None of them are told to dunk on the teams involved; they are here so you recognize the same shape in your own code before it costs you.
+Real incidents appear throughout the book in boxed **War Story** sections. The incidents are years old and the mistakes behind them still recur. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory).
 
@@ -82,7 +82,7 @@ This book was written and edited by hand. The visual mechanism that describes So
 Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here are a few shortcuts:
 
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
-- **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it leans on.
+- **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it depends on.
 
 ## The Glossary
 

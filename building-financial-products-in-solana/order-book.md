@@ -6,7 +6,7 @@ The program lives at `finance/order-book` in the companion repository. It assume
 
 ## A Limit Order Is a Price You Refuse to Cross
 
-A **limit order** is an order with a line drawn on it. A **bid** says "I will buy, but only at or below this price." An **ask** says "I will sell, but only at or above this price." The **order book** is the two lists where those orders wait: bids on one side, asks on the other, best prices at the front. The gap between the best bid and the best ask is the spread, and when a new order's limit reaches across that gap, a trade happens.
+A **limit order** is an order with a price limit attached. A **bid** says "I will buy, but only at or below this price." An **ask** says "I will sell, but only at or above this price." The **order book** is the two lists where those orders wait: bids on one side, asks on the other, best prices at the front. The gap between the best bid and the best ask is the spread, and when a new order's limit reaches across that gap, a trade happens.
 
 ![The NVDAx/USDC order book: asks stacked lowest price first, bids highest first, and the spread between the best bid and best ask.](figures/order-book-bids-asks-spread.svg)
 
@@ -22,13 +22,13 @@ The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **
 
 The **market** is a PDA holding one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). Its seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 
-The **order book** is the big one: about 180 KB holding two trees of resting orders (one per side, 1,024 orders each) plus a monotonic `next_order_id` counter. It is **zero-copy**: an account this large would be prohibitively expensive to deserialize on every instruction, so the program reads and writes fields in place through an `AccountLoader` instead.
+The **order book** is the largest account: about 180 KB holding two trees of resting orders (one per side, 1,024 orders each) plus a monotonic `next_order_id` counter. It is **zero-copy**: an account this large would be prohibitively expensive to deserialize on every instruction, so the program reads and writes fields in place through an `AccountLoader` instead.
 
 > **Why the order book is not a PDA.** Solana caps account allocations made from inside a program at 10 KB, so `initialize_market()` cannot create a 180 KB account. Instead, the client creates the account directly with the System Program before calling `initialize_market()`, sized to `ORDER_BOOK_ACCOUNT_SIZE` and owned by the program. And it cannot be a PDA at all, because creating an account that way requires the new account's own signature, which a PDA cannot give. The program instead ties the book to its market with a `has_one = order_book` constraint, checked on every instruction that touches it.
 
 Three **vaults** hold the money: a base vault for locked NVDAx, a quote vault for locked USDC, and a separate **fee vault** for Maria's earnings. The fee vault holds the same token as the quote vault, and keeping them separate means balances owed to users and balances earned by the market can never be confused. That separation is what stops a caller from being paid out of Maria's fees; the failure modes section shows the attack it blocks.
 
-Each trader gets a **market user** account (seeds: `"market_user"`, the market, the owner), tracking their `open_orders` (capped at 20) and two numbers that keep the design cheap: `unsettled_base` and `unsettled_quote`, the amounts the program owes them. When the program takes tokens from a user it transfers them immediately into a vault; when it owes tokens to a user it just increments these counters. Users claim what they are owed whenever they like, and many small payouts consolidate into one transfer, saving compute units on the hot path.
+Each trader gets a **market user** account (seeds: `"market_user"`, the market, the owner), tracking their `open_orders` (capped at 20) and two numbers that keep the design cheap: `unsettled_base` and `unsettled_quote`, the amounts the program owes them. When the program takes tokens from a user it transfers them immediately into a vault; when it owes tokens to a user it just increments these counters. Users claim what they are owed whenever they like, and many small payouts consolidate into one transfer, saving compute units on the path every fill takes.
 
 Finally, every order placed becomes an **order** account of its own (seeds: `"order"`, the market, the order ID): side, price, original quantity, filled quantity, a status that walks Open, PartiallyFilled, Filled, or Cancelled, and a timestamp.
 
@@ -104,7 +104,7 @@ One line in the handler belongs in everything you build: it snapshots the unsett
 
 ## The Market Authority Withdraws the Fees
 
-At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One nice touch: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule without babysitting it. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter treats it fully), though this handler adds an authority gate because it moves fee money.
+At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One detail: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule unattended. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter treats it fully), though this handler adds an authority gate because it moves fee money.
 
 ![withdraw_fees() drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 

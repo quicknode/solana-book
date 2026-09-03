@@ -2,7 +2,7 @@
 
 The *Order Book Exchange* chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee is compensation for a loss, and the chapter puts a number on it.
 
-AMMs shine where order books struggle: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
+AMMs work where order books do not: tokens without much trading volume, where a taker might wait forever for a matching maker. That is why they are the standard venue for new token launches, and why this chapter's story is one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
 The K in "constant product" is constant only inside a single trade: it grows every time a deposit lands or a fee stays behind. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every trade.
 
@@ -43,11 +43,11 @@ Maria runs `initialize_config()` with a fee of 30 basis points and an admin shar
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $2.25, so she runs `deposit_liquidity()` with her 400 ACME and 900 USDC, the founder stock and nine-tenths of her cash. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 400, Y = 900, K = 360,000.
 
-Her LP tokens come from the formula the *Arithmetic of Money* chapter described: the **integer square root of X times Y**, computed by `integer_sqrt()`, a hand-rolled Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`. That is a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address, as Uniswap V2 does; it never exists as supply, while the reserves it represents stay in the pool. Its value is a fraction of a cent. What makes it work is that it is always part of the share supply the pool divides by. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
+Her LP tokens come from the formula the *Arithmetic of Money* chapter described: the **integer square root of X times Y**, computed by `integer_sqrt()`, the program's own Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`. That is a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address, as Uniswap V2 does; it never exists as supply, while the reserves it represents stay in the pool. Its value is a fraction of a cent. What makes it work is that it is always part of the share supply the pool divides by. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
 ![√(400 × 900) = 600 LP, less the 100 minor units of MINIMUM_LIQUIDITY minted to nobody and locked forever.](figures/amm-first-deposit.svg)
 
-> **A square root with no floats.** `integer_sqrt()` is **Newton's method** running on integers: start with a guess, then repeatedly replace it with the average of the guess and the target divided by the guess. The sequence homes in on the square root in a few dozen iterations, and the result is floored. The same approach covers any real-valued function a program needs onchain (roots, exponentials, logs) becomes an integer iteration with a known, bounded error, because floats can never touch funds.
+> **A square root with no floats.** `integer_sqrt()` is **Newton's method** running on integers: start with a guess, then repeatedly replace it with the average of the guess and the target divided by the guess. The sequence converges on the square root in a few dozen iterations, and the result is floored. The same approach covers any real-valued function a program needs onchain (roots, exponentials, logs) becomes an integer iteration with a known, bounded error, because floats can never touch funds.
 
 ## Adding Liquidity in Ratio Does Not Move the Price
 
@@ -59,7 +59,7 @@ X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Depo
 
 Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage guard. Three things happen in strict order.
 
-**The fee comes off the top.** 30 basis points of 100 is 30 cents. The admin share, about 5 cents (1,667 basis points of it, floored in minor units), accrues to `admin_fees_owed_b` as Maria's virtual claim; the remaining 25 cents stays in the pool, where it fattens the reserves that back every LP token. Bob's taxed input is 99.70.
+**The fee is deducted first.** 30 basis points of 100 is 30 cents. The admin share, about 5 cents (1,667 basis points of it, floored in minor units), accrues to `admin_fees_owed_b` as Maria's virtual claim; the remaining 25 cents stays in the pool, where it adds to the reserves that back every LP token. Bob's taxed input is 99.70.
 
 **The curve prices the trade.** Y rises to 1,224.70, and X must fall to K ÷ Y ≈ 459.3. Bob receives about 40.7 ACME. He paid an *average* of about $2.46 per token while the quoted price before his trade was $2.25 and the spot price after it is about $2.67: his own trade moved along the curve as it executed. Every AMM trade pays its own price impact.
 
@@ -71,11 +71,11 @@ K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is
 
 ## The Next Trader Pays the Price the Last One Made
 
-Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. The second trader's numbers follow from the first trader's footprint.
+Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. The second trader's numbers follow from what the first trader's swap did to the pool.
 
 ## Selling Back Pays the Fee in the Input Token
 
-Bob sells 20 of his 40.7 ACME. A sell is the same instruction with `input_is_token_a` flipped. Now the fee comes off his ACME input (0.06 ACME, of which 0.01 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 55.11 USDC to Bob, an average near $2.76 against the $2.46 he paid. The spot price eases back to about $2.64. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
+Bob sells 20 of his 40.7 ACME. A sell is the same instruction with `input_is_token_a` flipped. Now the fee comes off his ACME input (0.06 ACME, of which 0.01 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 55.11 USDC to Bob, an average near $2.76 against the $2.46 he paid. The spot price falls back to about $2.64. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
 
 ## The Admin Sweeps Its Share of the Fees
 
@@ -93,7 +93,7 @@ That gap is **impermanent loss**, and it is the price of being an LP. A constant
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 
-Every division in this program floors. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor** (the one floor that favors the trader is the fee itself, clipped by at most one minor unit). The dust stays in the reserves, where it accrues to all LPs rather than leaking to whoever transacts most often. Every multiplication runs in u128 before its division (multiply before divide), and every step is `checked_*` with `MathOverflow` waiting on failure. The one exotic operation, the initial deposit's square root, is eleven lines of Newton's method on integers, floored like everything else. Every rule in the *Arithmetic of Money* chapter appears in this one file.
+Every division in this program floors. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor** (the one floor that favors the trader is the fee itself, clipped by at most one minor unit). The dust stays in the reserves, where it accrues to all LPs rather than leaking to whoever transacts most often. Every multiplication runs in u128 before its division (multiply before divide), and every step is `checked_*` with `MathOverflow` on failure. The one exotic operation, the initial deposit's square root, is eleven lines of Newton's method on integers, floored like everything else. Every rule in the *Arithmetic of Money* chapter appears in this one file.
 
 ## The Invariants: K Must Not Decrease
 
@@ -112,7 +112,7 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 ## Testing Considerations
 
-The suite (`tests/test_swap.rs`) covers each section of this chapter. Two tests, `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap`, pin K's direction both ways, while `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` pin the admin-fee exclusion, the accounting a refactor is most likely to break. Two more, `test_deposit_clamps_excess_amount_a` and `_b`, pin the ratio clamp from both directions (both directions of every symmetric flow), and the three reverts-below-minimum tests pin every slippage guard. If you write one invariant test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not pay for the privilege.
+The suite (`tests/test_swap.rs`) covers each section of this chapter. Two tests, `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap`, pin K's direction both ways, while `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` pin the admin-fee exclusion, the accounting a refactor is most likely to break. Two more, `test_deposit_clamps_excess_amount_a` and `_b`, pin the ratio clamp from both directions (both directions of every symmetric flow), and the three reverts-below-minimum tests pin every slippage guard. If you write one invariant test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not lose value.
 
 ## What You Learnt from Building the Constant-Product AMM
 
@@ -127,4 +127,4 @@ The concepts you now have:
 - **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone, keeps the share divisor from ever being dust-sized.
 - **Impermanent loss.** An LP is a bet on trading volume, not price direction, and nobody should provide liquidity without being able to draw the diagram.
 
-The next chapter builds the design that pays neither price impact nor impermanent loss, a market maker quoting its own capital at oracle prices, and pays a different cost instead. And the *Vault Strategy* chapter, later in the book, climbs one level up the stack: it *uses* venues like these, and the question stops being "how do trades clear" and becomes "who is allowed to trade with other people's money, and what stops them."
+The next chapter builds the design that pays neither price impact nor impermanent loss, a market maker quoting its own capital at oracle prices, and pays a different cost instead. And the *Vault Strategy* chapter, later in the book, works one level up: it *uses* venues like these, and the question stops being "how do trades clear" and becomes "who is allowed to trade with other people's money, and what stops them."
