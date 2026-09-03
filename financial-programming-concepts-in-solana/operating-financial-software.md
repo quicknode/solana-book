@@ -1,8 +1,8 @@
 # Chapter 10: Operating Financial Software
 
-Correct code is only the start. The rest of the job is proving that code on every path money can take, and waiting for the chain's answer to become final before acting on it. It is also bounding the operator's power, so the admin key can neither drain the market nor lock users inside it.
+Correct code is only the start. The rest of the job is proving that code on every flow.
 
-## Bugs Live at Numerical Boundaries, So Test Both Sides of Every One
+## Test the Edges of Every Interaction
 
 Financial code fails at the edges the happy path never reaches: the refund, the second claim, the withdrawal that lands exactly on the health boundary. A suite that covers only the happy path proves the demo works. The rules below push every test to an edge.
 
