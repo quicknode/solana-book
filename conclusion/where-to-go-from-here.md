@@ -65,7 +65,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **Company cash that is not idle over the weekend.** Treasury that sits flat from Friday to Monday can sit in a vault instead, redeemable at a share price at any hour. The *Vault Strategy* chapter is the machinery, and who may change the mandate, and how fast, is the *Operating Financial Software* chapter's subject.
 
-None of these is a specification, and rebuilding one because it appeared in a book is the weakest reason to build anything. Take the pattern instead: somebody specific, a cost or a delay they never agreed to, and a state machine small enough to hold in your head.
+In each of these cases there is a specific situation, an individual or organization, and a cost or a delay they never agreed to. Solving those makes a good financial product.
 
 ## The Problems Nobody Has Solved Yet
 
