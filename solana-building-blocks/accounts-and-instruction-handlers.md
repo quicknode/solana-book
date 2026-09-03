@@ -101,7 +101,7 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 
 That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything, because receiving requires no signature from the recipient, while nothing will ever leave his account until a transaction *he* signs asks for it.
 
-Solana used the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
+Solana uses the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
 - A token's **mint authority** is the only address that may create new supply of it.
 - That token's **freeze authority** is the only address that may freeze a holder's account.
