@@ -88,6 +88,15 @@ const rules = [
   [/\bthe discipline\b|\bhygiene\b/i, 'name the rule instead of its category: "the rules below", "the staleness check"'],
   [/\bworth (?:stealing|copying|noticing|printing|studying|memorizing)\b|\bby now you\b/i,
     "do not rate the next sentence; cut the rating and keep the content"],
+  // Mannered prose: an idiom, a slang word, or a metaphor standing where the
+  // literal phrase is the same length, each one found in a single audit of
+  // the manuscript. "A single whale" was "a single large backer", "config
+  // foot-guns" was "dangerous configurations", "the LPs eat the drift" was
+  // "the LPs absorb the loss", and "the ladder has three rungs" was "there
+  // are three levels of assurance". A metaphor drags in connotations the
+  // writer did not choose; the fix is to say the thing.
+  [/\bwhales?\b|\bfoot-?guns?\b|\bzombie\b|\brugged\b|\bfat-finger|\bbabysit|\bgriefing\b|\bafter the whistle\b|\bmid-flight\b|\bhot path\b|\bhand-rolled\b|\bcomes? off the top\b|\bpays? for itself\b|\bcomes? home\b|\bripped off\b|\bdunk on\b|\bsliver\b|\byou do you\b|\bcomes? in hot\b|\bdouble duty\b|\brungs?\b|\bup the ladder\b/i,
+    'say the plain thing: "a large backer", "a dangerous configuration", "absorb the loss", "the third level"'],
   // "Fail open" means "stop working" to an electrician (an open circuit) and
   // "let everything through" to everyone else (an open door), and "fail
   // closed" flips the same way, so half the readers take each one backwards.

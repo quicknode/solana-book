@@ -10,7 +10,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 ![Alice holds 250 USDC and wants 1 TSLAx; Bob holds 1 TSLAx and wants 250 USDC. Each side holds exactly what the other wants.](figures/escrow-swap-intent.svg)
 
-The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? Maybe Bob is just that type of guy. An **escrow** lets Alice and Bob swap without having to trust each other.
+The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? An **escrow** lets Alice and Bob swap without having to trust each other.
 
 Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has bought a house or sent money overseas knows, the third party takes a percentage for itself, typically somewhere between one and six percent of the transaction.
 
@@ -31,7 +31,7 @@ The deal is priced the way all Solana money is priced: in **minor units**, the s
 
 ## The Account Model
 
-Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard cast of accounts every token-handling program touches.
+Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard set of accounts every token-handling program touches.
 
 ![The offer PDA holds authority over its own vault, so no person can move the escrowed tokens.](figures/escrow-account-map.svg)
 
@@ -70,7 +70,7 @@ With the structure verified, the handler body is two small steps:
 
 ![make_offer() moves 250,000,000 minor units of USDC from Alice's token account into the vault, while the offer account is written with the maker, the mints, and the wanted amount.](figures/escrow-make-offer.svg)
 
-Alice is done, and can close her laptop.
+Alice is done.
 
 ### The Taker Takes the Offer
 
@@ -93,13 +93,13 @@ Both sides now hold exactly what the other offered. No percentage went to anyone
 
 If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
 
-The constraints make it maker-only: the signer must be the maker, and `has_one = maker` checks the signer against the address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). The handler, `handle_cancel_offer()`, mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and lets `close = maker` close the offer account to Alice. Every lamport of rent she fronted comes home.
+The constraints make it maker-only: the signer must be the maker, and `has_one = maker` checks the signer against the address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). The handler, `handle_cancel_offer()`, mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and lets `close = maker` close the offer account to Alice. Every lamport of rent she fronted is returned to her.
 
 ![cancel_offer() returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
 
 ## The Math
 
-Escrow is the one program in this book whose arithmetic is nearly invisible, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication hiding in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
+Escrow is the one program in this book with almost no arithmetic, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
 
 The money math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). On either exit path, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
@@ -119,7 +119,7 @@ What must hold, before and after every handler:
 - **Account substitution.** The classic escrow attack is a taker who passes their own account where the maker's payment account should be, or a foreign vault, or a mismatched mint. Every one of these is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, `has_one` binds the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter dissects what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
 - **The abandoned offer.** The failure mode that is a missing feature: without `cancel_offer()`, an untaken offer strands the maker's tokens permanently. Every state needs an exit.
-- **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks belong in any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same. A swap of a token for a different amount of itself means someone is about to be ripped off.
+- **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks belong in any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same. A swap of a token for a different amount of itself means someone is about to be cheated.
 
 ## Testing Considerations
 
@@ -130,7 +130,7 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where money goes to the wrong person.
 
-The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one rung further: the `kani-proofs` crate in the companion repository proves the conservation invariants formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
+The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository proves the conservation invariants formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
 
 ## What You Learnt from Building the Escrow
 
