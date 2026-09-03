@@ -39,15 +39,16 @@ Before a program that holds other people's money touches mainnet, get a **second
 
 A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write, because a program always executes in a block no validator has voted on yet. If that block is skipped or loses a fork, the transaction did not happen, and every account it touched goes back with it.
 
-The code that reads the chain has to answer that question, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. Solana gives a reader three commitment levels to choose between:[^commitment-levels]
+The code that reads the chain has to answer that question, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. A reader of the chain asks for one of two states, by the commitment level it passes with the request:[^commitment-levels]
 
 | Commitment | What it means | What can still happen to it |
 | --- | --- | --- |
 | **processed** | A leader executed the transaction and put it in a block | It can vanish: the block may be skipped or lose a fork |
-| **confirmed** | A supermajority of stake has voted for that block | It can vanish in theory; no confirmed block has been rolled back on mainnet |
-| **finalized** | So many blocks sit on top that no validator can now vote another way | Nothing. This is the record |
+| **finalized** | The validators have voted the block final, and no fork can replace it | Nothing. This is the record |
 
-A liquidator bot scans at `processed`, because it is reading only to decide which transaction to send next, and a transaction aimed at a state that vanished fails. A frontend telling a user their swap landed reads at `confirmed`, because a screen can be redrawn if the block is dropped. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The rule underneath is to match the level to how reversible your reaction is. The chain may still drop a `confirmed` transaction, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rules, not by anything in your code.
+The request also accepts a third level, `confirmed`. Under Tower BFT it names a middle state: a block a supermajority of stake has voted for, which the network still permits to lose and which has never been lost on mainnet. Alpenglow, the consensus design replacing Tower BFT, has no middle state, because its first round of votes finalizes the block, so `confirmed` and `finalized` then name the same thing.[^alpenglow]
+
+A liquidator bot scans at `processed`, because it is reading only to decide which transaction to send next, and a transaction aimed at a state that vanished fails. Anything that leaves the chain and cannot be recalled waits for `finalized`: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books. The rule underneath is to match the level to how reversible your reaction is, because the chain can drop a block that is not final, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rules, not by anything in your code.
 
 ## Admin Power Runs on a Written Specification
 
@@ -66,9 +67,11 @@ Every market in this book has an operator with real power: withdrawing fees, set
 - Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
 - Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
-- A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, a screen that can be redrawn reads at `confirmed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
+- A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, admin money kept apart from user money, and no path to principal. A pause stops entrances and leaves exits open, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
 
 [^kani]: Kani is a Rust model checker from the AWS-backed model-checking project, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
 
-[^commitment-levels]: The three levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
+[^commitment-levels]: The commitment levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
+
+[^alpenglow]: Alpenglow is proposed in SIMD-0326, at [github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0326-alpenglow.md](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0326-alpenglow.md), whose Impact section says optimistic confirmation is superseded by finality. Validators approved it in September 2025, and as this is written, in September 2026, mainnet activation is scheduled to begin at the end of that month. That `confirmed` then equals `finalized` is from Brennan Watt of Anza, in a message to the author on August 28, 2026.
