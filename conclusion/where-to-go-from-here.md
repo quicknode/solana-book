@@ -83,7 +83,7 @@ Some things were left out on purpose, and knowing which is part of knowing the f
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
-**Formal verification** appears here only briefly. The escrow program's Kani proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
+**Formal verification** appears here only briefly. The escrow program's formal proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
 
 **Governance** is deliberately absent. Every program here has an operator with a key, and admin power is treated in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
