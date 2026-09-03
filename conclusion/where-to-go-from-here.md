@@ -79,7 +79,7 @@ The better ideas are in the places where the machinery exists and no product has
 
 Some things were left out on purpose, and knowing which is part of knowing the field.
 
-**Reward distribution** got no chapter of its own, though you have already met the whole of it: the reward-per-token index inside the lending market and the parimutuel pool is the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up. There is nothing more to the mechanism than that index.
+**Reward distribution** got no chapter of its own, though you have already met the whole of it. The reward-per-token index inside the lending market and the parimutuel pool is the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up. There is nothing more to the mechanism than that index.
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
