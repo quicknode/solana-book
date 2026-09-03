@@ -100,7 +100,12 @@ Assets pledged to secure a loan, seizable on default or on breach of the liquida
 
 ### commitment level
 
-How sure the chain is of the transaction. `processed` means a leader executed the transaction and put it in a block, which can still vanish. `finalized` means the validators have voted the block final and no fork can replace it.[^confirmed] A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
+How sure the chain is of the transaction:
+
+- `processed`: a leader executed the transaction and put it in a block, which can still vanish.
+- `finalized`: the validators have voted the block final, and no fork can replace it.[^confirmed]
+
+A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
 
 ### compute unit
 
