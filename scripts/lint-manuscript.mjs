@@ -57,6 +57,24 @@ const rules = [
   [/\bis the one that matters\b|\bmatters more than it looks\b/i,
     'say why: "the path an attacker will drive", not "the one that matters"'],
   [/\bit is worth being\b/i, "cut it: if the point is worth making, make it"],
+  // Words that rate the writing instead of doing it. "Honest" appeared twenty
+  // times in this manuscript and never once meant honesty ("the honest way to
+  // make it", "an honest limitation, stated as one"); "quietly" dressed up a
+  // value that changed; "the discipline" and "hygiene" named a category where
+  // the rule itself was shorter; "worth stealing" and "by now you know" told
+  // the reader how to feel about the next sentence. The paragraph-closing
+  // maxim is the same tell with no regex, so the companion AI plugin
+  // describes it and this file cannot catch it.
+  [/\bhonest(?:ly)?\b/i, 'say what the sentence means without the word: accurate, stated, plain, or nothing'],
+  [/\bquietly\b/i, "the value changed, so say it changed; the adverb adds only tone"],
+  [/\bthe discipline\b|\bhygiene\b/i, 'name the rule instead of its category: "the rules below", "the staleness check"'],
+  [/\bworth (?:stealing|copying|noticing|printing|studying|memorizing)\b|\bby now you\b/i,
+    "do not rate the next sentence; cut the rating and keep the content"],
+  // "Fail open" means "stop working" to an electrician (an open circuit) and
+  // "let everything through" to everyone else (an open door), and "fail
+  // closed" flips the same way, so half the readers take each one backwards.
+  [/\bfail(?:s|ed|ing)?[ -](?:open|closed)\b/i,
+    'say what happens: "refuses the transaction", "rejects the price", "lets every request through"'],
   // Pointing the reader at the page instead of telling them what is on it.
   // "Note what is pledged: shares" is one word longer than "what he pledges is
   // shares". Watching a real market, or looking away from the chain, is the
