@@ -11,13 +11,13 @@ Financial code fails in the code paths nobody drives: the refund path, the secon
 - **Use nonzero, asymmetric values.** A test with `duration: 0` or equal amounts on both sides sits exactly where opposite comparisons coincide, so it passes with the inequality written backwards. Prime-ish, unequal, memorable numbers make wrong math produce wrong answers.
 - **Test both sides of every boundary.** The borrow at maximum loan-to-value must succeed, and the same borrow plus one minor unit must fail. The lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is that pair of tests.
 - **Test the adversarial code path by name.** Every rule in the failure-modes section of a program chapter earns a test that tries to break it: the non-maker canceling, the fee vault substituted for the user vault, the double claim.
-- **Assert properties, not just balances.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). Property tests catch whole bug classes; balance assertions catch instances.
+- **Assert properties, not just balances.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). Invariant tests catch whole bug classes; balance assertions catch instances.
 
 The mechanics are cheap: LiteSVM runs the real program in-process in milliseconds, slot-warping makes weeks of interest pass in a test, and injected feed accounts make prices a fixture.
 
 ## Proving Goes Further Than Testing
 
-A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the rules above, driving every code path with chosen values. Property tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like Kani[^kani] explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
+A test checks the inputs you thought of; a proof checks all of them. The ladder has three rungs, and financial software should climb as high as the money justifies. Tests come first: the rules above, driving every code path with chosen values. Invariant tests come second: assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are not just the ones you imagined. **Formal verification** is the top rung: a model checker like Kani[^kani] explores *every* possible input to a function, bit by bit, and either proves the property holds or hands you the exact counterexample.
 
 The escrow program in the companion repository ships a set of Kani harnesses that do this for the parts of it a proof can reach:
 
@@ -60,7 +60,7 @@ Every market in this book has an operator with real power: Maria withdraws fees,
 ## What You Learnt
 
 - Test the code path the bug lives in: both directions of every symmetric flow, both sides of every boundary, adversarial paths by name, and properties as well as balances.
-- Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
+- Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, as far up the ladder as the money justifies.
 - Ship with a second-opinion audit; a reviewer hunting the same holes an attacker would hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain has to choose. A bot deciding which transaction to send next can read at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, segregated money, no path to principal, pauses that narrow toward exits, a plan for silence, and upgrade authority worth trusting.
