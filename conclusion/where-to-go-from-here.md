@@ -91,7 +91,7 @@ Some things were left out on purpose, and knowing which is part of knowing the s
 
 ## Build One, Then Have It Attacked
 
-The gap between reading this book and shipping is one project wide, and it closes faster than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Give every state an exit, so every participant can get their money out from wherever the program stops. Write the tests that drive the machine down every path, especially the exits, and the property tests that assert what must never change.
+The gap between reading this book and shipping is one project wide, and it closes faster than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Give every state an exit, so every participant can get their money out from wherever the program stops. Write the tests that drive the machine down every path, especially the exits, and the invariant tests that assert what must never change.
 
 Then get a second opinion from somebody who was not in the room. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 
