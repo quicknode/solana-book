@@ -440,7 +440,15 @@ const html = `<!doctype html>
 @page part-start { @top-left { content: none; } @top-right { content: none; } }
 @page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; }${suppressReviewerFooter} @top-left { content: none; } @top-right { content: none; } }
 .cover { page: cover; break-after: page; }
-.cover img { display: block; width: ${PAGE_WIDTH_IN}in; height: ${PAGE_HEIGHT_IN}in; }
+/* The cover art is drawn a point past the trim, so that rounding in Chromium's
+   paint of the image cannot leave a white hairline along an edge; the crop
+   after printing establishes where the edge actually falls. The sheet paged.js
+   clips the art to is widened to match, because Chromium rounds that clip's
+   right edge down by a fraction of a point and reinstates the hairline there.
+   Only the width is widened: a taller sheet spills the art past the bottom of
+   the cover and onto the top of the title page. */
+.cover img { display: block; width: calc(${PAGE_WIDTH_IN}in + 1pt); height: calc(${PAGE_HEIGHT_IN}in + 1pt); }
+.pagedjs_cover_page .pagedjs_sheet { width: calc(${PAGE_WIDTH_IN}in + 1pt); }
 
 html { font-size: 11pt; }
 body {
@@ -707,11 +715,38 @@ const openingPages = await page.evaluate(() => {
   return [...opening.values()].sort((a, b) => a.number - b.number);
 });
 
-writeFileSync(outputPath, await page.pdf({ preferCSSPageSize: true }));
+const printed = await page.pdf({ preferCSSPageSize: true });
 await browser.close();
 
-const pageCount = (await PDFDocument.load(readFileSync(outputPath))).getPageCount();
+// Chromium's print pipeline rounds the sheet up to the next 1/300in dot, so a
+// 7.44 x 9.69in page comes out 0.24pt wider and taller than asked for, whatever
+// units the size is written in and whether it comes from the CSS or from pdf()'s
+// own width and height. It anchors the content at the top left, so the slack
+// lands on the right and at the bottom, where it shows on the cover as a white
+// band down two edges of the art. Cropping every page back to the trim removes
+// it and makes the file's page size the one PRINT-SPECIFICATION.md documents.
+const pdf = await PDFDocument.load(printed);
+const trimWidth = PAGE_WIDTH_IN * 72;
+const trimHeight = PAGE_HEIGHT_IN * 72;
+let croppedPages = 0;
+for (const sheet of pdf.getPages()) {
+  const { width, height } = sheet.getSize();
+  if (width < trimWidth - 0.001 || height < trimHeight - 0.001) {
+    console.error(`Sheet is ${width.toFixed(2)} x ${height.toFixed(2)}pt, smaller than the ${trimWidth.toFixed(2)} x ${trimHeight.toFixed(2)}pt trim; not cropping.`);
+    process.exit(1);
+  }
+  if (width - trimWidth < 0.001 && height - trimHeight < 0.001) continue;
+  // Keep the top-left corner: PDF y counts up from the bottom, so the origin
+  // moves up by whatever slack was added below the content.
+  sheet.setMediaBox(0, height - trimHeight, trimWidth, trimHeight);
+  sheet.setCropBox(0, height - trimHeight, trimWidth, trimHeight);
+  croppedPages++;
+}
+writeFileSync(outputPath, await pdf.save());
+
+const pageCount = pdf.getPageCount();
 console.log(`Wrote ${outputPath} (${pageCount} pages)`);
+if (croppedPages > 0) console.log(`Cropped ${croppedPages} page(s) to the ${PAGE_WIDTH_IN} x ${PAGE_HEIGHT_IN}in trim.`);
 
 // Every URI action in the finished PDF, with the number of annotations
 // carrying it. A viewer follows these, not the printed characters.
