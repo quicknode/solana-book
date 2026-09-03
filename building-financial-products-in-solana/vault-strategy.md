@@ -8,7 +8,7 @@ One vocabulary note before the story, because the word is overloaded. On Solana,
 
 ## A Curator Decides What Managers May Touch at All
 
-Two different people hold power in this program, and their separation is its first security decision. Victor runs the registry: he is not a fund manager, but the curator who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is his reputation for funds not blowing up, so vetting feeds is his product. Maria, the fund manager you will meet shortly, gets to pick allocations only from what Victor has approved.
+Two different people hold power in this program, and their separation is its first security decision. Victor runs the registry: he is not a fund manager, but the curator who decides which assets managers may invest in at all, and which price feed is the truth for each. He operates the platform the strategies live on, and his business is his reputation for funds not failing, so vetting feeds is his product. Maria, the fund manager you will meet shortly, gets to pick allocations only from what Victor has approved.
 
 Victor runs `initialize_registry()` once, creating the **registry**: the curator record at the root of an approved-asset set. The registry holds no list; the account stores only the curator's authority. Victor then runs `approve_asset()` for each asset he vets, and each call creates an **`ApprovedAsset`** account at a PDA derived from the registry and the asset's mint (seeds: `"approved_asset"`, the registry, the mint), binding that mint to its official Pyth price feed. An asset is approved if it has an `ApprovedAsset` account, and not approved if it does not. Victor vets which assets and which feeds are safe, so a manager cannot list a token they minted themselves, and cannot pair a real asset with a price feed they control. When Maria later adds an asset to her strategy, the feed address is copied out of the `ApprovedAsset` account; the manager never supplies a price feed.
 
@@ -40,7 +40,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 **Then it deploys the money at the weights.** 40% of 900, $360, buys TSLAx at $250: 1.44 TSLAx into the TSLAx vault. 60%, $540, buys NVDAx at $180: exactly 3 NVDAx. The swaps run through the router fixed at strategy creation (the example ships a mock router standing in for Jupiter; a router that is not the configured one is rejected, pinned by `test_deposit_rejects_unregistered_router`), and the strategy PDA signs.
 
-**And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output *from the oracle price* and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot wave a bad fill through, because the minimum is never theirs to supply. **When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
+**And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output *from the oracle price* and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot approve a bad fill, because the minimum is never theirs to supply. **When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
 ![900 USDC in, 900 shares out, and every swap minimum comes from the same feeds the NAV loop reads.](figures/vault-deposit.svg)
 
@@ -66,13 +66,13 @@ Traditional funds sell assets to pay the management fee. This program does what 
 
 Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it hands her **her proportional slice of every vault, in kind**. That is her share of the USDC vault, of the TSLAx vault (about 1.5), and of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
 
-She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for running the book. Victor took no fee on any of it. What he earned is what his platform sells: a track record of funds that cannot be rugged.
+She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for managing the fund. Victor took no fee on any of it. What he earned is what his platform sells: a track record of funds whose managers cannot take the assets.
 
 ![No price account appears here: every leg is a proportion of a vault balance, not a quote.](figures/vault-withdraw-in-kind.svg)
 
 ## The Math: One Valuation Loop, Floors Toward the Fund
 
-Every formula in the program is a proportion, and they all lean the same way. Shares minted: deposit × supply ÷ NAV, floored. Withdrawal legs: vault balance × shares ÷ supply, floored per asset. Fee shares: supply × rate × time over a year, floored. Deployment per leg: deposit × weight ÷ 10,000, floored. All u128 intermediates, all multiply-before-divide, remainders resting with the fund rather than the transactor. The one multiplication that is not a proportion is the valuation itself, amount × price at the feed's 10^8 precision, and the fund's integrity depends on that line running over every asset, every time, with a fresh price.
+Every formula in the program is a proportion, and they all round the same way. Shares minted: deposit × supply ÷ NAV, floored. Withdrawal legs: vault balance × shares ÷ supply, floored per asset. Fee shares: supply × rate × time over a year, floored. Deployment per leg: deposit × weight ÷ 10,000, floored. All u128 intermediates, all multiply-before-divide, remainders staying with the fund rather than the transactor. The one multiplication that is not a proportion is the valuation itself, amount × price at the feed's 10^8 precision, and the fund's integrity depends on that line running over every asset, every time, with a fresh price.
 
 ## The Invariants: Custody Never Moves
 
@@ -91,7 +91,7 @@ Every formula in the program is a proportion, and they all lean the same way. Sh
 
 ## Testing Considerations
 
-The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`). It then pins each wall separately. Under-allocated strategies refuse deposits, unapproved assets refuse listing, weight overflows refuse, the 17th asset refuses, and non-managers cannot set weights. Unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
+The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`). It then pins each rule separately. Under-allocated strategies refuse deposits, unapproved assets refuse listing, weight overflows refuse, the 17th asset refuses, and non-managers cannot set weights. Unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
 
 ## What You Learnt from Building the Vault Strategy
 
