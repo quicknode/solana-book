@@ -1,6 +1,6 @@
 # Chapter 10: Operating Financial Software
 
-Correct code is only the start. The rest of the job is proving that code on every path money can take, waiting for the chain's answer to become final before acting on it, and holding power over a live market without becoming its biggest risk.
+Correct code is only the start. The rest of the job is proving that code on every path money can take, waiting for the chain's answer to become final before acting on it, and bounding the operator's power so the admin key can neither drain the market nor lock users inside it.
 
 ## Bugs Live at the Boundaries, So Test Both Sides of Every One
 
