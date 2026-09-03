@@ -63,7 +63,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **Payouts with no claim to file.** A flight lands three hours late; a region gets no rain for a month. Where the fact is measurable and comes from a source both sides agreed on in advance, the payout is a rule instead of a claims department: a pool that pays a fixed amount when the measurement crosses a line. Pool accounting from the *Betting Market* chapter, measurement from the *Offchain Truth* chapter. This is insurance in all but name, and insurance is licensed nearly everywhere. That makes it the plainest case of a rule that covers this whole page: what a product legally is follows from what it does for people, never from what it is built on.
 
-**Company cash that is not idle over the weekend.** Treasury that sits flat from Friday to Monday can sit in a vault instead, redeemable at a share price at any hour. The *Vault Strategy* chapter is the whole of the machinery, and who may change the mandate, and how fast, is the *Operating Financial Software* chapter's subject.
+**Company cash that is not idle over the weekend.** Treasury that sits flat from Friday to Monday can sit in a vault instead, redeemable at a share price at any hour. The *Vault Strategy* chapter is the machinery, and who may change the mandate, and how fast, is the *Operating Financial Software* chapter's subject.
 
 None of these is a specification, and rebuilding one because it appeared in a book is the weakest reason to build anything. Take the shape instead: somebody specific, a cost or a delay they never agreed to, and a state machine small enough to hold in your head.
 
@@ -97,6 +97,6 @@ Then get a second opinion from somebody who was not in the room. Every check in 
 
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 
-Nine programs in, the machinery is no longer the hard part. Choosing whose problem to solve is. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+Nine programs in, choosing whose problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
 
 [^rosca-scope]: The World Bank's Global Findex measures informal saving-club membership country by country, at [globalfindex.worldbank.org](https://globalfindex.worldbank.org). The practice is commonest where formal bank accounts are least available.

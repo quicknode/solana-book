@@ -2,7 +2,7 @@
 
 Nearly every generic introduction describes blockchain as a "shared ledger". This is vague: shared how, and with whom? Additionally, most of a program's data is not a balance, and would not appear in a traditional accounting ledger.
 
-Solana - or more specifically, Solana mainnet and devnet - is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
+Solana (or more specifically, Solana mainnet and devnet) is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
 
 ## A User's Public Key Is Their Address
 
@@ -44,7 +44,7 @@ Meet Bob. Bob has his own key pair, and his public key is another point on the s
 
 ## Users Interact With Programs and Each Other by Sending Transactions
 
-Alice wants to send Bob some SOL. The only way to change anything on this computer - move a balance, store data, anything - is to send it a **transaction**.
+Alice wants to send Bob some SOL. The only way to change anything on this computer, whether that is moving a balance or storing data, is to send it a **transaction**.
 
 A transaction carries one or more **instructions**, and each instruction is input for a public function called an **instruction handler** that is part of an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve:
 
@@ -61,11 +61,11 @@ Every instruction names which of the program's **instruction handlers** to run, 
 > - An "instruction" is the input a transaction carries: which handler to run, which accounts it may touch, and the arguments.
 > - An "instruction handler" is the onchain function that runs.
 >
-> Older Solana content is loose about this and uses "instruction" for both. You may read or hear "this program has five instructions" - in cases like this "instruction" plainly means a function, and you should understand it means "instruction handler".
+> Older Solana content is loose about this and uses "instruction" for both. You may read or hear "this program has five instructions". In cases like this "instruction" plainly means a function, and you should understand it means "instruction handler".
 
 Alice runs her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
-The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports - the balance an explorer displays as 1 SOL is the integer 1,000,000,000 - and every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds on this one idea.
+The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the full discipline on this one idea.
 
 > **Why "lamport"?** Lamports are named after Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
 
@@ -79,17 +79,17 @@ For financial software, atomicity is a primitive you design with. Settlement ris
 
 - the escrow program you're about to build moves Alice's payment and Bob's stock in one atomic unit, and no combination of failures leaves one side paid and the other empty-handed. 
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state
-- A **flash loan** - a crypto specific concept - borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
+- A **flash loan**, a crypto specific concept, borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
 ![A flash loan is atomicity turned into credit: four instructions across three programs commit together, or the failed repayment unwinds the borrow itself.](figures/atomic-transaction.svg)
 
-The budget for work done by instructions is metered in **compute units** per transaction, and you pay for CUs directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill - later, all those funds can be collected in a single step - and why work gets consolidated everywhere you look.
+The budget for work done by instructions is metered in **compute units** per transaction, and you pay for CUs directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill, so all those funds can be collected later in a single step, and why work gets consolidated everywhere you look.
 
 ## Every Transaction Is Signed
 
-One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction - not a similar one, not an edited one. Anyone can use Alice's public key to verify a signature that claims to be from Alice.
+One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction, not a similar one and not an edited one. Anyone can use Alice's public key to verify a signature that claims to be from Alice.
 
  You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh signature that the card is genuine and issued by your bank.
 
@@ -99,7 +99,7 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 - **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
 - **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
 
-That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything - receiving requires no signature from the recipient - while nothing will ever leave his account until a transaction *he* signs asks for it.
+That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything, because receiving requires no signature from the recipient, while nothing will ever leave his account until a transaction *he* signs asks for it.
 
 Solana used the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
@@ -130,14 +130,14 @@ Every account holds a lamport deposit proportional to its size, called **rent**;
 
 The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts [^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. 
 
-Like the programs on your regular computer and the files they work with, Solana programs use their instruction handlers to read the accounts they are handed, and write new values back. This split - logic in program accounts and state in data accounts - is what makes financial state easy to read. To know a market's condition you read its accounts, and the only way to change those accounts is through the owning program's instruction handlers.
+Like the programs on your regular computer and the files they work with, Solana programs use their instruction handlers to read the accounts they are handed, and write new values back. This split, logic in program accounts and state in data accounts, is what makes financial state easy to read. To know a market's condition you read its accounts, and the only way to change those accounts is through the owning program's instruction handlers.
 
 ## Addresses Come in Three Kinds
 
 Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in three kinds:
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
-- **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds - you'll learn more about these in the *PDAs* chapter. Since PDA addresses aren't public keys, they don't have private keys. 
+- **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds. You'll learn more about these in the *PDAs* chapter. Since PDA addresses aren't public keys, they don't have private keys. 
 - **Built-in addresses.** The System Program, the two token programs, and the sysvars sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads, `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` is the Token Extensions program. Some of these byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them.
 
 ![Only the first has a private key behind it; the other two are derived, and nobody can use a private key to sign for them.](figures/address-types.svg)
@@ -156,7 +156,7 @@ So Bob signs a transaction carrying one instruction: the **Token Program**'s `tr
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
-Bob's transfer instruction names every account it touches - Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's - the validation section of the *Adversary* chapter covers this in more detail.
+Bob's transfer instruction names every account it touches: Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence shapes this whole book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's. The validation section of the *Adversary* chapter covers this in more detail.
 
 ## What You Learnt
 

@@ -91,7 +91,7 @@ Dave watches for liquidation opportunities. He is the reason the market stays so
 - The **bonus** prices his service: he seizes $450 × 1.05 = $472.50 of Carol's collateral, paid in USDC shares, every step of the conversion floored toward the borrower.
 - Overreach fails the whole call: asking to seize more collateral than the obligation holds rejects with `LiquidationTooLarge` rather than silently capping, because a silent cap would make the liquidator pay full price for less collateral (pinned by `over_seizing_liquidation_rejected_smaller_succeeds`).
 
-Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Why half at a time? The close factor means the borrower loses the minimum collateral needed to restore health, rather than the whole position.
+Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Taking half at a time is what the close factor buys: the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
 ![The first call repays half the debt and seizes collateral worth the repayment plus a 5% bonus, every conversion rounded toward Carol.](figures/lending-liquidation.svg)
 
@@ -163,6 +163,6 @@ The concepts you now have:
 - **Cranks.** Permissionless, idempotent maintenance whose funds destinations come from stored state, and whose reliability comes from someone being paid.
 - **Freshness as a gate.** Every valuation requires same-transaction refreshes, so acting on stale state is a transaction that cannot be built.
 
-The *Vault Strategy* chapter asks a different question about other people's money: not "is the loan covered" but "what is the manager allowed to do."
+The *Vault Strategy* chapter asks a different question about other people's money: what is the manager allowed to do with it.
 
 [^lending-size]: [defillama.com/chain/solana](https://defillama.com/chain/solana) ranks Solana's categories by the value locked in them. Where lending sits in that ranking moves with the market.

@@ -26,11 +26,11 @@ Solana is a fast-moving space: network releases, framework versions, chain const
 
 *Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
-In this book you'll learn how each of the classic financial products actually works as a Solana program, how to handle assets without losing a penny, and how to prove your program works. These long term concepts are what this book is for.
+In this book you'll learn how each of the classic financial products actually works as a Solana program, how to handle assets without losing a penny, and how to prove your program works.
 
-## Why Write a Book in the Age of AI?
+## Why Write a Book When an AI Can Write the Program?
 
-An LLM can write a Solana program on request, and we fully expect you to use an AI to do exactly that - this book includes a companion AI plugin, introduced below, to help you do this correctly.
+An LLM can write a Solana program on request, and we expect you to use an AI to do exactly that. This book includes a companion AI plugin, introduced below, to help you do it correctly.
 
 However **no AI can understand a program on your behalf.** The value of this book is the knowledge it leaves in your head: how financial products exist as Solana programs, so you can design your own programs, understand their implementation, incentives and trust decisions, and have confidence in what you have built. After reading it, you will be able to:
 
@@ -67,13 +67,11 @@ The diagrams throughout the book share one set of conventions, and each conventi
 
 The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to money (the arithmetic, offchain truth, the adversary, testing, and admin power).
 
-**Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine. These programs have not been drawn and explained side by side in one place before.
+**Building Financial Products** is nine chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the nine cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each is drawn as well as written: account maps, state machines, and value flows, in one visual language shared across all nine.
 
-Real incidents appear throughout the book in boxed **War Story** sections. History does not go stale, which makes these among the most durable pages in the book. None of them are told to dunk on the teams involved - rather, they are here so you recognize the same shape in your own code before it costs you.
+Real incidents appear throughout the book in boxed **War Story** sections. History does not go stale. None of them are told to dunk on the teams involved; they are here so you recognize the same shape in your own code before it costs you.
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory).
-
-Like *TCP/IP Illustrated*, this book teaches a way of thinking. Over time, you'll notice the same patterns and turn knowledge into understanding and habit.
 
 ## How This Book Was Produced
 
