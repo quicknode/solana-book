@@ -100,7 +100,7 @@ Assets pledged to secure a loan, seizable on default or on breach of the liquida
 
 ### commitment level
 
-How sure a reader of the chain is asking to be: `processed` (a leader executed it), `confirmed` (a supermajority of stake voted for the block), or `finalized` (no validator can now vote another way). A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
+How sure a reader of the chain is asking to be. `processed` means a leader executed the transaction and put it in a block, which can still vanish. `finalized` means the validators have voted the block final and no fork can replace it. `confirmed` named a middle state under Tower BFT, a block a supermajority of stake had voted for; Alpenglow folds it into `finalized`. A program cannot see its own commitment, so the bot, crank, or backend reading the chain picks one; the *Operating Financial Software* chapter matches the level to how reversible the reaction is.
 
 ### compute unit
 
@@ -176,7 +176,7 @@ A service that gives away free test tokens on devnet: SOL from the `solana airdr
 
 ### finality
 
-The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when enough blocks have been built on top that no validator can vote for a competing fork; how long that takes is set by the network's consensus and moves when it does. Distinct from confirmed, which a supermajority has voted for but which the network still permits to lose. See [commitment level](#commitment-level).
+The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when its validators have voted the block final; how long that takes is set by the network's consensus and moves when it does. See [commitment level](#commitment-level).
 
 ### fixed point
 
