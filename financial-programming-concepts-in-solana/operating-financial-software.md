@@ -11,7 +11,7 @@ Financial code fails at the edges the happy path never reaches: the refund, the 
 - **Use nonzero, asymmetric values.** A test with `duration: 0`, or the same amount on both sides, sits at the one value where `<=` and `>=` both hold, so it passes with the comparison written backwards. Equal amounts hide a second bug: a formula with its operands swapped computes the same total either way. Use unequal amounts you can recognize in a failed assertion's output, like 1,000 USDC against 3 NVDAx, so a wrong total tells you which input it was built from.
 - **Test both sides of every numerical boundary.** The withdrawal that lands exactly on the loan-to-value limit must succeed, and the same withdrawal plus one minor unit must fail. The lending suite's `withdraw_at_health_boundary_then_one_more_unit_fails` is that pair: a withdrawal that leaves borrowing power exactly equal to the debt passes, and one more minor unit is refused.
 - **Test every attack by name.** Every rule in a program chapter's failure-modes section gets a test that tries to break it: the non-maker canceling an offer, the fee vault passed in place of the user vault, the second claim on a settled event.
-- **Assert properties, not just account values.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). A property test catches a whole bug class; an assertion on one account's value catches one instance of it.
+- **Assert invariants, not just account values.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). An invariant test catches a whole bug class; an assertion on one account's value catches one instance of it.
 
 Every test in this list is cheap to write and fast to run. LiteSVM runs the compiled program in-process in milliseconds, warping the slot makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs. The expensive test is the one nobody wrote. Cashio and Wormhole, in the *Adversary* chapter, each lost their funds through a handler that accepted a substituted account, the case one test in the fifth rule above drives on purpose.
 
@@ -20,8 +20,8 @@ Every test in this list is cheap to write and fast to run. LiteSVM runs the comp
 A test checks the inputs you thought of. A proof checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much money the program will hold:
 
 - **Tests** drive every code path with values you chose, by the rules above.
-- **Property tests** assert a law (a round trip creates no value, an index never decreases) over generated inputs, so the values are no longer only the ones you imagined.
-- **Formal verification** hands a function to a model checker like Kani,[^kani] which explores *every* possible input, bit by bit, and either proves the property holds or hands you the exact input that breaks it.
+- **Invariant tests** assert a rule that must hold on every input (a round trip creates no value, an index never decreases) against generated inputs, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
+- **Formal verification** hands a function to a model checker like Kani,[^kani] which explores *every* possible input, bit by bit, and either proves the invariant holds or hands you the exact input that breaks it.
 
 The escrow program in the companion repository ships Kani harnesses for the parts of it a proof can reach:
 
@@ -29,7 +29,7 @@ The escrow program in the companion repository ships Kani harnesses for the part
 - `proof_cancel_offer_returns_all_to_maker` proves the refund path returns every vault token to the maker.
 - `proof_offer_id_seed_injective` proves two different offer IDs can never derive the same address.
 
-A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and proves those. Percolator, Anatoly Yakovenko's Kani-verified perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole. Each invariant in a program chapter's invariants section is a property a harness like these can settle.
+A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and proves those. Percolator, Anatoly Yakovenko's Kani-verified perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole. Each invariant in a program chapter's invariants section is a claim a harness like these can settle.
 
 ## Ship With a Second Opinion
 
@@ -63,8 +63,8 @@ Every market in this book has an operator with real power: withdrawing fees, set
 
 ## What You Learnt
 
-- Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and properties as well as account values.
-- Proving goes further than testing: property tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
+- Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
+- Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, a screen that can be redrawn reads at `confirmed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, admin money kept apart from user money, and no path to principal. A pause stops entrances and leaves exits open, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
