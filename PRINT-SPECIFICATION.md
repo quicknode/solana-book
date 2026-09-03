@@ -27,6 +27,10 @@ The side margins are set by two constraints. KDP requires a gutter of at least 0
 
 Margins are symmetric rather than mirrored. If the interior is ever sent to a printer that wants a larger inside margin than outside, that is a `@page :left` and `@page :right` pair, and the gutter number above is where it starts.
 
+**Every page is cropped to the trim after printing, because Chromium's sheet is bigger than the one asked for.** A 7.44 x 9.69in page is 535.68 x 697.68pt, and Chromium prints 535.92 x 697.92: it rounds the sheet up to the next 1/300in dot. The extra dot cannot be avoided from the page description — the size comes out the same written in `in`, `pt`, `px`, `mm` or `q`, asked for a hundredth of a point smaller, or passed to `page.pdf()` as an explicit width and height instead of through `preferCSSPageSize`. Chromium anchors the content at the top left, so the slack lands on the right and at the bottom, where on a white interior page it is invisible and on the cover it read as a white band down two edges of the art. `build-pdf.mjs` sets each page's MediaBox and CropBox back to the trim, keeping the top-left corner, which both removes the band and makes the file's page size the one this document states. A build whose sheet comes out *smaller* than the trim fails rather than cropping, because that is a page size nobody asked for.
+
+The cover art is drawn a point past the trim on every side so that rounding in Chromium's paint of the image cannot leave a white hairline inside the crop, and the cover's paged.js sheet is widened to match, because that sheet's clip rounds its right edge down by a fraction of a point and would reinstate the hairline there. Only the width is widened: a taller sheet spills the art past the bottom of the cover and onto the top of the title page, which is a hairline of cover black along three edges of page two rather than a clean page.
+
 ## Type
 
 | Role | Face | Size |
