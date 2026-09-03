@@ -93,7 +93,7 @@ Some things were left out on purpose, and knowing which is part of knowing the f
 
 One project separates reading this book from shipping, and it takes less time than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Give every state an exit, so every participant can get their money out from wherever the program stops. Write the tests that drive the machine down every path, especially the exits, and the invariant tests that assert what must never change.
 
-Then get a second opinion from somebody who did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
+Then get a second (and third) opinion from an expert that did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 
