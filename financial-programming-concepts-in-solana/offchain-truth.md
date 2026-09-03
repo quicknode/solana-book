@@ -23,7 +23,7 @@ An oracle's publication is *input*, as untrusted as an instruction argument unti
 
 ## Trust Is an Engineering Parameter
 
-Who signs the fact is a design decision with a full spectrum of answers, and the way to make it is to ask three questions: who publishes, what does it cost them to lie, and what happens when they stop publishing?
+Who signs the fact is a design decision with a range of answers, and the way to make it is to ask three questions: who publishes, what does it cost them to lie, and what happens when they stop publishing?
 
 At one end sits the **single trusted key**. The betting market's admin settles the event with one signature; their word becomes the onchain truth. For a small market whose operator's business is its reputation, this can be the right design, and the program's job is to make the trust *visible and narrow*. The admin picks the winning outcome, but they cannot touch the pro-rata math, exceed the snapshotted fee, or reach the vault by any other path. A reader of the code can see what their signature can and cannot do.
 
@@ -35,7 +35,7 @@ The third question, **what happens when publication stops**, is the one designs 
 
 One more rule: **the fact's meaning must be pinned when the money commits, not when the fact arrives.** The betting market locks its outcome list the moment the first bet lands and snapshots its fee at event creation, so the question bettors staked on cannot be rewritten before it is answered. Whatever the source, the terms are fixed when the money enters, and only the answer arrives later.
 
-The price-manipulation section of the *Adversary* chapter covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered*, a true report of a market the attacker just bent.
+The price-manipulation section of the *Adversary* chapter covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered*, a true report of a market the attacker just manipulated.
 
 ## What You Learnt
 

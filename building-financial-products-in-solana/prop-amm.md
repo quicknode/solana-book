@@ -51,7 +51,7 @@ A round trip costs 1.65 USDC: buying 5 NVDAx cost 825.825 and selling them back 
 
 ## The Oracle Moves and the Quote Moves With It
 
-NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory got picked off along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
+NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory was sold below its value along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
 
 ![Against a quote the price is flat whatever the size, until the inventory boundary, where the market refuses rather than reprices.](figures/prop-amm-curve-vs-quote.svg)
 
@@ -65,17 +65,17 @@ The oracle gates pull the quote automatically, for the same reasons Maria pulls 
 
 ## The Market Maker Leaves, Whole
 
-When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no pro-rata slice, no locked floor, no waterfall. The exit machinery that filled three chapters exists to divide pooled money fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them: every state needs an exit, and an empty market's exit is to say no.
+When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no pro-rata slice, no locked floor, no waterfall. The exit machinery that filled three chapters exists to divide pooled money fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them: every state needs an exit, and an empty market's exit is to refuse every swap.
 
-## The Math: Every Rounding Points at the Trader
+## The Math: Every Rounding Favors the Market
 
 The quote arithmetic is four small functions (`quote_math.rs`), all checked u128, multiply before divide, one floor per quantity. The ask rounds **up**; the bid rounds **down**; both outputs floor. Every rounding direction favors the market, so the composite invariant, that value out never exceeds value in measured at the raw oracle price, holds by construction. The handler still asserts it after computing each fill, cross-multiplied so the check itself does no rounding, and fails with `InvariantViolated` if a future refactor breaks a rounding direction. Assert after the math, as the constant-product pool's post-trade K check does, here guarding a much simpler formula.
 
-The unit conversion is the part that does not stay clean. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program cannot assume its tokens will be.
+The unit conversion is the one part that is not simple. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program cannot assume its tokens will be.
 
 ## The Invariants: What the Market Promises
 
-- The quote brackets the oracle: bid at or below the price, ask at or above it, with each side's rounding pointing away from the trader.
+- The quote brackets the oracle: bid at or below the price, ask at or above it, with each side's rounding favoring the market.
 - No swap hands out more value, at the raw oracle price, than it takes in, enforced onchain after the math, per fill.
 - Only the operator moves inventory, and the operator can always move all of it: `has_one = operator` on both inventory handlers is the entire access control.
 - Traders carry no custody risk. A swap is a single atomic transaction against visible prices; nobody deposits anything into a prop AMM, so there is nothing of theirs to lose. Every risk in this design (stale quotes, adverse selection, a bad oracle) lands on Maria.
@@ -83,13 +83,13 @@ The unit conversion is the part that does not stay clean. Prices arrive at the o
 ## The Failure Modes: What Attacks a Market Maker
 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates sit in front of every single swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter meets the same failure with leverage multiplying it.
-- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
+- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
 - **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the *Perpetual Futures* chapter makes, with one difference: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program; the companion repository's oracle module documents the one-call upgrade to a verified Switchboard read.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and whole categories return "not applicable". No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 
 ## Testing Considerations
 
-The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the rule that defines the genre: the capital is Maria's, and the market fails safe without it.
+The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the rule that defines the genre: the capital is Maria's, and without it the market refuses every swap.
 
 ## What You Learnt from Building the Prop AMM
 

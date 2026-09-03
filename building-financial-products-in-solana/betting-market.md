@@ -79,7 +79,7 @@ There is no `claimed` boolean to forget to check, because the account's deletion
 
 ## Closing Out, and an Exit From Every State
 
-Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to sneak through this cheaper path rejects with `BetWon` and must use `claim_winnings()`), then closes the account and frees the slot. Both rules are pinned by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
+Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this cheaper path rejects with `BetWon` and must use `claim_winnings()`), then closes the account and frees the slot. Both rules are pinned by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
 
 And what if the film festival burns down? An Open event has a second exit: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (pinned by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
 
@@ -106,12 +106,12 @@ Every checked operation maps to `MathOverflow`. There are no rates, no time, no 
 
 ## The Failure Modes: The Oracle Is a Person, and Everything Downstream of That
 
-- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by fat-finger. The program's design limits the damage to exactly that one decision (she cannot skim beyond the fee or redirect funds), but the decision is hers alone. This program is deliberately the simplest case; the *Offchain Truth* chapter covers what it costs a trusted party to lie, and how to grow out of a single key.
+- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by mistake. The program's design limits the damage to exactly that one decision (she cannot skim beyond the fee or redirect funds), but the decision is hers alone. This program is deliberately the simplest case; the *Offchain Truth* chapter covers what it costs a trusted party to lie, and how to grow out of a single key.
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.
-- **Double claims** die because the bet account dies. There is no flag to desynchronize.
+- **Double claims** fail because the bet account is gone. There is no flag to desynchronize.
 - **Changing the game mid-play**: adding outcomes after betting starts is rejected; the fee is snapshotted per event.
 - **Slot exhaustion**: 32 concurrent positions per user, `TooManyBets` beyond it, and `close_losing_bet()` to recycle slots.
-- **Betting after the whistle** rejects with `EventNotOpen`, whichever exit the event took.
+- **Betting after the event closes** rejects with `EventNotOpen`, whichever exit the event took.
 
 ## Testing Considerations
 
@@ -131,4 +131,4 @@ The concepts you now have:
 
 The pooled payout formula and the trusted-signer question both return at full scale in the *Lending and Borrowing* and *Perpetual Futures* chapters, where the trusted signature is a price feed and the settlement math runs continuously instead of once.
 
-The next chapter puts the shape on a trading floor. Everyone here bet into one pool and took a share of it; from here on, the parties quote prices at each other instead, and the price stops being a pool's arithmetic and starts being a commitment somebody posted.
+The next chapter builds an exchange. Everyone here bet into one pool and took a share of it; from here on, the parties quote prices at each other instead, and the price stops being a pool's arithmetic and starts being a commitment somebody posted.
