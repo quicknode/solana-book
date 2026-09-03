@@ -10,7 +10,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 ![Alice holds 250 USDC and wants 1 TSLAx; Bob holds 1 TSLAx and wants 250 USDC. Each side holds exactly what the other wants.](figures/escrow-swap-intent.svg)
 
-The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? Maybe Bob is just that type of guy. The real problem an **escrow** solves is not moving tokens, it is letting Alice and Bob swap without having to trust each other.
+The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? Maybe Bob is just that type of guy. An **escrow** lets Alice and Bob swap without having to trust each other.
 
 Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has bought a house or sent money overseas knows, the third party takes a percentage for itself, typically somewhere between one and six percent of the transaction.
 
@@ -91,7 +91,7 @@ Both sides now hold exactly what the other offered. No percentage went to anyone
 
 ### The Maker Cancels the Offer
 
-What if nobody takes the offer and Alice wants her USDC back? Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
+If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
 
 The constraints make it maker-only: the signer must be the maker, and `has_one = maker` checks the signer against the address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). The handler, `handle_cancel_offer()`, mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and lets `close = maker` close the offer account to Alice. Every lamport of rent she fronted comes home.
 
@@ -144,4 +144,4 @@ The concepts you now have:
 - **An exit from every state.** `take_offer()` and `cancel_offer()` both drain and close everything, returning rent to whoever paid it.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
-Every program after this one is an escrow with a different exit. The fundraiser in the next chapter is an escrow with many depositors and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome. Once you have built an escrow, everything else looks like an escrow.
+Every program after this one is an escrow with a different exit. The fundraiser in the next chapter is an escrow with many depositors and a deadline. The AMM is a pair of vaults whose exchange rate is set by a formula instead of a maker. The betting market is a vault whose exit is decided by an outcome.
