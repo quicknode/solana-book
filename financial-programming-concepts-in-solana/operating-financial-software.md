@@ -70,7 +70,7 @@ Every market in this book has an operator with real power: withdrawing fees, set
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, admin money kept apart from user money, and no path to principal. A pause stops entrances and leaves exits open, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
 
-[^kani]: Kani is a Rust model checker from the AWS-backed model-checking project, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
+[^kani]: Kani is a Rust model checker, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
 
 [^commitment-levels]: The commitment levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
 
