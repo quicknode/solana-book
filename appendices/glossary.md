@@ -228,7 +228,7 @@ Capital a venue sets aside to absorb losses larger than the collateral behind th
 
 ### invariant
 
-A property that must hold before and after every state change: K must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker proves one over every possible input; the *Operating Financial Software* chapter says how far up that ladder to climb.
+A property that must hold before and after every state change: K must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker proves one over every possible input; the *Operating Financial Software* chapter sets how far to go by how much money the program will hold.
 
 ### inventory
 
