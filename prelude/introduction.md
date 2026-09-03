@@ -40,7 +40,7 @@ However **no AI can understand a program on your behalf.** The value of this boo
 - Understand the economic incentives of your programs
 - Be responsible for the programs you have created
 
-The book splits the work with two companions. Both are available at [thesolanabook.com](https://thesolanabook.com):
+The book splits the work with two companions. Both are available at [solanabook.org](https://solanabook.org):
 
 - The **companion repository** holds the complete, tested programs that the program chapters walk through, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
 - The **companion AI plugin** distills this book's rules into a form AI coding tools apply automatically.
@@ -51,7 +51,7 @@ Framework-specific code is kept in the companion repository. Where code appears 
 
 ## Corrections Are Welcome, and Expected
 
-Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [thesolanabook.com](https://thesolanabook.com). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck at exactly the wrong moment, we would love to hear it, and contributors are credited by name.
+Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck at exactly the wrong moment, we would love to hear it, and contributors are credited by name.
 
 ## Prerequisites
 
