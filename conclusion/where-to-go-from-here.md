@@ -2,7 +2,7 @@
 
 Nine programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault strategy, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
 
-The Introduction promised a set of properties: markets that never close, settlement that is atomic and global, one set of accounts that every party reads. It promised rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those have stopped being reasons to consider a platform. They are materials you can now work with, on the world's most active blockchain.
+The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those have stopped being reasons to consider a platform. They are materials you can now work with, on the world's most active blockchain.[^most-active]
 
 What is left is deciding what to build with them.
 
@@ -10,9 +10,9 @@ What is left is deciding what to build with them.
 
 You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it nine times.
 
-You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state has no exit. That is the same checklist an auditor opens with.
+You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state needs an exit handler. That is the same checklist an auditor opens with.
 
-You can work with an AI as a peer rather than an authority. The companion AI plugin will apply this book's rules to code your tools generate, and you can now tell when the output is wrong, which is the only thing that makes generated financial code safe to use.
+You can work with an AI as a peer rather than an authority. The companion AI plugin will apply this book's rules to code your tools generate, and you can now tell when the output from AI tools is wrong, to make generated financial code safe.
 
 You can reason about who earns what, and why anyone shows up. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
@@ -22,9 +22,9 @@ And you can carry the responsibility that comes with all of it. Programs holding
 
 Look away from the chain for a moment, at what the people around you deal with every week.
 
-A payment sent on Friday evening arrives on Tuesday, because the rails carrying it keep office hours and observe public holidays. A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending money to family abroad pays a rate set by which two countries they happen to be standing in, which the Introduction's World Bank figures put above twenty percent in thirteen corridors. Money in a savings account earns close to nothing while the same money is lent out at several times that, and the gap between the two is the bank's business rather than a price the depositor could shop for.
+A payment sent on Friday evening arrives on Tuesday, because the rails carrying it keep office hours and observe public holidays. A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending money to family abroad pays a rate set by which two countries they happen to be standing in, which can reach as high as 20%.[^remittance-corridors] Money in a savings account earns close to nothing while the same money is lent out at several times that, and the gap between the two is the bank's business rather than a price the depositor could shop for.
 
-Businesses have the same problems from the other side. A shop owner who wants a second location either sells a slice of the business to whoever is nearby with money, or borrows through an underwriting process built for loans ten times larger. A supplier delivers goods and waits sixty days for the invoice to be paid while their own payroll runs every two weeks. Someone holding shares who needs cash for a repair sells them, ending a position they wanted to keep and often creating a tax bill, because borrowing against a portfolio is a private-banking service with a minimum balance attached. Rents rise with the value of housing, and the people paying the rent own none of it.
+Businesses have the same problems from the other side. A shop owner who wants a second location either sells a slice of the business to whoever is nearby with money, or borrows through an underwriting process built for loans ten times larger. A supplier delivers goods and waits sixty days for the invoice to be paid while their own payroll runs every two weeks. Someone holding shares who needs cash for a repair sells them, ending a position they wanted to keep and often creating a tax bill, because borrowing against a portfolio is a private-banking service, and so requires a significant minimum balance. Rents rise with the value of housing, and the people paying the rent own none of it.
 
 Every one of these has the same structure: parties standing between two people who have business with each other, each taking a cut and adding a delay, and a set of hours during which the arrangement operates at all. A program does not remove the need for underwriting, and it does not make a stranger's credit risk disappear. What it removes is the middleman whose entire function was holding the money and keeping the record, which is the function that a vault and an account already perform, for a fraction of a penny, at three in the morning on a Sunday.
 
@@ -35,7 +35,7 @@ Nobody in the paragraphs above wants a blockchain. They want their money on Satu
 So aim at consumers and businesses rather than at a crypto audience. In practice that means:
 
 - Quote everything in dollars and in time. A rate, a limit, a settlement time. Never basis points, token symbols, or pool utilization.
-- Keep keys and signing behind the product. Someone should be able to use it having never held a token deliberately, and never learn that they now do.
+- Keep keys and signing behind the product. Someone should be able to use it having never downloaded wallet software or held a token deliberately, and never learn that they now do.
 - Put the benefit on the front page in the user's own words: "get paid the day you invoice", "spend without selling your shares", "nobody can walk off with the pot".
 - Say the risk in the same plain words. Liquidation is not a footnote for somebody spending against their shares, and a rate that comes from borrowers can fall when borrowing does.
 
@@ -43,7 +43,7 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 
 Products of this kind have been shipped already, several of them with real users and real money behind them. Study what they have in common rather than copying them line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
 
-**An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The edges of the product move at the speed of the banking system, while everything between them moves at the speed of the chain. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Vault Strategy* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licenses that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
+**An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The product moves at the speed of the legacy system where it has to, and settles instantly everywhere else. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Vault Strategy* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licenses that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
 
 **Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that hold up are the ones that state the awkward case: when borrowing is high the reserve cannot pay every depositor out at once, and the app has to say so before a depositor discovers it by being refused a withdrawal.
 
@@ -98,5 +98,9 @@ Then get a second opinion from somebody who did not work on it. Every check in t
 Deploy to localnet, then devnet, and let mainnet be where a finished program goes live rather than where you find out whether it works.
 
 Nine programs in, choosing whose problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+
+[^most-active]: Artemis counted 4.1 million daily active addresses and 146 million transactions on Solana on August 31, 2026, against 1.7 million addresses on BNB Chain and under half a million on Ethereum. See [classic.artemis.ai/asset/solana](https://classic.artemis.ai/asset/solana).
+
+[^remittance-corridors]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. Source: The World Bank, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 
 [^rosca-scope]: The World Bank's Global Findex measures informal saving-club membership country by country, at [globalfindex.worldbank.org](https://globalfindex.worldbank.org). The practice is commonest where formal bank accounts are least available.
