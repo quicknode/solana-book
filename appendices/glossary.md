@@ -4,7 +4,11 @@ The vocabulary of this book, in one place: Solana's terms alongside the financia
 
 ### account
 
-Some data with an [address](#address). In a program, the data is a Rust struct. Wallets, token balances, program code, and everything a program stores are all accounts; each also has a lamport balance and an owner program that may change it. Financial state is accounts; this is the first idea in the book.
+Some data with an [address](#address). In a program, the data is a Rust struct. Wallets, token balances, program code, and everything a program stores are all accounts; each also has a lamport balance and an owner program that may change it. Financial state is accounts.
+
+### accumulation factor
+
+See [borrow accumulation factor](#borrow-accumulation-factor).
 
 ### address
 
@@ -12,7 +16,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are exactly the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The *Prop AMM* chapter treats it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow harvests the difference. The *Prop AMM* chapter treats it at length.
 
 ### all-or-nothing
 
@@ -70,13 +74,17 @@ An address chosen rather than computed: the System Program, the token programs, 
 
 The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address cheaply.
 
+### ceil (ceiling)
+
+Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, so debts and fees never round down into a shortfall the program absorbs. The opposite of [floor](#floor). See [rounding](#rounding).
+
 ### checked arithmetic
 
 Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on money in this book is checked.
 
 ### checks-effects-interactions
 
-The ordering discipline for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See the *Adversary* chapter.
+The ordering rule for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See the *Adversary* chapter.
 
 ### close factor
 
@@ -104,7 +112,7 @@ An oracle's own statement of its uncertainty: a price of $250 ± $8 is a differe
 
 ### counterparty
 
-The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the pool's solvency is the whole design. See the *Perpetual Futures* chapter.
+The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the design is organized around the pool's solvency. See the *Perpetual Futures* chapter.
 
 ### CPI (cross-program invocation)
 
@@ -124,11 +132,15 @@ In a fund, the authority that decides which assets may be held at all and which 
 
 ### custody
 
-Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. The rule this book repeats about custody is that balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
+Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. Balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
 
 ### decimals
 
 The number of minor units in one major unit of a token, declared on the mint. USDC has 6, SOL has 9. Programs must read decimals, never assume them.
+
+### degenerate value
+
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it is structurally valid and worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
 
 ### discretization
 
@@ -140,11 +152,11 @@ The 8 bytes Anchor writes at the start of an account's data identifying its type
 
 ### dust
 
-Sub-unit remainders left over by integer division. Rounding policy decides who owns it; the correct answer is the program, never whoever transacts most often.
+Sub-unit remainders left over by integer division: a sliver smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
 
 ### epoch
 
-A period of 432,000 slots over which a validator schedule holds, so its length in days falls as the slot time falls. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots over which a validator schedule holds, so its length in days depends on the slot time. Mostly relevant to staking; application logic usually counts slots.
 
 ### equity (position)
 
@@ -154,13 +166,17 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
 
+### exponentiation by squaring
+
+Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed slots in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
+
 ### faucet
 
 A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
 
 ### finality
 
-The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when enough blocks have been built on top that no validator can vote for a competing fork; how long that takes is set by the consensus protocol and moves when the protocol does. Distinct from confirmed, which a supermajority has voted for but which the protocol still permits to lose. See [commitment level](#commitment-level).
+The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when enough blocks have been built on top that no validator can vote for a competing fork; how long that takes is set by the network's consensus and moves when it does. Distinct from confirmed, which a supermajority has voted for but which the network still permits to lose. See [commitment level](#commitment-level).
 
 ### fixed point
 
@@ -170,9 +186,17 @@ Representing fractions as scaled integers: 1.05 stored as 1,050,000,000,000,000,
 
 A loan borrowed and repaid inside a single transaction, possible only because transactions are atomic: if the repayment fails, the borrow never happened.
 
+### floor
+
+Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never promise a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
+
 ### funding rate
 
 The periodic payment between longs and shorts on a perpetual futures market that tethers the perpetual's price to the index price.
+
+### half-up
+
+Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on money here: it rounds in the user's favor half the time, and a caller can size a deposit and withdrawal pair to collect that half repeatedly. The 2021 SPL token-lending bug was this. See [rounding](#rounding).
 
 ### halt
 
@@ -220,7 +244,7 @@ Two mathematically linked keys: a private key, kept secret, that signs messages,
 
 ### kink
 
-The bend in a lending reserve's interest rate curve, in this book at 80% [utilization](#utilization): below it the borrow rate climbs gently, above it steeply. The steep leg is the reserve begging for liquidity, pushing borrowers to repay and pulling suppliers in with yield at the same time. See the *Lending and Borrowing* chapter.
+The bend in a lending reserve's interest rate curve, in this book at 80% [utilization](#utilization): below it the borrow rate climbs gently, above it steeply. The steep leg pushes borrowers to repay and pulls suppliers in with yield. See the *Lending and Borrowing* chapter.
 
 ### lamport
 
@@ -292,7 +316,7 @@ On a perpetual futures market, the index price is the oracle's statement of the 
 
 ### mark to market
 
-Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because yesterday's valuation is an opinion and today's is the one money moves on.
+Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because money moves on today's valuation.
 
 ### market maker
 
@@ -340,7 +364,7 @@ The total notional of positions currently open on a market, usually tracked per 
 
 ### oracle
 
-A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, exactly as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
+A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
 
 ### order book
 
@@ -358,6 +382,10 @@ An address computed from a program's ID and chosen seeds. A PDA is not a public 
 
 A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The capstone chapter of this book.
 
+### phantom overflow
+
+An overflow in the middle of a calculation whose final answer would have fit: `price * quantity` passes u64 before the division that brings it back down. A legal transaction is rejected or corrupted for a reason the result never justified. The fix is to promote to u128 before multiplying and narrow back with a checked conversion. See the *Arithmetic of Money* chapter.
+
 ### PnL (profit and loss)
 
 What a position has gained or lost. While the position is open the figure is **unrealized PnL**, marked to market against the current price; closing the position realizes it. On the book's perpetual futures venue, PnL is size × price change ÷ entry price.
@@ -372,7 +400,7 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 ### pro rata
 
-In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join. The arithmetic is a ratio; the design question is always which denominator is honest, because that is where the [inflation attack](#inflation-attack) lives.
+In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join. The arithmetic is a ratio; the design question is which denominator to use, because the [inflation attack](#inflation-attack) skews it.
 
 ### program
 
@@ -404,7 +432,7 @@ A per-participant account, usually a PDA, recording what the program owes one pe
 
 ### rent
 
-The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is real money design.
+The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit. Who fronts rent, and who gets it back on which path, is part of the design.
 
 ### reservation
 
@@ -416,7 +444,11 @@ In a lending market, the per-asset pool: its liquidity vault, its share mint, it
 
 ### resting order
 
-A limit order that did not match on arrival and now waits on the book, funded and cancellable.
+A limit order that did not match on arrival and now waits on the book, funded and cancelable.
+
+### rounding
+
+The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder always settles with the program. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
 
 ### RPC endpoint
 
@@ -429,6 +461,10 @@ A traditional asset represented as a token onchain: commodities, equities, real 
 ### sandwich
 
 Wrapping someone's pending trade in two of your own: buy ahead of it to move the price against it, let it fill, then sell behind it. The classic [MEV](#mev) extraction on a public chain, and the reason every trade in this book carries a caller-side bound like a minimum output. See the *Adversary* chapter.
+
+### saturating
+
+What Rust's `saturating_add` and `saturating_mul` do when a result will not fit: clamp to the type's maximum or minimum and continue. Less silent than [wrapping](#wrapping) and still wrong on a balance, because the number returned is not the answer. Money uses [checked arithmetic](#checked-arithmetic).
 
 ### settlement
 
@@ -452,7 +488,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time, a fixed value in the range of hundreds of milliseconds, in which a leader may produce a block. The protocol has shortened it before and intends to shorten it again, so a slot count converts to seconds only at the current slot time. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time: a window of a few hundred milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
 ### SOL
 
@@ -524,7 +560,7 @@ A token account whose authority is a program's PDA, where a program holds funds 
 
 ### WAD
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for accumulation factors and rate math. Borrowed from Ethereum, where DappHub's `ds-math` library introduced it and MakerDAO made it standard, at 18 decimals because that is what Ether and most ERC-20 tokens use. Now the usual word for 18-decimal fixed point on every chain, Solana included.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for accumulation factors and rate math. Borrowed from the Ethereum blockchain, and now the usual word for 18-decimal fixed point on every chain, Solana included.
 
 ### wallet
 

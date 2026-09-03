@@ -55,19 +55,21 @@ Figure captions and table cells are ragged right for the same reason: they are s
 
 ## Running Heads and Folios
 
-The header carries two items: the book's title on the left, the current chapter's title on the right, both 9pt Georgia italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered.
+The header carries two items: the book's title on the left, the current chapter's title on the right, both 9pt Georgia italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A build carrying `REVIEWER_NAME` fills the third footer box, bottom right, with that name, so a single leaf out of an advance copy still says whose it is. Unstamped builds leave that box empty.
 
-Headers and folios are suppressed on the cover, the title page, chapter openers (headers only), part titles, and the blank versos paged.js inserts.
+Headers and folios are suppressed on the cover, the title page, chapter openers (headers only), part titles, and the blank versos paged.js inserts. The reviewer stamp follows the folio: present wherever the folio is, absent from the cover and the blanks.
 
 ## Structure
 
-A part title opens on a right-hand page, alone in the upper third of an otherwise empty page, and the reverse of that page is left blank so the part's first chapter also opens on a right-hand page. Every chapter starts on a new page.
+A part title opens on a right-hand page, alone in the upper third of an otherwise empty page, and the reverse of that page is left blank so the part's first chapter also opens on a right-hand page. Every chapter opens on a right-hand page too, which is how a reader flipping through finds where one ends and the next begins. Paged.js fills the verso it skips with a blank page, so the rule costs about one page for every two chapters: eight, at the current chapter count. Front-matter placeholders are exempt, because they share one flow until they have real content.
+
+Every part and chapter opening is checked against its page number after layout, and the build fails naming any that landed on a left-hand page. It prints the number it checked on success, because a selector that stopped matching would otherwise leave a check that passes without testing anything.
 
 Page one of the PDF is page one of the flow, so odd page numbers are right-hand pages whether or not the cover is included. The recto break rules re-resolve either way.
 
 ## Figures
 
-Every figure is an SVG, inlined into the build so the HTML has no external assets, and set to the full 5.74in measure. Figures do not break across pages. The conventions the drawings themselves follow live in the companion AI skill's `DIAGRAMS.md`, and `scripts/check-figure-geometry.mjs` enforces the mechanically checkable ones.
+Every figure is an SVG, inlined into the build so the HTML has no external assets, and set to the full 5.74in measure. Figures do not break across pages. The conventions the drawings themselves follow live in the companion AI plugin's `DIAGRAMS.md`, and `scripts/check-figure-geometry.mjs` enforces the mechanically checkable ones.
 
 ## Cover
 
@@ -92,7 +94,7 @@ npm install
 npm run build-pdf                          # print size, into build/
 npm run build-pdf -- --size letter         # US Letter
 NO_COVER=1 npm run build-pdf               # interior only
-REVIEWER_NAME="..." npm run build-pdf      # stamped advance copy
+REVIEWER_NAME="..." npm run build-pdf      # advance copy, named on the title page and every folio
 npm run build-pdf -- out.pdf               # explicit output path
 npm run build-pdf -- --help                # the switches, from the script itself
 npm run preview -- <name> "<phrase>"       # rasterize one page to check it

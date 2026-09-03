@@ -1,0 +1,16 @@
+{
+  // Prettier rewrites *italics* to _italics_ on save, and that breaks the
+  // manuscript's cross-reference lint. An underscore is a word character, so
+  // the `\b` in scripts/lint-manuscript.mjs never fires against the start of
+  // _Arithmetic of Money_: a malformed chapter reference written with
+  // underscores reads clean to the check built to catch it. WRITING-PLAN.md
+  // sets the asterisk as the book's one italic marker for that reason, and
+  // the lint rejects underscores outright.
+  //
+  // Prettier has no option for this; its Markdown emphasis character is not
+  // configurable. So Markdown opts out of format-on-save entirely. Every
+  // other language still formats normally.
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
+}
