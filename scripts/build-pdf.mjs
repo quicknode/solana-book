@@ -10,6 +10,7 @@
 // Usage: node scripts/build-pdf.mjs [output.pdf]
 
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join, dirname, resolve, basename } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -45,7 +46,9 @@ const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).joi
 Environment:
   NO_COVER=1      Build the interior without the cover page.
   REVIEWER_NAME   Stamp as an advance copy for that reviewer: named on the
-                  title page, and in the footer of every page carrying a folio.`;
+                  title page, and in the footer of every page carrying a folio.
+                  The commit the copy was built from is stamped beside the
+                  name, so feedback can be matched to the text it was about.`;
 
 const die = (message) => {
   console.error(`${message}\n\n${USAGE}`);
@@ -105,13 +108,36 @@ const escapeCssString = (text) =>
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
 const reviewerName = (process.env.REVIEWER_NAME ?? "").trim();
 const buildDate = new Date().toISOString().slice(0, 10);
+
+// A reviewer's copy also carries the commit it was built from. The manuscript
+// changes daily, and a build date does not say which of that day's commits a
+// piece of feedback was written against; the hash does. A build from a
+// working tree with uncommitted changes is marked as such, because its text
+// matches no commit exactly. Missing git is a warning rather than a failure:
+// the copy is still usable, it just cannot be traced.
+const git = (...args) =>
+  execFileSync("git", args, { cwd: repoRoot, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+function describeCommit() {
+  try {
+    const hash = git("rev-parse", "--short", "HEAD");
+    const dirty = git("status", "--porcelain", "--untracked-files=no") !== "";
+    return dirty ? `${hash}-dirty` : hash;
+  } catch {
+    console.warn("Could not read the git commit; the review copy will not name one.");
+    return "";
+  }
+}
+const commit = reviewerName ? describeCommit() : "";
+
 const advanceNote = reviewerName
-  ? `Advance review copy for ${escapeHtml(reviewerName)}. Please don't redistribute. Built ${buildDate}.`
+  ? `Advance review copy for ${escapeHtml(reviewerName)}. Please don't redistribute. Built ${buildDate}${commit ? ` from commit ${escapeHtml(commit)}` : ""}.`
   : `Prerelease draft, built ${buildDate}.`;
 // The title page names the reviewer once; the footer names them on every page,
-// so a single printed or photographed leaf still says whose copy it came from.
+// so a single printed or photographed leaf still says whose copy it came from,
+// and which revision of the text it was.
+const reviewerStamp = commit ? `${reviewerName} (${commit})` : reviewerName;
 const reviewerFooter = reviewerName
-  ? `@bottom-right { content: "${escapeCssString(reviewerName)}"; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }`
+  ? `@bottom-right { content: "${escapeCssString(reviewerStamp)}"; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }`
   : "";
 const suppressReviewerFooter = reviewerName ? " @bottom-right { content: none; }" : "";
 
