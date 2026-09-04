@@ -59,7 +59,7 @@ Figure captions and table cells are ragged right for the same reason: they are s
 
 ## Running Heads and Folios
 
-The header carries two items: the book's title on the left, the current chapter's title on the right, both 9pt Georgia italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A build carrying `REVIEWER_NAME` fills the third footer box, bottom right, with that name, so a single leaf out of an advance copy still says whose it is. Unstamped builds leave that box empty.
+The header carries two items: the book's title on the left, the current chapter's title on the right, both 9pt Georgia italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A build carrying `REVIEWER_NAME` fills the third footer box, bottom right, with that name and the short hash of the commit it was built from, so a single leaf out of an advance copy still says whose it is and which revision of the text it shows. The hash carries a `-dirty` suffix when the working tree had uncommitted changes, because that text matches no commit exactly. Unstamped builds leave that box empty.
 
 Headers and folios are suppressed on the cover, the title page, chapter openers (headers only), part titles, and the blank versos paged.js inserts. The reviewer stamp follows the folio: present wherever the folio is, absent from the cover and the blanks.
 
@@ -98,7 +98,7 @@ npm install
 npm run build-pdf                          # print size, into build/
 npm run build-pdf -- --size letter         # US Letter
 NO_COVER=1 npm run build-pdf               # interior only
-REVIEWER_NAME="..." npm run build-pdf      # advance copy, named on the title page and every folio
+REVIEWER_NAME="..." npm run build-pdf      # advance copy: name and commit hash on the title page and every folio
 npm run build-pdf -- out.pdf               # explicit output path
 npm run build-pdf -- --help                # the switches, from the script itself
 npm run preview -- <name> "<phrase>"       # rasterize one page to check it
