@@ -75,7 +75,9 @@ To keep the money easy to track, every character starts every chapter with the s
 
 ## How This Book Was Produced
 
-This book was written and edited by hand. The visual mechanism that describes Solana accounts and their changes, and the order in which Solana concepts are introduced, were conceived for the Professional Education Program at Solana Foundation. Every financial program other than the escrow was first made as a video for Quicknode, and this book began as transcriptions of that video content. AI tools were used to ensure consistency throughout the book: for example to ensure that concepts were defined on their first use, that the glossary was complete, and to ensure diagrams accurately reflected program state.
+The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos Mike produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
+
+AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, carrying renames through the text, the figures, and the companion repository together, and keeping the diagrams in step with actual program state.
 
 ## Where to Start, Depending on What You Came For
 
