@@ -51,6 +51,26 @@ git merge-base --is-ancestor origin/<branch> origin/main && echo "landed" || ech
 Prefer a flat PR off `main` whenever the work is separable. Stack only when the child genuinely cannot
 be reviewed or built without the parent.
 
+## Claude is not an author of this book
+
+Two things put a name in GitHub's contributor list, and an assistant belongs in neither.
+
+The first is the commit's own author field, which is the one that matters and the one most easily
+missed. A Claude Code session is configured as `Claude <noreply@anthropic.com>` unless it is told
+otherwise, so every commit it makes is authored by an assistant no matter how the message is worded.
+Before committing, check `git config user.email` and set it to the author's own.
+
+The second is a `Co-Authored-By` trailer naming an assistant, which GitHub reads as a second author.
+Claude Code adds one by default. Leave it off.
+
+Nothing else is the problem. A `Claude-Session` trailer, or a "generated with Claude Code" line on a
+pull request description, says how a change was produced rather than who wrote the book, and those are
+welcome to stay.
+
+Both defaults come from Claude Code's own configuration rather than from anything in this repository,
+so a session working here will do both unless told otherwise. This is where it is told. The history has
+already been rewritten once to take them out; do not put them back.
+
 ## Naming things the companion repository owns
 
 Prose must never name a field, function, or error that does not exist in
