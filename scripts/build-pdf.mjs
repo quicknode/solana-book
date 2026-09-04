@@ -262,17 +262,27 @@ const breakableUrl = (text) => {
 // holding the paper edition cannot click anything. Book-internal
 // cross-references were rewritten to #anchors by prepareMarkdown, so they do
 // not match here and stay plain prose.
-const bareAddress = (href) => href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+// What a reader sees. The scheme is printed, because it is part of the address
+// and because technical publishing prints it: O'Reilly sets a link as "words
+// (https://host/path)". A leading www is not, being a subdomain nobody types
+// and every browser supplies. So the printed form and the link can differ, and
+// the link is the one a click follows: it keeps the www it was written with.
+const printedAddress = (href) => href.replace(/^(https?:\/\/)www\./, "$1").replace(/\/$/, "");
+
+// The manuscript writes a link's text as the host and path alone, so that is
+// what the shape test below compares against. Keeping it derived from the
+// printed form means the two cannot drift apart.
+const bareAddress = (href) => printedAddress(href).replace(/^https?:\/\//, "");
 const markUrls = (html) =>
   html.replace(/<a href="(https?:[^"]+)">([^<]+)<\/a>/g, (whole, href, text) =>
     bareAddress(href) === text.replace(/\/$/, "")
-      ? `<a class="url" href="${href}">${breakableUrl(text)}</a>`
+      ? `<a class="url" href="${href}">${breakableUrl(printedAddress(href))}</a>`
       // The parentheses belong to the sentence, not to the address, so they
       // stay outside .url and set roman around the italic. They also keep the
       // separating space company: Paged.js drops a whitespace-only text node
       // during layout, which would jam the address against the word before it,
       // and " (" is not whitespace-only.
-      : `${whole} (<span class="url">${breakableUrl(bareAddress(href))}</span>)`,
+      : `${whole} (<span class="url">${breakableUrl(printedAddress(href))}</span>)`,
   );
 
 const sections = chapterPaths.map((path) => {

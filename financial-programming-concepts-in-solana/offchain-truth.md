@@ -43,6 +43,6 @@ The price-manipulation section of the *Adversary* chapter covers the case these 
 - Trust is an engineering parameter: a single key, a committee, or a feed network, chosen by asking who publishes, what lying costs them, and what happens when they go silent.
 - Pin the fact's meaning when the money commits, and give every state an exit that does not depend on the feed.
 
-[^negative-oil]: WTI crude oil futures traded as low as −$40.32 a barrel on 20 April 2020, the first negative price since the contract began trading in 1983, after storage filled and holders of the expiring May contract paid counterparties to take delivery off their hands. The EIA's account is at [www.eia.gov/todayinenergy/detail.php?id=43495](https://www.eia.gov/todayinenergy/detail.php?id=43495).
+[^negative-oil]: WTI crude oil futures traded as low as −$40.32 a barrel on 20 April 2020, the first negative price since the contract began trading in 1983, after storage filled and holders of the expiring May contract paid counterparties to take delivery off their hands. The EIA's account is at [eia.gov/todayinenergy/detail.php?id=43495](https://www.eia.gov/todayinenergy/detail.php?id=43495).
 
 [^escape-hatch]: The admin-power section of the *Operating Financial Software* chapter takes this up.
