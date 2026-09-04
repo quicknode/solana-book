@@ -329,16 +329,18 @@ for (const section of sections) {
   }
   tocPart = part;
   // Back matter is unnumbered: the Glossary is called the Glossary, not
-  // "Appendix A". Its row keeps the empty label column so its title lines up
-  // with the chapter titles above it.
+  // "Appendix A". With no label to print, its row has no label column at
+  // all, so the title sits at the left margin where "Chapter N" sits above
+  // it rather than indented to the chapter-title column.
   const isBackMatter = section.path.startsWith("appendices/");
   const label = isBackMatter ? "" : `Chapter ${++chapterNumber}`;
   const shortLabel = isBackMatter ? "" : String(chapterNumber);
+  const labelCell = label ? `<span class="label">${label}</span>` : "";
   // The row already prints its own "Chapter N" label, and every chapter's H1
   // carries that prefix too (it is what the running header and the chapter
   // opening page print), so drop it here to avoid "Chapter 2  Chapter 2: ...".
   const tocTitle = section.title.replace(/^Chapter \d+:\s*/, "");
-  tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}"><span class="label">${label}</span><span class="t">${tocTitle}</span><span class="pg"></span></a></li>`);
+  tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}">${labelCell}<span class="t">${tocTitle}</span><span class="pg"></span></a></li>`);
   for (const [index, subsection] of section.subsections.entries()) {
     const sectionLabel = shortLabel ? `${shortLabel}.${index + 1}` : "";
     tocEntries.push(`<li class="toc-section"><a href="#${subsection.id}"><span class="label">${sectionLabel}</span><span class="t">${subsection.title}</span><span class="pg"></span></a></li>`);
