@@ -105,4 +105,4 @@ The concepts you now have:
 - **NAV as the share price.** Value every vault with a fresh feed or refuse to run; a valuation that can skip an asset is a discount for whoever exploits it.
 - **Fees by dilution, snapshotted.** The fee mints shares against everyone proportionally, accrues by time rather than the manager's diligence, and has no setter, so the deal investors joined under cannot be worsened.
 
-The *Perpetual Futures* chapter closes the book by combining everything: vaults, shares, oracles, funding, margin, and liquidation, in the one program that uses all of it at once.
+The *Options* chapter comes next and takes the opposite approach to risk from everything since the escrow: a writer posts the whole of what they might owe before selling the right, so there is no margin department, no liquidator, and no oracle. The *Perpetual Futures* chapter then closes the book by combining everything: vaults, shares, oracles, funding, margin, and liquidation, in the one program that uses all of it at once.

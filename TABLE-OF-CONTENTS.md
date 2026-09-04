@@ -35,9 +35,10 @@ Each chapter walks one complete, tested program from the [companion repository](
 - [Chapter 16: The Prop AMM](building-financial-products-in-solana/prop-amm.md) - a market maker quoting its own capital at oracle prices
 - [Chapter 17: Lending and Borrowing](building-financial-products-in-solana/lending.md) - deposits, collateral, interest, liquidation, and cranks
 - [Chapter 18: The Vault Strategy](building-financial-products-in-solana/vault-strategy.md) - an onchain index fund
-- [Chapter 19: Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) - leveraged bets on a price; the capstone
+- [Chapter 19: Options](building-financial-products-in-solana/options.md) - calls and puts, fully collateralized and physically settled
+- [Chapter 20: Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) - leveraged bets on a price; the capstone
 
-## [Chapter 20: Where to Go From Here](conclusion/where-to-go-from-here.md)
+## [Chapter 21: Where to Go From Here](conclusion/where-to-go-from-here.md)
 
 ## [Glossary](appendices/glossary.md)
 

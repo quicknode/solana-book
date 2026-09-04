@@ -74,6 +74,7 @@ Steps currently missing their per-step diagram, to be drawn in the visual pass:
 - Perpetual Futures: Alice's `close_position` payout.
 - The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
 - The Vault Strategy: Bob's deposit at the new share price.
+- Options: Maria's `initialize_market`.
 
 ## Reviewers, Feedback, and Editions
 
@@ -84,7 +85,7 @@ Steps currently missing their per-step diagram, to be drawn in the visual pass:
 ## Milestones
 
 - **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
-- The remaining program chapters, one per example, in table-of-contents order (all nine drafted: Escrow, Token Fundraiser, The Betting Market, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, Lending and Borrowing, The Vault Strategy, Perpetual Futures). They run as three groups of three: custody and pooling, then market making, then credit and leverage. A chapter's place is set by what it assumes the reader already has, so The Betting Market sits third, where its only prerequisite is Escrow.
+- The remaining program chapters, one per example, in table-of-contents order (all ten drafted: Escrow, Token Fundraiser, The Betting Market, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, Lending and Borrowing, The Vault Strategy, Options, Perpetual Futures). They run as three groups: custody and pooling, then market making, then credit and derivatives. A chapter's place is set by what it assumes the reader already has, so The Betting Market sits third, where its only prerequisite is Escrow, and Options sits just before Perpetual Futures, because a fully collateralized derivative is the case the leveraged one relaxes.
 - The two Fundamentals sections (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
 - The remaining appendices. The Glossary is drafted.
 - The placeholder front-matter pages last.
