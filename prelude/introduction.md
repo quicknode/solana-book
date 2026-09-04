@@ -2,7 +2,7 @@
 
 It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
 
-This isn't a book about how Solana is built. It's about **building on the Solana platform**. We're aiming for it to be the essential reference for creating financial products on the world's most active blockchain.
+This isn't a book about how Solana is built. It's about **building on the Solana platform**. We're aiming for it to be the essential reference for creating financial products on the world's most active blockchain.[^most-active]
 
 ## Why Build Financial Programs on Solana?
 
@@ -89,6 +89,8 @@ Reading front to back works: the parts are ordered so that each one uses only wh
 ## The Glossary
 
 All technical and financial vocabulary this book uses is defined in the Glossary. If a term in a chapter surprises you, look there.
+
+[^most-active]: Artemis counted 4.1 million daily active addresses and 146 million transactions on Solana on August 31, 2026, against 1.7 million addresses on BNB Chain and under half a million on Ethereum. See [classic.artemis.ai/asset/solana](https://classic.artemis.ai/asset/solana).
 
 [^remittance-scope]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. Source: The World Bank, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 
