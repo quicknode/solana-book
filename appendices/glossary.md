@@ -22,6 +22,10 @@ A market maker's structural loss: the trades that find you when your quote is wr
 
 A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Token Fundraiser* chapter builds it onchain.
 
+### American option / European option
+
+An American option may be exercised at any time up to its expiry; a European option only at expiry. The *Options* chapter builds the American kind, which needs one comparison against the clock rather than a window.
+
 ### arbitrage
 
 Buying where an asset is cheap and selling where it is dear until the two prices meet. A constant-product pool does not know what its asset is worth; its price is only right because arbitrageurs have made it right, and the profit they take comes out of the pool's liquidity providers. See the *Constant-Product AMM* and *Prop AMM* chapters.
@@ -74,6 +78,18 @@ An address chosen rather than computed: the System Program, the token programs, 
 
 The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address cheaply.
 
+### call
+
+An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell, and the *Options* chapter's writer posts the underlying itself as collateral, which makes the call a [covered call](#covered-call).
+
+### cash settlement
+
+Settling a derivative by paying the difference between the market price and the contract's price in money, with no asset changing hands. It needs a price feed, and every check the *Offchain Truth* chapter describes. Compare [physical settlement](#physical-settlement).
+
+### cash-secured put
+
+A [put](#put) whose writer has posted the full strike, in the quote token, as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
+
 ### ceil (ceiling)
 
 Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, so debts and fees never round down into a shortfall the program absorbs. The opposite of [floor](#floor). See [rounding](#rounding).
@@ -118,6 +134,10 @@ An oracle's own statement of its uncertainty: a price of $250 ± $8 is a differe
 ### counterparty
 
 The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the design is organized around the pool's solvency. See the *Perpetual Futures* chapter.
+
+### covered call
+
+A [call](#call) whose writer has posted the underlying itself as collateral, so the shares the holder might buy are already in custody and the writer cannot fail to deliver them. The *Options* chapter's calls are all covered.
 
 ### CPI (cross-program invocation)
 
@@ -171,6 +191,14 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
 
+### exercise
+
+To use the right an [option](#option) grants: buy the underlying at the strike (a [call](#call)) or sell it there (a [put](#put)). In the *Options* chapter the holder may exercise while the clock is before `expiry`, and not after.
+
+### expiry
+
+The last moment an [option](#option) can be exercised. After it the writer reclaims whatever collateral was not taken. An expiry is a calendar date the parties agreed on, so the *Options* chapter measures it in wall-clock time.
+
 ### exponentiation by squaring
 
 Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed slots in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
@@ -210,6 +238,10 @@ A stop in block production, which Solana prefers to running two conflicting hist
 ### health / health factor
 
 A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. At or below the boundary, the position may be liquidated. See the *Lending and Borrowing* chapter.
+
+### holder
+
+The party who owns an [option](#option) and may [exercise](#exercise) it. A holder's loss is capped at the [premium](#premium) they paid. Compare [writer](#writer).
 
 ### impermanent loss
 
@@ -367,6 +399,10 @@ A borrower's loan file in a lending market: their collateral deposits, their bor
 
 The total notional of positions currently open on a market, usually tracked per side. A perpetual futures venue's funding direction and solvency reasoning both read it.
 
+### option
+
+The right, but not the obligation, to buy ([call](#call)) or sell ([put](#put)) an asset at a fixed price (the [strike](#strike)) before a fixed date (the [expiry](#expiry)), bought from a [writer](#writer) for a [premium](#premium). The *Options* chapter builds a venue for them.
+
 ### oracle
 
 A service that publishes signed statements of offchain facts, most often prices, onchain. A consuming program checks where the publication came from, its freshness, and its confidence interval, as it validates any other input. Where a feed network is involved, the signature itself was verified by the oracle's own program before the fact ever reached the account you read.
@@ -391,9 +427,17 @@ A contract paying the price movement of an asset, long or short, with leverage a
 
 An overflow in the middle of a calculation whose final answer would have fit: `price * quantity` passes u64 before the division that brings it back down. A legal transaction is rejected or corrupted for a reason the result never justified. The fix is to promote to u128 before multiplying and narrow back with a checked conversion. See the *Arithmetic of Money* chapter.
 
+### physical settlement
+
+Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
+
 ### PnL (profit and loss)
 
 What a position has gained or lost. While the position is open the figure is **unrealized PnL**, marked to market against the current price; closing the position realizes it. On the book's perpetual futures venue, PnL is size × price change ÷ entry price.
+
+### premium
+
+What the buyer of an [option](#option) pays its [writer](#writer) for the right, once, up front. It is the writer's whatever happens afterwards, and it is the most the [holder](#holder) can lose.
 
 ### price impact
 
@@ -422,6 +466,14 @@ The account holding a deployed program's compiled code, the slot it was last dep
 ### proprietary AMM (prop AMM)
 
 An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the *Prop AMM* chapter builds one.
+
+### protective put
+
+A [put](#put) bought by someone who already holds the underlying, as insurance against its price falling below the [strike](#strike). Like fire insurance, it is meant to expire unused.
+
+### put
+
+An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer posts the full strike as collateral, which makes the put a [cash-secured put](#cash-secured-put).
 
 ### quote token
 
@@ -523,6 +575,10 @@ A technique for storing bulk data offchain with onchain proofs, used for things 
 
 The fund-shaped product: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Distinct from a [vault](#vault), which in this book is only ever the token account the money sits in. See the *Vault Strategy* chapter.
 
+### strike
+
+The price at which an [option](#option) trades if its holder exercises. The *Options* chapter stores it as an amount of the quote token per contract rather than as a price, so every settlement is a multiplication with no division to round.
+
 ### System Program
 
 The program at a well-known address that creates accounts and transfers SOL. Every wallet account is owned by it, and every account any program creates is born through it.
@@ -574,6 +630,10 @@ A key pair used as an identity for holding and moving assets, with the private k
 ### wrapping
 
 What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Silent, and catastrophic on a balance, which is why money uses [checked arithmetic](#checked-arithmetic) instead.
+
+### writer
+
+The party who sells an [option](#option): they receive the [premium](#premium) and take on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer posts the whole of that obligation before the lot can be sold. Compare [holder](#holder).
 
 ### zero-copy
 
