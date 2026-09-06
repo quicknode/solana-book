@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="currentColor" fill-rule="evenodd">
+  <!--
+    The end mark: a square with the QuickNode Q knocked out of it, so the paper
+    shows through as the mark. The Q is the one from the cover wordmark, traced
+    from assets/cover.pdf. One even-odd path: the square fills, the Q outline
+    unfills it, and the Q counter fills again. The fill is currentColor so the
+    mark takes the ink of whatever text it closes. See build-pdf.mjs for how it
+    is set.
+  -->
+  <path d="M0 0H40V40H0Z M20.69 8.36 C27.15 8.67 31.70 13.43 31.70 20.00 C31.70 23.13 30.66 25.85 28.88 27.88 C28.81 27.96 28.77 28.03 28.78 28.14 C28.79 28.41 29.02 28.48 29.02 28.48 L33.60 31.33 L33.60 31.66 L20.02 31.66 L19.35 31.64 C12.90 31.33 8.35 26.57 8.35 20.00 C8.35 17.06 9.26 14.48 10.85 12.50 L11.17 12.12 C11.17 12.12 11.30 11.99 11.27 11.81 C11.23 11.59 11.04 11.53 11.04 11.53 L6.40 8.67 L6.40 8.34 L20.02 8.34 L20.69 8.36 Z M20.03 11.52 C15.18 11.52 11.81 14.86 11.81 20.00 C11.81 25.14 15.18 28.48 20.03 28.48 C24.88 28.48 28.25 25.14 28.25 20.00 C28.25 14.86 24.88 11.52 20.03 11.52 Z"/>
+</svg>
