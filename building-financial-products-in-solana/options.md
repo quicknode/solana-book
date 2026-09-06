@@ -1,8 +1,12 @@
 # Chapter 19: Options
 
-Alice holds five NVDAx, a token that tracks a share of NVIDIA stock, and NVDAx is trading at $165. She would be happy to sell at $180, and she would like to be paid while she waits. Bob thinks NVIDIA will pass $180 within the week, and he wants that upside for less than the $825 five shares would cost him. An **option** serves them both: Alice sells Bob the right, but not the obligation, to buy her five NVDAx at $180 any time in the next week, and Bob pays her 25 USDC for it now. If NVIDIA rallies, Bob buys the shares below the market. If it does not, he loses the 25 USDC and Alice keeps it as income on shares she still owns.
+Alice holds five NVDAx, a token that tracks a share of NVIDIA stock, and NVDAx is trading at $165. She would be happy to sell at $180, and she would like to be paid while she waits.
 
-Alice's offer to sell five NVDAx for 900 USDC is an ordinary offer with two additions: it expires, and the taker pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option lot, so that the custody stays legible and the whole lifecycle fits in three states; what that choice gives up is covered in the failure-modes section.
+Bob thinks NVIDIA will pass $180 within the week, and he wants that upside for less than the $825 five shares would cost him.
+
+An **option** serves them both: Alice sells Bob the right, but not the obligation, to buy her five NVDAx at $180 any time in the next week, and Bob pays her 25 USDC for it now. If NVIDIA rallies, Bob buys the shares below the market. If it does not, he loses the 25 USDC and Alice keeps it as income on shares she still owns.
+
+Alice's offer to sell five NVDAx for 900 USDC is an ordinary offer with two additions: it expires, and the taker pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option, so that the custody stays legible and the whole lifecycle fits in three states; what that choice gives up is covered in the failure-modes section.
 
 ## An Option Is a Right on One Side and an Obligation on the Other
 
@@ -39,7 +43,7 @@ This is **physical settlement**, and it is why the program has no oracle. Whethe
 
 The other design, **cash settlement**, pays the holder the difference between the market price and the strike, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets took that road on Solana, with margin and an oracle.[^zeta]
 
-## The Account Model: One Venue, Two Vaults, One Account per Lot
+## The Account Model: One Venue, Two Vaults, One Account per Option
 
 ![The market's three counters are a ledger of what the two vaults owe, and every handler that moves tokens asserts the vaults still cover it.](figures/options-account-map.svg)
 
@@ -51,12 +55,12 @@ The **market** is a PDA with seeds `"market"`, the underlying mint, and the quot
 
 A dataless **market authority** PDA (seeds `"authority"` + market) owns the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market) and exists to sign for them. Both vaults hold other people's money, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. One rule keeps that safe: a vault balance is custody, and the three counters are the truth about who is owed what.
 
-Each lot of options is an **option account**, a PDA with seeds `"option"`, the market, the writer, and an `id` the writer chooses, so one writer can have many lots open. Its struct is `OptionContract`, and its fields are the five terms plus the bookkeeping around them:
+Each option is an `OptionContract`, a PDA with seeds `"option"`, the market, the writer, and an `id` the writer chooses, so one writer can have many options open. Its fields are the five terms plus the bookkeeping around them:
 
 - `kind`, `Call` or `Put`, and `status`, which is `Listed` (written and collateralized, unsold), `Held` (sold), or `Exercised`.
 - `writer` and `holder`. The holder is empty until someone buys.
-- `contracts`, `underlying_per_contract`, and `strike_per_contract`. Alice's lot is 5 contracts, each on 1 NVDAx, each with a strike of 180 USDC.
-- `premium`, in the quote token, for the whole lot.
+- `contracts`, `underlying_per_contract`, and `strike_per_contract`. Alice's option is 5 contracts, each on 1 NVDAx, each with a strike of 180 USDC.
+- `premium`, in the quote token, for the whole option.
 - `expiry`, a unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots. Nothing in this program reads a price, so slot-measured freshness never comes into it.
 
 The three quantities are the account's most deliberate decision. **Every amount the option ever moves is a product of two of them.**
@@ -66,7 +70,7 @@ The three quantities are the account's most deliberate decision. **Every amount 
 
 There is no strike *price* to multiply by a quantity and divide by a decimals factor, so there is no division anywhere in settlement, and no rounding direction to get wrong. The strike is stored as an amount per contract rather than as a price, and the chapter's "180 USDC strike" is what that amount reads as when a contract is one whole NVDAx.
 
-![The option's three states and the three ways out: an unsold lot is canceled, a held lot is exercised before expiry or reclaimed after it, and an exercised lot is collected. Every exit closes the account.](figures/options-state-machine.svg)
+![The option's three states and the three ways out: an unsold option is canceled, a held option is exercised before expiry or reclaimed after it, and an exercised option is collected. Every exit closes the account.](figures/options-state-machine.svg)
 
 ## The Operator Opens the Venue
 
@@ -79,35 +83,35 @@ A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_
 
 ## A Writer Posts the Whole Obligation and Names a Price
 
-Alice, carrying the standard wallet of one SOL and 1,000 USDC plus her five NVDAx, calls `write_option()`. She passes an `id` of 1 and an `OptionTerms` struct: kind `Call`, 5 contracts, 1 NVDAx per contract, a strike of 180 USDC per contract, a premium of 25 USDC for the lot, and an expiry one week out.
+Alice, carrying the standard wallet of one SOL and 1,000 USDC plus her five NVDAx, calls `write_option()`. She passes an `id` of 1 and an `OptionTerms` struct: kind `Call`, 5 contracts, 1 NVDAx per contract, a strike of 180 USDC per contract, a premium of 25 USDC for the whole option, and an expiry one week out.
 
 The handler checks the terms before it touches a token:
 
-- **A zero quantity** in `contracts`, `underlying_per_contract`, or `strike_per_contract` is refused (`InvalidParameter`). Every quantity is a multiplier in the settlement math, so a zero is a lot that delivers nothing or costs nothing to exercise.
-- **A zero premium** is refused the same way. It would make the lot a gift rather than a sale.
-- **An expiry at or before now** is refused (`ExpiryInPast`). The holder may exercise while `now < expiry`, so such a lot could never be exercised.
-- **A lot whose settlement overflows** is refused (`MathOverflow`). Both settlement products are computed now, at write time, so the overflow is found before anyone pays for the lot, and `test_write_option_rejects_a_lot_whose_collateral_overflows` pins it.
+- **A zero quantity** in `contracts`, `underlying_per_contract`, or `strike_per_contract` is refused (`InvalidParameter`). Every quantity is a multiplier in the settlement math, so a zero is an option that delivers nothing or costs nothing to exercise.
+- **A zero premium** is refused the same way. It would make the option a gift rather than a sale.
+- **An expiry at or before now** is refused (`ExpiryInPast`). The holder may exercise while `now < expiry`, so such an option could never be exercised.
+- **An option whose settlement overflows** is refused (`MathOverflow`). Both settlement products are computed now, at write time, so the overflow is found before anyone pays for it, and `test_write_option_rejects_a_lot_whose_collateral_overflows` pins it.
 
 Then the effects come before the transfer, in this order:
 
-1. The option account is written with status `Listed` and an empty holder.
+1. The `OptionContract` is written with status `Listed` and an empty holder.
 2. The market's `underlying_locked` rises by 5 NVDAx.
 3. The custody check runs against what the vault balance will be once the transfer lands.
 4. Alice's 5 NVDAx move into the underlying vault.
 
 From this moment the vault holds everything a future holder could ever claim from her.
 
-![write_option() moves Alice's 5 NVDAx into the underlying vault and creates the option account listed at a 25 USDC premium; the market's underlying_locked counter rises to match.](figures/options-write-call.svg)
+![write_option() moves Alice's 5 NVDAx into the underlying vault and creates the option, listed at a 25 USDC premium; the market's underlying_locked counter rises to match.](figures/options-write-call.svg)
 
 One more account is set up here. Alice's USDC account, where her premium will arrive, is created if it does not exist, paid for by Alice, so that `buy_option()` can require it to exist rather than make the buyer pay rent on an account that belongs to the writer.
 
-Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold lot has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` pins it. Without this exit, a lot nobody buys would hold the writer's shares forever.
+Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` pins it. Without this exit, an option nobody buys would hold the writer's shares forever.
 
 ## A Buyer Pays the Premium, and the Collateral Does Not Move
 
 Bob calls `buy_option()`. The handler does four things:
 
-- It requires the lot to be `Listed` and unexpired (`OptionNotListed`, `OptionExpired`), because a right nobody can exercise any more is not for sale.
+- It requires the option to be `Listed` and unexpired (`OptionNotListed`, `OptionExpired`), because a right nobody can exercise any more is not for sale.
 - It splits the premium: `fee_bps` of it, 0.25 USDC, goes into the quote vault and is added to `fees_owed`.
 - It sends the remaining 24.75 USDC straight from Bob to Alice.
 - It sets the option's `holder` to Bob and its `status` to `Held`.
@@ -116,11 +120,11 @@ Bob calls `buy_option()`. The handler does four things:
 
 The premium is the only money that changes hands, and it is Alice's from this moment whatever Bob does later. The 5 NVDAx do not move. Bob's downside is fixed at the 25 USDC he just paid, and Alice's upside on the shares is capped at $180 until the week is out.
 
-A writer cannot buy their own lot. Their address would sit in the `buyer` and `writer` slots at once, and the premium's source and destination would be the same token account in two mutable slots, which the runtime rejects before the handler runs (`test_writer_cannot_buy_their_own_option`). A second buyer is refused because the lot is no longer `Listed` (`test_buy_is_refused_once_sold`).
+A writer cannot buy their own option. Their address would sit in the `buyer` and `writer` slots at once, and the premium's source and destination would be the same token account in two mutable slots, which the runtime rejects before the handler runs (`test_writer_cannot_buy_their_own_option`). A second buyer is refused because the option is no longer `Listed` (`test_buy_is_refused_once_sold`).
 
 ## The Holder Exercises Before Expiry, and the Tokens Change Hands
 
-NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` before the week is out. The handler requires the lot to be `Held`, the clock to be before `expiry` (`OptionNotHeld`, `OptionExpired`), and the signer to be the holder. Then it moves both legs and updates the ledger:
+NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` before the week is out. The handler requires the option to be `Held`, the clock to be before `expiry` (`OptionNotHeld`, `OptionExpired`), and the signer to be the holder. Then it moves both legs and updates the ledger:
 
 - Bob pays the strike, 5 times 180 USDC, 900 USDC, into the quote vault.
 - The underlying vault pays Bob the 5 NVDAx.
@@ -133,13 +137,13 @@ Bob now holds 5 NVDAx worth $1,000 and has spent 925 USDC to get them, 25 of pre
 
 The strike payment stays in the vault, owed to Alice, rather than being sent to her directly. Paying the writer inside the exercise would mean requiring the writer's token account to exist at that moment, and a writer who closed it could then block the holder from ever exercising. The vault holds it instead, and the writer comes to get it.
 
-A put exercises the same way with the two tokens swapped: the holder delivers the underlying into the underlying vault and the quote vault pays them the strike. `test_put_lifecycle_delivers_the_underlying_for_the_strike` walks that path with a lot of five puts at a 150 strike, whose writer collects five NVDAx at the end.
+A put exercises the same way with the two tokens swapped: the holder delivers the underlying into the underlying vault and the quote vault pays them the strike. `test_put_lifecycle_delivers_the_underlying_for_the_strike` walks that path with five puts at a 150 strike, whose writer collects five NVDAx at the end.
 
 ## The Writer Collects the Strike, and the Account Closes
 
-Alice calls `collect_proceeds()`. The handler requires the lot to be `Exercised` (`OptionNotExercised`) and the signer to be the writer, pays her the 900 USDC from the quote vault, reduces `quote_locked` by the same amount, and closes the option account with its rent back to her.
+Alice calls `collect_proceeds()`. The handler requires the option to be `Exercised` (`OptionNotExercised`) and the signer to be the writer, pays her the 900 USDC from the quote vault, reduces `quote_locked` by the same amount, and closes the option with its rent back to her.
 
-![collect_proceeds() pays Alice the 900 USDC strike from the quote vault and closes the option account, rent back to her; only Maria's 0.25 USDC fee is left in the vault.](figures/options-collect-proceeds.svg)
+![collect_proceeds() pays Alice the 900 USDC strike from the quote vault and closes the option, rent back to her; only Maria's 0.25 USDC fee is left in the vault.](figures/options-collect-proceeds.svg)
 
 Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the payoff figure: the premium was all she could make, and she made it.
 
@@ -149,17 +153,17 @@ The put is the mirror image, and it also shows the other exit. Carol would like 
 
 ![Carol's write_option() moves 750 USDC of strike collateral into the quote vault: a cash-secured put, listed at a 20 USDC premium.](figures/options-write-put.svg)
 
-Dave holds five NVDAx and wants insurance against a fall below $150 for the week. He calls `buy_option()`: 19.80 USDC to Carol, 0.20 USDC into the quote vault for Maria, and the lot is `Held`. This is a **protective put**, the position a stockholder buys the way a homeowner buys fire insurance, and like fire insurance it is meant to expire unused.
+Dave holds five NVDAx and wants insurance against a fall below $150 for the week. He calls `buy_option()`: 19.80 USDC to Carol, 0.20 USDC into the quote vault for Maria, and the option is `Held`. This is a **protective put**, the position a stockholder buys the way a homeowner buys fire insurance, and like fire insurance it is meant to expire unused.
 
 ![Dave's buy_option() pays Carol 19.80 USDC and Maria 0.20 USDC; the 750 USDC of collateral does not move.](figures/options-buy-put.svg)
 
-The week passes with NVDAx above $150, and Dave does nothing: selling at 150 when the market pays more would be a gift to Carol. Once the expiry has passed, Carol calls `reclaim_collateral()`. The handler checks two things and then unwinds the lot:
+The week passes with NVDAx above $150, and Dave does nothing: selling at 150 when the market pays more would be a gift to Carol. Once the expiry has passed, Carol calls `reclaim_collateral()`. The handler checks two things and then unwinds the option:
 
-- The lot must be `Held`, because an exercised lot has no collateral left to reclaim (`OptionNotHeld`).
+- The option must be `Held`, because an exercised option has no collateral left to reclaim (`OptionNotHeld`).
 - The clock must be at or past `expiry` (`OptionNotExpired`).
 - It returns her 750 USDC from the quote vault, reduces `quote_locked`, and closes the account.
 
-![reclaim_collateral() returns Carol's 750 USDC once the expiry has passed and closes the option account. Dave's insurance expired unused, which is what insurance against a fall that never came should do.](figures/options-reclaim.svg)
+![reclaim_collateral() returns Carol's 750 USDC once the expiry has passed and closes the option. Dave's insurance expired unused, which is what insurance against a fall that never came should do.](figures/options-reclaim.svg)
 
 Carol's return is the 19.80 USDC premium on a purchase that never happened. Dave's insurance cost him 20 USDC and paid nothing. Both got what they paid for.
 
@@ -190,12 +194,12 @@ Every checked operation maps to `MathOverflow`. There is no rounding rule to cho
 ## The Invariants: The Vaults Cover the Ledger, and the Clock Picks One Exit
 
 - **Each vault covers what the market owes.** The underlying vault holds at least `underlying_locked`; the quote vault holds at least `quote_locked` plus `fees_owed`. Every handler that moves tokens updates the counters first and then calls `check_custody()` against the balances its transfers will leave behind, and fails with `CustodyInvariantViolated` if a refactor ever breaks the accounting. The tests strengthen it to equality after every step, because nothing in them donates to a vault.
-- **A held lot has exactly one open exit at every instant.** Before `expiry` the holder can exercise and the writer cannot reclaim; at and after it, the reverse. There is no moment at which both can claim the same collateral and none at which neither can.
-- **Every exit closes the account.** Cancel, collect, and reclaim all end with `close = writer`, so a lot cannot be collected twice: the account is gone.
+- **A held option has exactly one open exit at every instant.** Before `expiry` the holder can exercise and the writer cannot reclaim; at and after it, the reverse. There is no moment at which both can claim the same collateral and none at which neither can.
+- **Every exit closes the account.** Cancel, collect, and reclaim all end with `close = writer`, so an option cannot be collected twice: the account is gone.
 - **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else; no handler moves collateral or a strike payment to the admin under any parameters.
-- **Physical settlement moves exactly the posted terms.** What the holder receives is what the writer posted, and what the writer collects is what the holder paid, to the minor unit, for every lot the program would accept.
+- **Physical settlement moves exactly the posted terms.** What the holder receives is what the writer posted, and what the writer collects is what the holder paid, to the minor unit, for every option the program would accept.
 
-The companion repository's `kani-proofs` crate proves the last two and the first: `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two lots of either kind into shared vaults, sends each down one of its three exits, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` is the second invariant over every pair of timestamps.
+The companion repository's `kani-proofs` crate proves the last two and the first: `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, sends each down one of its three exits, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` is the second invariant over every pair of timestamps.
 
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
@@ -203,7 +207,7 @@ The companion repository's `kani-proofs` crate proves the last two and the first
 - **The clock.** Expiry is a unix timestamp read from the Clock sysvar, which validators set and which can drift from wall-clock time by seconds. A holder who waits until the final second to exercise is betting against that drift, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** If the strike were paid to the writer's token account inside `exercise_option()`, a writer could close that account and make every exercise fail, keeping the premium and the collateral both. The strike goes into the vault instead, owed to the writer, and the holder's exercise depends on no account of the writer's.
 - **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` pins it.
-- **What the design gives up.** A held option cannot be resold, and a lot cannot be exercised in part. Venues that want both represent each option as two tokens, an option token the holder can sell on any exchange and a writer token that claims the proceeds. Adding that back means introducing the tokens, and with them an accounting of who holds how much of each lot.
+- **What the design gives up.** A held option cannot be resold, and an option cannot be exercised in part. Venues that want both represent each option as two tokens, an option token the holder can sell on any exchange and a writer token that claims the proceeds. Adding that back means introducing the tokens, and with them an accounting of who holds how much of each option.
 - **What is absent.** Most of the usual attacks on a financial program return "not applicable" here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain, because there is no division. The venue's entire risk surface is the custody ledger and the two comparisons against the clock, which is why both are proved rather than only tested.
 
 ## Testing Considerations
@@ -214,7 +218,7 @@ The suite (`tests/test_options.rs`) walks the call from write to collected strik
 - Cancel after a sale, and buy after a sale or after expiry.
 - Exercise by anyone but the holder, and collection by anyone but the writer or before an exercise.
 - Reclaim after an exercise, and fee collection by anyone but the admin.
-- The four zero terms, and the overflowing lot at write time.
+- The four zero terms, and the overflowing option at write time.
 
 When you build your own, copy the shape of the two boundary tests: a deadline needs one test that stays inside it and one that steps past it, and `expiry: 0` would have let both directions pass.
 

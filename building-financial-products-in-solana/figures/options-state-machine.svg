@@ -22,9 +22,9 @@
   <path d="M 366,150 L 430,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
   <text x="398" y="115" font-size="10.5" text-anchor="middle">exercise_option()</text>
   <text x="398" y="143" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(before expiry)</text>
-  <!-- terminal: the option account closed -->
+  <!-- terminal: the option closed -->
   <rect x="246" y="228" width="148" height="52" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
-  <text x="320" y="248" font-size="11" font-weight="bold" text-anchor="middle">option account closed</text>
+  <text x="320" y="248" font-size="11" font-weight="bold" text-anchor="middle">option closed</text>
   <text x="320" y="264" font-size="10" fill="#444" text-anchor="middle">rent refunded to the writer</text>
   <!-- the three exits -->
   <path d="M 117,177 C 117,215 180,250 242,254" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
