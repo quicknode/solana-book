@@ -315,6 +315,43 @@ const isPreludeItem = (path) =>
   (path.startsWith("prelude/") && !path.endsWith("introduction.md")) || path.startsWith("postlude/");
 
 
+// The end mark. Magazines close every article with a small device so that a
+// reader who reaches it knows the piece is over rather than continued on
+// another page: The Economist's red square, The New Yorker's diamond, and very
+// often the publication's own logo in miniature. A book chapter can end
+// mid-page too, and the mark says so. Ours is a square with the QuickNode Q
+// knocked out of it, the Q taken from the cover wordmark; the file is
+// assets/end-mark.svg.
+//
+// It is set on the chapter's last line, pushed out to the right edge of the
+// measure, which is what a magazine's right-indent tab does: the mark lands in
+// the same place on every chapter's last page, under the running head. It is a
+// float, so when the last line is too full to hold it, it drops to a line of
+// its own, still flush right. A chapter that ends in a list carries the mark
+// in its last item; one that ends in anything else (a table, a code block, a
+// figure) gets it on a line of its own.
+const endMarkSvg = readFileSync(join(repoRoot, "assets", "end-mark.svg"), "utf8")
+  .replace(/<!--[\s\S]*?-->/g, "")
+  .replace(/<\?xml[^>]*>/, "")
+  .replace("<svg ", '<svg class="end-mark" ')
+  .trim();
+
+// Puts the mark at the end of the last paragraph of a fragment, or after the
+// fragment if it does not end in one.
+function withEndMark(html) {
+  const trimmed = html.trimEnd();
+  if (trimmed.endsWith("</p>")) return `${trimmed.slice(0, -4)}${endMarkSvg}</p>`;
+  const listEnd = trimmed.match(/<\/li>\s*<\/(ul|ol)>$/);
+  if (listEnd) {
+    const open = trimmed.lastIndexOf("<li>");
+    const inner = trimmed.slice(open + 4, trimmed.length - listEnd[0].length).trimEnd();
+    // A loose list's item wraps its text in a paragraph; a tight list's does not.
+    const marked = inner.endsWith("</p>") ? withEndMark(inner) : `${inner}${endMarkSvg}`;
+    return `${trimmed.slice(0, open)}<li>${marked}</li>\n</${listEnd[1]}>`;
+  }
+  return `${trimmed}\n<p class="end-mark-line">${endMarkSvg}</p>`;
+}
+
 // The printed table of contents, in the style of TCP/IP Illustrated:
 // "Chapter N  Title" rows in bold, "N.M  Section" rows beneath, page numbers
 // right-aligned and filled in after Paged.js lays the pages out.
@@ -351,7 +388,10 @@ const printedToc = tocEntries.join("\n");
 let bodyPart = null;
 const body = sections
   .map((section) => {
-    const html = section.html.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
+    // Front and back matter share a flow and are not chapters a reader finishes,
+    // so they carry no end mark.
+    const marked = isPreludeItem(section.path) ? section.html : withEndMark(section.html);
+    const html = marked.replace("</h1>", "</h1><div class=\"cols\">") + "</div>";
     let classes = isPreludeItem(section.path) ? "chapter prelude-item" : "chapter";
     const part = partForPath.get(section.path) ?? null;
     // A part opens with its own page, carrying the label and the part's name.
@@ -653,6 +693,14 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 ::footnote-marker {
   content: counter(footnote-marker) ". ";
 }
+/* The end mark (see withEndMark): a cap-height square at the right edge of the
+   measure, in the text's own ink. A float is placed from the top of its line,
+   so the top margin is what puts its bottom edge on the baseline: the line is
+   1.38em tall and the square 0.7em, and the remainder is split so that the
+   square's foot meets the text's; measured in the built PDF, not derived. */
+svg.end-mark { width: 0.7em; height: 0.7em; float: right; margin-top: 0.335em; }
+.end-mark-line { text-align: right; margin-top: 0.4em; }
+.end-mark-line svg.end-mark { float: none; margin-top: 0; vertical-align: baseline; }
 .figure-placeholder {
   border: 0.75pt dashed #888;
   padding: 0.45em 0.6em;
