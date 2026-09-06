@@ -317,73 +317,36 @@ const isPreludeItem = (path) =>
 
 // The end mark. Magazines close every article with a small device so that a
 // reader who reaches it knows the piece is over rather than continued on
-// another page: The New Yorker's diamond, Time's red square, and very often the
-// publication's own logo in miniature. A book chapter can end mid-page too, and
-// the mark says so. Ours is a square with the QuickNode Q knocked out of it,
-// the Q taken from the cover wordmark; the file is assets/end-mark.svg.
+// another page: The Economist's red square, The New Yorker's diamond, and very
+// often the publication's own logo in miniature. A book chapter can end
+// mid-page too, and the mark says so. Ours is a square with the QuickNode Q
+// knocked out of it, the Q taken from the cover wordmark; the file is
+// assets/end-mark.svg.
 //
-// It is set on the chapter's last line, a word space after the final word, the
-// way the magazine marks are. It is bound to that word in a no-wrap span:
-// Chromium will break a line before an inline image whatever character
-// precedes it, a no-break space included, and a mark alone on a line of its
-// own reads as a misprint. A chapter that ends in a list gets the mark in its
-// last item; one that ends in anything else (a table, a code block, a figure)
-// gets it on a line of its own, flush right.
+// It is set on the chapter's last line, pushed out to the right edge of the
+// measure, which is what a magazine's right-indent tab does: the mark lands in
+// the same place on every chapter's last page, under the running head. It is a
+// float, so when the last line is too full to hold it, it drops to a line of
+// its own, still flush right. A chapter that ends in a list carries the mark
+// in its last item; one that ends in anything else (a table, a code block, a
+// figure) gets it on a line of its own.
 const endMarkSvg = readFileSync(join(repoRoot, "assets", "end-mark.svg"), "utf8")
   .replace(/<!--[\s\S]*?-->/g, "")
   .replace(/<\?xml[^>]*>/, "")
   .replace("<svg ", '<svg class="end-mark" ')
   .trim();
 
-// Splits inline HTML on whitespace without splitting inside a tag, then takes
-// the shortest trailing run of tokens whose tags balance: the last word,
-// together with any inline element it closes, so the no-wrap span never cuts
-// across an <a>, <em> or footnote.
-function bindEndMark(inner) {
-  const tokens = [];
-  let current = "";
-  let inTag = false;
-  for (const ch of inner) {
-    if (ch === "<") inTag = true;
-    else if (ch === ">") inTag = false;
-    if (!inTag && /\s/.test(ch)) {
-      if (current) tokens.push(current);
-      current = "";
-    } else {
-      current += ch;
-    }
-  }
-  if (current) tokens.push(current);
-  const balanced = (text) => {
-    let depth = 0;
-    for (const tag of text.matchAll(/<(\/?)(\w+)[^>]*?(\/?)>/g)) {
-      if (tag[3] === "/" || tag[2] === "wbr" || tag[2] === "br") continue;
-      depth += tag[1] === "/" ? -1 : 1;
-      if (depth < 0) return false;
-    }
-    return depth === 0;
-  };
-  let start = tokens.length - 1;
-  while (start > 0 && !balanced(tokens.slice(start).join(" "))) start--;
-  const head = tokens.slice(0, start).join(" ");
-  const tail = tokens.slice(start).join(" ");
-  return `${head}${head ? " " : ""}<span class="end-mark-hold">${tail}&nbsp;${endMarkSvg}</span>`;
-}
-
-// Puts the mark inside the last paragraph of a fragment, or after the fragment
-// if it does not end in one.
+// Puts the mark at the end of the last paragraph of a fragment, or after the
+// fragment if it does not end in one.
 function withEndMark(html) {
   const trimmed = html.trimEnd();
-  if (trimmed.endsWith("</p>")) {
-    const open = trimmed.lastIndexOf("<p>");
-    return `${trimmed.slice(0, open)}<p>${bindEndMark(trimmed.slice(open + 3, -4))}</p>`;
-  }
+  if (trimmed.endsWith("</p>")) return `${trimmed.slice(0, -4)}${endMarkSvg}</p>`;
   const listEnd = trimmed.match(/<\/li>\s*<\/(ul|ol)>$/);
   if (listEnd) {
     const open = trimmed.lastIndexOf("<li>");
-    const inner = trimmed.slice(open + 4, trimmed.length - listEnd[0].length);
+    const inner = trimmed.slice(open + 4, trimmed.length - listEnd[0].length).trimEnd();
     // A loose list's item wraps its text in a paragraph; a tight list's does not.
-    const marked = inner.trimEnd().endsWith("</p>") ? withEndMark(inner) : bindEndMark(inner.trimEnd());
+    const marked = inner.endsWith("</p>") ? withEndMark(inner) : `${inner}${endMarkSvg}`;
     return `${trimmed.slice(0, open)}<li>${marked}</li>\n</${listEnd[1]}>`;
   }
   return `${trimmed}\n<p class="end-mark-line">${endMarkSvg}</p>`;
@@ -730,11 +693,14 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 ::footnote-marker {
   content: counter(footnote-marker) ". ";
 }
-/* The end mark (see withEndMark): a cap-height square sitting on the baseline,
-   a word space after the chapter's last word. It inherits the text's ink. */
-svg.end-mark { width: 0.7em; height: 0.7em; vertical-align: baseline; margin-left: 0.1em; }
-.end-mark-hold { white-space: nowrap; }
+/* The end mark (see withEndMark): a cap-height square at the right edge of the
+   measure, in the text's own ink. A float is placed from the top of its line,
+   so the top margin is what puts its bottom edge on the baseline: the line is
+   1.38em tall and the square 0.7em, and the remainder is split so that the
+   square's foot meets the text's; measured in the built PDF, not derived. */
+svg.end-mark { width: 0.7em; height: 0.7em; float: right; margin-top: 0.335em; }
 .end-mark-line { text-align: right; margin-top: 0.4em; }
+.end-mark-line svg.end-mark { float: none; margin-top: 0; vertical-align: baseline; }
 .figure-placeholder {
   border: 0.75pt dashed #888;
   padding: 0.45em 0.6em;
