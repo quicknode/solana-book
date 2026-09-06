@@ -65,9 +65,9 @@ Headers and folios are suppressed on the cover, the title page, chapter openers 
 
 ## Structure
 
-A part title opens on a right-hand page, alone in the upper third of an otherwise empty page, and the reverse of that page is left blank so the part's first chapter also opens on a right-hand page. Every chapter opens on a right-hand page too, which is how a reader flipping through finds where one ends and the next begins. Paged.js fills the verso it skips with a blank page, so the rule costs about one page for every two chapters: eight, at the current chapter count. Front-matter placeholders are exempt, because they share one flow until they have real content.
+The title page opens on a right-hand page: page one when the book is built without the cover, page three when it is built with it, the blank page between them being the reverse of the cover. A part title opens on a right-hand page, alone in the upper third of an otherwise empty page, and the reverse of that page is left blank so the part's first chapter also opens on a right-hand page. Every chapter opens on a right-hand page too, which is how a reader flipping through finds where one ends and the next begins. Paged.js fills the verso it skips with a blank page, so the rule costs about one page for every two chapters: eight, at the current chapter count. Front-matter placeholders are exempt, because they share one flow until they have real content.
 
-Every part and chapter opening is checked against its page number after layout, and the build fails naming any that landed on a left-hand page. It prints the number it checked on success, because a selector that stopped matching would otherwise leave a check that passes without testing anything.
+The title page and every part and chapter opening are checked against their page numbers after layout, and the build fails naming any that landed on a left-hand page. It prints the number it checked on success, because a selector that stopped matching would otherwise leave a check that passes without testing anything.
 
 Page one of the PDF is page one of the flow, so odd page numbers are right-hand pages whether or not the cover is included. The recto break rules re-resolve either way.
 

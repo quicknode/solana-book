@@ -539,7 +539,10 @@ body {
 p { margin: 0 0 0.6em 0; text-align: justify; }
 a { color: #111 !important; text-decoration: none; }
 
-.title-page { page: chapter-start; text-align: center; break-after: page; }
+/* The title page is a right-hand page: page one when the book is built without
+   the cover, page three when it is built with it, the blank paged.js inserts
+   between them being the cover's reverse. */
+.title-page { page: chapter-start; text-align: center; break-before: recto; break-after: page; }
 .title-page h1 { font-size: 26pt; margin-top: 3.2in; line-height: 1.2; border: none; }
 .title-page .author { margin-top: 0.6in; font-size: 13pt; }
 .title-page .note { margin-top: 2.2in; font-size: 9pt; color: #555; }
@@ -781,20 +784,22 @@ const linkLines = await page.evaluate(() => {
 });
 
 // Page one of the PDF is page one of the flow, so odd page numbers are
-// right-hand pages whether or not the cover is included. A part title belongs
-// on one, and so does every chapter.
+// right-hand pages whether or not the cover is included. The title page
+// belongs on one, a part title belongs on one, and so does every chapter.
 // The recto break rules re-resolve either way, so dropping the cover shifts
 // where paged.js inserts its blanks rather than putting parts on the wrong side. A section that runs over several pages
 // appears once per page it occupies, so keep the lowest number for each: that
 // is the page it opens on.
 const openingPages = await page.evaluate(() => {
   const opening = new Map();
-  for (const section of document.querySelectorAll("section.part-divider, section.chapter:not(.prelude-item)")) {
+  for (const section of document.querySelectorAll(".title-page, section.part-divider, section.chapter:not(.prelude-item)")) {
     const number = Number(section.closest(".pagedjs_page")?.getAttribute("data-page-number"));
-    const key = section.dataset.ref ?? section.id;
-    const name = section.classList.contains("part-divider")
-      ? `part title: ${section.querySelector("h1")?.textContent ?? "?"}`
-      : `chapter: ${section.querySelector("h1")?.textContent ?? "?"}`;
+    const key = section.classList.contains("title-page") ? "title-page" : (section.dataset.ref ?? section.id);
+    const name = section.classList.contains("title-page")
+      ? "title page"
+      : section.classList.contains("part-divider")
+        ? `part title: ${section.querySelector("h1")?.textContent ?? "?"}`
+        : `chapter: ${section.querySelector("h1")?.textContent ?? "?"}`;
     const seen = opening.get(key);
     if (!seen || number < seen.number) opening.set(key, { name, number });
   }
@@ -881,5 +886,6 @@ if (strays.length > 0) {
 } else {
   // Printed rather than kept silent, because a selector that stops matching
   // would otherwise turn this check into a no-op that still reports success.
-  console.log(`${openingPages.length} part and chapter openings, all on right-hand pages.`);
+  const titlePage = openingPages.find(({ name }) => name === "title page")?.number ?? "?";
+  console.log(`Title page on page ${titlePage}; ${openingPages.length - 1} part and chapter openings; all on right-hand pages.`);
 }
