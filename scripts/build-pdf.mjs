@@ -730,9 +730,9 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
 ::footnote-marker {
   content: counter(footnote-marker) ". ";
 }
-/* The end mark (see withEndMark): a cap-height square sitting on the baseline,
+/* The end mark (see withEndMark): a square a little over cap height, on the baseline,
    a word space after the chapter's last word. It inherits the text's ink. */
-svg.end-mark { width: 0.7em; height: 0.7em; vertical-align: baseline; margin-left: 0.1em; }
+svg.end-mark { width: 0.8em; height: 0.8em; vertical-align: baseline; margin-left: 0.1em; }
 .end-mark-hold { white-space: nowrap; }
 .end-mark-line { text-align: right; margin-top: 0.4em; }
 .figure-placeholder {
