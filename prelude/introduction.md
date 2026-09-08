@@ -63,6 +63,10 @@ Code here is given in Rust, Solana's primary programming language. The Rust is e
 
 The diagrams throughout the book share one set of conventions, and each convention is explained by the first figure that uses it.
 
+## The Glossary
+
+All technical and financial vocabulary this book uses is defined in the Glossary. If a term in a chapter surprises you, look there.
+
 ## Programs Follow Patterns, Patterns Build Understanding
 
 The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to money (the arithmetic, offchain truth, the adversary, testing, and admin power).
@@ -88,9 +92,7 @@ Here is where to begin, depending on what you came for:
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it depends on.
 
-## The Glossary
-
-All technical and financial vocabulary this book uses is defined in the Glossary. If a term in a chapter surprises you, look there.
+Part I opens with the computer itself: one giant machine that spans the world, and two people, Alice and Bob, paying each other on it. Let's get started.
 
 [^most-active]: Artemis counted 4.1 million daily active addresses and 146 million transactions on Solana on August 31, 2026, against 1.7 million addresses on BNB Chain and under half a million on Ethereum. See [classic.artemis.ai/asset/solana](https://classic.artemis.ai/asset/solana).
 
