@@ -19,13 +19,15 @@ The book was previously built at US Letter, 8.5 x 11in. Letter is a printer-pape
 | | |
 | --- | --- |
 | Trim | 7.44 x 9.69 in |
-| Margins | 0.8in top, 0.85in sides, 0.85in bottom |
-| Text block | 5.74 x 8.04 in |
-| Measure | about 75 characters |
+| Margins | 0.8in top, 1in sides, 1in bottom |
+| Text block | 5.44 x 7.89 in |
+| Measure | about 90 characters, 41 lines |
 
-The side margins are set by two constraints. KDP requires a gutter of at least 0.75in for a book of 151 to 500 pages, and 0.85in clears it with room for the binding to eat. And the measure that leaves, 5.74in of 11pt type, lands at about 75 characters, the top of the range a reader tracks comfortably. Letter at 1.1in margins gave 6.3in and about 82 characters, which was too long.
+**The margins are O'Reilly's, near enough.** An animal book at 7 x 9.19in carries a text block of about 5.2 x 7.4in: 0.85 to 0.9in inside, 0.95 to 1in outside, 0.8in above the text with the running head at about 0.5in, and 1in below with the folio at about 0.6in. On the slightly larger KDP trim, 1in sides and a 1in bottom give a 5.44 x 7.89in block that is the same share of the page. They also clear KDP's gutter requirement, 0.75in for a book of 151 to 500 pages, with room for the binding to eat.
 
-Margins are symmetric rather than mirrored. If the interior is ever sent to a printer that wants a larger inside margin than outside, that is a `@page :left` and `@page :right` pair, and the gutter number above is where it starts.
+The measure that leaves, 5.44in of 10pt type, runs to about 90 characters. That is long by the usual rule of thumb, and it is what O'Reilly's own pages run to at the same type size; the book was 11pt on 0.85in margins until it was measured against one, and at 81 characters a line with 38 lines a page it read as a larger, looser page than the shelf it sits on.
+
+Margins are symmetric rather than mirrored, where O'Reilly's outside margin is a tenth of an inch wider than the inside. If the interior is ever sent to a printer that wants a larger inside margin than outside, that is a `@page :left` and `@page :right` pair, and the gutter number above is where it starts.
 
 **Every page is cropped to the trim after printing, because Chromium's sheet is bigger than the one asked for.** A 7.44 x 9.69in page is 535.68 x 697.68pt, and Chromium prints 535.92 x 697.92: it rounds the sheet up to the next 1/300in dot. The extra dot cannot be avoided from the page description — the size comes out the same written in `in`, `pt`, `px`, `mm` or `q`, asked for a hundredth of a point smaller, or passed to `page.pdf()` as an explicit width and height instead of through `preferCSSPageSize`. Chromium anchors the content at the top left, so the slack lands on the right and at the bottom, where on a white interior page it is invisible and on the cover it read as a white band down two edges of the art. `build-pdf.mjs` sets each page's MediaBox and CropBox back to the trim, keeping the top-left corner, which both removes the band and makes the file's page size the one this document states. A build whose sheet comes out *smaller* than the trim fails rather than cropping, because that is a page size nobody asked for.
 
@@ -35,13 +37,16 @@ The cover art is drawn a point past the trim on every side so that rounding in C
 
 | Role | Face | Size |
 | --- | --- | --- |
-| Body | Gelasio (bundled in `assets/fonts/`) | 11pt / 1.38 |
-| Headings | Denim INK (bundled in `assets/fonts/`) | 17pt chapter, 13pt section, 11pt italic sub-section |
-| Code and addresses | DejaVu Sans Mono (bundled in `assets/fonts/`) | 0.82em, about 9pt |
-| Figures | Gelasio, with DejaVu Sans Mono for handler names | 7-10.5pt |
-| Figure captions | Body face, italic | 9.5pt |
-| Running heads | Gelasio italic | 9pt |
-| Folio | Gelasio | 10pt |
+| Body | Gelasio (bundled in `assets/fonts/`) | 10pt / 1.38, so 13.8pt leading |
+| Headings | Denim INK (bundled in `assets/fonts/`) | 28pt part, 24pt chapter, 14pt section, 11pt italic sub-section |
+| Code and addresses | DejaVu Sans Mono (bundled in `assets/fonts/`) | 0.85em, so 8.5pt |
+| Figures | Gelasio, with DejaVu Sans Mono for handler names | 4.3-9pt, see below |
+| Figure captions | Body face, italic | 9pt |
+| Footnotes | Body face | 8pt |
+| Running heads | Gelasio italic | 8pt |
+| Folio | Gelasio | 9pt |
+
+**The sizes are O'Reilly's.** Their technical books set Minion Pro at about 10pt on 13pt, with code around 8.5pt, captions and footnotes at 8 to 9pt, running heads at 8pt, and sans-serif headings from the mid-20s for a chapter title down to 12pt for the smallest. Point size alone does not carry across faces: Gelasio's x-height is 0.48 of the em where Minion's is 0.43, so 10pt Gelasio reads like 11pt Minion, a shade larger than an O'Reilly page rather than smaller. The book was 11pt until it was measured against one, when it turned out to read like 12pt Minion, with 38 lines a page against O'Reilly's 42.
 
 **Every face is bundled, so a build is identical on any machine.** This used not to be true: the body asked for Charter and fell back to Georgia, and the figures asked for Georgia and fell back to whatever generic serif the machine had. Two machines produced two different books, and `check-figure-geometry.mjs` measured clearances against a face the printed book would never use — which is how a coin mark sitting on top of a label passed the check.
 
@@ -59,7 +64,7 @@ Figure captions and table cells are ragged right for the same reason: they are s
 
 ## Running Heads and Folios
 
-The header carries two items: the book's title on the left, the current chapter's title on the right, both 9pt Georgia italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A build carrying `REVIEWER_NAME` fills the third footer box, bottom right, with that name and the short hash of the commit it was built from, so a single leaf out of an advance copy still says whose it is and which revision of the text it shows. The hash carries a `-dirty` suffix when the working tree had uncommitted changes, because that text matches no commit exactly. Unstamped builds leave that box empty.
+The header carries two items: the book's title on the left, the current chapter's title on the right, both 8pt Gelasio italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A build carrying `REVIEWER_NAME` fills the third footer box, bottom right, with that name and the short hash of the commit it was built from, so a single leaf out of an advance copy still says whose it is and which revision of the text it shows. The hash carries a `-dirty` suffix when the working tree had uncommitted changes, because that text matches no commit exactly. Unstamped builds leave that box empty.
 
 Headers and folios are suppressed on the cover, the title page, chapter openers (headers only), part titles, and the blank versos paged.js inserts. The reviewer stamp follows the folio: present wherever the folio is, absent from the cover and the blanks.
 
@@ -73,7 +78,7 @@ Page one of the PDF is page one of the flow, so odd page numbers are right-hand 
 
 ## Figures
 
-Every figure is an SVG, inlined into the build so the HTML has no external assets, and set to the full 5.74in measure. Figures do not break across pages. The conventions the drawings themselves follow live in the companion AI plugin's `DIAGRAMS.md`, and `scripts/check-figure-geometry.mjs` enforces the mechanically checkable ones.
+Every figure is an SVG, inlined into the build so the HTML has no external assets, and set to the full 5.44in measure. Figures do not break across pages. Most are drawn on a 640-unit canvas, which puts a unit at 0.612pt, so a 7-unit label prints at 4.3pt: smaller than anything else in the book, and smaller than O'Reilly's figure labels, which rarely go under 7pt. That is a property of the drawings, not of the page, and the fix is in the figures. The conventions the drawings themselves follow live in the companion AI plugin's `DIAGRAMS.md`, and `scripts/check-figure-geometry.mjs` enforces the mechanically checkable ones.
 
 ## Cover
 
@@ -89,7 +94,7 @@ The drawing is vector throughout and its type is outlined, so the file embeds no
 
 `--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite the print build. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
 
-It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 82 characters, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 205 pages against 234, because the larger page carries more.
+It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 100 characters of 10pt type, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 222 pages against 259, because the larger page carries more.
 
 ## Building It
 
@@ -110,4 +115,4 @@ The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cov
 
 The build needs a Chromium binary, found at `/opt/pw-browsers/chromium` or wherever `CHROMIUM_PATH` points.
 
-At the time of writing the manuscript runs to **234 pages** with the cover, which puts it in KDP's 151 to 300 page band for gutter purposes. Every figure is drawn, so that number will move with editing rather than with artwork.
+At the time of writing the manuscript runs to **259 pages** with the cover, which puts it in KDP's 151 to 300 page band for gutter purposes. Every figure is drawn, so that number will move with editing rather than with artwork.

@@ -25,16 +25,17 @@ const AUTHOR = "Mike MacCana";
 
 // Page sizes, in inches. "print" is what the book is printed at: 7.44 x 9.69
 // is the KDP standard trim closest in proportion to the 7 x 9.19 technical
-// books are usually printed at, which KDP does not offer. Its side margins
-// clear KDP's 0.75in gutter minimum for books up to 500 pages and leave a
-// 5.74in measure, about 75 characters.
+// books are usually printed at, which KDP does not offer. The margins follow
+// O'Reilly's: a 1in side margin clears KDP's 0.75in gutter minimum for books
+// up to 500 pages and leaves a 5.44in measure, about 90 characters of 10pt
+// type, which is the line length O'Reilly's own pages run to.
 //
 // "letter" is US Letter, for reading on screen and for printing a draft on an
 // office printer. It is not a book size, and its wider margins only bring the
-// measure down to 6.3in, about 82 characters, which is longer than a reader
+// measure down to 6.3in, about 100 characters, which is longer than a reader
 // tracks comfortably. Every page dimension is derived from the chosen size.
 const PAGE_SIZES = {
-  print: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 0.85, topMarginIn: 0.8, bottomMarginIn: 0.85 },
+  print: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 1, topMarginIn: 0.8, bottomMarginIn: 1 },
   letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
 };
 
@@ -501,13 +502,15 @@ const html = `<!doctype html>
 @page {
   size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;
   margin: ${TOP_MARGIN_IN}in ${SIDE_MARGIN_IN}in ${BOTTOM_MARGIN_IN}in ${SIDE_MARGIN_IN}in;
-  @bottom-center { content: counter(page); font-family: Gelasio, Georgia, serif; font-size: 10pt; }
+  @bottom-center { content: counter(page); font-family: Gelasio, Georgia, serif; font-size: 9pt; }
   /* The draft marker sits in the footer rather than the header: at this trim
-     the measure fits two running heads, and a third box wraps both of them. */
-  @bottom-left { content: "PRERELEASE DRAFT (${buildDate}) - NOT FOR DISTRIBUTION"; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
+     the measure fits two running heads, and a third box wraps both of them.
+     The marker is two lines by design, broken before the second phrase; left
+     to wrap on its own the box broke inside the date. */
+  @bottom-left { content: "PRERELEASE DRAFT (${buildDate})\\A NOT FOR DISTRIBUTION"; white-space: pre; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
   ${reviewerFooter}
-  @top-left { content: "${TITLE}"; font-family: Gelasio, Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
-  @top-right { content: string(chapter); font-family: Gelasio, Georgia, serif; font-size: 9pt; font-style: italic; color: #444; }
+  @top-left { content: "${TITLE}"; font-family: Gelasio, Georgia, serif; font-size: 8pt; font-style: italic; color: #444; }
+  @top-right { content: string(chapter); font-family: Gelasio, Georgia, serif; font-size: 8pt; font-style: italic; color: #444; }
 }
 @page :first { @bottom-center { content: none; } @bottom-left { content: none; }${suppressReviewerFooter} @top-left { content: none; } @top-right { content: none; } }
 /* Pages inserted to push a part title onto a right-hand page carry nothing. */
@@ -528,7 +531,13 @@ const html = `<!doctype html>
 .cover img { display: block; width: calc(${PAGE_WIDTH_IN}in + 1pt); height: calc(${PAGE_HEIGHT_IN}in + 1pt); }
 .pagedjs_cover_page .pagedjs_sheet { width: calc(${PAGE_WIDTH_IN}in + 1pt); }
 
-html { font-size: 11pt; }
+/* 10pt on 13.8pt leading. O'Reilly's technical books set Minion Pro at about
+   10pt on 13pt; Gelasio's x-height is a tenth taller than Minion's, so 10pt of
+   it reads a shade larger than O'Reilly's page rather than smaller. The book
+   was 11pt until it was measured against one: at that size a line of Gelasio
+   has the x-height of 12pt Minion, and a page carried 38 lines against
+   O'Reilly's 42. */
+html { font-size: 10pt; }
 body {
   font-family: Gelasio, Georgia, "Times New Roman", serif;
   line-height: 1.38;
@@ -548,9 +557,9 @@ a { color: #111 !important; text-decoration: none; }
 .title-page .note { margin-top: 2.2in; font-size: 9pt; color: #555; }
 
 .book-toc { page: chapter-start; break-after: page; }
-.book-toc h1 { font-size: 17pt; }
+.book-toc h1 { font-size: 24pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { font-size: 10.5pt; }
+.book-toc li { font-size: 10pt; }
 .book-toc li a { display: flex; align-items: baseline; }
 /* "Chapter 20" sets the width: at 5.4em the two-digit labels wrapped, so the
    number printed on a line of its own under the word. Never wrap a label, and
@@ -564,7 +573,7 @@ a { color: #111 !important; text-decoration: none; }
   display: flex;
   align-items: baseline;
   margin: 1.5em 0 0.35em 0;
-  font-size: 11.5pt;
+  font-size: 11pt;
   font-weight: bold;
   letter-spacing: 0.02em;
   padding-bottom: 0.18em;
@@ -577,13 +586,13 @@ a { color: #111 !important; text-decoration: none; }
 section.part-divider { break-before: recto; page: part-start; text-align: center; }
 section.part-divider .part-label {
   margin: 2.6in 0 0.3in 0;
-  font-size: 11pt;
+  font-size: 10pt;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #555;
 }
 section.part-divider h1 {
-  font-size: 22pt;
+  font-size: 28pt;
   line-height: 1.25;
   border: none;
   margin: 0;
@@ -601,6 +610,10 @@ section.chapter:not(.prelude-item) { break-before: recto; }
 /* Paged.js keeps the running headers on the pages it inserts; @page :blank is
    the standard suppression, and this is the belt-and-braces version of it. */
 .pagedjs_blank_page .pagedjs_margin-content { display: none; }
+/* The draft marker's "\A" is a line break only where white space is
+   preserved, and paged.js sets the box's content on this generated element
+   rather than on the box the @page rule styles. */
+.pagedjs_margin-bottom-left .pagedjs_margin-content::after { white-space: pre; }
 /* Front-matter placeholder pages share one flow until they have real content. */
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
@@ -608,17 +621,17 @@ section.prelude-item .cols { column-count: 1; }
 section.chapter .cols { column-count: 1; }
 section.chapter h1 {
   string-set: chapter content(text);
-  font-size: 17pt;
+  font-size: 24pt;
   line-height: 1.25;
   margin: 0.15in 0 0.28in 0;
   padding-bottom: 0.1in;
   border-bottom: 0.5pt solid #999;
 }
-h2 { font-size: 13pt; margin: 1.1em 0 0.45em 0; }
+h2 { font-size: 14pt; margin: 1.1em 0 0.45em 0; }
 h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
 
-code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
+code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.85em; }
 /* An address sets in italic, which is what technical publishing does with one:
    it is O'Reilly's house style and No Starch's, and a reader needs no machine
    face to tell them an address is copied exactly. The monospace face stays
@@ -629,7 +642,7 @@ code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; f
    to compensate for. Hyphenation is off: body text hyphenates, and a soft
    hyphen dropped into an address is a character the reader would retype. */
 .url { font-style: italic; hyphens: none; }
-pre { font-size: 0.82em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
+pre { font-size: 0.85em; background: #f4f4f2; padding: 0.5em 0.7em; overflow-x: hidden; white-space: pre-wrap; }
 blockquote { margin: 0.55em 0; padding: 0.4em 0.6em; background: #f4f4f2; border-left: 2.5pt solid #888; font-size: 0.95em; break-inside: avoid; }
 blockquote p { text-align: left; }
 ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
@@ -651,7 +664,7 @@ th { background: #ececea; font-weight: bold; border-bottom: 1pt solid #666; }
 table p { margin: 0; text-align: left; }
 figure { margin: 1em auto; break-inside: avoid; text-align: center; max-width: ${TEXT_WIDTH_IN}in; }
 figure svg { width: 100%; height: auto; }
-figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
+figcaption { font-size: 9pt; font-style: italic; color: #444; text-align: left; margin-top: 0.3em; }
 /* Footnotes. A note is an aside a reader can take or leave, so it is set at
    the foot of the page its call sits on, under a short rule and two points
    smaller than the text: small enough that the eye passes over it while
@@ -660,7 +673,7 @@ figcaption { font-size: 9.5pt; font-style: italic; color: #444; text-align: left
    runs from 1 through the whole book rather than restarting each chapter. */
 .footnote {
   float: footnote;
-  font-size: 9pt;
+  font-size: 8pt;
   line-height: 1.3;
   /* The measure a note is set to is short and its text is small, so justifying
      it would open rivers of white space between the words. */
