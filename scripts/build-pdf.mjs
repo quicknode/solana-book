@@ -516,6 +516,12 @@ const html = `<!doctype html>
 /* Pages inserted to push a part title onto a right-hand page carry nothing. */
 @page :blank { @bottom-center { content: none; } @bottom-left { content: none; }${suppressReviewerFooter} @top-left { content: none; } @top-right { content: none; } }
 @page chapter-start { @top-left { content: none; } @top-right { content: none; } }
+/* A chapter's opening page carries no running head either: the title is
+   printed large on that page, and repeating it in the header above is
+   redundant. Only the opening page, so the chapter's other pages keep theirs.
+   Paged.js marks the first page of a named-page element, which is what
+   "chapter:first" selects. */
+@page chapter:first { @top-left { content: none; } @top-right { content: none; } }
 /* A part title page carries no running head: the chapter it interrupts is over
    and the one it announces has not started. */
 @page part-start { @top-left { content: none; } @top-right { content: none; } }
@@ -561,10 +567,13 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc ol { list-style: none; padding: 0; }
 .book-toc li { font-size: 10pt; }
 .book-toc li a { display: flex; align-items: baseline; }
-/* "Chapter 20" sets the width: at 5.4em the two-digit labels wrapped, so the
+/* "Chapter 20" sets the width: at 54pt the two-digit labels wrapped, so the
    number printed on a line of its own under the word. Never wrap a label, and
-   let one wider than the column push its own title rather than folding. */
-.book-toc .label { flex: 0 0 auto; min-width: 6.4em; white-space: nowrap; }
+   let one wider than the column push its own title rather than folding. The
+   width is in points rather than ems because a part row is set a point larger
+   than a chapter row, and an em column grew with it, so the part titles sat
+   to the right of the chapter titles beneath them. */
+.book-toc .label { flex: 0 0 auto; min-width: 64pt; white-space: nowrap; }
 .book-toc .t { flex: 1; padding-right: 1em; }
 .book-toc .pg { flex: 0 0 auto; }
 .book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }
@@ -606,7 +615,7 @@ section.chapter { break-before: page; }
    chapters. Front-matter placeholders are exempt, because they share one flow
    until they have real content. Paged.js resolves break rules in source order
    rather than by specificity, so this has to come after the rule it overrides. */
-section.chapter:not(.prelude-item) { break-before: recto; }
+section.chapter:not(.prelude-item) { break-before: recto; page: chapter; }
 /* Paged.js keeps the running headers on the pages it inserts; @page :blank is
    the standard suppression, and this is the belt-and-braces version of it. */
 .pagedjs_blank_page .pagedjs_margin-content { display: none; }
