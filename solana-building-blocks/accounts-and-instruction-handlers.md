@@ -122,7 +122,7 @@ Alice's account holds a balance and nothing else, and so does Bob's. That is the
 
 > Solana accounts can store any data, not just balances like accounts in traditional finance.
 
-In a program, the data is a struct; on the chain, it is bytes in the account's data field, alongside a lamport balance and an **owner program**. Only the owner program can change the account, so users (or other programs) invoke that program to modify it. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
+Besides its address, every account records three things: a lamport balance, some data, and an **owner program**. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program is the one program allowed to change the account, and the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
 ![One account, dissected: an address, an owner program, a lamport balance, and data bytes that the owning program reads as a Rust struct.](figures/account-dissected.svg)
 
