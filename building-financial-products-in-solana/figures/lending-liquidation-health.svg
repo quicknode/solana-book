@@ -10,7 +10,7 @@
   <text x="10" y="927.34" font-size="8" fill="#444">call 1: 1.5 SPCXx</text>
   <text x="132" y="927.34" font-size="8" fill="#444">call 2: 0.75</text>
   <text x="192" y="927.34" font-size="8" fill="#444">left: 0.75</text>
-  <text x="292" y="893.34" font-size="8.5" fill="#111" font-weight="bold">Carol&#8217;s health, before and after</text>
+  <text x="292" y="893.34" font-size="8.5" fill="#111" font-weight="bold">Carol's health, before and after</text>
   <rect x="292" y="901.34" width="180" height="10" fill="url(#lend-health-hatch)" stroke="#111" stroke-width="1.2"/>
   <rect x="292" y="901.34" width="200" height="10" fill="none" stroke="#111" stroke-width="1.2"/>
   <rect x="292" y="919.34" width="154" height="10" fill="url(#lend-health-hatch)" stroke="#111" stroke-width="1.2"/>

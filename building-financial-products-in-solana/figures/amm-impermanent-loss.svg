@@ -12,7 +12,7 @@
   <!-- axes -->
   <line x1="80" y1="330" x2="80" y2="38" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
   <line x1="80" y1="330" x2="614" y2="330" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
-  <text x="88" y="28" font-size="13" font-weight="bold">value of Alice&#8217;s position</text>
+  <text x="88" y="28" font-size="13" font-weight="bold">value of Alice's position</text>
   <text x="612" y="352" font-size="13" font-weight="bold" text-anchor="end">ACME price</text>
   <!-- just holding: a straight line -->
   <line x1="80" y1="279" x2="600" y2="76" stroke="#111" stroke-width="1.6"/>

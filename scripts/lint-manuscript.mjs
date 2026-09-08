@@ -459,6 +459,13 @@ const figureDirs = [
 ];
 
 const svgRules = [
+  // Figure text is typed with the same straight apostrophe and straight
+  // quotes as the chapters, and the build sets both typographically when it
+  // inlines the figure. Seventy figures once carried the curly forms as
+  // numeric entities and nine as literal characters, so the same label read
+  // three ways to grep.
+  [/&#821[67];|&#822[01];|&#x201[89a-d];|&(?:[lr]squo|[lr]dquo);|[\u2018\u2019\u201c\u201d]/,
+    "use a straight apostrophe (') and straight quotes (\") in figure text; the build sets them typographically"],
   [/<rect(?![^>]*class="marker")[^>]*\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
   [/<rect[^>]*\bry="/, "set rx only on rects; ry duplicates it (ellipse glyphs are exempt)"],
   [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],

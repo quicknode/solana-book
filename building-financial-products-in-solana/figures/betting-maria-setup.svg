@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 695" font-family="Gelasio, Georgia, serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria opens the market</text>
-  <!-- Maria&#8217;s setup: initialize_config(), create_event(), add_outcome() &#215;2 -->
+  <!-- Maria's setup: initialize_config(), create_event(), add_outcome() &#215;2 -->
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" fill="#111" text-anchor="end">Solana Devnet</text>
   <circle cx="518" cy="80.5729" r="7" fill="#fff"/>
@@ -19,12 +19,12 @@
   </g>
   <g opacity="0.3">
   <circle cx="16" cy="102.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="26" y="96.9168" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="26" y="96.9168" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS +</text>
   <text x="26" y="105.917" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="26" y="114.917" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="8" y="120.917" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(16,124.917)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="36" y="135.42" font-size="10.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <text x="36" y="135.42" font-size="10.5" font-weight="bold">Alice's USDC</text>
   </g>
   <circle cx="222" cy="42.684" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -35,12 +35,12 @@
   </g>
   <g opacity="0.3">
   <circle cx="133" cy="108.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="143" y="102.644" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="143" y="102.644" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS +</text>
   <text x="143" y="111.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="143" y="120.644" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="125" y="126.644" width="105" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(133,130.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="153" y="141.14" font-size="10.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <text x="153" y="141.14" font-size="10.5" font-weight="bold">Bob's USDC</text>
   </g>
   <circle cx="334" cy="52.454" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -51,12 +51,12 @@
   </g>
   <g opacity="0.3">
   <circle cx="245" cy="118.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="255" y="113.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="255" y="113.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS +</text>
   <text x="255" y="122.062" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="255" y="131.062" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="237" y="137.062" width="111" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(245,141.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="265" y="151.56" font-size="10.5" font-weight="bold">Carol&#8217;s USDC</text>
+  <text x="265" y="151.56" font-size="10.5" font-weight="bold">Carol's USDC</text>
   </g>
   <g>
   <circle cx="459" cy="69.212" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -68,12 +68,12 @@
   </g>
   <g opacity="0.3">
   <circle cx="363" cy="134.936" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="373" y="129.436" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
+  <text x="373" y="129.436" font-size="7" letter-spacing="0.3" fill="#555">MARIA'S ADDRESS +</text>
   <text x="373" y="138.436" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="373" y="147.436" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="355" y="153.436" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(363,157.436)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="383" y="167.94" font-size="10.5" font-weight="bold">Maria&#8217;s USDC</text>
+  <text x="383" y="167.94" font-size="10.5" font-weight="bold">Maria's USDC</text>
   </g>
   <g>
   <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -93,7 +93,7 @@
   </g>
   <g>
   <circle cx="482" cy="246.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="250.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;CONFIG&#8221;</text>
+  <text x="492" y="250.37" font-size="7" letter-spacing="0.3" fill="#555">"CONFIG"</text>
   <rect x="474" y="256.37" width="158" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,261.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="272.37" font-size="10.5" font-weight="bold">config</text>
@@ -106,7 +106,7 @@
   </g>
   <g>
   <circle cx="482" cy="341.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="345.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;EVENT&#8221; + EVENT ID</text>
+  <text x="492" y="345.37" font-size="7" letter-spacing="0.3" fill="#555">"EVENT" + EVENT ID</text>
   <rect x="474" y="351.37" width="158" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,356.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="367.37" font-size="10.5" font-weight="bold">event</text>
@@ -118,7 +118,7 @@
   </g>
   <g>
   <circle cx="482" cy="441.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="440.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OUTCOME&#8221; + EVENT</text>
+  <text x="492" y="440.37" font-size="7" letter-spacing="0.3" fill="#555">"OUTCOME" + EVENT</text>
   <text x="492" y="449.37" font-size="7" letter-spacing="0.3" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="455.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,460.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
@@ -129,7 +129,7 @@
   </g>
   <g>
   <circle cx="482" cy="509.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="508.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OUTCOME&#8221; + EVENT</text>
+  <text x="492" y="508.37" font-size="7" letter-spacing="0.3" fill="#555">"OUTCOME" + EVENT</text>
   <text x="492" y="517.37" font-size="7" letter-spacing="0.3" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="523.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,528.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
@@ -140,17 +140,17 @@
   </g>
   <g>
   <circle cx="482" cy="577.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="576.37" font-size="7" letter-spacing="0.3" fill="#555">EVENT&#8217;S ADDRESS +</text>
+  <text x="492" y="576.37" font-size="7" letter-spacing="0.3" fill="#555">EVENT'S ADDRESS +</text>
   <text x="492" y="585.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + USDC MINT</text>
   <rect x="474" y="591.37" width="158" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(482,596.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="502" y="607.37" font-size="10.5" font-weight="bold">vault: the event&#8217;s USDC</text>
+  <text x="502" y="607.37" font-size="10.5" font-weight="bold">vault: the event's USDC</text>
   <line x1="482" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="623.37" font-size="9.5" fill="#444">0 USDC</text>
   <text x="482" y="635.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="624.87" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
-  <text x="228" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria&#8217;s signature against config.admin;</text>
+  <text x="228" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria's signature against config.admin;</text>
   <text x="228" y="316" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">anyone else gets Unauthorized</text>
   <text x="228" y="346" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">add_outcome() locks once betting starts: BettingAlreadyStarted</text>
   <text x="228" y="376" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">no bet or user-index accounts exist yet</text>
