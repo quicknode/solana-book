@@ -31,7 +31,7 @@
   <text x="230" y="206" font-size="9.5" fill="#444" text-anchor="middle">flat at &#8722;25: the premium is all he can lose</text>
   <!-- the writer: keeps the premium below the strike, then gives up 5 USDC per dollar -->
   <path d="M 100,150 L 360,150 L 560,250" fill="none" stroke="#111" stroke-width="2.4" stroke-dasharray="6 4"/>
-  <text x="566" y="254" font-size="10.5" font-weight="bold">Alice (writer)</text>
+  <text x="562" y="254" font-size="10.5" font-weight="bold">Alice (writer)</text>
   <text x="230" y="140" font-size="9.5" fill="#444" text-anchor="middle">flat at +25: the premium is all she can make</text>
   <!-- the shares she still holds below the strike are not in the writer's line -->
   <text x="320" y="312" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">the two lines sum to zero at every price: the option moves money between them and creates none</text>
