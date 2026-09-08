@@ -39,7 +39,7 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 - Put the benefit on the front page in the user's own words: "get paid the day you invoice", "spend without selling your shares", "nobody can walk off with the pot".
 - Say the risk in the same plain words. Liquidation is not a footnote for somebody spending against their shares, and a rate that comes from borrowers can fall when borrowing does.
 
-## What a Product Worth Building Has in Common
+## What Products Worth Building Have in Common
 
 Products of this kind have been shipped already, several of them with real users and real money behind them. Study what they have in common rather than copying them line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
 
