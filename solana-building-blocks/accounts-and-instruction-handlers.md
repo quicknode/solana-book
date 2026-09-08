@@ -18,6 +18,10 @@ This figure is the first example of how this book shows people, programs and dat
 
 > **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be billions of times the age of the universe. When this book says an address "belongs" to Alice, that is the basis of the claim: nobody else will ever generate her number.
 
+A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Without its apps and branding, a saved wallet is small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet.
+
+> **64 bytes, but only 32 are secret.** An `id.json` keypair file holds the 32-byte private key followed by the 32-byte public key. The second half is a convenience, not a necessity: the public key is mathematically derived from the private key, so software can recompute it from the first 32 bytes at any time. The private key is the only secret, and the only part that needs protecting.
+
 ## There Is More Than One Solana Computer
 
 The curve in the figure is labeled **Solana devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
@@ -111,10 +115,6 @@ Solana uses the word **authority** for a particular action granted to whoever ca
 Different authorities in the same program can be given to different accounts. 
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, but for standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Any authority can be a multisig address rather than one person's wallet. 
-
-A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Without its apps and branding, a saved wallet is small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet.
-
-> **64 bytes, but only 32 are secret.** An `id.json` keypair file holds the 32-byte private key followed by the 32-byte public key. The second half is a convenience, not a necessity: the public key is mathematically derived from the private key, so software can recompute it from the first 32 bytes at any time. The private key is the only secret, and the only part that needs protecting.
 
 ## Accounts Store Data, Not Just SOL
 
