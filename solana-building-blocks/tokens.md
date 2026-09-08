@@ -6,7 +6,7 @@ Assets on Solana are **tokens**, and every token is defined by a mint account an
 - equities like NVDAx, SPCXx, and TSLAx
 - the share tokens the book's own programs mint
 
-...as is every other asset on Solana.
+So is every other asset on Solana.
 
 ## Every Distinct Token Has Its Own Mint
 
@@ -62,7 +62,7 @@ The mint's other authority is the **freeze authority**, which can freeze and tha
 
 Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core machinery, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every account in one transaction uses the same token program. Every program in this book works that way.
 
-The extensions that matter for financial products:
+The table lists the extensions that matter for financial products:
 
 | Extension | What it does | What it means for your program |
 | --- | --- | --- |

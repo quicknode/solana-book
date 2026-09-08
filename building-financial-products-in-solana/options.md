@@ -61,7 +61,7 @@ Each option is an `OptionContract`, a PDA with seeds `"option"`, the market, the
 - `writer` and `holder`. The holder is empty until someone buys.
 - `contracts`, `underlying_per_contract`, and `strike_per_contract`. Alice's option is 5 contracts, each on 1 NVDAx, each with a strike of 180 USDC.
 - `premium`, in the quote token, for the whole option.
-- `expiry`, a unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots. Nothing in this program reads a price, so slot-measured freshness never comes into it.
+- `expiry`, a Unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots. Nothing in this program reads a price, so slot-measured freshness never comes into it.
 
 The three quantities are the account's most deliberate decision. **Every amount the option ever moves is a product of two of them.**
 
@@ -173,7 +173,7 @@ Maria calls `collect_fees()`. The handler pays her `fees_owed`, 0.45 USDC across
 
 ![collect_fees() pays Maria the 0.45 USDC of accumulated fees, and both vaults are empty.](figures/options-collect-fees.svg)
 
-Where everyone ended up:
+Everyone ends the story with what their position promised:
 
 - Alice earned a premium and sold her shares at her price.
 - Bob turned 25 USDC of premium into five NVDAx at a $20 discount to the market.
@@ -204,7 +204,7 @@ The companion repository's `kani-proofs` crate proves the last two and the first
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
 - **The writer defaults.** They cannot. `write_option()` takes the entire obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder's window has closed. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` pin the two doors that must stay shut while a holder could still exercise.
-- **The clock.** Expiry is a unix timestamp read from the Clock sysvar, which validators set and which can drift from wall-clock time by seconds. A holder who waits until the final second to exercise is betting against that drift, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
+- **The clock.** Expiry is a Unix timestamp read from the Clock sysvar, which validators set and which can drift from wall-clock time by seconds. A holder who waits until the final second to exercise is betting against that drift, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** If the strike were paid to the writer's token account inside `exercise_option()`, a writer could close that account and make every exercise fail, keeping the premium and the collateral both. The strike goes into the vault instead, owed to the writer, and the holder's exercise depends on no account of the writer's.
 - **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` pins it.
 - **What the design gives up.** A held option cannot be resold, and an option cannot be exercised in part. Venues that want both represent each option as two tokens, an option token the holder can sell on any exchange and a writer token that claims the proceeds. Adding that back means introducing the tokens, and with them an accounting of who holds how much of each option.
@@ -224,9 +224,9 @@ When you build your own, copy the shape of the two boundary tests: a deadline ne
 
 ## What You Learnt from Building the Options Venue
 
-An options exchange needs a clearing house standing behind every writer, a margin department watching every account, and a settlement desk on expiry day. This chapter replaced all of it with a rule: post the whole obligation before you sell the right. The clearing house is the vault, the margin department has nothing to watch, and settlement is two token transfers the holder triggers.
+One rule carried this chapter: post the whole obligation before you sell the right. An options exchange needs a clearing house standing behind every writer, a margin department watching every account, and a settlement desk on expiry day, and the rule takes each job in turn. The clearing house is the vault, the margin department has nothing to watch, and settlement is two token transfers the holder triggers.
 
-The concepts you now have:
+The options venue added six concepts:
 
 - **The option's terms.** A call or a put, a strike, an expiry, and a premium; a writer who keeps the premium and takes on an obligation, and a holder whose loss is capped at the premium.
 - **Full collateralization removes whole categories.** A covered call and a cash-secured put cannot default, so the program needs no margin, no liquidator, and no oracle; everything the *Perpetual Futures* chapter adds is the cost of letting writers post less than they owe.

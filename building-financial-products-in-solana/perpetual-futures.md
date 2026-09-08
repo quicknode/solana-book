@@ -53,7 +53,7 @@ A stale price here invites arbitrage. Anyone who can trade a leveraged market at
 
 ## Opening a Long, and the Pool Reserves the Best Case
 
-Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage guard; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the gates, in order:
+Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage guard; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the handler runs its gates, in order:
 
 - **Leverage**: size must not exceed net collateral times `max_leverage`. 5,000 against 995 × 10 = 9,950 passes; her effective leverage is about 5x. Eleven-x fails with `LeverageTooHigh` (pinned by `test_open_rejects_excess_leverage`).
 - **Born healthy**: net collateral must exceed the maintenance margin on her size, 5% of 5,000 = 250 USDC, else `PositionNotHealthy`. A position must not be liquidatable in the transaction that creates it.
@@ -77,7 +77,7 @@ Her transaction ends with the only token movement: 1,000 USDC from Alice's token
 
 A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. For example, with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots owes 50 USDC.
 
-Two simplifications, both documented in the example:
+The example documents two simplifications:
 
 - **The payment goes to the pool**, to the LPs, rather than to the lighter side of traders.
 - **The rate is flat**, rather than scaling with how lopsided the book is.
@@ -107,7 +107,7 @@ The pool cannot sell Bob's position; a program never acts on its own, somebody h
 
 At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool authority's signature. The same handler protects the pool from the other direction. A position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and must exit through liquidation, and any payout the pool arithmetic cannot cover is refused with `PoolInsolvent` rather than overdrawing the LPs.
 
-Where did everyone end up?
+Everyone ends the story with what their position promised:
 
 - **Alice** turned 1,000 into 1,990 by being right with leverage.
 - **Bob** turned 1,000 into 195 by being wrong and slow.
@@ -129,7 +129,7 @@ The example's design notes point at Percolator, Anatoly Yakovenko's formally ver
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
 - **Bounded progress**: no operation's cost grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
 
-Plus the book's standing invariants: the vault balance always equals `liquidity + total_collateral + protocol_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy has, at all times, at least one working exit.
+The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + protocol_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy has, at all times, at least one working exit.
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
@@ -147,9 +147,9 @@ The suite is the largest in the companion repository: a mock oracle the tests se
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
-A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. This chapter rebuilt the whole stack as one program: the pool is the clearing house and the counterparty, the maintenance margin and reservation are the margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
+The idea this chapter added is pre-funded solvency: every position reserves its maximum payout when it opens, so the pool can never owe more than it holds. Everything a futures exchange staffs falls out of that one reservation. The pool is the clearing house and the counterparty, the maintenance margin and the reservation are its margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
-The concepts this capstone added:
+This capstone added four concepts:
 
 - **Pre-funded solvency.** Reserve every position's maximum payout at open, cap profit at the reservation, and gate LP withdrawals on free liquidity, so the pool can never owe more than it holds.
 - **Constant-time accounting.** Per-side scaled accumulators and entry snapshots make solvency, AUM, and settlement computable without ever iterating open positions: realizable credit, account-local safety, and bounded progress, in miniature.

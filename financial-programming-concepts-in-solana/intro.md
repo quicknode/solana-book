@@ -34,4 +34,4 @@ Rent deposits are small, but they belong to somebody. Two rules settle who pays 
 ## What You Learnt
 
 - Every financial product is a small state machine: draw it before writing any handler, name every state and transition, and make sure every participant can get their money out of every state.
-- One handler, one transition, check the account state, and not just the signers. An exit empties the vault, closes the accounts, and sends the rent deposit back to whoever paid it.
+- Give each transition its own handler, and check the account's state, not only who signed. An exit empties the vault, closes the accounts, and sends the rent deposit back to whoever paid it.

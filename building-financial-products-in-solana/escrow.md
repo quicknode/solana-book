@@ -70,13 +70,11 @@ With the structure verified, the handler body is two small steps:
 
 ![make_offer() moves 250,000,000 minor units of USDC from Alice's token account into the vault, while the offer account is written with the maker, the mints, and the wanted amount.](figures/escrow-make-offer.svg)
 
-Alice is done.
-
 ### The Taker Takes the Offer
 
 Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
 
-Alice does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
+That is all Alice does. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
 The handler body runs two steps:
 
@@ -105,7 +103,7 @@ The money math that remains is rent. Alice fronts the rent deposits for the offe
 
 ## The Invariants
 
-What must hold, before and after every handler:
+Three things must hold before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account.
 - The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until an exit runs (a direct donation could push it above, and changes nothing), and both exits drain the vault completely before closing it.
@@ -136,7 +134,7 @@ The testing section of the *Operating Financial Software* chapter builds the gen
 
 In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, charges one to six percent for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
 
-The concepts you now have:
+The escrow gave you five concepts:
 
 - **Program custody.** Tokens held in a vault whose authority is a data account (a PDA), so funds move only along the code paths the program defines.
 - **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler validates its accounts against that stored data.

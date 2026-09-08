@@ -6,7 +6,7 @@ You have been using PDAs since the *Tokens* chapter. Every wallet's token balanc
 - the mint
 - the token program that manages the mint
 
-As a result:
+Three things follow from that derivation:
 
 - Anyone can recompute this address, so a program can find Alice's USDC without asking her where it is.
 - A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it.
@@ -50,4 +50,4 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 - The associated token accounts you already use are PDAs of the Associated Token Program, and a program's own records work the same way with seeds it chooses.
 - A program's PDAs form a **key/value store**: the seeds are the identifier, the account's data is the value.
 - Seeds make data findable and relationships verifiable.
-- PDAs can own token accounts, this is what "the program holds the funds" means.
+- PDAs can own token accounts. That is what "the program holds the funds" means.

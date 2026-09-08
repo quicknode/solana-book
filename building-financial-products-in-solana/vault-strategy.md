@@ -36,7 +36,7 @@ She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. 
 
 Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `deposit()` with 900 USDC and a `minimum_shares` floor. The handler does three jobs in one transaction, and the order is what makes it safe.
 
-**First it values the fund.** It walks every asset: reads the vault balance, loads the Pyth price, and accumulates value in u128 as amount × price ÷ 10^8, multiply before divide. The price load rejects a feed that is not the one recorded in the asset config, a price that is not positive, or a price older than 60 seconds. Plus the USDC vault. That total is the **net asset value**, the NAV. On the fund's first deposit the NAV is zero and shares are minted one-to-one: Alice's 900 USDC becomes 900 shares.
+**First it values the fund.** It walks every asset: reads the vault balance, loads the Pyth price, and accumulates value in u128 as amount × price ÷ 10^8, multiply before divide. The price load rejects a feed that is not the one recorded in the asset config, a price that is not positive, or a price older than 60 seconds. The USDC vault is added to the total. That total is the **net asset value**, the NAV. On the fund's first deposit the NAV is zero and shares are minted one-to-one: Alice's 900 USDC becomes 900 shares.
 
 **Then it deploys the money at the weights.** 40% of 900, $360, buys TSLAx at $250: 1.44 TSLAx into the TSLAx vault. 60%, $540, buys NVDAx at $180: exactly 3 NVDAx. The swaps run through the router fixed at strategy creation (the example ships a mock router standing in for Jupiter; a router that is not the configured one is rejected, pinned by `test_deposit_rejects_unregistered_router`), and the strategy PDA signs.
 
@@ -97,7 +97,7 @@ The suite (with hand-built Pyth price-update accounts injected so prices are det
 
 An index fund needs a custodian, a compliance officer, a fee schedule in a prospectus, and an auditor checking that the manager's trades match the mandate. This chapter needed a registry account, a weight sum that must hit 10,000, a fee constant with no setter, and a slippage floor computed from a feed the manager cannot choose.
 
-The concepts you now have:
+The vault added five concepts:
 
 - **The manager as the threat model.** The invariant every program in this book keeps: no instruction handler, under any parameters, moves user deposits to the operator. Rebalancing moves tokens between program-owned vaults; the fee path mints shares and touches no vault.
 - **A curator separate from a manager.** Victor's approved-asset set binds each asset to its official feed, so a manager can neither list their own token nor pair a real asset with a feed they control.

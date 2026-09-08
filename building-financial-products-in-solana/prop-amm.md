@@ -19,7 +19,7 @@ Two things are absent as a result:
 
 The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
-No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The *Token Fundraiser* chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are the entire accounting.
+The market has no LP mint, because there are no depositors to issue receipts to. It has no fee ledger: the spread is the fee, and it lands in the inventory itself. And it has no virtual reserves, because pricing never reads the reserves. The *Token Fundraiser* chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are the entire accounting.
 
 ## The Market Maker Opens the Market and Stocks It
 
@@ -93,9 +93,9 @@ The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in 
 
 ## What You Learnt from Building the Prop AMM
 
-A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. This chapter rebuilt the desk as a program: the oracle is the trader on the desk, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes, and `paused` is pulling them entirely.
+The inversion this chapter taught is that the market maker can be the pool: one firm quotes its own capital at oracle prices, with no depositor, curve, or LP token involved. A market-making desk still lives inside it, one role per field. The oracle is the trader quoting two-sided prices, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when the world moves, and `paused` is the desk pulling them entirely.
 
-The concepts you now have:
+Five concepts came with the prop AMM:
 
 - **Oracle-priced quoting.** The price comes from a feed, not from reserves, so there is no price impact and nothing to sandwich; the spread is the entire fee.
 - **For a market maker the oracle checks protect its own capital.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.

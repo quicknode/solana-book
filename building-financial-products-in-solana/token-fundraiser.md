@@ -25,7 +25,7 @@ The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's ad
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.
 - `current_amount`: the running total the program itself has counted, which is deliberately not the same number as the vault's balance.
-- `time_started` and `duration`: the clock's unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
+- `time_started` and `duration`: the clock's Unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
@@ -69,7 +69,7 @@ One problem survives success, and you will meet it in your own designs: the elev
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Now the other future. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Now take the other future. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 The order inside that handler is checks-effects-interactions: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and it appears wherever money exits in this book.
 
@@ -117,7 +117,7 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 
 Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter made the same promise a property of code: no platform, no fee, and terms that cannot change because no handler exists to change them.
 
-The concepts you now have, on top of the escrow's:
+The fundraiser added five concepts on top of the escrow's:
 
 - **A deadline that flips which exit is open.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
 - **The counter is the truth; the vault is just custody.** A gate that unlocks money must read state the program itself wrote, never a token balance anyone can inflate by donation.

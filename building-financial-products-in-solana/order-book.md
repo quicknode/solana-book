@@ -104,7 +104,7 @@ One line in the handler belongs in everything you build: it snapshots the unsett
 
 ## The Market Authority Withdraws the Fees
 
-At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One detail: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule unattended. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter treats it fully), though this handler adds an authority gate because it moves fee money.
+At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One detail is deliberate: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule unattended. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter treats it fully), though this handler adds an authority gate because it moves fee money.
 
 ![withdraw_fees() drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 
@@ -130,7 +130,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 
 - **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is `has_one` constraints binding every vault and mint on every instruction to the addresses recorded on the market at creation, and the test suite proves the attack fails. This is the same account-substitution attack the *Escrow* chapter described, against a bigger program.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program re-derives the fills from its own book and verifies every supplied account against that plan: order ID, market, and owner all have to line up, or the transaction fails.
-- **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, which an attacker turns into a drain with thousands of tiny fills. Covered above; pinned by a test below.
+- **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, which an attacker turns into a drain with thousands of tiny fills. The math section covered it, and a test below pins it.
 - **Book spam.** A full tree is a denial-of-service on everyone else's orders. Tick alignment, the minimum order size, the 20-open-orders-per-user cap, and the `OrderBookFull` check all reject spam, each with its own named error.
 - **The unauthorized paths.** Canceling someone else's order rejects with `Unauthorized`; withdrawing fees without being the authority rejects with `NotMarketAuthority`; placing orders on a paused market rejects with `MarketPaused`.
 
@@ -148,9 +148,9 @@ If you write one test after reading this chapter, write the vault-swap one for y
 
 ## What You Learnt from Building the Order Book Exchange
 
-NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This chapter rebuilt all three as one program: the critbit trees are the matching engine, the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
+Price-time priority is a rule, and a rule can be a data structure: the critbit trees hold the book in the order the matching engine at NYSE, NASDAQ, or the CME would walk it. What those exchanges staff around that engine, a clearing house and a settlement system, became two fields and a handler: the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
 
-The concepts you now have, on top of the escrow's:
+The order book added five concepts on top of the escrow's:
 
 - **Every resting order is a funded commitment.** Lock-on-entry means no matched order can turn out to be backed by nothing.
 - **A data structure chosen for onchain cost.** The critbit tree gives insertion without shifting and price-time priority for free, on a chain where compute is metered.

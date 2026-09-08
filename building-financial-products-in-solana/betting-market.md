@@ -18,7 +18,7 @@ In a bookmaker market, the house quotes odds and carries risk on every bet. In a
 
 The **config** is a single PDA (seed `"config"`) created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `default_fee_bps` each new event copies at creation, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
-Each **event** is a PDA (seeds: `"event"`, the event ID) with a description, a status that is Open, Settled, or Cancelled, the running `total_pool`, and, after settlement, the `winning_outcome_index`, `winning_pool`, and `distributable_losing_pool`. Two design details:
+Each **event** is a PDA (seeds: `"event"`, the event ID) with a description, a status that is Open, Settled, or Cancelled, the running `total_pool`, and, after settlement, the `winning_outcome_index`, `winning_pool`, and `distributable_losing_pool`. Two design details matter:
 
 - **Each event keeps the fee it was created with.** If Maria later changes `default_fee_bps`, markets that bettors already joined keep the fee they signed up under. Terms do not change retroactively.
 - **The vault is one token account for the whole event**, an associated token account whose authority is the event PDA. Stakes on every outcome mix in one vault; the accounting that keeps them straight lives in the data accounts, not in separate pots.
@@ -119,9 +119,9 @@ The suite builds all state through the program's own handlers, and its centerpie
 
 ## What You Learnt from Building the Betting Market
 
-A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window; a betting site adds a bookmaker carrying risk on every line. This chapter replaced all of it with a vault and four expressions of arithmetic: the pool is the odds, the program carries no risk, and the house takes a fee only from the losers.
+A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window; a betting site adds a bookmaker carrying risk on every line. Here a vault and four expressions of arithmetic do those jobs: the pool is the odds, the program carries no risk, and the house takes a fee only from the losers.
 
-The concepts you now have:
+This chapter added five concepts:
 
 - **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so conviction pays proportionally and no one sets odds.
 - **Offchain truth by designated signer.** The operator's signature is the oracle, and the program's job is making that trust visible and narrow: they pick the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
