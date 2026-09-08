@@ -81,7 +81,7 @@ AI tools did the mechanical work: checking spelling and grammar, keeping termino
 
 ## Where to Start, Depending on What You Came For
 
-Reading front to back works: the parts are ordered so that each one uses only what came before. But you can start anywhere, so here is where to begin, depending on what you came for:
+Here is where to begin, depending on what you came for:
 
 - **New to Solana, or to finance, or both?** Read front to back. Part I introduces every mechanism before Part II uses it, so nothing in a program chapter arrives unexplained.
 - **Coming from traditional finance?** The financial concepts that open each program chapter will be familiar, so skim those. Read [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks) in full instead, because the accounts, signatures, and rent those concepts are built from are what is new to you.
