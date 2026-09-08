@@ -16,11 +16,11 @@ In a bookmaker market, the house quotes odds and carries risk on every bet. In a
 
 ![The event owns its vault as an associated token account, so no operator key stands between the bettors and the pool.](figures/betting-account-map.svg)
 
-The **config** is a single PDA (seed `"config"`) created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `fee_bps`, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
+The **config** is a single PDA (seed `"config"`) created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `default_fee_bps` each new event copies at creation, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
 Each **event** is a PDA (seeds: `"event"`, the event ID) with a description, a status that is Open, Settled, or Cancelled, the running `total_pool`, and, after settlement, the `winning_outcome_index`, `winning_pool`, and `distributable_losing_pool`. Two design details:
 
-- **The event snapshots `fee_bps` at creation.** If Maria later changes the config's fee, markets that bettors already joined keep the fee they signed up under. Terms do not change retroactively.
+- **The event snapshots the fee at creation.** `initialize_event()` copies the config's `default_fee_bps` into the event's own `fee_bps`, and settlement charges the event's copy. If Maria later changes the config's fee, markets that bettors already joined keep the fee they signed up under. Terms do not change retroactively.
 - **The vault is one token account for the whole event**, an associated token account whose authority is the event PDA. Stakes on every outcome mix in one vault; the accounting that keeps them straight lives in the data accounts, not in separate pots.
 
 Each **outcome** is a PDA (seeds: `"outcome"`, the event, an index byte) holding its label, its `total_amount` staked, and its `bet_count`. Each **bet** is a PDA (seeds: `"bet"`, the outcome, the bettor), holding the bettor, the outcome index, and the amount. One bet account per bettor per outcome: betting again on the same outcome tops up the existing account rather than creating a second one.
