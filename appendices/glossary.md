@@ -80,7 +80,7 @@ The extra byte found while deriving a PDA that pushes the result off the ed25519
 
 ### call
 
-An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell, and the *Options* chapter's writer posts the underlying itself as collateral, which makes the call a [covered call](#covered-call).
+An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell, and the *Options* chapter's writer supplies the underlying asset to the program as collateral, which makes the call a [covered call](#covered-call).
 
 ### cash settlement
 
@@ -88,7 +88,7 @@ Settling a derivative by paying the difference between the market price and the 
 
 ### cash-secured put
 
-A [put](#put) whose writer has posted the full strike, in the quote token, as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
+A [put](#put) whose writer has supplied the full strike, in the quote token, to the program as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
 
 ### ceil (ceiling)
 
@@ -135,9 +135,13 @@ An oracle's own statement of its uncertainty: a price of $250 ± $8 is a differe
 
 The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the design is organized around the pool's solvency. See the *Perpetual Futures* chapter.
 
+### covered
+
+See [covered call](#covered-call).
+
 ### covered call
 
-A [call](#call) whose writer has posted the underlying itself as collateral, so the shares the holder might buy are already in custody and the writer cannot fail to deliver them. The *Options* chapter's calls are all covered.
+A [call](#call) whose writer has supplied the underlying asset to the program as collateral, so the shares the holder might buy are already in custody and the writer cannot fail to deliver them. The *Options* chapter's calls are all covered.
 
 ### CPI (cross-program invocation)
 
@@ -473,7 +477,7 @@ A [put](#put) bought by someone who already holds the underlying, as insurance a
 
 ### put
 
-An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer posts the full strike as collateral, which makes the put a [cash-secured put](#cash-secured-put).
+An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer supplies the full strike to the program as collateral, which makes the put a [cash-secured put](#cash-secured-put).
 
 ### quote token
 
@@ -607,6 +611,10 @@ A signed bundle of instructions that executes atomically: all of it lands or non
 
 A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than rent it for one slot. See the *Adversary* chapter.
 
+### underlying
+
+The asset an [option](#option) or other derivative is about: what a [call](#call) buys and a [put](#put) sells at the [strike](#strike). It is short for the underlying asset, and every options market uses it as a noun on its own. In the *Options* chapter the underlying is NVDAx and the quote token is USDC.
+
 ### utilization
 
 In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
@@ -633,7 +641,7 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 
 ### writer
 
-The party who sells an [option](#option): they receive the [premium](#premium) and take on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer posts the whole of that obligation before the lot can be sold. Compare [holder](#holder).
+The party who sells an [option](#option): they receive the [premium](#premium) and take on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
 
 ### zero-copy
 
