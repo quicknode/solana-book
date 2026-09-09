@@ -108,6 +108,12 @@ const rules = [
   // reader doing something in the world, and stays.
   [/\bNote (?:what|who|where|the order)\b|\bNotice (?:what|who|how)\b|\bWatch \w+ in the (?:story|chapter|section|table|figure)\b/,
     'state what the reader would see, rather than telling them to look at it'],
+  // "Treats" for "discusses" ("the Lending chapter treats it fully", "admin
+  // power is treated in the Operating chapter") is academic register the
+  // author has ruled out. "Treats X as Y", the runtime treating a byte string
+  // as an address, is a different verb and is not matched.
+  [/\b(?:chapter|section|book|appendix) treats\b|\btreat(?:s|ed)? (?:it|them|this|that) (?:fully|in full|at length|below|later|here)\b|\bis treated (?:in|by) the\b/i,
+    'say "explains" or "covers"'],
   // American spelling, second batch: the doubled-l forms and the noun/verb
   // pairs British English splits. Identifiers keep whatever the code shipped.
   [/\b(?:cancelling|modelling|labelling|signalling|travelling)\b/i,
@@ -359,6 +365,10 @@ const wordinessRules = [
   // "confirmed" is one of Solana's three commitment levels, alongside
   // processed and finalized. Using "confirm" loosely for "check" puts a
   // reserved word on an unrelated idea, in a book that teaches the levels.
+  // "Pin" in both of the manuscript's senses: what a test does ("pinned by
+  // test_x", "the test pins it") and a value fixed when an account is made
+  // ("pinned at creation"). The author ruled both out.
+  [/\bpin(?:s|ned|ning)?\b/i, 'a test enforces, checks, or asserts; a value is fixed or recorded at creation'],
   [/\bconfirms?\b(?! that a supermajority)/i,
     'say "check": "confirmed" is a commitment level in this book, not a synonym for checking'],
 ];

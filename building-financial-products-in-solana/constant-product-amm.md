@@ -112,13 +112,13 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 ## Testing Considerations
 
-The suite (`tests/test_swap.rs`) covers each section of this chapter. Two tests, `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap`, pin K's direction both ways, while `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` pin the admin-fee exclusion, the accounting a refactor is most likely to break. Two more, `test_deposit_clamps_excess_amount_a` and `_b`, pin the ratio clamp from both directions (both directions of every symmetric flow), and the three reverts-below-minimum tests pin every slippage guard. If you write one invariant test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not lose value.
+The suite (`tests/test_swap.rs`) covers each section of this chapter. Two tests, `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap`, check K's direction both ways, while `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` check the admin-fee exclusion, the accounting a refactor is most likely to break. Two more, `test_deposit_clamps_excess_amount_a` and `_b`, check the ratio clamp from both directions (both directions of every symmetric flow), and the three reverts-below-minimum tests check every slippage guard. If you write one invariant test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not lose value.
 
 ## What You Learnt from Building the Constant-Product AMM
 
 The order book needed a tree, a matching engine, and maker accounts, because humans were quoting the prices. The AMM replaced all of it, and the market makers themselves, with one multiplication: instant liquidity for anything, priced by a curve, funded by anyone willing to earn fees for supplying it.
 
-The concepts you now have:
+Six concepts came with the curve:
 
 - **A formula as the market maker.** Output = taxed input × other reserve ÷ (this reserve + taxed input); the first deposit sets the price, and every trade pays its own price impact.
 - **How K grows.** Constant within a trade, growing across deposits and fees; and an invariant that can hold vacuously (new K ≥ 0 on an empty pool) is not an invariant.

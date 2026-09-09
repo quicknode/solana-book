@@ -1,18 +1,18 @@
 # Chapter 21: Where to Go From Here
 
-Nine programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault strategy, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
+Ten programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a vault strategy, an options venue, and a perpetual futures venue. Between them they cover the machinery most financial products are made of.
 
-The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those have stopped being reasons to consider a platform. They are materials you can now work with, on the world's most active blockchain.[^most-active]
+The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those are no longer sales points for a platform. They are materials you can build with.
 
 What is left is deciding what to build with them.
 
 ## What You Can Build Now
 
-You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it nine times.
+You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it ten times.
 
 You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state needs an exit handler. That is the same checklist an auditor opens with.
 
-You can work with an AI as a peer rather than an authority. The companion AI plugin will apply this book's rules to code your tools generate, and you can now tell when the output from AI tools is wrong, to make generated financial code safe.
+You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's money.
 
 You can reason about who earns what, and why anyone shows up. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
@@ -34,7 +34,7 @@ Nobody in the paragraphs above wants a blockchain. They want their money on Satu
 
 So aim at consumers and businesses rather than at a crypto audience. In practice that means:
 
-- Quote everything in dollars and in time. A rate, a limit, a settlement time. Never basis points, token symbols, or pool utilization.
+- Quote everything in dollars and in time, whether it is a rate, a limit, or a settlement time. Never basis points, token symbols, or pool utilization.
 - Keep keys and signing behind the product. Someone should be able to use it having never downloaded wallet software or held a token deliberately, and never learn that they now do.
 - Put the benefit on the front page in the user's own words: "get paid the day you invoice", "spend without selling your shares", "nobody can walk off with the pot".
 - Say the risk in the same plain words. Liquidation is not a footnote for somebody spending against their shares, and a rate that comes from borrowers can fall when borrowing does.
@@ -85,7 +85,7 @@ Some things were left out on purpose, and knowing which is part of knowing the f
 
 **Formal verification** appears here only briefly. The escrow program's formal proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
 
-**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is treated in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
+**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
 **The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
 
@@ -97,9 +97,8 @@ Then get a second (and third) opinion from an expert that did not work on it. Ev
 
 Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
-Nine programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
 
-[^most-active]: Artemis counted 4.1 million daily active addresses and 146 million transactions on Solana on August 31, 2026, against 1.7 million addresses on BNB Chain and under half a million on Ethereum. See [classic.artemis.ai/asset/solana](https://classic.artemis.ai/asset/solana).
 
 [^remittance-corridors]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. Source: The World Bank, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 

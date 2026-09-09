@@ -53,7 +53,7 @@ Is this greedy? Keeping the dust in the pool is the only policy that holds up: t
 
 ### Safety Checks Round Against the User Too
 
-The table covers money changing hands. The same direction applies to the numbers a program checks before it lets money move at all. A lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better. A borrower is refused a loan they could just barely afford, rather than granted one they just barely cannot.
+The table covers money changing hands. The same direction applies to the numbers a program checks before it lets money move at all. A lending market floors collateral value and ceils debt, so a position always looks slightly worse than it is, never slightly better. The program refuses a loan the borrower can only just afford, rather than granting one they cannot quite repay.
 
 ### A Ceiled Fee Is a Capped Fee
 
