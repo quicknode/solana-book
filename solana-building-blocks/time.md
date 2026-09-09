@@ -82,7 +82,7 @@ When the deadline is one you promised a person, use timestamps, and leave a marg
 
 ## Who Fills First Is a Counter, Not a Clock
 
-The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. Two orders can arrive in the same slot and carry the same timestamp, but they won't get the same number in a counter.
+The order book exchange uses neither clock for the thing traders care most about: who queued first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. Two orders can arrive in the same slot and carry the same timestamp. The market's counter still gives them different numbers. A validator can nudge the timestamp; it cannot nudge the counter.
 
 ## Every Consumer Sets Its Own Freshness Window
 
