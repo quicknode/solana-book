@@ -22,7 +22,7 @@ Before each **epoch** of 432,000 slots, the network draws a **leader schedule**.
 
 The **Unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is accurate to within a few seconds, and validators can nudge it.
 
-![The wall clock, right to within a few seconds, and nudgeable by whoever reports it.](figures/unix-timestamp.svg)
+![The wall clock, accurate to within a few seconds, and nudgeable by whoever reports it.](figures/unix-timestamp.svg)
 
 A validator can nudge it by a few seconds, and a few seconds is what it stays however long the span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, whoever can nudge that timestamp decides which side of the boundary a transaction lands on.
 

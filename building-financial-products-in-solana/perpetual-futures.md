@@ -143,7 +143,9 @@ The book's standing invariants hold here too. The vault balance always equals `l
 
 ## Testing Considerations
 
-The suite is the largest in the companion repository: a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. The pattern to copy is **one test per invariant, named as the sentence it checks**: `test_profit_capped_at_reserved_notional`, `test_remove_liquidity_blocked_by_reserved`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`. The happy-path tests (`test_close_long_in_profit`, `test_close_long_in_loss`, `test_close_short_in_profit`) assert exact payouts computed by hand, the same numbers this chapter used, and `test_liquidation_of_underwater_long` runs Dave's whole waterfall. When a future change breaks an invariant, the test that fails states, in its own name, which promise you just broke.
+The suite is the largest in the companion repository: a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. The pattern to copy is **one test per invariant, named as the sentence it checks**: `test_profit_capped_at_reserved_notional`, `test_remove_liquidity_blocked_by_reserved`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`.
+
+The happy-path tests (`test_close_long_in_profit`, `test_close_long_in_loss`, `test_close_short_in_profit`) check the same hand-computed payouts this chapter walked through. `test_liquidation_of_underwater_long` runs Dave's whole waterfall. When a future change breaks an invariant, the test that fails states, in its own name, which promise you just broke.
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
