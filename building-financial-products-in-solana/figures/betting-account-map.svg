@@ -182,7 +182,7 @@
   <text x="482" y="288.37" font-size="9.5">admin: Maria</text>
   <text x="482" y="300.37" font-size="9.5" fill="#444">token_mint: USDC</text>
   <text x="482" y="312.37" font-size="9.5">fee_recipient: Maria</text>
-  <text x="482" y="324.37" font-size="9.5">fee_bps: 200 (2%)</text>
+  <text x="482" y="324.37" font-size="9.5">default_fee_bps: 200 (2%)</text>
   </g>
   <g>
   <circle cx="482" cy="341.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

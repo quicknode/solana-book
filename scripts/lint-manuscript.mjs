@@ -492,7 +492,7 @@ for (const file of svgFiles) {
     if (h / w > MAX_ASPECT) {
       failures += 1;
       console.error(`${file}: ${w}x${h} is ${(h / w).toFixed(2)} times as tall as it is wide, ` +
-        `over the ${MAX_ASPECT} that fits the text block (prints ${(5.74 * h / w).toFixed(2)}in against 8.04in)`);
+        `over the ${MAX_ASPECT} that fits the text block (prints ${(5.44 * h / w).toFixed(2)}in against 7.89in)`);
     }
   }
   // Anything after </svg> is not in the drawing. The browser lays it out as
