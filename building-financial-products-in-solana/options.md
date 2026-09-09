@@ -23,7 +23,7 @@ The two sides have different shapes, and the shapes are the whole subject:
 - **The writer** keeps the premium whatever happens, and in exchange takes on an obligation: to sell the underlying at the strike (a call) or to buy it at the strike (a put) whenever the holder asks. The writer's gain is capped at the premium, and the writer's obligation is not.
 - **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
 
-![Each side's profit or loss on the five contracts, against the NVDAx price when the week ends. The writer's line is flat at plus 25 USDC until the strike and then falls; the holder's is its mirror, flat at minus 25 and then rising. The lines sum to zero at every price.](figures/options-payoff.svg)
+![Four ways the week can end, and what each side has at the end of it, against doing nothing. Below the strike the writer keeps the premium and the holder loses it. Above it the holder's gain grows with the price and the writer's loss grows with it, and in every column the two sum to zero.](figures/options-payoff.svg)
 
 Traditional options venues let a writer take on that obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault.**
 
@@ -145,7 +145,7 @@ Alice calls `collect_proceeds()`. The handler requires the option to be `Exercis
 
 ![collect_proceeds() pays Alice the 900 USDC strike from the quote vault and closes the option, rent back to her; only Maria's 0.25 USDC fee is left in the vault.](figures/options-collect-proceeds.svg)
 
-Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the payoff figure: the premium was all she could make, and she made it.
+Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the four-ways figure, its last column: the premium was all she could make, and she made it.
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
