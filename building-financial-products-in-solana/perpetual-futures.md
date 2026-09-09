@@ -14,7 +14,7 @@ That design decision creates the problem the program is organized around: the po
 
 ## The Account Model: One Pool, One Vault, One Position per Side per Trader
 
-![The account map: the pool account and its authority PDA, the single custody vault and LP share mint they control, one position account per trader per side, and the oracle feed the pool is pinned to.](figures/perps-account-map.svg)
+![The account map: the pool account and its authority PDA, the single custody vault and LP share mint they control, one position account per trader per side, and the oracle feed fixed at the pool's creation.](figures/perps-account-map.svg)
 
 The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_slot`) and the live accounting this chapter keeps returning to:
 
@@ -31,17 +31,17 @@ Each position is a **position** PDA with seeds `"position"`, the pool, the owner
 
 ## Creating the Market, Where the Parameters Are Checked Against Each Other
 
-Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `protocol_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, leaving its owner with no exit at all. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` pins it. Every state needs an exit, and here that principle reaches back into the *configuration* of the market.
+Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `protocol_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, leaving its owner with no exit at all. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. Every state needs an exit, and here that principle reaches back into the *configuration* of the market.
 
 ## Liquidity Providers Fund the Pool and Get Shares Priced at Mark
 
 Carol is a liquidity provider. Her income is every losing trader's loss and every funding payment; her risk is every winning trader's profit. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`: a withheld 1,000 minor units, a tenth of a cent, that no one will ever own. That is the same first-depositor defense the *Constant-Product AMM* chapter built, and the one the *Vault Strategy* chapter named as its own missing guard. It closes the share-inflation attack before it opens. Later deposits mint shares pro rata against **assets under management marked to market**, rather than against the vault balance or `liquidity` alone: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a depositor could buy in cheap the moment traders were winning and dilute Carol at her worst moment. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly. Eleven more providers follow Carol in over the morning, and the pool opens for trading with 12,000 USDC of liquidity.
 
-Withdrawals have one extra gate: only **free** liquidity, `liquidity − reserved_liquidity`, may leave (`InsufficientLiquidity` otherwise, pinned by `test_remove_liquidity_blocked_by_reserved`). Carol can never pull out money the pool has promised to a winner.
+Withdrawals have one extra gate: only **free** liquidity, `liquidity − reserved_liquidity`, may leave (`InsufficientLiquidity` otherwise, checked by `test_remove_liquidity_blocked_by_reserved`). Carol can never pull out money the pool has promised to a winner.
 
 ## The Price Comes From Outside, So Every Handler Checks It Before Using It
 
-Every handler that touches money begins the same way: read the oracle, validate it, accrue funding. The pool is pinned at creation to one **oracle feed** account, the mechanism from the *Offchain Truth* chapter, at production scale. The feed carries a price written onchain by a network whose signatures prove its origin, read with the same five checks the *Prop AMM* chapter ran. In the companion repository the feed is a mock (`mock-switchboard`, an authority-gated stand-in the tests can set prices on, labeled not-for-production); the production path is a real Switchboard feed verified with the SDK's parse-and-verify call. Either way the program runs five checks on what it reads, in order:
+Every handler that touches money begins the same way: read the oracle, validate it, accrue funding. The pool records one **oracle feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. The feed carries a price written onchain by a network whose signatures prove its origin, read with the same five checks the *Prop AMM* chapter ran. In the companion repository the feed is a mock (`mock-switchboard`, an authority-gated stand-in the tests can set prices on, labeled not-for-production); the production path is a real Switchboard feed verified with the SDK's parse-and-verify call. Either way the program runs five checks on what it reads, in order:
 
 - the account is long enough to contain a price (`OracleDataTooShort`),
 - the price is positive (`NonPositivePrice`),
@@ -49,15 +49,15 @@ Every handler that touches money begins the same way: read the oracle, validate 
 - the price is fresh: no older than `MAX_PRICE_STALENESS_SLOTS`, 150 slots (`StalePrice`),
 - and the feed's own uncertainty band, divided by the price, is within `max_confidence_bps` (`OracleConfidenceTooWide`). A leveraged venue trading on a price the oracle itself is unsure of is how liquidation cascades start.
 
-A stale price here invites arbitrage. Anyone who can trade a leveraged market at a stale price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` pin both refusals.
+A stale price here invites arbitrage. Anyone who can trade a leveraged market at a stale price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` check both refusals.
 
 ## Opening a Long, and the Pool Reserves the Best Case
 
-Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage guard; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the gates, in order:
+Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage guard; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the handler makes three checks, in order, and refuses the position if any fails:
 
-- **Leverage**: size must not exceed net collateral times `max_leverage`. 5,000 against 995 × 10 = 9,950 passes; her effective leverage is about 5x. Eleven-x fails with `LeverageTooHigh` (pinned by `test_open_rejects_excess_leverage`).
+- **Leverage**: size must not exceed net collateral times `max_leverage`. 5,000 against 995 × 10 = 9,950 passes; her effective leverage is about 5x. Eleven-x fails with `LeverageTooHigh` (checked by `test_open_rejects_excess_leverage`).
 - **Born healthy**: net collateral must exceed the maintenance margin on her size, 5% of 5,000 = 250 USDC, else `PositionNotHealthy`. A position must not be liquidatable in the transaction that creates it.
-- **The reservation**: `reserved_liquidity` grows by her full size, 5,000, and the sum must stay within `liquidity`, else `InsufficientLiquidity` (pinned by `test_open_rejects_when_pool_cannot_back_it`).
+- **The reservation**: `reserved_liquidity` grows by her full size, 5,000, and the sum must stay within `liquidity`, else `InsufficientLiquidity` (checked by `test_open_rejects_when_pool_cannot_back_it`).
 
 By reserving the notional, the pool sets aside the most it could ever owe her, because **profit on a close is capped at the position's size**. The cap costs Alice something real: if NVDAx tripled to $300, her raw profit of 10,000 USDC would be paid as 5,000. In exchange, every winner's payout is pre-funded before the position exists, so the pool can never owe more than it holds. The test `test_profit_capped_at_reserved_notional` runs exactly the tripling and asserts the cap. Production venues layer insurance funds and auto-deleveraging above this floor; the floor is the part that must never be missing.
 
@@ -77,7 +77,7 @@ Her transaction ends with the only token movement: 1,000 USDC from Alice's token
 
 A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. For example, with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots owes 50 USDC.
 
-Two simplifications, both documented in the example:
+The example documents two simplifications:
 
 - **The payment goes to the pool**, to the LPs, rather than to the lighter side of traders.
 - **The rate is flat**, rather than scaling with how lopsided the book is.
@@ -107,12 +107,12 @@ The pool cannot sell Bob's position; a program never acts on its own, somebody h
 
 At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool authority's signature. The same handler protects the pool from the other direction. A position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and must exit through liquidation, and any payout the pool arithmetic cannot cover is refused with `PoolInsolvent` rather than overdrawing the LPs.
 
-Where did everyone end up?
+Everyone ends the story with what their position promised:
 
 - **Alice** turned 1,000 into 1,990 by being right with leverage.
 - **Bob** turned 1,000 into 195 by being wrong and slow.
 - **Dave** collected 50 USDC for one well-timed transaction.
-- **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, the only handler gated on her signature, and only to zero the fee ledger (`test_collect_fees_requires_authority` pins the gate).
+- **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, the only handler gated on her signature, and only to zero the fee ledger (`test_collect_fees_requires_authority` checks the gate).
 - **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus fees and funding on the next thousand traders.
 
 The pool does not need every trade to go its way, only most of them over time.
@@ -129,7 +129,7 @@ The example's design notes point at Percolator, Anatoly Yakovenko's formally ver
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
 - **Bounded progress**: no operation's cost grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
 
-Plus the book's standing invariants: the vault balance always equals `liquidity + total_collateral + protocol_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy has, at all times, at least one working exit.
+The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + protocol_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy has, at all times, at least one working exit.
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
@@ -143,13 +143,13 @@ Plus the book's standing invariants: the vault balance always equals `liquidity 
 
 ## Testing Considerations
 
-The suite is the largest in the companion repository: a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. The pattern to copy is **one test per invariant, named as the sentence it enforces**: `test_profit_capped_at_reserved_notional`, `test_remove_liquidity_blocked_by_reserved`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`. The happy-path tests (`test_close_long_in_profit`, `test_close_long_in_loss`, `test_close_short_in_profit`) assert exact payouts computed by hand, the same numbers this chapter used, and `test_liquidation_of_underwater_long` runs Dave's whole waterfall. When a future change breaks an invariant, the test that fails states, in its own name, which promise you just broke.
+The suite is the largest in the companion repository: a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. The pattern to copy is **one test per invariant, named as the sentence it checks**: `test_profit_capped_at_reserved_notional`, `test_remove_liquidity_blocked_by_reserved`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`. The happy-path tests (`test_close_long_in_profit`, `test_close_long_in_loss`, `test_close_short_in_profit`) assert exact payouts computed by hand, the same numbers this chapter used, and `test_liquidation_of_underwater_long` runs Dave's whole waterfall. When a future change breaks an invariant, the test that fails states, in its own name, which promise you just broke.
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
-A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. This chapter rebuilt the whole stack as one program: the pool is the clearing house and the counterparty, the maintenance margin and reservation are the margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
+A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. One reservation does most of that work: every position reserves its maximum payout when it opens, so the pool can never owe more than it holds. The pool is the clearing house and the counterparty, the maintenance margin and the reservation are its margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
-The concepts this capstone added:
+This capstone added four concepts:
 
 - **Pre-funded solvency.** Reserve every position's maximum payout at open, cap profit at the reservation, and gate LP withdrawals on free liquidity, so the pool can never owe more than it holds.
 - **Constant-time accounting.** Per-side scaled accumulators and entry snapshots make solvency, AUM, and settlement computable without ever iterating open positions: realizable credit, account-local safety, and bounded progress, in miniature.

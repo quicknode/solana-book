@@ -17,9 +17,9 @@ Two things are absent as a result:
 
 ![The authority PDA holds no data at all; it exists only to sign for the two vaults.](figures/prop-amm-account-map.svg)
 
-The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the pinned oracle feed and its scale, the two token decimals (pinned at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
+The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the oracle feed and its scale, both fixed at creation, the two token decimals (recorded at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
 
-No LP mint: there are no depositors to issue receipts to. No fee ledger: the spread is the fee, and it lands in the inventory itself. No virtual reserves, because pricing never reads the reserves. The *Token Fundraiser* chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are the entire accounting.
+The market has no LP mint, because there are no depositors to issue receipts to. It has no fee ledger: the spread is the fee, and it lands in the inventory itself. And it has no virtual reserves, because pricing never reads the reserves. The *Token Fundraiser* chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are the entire accounting.
 
 ## The Market Maker Opens the Market and Stocks It
 
@@ -35,7 +35,7 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps:
 
-- **The oracle read**, with the checks from the *Offchain Truth* chapter: the feed's layout, a positive price, the scale pinned at creation, freshness within 150 slots, and a confidence band inside the market's limit.
+- **The oracle read**, with the checks from the *Offchain Truth* chapter: the feed's layout, a positive price, the scale fixed at creation, freshness within 150 slots, and a confidence band inside the market's limit.
 - **The ask**: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer.
 - **Her output**, floored: 825.825 USDC of her 1,000 buys exactly 5 NVDAx.
 
@@ -71,7 +71,7 @@ When Maria wants her capital back, `withdraw_inventory()` hands her both vaults,
 
 The quote arithmetic is four small functions (`quote_math.rs`), all checked u128, multiply before divide, one floor per quantity. The ask rounds **up**; the bid rounds **down**; both outputs floor. Every rounding direction favors the market, so the composite invariant, that value out never exceeds value in measured at the raw oracle price, holds by construction. The handler still asserts it after computing each fill, cross-multiplied so the check itself does no rounding, and fails with `InvariantViolated` if a future refactor breaks a rounding direction. Assert after the math, as the constant-product pool's post-trade K check does, here guarding a much simpler formula.
 
-The unit conversion is the one part that is not simple. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program pins both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program cannot assume its tokens will be.
+The unit conversion is the one part that is not simple. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program records both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With two six-decimal tokens they do cancel, which is why the chapter's numbers are clean; the program cannot assume its tokens will be.
 
 ## The Invariants: What the Market Promises
 
@@ -89,13 +89,13 @@ The unit conversion is the one part that is not simple. Prices arrive at the ora
 
 ## Testing Considerations
 
-The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` pin Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` pins the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` pin the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` pins the rule that defines the genre: the capital is Maria's, and without it the market refuses every swap.
+The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` assert Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` asserts the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` cover the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` checks the rule that defines the genre: the capital is Maria's, and without it the market refuses every swap.
 
 ## What You Learnt from Building the Prop AMM
 
-A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. This chapter rebuilt the desk as a program: the oracle is the trader on the desk, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes, and `paused` is pulling them entirely.
+A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. In this program the desk is the pool: one firm quotes its own capital at oracle prices, with no depositor, curve, or LP token involved. The oracle is the trader quoting two-sided prices, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when the world moves, and `paused` is the desk pulling them entirely.
 
-The concepts you now have:
+Five concepts came with the prop AMM:
 
 - **Oracle-priced quoting.** The price comes from a feed, not from reserves, so there is no price impact and nothing to sandwich; the spread is the entire fee.
 - **For a market maker the oracle checks protect its own capital.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.

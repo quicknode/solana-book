@@ -61,7 +61,7 @@ Each option is an `OptionContract`, a PDA with seeds `"option"`, the market, the
 - `writer` and `holder`. The holder is empty until someone buys.
 - `contracts`, `underlying_per_contract`, and `strike_per_contract`. Alice's option is 5 contracts, each on 1 NVDAx, each with a strike of 180 USDC.
 - `premium`, in the quote token, for the whole option.
-- `expiry`, a unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots. Nothing in this program reads a price, so slot-measured freshness never comes into it.
+- `expiry`, a Unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots. Nothing in this program reads a price, so slot-measured freshness never comes into it.
 
 The three quantities are the account's most deliberate decision. **Every amount the option ever moves is a product of two of them.**
 
@@ -79,7 +79,7 @@ Maria runs the venue. Her incentive is a fee of 1% on every premium paid, and he
 - A venue whose underlying and quote are the same token.
 - A fee of 100% or more, which would leave a writer nothing from a sale.
 
-A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_fee_venue_pays_the_writer_the_whole_premium` pins that the fee transfer is then skipped rather than sent for nothing. Her key is stored as the market's `admin`, and the only handler that reads it is `collect_fees()`.
+A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_fee_venue_pays_the_writer_the_whole_premium` checks that the fee transfer is then skipped rather than sent for nothing. Her key is stored as the market's `admin`, and the only handler that reads it is `collect_fees()`.
 
 ## A Writer Posts the Whole Obligation and Names a Price
 
@@ -90,7 +90,7 @@ The handler checks the terms before it touches a token:
 - **A zero quantity** in `contracts`, `underlying_per_contract`, or `strike_per_contract` is refused (`InvalidParameter`). Every quantity is a multiplier in the settlement math, so a zero is an option that delivers nothing or costs nothing to exercise.
 - **A zero premium** is refused the same way. It would make the option a gift rather than a sale.
 - **An expiry at or before now** is refused (`ExpiryInPast`). The holder may exercise while `now < expiry`, so such an option could never be exercised.
-- **An option whose settlement overflows** is refused (`MathOverflow`). Both settlement products are computed now, at write time, so the overflow is found before anyone pays for it, and `test_write_option_rejects_a_lot_whose_collateral_overflows` pins it.
+- **An option whose settlement overflows** is refused (`MathOverflow`). Both settlement products are computed now, at write time, so the overflow is found before anyone pays for it, and `test_write_option_rejects_a_lot_whose_collateral_overflows` checks it.
 
 Then the effects come before the transfer, in this order:
 
@@ -105,7 +105,7 @@ From this moment the vault holds everything a future holder could ever claim fro
 
 One more account is set up here. Alice's USDC account, where her premium will arrive, is created if it does not exist, paid for by Alice, so that `buy_option()` can require it to exist rather than make the buyer pay rent on an account that belongs to the writer.
 
-Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` pins it. Without this exit, an option nobody buys would hold the writer's shares forever.
+Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` checks it. Without this exit, an option nobody buys would hold the writer's shares forever.
 
 ## A Buyer Pays the Premium, and the Collateral Does Not Move
 
@@ -173,7 +173,7 @@ Maria calls `collect_fees()`. The handler pays her `fees_owed`, 0.45 USDC across
 
 ![collect_fees() pays Maria the 0.45 USDC of accumulated fees, and both vaults are empty.](figures/options-collect-fees.svg)
 
-Where everyone ended up:
+Everyone ends the story with what their position promised:
 
 - Alice earned a premium and sold her shares at her price.
 - Bob turned 25 USDC of premium into five NVDAx at a $20 discount to the market.
@@ -203,16 +203,16 @@ The companion repository's `kani-proofs` crate proves the last two and the first
 
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
-- **The writer defaults.** They cannot. `write_option()` takes the entire obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder's window has closed. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` pin the two doors that must stay shut while a holder could still exercise.
-- **The clock.** Expiry is a unix timestamp read from the Clock sysvar, which validators set and which can drift from wall-clock time by seconds. A holder who waits until the final second to exercise is betting against that drift, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
+- **The writer defaults.** They cannot. `write_option()` takes the entire obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder's window has closed. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` check the two refusals that must hold while a holder could still exercise.
+- **The clock.** Expiry is a Unix timestamp read from the Clock sysvar, which validators set and which can drift from wall-clock time by seconds. A holder who waits until the final second to exercise is betting against that drift, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** If the strike were paid to the writer's token account inside `exercise_option()`, a writer could close that account and make every exercise fail, keeping the premium and the collateral both. The strike goes into the vault instead, owed to the writer, and the holder's exercise depends on no account of the writer's.
-- **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` pins it.
+- **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
 - **What the design gives up.** A held option cannot be resold, and an option cannot be exercised in part. Venues that want both represent each option as two tokens, an option token the holder can sell on any exchange and a writer token that claims the proceeds. Adding that back means introducing the tokens, and with them an accounting of who holds how much of each option.
 - **What is absent.** Most of the usual attacks on a financial program return "not applicable" here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain, because there is no division. The venue's entire risk surface is the custody ledger and the two comparisons against the clock, which is why both are proved rather than only tested.
 
 ## Testing Considerations
 
-The suite (`tests/test_options.rs`) walks the call from write to collected strike and the put from write to exercise and to expiry, pinning every balance to the minor unit, and it calls the custody check's equality form after every step. Around the happy paths there is one test per gate:
+The suite (`tests/test_options.rs`) walks the call from write to collected strike and the put from write to exercise and to expiry, asserting every balance to the minor unit, and it calls the custody check's equality form after every step. Around the happy paths there is one test per gate:
 
 - The expiry boundary, from both sides.
 - Cancel after a sale, and buy after a sale or after expiry.
@@ -224,9 +224,9 @@ When you build your own, copy the shape of the two boundary tests: a deadline ne
 
 ## What You Learnt from Building the Options Venue
 
-An options exchange needs a clearing house standing behind every writer, a margin department watching every account, and a settlement desk on expiry day. This chapter replaced all of it with a rule: post the whole obligation before you sell the right. The clearing house is the vault, the margin department has nothing to watch, and settlement is two token transfers the holder triggers.
+An options exchange needs a clearing house standing behind every writer, a margin department watching every account, and a settlement desk on expiry day. In this program, making the writer post the whole obligation before they sell the right does all three jobs. The clearing house is the vault, the margin department has nothing to watch, and settlement is two token transfers the holder triggers.
 
-The concepts you now have:
+The options venue added six concepts:
 
 - **The option's terms.** A call or a put, a strike, an expiry, and a premium; a writer who keeps the premium and takes on an obligation, and a holder whose loss is capped at the premium.
 - **Full collateralization removes whole categories.** A covered call and a cash-secured put cannot default, so the program needs no margin, no liquidator, and no oracle; everything the *Perpetual Futures* chapter adds is the cost of letting writers post less than they owe.

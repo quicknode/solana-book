@@ -6,13 +6,13 @@ The program lives at `finance/token-fundraiser` in the companion repository. It 
 
 ## Success and Failure Are Both Written Down in Advance
 
-Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two futures. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
+Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
 
 The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both.
 
 ![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
 
-![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that opened the first future closes this one.](figures/fundraiser-failure-future.svg)
+![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that decided the first ending decides this one.](figures/fundraiser-failure-future.svg)
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
@@ -25,7 +25,7 @@ The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's ad
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.
 - `current_amount`: the running total the program itself has counted, which is deliberately not the same number as the vault's balance.
-- `time_started` and `duration`: the clock's unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
+- `time_started` and `duration`: the clock's Unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
@@ -61,7 +61,7 @@ The cost is that the program's books cover only what came in through it. Tokens 
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
-`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The fundraiser is not marked finished; its account is gone, so a second claim has nothing to read, and double-claiming is impossible without any flag to check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
+`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The fundraiser is not marked finished; its account is gone, so a second claim has nothing to read, and double-claiming is impossible without any flag to check. The test `test_check_contributions_success_pays_maker_and_closes_vault` asserts all three effects.
 
 One problem survives success, and you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone. The program omits it, and the omission is the kind to look for in your own programs: *for every account your program creates, name the handler that eventually closes it.*
 
@@ -69,7 +69,7 @@ One problem survives success, and you will meet it in your own designs: the elev
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Now the other future. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Now take the other ending. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 The order inside that handler is checks-effects-interactions: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and it appears wherever money exits in this book.
 
@@ -101,9 +101,9 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 ## The Failure Modes: One Gate per Attack
 
 - **Claiming early or after a miss** fails on the counter: `TargetNotMet`.
-- **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (pinned by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
-- **Contributing after the deadline** fails with `FundraiserEnded` (pinned by `test_contribute_after_deadline_fails`).
-- **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (pinned by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
+- **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (checked by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
+- **Contributing after the deadline** fails with `FundraiserEnded` (checked by `test_contribute_after_deadline_fails`).
+- **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (checked by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
 - **Inflating the vault directly** moves tokens but never moves the counter, so it unlocks nothing.
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
@@ -117,7 +117,7 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 
 Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter made the same promise a property of code: no platform, no fee, and terms that cannot change because no handler exists to change them.
 
-The concepts you now have, on top of the escrow's:
+The fundraiser added five concepts on top of the escrow's:
 
 - **A deadline that flips which exit is open.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
 - **The counter is the truth; the vault is just custody.** A gate that unlocks money must read state the program itself wrote, never a token balance anyone can inflate by donation.
