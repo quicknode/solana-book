@@ -28,8 +28,6 @@ A validator can nudge it by a few seconds, and a few seconds is what it stays ho
 
 ## Which Clock for Which Job
 
-The figure below asks four questions in order. A yes answers which clock to use, and four noes leave the slot count.
-
 ![Yes goes right to an answer, no goes down to the next question; four noes leave the slot count.](figures/clock-decision-tree.svg)
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. The vault's annual fee runs on the wall clock too, because a few seconds against a year change it by nothing anybody can see.
