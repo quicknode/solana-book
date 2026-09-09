@@ -9,9 +9,12 @@
 //   5. Arrowheads point along the stroke they terminate.
 //   6. A box collapsed to its heading centres that heading vertically.
 //   7. A faded address dot still occludes the cluster curve.
+//   8. Every label sits inside the canvas.
 //
-// Usage: node scripts/check-figure-geometry.mjs
-// Exits nonzero if any check fails.
+// Usage: node scripts/check-figure-geometry.mjs [name-fragment ...]
+// With arguments, only figures whose path contains one of them are checked,
+// which is the quick loop while fixing one family. Exits nonzero if any check
+// fails.
 
 import { chromium } from "playwright-core";
 import { readdirSync, readFileSync } from "node:fs";
@@ -32,6 +35,12 @@ for (const dir of figureDirs) {
   }
 }
 files.sort();
+const only = process.argv.slice(2);
+const selected = only.length > 0 ? files.filter((f) => only.some((frag) => f.includes(frag))) : files;
+if (selected.length === 0) {
+  console.error(`No figure matches ${only.join(", ")}`);
+  process.exit(1);
+}
 
 // Tangent break at each interior join of a path, in degrees. The figures use
 // absolute M/L/C/Q only; anything else is left alone rather than guessed at.
@@ -80,8 +89,15 @@ let failures = 0;
 // @font-face rules the page falls back to whatever generic serif the machine
 // has, and every clearance below is measured against a face the book will
 // never print in - which is how a coin sitting on a label passed this check.
+//
+// The faces are embedded as data URLs rather than named by file URL. The page
+// is loaded with setContent, which leaves it at about:blank, and Chromium will
+// not fetch a file: URL from there: every @font-face silently failed and the
+// check went on measuring the fallback, which is how a label 9 units past its
+// canvas edge passed. Reading the font here and inlining it has no origin to
+// be refused from, and fontsLoaded below fails the run if any face still does.
 const fontFace = (family, file, extra = "") =>
-  `@font-face{font-family:"${family}";src:url("${pathToFileURL(join(repoRoot, "assets", "fonts", file)).href}");${extra}}`;
+  `@font-face{font-family:"${family}";src:url("data:font/ttf;base64,${readFileSync(join(repoRoot, "assets", "fonts", file)).toString("base64")}");${extra}}`;
 const FONTS = [
   fontFace("Gelasio", "Gelasio-Regular.ttf", "font-weight:normal;font-style:normal;"),
   fontFace("Gelasio", "Gelasio-Bold.ttf", "font-weight:bold;font-style:normal;"),
@@ -90,11 +106,20 @@ const FONTS = [
   fontFace("DejaVu Sans Mono", "DejaVuSansMono-Bold.ttf", "font-weight:bold;font-style:normal;"),
 ].join("");
 
-for (const file of files) {
+for (const file of selected) {
   await page.setContent(
     `<!doctype html><style>body{margin:0}${FONTS}</style>${readFileSync(file, "utf8")}`,
   );
-  await page.evaluate(() => document.fonts.ready);
+  // A face no label on this figure happens to use is never fetched on its own,
+  // so each is loaded by hand; what is checked is that none of them failed.
+  const unloaded = await page.evaluate(async () => {
+    await Promise.all([...document.fonts].map((f) => f.load().catch(() => {})));
+    return [...document.fonts].filter((f) => f.status !== "loaded").map((f) => `${f.family} ${f.weight} ${f.style}`);
+  });
+  if (unloaded.length > 0) {
+    console.error(`bundled font(s) failed to load, so nothing below is measured in the book's faces: ${unloaded.join(", ")}`);
+    process.exit(1);
+  }
   const fig = await page.evaluate(() => {
     const svg = document.querySelector("svg");
     const inv = svg.getScreenCTM().inverse();
@@ -388,6 +413,22 @@ for (const file of files) {
     fail(`faded address dot at ${d.cx.toFixed(0)},${d.cy.toFixed(0)} lets the curve through; ` +
          `draw an opaque white disc behind it, before its faded group`);
   }
+
+  // 8. The PDF sets the figure at the text width and clips it to the viewBox,
+  // so a label past the canvas edge is not a label that runs into the margin:
+  // it is a label with its end cut off. Anything past the edge fails; a label
+  // that stops within 2 units of it is printing against the trim of the figure.
+  for (const t of fig.texts) {
+    if (!t.s) continue; // an empty label has no box to be clipped
+    const over = Math.max(vx - t.x1, vy - t.y1, t.x2 - (vx + vw), t.y2 - (vy + vh));
+    if (over <= -2) continue;
+    const key = `canvas:${t.s}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    fail(over > 0
+      ? `"${t.s.slice(0, 40)}" runs ${over.toFixed(1)} past the canvas edge and is clipped`
+      : `"${t.s.slice(0, 40)}" stops within ${(-over).toFixed(1)} of the canvas edge`);
+  }
 }
 
 await browser.close();
@@ -396,4 +437,4 @@ if (failures > 0) {
   console.error(`\n${failures} figure geometry failure(s).`);
   process.exit(1);
 }
-console.log(`Figure geometry clean across ${files.length} figures.`);
+console.log(`Figure geometry clean across ${selected.length} figure(s).`);

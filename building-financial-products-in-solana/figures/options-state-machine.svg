@@ -3,25 +3,25 @@
   <defs><marker id="options-states-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <!-- entry -->
   <path d="M 14,150 L 54,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
-  <text x="36" y="116" font-size="10.5" text-anchor="middle">write_option()</text>
+  <text x="40" y="116" font-size="10.5" text-anchor="middle">write_option()</text>
   <!-- Listed -->
   <rect x="58" y="125" width="118" height="50" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="117" y="147" font-size="13" font-weight="bold" text-anchor="middle">Listed</text>
   <text x="117" y="165" font-size="10" fill="#444" text-anchor="middle">collateral in the vault</text>
   <!-- Held -->
-  <rect x="246" y="125" width="118" height="50" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="305" y="147" font-size="13" font-weight="bold" text-anchor="middle">Held</text>
-  <text x="305" y="165" font-size="10" fill="#444" text-anchor="middle">premium paid to the writer</text>
+  <rect x="240" y="125" width="130" height="50" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="302" y="147" font-size="13" font-weight="bold" text-anchor="middle">Held</text>
+  <text x="302" y="165" font-size="10" fill="#444" text-anchor="middle">premium paid to the writer</text>
   <!-- Exercised -->
   <rect x="434" y="125" width="118" height="50" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="493" y="147" font-size="13" font-weight="bold" text-anchor="middle">Exercised</text>
   <text x="493" y="165" font-size="10" fill="#444" text-anchor="middle">strike in, collateral out</text>
   <!-- transitions along the top row -->
-  <path d="M 178,150 L 242,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
-  <text x="210" y="116" font-size="10.5" text-anchor="middle">buy_option()</text>
-  <path d="M 366,150 L 430,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
-  <text x="398" y="115" font-size="10.5" text-anchor="middle">exercise_option()</text>
-  <text x="398" y="143" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(before expiry)</text>
+  <path d="M 178,150 L 232,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
+  <text x="205" y="116" font-size="10.5" text-anchor="middle">buy_option()</text>
+  <path d="M 370,150 L 430,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
+  <text x="401" y="115" font-size="10.5" text-anchor="middle">exercise_option()</text>
+  <text x="401" y="143" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(before expiry)</text>
   <!-- terminal: the option closed -->
   <rect x="246" y="228" width="148" height="52" fill="#f4f4f2" stroke="#111" stroke-width="2"/>
   <text x="320" y="248" font-size="11" font-weight="bold" text-anchor="middle">option closed</text>

@@ -5,11 +5,11 @@
   <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- untouched by deposit_liquidity() -->
-  <circle cx="283" cy="47.7415" r="7" fill="#fff"/>
+  <circle cx="285" cy="47.923" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="283" cy="47.7415" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="275" y="11.0307" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(283,15.0307)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <circle cx="285" cy="47.923" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="277" y="11.0307" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(285,15.0307)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="303" y="25.4307" font-size="9.5" font-weight="bold">ACME mint</text>
   </g>
   <circle cx="488" cy="76.4582" r="7" fill="#fff"/>
@@ -21,11 +21,11 @@
   </g>
   <!-- Maria signs the first deposit -->
   <g>
-  <circle cx="108" cy="37.5425" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="16" y="43.7873" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="110" cy="37.602" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="43.7873" width="102" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,48.7873)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="44" y="59.7873" font-size="9.5" font-weight="bold">Maria</text>
-  <line x1="24" y1="64.7873" x2="108" y2="64.7873" stroke="#888" stroke-width="0.8"/>
+  <line x1="24" y1="64.7873" x2="110" y2="64.7873" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="75.7873" font-size="8.5" fill="#444">1 SOL</text>
   </g>
   <g>
@@ -33,10 +33,10 @@
   <text x="34" y="108.787" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
   <text x="34" y="117.787" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="34" y="126.787" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
-  <rect x="16" y="132.787" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="16" y="132.787" width="102" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,137.787)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="44" y="148.787" font-size="9.5" font-weight="bold">Maria&#8217;s ACME</text>
-  <line x1="24" y1="153.787" x2="108" y2="153.787" stroke="#888" stroke-width="0.8"/>
+  <line x1="24" y1="153.787" x2="110" y2="153.787" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="164.787" font-size="8.5" font-weight="bold">0 ACME</text>
   </g>
   <g>
@@ -44,10 +44,10 @@
   <text x="34" y="185.787" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
   <text x="34" y="194.787" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="34" y="203.787" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="16" y="209.787" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="16" y="209.787" width="102" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,214.787)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="44" y="225.787" font-size="9.5" font-weight="bold">Maria&#8217;s USDC</text>
-  <line x1="24" y1="230.787" x2="108" y2="230.787" stroke="#888" stroke-width="0.8"/>
+  <line x1="24" y1="230.787" x2="110" y2="230.787" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="241.787" font-size="8.5" font-weight="bold">100 USDC</text>
   </g>
   <g>
@@ -55,63 +55,63 @@
   <text x="34" y="262.787" font-size="7" letter-spacing="0.3" fill="#555">MARIA&#8217;S ADDRESS +</text>
   <text x="34" y="271.787" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="34" y="280.787" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
-  <rect x="16" y="286.787" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="16" y="286.787" width="102" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,291.787)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="44" y="302.787" font-size="9.5" font-weight="bold">Maria&#8217;s LP</text>
-  <line x1="24" y1="307.787" x2="108" y2="307.787" stroke="#888" stroke-width="0.8"/>
+  <line x1="24" y1="307.787" x2="110" y2="307.787" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="318.787" font-size="8.5" font-weight="bold">599.9999 LP</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="108" y="318.787" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="110" y="318.787" font-size="8" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <!-- the other three are not in this step -->
-  <circle cx="225" cy="43.1592" r="7" fill="#fff"/>
+  <circle cx="227" cy="43.296" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="225" cy="43.1592" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="133" y="49.7146" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(141,53.7146)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="161" y="64.1146" font-size="9.5" font-weight="bold">Alice (LP)</text>
+  <circle cx="227" cy="43.296" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="135" y="49.7146" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,53.7146)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="163" y="64.1146" font-size="9.5" font-weight="bold">Alice (LP)</text>
   </g>
   <g opacity="0.3">
-  <circle cx="141" cy="108.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="151" y="102.715" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-  <text x="151" y="111.715" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="151" y="120.715" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
-  <rect x="133" y="126.715" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(141,130.715)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="161" y="141.115" font-size="9.5" font-weight="bold">Alice&#8217;s ACME</text>
+  <circle cx="143" cy="108.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="153" y="102.715" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="153" y="111.715" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="153" y="120.715" font-size="7" letter-spacing="0.3" fill="#555">ACME MINT</text>
+  <rect x="135" y="126.715" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,130.715)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="163" y="141.115" font-size="9.5" font-weight="bold">Alice&#8217;s ACME</text>
   </g>
   <g opacity="0.3">
-  <circle cx="141" cy="185.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="151" y="179.715" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-  <text x="151" y="188.715" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="151" y="197.715" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="133" y="203.715" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(141,207.715)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="161" y="218.115" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <circle cx="143" cy="185.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="153" y="179.715" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="153" y="188.715" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="153" y="197.715" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="135" y="203.715" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,207.715)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="163" y="218.115" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
   </g>
   <g opacity="0.3">
-  <circle cx="141" cy="262.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="151" y="256.715" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-  <text x="151" y="265.715" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="151" y="274.715" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
-  <rect x="133" y="280.715" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(141,284.715)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="161" y="295.115" font-size="9.5" font-weight="bold">Alice&#8217;s LP</text>
+  <circle cx="143" cy="262.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="153" y="256.715" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="153" y="265.715" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="153" y="274.715" font-size="7" letter-spacing="0.3" fill="#555">LP MINT</text>
+  <rect x="135" y="280.715" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,284.715)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="163" y="295.115" font-size="9.5" font-weight="bold">Alice&#8217;s LP</text>
   </g>
   <circle cx="342" cy="53.828" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="342" cy="53.828" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="250" y="60.7742" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(258,64.7742)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="278" y="75.1742" font-size="9.5" font-weight="bold">Bob</text>
+  <rect x="252" y="60.7742" width="98" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(260,64.7742)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="280" y="75.1742" font-size="9.5" font-weight="bold">Bob</text>
   </g>
   <g opacity="0.3">
-  <circle cx="258" cy="119.274" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="268" y="113.774" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-  <text x="268" y="122.774" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="268" y="131.774" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="250" y="137.774" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(258,141.774)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="278" y="152.174" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <circle cx="260" cy="119.274" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="270" y="113.774" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="270" y="122.774" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="270" y="131.774" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="252" y="137.774" width="98" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(260,141.774)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="280" y="152.174" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
   </g>
   <circle cx="459" cy="70.973" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -204,27 +204,27 @@
   <text x="488" y="712.37" font-size="8" font-style="italic" fill="#444">authority: the pool authority</text>
   </g>
   <!-- 400 ACME, account to account -->
-  <path d="M 116,152.787 C 122,158.787 128,164.787 128,182.787 C 128,278 128,338 152,356 C 194,388 360,482 474,534.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
+  <path d="M 118,152.787 C 124,158.787 130,164.787 130,182.787 C 130,278 130,338 154,356 C 196,388 360,482 474,534.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <!-- 900 USDC, account to account -->
-  <path d="M 116,229.787 C 119,234.787 121,239.787 121,253.787 C 121,330 113.053,400.137 144,432 C 223.622,513.978 360,572 474,614.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
+  <path d="M 118,229.787 C 121,234.787 123,239.787 123,253.787 C 123,330 115.053,400.137 146,432 C 225.622,513.978 360,572 474,614.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <!-- the LP receipt, minted to Maria -->
-  <path d="M 474,694.37 C 380,708.37 132.145,721.287 80,648.37 C 49.088,605.144 66,480 66,330.787" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
+  <path d="M 474,694.37 C 380,708.37 134.145,721.287 82,648.37 C 51.088,605.144 68,480 68,330.787" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <!-- the first deposit sets the price -->
   <text x="330" y="240" font-size="9" fill="#444" font-style="italic" text-anchor="middle">the first deposit sets the price:</text>
   <text x="330" y="254" font-size="9" fill="#444" font-style="italic" text-anchor="middle">the ratio she deposits <tspan font-style="normal">is</tspan> the ratio, 900 &#247; 400 = $2.25</text>
   <text x="330" y="268" font-size="9" fill="#444" font-style="italic" text-anchor="middle">K = 360,000, and &#8730;K = 600 LP</text>
   <!-- MINIMUM_LIQUIDITY: a constant, not account state -->
-  <rect class="marker" x="187.8" y="390.3" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="195.8" y="401.9" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <g class="coin" transform="translate(217.8,398.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="179.9" y="478.8" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="187.9" y="490.4" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
-  <g class="coin" transform="translate(209.9,486.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="84.2" y="666.7" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="92.2" y="678.3" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <g class="coin" transform="translate(114.2,674.7)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect x="232" y="352" width="202" height="70" fill="#fff" stroke="#888" class="key"/>
-  <rect class="marker" x="240" y="362.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="248" y="374.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <text x="266" y="374" font-size="10.5" font-weight="bold" fill="#1e7a3c">Deposit 400 ACME into the pool</text>
-  <rect class="marker" x="240" y="380.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="248" y="392.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
-  <text x="266" y="392" font-size="10.5" font-weight="bold" fill="#1e7a3c">Deposit 900 USDC alongside it</text>
-  <rect class="marker" x="240" y="398.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="248" y="410.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <text x="266" y="410" font-size="10.5" font-weight="bold" fill="#1e7a3c">Mint 599.9999 LP to Maria</text>
+  <rect class="marker" x="189.8" y="390.3" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="197.8" y="401.9" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(219.8,398.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="181.9" y="478.8" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="189.9" y="490.4" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(211.9,486.8)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="86.2" y="666.7" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="94.2" y="678.3" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(116.2,674.7)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="234" y="352" width="200" height="70" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="242" y="362.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="250" y="374.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="268" y="374" font-size="10.5" font-weight="bold" fill="#1e7a3c">Deposit 400 ACME into the pool</text>
+  <rect class="marker" x="242" y="380.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="250" y="392.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="268" y="392" font-size="10.5" font-weight="bold" fill="#1e7a3c">Deposit 900 USDC alongside it</text>
+  <rect class="marker" x="242" y="398.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="250" y="410.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="268" y="410" font-size="10.5" font-weight="bold" fill="#1e7a3c">Mint 599.9999 LP to Maria</text>
 </svg>

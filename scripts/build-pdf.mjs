@@ -565,7 +565,7 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc { page: chapter-start; break-after: page; }
 .book-toc h1 { font-size: 24pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { font-size: 10pt; }
+.book-toc li { font-size: 10pt; break-inside: avoid; }
 .book-toc li a { display: flex; align-items: baseline; }
 /* "Chapter 20" sets the width: at 54pt the two-digit labels wrapped, so the
    number printed on a line of its own under the word. Never wrap a label, and
@@ -575,7 +575,13 @@ a { color: #111 !important; text-decoration: none; }
    to the right of the chapter titles beneath them. */
 .book-toc .label { flex: 0 0 auto; min-width: 64pt; white-space: nowrap; }
 .book-toc .t { flex: 1; padding-right: 1em; }
-.book-toc .pg { flex: 0 0 auto; }
+/* The page numbers are written in after Paged.js has laid the pages out, so
+   the number's width has to be reserved while the span is still empty. Without
+   the reservation a title that just fitted the row wraps once its number
+   arrives, every row below it moves down, and the rows that no longer fit are
+   pushed into an overflow column off the right of the page: the last two rows
+   of the contents printed nowhere. 2.4em holds three digits with room. */
+.book-toc .pg { flex: 0 0 auto; min-width: 2.4em; text-align: right; }
 .book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }
 .book-toc li.toc-section { margin: 0.08em 0 0.08em 1.6em; }
 .book-toc li.toc-part {
@@ -828,6 +834,60 @@ const openingPages = await page.evaluate(() => {
   return [...opening.values()].sort((a, b) => a.number - b.number);
 });
 
+// Nothing printed may fall outside its boundary. Paged.js clips every page to
+// its content area, and a figure is clipped to its own box, so a line that
+// lands past either edge is not a line in the margin but a line cut off: the
+// offer account's wanted amount lost its last three digits this way, and the
+// figure check did not see it because the label was measured in a fallback
+// face. Every text box is measured here in the faces the PDF embeds, against
+// the page it sits on, the footnote area if it is a note, and the figure box
+// if it is a figure label. Half a point of tolerance covers rounding.
+const overflows = await page.evaluate(() => {
+  const TOL = 0.75;
+  const out = [];
+  const within = (r, area, tol = TOL) =>
+    r.left >= area.left - tol && r.right <= area.right + tol && r.top >= area.top - tol && r.bottom <= area.bottom + tol;
+  const excess = (r, area) =>
+    [["left", area.left - r.left], ["right", r.right - area.right], ["top", area.top - r.top], ["bottom", r.bottom - area.bottom]]
+      .filter(([, by]) => by > TOL).map(([side, by]) => `${by.toFixed(1)}px past the ${side}`).join(", ");
+  for (const pageEl of document.querySelectorAll(".pagedjs_page")) {
+    const number = pageEl.getAttribute("data-page-number");
+    const content = pageEl.querySelector(".pagedjs_page_content");
+    if (!content) continue;
+    const footnotes = pageEl.querySelector(".pagedjs_footnote_area");
+    const roots = [[content, "text column"]];
+    if (footnotes) roots.push([footnotes, "footnote area"]);
+    for (const [root, name] of roots) {
+      const bound = root.getBoundingClientRect();
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        if (!node.textContent.trim() || node.parentElement.closest("svg")) continue;
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        for (const rect of range.getClientRects()) {
+          if (rect.width === 0 || rect.height === 0 || within(rect, bound)) continue;
+          out.push(`page ${number}: "${node.textContent.trim().slice(0, 50)}" is ${excess(rect, bound)} of the ${name}`);
+        }
+      }
+    }
+    const bound = content.getBoundingClientRect();
+    for (const block of content.querySelectorAll("pre, table, figure, blockquote")) {
+      const rect = block.getBoundingClientRect();
+      if (rect.width === 0 || within(rect, bound)) continue;
+      out.push(`page ${number}: a ${block.tagName.toLowerCase()} is ${excess(rect, bound)} of the text column`);
+    }
+    for (const svg of content.querySelectorAll("figure svg")) {
+      const box = svg.getBoundingClientRect();
+      for (const label of svg.querySelectorAll("text")) {
+        const rect = label.getBoundingClientRect();
+        if (rect.width === 0 || within(rect, box, 1)) continue;
+        out.push(`page ${number}: figure label "${label.textContent.trim().slice(0, 40)}" is ${excess(rect, box)} of its figure and clipped`);
+      }
+    }
+  }
+  return out;
+});
+
 const printed = await page.pdf({ preferCSSPageSize: true });
 await browser.close();
 
@@ -898,6 +958,14 @@ if (unlinkedLines.length > 0) {
     console.error(`  ${href}: ${lines} line(s), ${annotations} annotation(s)`);
   }
   process.exitCode = 1;
+}
+
+if (overflows.length > 0) {
+  console.error(`\n${overflows.length} piece(s) of text fall outside their boundary and print clipped:`);
+  for (const line of overflows) console.error(`  ${line}`);
+  process.exitCode = 1;
+} else {
+  console.log("Every line and figure label sits inside its page, note area and figure box.");
 }
 
 const strays = openingPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);

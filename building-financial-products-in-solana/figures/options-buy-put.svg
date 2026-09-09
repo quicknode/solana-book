@@ -92,15 +92,15 @@
   <text x="356" y="165.47" font-size="10.5" font-weight="bold">Dave&#8217;s NVDAx</text>
   </g>
   <g>
-  <circle cx="336" cy="209.47" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="346" y="203.97" font-size="7" letter-spacing="0.3" fill="#555">DAVE&#8217;S ADDRESS +</text>
-  <text x="346" y="212.97" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="346" y="221.97" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="328" y="227.97" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(336,232.97)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="356" y="243.97" font-size="10.5" font-weight="bold">Dave&#8217;s USDC</text>
-  <line x1="336" y1="248.97" x2="440" y2="248.97" stroke="#888" stroke-width="0.8"/>
-  <text x="336" y="259.97" font-size="9" font-weight="bold">980 USDC</text>
+  <circle cx="336" cy="212.47" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="346" y="206.97" font-size="7" letter-spacing="0.3" fill="#555">DAVE&#8217;S ADDRESS +</text>
+  <text x="346" y="215.97" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
+  <text x="346" y="224.97" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <rect x="328" y="230.97" width="120" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(336,235.97)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="356" y="246.97" font-size="10.5" font-weight="bold">Dave&#8217;s USDC</text>
+  <line x1="336" y1="251.97" x2="440" y2="251.97" stroke="#888" stroke-width="0.8"/>
+  <text x="336" y="262.97" font-size="9" font-weight="bold">980 USDC</text>
   </g>
   <g>
   <circle cx="624" cy="110.81" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -162,10 +162,10 @@
   <text x="472" y="594.71" font-size="9" font-weight="bold">750.45 USDC</text>
   <text x="472" y="606.71" font-size="9" font-style="italic" fill="#444">authority: the market authority</text>
   </g>
-  <path d="M 334,228 C 330,200 324,170 318,158" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#opt-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="346" y="183" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">1. buy_option()</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="346" y="196" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">19.80 USDC</text>
-  <g class="coin" transform="translate(334,194)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <path d="M 334,231 C 330,203 324,170 318,158" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#opt-arr)"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="346" y="184.5" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">1. buy_option()</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="346" y="197.5" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">19.80 USDC</text>
+  <g class="coin" transform="translate(331.5,195.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <path d="M 448,250 C 464,270 452,560 462,588" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#opt-arr)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="440" y="458" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">2. Maria&#8217;s fee · 0.20 USDC</text>
   <g class="coin" transform="translate(453,457)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
