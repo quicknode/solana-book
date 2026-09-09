@@ -112,7 +112,7 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 ## Testing Considerations
 
-The suite (`tests/test_swap.rs`) covers each section of this chapter. Two tests, `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap`, enforce K's direction both ways, while `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` check the admin-fee exclusion, the accounting a refactor is most likely to break. Two more, `test_deposit_clamps_excess_amount_a` and `_b`, check the ratio clamp from both directions (both directions of every symmetric flow), and the three reverts-below-minimum tests enforce every slippage guard. If you write one invariant test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not lose value.
+The suite (`tests/test_swap.rs`) covers each section of this chapter. Two tests, `test_invariant_holds_after_normal_swap` and `test_invariant_holds_after_b_to_a_swap`, check K's direction both ways, while `test_lp_mint_after_swap_uses_effective_reserves` and `test_deposit_after_swap_uses_shifted_effective_ratio` check the admin-fee exclusion, the accounting a refactor is most likely to break. Two more, `test_deposit_clamps_excess_amount_a` and `_b`, check the ratio clamp from both directions (both directions of every symmetric flow), and the three reverts-below-minimum tests check every slippage guard. If you write one invariant test for your own AMM, make it the round trip: swap in, swap back, and assert the pool did not lose value.
 
 ## What You Learnt from Building the Constant-Product AMM
 

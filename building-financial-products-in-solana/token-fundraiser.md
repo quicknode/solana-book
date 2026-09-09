@@ -101,9 +101,9 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 ## The Failure Modes: One Gate per Attack
 
 - **Claiming early or after a miss** fails on the counter: `TargetNotMet`.
-- **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (enforced by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
-- **Contributing after the deadline** fails with `FundraiserEnded` (enforced by `test_contribute_after_deadline_fails`).
-- **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (enforced by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
+- **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (checked by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
+- **Contributing after the deadline** fails with `FundraiserEnded` (checked by `test_contribute_after_deadline_fails`).
+- **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (checked by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
 - **Inflating the vault directly** moves tokens but never moves the counter, so it unlocks nothing.
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.

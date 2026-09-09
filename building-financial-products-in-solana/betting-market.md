@@ -29,7 +29,7 @@ Finally, each bettor gets a **user** PDA indexing their open bet accounts, cappe
 
 ## The Operator Creates the Market
 
-Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month"), then `add_outcome()` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_initialize_event` enforces it.
+Maria is the admin. Her key is recorded in the program's config, and only she can create events, add outcomes, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month"), then `add_outcome()` twice: "Toy Story 5" and "Backrooms". Every one of these instruction handlers checks her signature against the config's stored admin via a `has_one` constraint and rejects anyone else with `Unauthorized`; the test `test_only_admin_can_initialize_event` checks it.
 
 One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome()` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
 
@@ -51,8 +51,8 @@ The month ends. In the real world, Toy Story 5 wins. In program terms, the fact 
 
 Settlement does four things, none of which involve paying bettors yet:
 
-- Marks the event Settled, so `place_bet()` now rejects with `EventNotOpen` (enforced by `test_cannot_bet_after_settle`).
-- Validates the winner structurally: the winning outcome account is re-derived from the index via its PDA seeds, and an outcome nobody bet on rejects with `OutcomeHasNoBets`, because a winning pool of zero would put a divide-by-zero in every claim (enforced by `test_settle_outcome_without_bets_fails`).
+- Marks the event Settled, so `place_bet()` now rejects with `EventNotOpen` (checked by `test_cannot_bet_after_settle`).
+- Validates the winner structurally: the winning outcome account is re-derived from the index via its PDA seeds, and an outcome nobody bet on rejects with `OutcomeHasNoBets`, because a winning pool of zero would put a divide-by-zero in every claim (checked by `test_settle_outcome_without_bets_fails`).
 - Does the fee math. The losing pool is `total_pool` minus the winning outcome's total: 600 − 400 = 200 USDC. The fee is 2% of the *losing pool only*: 4 USDC, computed in u128 and floored. The remaining 196 becomes the `distributable_losing_pool`, stored on the event. Charging the fee only on the losing side gives one guarantee: **a winner can never receive less than they staked**.
 - Transfers the 4 USDC fee out of the vault to the fee recipient's token account, signed by the event PDA.
 
@@ -71,7 +71,7 @@ The multiply runs in u128 and divides exactly once, after the multiplication, so
 Two orderings in this handler close attacks:
 
 - **The bet is removed from the user's index before the token transfer.** Effects before interactions, so no re-entry path can see stale state.
-- **The bet account itself closes at the end of the claim**, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (enforced by `test_double_claim_fails`).
+- **The bet account itself closes at the end of the claim**, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (checked by `test_double_claim_fails`).
 
 There is no `claimed` boolean to forget to check, because the account's deletion is the exit.
 
@@ -79,7 +79,7 @@ There is no `claimed` boolean to forget to check, because the account's deletion
 
 ## Closing Out, and an Exit From Every State
 
-Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this cheaper path rejects with `BetWon` and must use `claim_winnings()`), then closes the account and frees the slot. Both rules are enforced by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
+Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this cheaper path rejects with `BetWon` and must use `claim_winnings()`), then closes the account and frees the slot. Both rules are checked by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
 
 And what if the film festival burns down? An Open event has a second exit: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (checked by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
 

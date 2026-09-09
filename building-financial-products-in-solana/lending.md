@@ -29,7 +29,7 @@ Finally, each borrower gets one **obligation** PDA per market (seeds: `"obligati
 
 ## Prices Come In by Signature: The Feed, Freshness, and Slots
 
-Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors a Switchboard On-Demand pull feed; in production the account would *be* the Switchboard feed, decoded and verified by the program, and a production read should also reject prices whose confidence interval is too wide. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` enforces that), which keeps the tests deterministic and makes the trust arrangement unusually visible: this market's prices are true because a named key signed them recently.
+Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors a Switchboard On-Demand pull feed; in production the account would *be* the Switchboard feed, decoded and verified by the program, and a production read should also reject prices whose confidence interval is too wide. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` checks that), which keeps the tests deterministic and makes the trust arrangement unusually visible: this market's prices are true because a named key signed them recently.
 
 "Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots makes the reading handler fail with `StalePriceFeed`, slots being the clock the *Time* chapter recommends whenever an adversary would profit from stretching the window. Every handler that values anything requires a `refresh_reserve()` and `refresh_obligation()` to have run in the same transaction, with `ReserveStale` and `ObligationStale` rejecting anyone who skips it.
 
@@ -86,10 +86,10 @@ The other thing that moves over time is prices. SPCXx rallies from $250 to $300,
 
 Dave watches for liquidation opportunities. He is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler enforces three rules:
 
-- A healthy obligation cannot be touched: the health gate rejects with `ObligationHealthy` (enforced by `healthy_obligation_cannot_be_liquidated`). A liquidator cannot choose their target; they can only take positions the market has already marked unhealthy.
+- A healthy obligation cannot be touched: the health gate rejects with `ObligationHealthy` (checked by `healthy_obligation_cannot_be_liquidated`). A liquidator cannot choose their target; they can only take positions the market has already marked unhealthy.
 - The **close factor** caps one liquidation at 50% of the debt. Dave repays 1.5 SPCXx ($450).
 - The **bonus** prices his service: he seizes $450 × 1.05 = $472.50 of Carol's collateral, paid in USDC shares, every step of the conversion floored toward the borrower.
-- Overreach fails the whole call: asking to seize more collateral than the obligation holds rejects with `LiquidationTooLarge` rather than silently capping, because a silent cap would make the liquidator pay full price for less collateral (enforced by `over_seizing_liquidation_rejected_smaller_succeeds`).
+- Overreach fails the whole call: asking to seize more collateral than the obligation holds rejects with `LiquidationTooLarge` rather than silently capping, because a silent cap would make the liquidator pay full price for less collateral (checked by `over_seizing_liquidation_rejected_smaller_succeeds`).
 
 Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Taking half at a time is what the close factor buys: the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
@@ -131,7 +131,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 
 ## The Invariants: Solvency by Construction
 
-- Total liquidity = available + borrowed-with-interest − the house's accumulated fees, and the share supply is a claim on exactly that; the exchange rate cannot be moved by donating tokens to the vault (enforced by `raw_token_donation_does_not_inflate_exchange_rate`).
+- Total liquidity = available + borrowed-with-interest − the house's accumulated fees, and the share supply is a claim on exactly that; the exchange rate cannot be moved by donating tokens to the vault (checked by `raw_token_donation_does_not_inflate_exchange_rate`).
 - No action may leave an obligation past its allowed borrow value, and every valuation is fresh (same transaction) or refused.
 - Loan-to-value ≤ liquidation threshold in every valid config, so there is always a buffer between the most you can borrow and the point you can be liquidated.
 - The factor never decreases, and debt computed from it never rounds in the borrower's favor.
