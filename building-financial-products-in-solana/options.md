@@ -6,7 +6,7 @@ Bob thinks NVIDIA will pass $180 within the week, and he wants that upside for l
 
 An **option** serves them both: Alice sells Bob the right, but not the obligation, to buy her five NVDAx at $180 any time in the next week, and Bob pays her 25 USDC for it now. If NVIDIA rallies, Bob buys the shares below the market. If it does not, he loses the 25 USDC and Alice keeps it as income on shares she still owns.
 
-Alice's offer to sell five NVDAx for 900 USDC is an ordinary offer with two additions: it expires, and the taker pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option, so that the custody stays legible and the whole lifecycle fits in three states; what that choice gives up is covered in the failure-modes section.
+Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary offer with two additions: it expires, and the taker pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option, so that the custody stays legible and the whole lifecycle fits in three states; what that choice gives up is covered in the failure-modes section.
 
 ## An Option Is a Right on One Side and an Obligation on the Other
 
