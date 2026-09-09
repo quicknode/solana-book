@@ -93,7 +93,7 @@ The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in 
 
 ## What You Learnt from Building the Prop AMM
 
-The inversion this chapter taught is that the market maker can be the pool: one firm quotes its own capital at oracle prices, with no depositor, curve, or LP token involved. A market-making desk still lives inside it, one role per field. The oracle is the trader quoting two-sided prices, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when the world moves, and `paused` is the desk pulling them entirely.
+A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. In this program the desk is the pool: one firm quotes its own capital at oracle prices, with no depositor, curve, or LP token involved. The oracle is the trader quoting two-sided prices, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when the world moves, and `paused` is the desk pulling them entirely.
 
 Five concepts came with the prop AMM:
 

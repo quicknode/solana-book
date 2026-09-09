@@ -148,7 +148,7 @@ If you write one test after reading this chapter, write the vault-swap one for y
 
 ## What You Learnt from Building the Order Book Exchange
 
-Price-time priority is a rule, and a rule can be a data structure: the critbit trees hold the book in the order the matching engine at NYSE, NASDAQ, or the CME would walk it. Those exchanges also staff a clearing house and a settlement system. Here the clearing house's internal ledger is the unsettled balances, and settlement is `settle_funds()`, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
+NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This program's matching engine is two critbit trees holding the book in price-time order, its clearing house's internal ledger is the unsettled balances, and its settlement is `settle_funds()`, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
 
 The order book added five concepts on top of the escrow's:
 

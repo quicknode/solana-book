@@ -6,13 +6,13 @@ The program lives at `finance/token-fundraiser` in the companion repository. It 
 
 ## Success and Failure Are Both Written Down in Advance
 
-Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two futures. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
+Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
 
 The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both.
 
 ![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
 
-![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that opened the first future closes this one.](figures/fundraiser-failure-future.svg)
+![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that decided the first ending decides this one.](figures/fundraiser-failure-future.svg)
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
@@ -69,7 +69,7 @@ One problem survives success, and you will meet it in your own designs: the elev
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Now take the other future. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Now take the other ending. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 The order inside that handler is checks-effects-interactions: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and it appears wherever money exits in this book.
 

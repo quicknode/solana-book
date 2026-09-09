@@ -147,7 +147,7 @@ The suite is the largest in the companion repository: a mock oracle the tests se
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
-The idea this chapter added is pre-funded solvency: every position reserves its maximum payout when it opens, so the pool can never owe more than it holds. Everything a futures exchange staffs falls out of that one reservation. The pool is the clearing house and the counterparty, the maintenance margin and the reservation are its margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
+A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. One reservation does most of that work: every position reserves its maximum payout when it opens, so the pool can never owe more than it holds. The pool is the clearing house and the counterparty, the maintenance margin and the reservation are its margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
 This capstone added four concepts:
 
