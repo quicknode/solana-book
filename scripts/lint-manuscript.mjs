@@ -120,11 +120,18 @@ const rules = [
     "American spelling doubles the l only when the stress falls on the last syllable: canceling, modeling"],
   [/\bcancellable\b|\bcentre\b|\bcentrepiece\b|\blicence(?:s|d)?\b/i,
     'American spelling in prose: cancelable, center, centerpiece, license'],
-  // One apostrophe and one set of quotes across the manuscript. A curly
-  // apostrophe reached six figure captions by way of a word processor; the
-  // build sets whichever it is given, so the two forms print differently.
+  // One apostrophe and one set of quotes in the source, both straight. The
+  // build sets them typographically (’ and “ ”) in prose and leaves code
+  // alone, so nothing is gained by typing the curly forms and something is
+  // lost: a curly apostrophe reached six figure captions by way of a word
+  // processor once, and the two forms then read differently to grep.
   [/[\u2018\u2019\u201c\u201d]/,
-    "use a straight apostrophe (') and straight quotes (\"), as the rest of the manuscript does"],
+    "use a straight apostrophe (') and straight quotes (\"); the build sets them typographically"],
+  // The build sets every single quote as an apostrophe, because a quotation
+  // inside a quotation does not occur in the manuscript. A single quote that
+  // opens a word would print as an apostrophe hanging off its front.
+  [/(?:^|[\s(\[])'(?=[A-Za-z0-9])/,
+    "a single quote is always an apostrophe here; set a quotation in double quotes"],
   // One italic marker. Underscores also blind the chapter-reference check
   // below, because an underscore is a word character, so `\b` never fires
   // against the start of _Arithmetic of Money_ and the reference reads clean.
@@ -452,6 +459,13 @@ const figureDirs = [
 ];
 
 const svgRules = [
+  // Figure text is typed with the same straight apostrophe and straight
+  // quotes as the chapters, and the build sets both typographically when it
+  // inlines the figure. Seventy figures once carried the curly forms as
+  // numeric entities and nine as literal characters, so the same label read
+  // three ways to grep.
+  [/&#821[67];|&#822[01];|&#x201[89a-d];|&(?:[lr]squo|[lr]dquo);|[\u2018\u2019\u201c\u201d]/,
+    "use a straight apostrophe (') and straight quotes (\") in figure text; the build sets them typographically"],
   [/<rect(?![^>]*class="marker")[^>]*\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
   [/<rect[^>]*\bry="/, "set rx only on rects; ry duplicates it (ellipse glyphs are exempt)"],
   [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],

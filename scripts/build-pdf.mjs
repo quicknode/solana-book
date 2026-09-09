@@ -286,6 +286,57 @@ const markUrls = (html) =>
       : `${whole} (<span class="url">${breakableUrl(printedAddress(href))}</span>)`,
   );
 
+// Typographic quotes. The manuscript is typed with the straight apostrophe and
+// the straight double quote, one form each so that grep and the lint see one
+// thing, and this is where they become the marks a typeset book carries: the
+// apostrophe ’ and the pair “ ”. That is the convention of every technical
+// publisher (O'Reilly's house style sets them so), and a straight quote in
+// running text is the one typewriter habit a reader notices on a printed page.
+// Code keeps its straight quotes, in a span or a block, because "offer" in a
+// seed is the byte the program compares and not a mark of speech. Only text
+// runs are touched, so attributes, scripts, and styles pass through, and the
+// inlined figures get the same treatment as the captions beneath them.
+//
+// A double quote opens when nothing, whitespace, or an opening bracket comes
+// before it and closes otherwise; the character before is tracked across
+// inline tags so that ("<em>x</em>") and <em>word</em>" both come out right.
+// A single quote is always an apostrophe: the manuscript never nests a
+// quotation inside a quotation, and the lint holds it to that, so 'til and
+// '90s also print as the elisions they are.
+const untouchedElements = new Set(["code", "pre", "script", "style"]);
+const inlineElements = new Set(["a", "abbr", "b", "em", "i", "small", "span", "strong", "sub", "sup", "tspan"]);
+const typographicQuotes = (html) => {
+  let out = "";
+  let previous = "";
+  let untouchedUntil = null;
+  for (const token of html.split(/(<[^>]+>)/)) {
+    if (token.startsWith("<")) {
+      out += token;
+      const name = token.match(/^<\/?([a-zA-Z][a-zA-Z0-9]*)/)?.[1]?.toLowerCase();
+      if (untouchedUntil) {
+        if (token.startsWith("</") && name === untouchedUntil) untouchedUntil = null;
+      } else if (untouchedElements.has(name) && !token.startsWith("</")) {
+        untouchedUntil = name;
+      } else if (name && !inlineElements.has(name)) {
+        previous = "";
+      }
+      continue;
+    }
+    if (untouchedUntil || token === "") {
+      out += token;
+      continue;
+    }
+    const text = token.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    out += text.replace(/["']/g, (quote, index) => {
+      if (quote === "'") return "’";
+      const before = index === 0 ? previous : text[index - 1];
+      return before === "" || /[\s(\[{‘“]/.test(before) ? "“" : "”";
+    });
+    previous = text.at(-1);
+  }
+  return out;
+};
+
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
   const id = idForPath(path);
@@ -749,13 +800,13 @@ ${includeCover ? `<div class="cover">${coverContent}</div>` : ""}
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
-  <div class="note">${advanceNote}</div>
+  <div class="note">${typographicQuotes(advanceNote)}</div>
 </div>
 <nav class="book-toc">
   <h1>Contents</h1>
-  <ol>${printedToc}</ol>
+  <ol>${typographicQuotes(printedToc)}</ol>
 </nav>
-${body}
+${typographicQuotes(body)}
 <script>window.PagedConfig = { auto: false };</script>
 <script>${pagedPolyfill}</script>
 <script>

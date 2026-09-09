@@ -32,18 +32,18 @@
   </g>
   <g>
   <circle cx="12" cy="101.66" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="96.1597" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="22" y="96.1597" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS +</text>
   <text x="22" y="105.16" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="22" y="114.16" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="4" y="120.16" width="93" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(12,125.16)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="32" y="136.16" font-size="8.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <text x="32" y="136.16" font-size="8.5" font-weight="bold">Alice's USDC</text>
   <line x1="12" y1="141.16" x2="89" y2="141.16" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="152.16" font-size="8.5" fill="#444">0 USDC</text>
   </g>
   <g>
   <circle cx="12" cy="178.66" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="173.16" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="22" y="173.16" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS +</text>
   <text x="22" y="182.16" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="22" y="191.16" font-size="7" letter-spacing="0.3" fill="#555">USDC SHARE MINT</text>
   <rect x="4" y="197.16" width="93" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -54,7 +54,7 @@
   </g>
   <g>
   <circle cx="12" cy="255.66" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="250.16" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
+  <text x="22" y="250.16" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS +</text>
   <text x="22" y="259.16" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="22" y="268.16" font-size="7" letter-spacing="0.3" fill="#555">SPCXX SHARE MINT</text>
   <rect x="4" y="274.16" width="93" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -73,18 +73,18 @@
   </g>
   <g>
   <circle cx="110" cy="105.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="120" y="100.282" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="120" y="100.282" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS +</text>
   <text x="120" y="109.282" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="120" y="118.282" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
   <rect x="102" y="124.282" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(110,129.282)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="130" y="140.282" font-size="8.5" font-weight="bold">Bob&#8217;s NVDAx</text>
+  <text x="130" y="140.282" font-size="8.5" font-weight="bold">Bob's NVDAx</text>
   <line x1="110" y1="145.282" x2="190" y2="145.282" stroke="#888" stroke-width="0.8"/>
   <text x="110" y="156.282" font-size="8.5" fill="#444">0 NVDAx</text>
   </g>
   <g>
   <circle cx="110" cy="182.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="120" y="177.282" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="120" y="177.282" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS +</text>
   <text x="120" y="186.282" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="120" y="195.282" font-size="7" letter-spacing="0.3" fill="#555">NVDAX SHARE MINT</text>
   <rect x="102" y="201.282" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -95,20 +95,20 @@
   </g>
   <g>
   <circle cx="110" cy="259.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="120" y="254.282" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
+  <text x="120" y="254.282" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS +</text>
   <text x="120" y="263.282" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="120" y="272.282" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="102" y="278.282" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(110,283.282)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="130" y="294.282" font-size="8.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <text x="130" y="294.282" font-size="8.5" font-weight="bold">Bob's USDC</text>
   <line x1="110" y1="299.282" x2="190" y2="299.282" stroke="#888" stroke-width="0.8"/>
   <text x="110" y="310.282" font-size="8.5" fill="#444">750 USDC</text>
   </g>
   <g>
   <circle cx="110" cy="336.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="120" y="331.282" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OBLIGATION&#8221; +</text>
+  <text x="120" y="331.282" font-size="7" letter-spacing="0.3" fill="#555">"OBLIGATION" +</text>
   <text x="120" y="340.282" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
-  <text x="120" y="349.282" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS</text>
+  <text x="120" y="349.282" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS</text>
   <rect x="102" y="355.282" width="114" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(110,360.282)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="130" y="371.282" font-size="8.5" font-weight="bold">obligation</text>
@@ -118,8 +118,8 @@
   </g>
   <g>
   <circle cx="110" cy="437.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="120" y="432.282" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OBLIGATION_SHARE_</text>
-  <text x="120" y="441.282" font-size="7" letter-spacing="0.3" fill="#555">VAULT&#8221; + RESERVE +</text>
+  <text x="120" y="432.282" font-size="7" letter-spacing="0.3" fill="#555">"OBLIGATION_SHARE_</text>
+  <text x="120" y="441.282" font-size="7" letter-spacing="0.3" fill="#555">VAULT" + RESERVE +</text>
   <text x="120" y="450.282" font-size="7" letter-spacing="0.3" fill="#555">OBLIGATION</text>
   <rect x="102" y="456.282" width="114" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(110,461.282)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
@@ -138,18 +138,18 @@
   </g>
   <g>
   <circle cx="211" cy="113.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="221" y="108.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="221" y="108.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS +</text>
   <text x="221" y="117.34" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="221" y="126.34" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
   <rect x="203" y="132.34" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(211,137.34)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="231" y="148.34" font-size="8.5" font-weight="bold">Carol&#8217;s USDC</text>
+  <text x="231" y="148.34" font-size="8.5" font-weight="bold">Carol's USDC</text>
   <line x1="211" y1="153.34" x2="295" y2="153.34" stroke="#888" stroke-width="0.8"/>
   <text x="211" y="164.34" font-size="8.5" fill="#444">0 USDC</text>
   </g>
   <g>
   <circle cx="211" cy="190.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="221" y="185.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="221" y="185.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS +</text>
   <text x="221" y="194.34" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="221" y="203.34" font-size="7" letter-spacing="0.3" fill="#555">USDC SHARE MINT</text>
   <rect x="203" y="209.34" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -160,20 +160,20 @@
   </g>
   <g>
   <circle cx="211" cy="267.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="221" y="262.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS +</text>
+  <text x="221" y="262.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS +</text>
   <text x="221" y="271.34" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="221" y="280.34" font-size="7" letter-spacing="0.3" fill="#555">SPCXX MINT</text>
   <rect x="203" y="286.34" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(211,291.34)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="231" y="302.34" font-size="8.5" font-weight="bold">Carol&#8217;s SPCXx</text>
+  <text x="231" y="302.34" font-size="8.5" font-weight="bold">Carol's SPCXx</text>
   <line x1="211" y1="307.34" x2="295" y2="307.34" stroke="#888" stroke-width="0.8"/>
   <text x="211" y="318.34" font-size="8.5" fill="#444">3 SPCXx</text>
   </g>
   <g>
   <circle cx="229" cy="344.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="239" y="339.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OBLIGATION&#8221; +</text>
+  <text x="239" y="339.34" font-size="7" letter-spacing="0.3" fill="#555">"OBLIGATION" +</text>
   <text x="239" y="348.34" font-size="7" letter-spacing="0.3" fill="#555">MARKET +</text>
-  <text x="239" y="357.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL&#8217;S ADDRESS</text>
+  <text x="239" y="357.34" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS</text>
   <rect x="221" y="363.34" width="118" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(229,368.34)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="249" y="379.34" font-size="8.5" font-weight="bold">obligation</text>
@@ -183,8 +183,8 @@
   </g>
   <g>
   <circle cx="229" cy="445.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="239" y="440.34" font-size="7" letter-spacing="0.3" fill="#555">&#8220;OBLIGATION_SHARE_</text>
-  <text x="239" y="449.34" font-size="7" letter-spacing="0.3" fill="#555">VAULT&#8221; + RESERVE +</text>
+  <text x="239" y="440.34" font-size="7" letter-spacing="0.3" fill="#555">"OBLIGATION_SHARE_</text>
+  <text x="239" y="449.34" font-size="7" letter-spacing="0.3" fill="#555">VAULT" + RESERVE +</text>
   <text x="239" y="458.34" font-size="7" letter-spacing="0.3" fill="#555">OBLIGATION</text>
   <rect x="221" y="464.34" width="118" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(229,469.34)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
@@ -203,12 +203,12 @@
   </g>
   <g>
   <circle cx="316" cy="125.183" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="326" y="119.683" font-size="7" letter-spacing="0.3" fill="#555">DAVE&#8217;S ADDRESS +</text>
+  <text x="326" y="119.683" font-size="7" letter-spacing="0.3" fill="#555">DAVE'S ADDRESS +</text>
   <text x="326" y="128.683" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
   <text x="326" y="137.683" font-size="7" letter-spacing="0.3" fill="#555">SPCXX MINT</text>
   <rect x="308" y="143.683" width="93" height="24" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(316,148.683)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="336" y="159.683" font-size="8.5" font-weight="bold">Dave&#8217;s SPCXx</text>
+  <text x="336" y="159.683" font-size="8.5" font-weight="bold">Dave's SPCXx</text>
   <line x1="316" y1="164.683" x2="393" y2="164.683" stroke="#888" stroke-width="0.8"/>
   </g>
   <g>
@@ -243,7 +243,7 @@
   </g>
   <g>
   <circle cx="482" cy="314.676" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="313.676" font-size="7" letter-spacing="0.3" fill="#555">&#8220;LENDING_MARKET&#8221;</text>
+  <text x="492" y="313.676" font-size="7" letter-spacing="0.3" fill="#555">"LENDING_MARKET"</text>
   <text x="492" y="322.676" font-size="7" letter-spacing="0.3" fill="#555">+ MARKET ID</text>
   <rect x="474" y="328.676" width="162" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,333.676)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
