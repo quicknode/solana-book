@@ -12,10 +12,10 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 
 An option has five terms:
 
+- Its **premium** is what the buyer pays for the right, once, up front.
 - Its **kind** is a **call**, the right to buy the underlying asset, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
-- Its **premium** is what the buyer pays for the right, once, up front.
 - Its two parties are the **writer**, who sells the right, and the **holder**, who holds it. Using the right is **exercising** the option.
 
 The two sides have different shapes, and the shapes are the whole subject:
