@@ -33,7 +33,7 @@ At the far end sit **price feed networks** like Pyth and Switchboard, which aggr
 
 The third question, **what happens when publication stops**, is the one designs forget. Feeds go stale during outages; committees deadlock; admins lose keys or interest. A program whose only paths require fresh truth is a program that can strand everyone's funds by hearing nothing. The staleness checks above handle the safety half (never act on old truth); the liveness half belongs to the state machine: an exit from every state that does not depend on the feed. The betting market can be canceled and refunded without an outcome ever being declared. A lending market whose oracle dies needs an escape hatch.[^escape-hatch] When you choose a trusted source, decide at the same time what the program does when it goes silent.
 
-One more rule applies: **the fact's meaning must be pinned when the money commits, not when the fact arrives.** The betting market locks its outcome list the moment the first bet lands and snapshots its fee at event creation, so the question bettors staked on cannot be rewritten before it is answered. Whatever the source, the terms are fixed when the money enters, and only the answer arrives later.
+One more rule applies: **the fact's meaning must be fixed when the money commits, not when the fact arrives.** The betting market locks its outcome list the moment the first bet lands and snapshots its fee at event creation, so the question bettors staked on cannot be rewritten before it is answered. Whatever the source, the terms are fixed when the money enters, and only the answer arrives later.
 
 The price-manipulation section of the *Adversary* chapter covers the case these checks cannot catch: a signed fact that is fresh, confident, correctly verified, and *engineered*, a true report of a market the attacker just manipulated.
 
@@ -41,7 +41,7 @@ The price-manipulation section of the *Adversary* chapter covers the case these 
 
 - A fact is onchain truth because a key the program trusts vouched for it, either by signing your transaction directly or by signing offchain for an oracle program to verify and record in an account. Either way the publication is input: check its provenance, its freshness (in the right clock), its confidence, and its degenerate values.
 - Trust is an engineering parameter: a single key, a committee, or a feed network, chosen by asking who publishes, what lying costs them, and what happens when they go silent.
-- Pin the fact's meaning when the money commits, and give every state an exit that does not depend on the feed.
+- Fix the fact's meaning when the money commits, and give every state an exit that does not depend on the feed.
 
 [^negative-oil]: WTI crude oil futures traded as low as −$40.32 a barrel on 20 April 2020, the first negative price since the contract began trading in 1983, after storage filled and holders of the expiring May contract paid counterparties to take delivery off their hands. The EIA's account is at [eia.gov/todayinenergy/detail.php?id=43495](https://www.eia.gov/todayinenergy/detail.php?id=43495).
 

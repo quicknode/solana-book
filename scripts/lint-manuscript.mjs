@@ -365,6 +365,10 @@ const wordinessRules = [
   // "confirmed" is one of Solana's three commitment levels, alongside
   // processed and finalized. Using "confirm" loosely for "check" puts a
   // reserved word on an unrelated idea, in a book that teaches the levels.
+  // "Pin" in both of the manuscript's senses: what a test does ("pinned by
+  // test_x", "the test pins it") and a value fixed when an account is made
+  // ("pinned at creation"). The author ruled both out.
+  [/\bpin(?:s|ned|ning)?\b/i, 'a test enforces, checks, or asserts; a value is fixed or recorded at creation'],
   [/\bconfirms?\b(?! that a supermajority)/i,
     'say "check": "confirmed" is a commitment level in this book, not a synonym for checking'],
 ];

@@ -12,7 +12,7 @@ Two different people hold power in this program, and their separation is its fir
 
 Victor runs `initialize_registry()` once, creating the **registry**: the curator record at the root of an approved-asset set. The registry holds no list; the account stores only the curator's authority. Victor then runs `approve_asset()` for each asset he vets, and each call creates an **`ApprovedAsset`** account at a PDA derived from the registry and the asset's mint (seeds: `"approved_asset"`, the registry, the mint), binding that mint to its official Pyth price feed. An asset is approved if it has an `ApprovedAsset` account, and not approved if it does not. Victor vets which assets and which feeds are safe, so a manager cannot list a token they minted themselves, and cannot pair a real asset with a price feed they control. When Maria later adds an asset to her strategy, the feed address is copied out of the `ApprovedAsset` account; the manager never supplies a price feed.
 
-The approved set is stocks, bonds, whatever investors actually want. It cannot include the manager's own token: `add_asset()` checks approval by deriving the `ApprovedAsset` address for the mint it is handed, so adding an unapproved asset fails because the account does not exist (pinned by `test_add_asset_rejects_unapproved`).
+The approved set is stocks, bonds, whatever investors actually want. It cannot include the manager's own token: `add_asset()` checks approval by deriving the `ApprovedAsset` address for the mint it is handed, so adding an unapproved asset fails because the account does not exist (enforced by `test_add_asset_rejects_unapproved`).
 
 ![A manager may select from the approved set but never add to it; only Victor's authority creates an ApprovedAsset.](figures/vault-registry.svg)
 
@@ -30,7 +30,7 @@ The indexes guard the valuation: every handler that computes the fund's value wa
 
 Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy()` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund *by configuration*, and the cap is the program refusing to make that a parameter.
 
-She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight()`, and only Maria: the manager gate is pinned by `test_set_weight_rejects_non_manager`.
+She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight()`, and only Maria: the manager gate is enforced by `test_set_weight_rejects_non_manager`.
 
 ## A Deposit Makes the Program Acquire Assets
 
@@ -38,7 +38,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 **First it values the fund.** It walks every asset: reads the vault balance, loads the Pyth price, and accumulates value in u128 as amount × price ÷ 10^8, multiply before divide. The price load rejects a feed that is not the one recorded in the asset config, a price that is not positive, or a price older than 60 seconds. The USDC vault is added to the total. That total is the **net asset value**, the NAV. On the fund's first deposit the NAV is zero and shares are minted one-to-one: Alice's 900 USDC becomes 900 shares.
 
-**Then it deploys the money at the weights.** 40% of 900, $360, buys TSLAx at $250: 1.44 TSLAx into the TSLAx vault. 60%, $540, buys NVDAx at $180: exactly 3 NVDAx. The swaps run through the router fixed at strategy creation (the example ships a mock router standing in for Jupiter; a router that is not the configured one is rejected, pinned by `test_deposit_rejects_unregistered_router`), and the strategy PDA signs.
+**Then it deploys the money at the weights.** 40% of 900, $360, buys TSLAx at $250: 1.44 TSLAx into the TSLAx vault. 60%, $540, buys NVDAx at $180: exactly 3 NVDAx. The swaps run through the router fixed at strategy creation (the example ships a mock router standing in for Jupiter; a router that is not the configured one is rejected, enforced by `test_deposit_rejects_unregistered_router`), and the strategy PDA signs.
 
 **And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output *from the oracle price* and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot approve a bad fill, because the minimum is never theirs to supply. **When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
@@ -54,7 +54,7 @@ But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund agains
 
 ## A Later Investor Buys In at the New Price
 
-Bob, the second investor, deposits 480 USDC of his standard wallet. He is not early, and the share math prices that in: shares = deposit × total shares ÷ NAV, floored. With 900 shares outstanding against a $960 NAV, his 480 buys 450 shares, not 480. Alice's early position is not diluted by his arrival, and the test suite pins the fairness directly (`test_deposit_fair_pricing`). His money deploys 40/60 at current prices, same as hers, same slippage floor.
+Bob, the second investor, deposits 480 USDC of his standard wallet. He is not early, and the share math prices that in: shares = deposit × total shares ÷ NAV, floored. With 900 shares outstanding against a $960 NAV, his 480 buys 450 shares, not 480. Alice's early position is not diluted by his arrival, and the test suite checks the fairness directly (`test_deposit_fair_pricing`). His money deploys 40/60 at current prices, same as hers, same slippage floor.
 
 ## The Manager's Fee Arrives by Dilution
 
@@ -91,7 +91,7 @@ Every formula in the program is a proportion, and they all round the same way. S
 
 ## Testing Considerations
 
-The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`). It then pins each rule separately. Under-allocated strategies refuse deposits, unapproved assets refuse listing, weight overflows refuse, the 17th asset refuses, and non-managers cannot set weights. Unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
+The suite (with hand-built Pyth price-update accounts injected so prices are deterministic) covers the full lifecycle end to end (`test_full_lifecycle`). It then checks each rule separately. Under-allocated strategies refuse deposits, unapproved assets refuse listing, weight overflows refuse, the 17th asset refuses, and non-managers cannot set weights. Unregistered routers refuse, slippage floors reject on deposit and withdrawal, incomplete account lists refuse, and later depositors pay fair NAV. The pattern to copy is the price injection: valuation code cannot be tested with prices you cannot control, so the harness makes the feed a fixture and then moves it deliberately.
 
 ## What You Learnt from Building the Vault Strategy
 

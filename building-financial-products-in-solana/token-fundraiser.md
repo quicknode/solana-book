@@ -61,7 +61,7 @@ The cost is that the program's books cover only what came in through it. Tokens 
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
-`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The fundraiser is not marked finished; its account is gone, so a second claim has nothing to read, and double-claiming is impossible without any flag to check. The test `test_check_contributions_success_pays_maker_and_closes_vault` pins all three effects.
+`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The fundraiser is not marked finished; its account is gone, so a second claim has nothing to read, and double-claiming is impossible without any flag to check. The test `test_check_contributions_success_pays_maker_and_closes_vault` asserts all three effects.
 
 One problem survives success, and you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone. The program omits it, and the omission is the kind to look for in your own programs: *for every account your program creates, name the handler that eventually closes it.*
 
@@ -101,9 +101,9 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 ## The Failure Modes: One Gate per Attack
 
 - **Claiming early or after a miss** fails on the counter: `TargetNotMet`.
-- **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (pinned by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
-- **Contributing after the deadline** fails with `FundraiserEnded` (pinned by `test_contribute_after_deadline_fails`).
-- **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (pinned by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
+- **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (enforced by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
+- **Contributing after the deadline** fails with `FundraiserEnded` (enforced by `test_contribute_after_deadline_fails`).
+- **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (enforced by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
 - **Inflating the vault directly** moves tokens but never moves the counter, so it unlocks nothing.
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
