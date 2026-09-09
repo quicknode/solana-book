@@ -224,7 +224,7 @@ When you build your own, copy the shape of the two boundary tests: a deadline ne
 
 ## What You Learnt from Building the Options Venue
 
-One rule carried this chapter: post the whole obligation before you sell the right. An options exchange needs a clearing house standing behind every writer, a margin department watching every account, and a settlement desk on expiry day, and the rule takes each job in turn. The clearing house is the vault, the margin department has nothing to watch, and settlement is two token transfers the holder triggers.
+An options exchange needs a clearing house standing behind every writer, a margin department watching every account, and a settlement desk on expiry day. In this program, making the writer post the whole obligation before they sell the right does all three jobs. The clearing house is the vault, the margin department has nothing to watch, and settlement is two token transfers the holder triggers.
 
 The options venue added six concepts:
 
