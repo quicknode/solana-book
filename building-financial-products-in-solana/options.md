@@ -27,8 +27,8 @@ The two sides have different shapes, and the shapes are the whole subject:
 
 Traditional options venues let a writer take on that obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault.**
 
-- A call writer posts the underlying itself, so the call is **covered**: the shares the holder might buy are already in custody, and the writer cannot fail to deliver them.
-- A put writer posts the full strike in the quote token, so the put is **cash-secured**: the money the holder might be paid is already in custody, and the writer cannot fail to pay.
+- A call writer supplies the underlying asset to the program, so the call is **covered**: the shares the holder might buy are already in custody, and the writer cannot fail to deliver them.
+- A put writer supplies the full strike, in the quote token, to the program, so the put is **cash-secured**: the money the holder might be paid is already in custody, and the writer cannot fail to pay.
 
 Nothing in this program is ever undercollateralized, so it has no margin, no health factor, no liquidator, and no oracle. Every one of those returns in the *Perpetual Futures* chapter, where writers are allowed to post less than they owe.
 
