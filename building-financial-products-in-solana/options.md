@@ -20,10 +20,10 @@ An option has five terms:
 
 The two sides have different shapes, and the shapes are the whole subject:
 
-- **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
 - **The writer** keeps the premium whatever happens, and in exchange takes on an obligation: to sell the underlying at the strike (a call) or to buy it at the strike (a put) whenever the holder asks. The writer's gain is capped at the premium, and the writer's obligation is not.
+- **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
 
-![The holder's line is flat at minus 25 USDC until the strike and then rises; the writer's is its mirror, flat at plus 25 and then falling. The lines sum to zero at every price.](figures/options-payoff.svg)
+![The writer's line is flat at plus 25 USDC until the strike and then falls; the holder's is its mirror, flat at minus 25 and then rising. The lines sum to zero at every price.](figures/options-payoff.svg)
 
 Traditional options venues let a writer take on that obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault.**
 
@@ -197,7 +197,7 @@ Every checked operation maps to `MathOverflow`. There is no rounding rule to cho
 - **A held option has exactly one open exit at every instant.** Before `expiry` the holder can exercise and the writer cannot reclaim; at and after it, the reverse. There is no moment at which both can claim the same collateral and none at which neither can.
 - **Every exit closes the account.** Cancel, collect, and reclaim all end with `close = writer`, so an option cannot be collected twice: the account is gone.
 - **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else; no handler moves collateral or a strike payment to the admin under any parameters.
-- **Physical settlement moves exactly the posted terms.** What the holder receives is what the writer posted, and what the writer collects is what the holder paid, to the minor unit, for every option the program would accept.
+- **Physical settlement moves exactly the posted terms.** What the writer collects is what the holder paid, and what the holder receives is what the writer posted, to the minor unit, for every option the program would accept.
 
 The companion repository's `kani-proofs` crate proves the last two and the first: `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, sends each down one of its three exits, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` is the second invariant over every pair of timestamps.
 
