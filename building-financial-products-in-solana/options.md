@@ -39,7 +39,7 @@ Exercising moves tokens, and no price is computed:
 - When a holder exercises a call, they pay the strike into the vault and take the underlying out.
 - When a holder exercises a put, they deliver the underlying and take the strike.
 
-This is **physical settlement**, and it is why the program has no oracle. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and has no opinion about the price.
+This is **physical settlement**, and it is why the program has no oracle.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain: physical here means the tokens themselves change hands, rather than a cash difference. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and has no opinion about the price.
 
 The other design, **cash settlement**, pays the holder the difference between the market price and the strike, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets took that road on Solana, with margin and an oracle.[^zeta]
 
@@ -236,5 +236,7 @@ The options venue added six concepts:
 - **A deadline is a comparison and its complement.** The holder's window and the writer's window partition time, tested from both sides and proved over every timestamp.
 
 The *Perpetual Futures* chapter is where the collateral rule is relaxed. Traders post a fraction of their exposure, an oracle values the rest continuously, and a liquidator is paid to close what the fraction no longer covers. Every part of that machinery exists to manage the risk this chapter refused to take.
+
+[^psyoptions]: PsyOptions pioneered physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. PsyOptions represented each option series as fungible SPL tokens, one mint per series; this program keeps one account per option instead, trading that composability for legible custody.
 
 [^zeta]: Zeta Markets describes its margined, cash-settled design at [docs.zeta.markets](https://docs.zeta.markets). The comparison is between two settlement designs, not two products: a cash-settled venue can offer leverage and needs a price feed to do it, and a physically settled one offers neither.
