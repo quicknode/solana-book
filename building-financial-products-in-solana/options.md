@@ -23,7 +23,7 @@ The two sides have different shapes, and the shapes are the whole subject:
 - **The writer** keeps the premium whatever happens, and in exchange takes on an obligation: to sell the underlying at the strike (a call) or to buy it at the strike (a put) whenever the holder asks. The writer's gain is capped at the premium, and the writer's obligation is not.
 - **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
 
-![The writer's line is flat at plus 25 USDC until the strike and then falls; the holder's is its mirror, flat at minus 25 and then rising. The lines sum to zero at every price.](figures/options-payoff.svg)
+![Each side's profit or loss on the five contracts, against the NVDAx price when the week ends. The writer's line is flat at plus 25 USDC until the strike and then falls; the holder's is its mirror, flat at minus 25 and then rising. The lines sum to zero at every price.](figures/options-payoff.svg)
 
 Traditional options venues let a writer take on that obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault.**
 
