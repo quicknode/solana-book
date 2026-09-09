@@ -151,7 +151,7 @@ The happy-path tests (`test_close_long_in_profit`, `test_close_long_in_loss`, `t
 
 A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. One reservation does most of that work: every position reserves its maximum payout when it opens, so the pool can never owe more than it holds. The pool is the clearing house and the counterparty, the maintenance margin and the reservation are its margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
-This capstone added four concepts:
+This chapter added four concepts:
 
 - **Pre-funded solvency.** Reserve every position's maximum payout at open, cap profit at the reservation, and gate LP withdrawals on free liquidity, so the pool can never owe more than it holds.
 - **Constant-time accounting.** Per-side scaled accumulators and entry snapshots make solvency, AUM, and settlement computable without ever iterating open positions: realizable credit, account-local safety, and bounded progress, in miniature.

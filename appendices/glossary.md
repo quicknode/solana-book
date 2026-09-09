@@ -421,7 +421,7 @@ An address computed from a program's ID and chosen seeds. A PDA is not a public 
 
 ### perpetual future
 
-A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The capstone chapter of this book.
+A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The *Perpetual Futures* chapter builds one.
 
 ### phantom overflow
 
