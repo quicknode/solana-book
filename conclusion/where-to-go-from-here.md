@@ -85,7 +85,7 @@ Some things were left out on purpose, and knowing which is part of knowing the f
 
 **Formal verification** appears here only briefly. The escrow program's formal proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
 
-**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is treated in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
+**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
 
 **The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
 

@@ -98,13 +98,13 @@ Bob decides three shares is enough. He calls `cancel_order()` on his order accou
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
-One line in the handler belongs in everything you build: it snapshots the unsettled amounts and **zeroes the counters before making the transfers**. If a token transfer could ever call back into this program (token extensions can attach hooks to transfers), a caller re-entering mid-transfer would find balances already zeroed instead of still-credited, so double-withdrawal is impossible. The pattern is called checks-effects-interactions, and the *Adversary* chapter treats it fully.
+One line in the handler belongs in everything you build: it snapshots the unsettled amounts and **zeroes the counters before making the transfers**. If a token transfer could ever call back into this program (token extensions can attach hooks to transfers), a caller re-entering mid-transfer would find balances already zeroed instead of still-credited, so double-withdrawal is impossible. The pattern is called checks-effects-interactions, and the *Adversary* chapter explains it fully.
 
 ![settle_funds() for Bob and Carol: the unsettled counters are zeroed first, then the market PDA signs the transfers from the base and quote vaults to their token accounts.](figures/order-book-settle.svg)
 
 ## The Market Authority Withdraws the Fees
 
-At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One detail is deliberate: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule unattended. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter treats it fully), though this handler adds an authority gate because it moves fee money.
+At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One detail is deliberate: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule unattended. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter explains it fully), though this handler adds an authority gate because it moves fee money.
 
 ![withdraw_fees() drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 
@@ -148,7 +148,7 @@ If you write one test after reading this chapter, write the vault-swap one for y
 
 ## What You Learnt from Building the Order Book Exchange
 
-Price-time priority is a rule, and a rule can be a data structure: the critbit trees hold the book in the order the matching engine at NYSE, NASDAQ, or the CME would walk it. What those exchanges staff around that engine, a clearing house and a settlement system, became two fields and a handler: the unsettled balances are the clearing house's internal ledger, and `settle_funds()` is settlement, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
+Price-time priority is a rule, and a rule can be a data structure: the critbit trees hold the book in the order the matching engine at NYSE, NASDAQ, or the CME would walk it. Those exchanges also staff a clearing house and a settlement system. Here the clearing house's internal ledger is the unsettled balances, and settlement is `settle_funds()`, permissionless and instant. The one operator who remains sets the market's parameters and collects its fee, and can do nothing else.
 
 The order book added five concepts on top of the escrow's:
 
