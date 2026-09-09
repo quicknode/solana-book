@@ -12,7 +12,7 @@ A **slot** is a window in which one leader may produce one block, and the slot c
 
 Three things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know all three:
 
-- **A slot is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, and real slots run a little longer or shorter.[^slot-time-live] A time counted in slots is accurate to around 3%, and that error grows with the count.
+- **A slot is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, and real slots run a little longer or shorter.[^slot-time-live] A time counted in slots is accurate to around 3%.
 - **A leader can stretch its own slots, though it cannot shorten them.** Proof of history fixes the hashes in a tick, so nobody can run ahead of it. What a leader can do is produce its slots slowly, or not at all, which makes those slots take longer in wall-clock time. That loosens a slot-counted window rather than tightening it. How far one leader can stretch depends on how many slots it leads, and that is a matter of stake.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
