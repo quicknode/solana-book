@@ -15,9 +15,9 @@ Two things are absent as a result:
 
 ## The Account Model: One Market, Two Vaults, and Nothing Else
 
-![The authority PDA holds no data at all; it exists only to sign for the two vaults.](figures/prop-amm-account-map.svg)
+![The market account owns the two vaults and signs for them; the oracle feed is an account the program only reads.](figures/prop-amm-account-map.svg)
 
-The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the oracle feed and its scale, both fixed at creation, the two token decimals (recorded at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. A dataless **market authority** PDA owns the **base vault** and **quote vault**, and exists to sign.
+The **market** is a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's key, the oracle feed and its scale, both fixed at creation, the two token decimals (recorded at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. The market owns the **base vault** and **quote vault** and, being a PDA, signs for them.
 
 The market has no LP mint, because there are no depositors to issue receipts to. It has no fee ledger: the spread is the fee, and it lands in the inventory itself. And it has no virtual reserves, because pricing never reads the reserves. The *Token Fundraiser* chapter's rule was that balances are custody and state is truth. That rule exists because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are the entire accounting.
 
