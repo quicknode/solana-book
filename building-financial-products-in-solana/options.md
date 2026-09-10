@@ -53,7 +53,7 @@ The **market** is a PDA with seeds `"market"`, the underlying mint, and the quot
 - `quote_locked`: how much of the quote vault the market owes, as put writers' collateral and as call holders' strike payments waiting to be collected.
 - `fees_owed`: how much of the quote vault belongs to the admin.
 
-A dataless **market authority** PDA (seeds `"authority"` + market) owns the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market) and exists to sign for them. Both vaults hold other people's money, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. One rule keeps that safe: a vault balance is custody, and the three counters are the truth about who is owed what.
+The market owns the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market) and, being a PDA, signs for them with its own seeds. Both vaults hold other people's money, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. One rule keeps that safe: a vault balance is custody, and the three counters are the truth about who is owed what.
 
 Each option is an `OptionContract`, a PDA with seeds `"option"`, the market, the writer, and an `id` the writer chooses, so one writer can have many options open. Its fields are the five terms plus the bookkeeping around them:
 

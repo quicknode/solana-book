@@ -14,7 +14,7 @@ That design decision creates the problem the program is organized around: the po
 
 ## The Account Model: One Pool, One Vault, One Position per Side per Trader
 
-![The account map: the pool account and its authority PDA, the single custody vault and LP share mint they control, one position account per trader per side, and the oracle feed fixed at the pool's creation.](figures/perps-account-map.svg)
+![The account map: the pool account, the single custody vault and LP share mint it controls, one position account per trader per side, and the oracle feed fixed at the pool's creation.](figures/perps-account-map.svg)
 
 The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_slot`) and the live accounting this chapter keeps returning to:
 
@@ -25,7 +25,7 @@ The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle f
 - `long_size`, `short_size`, `long_size_scaled`, `short_size_scaled`: per-side open-interest accumulators, which make solvency checkable without iteration.
 - `cumulative_funding` and `last_funding_slot`: the funding index.
 
-A **pool authority** PDA (seeds `"authority"` + pool) holds no data and exists to sign. It is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together. The vault mixes custody; the three ledger fields keep the ownership straight, and the rule that makes that safe is the *Token Fundraiser* chapter's: balances are custody, state is truth.
+The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault mixes custody; the three ledger fields keep the ownership straight, and the rule that makes that safe is the *Token Fundraiser* chapter's: balances are custody, state is truth.
 
 Each position is a **position** PDA with seeds `"position"`, the pool, the owner, and the side (`"long"` or `"short"`), so a trader can hold at most one long and one short per market. The `Position` struct is a snapshot taken at open: `collateral` (net of the open fee), `size` (the notional exposure), `entry_price`, `size_scaled` (size divided by entry price, kept at `SIZE_PRECISION` fixed point), and `entry_funding` (the funding index at entry). Everything the program ever needs to settle the position is derivable from these fields plus the current price, which is what makes settlement **account-local**: closing or liquidating one position touches one position.
 
@@ -84,7 +84,7 @@ The example documents two simplifications:
 
 Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting structure, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, as the test suite's default market does.
 
-A flat rate is still a per-slot rate. The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate. A pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool authority bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
+A flat rate is still a per-slot rate. The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate. A pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool operator bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
 
 ![The funding index climbs while longs outweigh shorts and falls when shorts outweigh longs; each position pays or receives the index movement between its entry and its exit.](figures/perps-funding-index.svg)
 
@@ -105,7 +105,7 @@ The pool cannot sell Bob's position; a program never acts on its own, somebody h
 
 ## Closing at $120, and the Pool Pays From Its Reservation
 
-At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool authority's signature. The same handler protects the pool from the other direction. A position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and must exit through liquidation, and any payout the pool arithmetic cannot cover is refused with `PoolInsolvent` rather than overdrawing the LPs.
+At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool's signature. The same handler protects the pool from the other direction. A position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and must exit through liquidation, and any payout the pool arithmetic cannot cover is refused with `PoolInsolvent` rather than overdrawing the LPs.
 
 Everyone ends the story with what their position promised:
 
