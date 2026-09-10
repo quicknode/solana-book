@@ -84,7 +84,7 @@ An [option](#option) giving its holder the right to buy the underlying at the [s
 
 ### cash settlement
 
-Settling a derivative by paying the difference between the market price and the contract's price in money, with no asset changing hands. It needs a price feed, and every check the *Offchain Truth* chapter describes. Compare [physical settlement](#physical-settlement).
+Settling a derivative by paying the difference between the market price and the contract's price in the quote token, USDC in this book, with the underlying never changing hands. It needs a price feed, and every check the *Offchain Truth* chapter describes. Compare [physical settlement](#physical-settlement).
 
 ### cash-secured put
 

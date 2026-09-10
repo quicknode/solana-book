@@ -41,7 +41,7 @@ Exercising moves tokens, and no price is computed:
 
 This is **physical settlement**, and it is why the program has no oracle.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain. Physical here means the underlying asset itself changes hands at the strike, where cash settlement moves only the difference between the strike and the market price, in the quote token, and the underlying stays where it was. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and has no opinion about the price.
 
-The other design, **cash settlement**, pays the holder the difference between the market price and the strike, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets took that road on Solana, with margin and an oracle.[^zeta]
+The other design, **cash settlement**, pays the holder the difference between the market price and the strike in the quote token, USDC here, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets took that road on Solana, with margin and an oracle.[^zeta]
 
 ## The Account Model: One Venue, Two Vaults, One Account per Option
 
