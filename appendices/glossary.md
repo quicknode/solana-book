@@ -433,7 +433,7 @@ An overflow in the middle of a calculation whose final answer would have fit: `p
 
 ### physical settlement
 
-Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The name predates blockchains, and nothing about it happens offchain: onchain, physical means the tokens themselves change hands. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
+Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The name predates blockchains, and nothing about it happens offchain: onchain, physical means the underlying token itself changes hands, where cash settlement moves only a price difference in the quote token. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
 
 ### PnL (profit and loss)
 
