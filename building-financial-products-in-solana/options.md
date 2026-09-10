@@ -16,7 +16,7 @@ An option has five terms:
 - Its **kind** is a **call**, the right to buy the underlying asset, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
-- Its two parties are the **writer**, who sells the right, and the **holder**, who holds it. Using the right is **exercising** the option.
+- Its two parties are the **writer**, who creates the option and sells the right, and the **holder**, who buys it. Creating an option is called **writing** it, and using the right is **exercising** it.
 
 The two sides have different shapes, and the shapes are the whole subject:
 
