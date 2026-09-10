@@ -10,13 +10,14 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 
 ## An Option Is a Right on One Side and an Obligation on the Other
 
-An option has five terms:
+An option has four terms and two parties:
 
 - Its **premium** is what the buyer pays for the right, once, up front.
 - Its **kind** is a **call**, the right to buy the underlying asset, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
-- Its two parties are the **writer**, who creates the option and sells the right, and the **holder**, who buys it. Creating an option is called **writing** it, and using the right is **exercising** it.
+- The **writer** creates the option, which is called **writing** it, and in doing so agrees to sell or buy the underlying asset at the strike if asked.
+- The **holder** buys the option and may use the right it carries. Using the right is **exercising** the option.
 
 The two sides have different shapes, and the shapes are the whole subject:
 
