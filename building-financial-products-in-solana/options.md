@@ -10,7 +10,7 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 
 ## An Option Is a Right on One Side and an Obligation on the Other
 
-An option has four terms and two parties:
+Options have some unique terminology:
 
 - Its **premium** is what the buyer pays for the right, once, up front.
 - Its **kind** is a **call**, the right to buy the underlying asset, or a **put**, the right to sell it.
