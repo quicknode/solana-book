@@ -968,8 +968,7 @@ for (const sheet of pdf.getPages()) {
 }
 writeFileSync(outputPath, await pdf.save());
 
-const pageCount = pdf.getPageCount();
-console.log(`Wrote ${outputPath} (${pageCount} pages)`);
+console.log(`Wrote "${outputPath}"`);
 if (croppedPages > 0) console.log(`Cropped ${croppedPages} page(s) to the ${PAGE_WIDTH_IN} x ${PAGE_HEIGHT_IN}in trim.`);
 
 // Every URI action in the finished PDF, with the number of annotations
@@ -1015,18 +1014,18 @@ if (overflows.length > 0) {
   console.error(`\n${overflows.length} piece(s) of text fall outside their boundary and print clipped:`);
   for (const line of overflows) console.error(`  ${line}`);
   process.exitCode = 1;
-} else {
-  console.log("Every line and figure label sits inside its page, note area and figure box.");
 }
 
+// A selector that stops matching would otherwise turn the right-hand-page
+// check into a no-op that passes on an empty list.
+const titlePage = openingPages.find(({ name }) => name === "title page");
+if (!titlePage || openingPages.length < 2) {
+  console.error("\nThe title page and chapter openings were not found in the rendered book, so their pages could not be checked.");
+  process.exitCode = 1;
+}
 const strays = openingPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
 if (strays.length > 0) {
   console.error(`\n${strays.length} opening page(s) did not land on a right-hand page:`);
   for (const { name, number } of strays) console.error(`  page ${number}: ${name}`);
   process.exitCode = 1;
-} else {
-  // Printed rather than kept silent, because a selector that stops matching
-  // would otherwise turn this check into a no-op that still reports success.
-  const titlePage = openingPages.find(({ name }) => name === "title page")?.number ?? "?";
-  console.log(`Title page on page ${titlePage}; ${openingPages.length - 1} part and chapter openings; all on right-hand pages.`);
 }

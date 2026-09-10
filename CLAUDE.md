@@ -7,7 +7,7 @@ Three commands, all of which must pass:
 ```
 npm run lint                        # banned phrases, heading rules, figure and chapter-reference rules
 node scripts/check-figure-geometry.mjs   # renders every SVG in Chromium: text overlap, arrowheads, coin marks
-npm run build-pdf                   # the whole book, and the page count is a useful smell test
+npm run build-pdf                   # the whole book; prints only the output path on success
 ```
 
 `npm run preview -- <chapter> "<phrase>"` renders a single chapter around a phrase, which is faster than
