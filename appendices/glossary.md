@@ -88,7 +88,7 @@ Settling a derivative by paying the difference between the market price and the 
 
 ### cash-secured put
 
-A [put](#put) whose writer has supplied the full strike, in the quote token, to the program as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
+A [put](#put) whose writer has supplied enough of the quote token, USDC here, to buy every share at the strike price, held by the program as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
 
 ### ceil (ceiling)
 
@@ -477,7 +477,7 @@ A [put](#put) bought by someone who already holds the underlying, as insurance a
 
 ### put
 
-An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer supplies the full strike to the program as collateral, which makes the put a [cash-secured put](#cash-secured-put).
+An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer supplies the program with enough of the quote token to buy every share at the strike price, which makes the put a [cash-secured put](#cash-secured-put).
 
 ### quote token
 
