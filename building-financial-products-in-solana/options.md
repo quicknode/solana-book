@@ -235,7 +235,7 @@ The options venue added six concepts:
 - **A ledger for mixed custody.** When one vault holds several parties' money, the state account counts what each is owed and every handler asserts the vault still covers it, after the math.
 - **A deadline is a comparison and its complement.** The holder's window and the writer's window partition time, tested from both sides and proved over every timestamp.
 
-The *Perpetual Futures* chapter is where the collateral rule is relaxed. Traders post a fraction of their exposure, an oracle values the rest continuously, and a liquidator is paid to close what the fraction no longer covers. Every part of that machinery exists to manage the risk this chapter refused to take.
+In the *Perpetual Futures* chapter we will relax the collateral rule. Traders post a fraction of their exposure, an oracle values the rest continuously, and a liquidator is paid to close what the fraction no longer covers. Keeping such a venue solvent is hard, and you will see how much machinery it takes to handle positions whose collateral no longer covers what they owe.
 
 [^psyoptions]: PsyOptions pioneered physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. PsyOptions represented each option series as fungible SPL tokens, one mint per series; this program keeps one account per option instead, trading that composability for legible custody.
 

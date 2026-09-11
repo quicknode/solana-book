@@ -125,6 +125,6 @@ The fundraiser added five concepts on top of the escrow's:
 - **Cumulative caps.** Per-participant limits checked against running totals, which make broad participation a requirement rather than a hope.
 - **Name the closer for every account.** The stranded contributor receipts after a successful raise are the omission in this chapter, and the habit that catches it.
 
-An escrow held two strangers to one deal. The fundraiser holds eleven strangers to one condition, and paid for it with one new mechanism: a deadline that flips which exit is open. Every program in the rest of this part has this same structure: a vault owned by a data account, terms frozen at entry, and an exit from every state for every participant's money. The next chapter opens the same structure to a crowd and asks the question this one never had to: who decides what happened in the real world?
+In the *Betting Market* chapter we will build a pool that many people pay into, where the exit is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the money while trusting them for the result.
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
