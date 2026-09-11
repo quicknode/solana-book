@@ -22,7 +22,7 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Building the PDF
 
-`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at; `npm run build-pdf -- --size letter` builds the same manuscript at US Letter for screen reading and office printers. [PRINT-SPECIFICATION.md](PRINT-SPECIFICATION.md) records the trim, margins, type, and the rest of the physical book. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
+`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at; `npm run build-pdf -- --size letter` builds the same manuscript at US Letter for screen reading and office printers. `npm run resize-cover -- <wraparound-export.pdf>` sizes a full-wrap cover export to KDP's exact requirement, spine width included. [PRINT-SPECIFICATION.md](PRINT-SPECIFICATION.md) records the trim, margins, type, cover math, and the rest of the physical book. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
 
 ## Status
 
