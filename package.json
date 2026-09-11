@@ -5,7 +5,8 @@
   "scripts": {
     "build-pdf": "node scripts/build-pdf.mjs",
     "lint": "node scripts/lint-manuscript.mjs",
-    "preview": "node scripts/preview-page.mjs"
+    "preview": "node scripts/preview-page.mjs",
+    "resize-cover": "node scripts/resize-cover.mjs"
   },
   "repository": {
     "type": "git",
