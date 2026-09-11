@@ -69,7 +69,7 @@ One problem survives success, and you will meet it in your own designs: the elev
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Now take the other ending. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler succeeds. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Now take the other ending. Day seven arrives with only 3,600 USDC in the counter. Nothing announces the failure. The deadline arithmetic flips which handler works. Alice calls `refund()`. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 The order inside that handler is checks-effects-interactions: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and it appears wherever money exits in this book.
 
@@ -127,4 +127,4 @@ The fundraiser added five concepts on top of the escrow's:
 
 An escrow held two strangers to one deal. The fundraiser holds eleven strangers to one condition, and paid for it with one new mechanism: a deadline that flips which exit is open. Every program in the rest of this part has this same structure: a vault owned by a data account, terms frozen at entry, and an exit from every state for every participant's money. The next chapter opens the same structure to a crowd and asks the question this one never had to: who decides what happened in the real world?
 
-[^any-mint]: Any mint is accepted, Token Extensions mints included, because every account is declared through the token interface.
+[^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.

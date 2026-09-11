@@ -47,7 +47,7 @@ The defenses are about making price manipulation expensive and slow. **Time-weig
 
 ## A Rounding Error Becomes a Drain Once Someone Finds the Loop
 
-The *Arithmetic of Money* chapter set the policy: round against the user, floor once, ceil debt. This class is what happens to programs that did not. Each favorable rounding is under a cent. The exploit is the loop, and the loop pays best in an **empty or near-empty market**, where the attacker controls both sides of the ratio and can shape the divisor to maximize what flooring forgives.
+The *Arithmetic of Money* chapter set the policy: round against the user, floor once, ceil debt. This class is what happens to programs that did not. Each favorable rounding is under a cent. The exploit is the loop, and the loop works best in an **empty or near-empty market**, where the attacker controls both sides of the ratio and can shape the divisor to maximize what flooring forgives.
 
 > **War Story: the Hundred and Sonne drains, $7.4M and $20M.** Hundred Finance (2023) and Sonne Finance (2024), both forks of the same lending design on EVM chains, fell to the same sequence. Find or create a freshly-listed, empty market; make a tiny deposit to mint dust-level shares; donate a large sum to skew the exchange rate (the inflation setup). Then exploit the rate calculation's rounding direction, redeeming shares sized so the floored share-burn undercounted by one, repeatedly, until the pool drained. Two lending markets, a year apart, with the first post-mortem public the whole time:[^hundred-sonne] exploit classes recur because the underlying arithmetic ships again in every fork.
 

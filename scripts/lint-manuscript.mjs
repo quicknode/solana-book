@@ -388,10 +388,11 @@ const wordinessRules = [
   [/\b(?:chapters?|book|suites?|tests?|guide|section) walks?\b/i,
     'a chapter explains or builds; a suite follows or runs a path'],
   [/\bwalks? through\b/i, 'say what the prose does: explains, builds, follows'],
-  // "Works" says that something functions without saying what it does.
-  // Employment ("Alice works at ACME") is the one sense that stays.
-  [/\bworks\b(?! (?:at|for)\b)/i,
-    'say what happens: the handler succeeds, the conversion is valid, the code runs'],
+  // "Works" meaning succeeds or functions stays ("flips which handler
+  // works"). Working an example is tour-guide framing: the chapter shows
+  // or builds the example instead.
+  [/\bwork(?:s|ed|ing)? (?:an|the|a) examples?\b/i, 'the chapter shows or builds the example'],
+  [/\bworked examples?\b/i, 'the chapter shows or builds the example'],
 ];
 
 // Reduce a manuscript line to the prose a reader reads, so both checks above

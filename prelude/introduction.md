@@ -26,7 +26,7 @@ Solana changes quickly: network releases, framework versions, chain constants, a
 
 *Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
-In this book you'll learn how each of the classic financial products exists as a Solana program, how to handle assets without losing a penny, and how to prove your program correct.
+In this book you'll learn how each of the classic financial products actually works as a Solana program, how to handle assets without losing a penny, and how to prove your program works.
 
 ## Why Write a Book When an AI Can Write the Program?
 
