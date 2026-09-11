@@ -349,12 +349,23 @@ const sections = chapterPaths.map((path) => {
     .parse(prepareMarkdown(markdown, path), { mangle: false, headerIds: false })
     .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
     // Inline SVG figures so the single-file HTML needs no external assets;
-    // the image's alt text becomes the printed caption.
-    .replace(/<img src="([^"]+\.svg)" alt="([^"]*)"[^>]*>/g, (whole, src, alt) => {
+    // the image's alt text becomes the printed caption. The paragraph marked
+    // wraps the image in goes with it: a <figure> inside a <p> is invalid
+    // HTML, and the browser mends it by closing the paragraph early, which
+    // left an empty <p> between each heading and the figure under it. Paged.js
+    // keeps a heading on the page of whatever element follows it in the
+    // source (the stylesheet's break-after: avoid), and the empty paragraph
+    // was that element, so the figure was free to start the next page with
+    // its heading stranded at the foot of the one before.
+    .replace(/<p><img src="([^"]+\.svg)" alt="([^"]*)"[^>]*><\/p>/g, (whole, src, alt) => {
       const svg = readFileSync(join(repoRoot, dirname(path), src), "utf8");
       return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
     })
     .replace(/<code>([^<]+)<\/code>/g, (whole, text) => `<code>${breakableIdentifier(text)}</code>`);
+  // A figure that was not alone in its paragraph is not inlined above, and
+  // would print as a broken image.
+  const missed = htmlWithCode.match(/<img [^>]*\.svg[^>]*>/);
+  if (missed) throw new Error(`${path}: figure not inlined, is it on a line of its own? ${missed[0]}`);
   const html = markUrls(htmlWithCode);
   const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
   return { id, title, html, path, subsections };
@@ -939,6 +950,39 @@ const overflows = await page.evaluate(() => {
   return out;
 });
 
+// A heading directly followed by a figure is that figure's title, and the two
+// belong on one page: a title alone at the foot of a page, naming a figure
+// that is over the leaf, is the layout fault readers notice first. The
+// stylesheet says break-after: avoid on every heading, and Paged.js honours
+// that by pinning the heading to the element that follows it in the source,
+// so the pairs are read from the source it laid out and the pages their
+// copies landed on are compared.
+const headingFigurePairs = await page.evaluate(() => {
+  const parsed = window.PagedPolyfill?.chunker?.source;
+  const source = parsed?.querySelectorAll ? parsed : parsed?.dom;
+  if (!source) return null;
+  const pageOf = (element) =>
+    Number(document.querySelector(`.pagedjs_page [data-ref="${element.dataset.ref}"]`)?.closest(".pagedjs_page")?.getAttribute("data-page-number"));
+  const split = [];
+  let pairs = 0;
+  for (const figure of source.querySelectorAll("figure")) {
+    // An empty paragraph between the two is not a neighbour: it is what the
+    // parser leaves when a figure was emitted inside a <p> (see the figure
+    // inlining), and looking past it keeps this check reporting the split
+    // pairs rather than finding no pairs at all if that markup came back.
+    let heading = figure.previousElementSibling;
+    while (heading && heading.tagName === "P" && !heading.textContent.trim()) heading = heading.previousElementSibling;
+    if (!heading || !/^H[23]$/.test(heading.tagName)) continue;
+    pairs++;
+    const headingPage = pageOf(heading);
+    const figurePage = pageOf(figure);
+    if (headingPage !== figurePage) {
+      split.push(`"${heading.textContent.trim()}" is on page ${headingPage} and its figure on page ${figurePage}`);
+    }
+  }
+  return { pairs, split };
+});
+
 const printed = await page.pdf({ preferCSSPageSize: true });
 await browser.close();
 
@@ -1013,6 +1057,17 @@ if (unlinkedLines.length > 0) {
 if (overflows.length > 0) {
   console.error(`\n${overflows.length} piece(s) of text fall outside their boundary and print clipped:`);
   for (const line of overflows) console.error(`  ${line}`);
+  process.exitCode = 1;
+}
+
+// The book has several such pairs, so an empty list means the source was not
+// found rather than that every pair kept its page.
+if (!headingFigurePairs || headingFigurePairs.pairs === 0) {
+  console.error("\nNo heading followed by a figure was found in the laid-out source, so their pages could not be checked.");
+  process.exitCode = 1;
+} else if (headingFigurePairs.split.length > 0) {
+  console.error(`\n${headingFigurePairs.split.length} heading(s) are parted from the figure that follows them by a page break:`);
+  for (const line of headingFigurePairs.split) console.error(`  ${line}`);
   process.exitCode = 1;
 }
 
