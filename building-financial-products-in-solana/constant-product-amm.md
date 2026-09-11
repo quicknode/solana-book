@@ -89,7 +89,7 @@ Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC;
 
 That gap is **impermanent loss**, and it is the price of being an LP. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP is a bet on trading volume, not on price direction**: if accumulated fees outrun the divergence, LPing wins; if the price runs hard in one direction on thin volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, the loss would have evaporated. Nobody should provide liquidity without being able to draw this diagram.
 
-![Impermanent loss: the value of Alice's LP position touches the value of just holding at the $2.25 deposit price and falls away on both sides, with fee income as the band that can offset the gap.](figures/amm-impermanent-loss.svg)
+![Impermanent loss: the value of Alice's LP position equals the value of just holding only at the $2.25 deposit price and falls below it on both sides. The shaded gap is the loss, and withdrawing at $2.64 realizes it; fee income lifts the LP line toward closing it.](figures/amm-impermanent-loss.svg)
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 
