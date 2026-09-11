@@ -18,7 +18,7 @@ deletion leaves when the columns around it stay put. It is advisory, not a gate:
 figures whose content is a curve rather than boxes, so each hit needs a look. Run it after removing
 anything from a figure.
 
-`npm run resize-cover -- <wraparound-export.pdf>` sizes a full-wrap cover export for KDP; the math and
+`npm run resize-cover` sizes the full-wrap cover export (`assets/cover-wrap.pdf`) for KDP; the math and
 the workflow are in `PRINT-SPECIFICATION.md` under Cover.
 
 ## A merged PR's branch is dead
