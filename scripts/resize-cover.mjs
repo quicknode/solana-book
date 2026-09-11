@@ -7,8 +7,13 @@
 // page count carries a spine of the wrong width even after a perfect rescale.
 //
 // Usage:
-//   npm run resize-cover                          # assets/cover.pdf, count from the built book
-//   npm run resize-cover -- path/to/export.pdf --pages 257 --paper white
+//   npm run resize-cover                       # assets/cover-wrap.pdf, count from the built book
+//   npm run resize-cover -- path/to/export.pdf [--pages 257] [--paper white|cream]
+//
+// The input is the full wraparound export (back cover, spine, front cover,
+// with bleed), kept at assets/cover-wrap.pdf. It is not assets/cover.pdf,
+// which is the front cover at trim and is consumed by the book build
+// instead (PRINT-SPECIFICATION.md, Cover).
 //
 // The rescaled file is print-ready for KDP's cover upload. Rasterization is
 // not needed here: KDP flattens covers for print itself, and the Quartz
@@ -28,7 +33,7 @@ const BLEED = 0.125;
 const PAGE_THICKNESS = { white: 0.002252, cream: 0.0025 };
 
 const args = process.argv.slice(2);
-let input = join(repoRoot, "assets", "cover.pdf");
+let input = join(repoRoot, "assets", "cover-wrap.pdf");
 let pages;
 let paper = "white";
 let out;
