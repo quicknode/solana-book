@@ -381,6 +381,18 @@ const wordinessRules = [
   [/\bpin(?:s|ned|ning)?\b/i, 'a test enforces, checks, or asserts; a value is fixed or recorded at creation'],
   [/\bconfirms?\b(?! that a supermajority)/i,
     'say "check": "confirmed" is a commitment level in this book, not a synonym for checking'],
+  // "Walks" with a chapter, book, or suite as its subject is tour-guide
+  // framing: a chapter explains or builds, and a suite follows or runs a
+  // path. A loop that walks a tree or the states of a machine is mechanism,
+  // and stays.
+  [/\b(?:chapters?|book|suites?|tests?|guide|section) walks?\b/i,
+    'a chapter explains or builds; a suite follows or runs a path'],
+  [/\bwalks? through\b/i, 'say what the prose does: explains, builds, follows'],
+  // "Works" meaning succeeds or functions stays ("flips which handler
+  // works"). Working an example is tour-guide framing: the chapter shows
+  // or builds the example instead.
+  [/\bwork(?:s|ed|ing)? (?:an|the|a) examples?\b/i, 'the chapter shows or builds the example'],
+  [/\bworked examples?\b/i, 'the chapter shows or builds the example'],
 ];
 
 // Reduce a manuscript line to the prose a reader reads, so both checks above

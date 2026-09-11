@@ -17,7 +17,7 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Companion projects
 
-- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the book's **companion repository**: the tested, CI-verified programs that each program chapter walks through
+- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the book's **companion repository**: the tested, CI-verified programs behind each program chapter
 - [Solana Finance Claude Plugin](https://github.com/quicknode/solana-finance-claude-plugin) - the book's **companion AI skill**: its rules are what the book distills, and its style guide is what the manuscript follows
 
 ## Building the PDF
