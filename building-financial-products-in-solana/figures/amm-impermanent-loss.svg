@@ -6,32 +6,37 @@
       <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
     </marker>
   </defs>
-  <!-- fee band (drawn first, under the lines) -->
-  <path d="M 150,260 Q 215,226 288,198 Q 360,170 430,147 L 430,134 Q 360,157 288,184 Q 215,212 150,246 Z" fill="#f4f4f2" stroke="none"/>
-  <path d="M 150,246 Q 215,212 288,184 Q 360,157 430,134" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <!-- the gap between the two lines: impermanent loss, zero only at the deposit price (drawn first, under the lines) -->
+  <path d="M 80,290.0 L 590,60.0 L 590,123.8 L 580,124.2 L 570,124.7 L 560,125.3 L 550,126.1 L 540,127.0 L 530,128.1 L 520,129.2 L 510,130.6 L 500,132.0 L 490,133.7 L 480,135.4 L 470,137.3 L 460,139.3 L 450,141.5 L 440,143.8 L 430,146.3 L 420,148.9 L 410,151.6 L 400,154.5 L 390,157.5 L 380,160.6 L 370,163.9 L 360,167.4 L 350,170.9 L 340,174.6 L 330,178.5 L 320,182.5 L 310,186.6 L 300,190.9 L 290,195.3 L 280,199.8 L 270,204.5 L 260,209.4 L 250,214.3 L 240,219.5 L 230,224.7 L 220,230.1 L 210,235.6 L 200,241.3 L 190,247.1 L 180,253.1 L 170,259.2 L 160,265.4 L 150,271.8 L 140,278.3 L 130,284.9 L 120,291.7 L 110,298.6 L 100,305.7 L 90,312.9 L 80,320.3 Z" fill="#f4f4f2" stroke="none"/>
   <!-- axes -->
   <line x1="80" y1="330" x2="80" y2="38" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
   <line x1="80" y1="330" x2="614" y2="330" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
   <text x="88" y="28" font-size="13" font-weight="bold">value of Alice's position</text>
   <text x="612" y="352" font-size="13" font-weight="bold" text-anchor="end">ACME price</text>
-  <!-- just holding: a straight line -->
-  <line x1="80" y1="279" x2="600" y2="76" stroke="#111" stroke-width="1.6"/>
-  <text x="598" y="60" font-size="12" font-weight="bold" text-anchor="end">just holding 100 ACME + 225 USDC</text>
-  <!-- LP position: tangent below the line everywhere else -->
-  <path d="M 80,296 C 115,275 149,258 184,242 C 219,226 253,212 288,198 C 323,184 357,172 392,160 C 427,148 461,136 496,125 C 531,114 565,104 600,94" fill="none" stroke="#111" stroke-width="2.2"/>
-  <text x="96" y="320" font-size="12" font-weight="bold">LP position</text>
+  <!-- just holding: a straight line, labelled at its right end -->
+  <line x1="80" y1="290.0" x2="590" y2="60.0" stroke="#555" stroke-width="1.4"/>
+  <text x="590" y="50.0" font-size="12" font-weight="bold" text-anchor="end">just holding 100 ACME + 225 USDC</text>
+  <!-- LP position: touches the holding line at the deposit price and falls below it on both sides, labelled at its right end -->
+  <path d="M 80,320.3 L 90,312.9 L 100,305.7 L 110,298.6 L 120,291.7 L 130,284.9 L 140,278.3 L 150,271.8 L 160,265.4 L 170,259.2 L 180,253.1 L 190,247.1 L 200,241.3 L 210,235.6 L 220,230.1 L 230,224.7 L 240,219.5 L 250,214.3 L 260,209.4 L 270,204.5 L 280,199.8 L 290,195.3 L 300,190.9 L 310,186.6 L 320,182.5 L 330,178.5 L 340,174.6 L 350,170.9 L 360,167.4 L 370,163.9 L 380,160.6 L 390,157.5 L 400,154.5 L 410,151.6 L 420,148.9 L 430,146.3 L 440,143.8 L 450,141.5 L 460,139.3 L 470,137.3 L 480,135.4 L 490,133.7 L 500,132.0 L 510,130.6 L 520,129.2 L 530,128.1 L 540,127.0 L 550,126.1 L 560,125.3 L 570,124.7 L 580,124.2 L 590,123.8" fill="none" stroke="#111" stroke-width="2.2"/>
+  <text x="590" y="141.8" font-size="12" font-weight="bold" text-anchor="end">LP position</text>
   <!-- deposit price: the touching point -->
-  <line x1="288" y1="204" x2="288" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="288" cy="198" r="5" fill="#111"/>
+  <line x1="288" y1="202.2" x2="288" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <circle cx="288" cy="196.2" r="5" fill="#111"/>
   <text x="288" y="348" font-size="12" font-weight="bold" text-anchor="middle">$2.25 deposit</text>
-  <text x="230" y="148" font-size="11" font-style="italic" fill="#444" text-anchor="middle">touches only at the deposit price</text>
-  <!-- fee band label -->
-  <text x="105" y="182" font-size="11" font-style="italic" fill="#444">fees offset the gap</text>
-  <path d="M 172,188 L 210,216" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-impermanent-loss-arr)"/>
-  <!-- Alice's withdrawal -->
-  <circle cx="319" cy="186" r="4" fill="#111"/>
-  <path d="M 346,232 L 325,193" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="350" y="238" font-size="10.5" font-style="italic" fill="#444">at withdrawal (spot &#8776; $2.64):</text>
-  <text x="350" y="253" font-size="10.5" font-style="italic" fill="#444">&#8776; $1.50 behind just holding</text>
+  <text x="236" y="140" font-size="11" font-style="italic" fill="#444" text-anchor="middle">equal only at the deposit price</text>
+  <path d="M 258,148 L 282,187.2" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <!-- withdrawal price: the gap is the loss -->
+  <line x1="470" y1="143.3" x2="470" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="470" y="348" font-size="12" font-weight="bold" text-anchor="middle">$2.64 withdrawal</text>
+  <line x1="470" y1="114.1" x2="470" y2="137.3" stroke="#111" stroke-width="2.2"/>
+  <line x1="465" y1="114.1" x2="475" y2="114.1" stroke="#111" stroke-width="2.2"/>
+  <circle cx="470" cy="137.3" r="4.5" fill="#111"/>
+  <path d="M 481,160 L 475,144.3" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="482" y="172" font-size="12" font-weight="bold">impermanent loss</text>
+  <text x="482" y="187" font-size="10.5" font-style="italic" fill="#444">Alice's slice is worth &#8776; $1.50 less</text>
+  <text x="482" y="201" font-size="10.5" font-style="italic" fill="#444">than the tokens she deposited</text>
+  <!-- fees -->
+  <text x="96" y="172" font-size="11" font-style="italic" fill="#444">fee income lifts the LP line;</text>
+  <text x="96" y="187" font-size="11" font-style="italic" fill="#444">enough volume closes the gap</text>
 </g>
 </svg>
