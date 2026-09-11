@@ -26,7 +26,7 @@ Solana changes quickly: network releases, framework versions, chain constants, a
 
 *Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
 
-In this book you'll learn how each of the classic financial products actually works as a Solana program, how to handle assets without losing a penny, and how to prove your program works.
+In this book you'll learn how each of the classic financial products exists as a Solana program, how to handle assets without losing a penny, and how to prove your program correct.
 
 ## Why Write a Book When an AI Can Write the Program?
 
@@ -42,7 +42,7 @@ However, **no AI can understand a program for you.** What this book should leave
 
 The book splits the work with two companions. Both are available at [solanabook.org](https://solanabook.org):
 
-- The **companion repository** holds the complete, tested programs that the program chapters walk through, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
+- The **companion repository** holds the complete, tested programs behind the program chapters, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
 - The **companion AI plugin** distills this book's rules into a form AI coding tools apply automatically.
 
 The AI plugin improves the code your tools write. The book improves your own understanding of it.
@@ -71,7 +71,7 @@ All technical and financial vocabulary this book uses is defined in the Glossary
 
 The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to money (the arithmetic, offchain truth, the adversary, testing, and admin power).
 
-**Building Financial Products** is ten chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
+**Building Financial Products** is ten chapters, and each one builds a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
 
 Real incidents appear throughout the book in boxed **War Story** sections. The incidents are years old and the mistakes behind them still recur. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
 

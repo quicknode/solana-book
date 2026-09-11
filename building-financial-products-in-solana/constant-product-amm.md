@@ -127,4 +127,4 @@ Six concepts came with the curve:
 - **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone, keeps the share divisor from ever being dust-sized.
 - **Impermanent loss.** An LP is a bet on trading volume, not price direction, and nobody should provide liquidity without being able to draw the diagram.
 
-The next chapter builds the design that pays neither price impact nor impermanent loss, a market maker quoting its own capital at oracle prices, and pays a different cost instead. And the *Vault Strategy* chapter, later in the book, works one level up: it *uses* venues like these, and the question stops being "how do trades clear" and becomes "who is allowed to trade with other people's money, and what stops them."
+The next chapter builds the design that pays neither price impact nor impermanent loss, a market maker quoting its own capital at oracle prices, and pays a different cost instead. And the *Vault Strategy* chapter, later in the book, operates one level up: it *uses* venues like these, and the question stops being "how do trades clear" and becomes "who is allowed to trade with other people's money, and what stops them."

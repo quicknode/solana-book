@@ -16,7 +16,7 @@ You can treat an AI as a peer, not an authority. The companion AI plugin applies
 
 You can reason about who earns what, and why anyone shows up. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
-And you can carry the responsibility that comes with all of it. Programs holding other people's money are not a place to find out whether an idea works.
+And you can carry the responsibility that comes with all of it. Programs holding other people's money are not a place to find out whether an idea is sound.
 
 ## The World Still Runs on Business Hours
 

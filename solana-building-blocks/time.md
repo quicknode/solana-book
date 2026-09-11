@@ -67,7 +67,7 @@ The gates give the length the network aims for, and the network can run slower t
 
 To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. That measurement comes from the validator-reported clock, so it belongs in offchain tooling, not in a handler. A program counts slots so that nobody can nudge its accrual. Multiply by a measured slot length and the nudge is back.
 
-> **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. No further reductions are planned once the network reaches 200 milliseconds.
+> **One conversion covers one slot time.** Converting is only valid over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. No further reductions are planned once the network reaches 200 milliseconds.
 
 A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract.
 
