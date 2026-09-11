@@ -158,4 +158,4 @@ The order book added five concepts on top of the escrow's:
 - **A fee whose rounding direction is a security decision.** Ceiling division on the fee closes a leak an attacker could industrialize through thousands of tiny fills.
 - **Vault separation plus `has_one`.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep user money and fee money apart.
 
-The AMM in the next chapter replaces the book with a formula; the perpetual futures exchange at the end of the book is this chapter plus leverage, a price feed, and time.
+In the *Constant-Product AMM* chapter we will build a market with no order book. Two vaults hold the pair of tokens, and a formula sets the price from their balances, so anyone can trade at any time without waiting for a counterparty to post an order. You will see what the people who fill the vaults earn for it, and what it costs them.
