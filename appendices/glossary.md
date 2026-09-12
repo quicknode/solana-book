@@ -203,6 +203,10 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
 
+### eviction
+
+An order book's answer to a full side: when no slot is free, the resting order furthest from the spread is removed to make room, and only if the new order is better than the one removed. The *Order Book Exchange* chapter explains what its program does instead.
+
 ### exercise
 
 To use the right an [option](#option) grants: buy the underlying at the strike (a [call](#call)) or sell it there (a [put](#put)). In the *Options* chapter the holder may exercise while the clock is before `expiry`, and not after.
@@ -443,6 +447,10 @@ A service that publishes signed statements of offchain facts, most often prices,
 
 The resting [bids](#bid) and [asks](#ask) for one market, best prices first, plus the matching engine that pairs them under [price-time priority](#price-time-priority). The traditional venue design, the one NYSE, NASDAQ and CME run, and the one an AMM replaces with a formula. See the *Order Book Exchange* chapter.
 
+### order segmentation
+
+A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is informed. The *Prop AMM* chapter covers it as a defense against adverse selection.
+
 ### parimutuel
 
 A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. The odds are the pool. See the *Betting Market* chapter.
@@ -570,6 +578,10 @@ An account whose private key signed the transaction. "Is this account a signer" 
 ### significand
 
 The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
+
+### size ladder
+
+A prop AMM's quote as a set of tiers, each a size at a spread, so the unit price rises with the size taken. Set by the firm from its inventory risk, never read from the vault balances. The *Prop AMM* chapter contrasts it with the single flat quote its program makes.
 
 ### slippage
 
