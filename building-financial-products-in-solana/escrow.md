@@ -29,26 +29,6 @@ Two roles run through this chapter, and the code names them the same way:
 
 The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. The same integer meaning two different things is why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth.
 
-## The Account Model
-
-Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard set of accounts every token-handling program touches.
-
-![The offer PDA holds authority over its own vault, so no person can move the escrowed tokens.](figures/escrow-account-map.svg)
-
-The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
-
-- `id`, a number the maker chooses, so one maker can have many offers open at once
-- `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
-- `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
-- `token_b_wanted_amount`, how much of token B the maker wants, in minor units
-- `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
-
-The offer account is a **PDA** (program derived address), derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide, and one maker attempting to reuse an ID fails at account creation.
-
-The **vault** is where Alice's USDC waits. It is an ordinary token account with one difference: its authority is the offer account, not Alice and not the program's author. The offer account is a PDA, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
-
-Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's and Bob's token accounts, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow uses Anchor's `token_interface`, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one.
-
 ## The Instruction Handlers
 
 The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` opens it, and it ends in exactly one of two ways, `take_offer()` or `cancel_offer()`. Every state needs an exit, and an open offer has two.
@@ -59,6 +39,24 @@ The program has three instruction handlers, and together they form the offer's c
 
 Alice calls `make_offer()` with three arguments: her chosen `id`, `token_a_offered_amount` (250,000,000 minor units of USDC), and `token_b_wanted_amount` (100,000,000 minor units of TSLAx).
 
+![make_offer() creates the offer account and the vault, and moves 250,000,000 minor units of USDC from Alice's token account into the vault. The vault's authority is the offer account, so no person can move the escrowed tokens.](figures/escrow-make-offer.svg)
+
+Financial state on Solana is accounts, and this one transaction created the two the deal needs.
+
+The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
+
+- `id`, the number Alice chose, so one maker can have many offers open at once
+- `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
+- `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
+- `token_b_wanted_amount`, how much of token B the maker wants, in minor units
+- `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
+
+The offer account is a **PDA** (program derived address), derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
+
+The **vault** is where Alice's USDC waits. It is an ordinary token account with one difference: its authority is the offer account, not Alice and not the program's author. The offer account is a PDA, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
+
+Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's token account for each mint, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow uses Anchor's `token_interface`, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one. Bob's accounts are faded in the figure because this transaction never touches them.
+
 Before the handler body runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here (`init`), with space for the data fields plus Anchor's discriminator, at the PDA address derived from `"offer"`, Alice's address, and the ID; if that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
 
 One constraint is easy to miss. `maker_token_account_b`, Alice's account for the token she *wants*, is created now if it does not exist, and Alice pays for it. The party who chose to open the offer carries its rent burden, and `take_offer()` can then require the destination for Bob's payment to already exist rather than making Bob pay to create an account that belongs to Alice.
@@ -67,8 +65,6 @@ With the structure verified, the handler body is two small steps:
 
 - **`handle_send_offered_tokens_to_vault()`** calls the shared `transfer_tokens()` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority.
 - **`handle_save_offer()`** writes the offer's fields, including the saved bump, into the offer account.
-
-![make_offer() moves 250,000,000 minor units of USDC from Alice's token account into the vault, while the offer account is written with the maker, the mints, and the wanted amount.](figures/escrow-make-offer.svg)
 
 ### The Taker Takes the Offer
 
