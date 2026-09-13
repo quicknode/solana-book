@@ -32,7 +32,7 @@ Each program chapter runs the same eight beats:
 
 - **Concept** - what this financial software does in the real world, with personas, real assets, and each party's incentive (the Introduction promises readers that admin and user incentives are discussed in every program chapter). Personas are introduced where they first act, not in a cast list.
 - **Account model** - the accounts, their owners, their PDAs, each introduced at the step that first needs it, with the step's figure showing it arrive. There is no section listing every account up front: a reader meeting a dozen accounts before any of them has done anything is overwhelmed, and the step figures accumulate into the full map on their own.
-- **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use, each step followed by a diagram of what moved and what changed; no flat reference section.
+- **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use, each step with a diagram of what moved and what changed where one is needed; no flat reference section.
 - **The math** - the calculations, in minor units, with rounding directions stated.
 - **The invariants** - what must hold before and after every handler.
 - **The failure modes** - how this program gets attacked or bricked, with the inline War Story where an incident matches.
@@ -66,7 +66,7 @@ Each incident is researched from primary sources and placed inside the chapter n
 
 What is specific to the book: the conventions are fixed during the single visual pass that draws every figure, and each is taught to the reader by the first figure that uses it, with a small legend on that figure. Every chapter's budget includes an account map, a state machine, and a flow. And:
 
-- **Every walkthrough step ("Alice does X", "Bob does Y") is followed by a diagram** showing the token movements, account creations and closures, and value changes that step caused.
+- **Every walkthrough step ("Alice does X", "Bob does Y") includes a diagram when one is needed**, showing the token movements, account creations and closures, and value changes that step caused. The diagram goes where the reader needs it, not at the step's end by habit: before the mechanics when the picture is what the mechanics explain, after them when it is their result, and nowhere when the step changes nothing worth drawing.
 
 Steps currently missing their per-step diagram, to be drawn in the visual pass:
 

@@ -70,6 +70,8 @@ With the structure verified, the handler code is two small steps:
 
 Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
 
+![take_offer() sends Bob's 1 TSLAx straight to Alice's token account, pays the vault's 250 USDC to Bob, and closes both the vault and the offer account, returning their rent to Alice.](figures/escrow-take-offer.svg)
+
 That is all Alice does. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
 The handler code runs two steps:
@@ -79,17 +81,15 @@ The handler code runs two steps:
 
 Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and the offer account itself is closed, refunding that rent to Alice too.
 
-![Both accounts close in the same instruction, and the rent lamports return to Alice.](figures/escrow-take-offer.svg)
-
 Both sides now hold exactly what the other offered. No percentage went to anyone.
 
 ### The Maker Cancels the Offer
 
 If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
 
-The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and closes the offer account to Alice too. Every lamport of rent she fronted is returned to her.
-
 ![cancel_offer() returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
+
+The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and closes the offer account to Alice too. Every lamport of rent she fronted is returned to her.
 
 ## The Math
 
