@@ -87,7 +87,7 @@ Both sides now hold exactly what the other offered. No percentage went to anyone
 
 If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
 
-The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). The handler, `handle_cancel_offer()`, mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and closes the offer account to Alice too. Every lamport of rent she fronted is returned to her.
+The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and closes the offer account to Alice too. Every lamport of rent she fronted is returned to her.
 
 ![cancel_offer() returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
 
