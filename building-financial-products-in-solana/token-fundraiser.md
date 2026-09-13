@@ -57,7 +57,7 @@ The claim handler's one gate compares the target against `current_amount`, the p
 
 The same rule protects the *Constant-Product AMM* chapter's pool pricing, and it applies to every gate: **balances are custody, state is truth**. A gate that unlocks money by reading a balance someone else can inflate can be opened by anyone.
 
-The cost is that the program's books cover only what came in through it. Tokens donated straight to the vault are outside the program's accounting: on a successful raise they ride along to Maria (the claim drains the vault's full balance), and on a failed raise they are stranded. Refunds pay out each receipt's recorded amount, and no receipt records the donation. Do not send tokens to program vaults except through the program's own handlers.
+The cost is that the program's count covers only what came in through it. Tokens donated straight to the vault are outside the program's accounting: on a successful raise they ride along to Maria (the claim drains the vault's full balance), and on a failed raise they are stranded. Refunds pay out each receipt's recorded amount, and no receipt records the donation. Do not send tokens to program vaults except through the program's own handlers.
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
