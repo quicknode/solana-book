@@ -10,9 +10,9 @@ Two numbers are recorded the moment the fundraiser opens: the **target** and the
 
 The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both.
 
-![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
+![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-target-met.svg)
 
-![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that decided the first ending decides this one.](figures/fundraiser-failure-future.svg)
+![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that decided the first ending decides this one.](figures/fundraiser-target-not-met.svg)
 
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
@@ -29,9 +29,9 @@ The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's ad
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
-Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, created on first contribution with `init_if_needed`, topped up on repeat contributions, and closed when its purpose is served.
+Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, and `contribute()` creates it only when it does not exist yet, so a backer's first contribution opens the receipt, every later one adds to it, and it is closed when its purpose is served.
 
-## The Maker Opens a Seven-Day Window
+## The Maker Starts the Fundraiser
 
 Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. A crowdfunding platform can, and occasionally does, change campaign rules mid-campaign. Here the terms cannot change, because no handler exists to change them.
 
@@ -39,13 +39,13 @@ The handler stamps `time_started` from the cluster clock and stores the duration
 
 ## Nobody May Carry More Than a Tenth of the Raise
 
-Eleven backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise; they will trust a program whose refund path they can read.
+Eleven backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise. They will trust a program that gives Maria no way to redirect the vault to herself, and whose deployed code is verified to match its published source.
+
+Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. So the program caps what any one backer may carry at a tenth of the target, and the arithmetic follows: **a successful raise needs at least ten distinct contributors**. The cap also makes the obvious manipulation harder: a single large backer filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
 Alice tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, multiply before divide, as in every other chapter.
 
 The cap is not just per call. Carol contributes 450 USDC, then comes back the next day with 450 more, and her contributor account's running total lands exactly on the 900 cap; a third contribution would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
-
-The cap has an arithmetic consequence: if no one may carry more than a tenth of the target, then **a successful raise needs at least ten distinct contributors**. That says what this fundraiser is for. Maria is not trying to find one patron; she is trying to prove there is a market for the machine, and a raise that only closes with broad participation is evidence money alone cannot fake. It also makes the obvious manipulation harder: a single large backer filling the raise in one transaction to make demand look broad now needs ten wallets and still shows up as ten receipts on the fundraiser.
 
 So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here because most of them stopped short of the cap. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
 
