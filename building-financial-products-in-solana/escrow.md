@@ -59,7 +59,7 @@ Around these two sit the accounts every token program interaction needs: the two
 
 Before the handler code runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here (`init`), with space for the data fields plus Anchor's discriminator, at the PDA address derived from `"offer"`, Alice's address, and the ID; if that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
 
-One constraint is easy to miss. `maker_token_account_b`, Alice's account for the token she *wants*, is created now if it does not exist, and Alice pays for it. The party who chose to open the offer carries its rent burden, and `take_offer()` can then require the destination for Bob's payment to already exist rather than making Bob pay to create an account that belongs to Alice.
+`maker_token_account_b` is Alice's account for the token she *wants*: the TSLAx account Bob will pay into. She may not have one yet, so `make_offer()` creates it if it does not exist, and Alice pays the rent. Creating it now means Bob never has to. When he takes the offer the account is already there, and `take_offer()` only checks that it is. Otherwise Bob would be paying rent on an account that belongs to Alice.
 
 With the structure verified, the handler code is two small steps:
 
