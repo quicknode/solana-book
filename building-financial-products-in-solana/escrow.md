@@ -12,7 +12,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? An **escrow** lets Alice and Bob swap without having to trust each other.
 
-Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. Anyone who has bought a house has used one. In the United States it is an escrow company or a title company,[^settlement-agent] which holds the buyer's money until the deed is signed and recorded, then pays the seller. A mortgage does not change this: the bank is a lender, not the escrow, and it wires its part of the price into the same account a cash buyer fills alone. Sending money overseas passes through a third party the same way. In each case the third party takes a fee for itself, a settlement fee on the house and a few percent of the amount on the transfer.
+Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent money overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
 
 ![Traditional escrow: Alice and Bob each send funds to a third party in the middle, which forwards them onward minus the slice it keeps for itself.](figures/escrow-traditional-escrow.svg)
 
@@ -132,7 +132,7 @@ The testing section of the *Operating Financial Software* chapter builds the gen
 
 ## What You Learnt from Building the Escrow
 
-In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, charges a fee for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
+In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, takes a percentage for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
 
 The escrow gave you five concepts:
 
@@ -144,4 +144,4 @@ The escrow gave you five concepts:
 
 In the *Token Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
 
-[^settlement-agent]: Which company plays the part varies by state and by country. In the western United States it is an escrow company, elsewhere a title company or a closing attorney; in the United Kingdom the two sides' conveyancing solicitors hold and release the money; in Australia a conveyancer or solicitor does the same at settlement.
+[^remittance-cost]: The World Bank's figures for the third quarter of 2025, which put the global average near 6.5% with thirteen corridors above 20%. See [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
