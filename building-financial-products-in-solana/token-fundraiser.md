@@ -53,11 +53,9 @@ So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight
 
 ## The Counter Is the Truth; the Vault Is Just Custody
 
-The claim handler's one gate compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. The distinction matters because anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, a well-meaning outsider, or Maria herself, could top the vault up with 5,400 USDC of outside money on day six, "reach" the target, and unlock a claim the contributors never funded to that level. Because the gate reads the counter, a direct donation to the vault changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and then watches the claim fail anyway.
+The claim handler's one gate compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. The distinction matters because anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and walk off with 3,600 USDC of contributions the target was meant to protect. Because the gate reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and then watches the claim fail anyway.
 
 The same rule protects the *Constant-Product AMM* chapter's pool pricing, and it applies to every gate: **balances are custody, state is truth**. A gate that unlocks money by reading a balance someone else can inflate can be opened by anyone.
-
-The cost is that the program's count covers only what came in through it. Tokens donated straight to the vault are outside the program's accounting: on a successful raise they ride along to Maria (the claim drains the vault's full balance), and on a failed raise they are stranded. Refunds pay out each receipt's recorded amount, and no receipt records the donation. Do not send tokens to program vaults except through the program's own handlers.
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
