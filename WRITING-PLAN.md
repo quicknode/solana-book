@@ -31,7 +31,7 @@ How the manuscript gets produced, verified, reviewed, and kept alive. The table 
 Each program chapter runs the same eight beats:
 
 - **Concept** - what this financial software does in the real world, with personas, real assets, and each party's incentive (the Introduction promises readers that admin and user incentives are discussed in every program chapter). Personas are introduced where they first act, not in a cast list.
-- **Account model** - the accounts, their owners, their PDAs, with the account-relationship diagram.
+- **Account model** - the accounts, their owners, their PDAs, each introduced at the step that first needs it, with the step's figure showing it arrive. There is no section listing every account up front: a reader meeting a dozen accounts before any of them has done anything is overwhelmed, and the step figures accumulate into the full map on their own.
 - **Instruction handlers** - the lifecycle walked in prose, each handler named and explained at first use, each step followed by a diagram of what moved and what changed; no flat reference section.
 - **The math** - the calculations, in minor units, with rounding directions stated.
 - **The invariants** - what must hold before and after every handler.
