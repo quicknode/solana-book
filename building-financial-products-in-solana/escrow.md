@@ -57,11 +57,11 @@ The **vault** is where Alice's USDC waits. It is an ordinary token account with 
 
 Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's token account for each mint, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow uses Anchor's `token_interface`, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one. Bob's accounts are faded in the figure because this transaction never touches them.
 
-Before the handler body runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here (`init`), with space for the data fields plus Anchor's discriminator, at the PDA address derived from `"offer"`, Alice's address, and the ID; if that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
+Before the handler code runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here (`init`), with space for the data fields plus Anchor's discriminator, at the PDA address derived from `"offer"`, Alice's address, and the ID; if that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
 
 One constraint is easy to miss. `maker_token_account_b`, Alice's account for the token she *wants*, is created now if it does not exist, and Alice pays for it. The party who chose to open the offer carries its rent burden, and `take_offer()` can then require the destination for Bob's payment to already exist rather than making Bob pay to create an account that belongs to Alice.
 
-With the structure verified, the handler body is two small steps:
+With the structure verified, the handler code is two small steps:
 
 - **`handle_send_offered_tokens_to_vault()`** calls the shared `transfer_tokens()` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority.
 - **`handle_save_offer()`** writes the offer's fields, including the saved bump, into the offer account.
@@ -72,7 +72,7 @@ Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: 
 
 That is all Alice does. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
-The handler body runs two steps:
+The handler code runs two steps:
 
 - **`handle_send_wanted_tokens_to_maker()`** moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it.
 - **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
