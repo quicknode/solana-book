@@ -10,10 +10,6 @@ Two numbers are recorded the moment the fundraiser opens: the **target** and the
 
 The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both.
 
-![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-target-met.svg)
-
-![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that decided the first ending decides this one.](figures/fundraiser-target-not-met.svg)
-
 ## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
 
 The program calls the fundraiser's creator the **maker**: Maria here, and her incentive is straightforward: she gets her production run funded all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are rent deposits on the accounts.
