@@ -2,7 +2,7 @@
 
 Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
-The program lives at `finance/token-fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: five instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The custody machinery is the same, with one addition: a **deadline**.
+The program lives at `finance/token-fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The custody machinery is the same, with one addition: a **deadline**.
 
 ## Success and Failure Are Both Written Down in Advance
 
@@ -59,7 +59,7 @@ The same rule protects the *Constant-Product AMM* chapter's pool pricing, and it
 
 ![Success: one transaction drains the vault to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
 
-One problem survives success, and you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone. The program omits it, and the omission is the kind to look for in your own programs: *for every account your program creates, name the handler that eventually closes it.*
+One thing survives success, and you will meet it in your own designs: the eleven contributor receipts. The claim cannot close them, because there is one per backer and the claim transaction carries none of them. Nor can `refund()`, which runs only on a failed raise. So each backer's receipt rent (about a thousandth of a SOL) would sit in an account nothing could close, and the program carries one more handler for exactly that: `close_contributor()`. A backer signs, passes the address their receipt was written for, and the handler makes one check: the account at that address is no longer owned by the program. A live fundraiser is program-owned, and a closed one belongs to the system program again, so while the raise is open the call fails with `FundraiserStillOpen` and the receipt stays a live claim on the vault. Once the fundraiser is gone the receipt closes and the rent comes back, which `test_close_contributor_after_successful_claim_returns_rent` asserts. The handler pays nothing and checks nothing else, and it exists because of a rule to apply to your own programs: *for every account your program creates, name the handler that eventually closes it.*
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
@@ -71,7 +71,7 @@ The order inside that handler is checks-effects-interactions: the receipt is zer
 
 Refunds are per-contributor and pull-based: each backer collects their own, whenever they like, with no deadline. The contributors are left exactly whole; the all-or-nothing promise was kept by the cheapest mechanism on the chain: an integer comparison.
 
-One exit remains. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so while the failed fundraiser's account exists, Maria can never open another raise from that wallet. Once every contribution has been refunded, she calls `close_fundraiser()`. It checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so no refund can ever be stranded). It then sweeps any stray direct donations in the vault to her token account, and closes both the vault and the fundraiser, returning her rent. Nothing of the failed raise remains onchain, and Maria can try again next quarter with a smaller target. Every account this program creates has a named closer on the failure path.
+One exit remains. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so while the failed fundraiser's account exists, Maria can never open another raise from that wallet. Once every contribution has been refunded, she calls `close_fundraiser()`. It checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so no refund can ever be stranded). It then sweeps any stray direct donations in the vault to her token account, and closes both the vault and the fundraiser, returning her rent. Nothing of the failed raise remains onchain, and Maria can try again next quarter with a smaller target. Every account this program creates has a named closer on both paths: the receipts close through `refund()` here and through `close_contributor()` after a win.
 
 ## The Math: Three Constants and a Floor
 
@@ -102,6 +102,7 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
 - **Closing the fundraiser early or with money inside** fails on the close gates: `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
+- **Closing a receipt while its raise is live** fails because the fundraiser account still belongs to the program: `FundraiserStillOpen` (checked by `test_close_contributor_while_fundraiser_open_fails`).
 
 ## Testing Considerations
 
@@ -117,7 +118,7 @@ The fundraiser added five concepts on top of the escrow's:
 - **The counter is the truth; the vault is just custody.** A gate that unlocks money must read state the program itself wrote, never a token balance anyone can inflate by donation.
 - **A receipt PDA per participant**, created on first use, topped up on repeats, and closed when its purpose is served, so double refunds fail once the account is gone.
 - **Cumulative caps.** Per-participant limits checked against running totals, which make broad participation a requirement rather than a hope.
-- **Name the closer for every account.** The stranded contributor receipts after a successful raise are the omission in this chapter, and the habit that catches it.
+- **Name the closer for every account.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
 
 In the *Betting Market* chapter we will build a pool that many people pay into, where the exit is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the money while trusting them for the result.
 
