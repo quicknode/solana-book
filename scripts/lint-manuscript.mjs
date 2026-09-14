@@ -30,6 +30,14 @@ const rules = [
   [/\boff-chain\b/i, 'write "offchain", unhyphenated'],
   [/\bcross-chain\b/i, 'write "crosschain", unhyphenated'],
   [/—/, "no em-dashes; use a regular dash or rewrite"],
+  // One framework's implementation of an account constraint dates the sentence: Anchor
+  // 2 dropped has_one for address= on the sibling, Quasar writes has_one(x),
+  // and the native version is an if-statement. Prose names the check (a
+  // stored-address check, an account created if it does not exist, closing
+  // an account to its payer); the one footnote that gives each framework's implementation is
+  // excepted below.
+  [/\bhas_one\b|\binit_if_needed\b|`init`|\bclose = \w+/,
+    'name the check, not one framework\'s implementation of it: "stored-address check", "created if it does not exist", "closes the account to the maker" (companion AI plugin)'],
   // Same category as the em-dash rule above: phrases a reader clocks as
   // machine-written before they have finished the sentence. Each one also
   // stands in for a mechanism rather than stating it, so the fix is the same
@@ -172,6 +180,7 @@ const rules = [
 
 // Allowed exceptions, matched against the full line.
 const exceptions = [
+  /^\[\^stored-address-per-framework\]:/, // the Adversary chapter's one footnote giving each framework's implementation of the check
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself

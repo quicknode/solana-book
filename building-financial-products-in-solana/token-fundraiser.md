@@ -29,7 +29,7 @@ The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's ad
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
-Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, created on first contribution with `init_if_needed`, topped up on repeat contributions, and closed when its purpose is served.
+Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, created on first contribution if it does not already exist, topped up on repeat contributions, and closed when its purpose is served.
 
 ## The Maker Opens a Seven-Day Window
 
