@@ -106,7 +106,7 @@ One line in the handler belongs in everything you build: it snapshots the unsett
 
 At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. One detail is deliberate: when the fee vault is empty it succeeds as a no-op instead of failing, so Maria can run it on a schedule unattended. Scheduled maintenance that succeeds as a no-op when there is nothing to do is a **crank** (the *Lending and Borrowing* chapter explains it fully), though this handler adds an authority gate because it moves fee money.
 
-![withdraw_fees() drains the fee vault to Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
+![withdraw_fees() empties the fee vault into Maria's USDC account, gated by the authority check.](figures/order-book-withdraw-fees.svg)
 
 ## The Math: Lots, Ticks, and a Fee That Rounds Up
 
@@ -123,7 +123,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 - Every resting order's full lock is in a vault: quote for bids (price × remaining × quote lot size), base for asks. The vaults always hold at least the sum of all resting locks plus all unsettled balances.
 - Every locked minor unit is accounted for on exit: a fill splits the lock into maker proceeds, taker rebate, and fee, and those three always sum exactly to what was locked for that fill. Cancellation returns exactly the remainder's lock.
 - `filled_quantity` never exceeds `original_quantity`, and order status only moves forward: Open to PartiallyFilled to Filled, or out to Cancelled.
-- The fee vault only ever receives the computed fee, and only the recorded authority can drain it.
+- The fee vault only ever receives the computed fee, and only the recorded authority can withdraw from it.
 - Every leaf in a tree corresponds to exactly one Open or PartiallyFilled order account, and to an entry in its owner's open-order list.
 
 ## The Failure Modes: Vault Swaps, Fake Makers, and Book Spam

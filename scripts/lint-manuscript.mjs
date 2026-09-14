@@ -339,6 +339,18 @@ for (const file of [...new Set(files)]) {
 // as its text and a code span as one word.
 const sentenceWordLimit = 45;
 
+// "Drain" is the attacker's word, and the manuscript used it for both an
+// exploit emptying a pool and a handler legitimately paying a vault out on
+// its way to closing it, so the escrow's own exits read as an incident. The
+// companion AI plugin's rule: a handler empties a vault or pays it out; a
+// drain is what an attacker does. A sentence may keep the word only when it
+// names the attack it belongs to.
+const drainWord = /\bdrain(?:s|ed|ing)?\b/i;
+const drainContext =
+  /\b(?:attack|attacker|exploit|adversar|auditor|hole|rounding|precision|arbitrage|stale|vacuous|uncapped|abuse|leak|steal|undercount|error|bug|manipulat|campaign|war story|empty-reserve)/i;
+const drainReason =
+  'a handler "empties" a vault or "pays it out"; "drain" is the attacker\'s word and stays only in a sentence naming the attack (companion AI plugin)';
+
 // Words with a plain equivalent and no meaning of their own in this domain.
 // Deliberately short: "execute", "yield", "provide", "present" and "operate"
 // all read as bureaucratic in a generic style guide and are exact here (a
@@ -449,6 +461,10 @@ for (const file of [...new Set(files)]) {
       }
 
       for (const sentence of toSentences(body)) {
+        if (drainWord.test(sentence) && !drainContext.test(sentence)) {
+          failures += 1;
+          console.error(`${file}:${index + 1}: ${drainReason}\n    ${sentence.slice(0, 160)}`);
+        }
         const words = sentence.split(/\s+/).length;
         if (words <= sentenceWordLimit) continue;
         failures += 1;
@@ -471,6 +487,10 @@ const figureDirs = [
 ];
 
 const svgRules = [
+  // Figure labels follow the same rule as the prose: a vault is emptied or
+  // paid out by a handler, and drained only by an attacker.
+  [/<text[^>]*>[^<]*\bdrain/i,
+    'a handler "empties" a vault or "pays it out"; "drain" is the attacker\'s word (companion AI plugin)'],
   // Figure text is typed with the same straight apostrophe and straight
   // quotes as the chapters, and the build sets both typographically when it
   // inlines the figure. Seventy figures once carried the curly forms as
