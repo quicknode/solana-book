@@ -33,7 +33,7 @@ The deal is priced the way all Solana money is priced: in **minor units**, the s
 
 The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` opens it, and it ends in exactly one of two ways, `take_offer()` or `cancel_offer()`. Every state needs an exit, and an open offer has two.
 
-![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits drain and close the vault.](figures/escrow-state-machine.svg)
+![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits empty and close the vault.](figures/escrow-state-machine.svg)
 
 ### The Maker Makes the Offer
 
@@ -102,7 +102,7 @@ The money math that remains is rent. Alice fronts the rent deposits for the offe
 Three things must hold before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account.
-- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until an exit runs (a direct donation could push it above, and changes nothing), and both exits drain the vault completely before closing it.
+- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until an exit runs (a direct donation could push it above, and changes nothing), and both exits empty the vault completely before closing it.
 - The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler, so there is nothing to get wrong.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
 - Rent returns to whoever paid it, on every path.
@@ -135,7 +135,7 @@ The escrow gave you five concepts:
 - **Program custody.** Tokens held in a vault whose authority is a data account (a PDA), so funds move only along the code paths the program defines.
 - **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler validates its accounts against that stored data.
 - **State transitions gated by signatures and state.** Who signed, and what the stored data says, decide what may happen; `has_one`, seeds, and ATA derivation close every substitution.
-- **An exit from every state.** `take_offer()` and `cancel_offer()` both drain and close everything, returning rent to whoever paid it.
+- **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning rent to whoever paid it.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
 In the *Token Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
