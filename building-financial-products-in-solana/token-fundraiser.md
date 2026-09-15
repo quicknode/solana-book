@@ -4,17 +4,21 @@ Maria has designed a compact commercial espresso machine, and the factory quoted
 
 The program lives at `finance/token-fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The custody machinery is the same, with one addition: a **deadline**.
 
+The program calls the fundraiser's creator the **maker**: Maria here, and her incentive is straightforward: she gets her production run funded all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are rent deposits on the accounts.
+
 ## Success and Failure Are Both Written Down in Advance
 
 Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
 
 The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both.
 
-## The Account Model: A Fundraiser, Its Vault, and a Receipt per Contributor
+## The Maker Starts the Fundraiser
 
-The program calls the fundraiser's creator the **maker**: Maria here, and her incentive is straightforward: she gets her production run funded all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are rent deposits on the accounts.
+Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. A crowdfunding platform can, and occasionally does, change campaign rules mid-campaign. Here the terms cannot change, because no handler exists to change them.
 
-![The account map: Maria's fundraiser PDA owns the vault token account; each contributor holds a contributor PDA recording their running total.](figures/fundraiser-account-map.svg)
+![initialize_fundraiser() creates the fundraiser account, the terms sheet nothing can later change, and the vault it controls. No tokens move; Maria pays the rent for both.](figures/fundraiser-initialize.svg)
+
+Financial state on Solana is accounts, and this one transaction created the two the raise needs.
 
 The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the terms sheet:
 
@@ -24,12 +28,6 @@ The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's ad
 - `time_started` and `duration`: the clock's Unix timestamp at creation, and the window length in days. These two fields *are* the deadline.
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
-
-Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, and `contribute()` creates it only when it does not exist yet, so a backer's first contribution opens the receipt, every later one adds to it, and it is closed when its purpose is served.
-
-## The Maker Starts the Fundraiser
-
-Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. A crowdfunding platform can, and occasionally does, change campaign rules mid-campaign. Here the terms cannot change, because no handler exists to change them.
 
 The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. The *Time* chapter's warning applies: with day-granularity math, the window ends at the first tick of day seven, not at some intuitive "end of the seventh day". `contribute()` requires the floored day count to be *less than* the duration; `refund()` requires it to be *at least* the duration. The same expression, compared both ways, so there is no gap and no overlap between "you may still contribute" and "you may now refund": at the moment the elapsed-day count reaches 7, contributions turn off and refunds turn on, atomically, by arithmetic.
 
@@ -41,9 +39,15 @@ Maria is not trying to find one patron; she is trying to prove there is a market
 
 Alice tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, multiply before divide, as in every other chapter.
 
+She contributes 900 USDC instead, and this is the transaction every backer repeats: `contribute()` moves the tokens from her own token account into the vault, and adds 900 to `current_amount`. Alice signs; a transfer into the vault never needs a PDA signature, because the tokens are going in rather than out.
+
+![contribute() moves Alice's 900 USDC into the vault and creates her receipt; the counter, not the vault balance, is what records the contribution.](figures/fundraiser-contribute.svg)
+
+The transaction also created an account for her. Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, and `contribute()` creates it only when it does not exist yet, so a backer's first contribution opens the receipt, every later one adds to it, and it is closed when its purpose is served.
+
 The cap is not just per call. Carol contributes 450 USDC, then comes back the next day with 450 more, and her contributor account's running total lands exactly on the 900 cap; a third contribution would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
 
-So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here because most of them stopped short of the cap. Each `contribute()` moves tokens from the contributor's own token account into the vault (the contributor signs; inbound transfers never need PDA signatures), bumps their receipt, and adds to `current_amount`. Total: exactly 9,000 USDC.
+So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here because most of them stopped short of the cap. Total: exactly 9,000 USDC.
 
 ![Eleven contributors, none above 900 USDC, each slice as tall as what that backer gave: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
 
