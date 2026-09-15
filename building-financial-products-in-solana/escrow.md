@@ -97,7 +97,7 @@ If nobody takes the offer, Alice needs her USDC back. Without an exit, her token
 
 ![cancel_offer() returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
 
-The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and closes the offer account to Alice too. Every lamport of rent she fronted is returned to her.
+The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, and closes both the vault and the offer account, returning both rent deposits to Alice. Every lamport of rent she fronted is returned to her.
 
 ## The Math
 
