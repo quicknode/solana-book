@@ -18,8 +18,8 @@
   <g transform="translate(258,120)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="278" y="130.5" font-size="10.5" font-weight="bold">vault</text>
   </g>
-  <path d="M 140,104 C 180,92 210,82 244,78" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
-  <path d="M 140,120 C 180,122 210,126 244,129" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <path d="M 140,104 C 160,98 177.5,92.5 194.25,88 C 211.38,83.4 229.29,81.73 248,83" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <path d="M 140,120 C 159.38,120.97 176.4,122.41 192.68,123.97 C 211.05,125.74 229.49,126.75 248,127" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
   <text x="200" y="160" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">rent deposits paid at creation</text>
   <path d="M 378,86 L 466,86" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
   <text x="474" y="90" font-size="11" font-weight="bold">taken</text>

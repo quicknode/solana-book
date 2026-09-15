@@ -188,6 +188,13 @@ for (const file of selected) {
     // collinear or the stroke shows a corner. And an arrowhead drawn with
     // orient="auto" points along the tangent at the very last point, which
     // a short terminal hook can swing away from the line the reader sees.
+    const accountBoxes = [...svg.querySelectorAll('rect[rx="6"]')].map((r, i) => {
+      const b = box(r);
+      const t = [...svg.querySelectorAll("text")].map(box).map((tb, k) => ({ ...tb, s: svg.querySelectorAll("text")[k].textContent.trim() }))
+        .find((tb) => tb.x1 >= b.x1 && tb.x2 <= b.x2 && tb.y1 >= b.y1 && tb.y2 <= b.y2);
+      return { ...b, i, label: t ? t.s.slice(0, 24) : "a box" };
+    });
+    const seedLabels = [...svg.querySelectorAll("text")].filter((t) => parseFloat(t.getAttribute("font-size") || "10") < 8).map((t) => ({ ...box(t), s: t.textContent.trim().slice(0, 24) }));
     const arrows = [];
     for (const p of svg.querySelectorAll("path")) {
       const stroke = (p.getAttribute("stroke") || "").toLowerCase();
@@ -198,15 +205,42 @@ for (const file of selected) {
       const total = p.getTotalLength();
       if (total < 8) continue;
       const width = parseFloat(p.getAttribute("stroke-width") || "1");
-      const end = p.getPointAtLength(total);
-      const nib = p.getPointAtLength(total - 0.25);
-      const behind = p.getPointAtLength(Math.max(0, total - Math.max(10, 9 * width)));
+      // Samples are taken in the path's own coordinates and mapped to the
+      // figure's, so an arrow inside a translated group is compared with the
+      // boxes where they are drawn.
+      const pm = inv.multiply(p.getScreenCTM());
+      const sample = (len) => {
+        const q = svg.createSVGPoint();
+        const z = p.getPointAtLength(len);
+        q.x = z.x; q.y = z.y;
+        return q.matrixTransform(pm);
+      };
+      const end = sample(total);
+      const nib = sample(total - 0.25);
+      const behind = sample(Math.max(0, total - Math.max(10, 9 * width)));
+      const start = sample(0);
+      const ahead = sample(Math.min(total, Math.max(10, 9 * width)));
+      // Everything the stroke passes over, other than the boxes it starts and
+      // ends on: a value arrow drawn across an account it does not connect
+      // reads as a movement through that account.
+      const samples = [];
+      for (let l = 0; l <= total; l += 2) samples.push(sample(l));
+      const within = (q, b, pad) => q.x > b.x1 + pad && q.x < b.x2 - pad && q.y > b.y1 + pad && q.y < b.y2 - pad;
+      const endBoxes = new Set(accountBoxes.filter((b) => within(samples[0], b, -10) || within(samples[samples.length - 1], b, -10)).map((b) => b.i));
+      const over = new Set();
+      for (const q of samples) {
+        // A stroke crosses a box when it is more than a unit inside it; a graze along the border is not a crossing.
+        for (const b of accountBoxes) if (!endBoxes.has(b.i) && within(q, b, 1)) over.add(b.label);
+        for (const t of seedLabels) if (within(q, t, 1)) over.add(`seed label "${t.s}"`);
+      }
       arrows.push({
-        accent, head,
+        accent, head, over: [...over],
         d: p.getAttribute("d") || "",
         end: [end.x, end.y],
         tangent: [end.x - nib.x, end.y - nib.y],
         approach: [end.x - behind.x, end.y - behind.y],
+        start: [start.x, start.y],
+        departure: [ahead.x - start.x, ahead.y - start.y],
       });
     }
 
@@ -388,6 +422,79 @@ for (const file of selected) {
         fail(`arrowhead at ${a.end.map((v) => v.toFixed(0)).join(",")} points ${off.toFixed(0)}deg ` +
              `off its stroke; the line should meet the middle of the head's base`);
       }
+    }
+  }
+
+  // 10. An arrow runs between the two accounts it connects and over nothing
+  // else: not across a third account box, and not through a seed label. The
+  // exceptions are routes that predate the rule and have no clear alternative
+  // in their figure; each is named so a change to it is noticed.
+  const arrowExceptions = new Set([
+    // Heads that slide along an edge or land near a corner because the stem runs within a few units of the
+    // box it enters, or threads a gap between columns: no arc can arrive within the angle limit, and the top
+    // edge carries the box's seed label. Each needs a layout change, which is separate work.
+    "building-financial-products-in-solana/figures/betting-alice-claim.svg 118,141 slides",
+    "building-financial-products-in-solana/figures/betting-place-bets.svg 470,601 slides",
+    "building-financial-products-in-solana/figures/lending-deposit-shares.svg 179,670 slides",
+    "building-financial-products-in-solana/figures/lending-deposit-shares.svg start 97,183 corner",
+    "building-financial-products-in-solana/figures/lending-liquidation.svg 470,692 slides",
+    "building-financial-products-in-solana/figures/lending-liquidation.svg start 401,189 corner",
+    "building-financial-products-in-solana/figures/lending-liquidation-second-call.svg 470,692 slides",
+    "building-financial-products-in-solana/figures/lending-liquidation-second-call.svg start 401,189 corner",
+    "building-financial-products-in-solana/figures/options-buy-call.svg 462,523 slides",
+    "building-financial-products-in-solana/figures/options-buy-put.svg 462,522 slides",
+    "building-financial-products-in-solana/figures/options-exercise.svg 462,522 slides",
+    "building-financial-products-in-solana/figures/options-write-put.svg start 316,171 corner",
+    // the base vault's payout to Bob runs up his column with 3 units between stem and box; it slides along Bob's NVDAx
+    "building-financial-products-in-solana/figures/order-book-settle.svg 229,148 slides",
+    // Routes that predate the no-crossing rule and have no clear alternative in their figure.
+    "building-financial-products-in-solana/figures/lending-borrow-ltv.svg 186,346 over obligation",
+    "building-financial-products-in-solana/figures/lending-borrow-ltv.svg 186,346 over collateral vault",
+    "building-financial-products-in-solana/figures/order-book-settle.svg 229,148 over Bob's USDC",
+    "building-financial-products-in-solana/figures/vault-withdraw-in-kind.svg 240,318 over seed label \"TOKEN PROGRAM + TSLAX MI\"",
+  ]);
+  // 9. An arrow meets an account box on the flat of an edge, aimed into the
+  // box. A head that lands on the rounded corner covers the corner, and a
+  // value arrow that slides along an edge has its head lying across the
+  // border instead of pointing at the account. The box an end belongs to is
+  // the one the stroke is heading into (or, for a start, came out of), so a
+  // stroke passing a box's corner on its way elsewhere is not matched.
+  const edgeOf = (pt, dir, r, tol = 9) => {
+    if (pt[0] < r.x1 - tol || pt[0] > r.x2 + tol || pt[1] < r.y1 - tol || pt[1] > r.y2 + tol) return null;
+    const d = { left: Math.abs(pt[0] - r.x1), right: Math.abs(pt[0] - r.x2), top: Math.abs(pt[1] - r.y1), bottom: Math.abs(pt[1] - r.y2) };
+    const edge = Object.keys(d).sort((a, b) => d[a] - d[b])[0];
+    if (d[edge] > tol) return null;
+    const inward = { left: [1, 0], right: [-1, 0], top: [0, 1], bottom: [0, -1] }[edge];
+    const len = Math.hypot(dir[0], dir[1]) || 1;
+    if ((dir[0] * inward[0] + dir[1] * inward[1]) / len < -0.2) return null;
+    const along = edge === "left" || edge === "right" ? Math.min(pt[1] - r.y1, r.y2 - pt[1]) : Math.min(pt[0] - r.x1, r.x2 - pt[0]);
+    return { edge, along, off: between(dir, inward), at: `${r.x1.toFixed(0)},${r.y1.toFixed(0)}-${r.x2.toFixed(0)},${r.y2.toFixed(0)}` };
+  };
+  for (const a of fig.arrows) {
+    if (a.head) {
+      const hit = fig.accounts.map((r) => edgeOf(a.end, a.approach, r)).find(Boolean);
+      const tipKey = a.end.map((v) => v.toFixed(0)).join(",");
+      if (hit && hit.along < 10 && !arrowExceptions.has(`${name} ${tipKey} corner`)) {
+        fail(`arrowhead at ${tipKey} lands ${hit.along.toFixed(1)} from a corner of the box at ${hit.at}; ` +
+             `a head meets the flat of an edge, at least 10 from either corner`);
+      } else if (hit && a.accent && hit.off > 60 && !arrowExceptions.has(`${name} ${a.end.map((v) => v.toFixed(0)).join(",")} slides`)) {
+        fail(`arrowhead at ${a.end.map((v) => v.toFixed(0)).join(",")} slides ${hit.off.toFixed(0)}deg along the ${hit.edge} edge of the box at ${hit.at}; ` +
+             `aim the last stretch of the stroke into the box`);
+      }
+    }
+    const from = fig.accounts.map((r) => edgeOf(a.start, [-a.departure[0], -a.departure[1]], r)).find(Boolean);
+    if (from && from.along < 8 && !arrowExceptions.has(`${name} start ${a.start.map((v) => v.toFixed(0)).join(",")} corner`)) {
+      fail(`arrow starts at ${a.start.map((v) => v.toFixed(0)).join(",")}, ${from.along.toFixed(1)} from a corner of the box at ${from.at}; ` +
+           `leave from the flat of an edge`);
+    }
+  }
+
+  // 10, continued: the crossings themselves.
+  for (const a of fig.arrows) {
+    const tip = a.end.map((v) => v.toFixed(0)).join(",");
+    for (const what of a.over) {
+      if (arrowExceptions.has(`${name} ${tip} over ${what}`)) continue;
+      fail(`arrow ending at ${tip} passes over ${what}; route it around, or land on another edge`);
     }
   }
 

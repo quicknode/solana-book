@@ -57,7 +57,7 @@ The table covers money changing hands. The same direction applies to the numbers
 
 ### A Ceiled Fee Is a Capped Fee
 
-Rounding up must never make a fee larger than the amount it is charged on. The order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written, too: the order book refuses a fee rate above 100%, and the vault strategy caps its manager's fee at 10%. No configuration can express a fee its program does not allow, so no manager can drain a fund by setting one.
+Rounding up must never make a fee larger than the amount it is charged on. The order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written, too: the order book refuses a fee rate above 100%, and the vault strategy caps its manager's fee at 10%. No configuration can express a fee its program does not allow, so no manager can abuse one to drain the fund.
 
 ### Ceiling Debt Is What "Paid in Full" Means Onchain
 
@@ -77,7 +77,7 @@ An **invariant** is a property that must hold before and after every state chang
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 
-Check them **after the math, not just before.** The AMM re-checks its product after the transfers have actually landed, and that one check catches every bug above it that would overpay a user, including bugs in code that has not been written yet. The check costs a few hundred compute units; the drain it catches is unbounded.
+Check them **after the math, not just before.** The AMM re-checks its product after the transfers have actually landed, and that one check catches every bug above it that would overpay a user, including bugs in code that has not been written yet. The check costs a few hundred compute units; the drain an attacker could make without it is unbounded.
 
 One note from the same program: degenerate values like zero can make invariants hold even in dangerous situations. K is the product of the two reserves, so K is zero whenever either reserve is zero, even though the pool still holds every token of the other. In that state `new_k >= old_k` reads `new_k >= 0`, which every outcome satisfies, while the swap formula pays out the whole remaining reserve for any input at all. So the AMM guards the degenerate case directly, requiring both reserves positive before it prices anything.
 
@@ -98,7 +98,7 @@ That update is an approximation of compounding, and it is the one the lending ma
 - **The everyday update approximates.** Multiplying by (1 + rate × elapsed slots) is simple interest over the interval. True compounding over n slots is (1 + rate)ⁿ, a power; the approximation is a multiply. The lending market grows `borrow_accumulation_factor` this way in `refresh_reserve()`, and every handler that moves money requires that refresh to have run first, so the intervals stay short. With a tiny per-slot rate and short intervals, the difference from true compounding is smaller than anything a borrower could measure.
 - **When a formula needs the exact power, square.** For (1 + rate)ⁿ with a large n, do not multiply n times. Use repeated squaring instead: (1 + rate)⁸ is three squarings rather than seven multiplications, and in general about log₂(n) of them, each with checked math and floored the same way. This is **exponentiation by squaring**. No program in this book needs it, because the lending market refreshes often enough that the approximation stays closer than the rounding. It is the tool for a market that can sit untouched for a long stretch, where one catch-up update would otherwise treat months of interest as simple interest.
 
-The rate itself is a policy choice; the arithmetic above only applies whatever rate the market sets. Nearly every lending market sets it the same way, though: as a function of **utilization**, the share of the pool that is lent out. The rate rises gently up to a target utilization and steeply beyond it, so a pool that is nearly drained pays depositors more and charges borrowers more until deposits come back or loans are repaid.
+The rate itself is a policy choice; the arithmetic above only applies whatever rate the market sets. Nearly every lending market sets it the same way, though: as a function of **utilization**, the share of the pool that is lent out. The rate rises gently up to a target utilization and steeply beyond it, so a pool that is nearly empty pays depositors more and charges borrowers more until deposits come back or loans are repaid.
 
 ## What You Learnt
 
@@ -106,6 +106,6 @@ The rate itself is a policy choice; the arithmetic above only applies whatever r
 - Multiply before divide, promote intermediates to u128, and check every operation with a named overflow error.
 - Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
 - Assert invariants after the math, and know the degenerate values that let an invariant hold in a dangerous state.
-- One accumulation factor compounds interest for every borrower at once, and rates rise with utilization as a pool drains, so borrowers repay and suppliers arrive.
+- One accumulation factor compounds interest for every borrower at once, and rates rise with utilization as a pool empties, so borrowers repay and suppliers arrive.
 
 [^spl-lending]: Neodyme published the bug, the exploit, and the coordinated disclosure in December 2021, at [neodyme.io/en/blog/lending_disclosure](https://neodyme.io/en/blog/lending_disclosure/). The $2.6B is the total value locked across the forks at the time, not a loss: the fix shipped before anyone else found it.

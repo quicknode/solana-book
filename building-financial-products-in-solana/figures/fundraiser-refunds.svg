@@ -175,11 +175,11 @@
   <text x="472" y="416.37" font-size="9" font-style="italic" fill="#444">authority: the fundraiser PDA</text>
   </g>
   <!-- three pull-based refunds: each pays exactly its own receipt -->
-  <path d="M 464,402 C 368,404 189.254,391.245 132,340 C 117.247,326.796 116,314 116,300 C 116,240 116,205 116,186 C 116,178 109.357,168.482 105,162" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
+  <path d="M 464,402 C 368,404 189.25,391.25 132,340 C 117.25,326.8 116,314 116,300 C 116,259.69 116,230.66 116,210.19 C 116,194.43 111,178.67 101,162.92" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="104" y="285.59" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <path d="M 464,388 C 400,376 286,368 248,340 C 230,326 222,312 222,296 C 222,250 222,215 222,192 C 222,184 215.357,174.482 211,168" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
+  <path d="M 464,388 C 400,376 286,368 248,340 C 230,326 222,312 222,296 C 222,264.38 222,237.95 222,217.05 C 222,200.91 217,184.78 207,168.64" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="210" y="285.89" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
-  <path d="M 464,376 C 432,356 367.238,345.641 345,320 C 338.448,312.445 337,304 337,296 C 337,260 337,224 337,202 C 337,194 330.357,184.482 326,178" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
+  <path d="M 462,384.37 C 430,374.37 367.24,345.64 345,320 C 338.45,312.45 337,304 337,296 C 337,271.25 337,246.5 337,226.3 C 337,210.55 332,194.81 322,179.06" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="325" y="285.66" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
   <path d="M 8,214 C 3,210 1,200 1,180 C 1,140 2.6,89 3,86 C 3.4,83 6.5,77 8,73" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#fund-ref-g)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="2" y="258" font-size="8.5" font-style="italic" fill="#444" text-anchor="start">each closed receipt</text>
