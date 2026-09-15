@@ -1,6 +1,14 @@
 # Chapter 11: Escrow
 
-Escrow is the smallest program that actually handles value, and every pattern it uses (holding tokens in a program-owned account, storing custom data, controlling who may do what) reappears in every chapter that follows. Once you have built an escrow, everything else looks like an escrow. An auction house is an escrow with competing takers. A betting market is an escrow where an outcome decides the payout. A lending market is an escrow with time and interest attached.
+Escrow is the simplest program in this book that handles value. It lets two people swap tokens without trusting each other or paying a middleman, and it does that with three instruction handlers. It also teaches the mechanics that every later program reuses:
+
+- holding tokens in a vault whose authority is an account the program controls, so nobody, including the program's author, can move them except along the paths the code defines
+- storing the terms of a deal in an account the program owns, and checking every later instruction against them
+- letting who signed, and what the stored terms say, decide what may happen next
+- giving every state an exit that returns the tokens and the rent, so nothing is stranded
+- counting every amount in minor units, the integers the token program moves
+
+The chapters that follow add what escrow does not have: a formula that sets a price, an outcome that decides a payout, time and interest, and an operator who must be constrained.
 
 The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus machine-checked proofs of its core invariants under `kani-proofs`. This chapter covers the Anchor version.
 
@@ -137,10 +145,10 @@ In traditional finance, an escrow means a trusted third party: a company that ho
 
 The escrow gave you five concepts:
 
-- **Program custody.** Tokens held in a vault whose authority is a data account (a PDA), so funds move only along the code paths the program defines.
-- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler validates its accounts against that stored data.
-- **State transitions gated by signatures and state.** Who signed, and what the stored data says, decide what may happen; stored-address checks, seeds, and ATA derivation close every substitution.
-- **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning rent to whoever paid it.
+- **Program custody.** Tokens held in a vault whose authority is an account the program controls (a PDA), so funds move only along the code paths the program defines.
+- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler checks its accounts against that stored data.
+- **State transitions gated by signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
+- **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the rent to whoever they belong to, so nothing is stranded.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
 In the *Token Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
