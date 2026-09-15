@@ -229,7 +229,7 @@
   <path d="M 138,158.644 C 126,170.644 126,182.644 126,198.644 L 126,340 C 126,380 162,412 236,426" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <path d="M 461,569.37 C 456,569.37 460,557.37 460,533.37 L 460,282 C 460,262 400,258 320,258 C 280,258 252,244 237,235.644" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <path d="M 239,424 C 172,440 90,520 52,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
-  <path d="M 239,444 C 192,470 132,545 100,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
+  <path d="M 240,438.5 C 193,464.5 132,545 100,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <path d="M 172,637 C 162,570 192,522 236,508" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <path d="M 207,637 C 217,620 222,602 236,590" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <rect class="marker" x="138" y="263.9" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="146" y="275.5" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
