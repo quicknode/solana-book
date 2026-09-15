@@ -66,7 +66,7 @@ Each incident is researched from primary sources and placed inside the chapter n
 
 What is specific to the book: the conventions are fixed during the single visual pass that draws every figure, and each is taught to the reader by the first figure that uses it, with a small legend on that figure. Every chapter's budget includes an account map, a state machine, and a flow. And:
 
-- **Every walkthrough step ("Alice does X", "Bob does Y") includes a diagram when one is needed**, showing the token movements, account creations and closures, and value changes that step caused. The diagram goes where the reader needs it, not at the step's end by habit: before the mechanics when the picture is what the mechanics explain, after them when it is their result, and nowhere when the step changes nothing worth drawing.
+- **Every walkthrough step ("Alice does X", "Bob does Y") includes a diagram** showing the token movements, account creations and closures, and value changes that step caused. The diagram goes where the reader needs it, not at the step's end by habit: before the mechanics when the picture is what the mechanics explain, after them when it is their result.
 
 Steps currently missing their per-step diagram, to be drawn in the visual pass:
 
