@@ -39,7 +39,7 @@ The deal is priced the way all Solana money is priced: in **minor units**, the s
 
 ## The Instruction Handlers
 
-The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` opens it, and it ends in exactly one of two ways, `take_offer()` or `cancel_offer()`. Every state needs an exit, and an open offer has two.
+The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every state needs an exit, and an open offer has two.
 
 ![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits empty and close the vault.](figures/escrow-state-machine.svg)
 
