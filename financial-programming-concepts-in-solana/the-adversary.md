@@ -20,12 +20,12 @@ The full checklist is short:
 
 - Is the account that authorizes this action a **signer**?
 - Is each account **owned** by the program that should own it, so its data can be believed?
-- Does each account **match the one recorded** when the relationship was created? This is the `has_one` pattern: the vault recorded on the market, the maker recorded on the offer.
+- Does each account **match the one recorded** when the relationship was created? This is the **stored-address check**: the vault recorded on the market, the maker recorded on the offer.[^stored-address-per-framework]
 - Is each PDA **derived** from the seeds it claims, with its stored bump?
 
 Anchor's constraints express all four declaratively, and the program chapters use them on every account of every instruction.
 
-The attack that punishes a missing check is **substitution**, and its classic form has a name from the 1988 security literature: the **confused deputy**, an entity with authority tricked into using it on an attacker's behalf.[^confused-deputy] Your program is the deputy: it holds the vault keys, and the attacker's goal is to make it sign a transfer while looking at the wrong accounts. The attacker passes their own account where the payment destination belongs, or passes a lookalike data account they fabricated, full of numbers the program will trust. Or they pass the fee vault where the user vault belongs: the two hold the same mint under the same authority, and only a stored-address check tells them apart, which is why the order book's `has_one` constraints exist.
+The attack that punishes a missing check is **substitution**, and its classic form has a name from the 1988 security literature: the **confused deputy**, an entity with authority tricked into using it on an attacker's behalf.[^confused-deputy] Your program is the deputy: it holds the vault keys, and the attacker's goal is to make it sign a transfer while looking at the wrong accounts. The attacker passes their own account where the payment destination belongs, or passes a lookalike data account they fabricated, full of numbers the program will trust. Or they pass the fee vault where the user vault belongs: the two hold the same mint under the same authority, and only a stored-address check tells them apart. That is why the order book checks every vault it is handed against the addresses its market recorded.
 
 > **War Story: Cashio, $48M, 2022.** Cashio's stablecoin was minted against deposited collateral, and the mint instruction handler validated its accounts in a chain: this account is trusted because that one vouches for it. One link, the collateral token's mint data, went unvalidated: the "root of trust" account was never checked against anything the program knew. An attacker fabricated the whole chain, ending it in a worthless token, deposited nothing of value, and minted two billion CASH against it, keeping about $48M after refunding the accounts under $100,000.[^cashio] Every link in an account chain must end in something the program itself derived or recorded.
 
@@ -76,10 +76,12 @@ The postcondition asserts from the *Arithmetic of Money* chapter (re-check K aft
 
 [^confused-deputy]: Norm Hardy named it in "The Confused Deputy (or why capabilities might have been invented)", ACM SIGOPS Operating Systems Review 22(4), October 1988, at [dl.acm.org/doi/10.1145/54289.871709](https://dl.acm.org/doi/10.1145/54289.871709).
 
-[^cashio]: The fabricated account chain is taken apart at [rekt.news/cashio-rekt](https://rekt.news/cashio-rekt), which also carries the attacker's message announcing the refund. The team published no lasting post-mortem of its own. Gross figures near $52M appear elsewhere and count what was drained before the refund.
+[^cashio]: The fabricated account chain is taken apart at [rekt.news/cashio-rekt](https://rekt.news/cashio-rekt), which also carries the attacker's message announcing the refund. The team published no lasting post-mortem of its own. Gross figures near $52M appear elsewhere and count what the attacker drained before the refund.
 
 [^wormhole]: Wormhole's own incident report is at [wormholecrypto.medium.com/wormhole-incident-report-02-02-22-ad9b8f21eec6](https://wormholecrypto.medium.com/wormhole-incident-report-02-02-22-ad9b8f21eec6), and the spoofed sysvar is taken apart at [rekt.news/wormhole-rekt](https://rekt.news/wormhole-rekt).
 
 [^mango]: Both US regulators charged it, and their filings describe the trade in detail: the CFTC at [cftc.gov/PressRoom/PressReleases/8647-23](https://www.cftc.gov/PressRoom/PressReleases/8647-23), the SEC at [sec.gov/newsroom/press-releases/2023-13](https://www.sec.gov/newsroom/press-releases/2023-13). The phrase quoted above is the attacker's own, posted on 15 October 2022 at [x.com/avi_eisen/status/1581326197241180160](https://x.com/avi_eisen/status/1581326197241180160) and reproduced in the criminal complaint.
 
 [^hundred-sonne]: Hundred Finance is written up at [halborn.com/blog/post/explained-the-hundred-finance-hack-april-2023](https://www.halborn.com/blog/post/explained-the-hundred-finance-hack-april-2023), and Sonne, under the name of the design both forked, at [blog.verichains.io/p/compound-v2-forked-vulnerability](https://blog.verichains.io/p/compound-v2-forked-vulnerability).
+
+[^stored-address-per-framework]: Each framework implements the check in its own way, and the way changes between versions. In the companion repository, Anchor 2 puts `address = offer.maker` on the account being checked; Anchor 1 put `has_one = maker` on the account holding the record, and Quasar writes `has_one(maker)` there; the native version is an if-statement comparing the two addresses. The check is the same in all four.

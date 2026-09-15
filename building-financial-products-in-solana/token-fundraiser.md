@@ -10,7 +10,7 @@ Two numbers are recorded the moment the fundraiser opens: the **target** and the
 
 The two exits are **mutually exclusive by construction**: the claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both. No sequence of calls can unlock both.
 
-![At the target, one call drains the whole vault to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
+![At the target, one call pays the whole vault out to Maria and the fundraiser closes.](figures/fundraiser-success-future.svg)
 
 ![Past the deadline with the target missed, each contributor calls for their own 900 USDC back, and the same comparison that decided the first ending decides this one.](figures/fundraiser-failure-future.svg)
 
@@ -29,7 +29,7 @@ The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's ad
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
-Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, created on first contribution with `init_if_needed`, topped up on repeat contributions, and closed when its purpose is served.
+Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, created on first contribution if it does not already exist, topped up on repeat contributions, and closed when its purpose is served.
 
 ## The Maker Opens a Seven-Day Window
 
@@ -57,7 +57,7 @@ The claim handler's one gate compares the target against `current_amount`, the p
 
 The same rule protects the *Constant-Product AMM* chapter's pool pricing, and it applies to every gate: **balances are custody, state is truth**. A gate that unlocks money by reading a balance someone else can inflate can be opened by anyone.
 
-The cost is that the program's books cover only what came in through it. Tokens donated straight to the vault are outside the program's accounting: on a successful raise they ride along to Maria (the claim drains the vault's full balance), and on a failed raise they are stranded. Refunds pay out each receipt's recorded amount, and no receipt records the donation. Do not send tokens to program vaults except through the program's own handlers.
+The cost is that the program's books cover only what came in through it. Tokens donated straight to the vault are outside the program's accounting: on a successful raise they ride along to Maria (the claim pays out the vault's full balance), and on a failed raise they are stranded. Refunds pay out each receipt's recorded amount, and no receipt records the donation. Do not send tokens to program vaults except through the program's own handlers.
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
@@ -65,7 +65,7 @@ The cost is that the program's books cover only what came in through it. Tokens 
 
 One problem survives success, and you will meet it in your own designs: the eleven contributor receipts. Their only closing path is `refund()`, and after the claim the fundraiser account a refund must read no longer exists, so each backer's receipt rent (about a thousandth of a SOL) is stuck in an account that can never close. The fix is one more handler that closes a receipt without paying anything once the fundraiser is gone. The program omits it, and the omission is the kind to look for in your own programs: *for every account your program creates, name the handler that eventually closes it.*
 
-![Success: one transaction drains the vault to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
+![Success: one transaction pays the vault out to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
@@ -111,7 +111,7 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 
 ## Testing Considerations
 
-The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Its anchors are the paired lifecycle tests: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and watches the claim, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and proves the same wallet can raise again. Around them, one test per gate. The one to copy into every vault program you write is the donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` proves close is where strays finally drain).
+The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Its anchors are the paired lifecycle tests: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and watches the claim, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and proves the same wallet can raise again. Around them, one test per gate. The one to copy into every vault program you write is the donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` proves close is where strays are finally swept to the maker).
 
 ## What You Learnt from Building the Token Fundraiser
 

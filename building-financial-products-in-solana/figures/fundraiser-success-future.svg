@@ -170,7 +170,7 @@
   <text x="472" y="406.37" font-size="9" font-style="italic" fill="#444">authority: the fundraiser PDA</text>
   </g>
   <!-- exit one: the target is reached and the vault drains to Maria -->
-  <path d="M 464,366 C 446,338 446.298,269.356 437,215 C 435.077,203.761 431.874,199.635 430,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-faa)"/>
+  <path d="M 462,374.37 C 444,346.37 446.3,269.36 437,215 C 435.08,203.76 431.87,199.64 430,195" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-faa)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="430.69" y="240.42" font-size="9" font-style="italic" fill="#444" text-anchor="end">target met:</text>
   <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="428.73" y="252.42" font-size="9" font-weight="bold" fill="#1e7a3c">9,000 USDC</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="430.69" y="264.42" font-size="9" font-style="italic" fill="#444" text-anchor="end">the whole vault</text>

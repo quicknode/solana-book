@@ -210,7 +210,7 @@
   <text x="238" y="400" font-size="8" fill="#444" font-style="italic" text-anchor="end">Maria, the LPs' $0.25 simply stays in the vault</text>
   <text x="238" y="412" font-size="8" fill="#444" font-style="italic" text-anchor="end">99.70 is the taxed input the curve prices off</text>
   <!-- the curve prices the trade: ACME out to Bob -->
-  <path d="M 474,472.37 C 440,500 412,430 392,370 C 378,326 369.782,271.109 353,234.774" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-bob-swap-arr)"/>
+  <path d="M 474,472.37 C 440,500 412,430 392,370 C 386.09,351.44 381.22,330.94 376.29,310.71 C 373.38,298.76 360.62,280.79 338,256.77" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-bob-swap-arr)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="359.86" y="300.66" font-size="9.5" font-weight="bold" fill="#1e7a3c">&#8776; 40.7 ACME</text>
   <text x="362.64" y="314.66" font-size="8" fill="#444" font-style="italic" text-anchor="end">signed by the pool config</text>
   <!-- the price slide, and what happened to K -->

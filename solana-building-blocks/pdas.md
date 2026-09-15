@@ -34,7 +34,7 @@ The market for a token pair, a user's position in it, and the offer with a given
 
 ## Seeds Make Relationships Verifiable
 
-An account that claims to be "the vault for this market" either derives from the market's seeds or it does not. Combined with stored addresses (`has_one`), derivation is how a program proves that the accounts a caller supplied belong together.
+An account that claims to be "the vault for this market" either derives from the market's seeds or it does not. Combined with stored-address checks, derivation is how a program proves that the accounts a caller supplied belong together.
 
 ## PDA Authority Makes Custody Programmatic
 

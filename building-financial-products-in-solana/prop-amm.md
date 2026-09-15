@@ -77,7 +77,7 @@ The unit conversion is the one part that is not simple. Prices arrive at the ora
 
 - The quote brackets the oracle: bid at or below the price, ask at or above it, with each side's rounding favoring the market.
 - No swap hands out more value, at the raw oracle price, than it takes in, enforced onchain after the math, per fill.
-- Only the operator moves inventory, and the operator can always move all of it: `has_one = operator` on both inventory handlers is the entire access control.
+- Only the operator moves inventory, and the operator can always move all of it: checking the signer against the operator address stored in the market, on both inventory handlers, is the entire access control.
 - Traders carry no custody risk. A swap is a single atomic transaction against visible prices; nobody deposits anything into a prop AMM, so there is nothing of theirs to lose. Every risk in this design (stale quotes, adverse selection, a bad oracle) lands on Maria.
 
 ## The Failure Modes: What Attacks a Market Maker

@@ -179,6 +179,10 @@ Representing a continuous quantity as discrete integer steps. Onchain money is d
 
 The 8 bytes Anchor writes at the start of an account's data identifying its type, so a program cannot be fed one kind of account where another belongs.
 
+### drain
+
+To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. The word belongs to the attacker. A handler that legitimately moves a vault's whole balance out on its way to closing it empties the vault or pays it out. See the *Adversary* chapter.
+
 ### dust
 
 Sub-unit remainders left over by integer division: a fraction smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
