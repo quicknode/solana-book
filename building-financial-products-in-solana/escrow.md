@@ -1,6 +1,14 @@
 # Chapter 11: Escrow
 
-Once you have built an escrow, everything else looks like an escrow. An auction house is an escrow with competing takers. A betting market is an escrow where an outcome decides the payout. A lending market is an escrow with time and interest attached. Escrow is the smallest program that actually handles value, and every pattern it uses (holding tokens in a program-owned account, storing custom data, controlling who may do what) reappears in every chapter that follows.
+Escrow is the simplest program in this book. It lets two people swap tokens without trusting each other or paying a middleman, and it does that with three instruction handlers. It also teaches the mechanics that every later program reuses:
+
+- holding tokens in a vault whose authority is an account the program controls, so nobody, including the program's author, can move them except along the paths the code defines
+- storing the terms of a deal in an account the program owns, and checking every later instruction against them
+- letting who signed, and what the stored terms say, decide what may happen next
+- giving every state an exit that returns the tokens and the account rent deposits, so neither is stranded
+- counting every amount in minor units, the integers the token program moves
+
+The chapters that follow add what escrow does not have: a formula that sets a price, an outcome that decides a payout, time and interest, and an operator who must be constrained.
 
 The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus machine-checked proofs of its core invariants under `kani-proofs`. This chapter covers the Anchor version.
 
@@ -12,7 +20,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? An **escrow** lets Alice and Bob swap without having to trust each other.
 
-Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has bought a house or sent money overseas knows, the third party takes a percentage for itself, typically somewhere between one and six percent of the transaction.
+Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent money overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
 
 ![Traditional escrow: Alice and Bob each send funds to a third party in the middle, which forwards them onward minus the slice it keeps for itself.](figures/escrow-traditional-escrow.svg)
 
@@ -29,61 +37,57 @@ Two roles run through this chapter, and the code names them the same way:
 
 The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. The same integer meaning two different things is why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth.
 
-## The Account Model
-
-Financial state on Solana is accounts. The escrow program uses two accounts it creates itself, plus the standard set of accounts every token-handling program touches.
-
-![The offer PDA holds authority over its own vault, so no person can move the escrowed tokens.](figures/escrow-account-map.svg)
-
-The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
-
-- `id`, a number the maker chooses, so one maker can have many offers open at once
-- `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
-- `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
-- `token_b_wanted_amount`, how much of token B the maker wants, in minor units
-- `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
-
-The offer account is a **PDA** (program derived address), derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide, and one maker attempting to reuse an ID fails at account creation.
-
-The **vault** is where Alice's USDC waits. It is an ordinary token account with one difference: its authority is the offer account, not Alice and not the program's author. The offer account is a PDA, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
-
-Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's and Bob's token accounts, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow uses Anchor's `token_interface`, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one.
-
 ## The Instruction Handlers
 
-The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` opens it, and it ends in exactly one of two ways, `take_offer()` or `cancel_offer()`. Every state needs an exit, and an open offer has two.
+The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every state needs an exit, and an open offer has two.
 
-![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits drain and close the vault.](figures/escrow-state-machine.svg)
+![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits empty and close the vault.](figures/escrow-state-machine.svg)
 
 ### The Maker Makes the Offer
 
 Alice calls `make_offer()` with three arguments: her chosen `id`, `token_a_offered_amount` (250,000,000 minor units of USDC), and `token_b_wanted_amount` (100,000,000 minor units of TSLAx).
 
-Before the handler body runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here (`init`), with space for the data fields plus Anchor's discriminator, at the PDA address derived from `"offer"`, Alice's address, and the ID; if that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
+![make_offer() creates the offer account and the vault, and moves 250,000,000 minor units of USDC from Alice's token account into the vault. The vault's authority is the offer account, so no person can move the escrowed tokens.](figures/escrow-make-offer.svg)
 
-One constraint is easy to miss. `maker_token_account_b`, Alice's account for the token she *wants*, is created now if it does not exist, and Alice pays for it. The party who chose to open the offer carries its rent burden, and `take_offer()` can then require the destination for Bob's payment to already exist rather than making Bob pay to create an account that belongs to Alice.
+Financial state on Solana is accounts, and this one transaction created the two the deal needs.
 
-With the structure verified, the handler body is two small steps:
+The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
+
+- `id`, the number Alice chose, so one maker can have many offers open at once
+- `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
+- `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
+- `token_b_wanted_amount`, how much of token B the maker wants, in minor units
+- `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
+
+The offer account is a **PDA** (program derived address), derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
+
+The **vault** is where Alice's USDC waits. It is an ordinary token account with one difference: its authority is the offer account, not Alice and not the program's author. The offer account is a PDA, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
+
+Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's token account for each mint, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow accepts either token program through one interface, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one. Bob's accounts are faded in the figure because this transaction never touches them.
+
+Before the handler code runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here, with space for the data fields plus the discriminator that marks the account's type, at the PDA address derived from `"offer"`, Alice's address, and the ID. If that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
+
+`maker_token_account_b` is Alice's account for the token she *wants*: the TSLAx account Bob will pay into. She may not have one yet, so `make_offer()` creates it if it does not exist, and Alice pays the rent. Creating it now means Bob never has to. When he takes the offer the account is already there, and `take_offer()` only checks that it is. Otherwise Bob would be paying rent on an account that belongs to Alice.
+
+With the structure verified, the handler code is two small steps:
 
 - **`handle_send_offered_tokens_to_vault()`** calls the shared `transfer_tokens()` helper to move the 250,000,000 minor units from `maker_token_account_a` into the vault, with Alice as the signing authority.
 - **`handle_save_offer()`** writes the offer's fields, including the saved bump, into the offer account.
 
-![make_offer() moves 250,000,000 minor units of USDC from Alice's token account into the vault, while the offer account is written with the maker, the mints, and the wanted amount.](figures/escrow-make-offer.svg)
-
 ### The Taker Takes the Offer
 
-Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer account *is* the argument. Bob names the offer he wants, and the account constraints verify that every other account in the transaction is the one that offer implies. `has_one = maker` ties the maker account to the address stored in the offer. `has_one = token_mint_a` and `has_one = token_mint_b` do the same for the mints. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
+Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
+
+![take_offer() sends Bob's 1 TSLAx straight to Alice's token account, pays the vault's 250 USDC to Bob, and closes both the vault and the offer account, returning their rent to Alice.](figures/escrow-take-offer.svg)
 
 That is all Alice does. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
-The handler body runs two steps:
+The handler code runs two steps:
 
 - **`handle_send_wanted_tokens_to_maker()`** moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it.
 - **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
 
-Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and Anchor's `close = maker` constraint closes the offer account itself, refunding that rent to Alice too.
-
-![Both accounts close in the same instruction, and the rent lamports return to Alice.](figures/escrow-take-offer.svg)
+Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and the offer account itself is closed, refunding that rent to Alice too.
 
 Both sides now hold exactly what the other offered. No percentage went to anyone.
 
@@ -91,9 +95,9 @@ Both sides now hold exactly what the other offered. No percentage went to anyone
 
 If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
 
-The constraints make it maker-only: the signer must be the maker, and `has_one = maker` checks the signer against the address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). The handler, `handle_cancel_offer()`, mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and lets `close = maker` close the offer account to Alice. Every lamport of rent she fronted is returned to her.
-
 ![cancel_offer() returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
+
+The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, closes the vault to Alice, and closes the offer account to Alice too. Every lamport of rent she fronted is returned to her.
 
 ## The Math
 
@@ -106,15 +110,20 @@ The money math that remains is rent. Alice fronts the rent deposits for the offe
 Three things must hold before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account.
-- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until an exit runs (a direct donation could push it above, and changes nothing), and both exits drain the vault completely before closing it.
+- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until an exit runs (a direct donation could push it above, and changes nothing), and both exits empty the vault completely before closing it.
 - The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler, so there is nothing to get wrong.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
 - Rent returns to whoever paid it, on every path.
 
 ## The Failure Modes
 
-- **Reused offer ID.** The offer account is created with `init` at an address derived from the maker and the ID, so a second `make_offer()` with the same ID fails at account creation.
-- **Account substitution.** The classic escrow attack is a taker who passes their own account where the maker's payment account should be, or a foreign vault, or a mismatched mint. Every one of these is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, `has_one` binds the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter dissects what happens to programs that skip these checks.
+- **Reused offer ID.** The offer account is created at an address derived from the maker and the ID, so a second `make_offer()` with the same ID fails at account creation.
+- **Account substitution.** The classic escrow attack is a taker who passes the wrong account somewhere and hopes the program does not look. Three versions, and what stops each:
+  - **The taker's own account as the maker's payment account.** Bob passes his own TSLAx account as `maker_token_account_b`, so the 1 TSLAx he pays would land back in his own wallet. That account must be Alice's associated token account for token mint B, an address derived from Alice's address and the mint, so Bob's account fails the check and the transaction is rejected before any token moves.
+  - **A foreign vault.** Alice has a second offer open, with 1,000 USDC in its vault. Bob passes the first offer, which asks 1 TSLAx for 250 USDC, together with the second offer's vault, hoping to be paid 1,000 USDC for his 1 TSLAx. The vault must be the first offer's associated token account for token mint A, derived from that offer's address, so the second vault is rejected. Even without that check the token program would refuse the transfer, because the PDA signing for it is not that vault's authority.
+  - **A mismatched mint.** Bob creates a token of his own, mints himself 100,000,000 minor units of it, and passes its mint as `token_mint_b` and his account of it as `taker_token_account_b`, hoping to pay Alice in a token worth nothing. The stored-address check compares the mint passed in against the `token_mint_b` recorded in the offer, and rejects it.
+
+  Each is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, stored-address checks bind the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter dissects what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
 - **The abandoned offer.** The failure mode that is a missing feature: without `cancel_offer()`, an untaken offer strands the maker's tokens permanently. Every state needs an exit.
 - **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks belong in any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same. A swap of a token for a different amount of itself means someone is about to be cheated.
@@ -132,14 +141,16 @@ The testing section of the *Operating Financial Software* chapter builds the gen
 
 ## What You Learnt from Building the Escrow
 
-In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, charges one to six percent for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
+In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, takes a percentage for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
 
 The escrow gave you five concepts:
 
-- **Program custody.** Tokens held in a vault whose authority is a data account (a PDA), so funds move only along the code paths the program defines.
-- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler validates its accounts against that stored data.
-- **State transitions gated by signatures and state.** Who signed, and what the stored data says, decide what may happen; `has_one`, seeds, and ATA derivation close every substitution.
-- **An exit from every state.** `take_offer()` and `cancel_offer()` both drain and close everything, returning rent to whoever paid it.
+- **Program custody.** Tokens held in a vault whose authority is an account the program controls (a PDA), so funds move only along the code paths the program defines.
+- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler checks its accounts against that stored data.
+- **State transitions gated by signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
+- **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
 In the *Token Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
+
+[^remittance-cost]: The World Bank's figures for the third quarter of 2025, which put the global average near 6.5% with thirteen corridors above 20%. See [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
