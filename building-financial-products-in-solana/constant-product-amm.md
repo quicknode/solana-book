@@ -89,7 +89,20 @@ Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC;
 
 That gap is **impermanent loss**, and it is the price of being an LP. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP is a bet on trading volume, not on price direction**: if accumulated fees outrun the divergence, LPing wins; if the price runs hard in one direction on thin volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, the loss would have evaporated. Nobody should provide liquidity without being able to draw this diagram.
 
-![Impermanent loss: the value of Alice's LP position equals the value of just holding only at the $2.25 deposit price and falls below it on both sides. The shaded gap is the loss, and withdrawing at $2.64 realizes it; fee income lifts the LP line toward closing it.](figures/amm-impermanent-loss.svg)
+![Impermanent loss, to scale for Alice's $450 position. With no fee income (solid) the LP is behind holding at every price but $2.25, by $1.50 at the $2.64 withdrawal. With $10 of fee income (dashed) the LP is ahead of holding between about $1.40 and $3.30.](figures/amm-impermanent-loss.svg)
+
+Fee income is what an LP is paid for carrying that gap, and the gap is small for ordinary moves. It grows with the square of the price change, so a move of a quarter costs Alice about $3 and a doubling about $39. The LPs keep 25 of every 30 basis points of fee and Alice holds a fifth of the pool, so she earns about five basis points of everything traded: $10 for every $20,000. The table sets the two against each other for her $450 position, counting fee income at face value. Each cell is what she has at withdrawal minus what she would have had by holding, and the fee columns are $20,000, $100,000, and $400,000 of trading, the last roughly a year of turning the pool over once a day.
+
+| ACME at withdrawal | Just holding | LP, no fees | LP, $10 of fees | LP, $50 of fees | LP, $200 of fees |
+|---|---|---|---|---|---|
+| $1.13 (halves) | $338 | −$19 | −$9 | +$31 | +$181 |
+| $1.69 (down a quarter) | $394 | −$4 | +$6 | +$46 | +$196 |
+| $2.25 (unchanged) | $450 | $0 | +$10 | +$50 | +$200 |
+| $2.81 (up a quarter) | $506 | −$3 | +$7 | +$47 | +$197 |
+| $4.50 (doubles) | $675 | −$39 | −$29 | +$11 | +$161 |
+| $9.00 (quadruples) | $1,125 | −$225 | −$215 | −$175 | −$25 |
+
+Across any row, LPing wins once fee income outruns the gap, and for ordinary moves it does not take much: $10 of fees covers a move of a quarter in either direction. Down the first column, with nobody trading, the LP is behind in every row but one; that is the solid curve in the figure, and a pool that pays nothing for the risk it asks LPs to carry. Down the last column the LP is still behind when the price quadruples, because the gap grows faster than fee income can, whatever the volume. An LP is paid in proportion to the trading and loses in proportion to the square of the price move.
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 
