@@ -81,7 +81,7 @@ To keep the money easy to track, every character starts every chapter with the s
 
 The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos Mike produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
 
-AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, carrying renames through the text, the figures, and the companion repository together, and keeping the diagrams in step with actual program state.
+AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, ensuring naming is consistent across the text, the figures, and the companion repository, and keeping the diagrams in step with actual program state.
 
 ## Where to Start, Depending on What You Came For
 
