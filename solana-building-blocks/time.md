@@ -12,11 +12,11 @@ A **slot** is a window in which one leader may produce one block, and the slot c
 
 Three things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know all three:
 
-- **A slot is not exactly the length the network intends.** The network sets a target in the range of hundreds of milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around 3%.[^slot-time-live]
+- **A slot is not exactly the length the network intends.** The network sets a target, 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around 3%.[^slot-time-live]
 - **A leader can stretch its own slots, though it cannot shorten them.** Proof of history fixes the hashes in a tick, so nobody can run ahead of it. What a leader can do is produce its slots slowly, or not at all, which makes those slots take longer in wall-clock time. That loosens a slot-counted window rather than tightening it. How far one leader can stretch depends on how many slots it leads, and that is a matter of stake.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
-Before each **epoch** of 432,000 slots, the network draws a **leader schedule**. Every slot is assigned to one validator, in turns of four consecutive slots, and a validator's chance at each turn is proportional to the stake delegated to it. A validator with 1% of the stake leads about 1% of the slots, in turns of four scattered across the epoch, and knows before the epoch starts which slots they are. A small validator can stretch its four slots, and then the schedule moves on. A validator with a large share of the stake leads a matching share of the slots in any window, so it can slow every turn it holds, and a slot-counted window runs long by a share that tracks that stake. Because the schedule is public in advance, it can also time a stretch to a boundary it wants to land on, an auction close or a funding interval. The same stake weights the vote that sets the Unix timestamp, so the same validator has the larger say over the next section's clock. Neither lets it move the slot count: the count still advances one per slot, and its own slots are the only ones it can slow.
+Before each **epoch** of 432,000 slots, about a day at 200 milliseconds, the network draws a **leader schedule**. Every slot is assigned to one validator, in turns of four consecutive slots, and a validator's chance at each turn is proportional to the stake delegated to it. A validator with 1% of the stake leads about 1% of the slots, in turns of four scattered across the epoch, and knows before the epoch starts which slots they are. A small validator can stretch its four slots, and then the schedule moves on. A validator with a large share of the stake leads a matching share of the slots in any window, so it can slow every turn it holds, and a slot-counted window runs long by a share that tracks that stake. Because the schedule is public in advance, it can also time a stretch to a boundary it wants to land on, an auction close or a funding interval. The same stake weights the vote that sets the Unix timestamp, so the same validator has the larger say over the next section's clock. Neither lets it move the slot count: the count still advances one per slot, and its own slots are the only ones it can slow.
 
 ## The Unix Timestamp
 
@@ -53,7 +53,7 @@ Both accumulate, both advance by elapsed slots, and both decide what somebody ow
 
 A freshness window is agreed in seconds, a borrower is quoted a rate per year, and each of those has to become a slot count before a program can use it. Divide the time by the length of a slot in milliseconds. Multiplying runs the same arithmetic backwards, for telling a person what a slot count or a per-slot rate comes to in their own units.
 
-The length of a slot is a static value, usually in the range of hundreds of milliseconds. At the time this book was written, the network was part way through reducing it to 200 milliseconds.[^slot-simd]
+The length of a slot is a static value: 200 milliseconds, the end point of a staged reduction from 400.[^slot-simd]
 
 A program can get that length three ways:
 
@@ -67,7 +67,7 @@ The gates give the length the network aims for, and the network can run slower t
 
 To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. That measurement comes from the validator-reported clock, so it belongs in offchain tooling, not in a handler. A program counts slots so that nobody can nudge its accrual. Multiply by a measured slot length and the nudge is back.
 
-> **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. No further reductions are planned once the network reaches 200 milliseconds.
+> **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change and converting each piece at the slot time the network used then. A slot count that reaches back across the reduction to 200 milliseconds needs that split, while one that starts after it does not. No reduction below 200 milliseconds is planned.
 
 A program that needs a long span in wall-clock time should store a timestamp beside the slot and subtract.
 
@@ -143,7 +143,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 ## A Shorter Slot Tightens Every Window and Speeds Up Every Rate
 
-The network has shortened the slot before, and a further staged reduction is published.[^slot-times] This is a rare event rather than a slow slide: the number holds for years, then moves once. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
+The network has shortened the slot before, most recently in stages from 400 milliseconds to 200.[^slot-times] This is a rare event rather than a slow slide: the number holds for years, then moves once. A program that planned for it keeps charging what its owner intended; one that did not needs a redeploy.
 
 A shorter slot pulls the two uses of a slot count in opposite directions:
 
@@ -178,7 +178,7 @@ The table lists every program in Part II that touches time, and the clock each o
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
-[^slot-times]: The stages, and how far each one has got, are published at [solana.com/upgrades/reduced-slot-times](https://solana.com/upgrades/reduced-slot-times).
+[^slot-times]: The stages of that reduction are published at [solana.com/upgrades/reduced-slot-times](https://solana.com/upgrades/reduced-slot-times).
 
 [^anza-docs]: Anza maintains the validator client and its documentation, at [docs.anza.xyz](https://docs.anza.xyz).
 
@@ -188,6 +188,6 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
 
-[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). In late August 2026 it read about 360 milliseconds against a 350 millisecond target, which is about 3% long.
+[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). In late August 2026, part way through the reduction, it read about 360 milliseconds against a 350 millisecond target, which is about 3% long.
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).

@@ -189,7 +189,7 @@ Sub-unit remainders left over by integer division: a fraction smaller than one [
 
 ### epoch
 
-A period of 432,000 slots over which a validator schedule holds, so its length in days depends on the slot time. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots over which a validator schedule holds, about a day at a 200 millisecond slot. Mostly relevant to staking; application logic usually counts slots.
 
 ### equity (position)
 
@@ -553,7 +553,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time: a window of a few hundred milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time: a window of 200 milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
 ### SOL
 
