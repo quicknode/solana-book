@@ -47,11 +47,7 @@ The book splits the work with two companions. Both are available at [solanabook.
 
 The AI plugin improves the code your tools write. The book improves your own understanding of it.
 
-Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page described next.
-
-## Corrections Are Welcome, and Expected
-
-Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
+Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository.
 
 ## Prerequisites
 
@@ -82,6 +78,10 @@ To keep the money easy to track, every character starts every chapter with the s
 The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos Mike produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
 
 AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, carrying renames through the text, the figures, and the companion repository together, and keeping the diagrams in step with actual program state.
+
+## Corrections Are Welcome, and Expected
+
+Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
 
 ## Where to Start, Depending on What You Came For
 
