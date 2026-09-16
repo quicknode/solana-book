@@ -695,6 +695,16 @@ section.chapter:not(.prelude-item) { break-before: recto; page: chapter; }
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
 section.prelude-item .cols { column-count: 1; }
+/* The epigraph sits alone on a right-hand page, the last thing before the
+   Introduction, with a blank reverse so the chapter opens on a right-hand page
+   too. Its heading is a file title for the build, not a line the reader sees.
+   The rule comes after the shared-flow rule above because paged.js resolves
+   break rules in source order. */
+section#ch-prelude-epigraph { break-before: recto; break-after: recto; page: chapter-start; }
+section#ch-prelude-epigraph h1 { display: none; }
+section#ch-prelude-epigraph .cols { margin: 2.6in 0.35in 0 0.35in; }
+section#ch-prelude-epigraph p { text-align: left; font-size: 11.5pt; line-height: 1.5; hyphens: none; text-wrap: pretty; }
+section#ch-prelude-epigraph p:last-child { margin-top: 0.8em; text-align: right !important; font-size: 10pt; color: #444; }
 section.chapter .cols { column-count: 1; }
 section.chapter h1 {
   string-set: chapter content(text);
