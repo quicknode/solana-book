@@ -73,7 +73,7 @@ The table lists the extensions that matter for financial products:
 | **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |
 | **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
 
-When you build on a token you did not issue, read its extensions first: several of them change what "I transferred X" means.
+Before building on a token you did not issue, check which extensions its mint carries: Solana Explorer lists them on the mint's page, and the table's last column says what each one does to a transfer your program makes.
 
 ![A transfer through the Token Extensions Program: the mint's transfer fee withholds 1 USDC for the issuer, so 99 arrives where 100 was sent.](figures/transfer-using-transfer-fee-extension.svg)
 
@@ -83,7 +83,7 @@ When you build on a token you did not issue, read its extensions first: several 
 - The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
-- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**, and extensions can change what a transfer means: check a token's extensions before building on it.
+- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: check which extensions a mint carries in Solana Explorer before building on it.
 
 
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).
