@@ -69,7 +69,7 @@ The book has two parts. **The Fundamentals** is everything you need before writi
 
 **Building Financial Products** is ten chapters, and each one builds a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
 
-Real incidents appear throughout the book in boxed **War Story** sections. The incidents are years old and the mistakes behind them still recur. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
+Real incidents appear throughout the book in boxed **War Story** sections. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory).
 
@@ -77,7 +77,7 @@ To keep the money easy to track, every character starts every chapter with the s
 
 The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos Mike produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
 
-AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, carrying renames through the text, the figures, and the companion repository together, and keeping the diagrams in step with actual program state.
+AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, ensuring naming is consistent across the text, the figures, and the companion repository, and keeping the diagrams in step with actual program state.
 
 ## Corrections Are Welcome, and Expected
 
