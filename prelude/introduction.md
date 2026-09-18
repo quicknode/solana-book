@@ -2,7 +2,7 @@
 
 It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some end by showing you how to build your first onchain program.
 
-This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active] It shows you how to build your first onchain program, then keeps going until you have built ten complete financial products.
+This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active] It explains ten complete financial products, from a two-party escrow to a perpetual futures venue, as the Solana programs they are, and the tested code behind each one is in a companion repository.
 
 ## Why Build Financial Programs on Solana?
 
@@ -55,7 +55,7 @@ This book does not assume you have written a Solana program, and it does not ass
 
 Every Solana mechanism is introduced before it is used, starting from the basics of users, accounts, programs, and data. Every financial concept (escrow, collateral, liquidation, market making, interest) is explained from first principles, with the personas and dollar amounts on the page, before any code depends on it.
 
-Code here is given in Rust, Solana's primary programming language. The Rust is explained as it appears, and the programs are deliberately small. If you can read a Rust struct and a function, you can read the program chapters.
+It does not assume you can program, either. The programs are explained in prose and figures: the accounts each one stores, the instruction handlers that move its money, what each handler checks before it does, and what happens when a check is missing. Handler and field names appear in the text so a reader with the companion repository open can find the code, and the prose says what each one does before it names it, so a reader without the repository loses nothing. The code itself is Rust, Solana's primary programming language, and it stays in the companion repository.
 
 The diagrams throughout the book share one set of conventions, and each convention is explained by the first figure that uses it.
 
@@ -90,7 +90,8 @@ Follow @QuicknodeSolana on X for updates to the book, new chapters and editions 
 Here is where to begin, depending on what you came for:
 
 - **New to Solana, or to finance, or both?** Read front to back. Part I introduces every mechanism before Part II uses it, so nothing in a program chapter arrives unexplained.
-- **Coming from traditional finance?** The financial concepts that open each program chapter will be familiar, so skim those. Read [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks) in full instead, because the accounts, signatures, and rent those concepts are built from are what is new to you.
+- **Here to understand these products, not to build one?** An analyst, a risk or compliance officer, a product manager, a lawyer: anyone whose work touches onchain finance without writing its code. Read [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks) for the vocabulary, then the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) and [*Adversary*](../financial-programming-concepts-in-solana/the-adversary.md) chapters, then the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order. Each program chapter tells its story with people and dollar amounts, names who earns what and why, and ends with how the program can be attacked, and none of that needs the code. The [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) and [*Operating Financial Software*](../financial-programming-concepts-in-solana/operating-financial-software.md) chapters are written for whoever writes the program, and you can skim them.
+- **Coming from traditional finance to build?** The financial concepts that open each program chapter will be familiar, so skim those. Read [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks) in full instead, because the accounts, signatures, and rent those concepts are built from are what is new to you.
 - **Already building on Solana?** Skim [Solana Building Blocks](../TABLE-OF-CONTENTS.md#solana-building-blocks), read [Financial Programming Concepts in Solana](../financial-programming-concepts-in-solana/intro.md) properly, then take the [program chapters](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana) in order.
 - **Here to ship one specific thing?** Read the [*Arithmetic of Money*](../financial-programming-concepts-in-solana/the-arithmetic-of-money.md) chapter and the [*Offchain Truth*](../financial-programming-concepts-in-solana/offchain-truth.md) chapter, then go straight to [your program chapter](../TABLE-OF-CONTENTS.md#building-financial-products-in-solana). Each program chapter names the sections it depends on.
 
