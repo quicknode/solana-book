@@ -47,7 +47,7 @@ The book splits the work with two companions. Both are available at [solanabook.
 
 The AI plugin improves the code your tools write. The book improves your own understanding of it.
 
-Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository.
+The code lives in the companion repository. These pages name its instruction handlers and fields and give its formulas, and the repository is the source of truth for all of them: when the two disagree, trust the companion repository.
 
 ## Prerequisites
 
