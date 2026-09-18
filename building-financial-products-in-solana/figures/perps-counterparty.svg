@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">The pool takes the other side</text>
   <defs><marker id="perps-cp-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <!-- the question the whole account model exists to answer -->
@@ -6,13 +6,13 @@
   <text x="300" y="78" font-size="11" font-weight="bold" text-anchor="middle">without reading a single position account</text>
   <!-- the pool sits at the centre -->
   <rect x="240" y="102" width="160" height="24" rx="6" fill="#f4f4f2" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,107)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="268" y="118" font-size="12" font-weight="bold">the pool</text>
+  <g transform="translate(248,105.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="268" y="116.7" font-size="12" font-weight="bold">the pool</text>
   <line x1="248" y1="123" x2="392" y2="123" stroke="#888" stroke-width="0.8"/>
   <!-- Carol, first of the liquidity providers -->
   <rect x="28" y="96" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(36,101)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="56" y="112" font-size="10.5" font-weight="bold">Carol (LP)</text>
+  <g transform="translate(36,99.5)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="56" y="110.175" font-size="10.5" font-weight="bold">Carol (LP)</text>
   <line x1="36" y1="117" x2="132" y2="117" stroke="#888" stroke-width="0.8"/>
   <text x="36" y="128" font-size="9.5" fill="#444">1 SOL</text>
   <text x="84" y="152" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">first of twelve LPs</text>
@@ -23,16 +23,16 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="191.92" y="176.6" font-size="9" fill="#444" font-style="italic" text-anchor="middle">priced at AUM marked to market</text>
   <!-- Alice goes long against the pool -->
   <rect x="496" y="44" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(504,49)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="524" y="60" font-size="10.5" font-weight="bold">Alice (long)</text>
+  <g transform="translate(504,47.5)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="524" y="58.175" font-size="10.5" font-weight="bold">Alice (long)</text>
   <line x1="504" y1="65" x2="600" y2="65" stroke="#888" stroke-width="0.8"/>
   <text x="504" y="76" font-size="9.5" fill="#444">1 SOL</text>
   <path d="M 492,74 C 478,77.5 464,81.77 450.67,86.46 C 433.36,92.56 417.14,101.74 402,114" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-cp-arr)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="447.17" y="74.58" font-size="10" font-weight="bold" fill="#1e7a3c" text-anchor="middle">1,000 USDC</text>
   <!-- Bob takes the mirror-image short, against the same pool -->
   <rect x="496" y="160" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(504,165)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="524" y="176" font-size="10.5" font-weight="bold">Bob (short)</text>
+  <g transform="translate(504,163.5)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="524" y="174.175" font-size="10.5" font-weight="bold">Bob (short)</text>
   <line x1="504" y1="181" x2="600" y2="181" stroke="#888" stroke-width="0.8"/>
   <text x="504" y="192" font-size="9.5" fill="#444">1 SOL</text>
   <path d="M 492,172 C 460,170 428,166 404,160" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-cp-arr)"/>

@@ -1,191 +1,191 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 0 664 684" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 0 664 684" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Settlement pays Bob and Carol</text>
   <!-- settle_funds(): the vaults pay out both traders once their counters are zeroed -->
   <!-- settle_funds() for Bob and for Carol: counters zeroed, then the market PDA signs -->
   <defs><marker id="order-book-settle-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
-  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <circle cx="366" cy="56.634" r="7" fill="#fff"/>
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <circle cx="366" cy="53.634" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="366" cy="56.634" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="366" cy="53.634" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="358" y="19.0155" width="113" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(366,23.0155)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="386" y="33.52" font-size="10.5" font-weight="bold">NVDAx mint</text>
   </g>
-  <circle cx="509" cy="80.581" r="7" fill="#fff"/>
+  <circle cx="509" cy="77.581" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="509" cy="80.581" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="509" cy="77.581" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="501" y="40.4582" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(509,44.4582)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="529" y="54.96" font-size="10.5" font-weight="bold">USDC mint</text>
   </g>
-  <circle cx="84" cy="36.9" r="7" fill="#fff"/>
+  <circle cx="84" cy="33.9" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="84" cy="36.9" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="84" cy="33.9" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="-20" y="43.9168" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(-12,47.9168)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="8" y="58.42" font-size="10.5" font-weight="bold">Alice</text>
   </g>
   <g>
-  <circle cx="221" cy="42.89" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="221" cy="39.89" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="122" y="49.6439" width="107" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(130,54.6439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="150" y="65.6439" font-size="10.5" font-weight="bold">Bob</text>
+  <g transform="translate(130,53.1439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="150" y="63.8189" font-size="10.5" font-weight="bold">Bob</text>
   <line x1="130" y1="70.6439" x2="221" y2="70.6439" stroke="#888" stroke-width="0.8"/>
   <text x="130" y="81.6439" font-size="9.5" fill="#444">1 SOL</text>
   </g>
   <g>
-  <circle cx="343" cy="53.945" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="343" cy="50.945" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="235" y="60.0617" width="117" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(243,65.0617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="263" y="76.0617" font-size="10.5" font-weight="bold">Carol</text>
+  <g transform="translate(243,63.5617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="263" y="74.2367" font-size="10.5" font-weight="bold">Carol</text>
   <line x1="243" y1="81.0617" x2="344" y2="81.0617" stroke="#888" stroke-width="0.8"/>
   <text x="243" y="92.0617" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <circle cx="463" cy="71.524" r="7" fill="#fff"/>
+  <circle cx="463" cy="68.524" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="463" cy="71.524" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="358" y="76.4364" width="113" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(366,80.4364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="386" y="90.94" font-size="10.5" font-weight="bold">Maria<tspan font-size="8"> (authority)</tspan></text>
+  <circle cx="463" cy="68.524" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="358" y="77.9364" width="113" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(366,81.9364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="386" y="92.44" font-size="10.5" font-weight="bold">Maria<tspan font-size="8"> (authority)</tspan></text>
   </g>
   <g opacity="0.3">
   <circle cx="-12" cy="102.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="-2" y="96.9168" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="-2" y="105.917" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="-2" y="114.917" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <text x="-2" y="96.9168" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="-2" y="105.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="-2" y="114.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT</text>
   <rect x="-20" y="120.917" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(-12,124.917)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="8" y="135.317" font-size="9.5" font-weight="bold">Alice's NVDAx</text>
   </g>
   <g>
   <circle cx="130" cy="108.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="140" y="102.644" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS +</text>
-  <text x="140" y="111.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="140" y="120.644" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <text x="140" y="102.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="140" y="111.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="140" y="120.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT</text>
   <rect x="122" y="126.644" width="107" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(130,131.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="150" y="142.644" font-size="9.5" font-weight="bold">Bob's NVDAx</text>
+  <g transform="translate(130,130.144)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="150" y="140.469" font-size="9.5">Bob's NVDAx</text>
   <line x1="130" y1="147.644" x2="221" y2="147.644" stroke="#888" stroke-width="0.8"/>
-  <text x="130" y="158.644" font-size="9.5" font-weight="bold">3 NVDAx</text>
+  <text x="130" y="158.644" font-size="9.5">3 NVDAx</text>
   </g>
   <g opacity="0.3">
   <circle cx="243" cy="118.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="253" y="113.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS +</text>
-  <text x="253" y="122.062" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="253" y="131.062" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
+  <text x="253" y="113.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
+  <text x="253" y="122.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="253" y="131.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT</text>
   <rect x="235" y="137.062" width="117" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(243,141.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="263" y="151.462" font-size="9.5" font-weight="bold">Carol's NVDAx</text>
   </g>
   <g opacity="0.3">
   <circle cx="-12" cy="179.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="-2" y="173.917" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="-2" y="182.917" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="-2" y="191.917" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <text x="-2" y="173.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="-2" y="182.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="-2" y="191.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="-20" y="197.917" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(-12,201.917)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="8" y="212.317" font-size="9.5" font-weight="bold">Alice's USDC</text>
   </g>
   <g>
   <circle cx="130" cy="185.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="140" y="179.644" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS +</text>
-  <text x="140" y="188.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="140" y="197.644" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <text x="140" y="179.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="140" y="188.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="140" y="197.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="122" y="203.644" width="107" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(130,208.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="150" y="219.644" font-size="9.5" font-weight="bold">Bob's USDC</text>
+  <g transform="translate(130,207.144)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="150" y="217.469" font-size="9.5">Bob's USDC</text>
   <line x1="130" y1="224.644" x2="221" y2="224.644" stroke="#888" stroke-width="0.8"/>
-  <text x="130" y="235.644" font-size="9.5" font-weight="bold">250 USDC</text>
+  <text x="130" y="235.644" font-size="9.5">250 USDC</text>
   </g>
   <g>
   <circle cx="243" cy="195.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="253" y="190.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS +</text>
-  <text x="253" y="199.062" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="253" y="208.062" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
+  <text x="253" y="190.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
+  <text x="253" y="199.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="253" y="208.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="235" y="214.062" width="117" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(243,219.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="263" y="230.062" font-size="9.5" font-weight="bold">Carol's USDC</text>
+  <g transform="translate(243,217.562)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="263" y="227.887" font-size="9.5">Carol's USDC</text>
   <line x1="243" y1="235.062" x2="344" y2="235.062" stroke="#888" stroke-width="0.8"/>
-  <text x="243" y="246.062" font-size="9.5" font-weight="bold">1,748.125 USDC</text>
+  <text x="243" y="246.062" font-size="9.5">1,748.125 USDC</text>
   </g>
   <g opacity="0.3">
-  <circle cx="366" cy="134.936" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="376" y="129.436" font-size="7" letter-spacing="0.3" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="376" y="138.436" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="376" y="147.436" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="358" y="153.436" width="113" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(366,157.436)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="386" y="167.836" font-size="9.5" font-weight="bold">Maria's USDC</text>
+  <circle cx="366" cy="136.436" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="376" y="130.936" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="376" y="139.936" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="376" y="148.936" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="358" y="154.936" width="113" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(366,158.936)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="386" y="169.336" font-size="9.5" font-weight="bold">Maria's USDC</text>
   </g>
   <g opacity="0.3">
   <circle cx="-12" cy="256.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="-2" y="250.917" font-size="7" letter-spacing="0.3" fill="#555">"MARKET_USER" +</text>
-  <text x="-2" y="259.917" font-size="7" letter-spacing="0.3" fill="#555">MARKET ADDRESS +</text>
-  <text x="-2" y="268.917" font-size="7" letter-spacing="0.3" fill="#555">ALICE'S ADDRESS</text>
+  <text x="-2" y="250.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"MARKET_USER" +</text>
+  <text x="-2" y="259.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET ADDRESS +</text>
+  <text x="-2" y="268.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
   <rect x="-20" y="274.917" width="112" height="22" rx="6" fill="#fff" stroke="#888"/>
   <g transform="translate(-12,278.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="8" y="288.67" font-size="8" font-weight="bold">Alice's market user</text>
   </g>
   <g>
   <circle cx="130" cy="262.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="140" y="256.644" font-size="7" letter-spacing="0.3" fill="#555">"MARKET_USER" +</text>
-  <text x="140" y="265.644" font-size="7" letter-spacing="0.3" fill="#555">MARKET ADDRESS +</text>
-  <text x="140" y="274.644" font-size="7" letter-spacing="0.3" fill="#555">BOB'S ADDRESS</text>
+  <text x="140" y="256.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"MARKET_USER" +</text>
+  <text x="140" y="265.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET ADDRESS +</text>
+  <text x="140" y="274.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS</text>
   <rect x="122" y="280.644" width="107" height="64" rx="6" fill="#fff" stroke="#888"/>
-  <g transform="translate(130,285.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="150" y="296.644" font-size="8" font-weight="bold">Bob's market user</text>
+  <g transform="translate(130,284.144)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="150" y="293.944" font-size="8">Bob's market user</text>
   <line x1="130" y1="301.644" x2="221" y2="301.644" stroke="#888" stroke-width="0.8"/>
   <text x="130" y="312.644" font-size="8">open_orders: [ ]</text>
-  <text x="130" y="324.644" font-size="8" font-weight="bold">unsettled_base: 0</text>
-  <text x="130" y="336.644" font-size="8" font-weight="bold">unsettled_quote: 0</text>
+  <text x="130" y="324.644" font-size="8">unsettled_base: 0</text>
+  <text x="130" y="336.644" font-size="8">unsettled_quote: 0</text>
   </g>
   <g>
   <circle cx="243" cy="272.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="253" y="267.062" font-size="7" letter-spacing="0.3" fill="#555">"MARKET_USER" +</text>
-  <text x="253" y="276.062" font-size="7" letter-spacing="0.3" fill="#555">MARKET ADDRESS +</text>
-  <text x="253" y="285.062" font-size="7" letter-spacing="0.3" fill="#555">CAROL'S ADDRESS</text>
+  <text x="253" y="267.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"MARKET_USER" +</text>
+  <text x="253" y="276.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET ADDRESS +</text>
+  <text x="253" y="285.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
   <rect x="235" y="291.062" width="117" height="64" rx="6" fill="#fff" stroke="#888"/>
-  <g transform="translate(243,296.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="263" y="307.062" font-size="8" font-weight="bold">Carol's market user</text>
+  <g transform="translate(243,294.562)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="263" y="304.362" font-size="8">Carol's market user</text>
   <line x1="243" y1="312.062" x2="344" y2="312.062" stroke="#888" stroke-width="0.8"/>
   <text x="243" y="323.062" font-size="8">open_orders: [ ]</text>
   <text x="243" y="335.062" font-size="8">unsettled_base: 0</text>
-  <text x="243" y="347.062" font-size="8" font-weight="bold">unsettled_quote: 0</text>
+  <text x="243" y="347.062" font-size="8">unsettled_quote: 0</text>
   </g>
   <g opacity="0.3">
   <circle cx="-12" cy="357.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="-2" y="351.917" font-size="7" letter-spacing="0.3" fill="#555">"ORDER" +</text>
-  <text x="-2" y="360.917" font-size="7" letter-spacing="0.3" fill="#555">MARKET ADDRESS +</text>
-  <text x="-2" y="369.917" font-size="7" letter-spacing="0.3" fill="#555">ORDER ID</text>
+  <text x="-2" y="351.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"ORDER" +</text>
+  <text x="-2" y="360.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET ADDRESS +</text>
+  <text x="-2" y="369.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ORDER ID</text>
   <rect x="-20" y="375.917" width="112" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(-12,379.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="8" y="390.42" font-size="10.5" font-weight="bold">Alice's order</text>
   </g>
   <g opacity="0.3">
   <circle cx="130" cy="363.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="140" y="357.644" font-size="7" letter-spacing="0.3" fill="#555">"ORDER" +</text>
-  <text x="140" y="366.644" font-size="7" letter-spacing="0.3" fill="#555">MARKET ADDRESS +</text>
-  <text x="140" y="375.644" font-size="7" letter-spacing="0.3" fill="#555">ORDER ID</text>
+  <text x="140" y="357.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"ORDER" +</text>
+  <text x="140" y="366.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET ADDRESS +</text>
+  <text x="140" y="375.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ORDER ID</text>
   <rect x="122" y="381.644" width="107" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(130,385.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="150" y="396.14" font-size="10.5" font-weight="bold">Bob's order</text>
   </g>
   <g opacity="0.3">
   <circle cx="243" cy="373.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="253" y="368.062" font-size="7" letter-spacing="0.3" fill="#555">"ORDER" +</text>
-  <text x="253" y="377.062" font-size="7" letter-spacing="0.3" fill="#555">MARKET ADDRESS +</text>
-  <text x="253" y="386.062" font-size="7" letter-spacing="0.3" fill="#555">ORDER ID</text>
+  <text x="253" y="368.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"ORDER" +</text>
+  <text x="253" y="377.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET ADDRESS +</text>
+  <text x="253" y="386.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ORDER ID</text>
   <rect x="235" y="392.062" width="117" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(243,396.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="263" y="406.56" font-size="10.5" font-weight="bold">Carol's order</text>
   </g>
   <!-- the order book program -->
   <g>
-  <circle cx="628" cy="112.082" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="628" cy="109.082" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="477" y="119.37" width="159" height="90" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(485,124.37)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
-  <text x="505" y="135.37" font-size="10.5" font-weight="bold">order book program</text>
+  <g transform="translate(485,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="505" y="133.545" font-size="10.5" font-weight="bold">order book program</text>
   <line x1="485" y1="140.37" x2="628" y2="140.37" stroke="#888" stroke-width="0.8"/>
   <text x="485" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_market()</text>
   <text x="485" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">create_market_user()</text>
@@ -196,11 +196,11 @@
   </g>
   <g>
   <circle cx="485" cy="223.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="222.37" font-size="7" letter-spacing="0.3" fill="#555">"MARKET" + NVDAX MINT +</text>
-  <text x="495" y="231.37" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT ADDRESS</text>
+  <text x="495" y="222.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"MARKET" + NVDAX MINT +</text>
+  <text x="495" y="231.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT ADDRESS</text>
   <rect x="477" y="237.37" width="159" height="136" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(485,242.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="505" y="253.37" font-size="10.5" font-weight="bold">market</text>
+  <g transform="translate(485,240.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="505" y="251.545" font-size="10.5" font-weight="bold">market</text>
   <line x1="485" y1="258.37" x2="628" y2="258.37" stroke="#888" stroke-width="0.8"/>
   <text x="485" y="269.37" font-size="9.5">authority: Maria</text>
   <text x="485" y="281.37" font-size="9.5">base_mint: NVDAx</text>
@@ -214,52 +214,52 @@
   </g>
   <g opacity="0.3">
   <circle cx="485" cy="394.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="398.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="398.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
   <rect x="477" y="404.37" width="159" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(485,408.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="505" y="418.87" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
   </g>
   <g>
   <circle cx="485" cy="489.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="493.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="493.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
   <rect x="477" y="499.37" width="159" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(485,504.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="505" y="515.37" font-size="10.5" font-weight="bold">base vault</text>
+  <g transform="translate(485,502.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="505" y="513.545" font-size="10.5" font-weight="bold">base vault</text>
   <line x1="485" y1="520.37" x2="628" y2="520.37" stroke="#888" stroke-width="0.8"/>
-  <text x="485" y="531.37" font-size="9.5" font-weight="bold">10 NVDAx</text>
+  <text x="485" y="531.37" font-size="9.5">10 NVDAx</text>
   <text x="485" y="543.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
   </g>
   <g>
   <circle cx="485" cy="560.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="564.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="564.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
   <rect x="477" y="570.37" width="159" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(485,575.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="505" y="586.37" font-size="10.5" font-weight="bold">quote vault</text>
+  <g transform="translate(485,573.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="505" y="584.545" font-size="10.5" font-weight="bold">quote vault</text>
   <line x1="485" y1="591.37" x2="628" y2="591.37" stroke="#888" stroke-width="0.8"/>
-  <text x="485" y="602.37" font-size="9.5" font-weight="bold">0 USDC</text>
+  <text x="485" y="602.37" font-size="9.5">0 USDC</text>
   <text x="485" y="614.37" font-size="9" font-style="italic" fill="#444">authority: the market PDA</text>
   </g>
   <g opacity="0.3">
   <circle cx="485" cy="631.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="635.37" font-size="7" letter-spacing="0.3" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="635.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
   <rect x="477" y="641.37" width="159" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(485,645.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="505" y="655.87" font-size="10.5" font-weight="bold">fee vault</text>
   </g>
   <!-- the base vault pays Bob his three shares -->
-  <path d="M 473,516 C 425,474 364,452 307,446 C 269,442 232.539,444.018 232,424 L 227.056,166.092 C 227.101,152.617 228.459,150.17 229,148" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
+  <path d="M 473,516 C 425,475.5 364,453.5 307,446 C 269,442 232.539,444.018 232,424 L 227.056,166.092 C 227.101,152.617 228.459,150.17 229,148" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
   <!-- the quote vault pays Carol her net proceeds -->
-  <path d="M 473,580 C 449,550 435,528 435,500 L 435,268 C 435,250 416.052,239.525 400,238 L 354.109,233.639" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
+  <path d="M 473,580 C 449,551.5 435,529.5 435,501.5 L 435,269.5 C 435,251.5 416.052,241.025 400,239.5 L 354.109,233.639" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
   <!-- the quote vault pays Bob back the lock his cancel released -->
-  <path d="M 473,608 C 405,608 184,602 134,576 C 120,568.7 100,556 100,536 L 100,250 Q 100,223 108,223 L 119,223" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
+  <path d="M 473,608 C 405,609.5 184,602 134,576 C 120,568.7 100,556 100,536 L 100,250 Q 100,223 108,223 L 119,223" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="634" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">each handler zeroes the counters before it makes the transfers:</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="650" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">checks-effects-interactions, so a re-entrant caller finds nothing left</text>
   <rect class="marker" x="223.5" y="433.4" width="14" height="16" rx="3" fill="#1e7a3c"/><text x="229.5" y="445" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
   <g class="coin" transform="translate(251.5,441.4)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <rect class="marker" x="76" y="492" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="84" y="503.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
   <g class="coin" transform="translate(100,500)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="396" y="376.5" width="25" height="16" rx="3" fill="#1e7a3c"/><text x="404" y="388.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <g class="coin" transform="translate(435,384.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="396" y="376.5" width="25" height="16" rx="3" fill="#1e7a3c"/><text x="404" y="389.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(435,386)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <rect x="189" y="456" width="256" height="70" fill="#fff" stroke="#888" class="key"/>
   <rect class="marker" x="197" y="466.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="205" y="478.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
   <text x="223" y="478" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Bob 3 NVDAx from the base vault</text>
