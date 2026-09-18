@@ -51,7 +51,7 @@ The AI plugin improves the code your tools write. The book improves your own und
 
 This book does not assume you have written a Solana program, and it does not assume a background in finance. It covers both in enough detail to work from either side with confidence.
 
-Every Solana mechanism is introduced before it is used, starting from the basics of users, accounts, programs, and data. Every financial concept (escrow, collateral, liquidation, market making, interest) is explained from first principles, with the personas and dollar amounts on the page, before any code depends on it.
+Every Solana mechanism is introduced before it is used, starting from the basics of users, accounts, programs, and data. Every financial concept (escrow, collateral, liquidation, market making, interest) is explained from first principles, through named people with real dollar amounts using the program in realistic scenarios: making gains, taking losses, and occasionally trying to attack it.
 
 It does not assume you are a software engineer, or that you know Rust, the programming language Solana programs are written in. The behavior of every program is explained in detail: the accounts it stores, the instruction handlers that move its money, what each handler checks before it does, and what happens when a check is missing. Handler and field names appear in the text so that the explanation and the code can be read side by side. Software engineers will find a complete implementation of every program in the companion repository, in Anchor 1, Anchor 2, and Quasar, with further languages and frameworks added as they arrive. Its tests run continuously, so the code stays current in a way a printed book cannot.
 
