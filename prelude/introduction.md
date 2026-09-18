@@ -42,7 +42,7 @@ However, **no AI can understand a program for you.** What this book should leave
 
 The book splits the work with two companions. Both are available at [solanabook.org](https://solanabook.org):
 
-- The **companion repository** holds the complete, tested programs behind the program chapters, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
+- The **companion repository** holds the complete, tested programs behind the program chapters, in Anchor 1, Anchor 2, and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
 - The **companion AI plugin** distills this book's rules into a form AI coding tools apply automatically.
 
 The AI plugin improves the code your tools write. The book improves your own understanding of it.
@@ -55,7 +55,7 @@ This book does not assume you have written a Solana program, and it does not ass
 
 Every Solana mechanism is introduced before it is used, starting from the basics of users, accounts, programs, and data. Every financial concept (escrow, collateral, liquidation, market making, interest) is explained from first principles, with the personas and dollar amounts on the page, before any code depends on it.
 
-It does not assume you can program, either. The programs are explained in prose and figures: the accounts each one stores, the instruction handlers that move its money, what each handler checks before it does, and what happens when a check is missing. Handler and field names appear in the text so a reader with the companion repository open can find the code, and the prose says what each one does before it names it, so a reader without the repository loses nothing. The code itself is Rust, Solana's primary programming language, and it stays in the companion repository.
+It does not assume you are a software engineer, or that you know Rust, the programming language Solana programs are written in. The behavior of every program is explained in detail: the accounts it stores, the instruction handlers that move its money, what each handler checks before it does, and what happens when a check is missing. Handler and field names appear in the text so that the explanation and the code can be read side by side. Software engineers will find a complete implementation of every program in the companion repository, in Anchor 1, Anchor 2, and Quasar, with further languages and frameworks added as they arrive. Its tests run continuously, so the code stays current in a way a printed book cannot.
 
 The diagrams throughout the book share one set of conventions, and each convention is explained by the first figure that uses it.
 
