@@ -26,19 +26,19 @@
   <text x="532" y="198" font-size="10" font-weight="bold">1</text>
   <!-- four leaves: resting orders -->
   <rect x="50" y="230" width="110" height="64" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="105" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">0100</text>
+  <text x="105" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace"><tspan text-decoration="underline">0</tspan>10<tspan text-decoration="underline">0</tspan></text>
   <text x="105" y="266" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Price: 1 (01)</text>
   <text x="105" y="282" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Sequence: 0 (00)</text>
   <rect x="190" y="230" width="110" height="64" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="245" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">0101</text>
+  <text x="245" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace"><tspan text-decoration="underline">0</tspan>10<tspan text-decoration="underline">1</tspan></text>
   <text x="245" y="266" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Price: 1 (01)</text>
   <text x="245" y="282" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Sequence: 1 (01)</text>
   <rect x="360" y="230" width="110" height="64" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="415" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">1000</text>
+  <text x="415" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace"><tspan text-decoration="underline">10</tspan>00</text>
   <text x="415" y="266" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Price: 2 (10)</text>
   <text x="415" y="282" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Sequence: 0 (00)</text>
   <rect x="500" y="230" width="110" height="64" fill="#f4f4f2" stroke="#888" stroke-width="1"/>
-  <text x="555" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">1100</text>
+  <text x="555" y="248" font-size="13" font-weight="bold" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace"><tspan text-decoration="underline">11</tspan>00</text>
   <text x="555" y="266" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Price: 3 (11)</text>
   <text x="555" y="282" font-size="10" font-style="italic" fill="#444" text-anchor="middle">Sequence: 0 (00)</text>
   <!-- walk order -->
