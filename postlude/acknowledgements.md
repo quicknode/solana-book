@@ -1,3 +1,5 @@
 # Acknowledgements and Credits
 
-PLACEHOLDER. To be written when the book is complete.
+This book would not have been possible without specific help from a few people. Chase Barker at the Solana Foundation hired me to create the Solana Foundation Professional Education Program. Carl DiClementi at Quicknode helped me continue the journey at the world's greatest blockchain infrastructure company. His colleagues Jordan Patapoff and Kyle Gannon helped this go from an e-book to something much grander, and Emily Chung designed the beautiful cover.
+
+I'd also like to thank my mentors, many of whom probably didn't know they were mentors. Con Zymaris at Cybersource in Australia let a teenager be a network engineer and learn from some of the smartest people in the country. Richard Keech got me my first full-time education role, at Red Hat, at the precise time Linux took over the world. Ashton Mills worked with me on the Linux Pocketbook series many years ago. Srihari Jeganathan convinced me that I could learn a real programming language. Geoff O'Callaghan always had the combination of calmness and competence that I aspire to. Thanks to everyone who went to PyCon, JSConf, or NodeConf. And to the great programmers I've had the pleasure to work alongside, who remind me how far the limit is: Kornel Lesinski, Luke Benstead, and Dean Little.
