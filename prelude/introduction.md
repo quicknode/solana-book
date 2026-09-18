@@ -47,8 +47,6 @@ The book splits the work with two companions. Both are available at [solanabook.
 
 The AI plugin improves the code your tools write. The book improves your own understanding of it.
 
-The code lives in the companion repository, and these pages name its instruction handlers and fields and give its formulas.
-
 ## Prerequisites
 
 This book does not assume you have written a Solana program, and it does not assume a background in finance. It covers both in enough detail to work from either side with confidence.
