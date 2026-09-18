@@ -1,8 +1,9 @@
 # About the Technical Reviewers
 
-PLACEHOLDER. Reviewers will be credited here with their name, title, and project. Corrections that
-land in the manuscript are additionally credited in the Acknowledgements. 
-
 Alex Kahn is the founder of Dropset, an onchain FX platform fixing global liquidity for non-US stablecoins.
 
+Callum McIntyre is an engineer at Anza, and was previously Developer Relations for Payments at the Solana Foundation.
+
 Dean Little is the founder of Blueshift, a Solana education and research initiative.
+
+<!-- Reviewers are added here as their review lands, alphabetically by surname: name, title, and project. Corrections that land in the manuscript are additionally credited in the Acknowledgements. -->
