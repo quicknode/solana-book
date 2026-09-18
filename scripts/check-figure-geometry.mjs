@@ -10,6 +10,7 @@
 //   6. The icon and title centre on their band: the box, or the title bar.
 //   7. A faded address dot still occludes the cluster curve.
 //   8. Every label sits inside the canvas.
+//   9. A public-key dot (r=6) sits on the curve; a derived-address dot (r=5.5) sits clear of it.
 //  11. No address dot touches or overlaps an account box.
 //
 // Usage: node scripts/check-figure-geometry.mjs [name-fragment ...]
@@ -322,10 +323,31 @@ for (const file of selected) {
       }
     }
 
+    // Every address dot, with its distance to the nearest piece of curve. The
+    // legend arcs count as curve: a dot on one of them is drawn as on the curve.
+    const curvePieces = [...svg.querySelectorAll("path")].filter(
+      (p) => p.getAttribute("stroke") === "#111" && p.getAttribute("stroke-width") === "3.5");
+    const addressDots = [];
+    if (curvePieces.length > 0) {
+      for (const c of nodes.filter(isDot)) {
+        const cx = parseFloat(c.getAttribute("cx")), cy = parseFloat(c.getAttribute("cy"));
+        let near = Infinity;
+        for (const piece of curvePieces) {
+          const len = piece.getTotalLength();
+          for (let i = 0; i <= 400; i += 1) {
+            const p = piece.getPointAtLength((len * i) / 400);
+            near = Math.min(near, Math.hypot(p.x - cx, p.y - cy));
+          }
+        }
+        addressDots.push({ cx, cy, r: parseFloat(c.getAttribute("r")), near });
+      }
+    }
+
     return {
       arrows,
       accounts,
       fadedDots,
+      addressDots,
       // Every address dot, with its 2-wide ring: getBBox stops at the
       // geometry, so the ring reaches a unit past it on every side.
       dots: nodes.filter(isDot).map((c) => { const b = box(c); return { x1: b.x1 - 1, y1: b.y1 - 1, x2: b.x2 + 1, y2: b.y2 + 1 }; }),
@@ -555,6 +577,27 @@ for (const file of selected) {
   for (const d of fig.fadedDots) {
     fail(`faded address dot at ${d.cx.toFixed(0)},${d.cy.toFixed(0)} lets the curve through; ` +
          `draw an opaque white disc behind it, before its faded group`);
+  }
+
+  // 9. The dot's radius and its place against the curve say the same thing,
+  // and have to agree. An address made from a key pair is a public key, so it
+  // is on the curve - always, whoever generated the pair and whatever they did
+  // with the private key afterwards - and draws as an r=6 dot touching the
+  // curve. A PDA or a built-in address has no private key and never sits on
+  // it: r=5.5, clear of the curve, beside its seeds or its address. The
+  // order-book figures once drew four accounts created from client key pairs
+  // as r=5.5 dots hanging in the program column, captioned "A CLIENT KEYPAIR",
+  // which said "no private key" and "a private key" about the same address.
+  for (const d of fig.addressDots) {
+    const where = `${d.cx.toFixed(0)},${d.cy.toFixed(0)}`;
+    if (d.r === 6 && d.near > d.r + 1.75) {
+      fail(`public-key dot at ${where} sits ${(d.near - d.r - 1.75).toFixed(1)} off the curve; ` +
+           `an address made from a key pair is always on the curve: move the dot onto it (named there if its box cannot reach it), ` +
+           `or if the address is derived draw it r=5.5 beside its seeds`);
+    } else if (d.r === 5.5 && d.near < d.r + 1.75 + 4) {
+      fail(`derived-address dot at ${where} touches the curve; a PDA or built-in address is never on the curve: ` +
+           `move it clear, or if the address is a public key draw it r=6 on the curve`);
+    }
   }
 
   // 8. The PDF sets the figure at the text width and clips it to the viewBox,
