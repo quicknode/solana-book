@@ -255,6 +255,14 @@ The party who owns an [option](#option) and may [exercise](#exercise) it. A hold
 
 The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
 
+### index
+
+The lending field's word for a stored number that grows over time and that every claim on a pool is a multiple of. Aave's borrow index, Compound's borrow index, and Save's cumulative borrow rate are all one. This book calls the lending market's index the [borrow accumulation factor](#borrow-accumulation-factor), and the perpetual futures venue's `cumulative_funding` is another: a position's funding owed is its size times the change in that index since it opened.
+
+### indexation
+
+Advancing an [index](#index) for the time elapsed since it was last updated, which is how interest and funding accrue without any position being touched. A reviewer's word rather than the book's; the *Time* chapter covers how elapsed time is measured.
+
 ### inflation attack
 
 The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. Defenses include locked minimum liquidity, virtual shares, and state-tracked pool size. See the *Adversary* chapter.
