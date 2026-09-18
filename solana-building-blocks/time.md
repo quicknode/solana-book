@@ -53,7 +53,7 @@ Both accumulate, both advance by elapsed slots, and both decide what somebody ow
 
 A freshness window is agreed in seconds, a borrower is quoted a rate per year, and each of those has to become a slot count before a program can use it. Divide the time by the length of a slot in milliseconds. Multiplying runs the same arithmetic backwards, for telling a person what a slot count or a per-slot rate comes to in their own units.
 
-The length of a slot is a static value: 200 milliseconds, the end point of a staged reduction from 400.[^slot-simd]
+The length of a slot is a static value: currently 200 milliseconds.[^slot-simd]
 
 A program can get that length three ways:
 
@@ -186,7 +186,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
 
-[^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
+[^slot-simd]: It was 400 milliseconds until August 2026, when the reduction proposed in [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md) began, running in stages through September.
 
 [^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). In late August 2026, part way through the reduction, it read about 360 milliseconds against a 350 millisecond target, which is about 3% long.
 
