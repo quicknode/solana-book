@@ -24,7 +24,9 @@ The two sides have different shapes, and the shapes are the whole subject:
 - **The writer** keeps the premium whatever happens, and in exchange takes on an obligation: to sell the underlying at the strike (a call) or to buy it at the strike (a put) whenever the holder asks. The writer's gain is capped at the premium, and the writer's obligation is not.
 - **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
 
-Every option has exactly two endings, and the price at expiry decides which: the holder exercises, or the option expires and the writer takes the collateral back. The chapter draws both for the call and both for the put.
+Every option has exactly two endings, and the price at expiry decides which: the holder exercises, or the option expires and the writer takes the collateral back. Where the price lands inside each ending decides how much each side made.
+
+![](figures/options-payoff.svg)
 
 Traditional options venues let a writer take on that obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault.**
 
@@ -148,7 +150,7 @@ Alice calls `collect_proceeds()`. The handler requires the option to be `Exercis
 
 ![](figures/options-collect-proceeds.svg)
 
-Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the trade: the premium was all she could make, and she made it.
+Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the four-ways figure, its last column: the premium was all she could make, and she made it.
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
