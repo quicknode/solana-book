@@ -83,6 +83,8 @@ AI tools did the mechanical work: checking spelling and grammar, keeping termino
 
 Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
 
+Follow @QuicknodeSolana on X for updates to the book, new chapters and editions as they ship, and the fastest way to ask a question or send feedback.[^quicknode-solana-x]
+
 ## Where to Start, Depending on What You Came For
 
 Here is where to begin, depending on what you came for:
@@ -101,3 +103,5 @@ Part I opens with the computer itself: one giant machine that spans the world, a
 [^rwa-scope]: [app.rwa.xyz](https://app.rwa.xyz) prices tokenized assets by class and by network, and [defillama.com/rwa/chains](https://defillama.com/rwa/chains) ranks the chains.
 
 [^btc-scope]: Blockworks Research put BTC spot volume on Solana near $80M in a day in August 2026. See [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin).
+
+[^quicknode-solana-x]: [x.com/QuicknodeSolana](https://x.com/QuicknodeSolana).
