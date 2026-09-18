@@ -446,6 +446,7 @@ for (const file of selected) {
     "building-financial-products-in-solana/figures/options-buy-call.svg 462,523 slides",
     "building-financial-products-in-solana/figures/options-buy-put.svg 462,522 slides",
     "building-financial-products-in-solana/figures/options-exercise.svg 462,522 slides",
+    "building-financial-products-in-solana/figures/options-put-exercised.svg 462,431 slides",
     "building-financial-products-in-solana/figures/options-write-put.svg start 316,171 corner",
     // the base vault's payout to Bob runs up his column with 3 units between stem and box; it slides along Bob's NVDAx
     "building-financial-products-in-solana/figures/order-book-settle.svg 229,148 slides",
