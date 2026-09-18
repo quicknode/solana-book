@@ -1,3 +1,5 @@
 node_modules/
 build/
 .DS_Store
+# Andale Mono is fetched by scripts/andale-mono.mjs; its licence does not allow it to be checked in
+assets/fonts/AndaleMono.ttf

@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 296" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 296" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Where the rent goes</text>
   <defs><marker id="rent-i" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="rent-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker><marker id="rent-x" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#999"/></marker></defs>
   <g>
   <rect x="24" y="94" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(32,99)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="52" y="110" font-size="10.5" font-weight="bold">the maker</text>
+  <g transform="translate(32,97.5)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="52" y="108.175" font-size="10.5" font-weight="bold">the maker</text>
   <line x1="32" y1="115" x2="128" y2="115" stroke="#888" stroke-width="0.8"/>
   <text x="32" y="126" font-size="9.5" fill="#444">1 SOL</text>
   </g>
@@ -33,8 +33,8 @@
   <text x="322" y="180" font-size="10" fill="#444" font-style="italic">nothing closes an untaken offer's vault</text>
   <g>
   <rect x="204" y="190" width="216" height="42" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(212,195)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="232" y="206" font-size="10.5" font-weight="bold">vault</text>
+  <g transform="translate(212,193.5)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="232" y="204.175" font-size="10.5" font-weight="bold">vault</text>
   <line x1="212" y1="211" x2="412" y2="211" stroke="#888" stroke-width="0.8"/>
   <text x="212" y="224" font-size="9.5">tokens and rent stranded, both the maker's</text>
   </g>

@@ -40,7 +40,7 @@ The cover art is drawn a point past the trim on every side so that rounding in C
 | Body | Gelasio (bundled in `assets/fonts/`) | 10pt / 1.38, so 13.8pt leading |
 | Headings | Denim INK (bundled in `assets/fonts/`) | 28pt part, 24pt chapter, 14pt section, 11pt italic sub-section |
 | Code and addresses | DejaVu Sans Mono (bundled in `assets/fonts/`) | 0.85em, so 8.5pt |
-| Figures | Gelasio, with DejaVu Sans Mono for handler names | 4.3-9pt, see below |
+| Figures | Denim INK, with DejaVu Sans Mono for handler names and Andale Mono for seed lists and addresses | 4.3-9pt, see below |
 | Figure captions | Body face, italic | 9pt |
 | Footnotes | Body face | 8pt |
 | Running heads | Gelasio italic | 8pt |
@@ -48,9 +48,11 @@ The cover art is drawn a point past the trim on every side so that rounding in C
 
 **The sizes are O'Reilly's.** Their technical books set Minion Pro at about 10pt on 13pt, with code around 8.5pt, captions and footnotes at 8 to 9pt, running heads at 8pt, and sans-serif headings from the mid-20s for a chapter title down to 12pt for the smallest. Point size alone does not carry across faces: Gelasio's x-height is 0.48 of the em where Minion's is 0.43, so 10pt Gelasio reads like 11pt Minion, a shade larger than an O'Reilly page rather than smaller. The book was 11pt until it was measured against one, when it turned out to read like 12pt Minion, with 38 lines a page against O'Reilly's 42.
 
-**Every face is bundled, so a build is identical on any machine.** This used not to be true: the body asked for Charter and fell back to Georgia, and the figures asked for Georgia and fell back to whatever generic serif the machine had. Two machines produced two different books, and `check-figure-geometry.mjs` measured clearances against a face the printed book would never use — which is how a coin mark sitting on top of a label passed the check.
+**Every face is pinned, so a build is identical on any machine.** This used not to be true: the body asked for Charter and fell back to Georgia, and the figures asked for Georgia and fell back to whatever generic serif the machine had. Two machines produced two different books, and `check-figure-geometry.mjs` measured clearances against a face the printed book would never use — which is how a coin mark sitting on top of a label passed the check.
 
-Gelasio is metrically compatible with Georgia, which is what the figures were drawn against, so pinning it kept every figure's geometry as designed. It is [OFL](https://openfontlicense.org/), as is DejaVu Sans Mono; both licences sit beside the fonts in `assets/fonts/`. Denim INK is licensed to Quicknode.
+Gelasio, DejaVu Sans Mono and Denim INK are bundled in `assets/fonts/`. Gelasio is [OFL](https://openfontlicense.org/), as is DejaVu Sans Mono; both licences sit beside the fonts. Denim INK is licensed to Quicknode. Andale Mono is one of Microsoft's core fonts, free to use but redistributable only as its original installer, so it is not checked in: `scripts/andale-mono.mjs` finds the copy macOS and Windows ship, or fetches the installer and unpacks the TTF into `assets/fonts/` (ignored by git), and the build and the geometry check both go through it. The CI runner installs `cabextract` for the unpacking.
+
+The figures were drawn against Georgia and moved to Denim INK, the heading face, for legibility at figure sizes; the sans is a shade wider, and the geometry check confirmed every label still clears its box. Seed lists and built-in addresses, at seven units the smallest text in the book, are Andale Mono, which stays legible where a serif's small capitals blurred.
 
 **Bundle static instances, not variable fonts.** Chromium's print-to-PDF silently drops a variable font and falls back to a system serif, with no warning and no error — the PDF simply comes out in the wrong face. Gelasio ships as a variable font; the four static instances are what this build embeds. If a face is ever swapped, check the result with `/BaseFont` in the PDF rather than trusting the page.
 

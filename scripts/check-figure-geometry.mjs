@@ -7,9 +7,10 @@
 //   3. Every coin mark sits beside an amount label, one coin per amount.
 //   4. Value arrows are smooth: no tangent break where two segments join.
 //   5. Arrowheads point along the stroke they terminate.
-//   6. A box collapsed to its heading centres that heading vertically.
+//   6. The icon and title centre on their band: the box, or the title bar.
 //   7. A faded address dot still occludes the cluster curve.
 //   8. Every label sits inside the canvas.
+//  11. No address dot touches or overlaps an account box.
 //
 // Usage: node scripts/check-figure-geometry.mjs [name-fragment ...]
 // With arguments, only figures whose path contains one of them are checked,
@@ -20,6 +21,7 @@ import { chromium } from "playwright-core";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { andaleMonoPath } from "./andale-mono.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const figureDirs = [
@@ -99,13 +101,15 @@ let failures = 0;
 // canvas edge passed. Reading the font here and inlining it has no origin to
 // be refused from, and fontsLoaded below fails the run if any face still does.
 const fontFace = (family, file, extra = "") =>
-  `@font-face{font-family:"${family}";src:url("data:font/ttf;base64,${readFileSync(join(repoRoot, "assets", "fonts", file)).toString("base64")}");${extra}}`;
+  `@font-face{font-family:"${family}";src:url("data:font/ttf;base64,${readFileSync(file.includes("/") ? file : join(repoRoot, "assets", "fonts", file)).toString("base64")}");${extra}}`;
 const FONTS = [
-  fontFace("Gelasio", "Gelasio-Regular.ttf", "font-weight:normal;font-style:normal;"),
-  fontFace("Gelasio", "Gelasio-Bold.ttf", "font-weight:bold;font-style:normal;"),
-  fontFace("Gelasio", "Gelasio-Italic.ttf", "font-weight:normal;font-style:italic;"),
+  fontFace("Denim INK", "DenimINK-Regular.ttf", "font-weight:normal;font-style:normal;"),
+  fontFace("Denim INK", "DenimINK-Bold.ttf", "font-weight:bold;font-style:normal;"),
+  fontFace("Denim INK", "DenimINK-RegularItalic.ttf", "font-weight:normal;font-style:italic;"),
+  fontFace("Denim INK", "DenimINK-BoldItalic.ttf", "font-weight:bold;font-style:italic;"),
   fontFace("DejaVu Sans Mono", "DejaVuSansMono.ttf", "font-weight:normal;font-style:normal;"),
   fontFace("DejaVu Sans Mono", "DejaVuSansMono-Bold.ttf", "font-weight:bold;font-style:normal;"),
+  fontFace("Andale Mono", andaleMonoPath(), "font-weight:normal;font-style:normal;"),
 ].join("");
 
 for (const file of selected) {
@@ -255,15 +259,23 @@ for (const file of selected) {
         const c = box(el);
         return c.x1 >= b.x1 && c.x2 <= b.x2 && c.y1 >= b.y1 && c.y2 <= b.y2;
       };
+      // The glyph is the 14-unit icon wrapper: a translated group whose first
+      // child is the mark's own group. A group that merely moves the whole box
+      // (translate(0,-90) round a faded account) also fits that description and
+      // also "holds" within the box, so the size rules it out.
       const glyph = [...svg.querySelectorAll("g[transform^='translate']")]
         .filter((g) => g.firstElementChild?.tagName === "g" && holds(g))
-        .map(box)[0];
-      const ruled = [...svg.querySelectorAll('line[stroke="#888"]')].some(holds);
-      // The heading only counts as one when it is the box's whole content: a
-      // second label means the box is a list, and rule 6 leaves it alone.
-      const labels = [...svg.querySelectorAll("text")].filter(holds);
-      const heading = labels.length === 1 ? box(labels[0]) : undefined;
-      return { ...b, glyph, heading, ruled };
+        .map(box)
+        .find((c) => c.x2 - c.x1 < 20 && c.y2 - c.y1 < 20);
+      const rule = [...svg.querySelectorAll('line[stroke="#888"]')].filter(holds).map(box).sort((p, q) => p.y1 - q.y1)[0];
+      const ruled = !!rule;
+      // In a collapsed box the heading is the whole content; in a ruled box it
+      // is the one label above the rule. Either way it and the icon are centred
+      // on their band: the box for the first, the title bar for the second.
+      const labels = [...svg.querySelectorAll("text")].filter(holds).map(box);
+      const heading = ruled ? labels.filter((l) => l.y2 <= rule.y1 + 1).sort((p, q) => p.y1 - q.y1)[0] : labels.length === 1 ? labels[0] : undefined;
+      const band = ruled ? { y1: b.y1, y2: rule.y1 } : { y1: b.y1, y2: b.y2 };
+      return { ...b, glyph, heading, ruled, band };
     });
 
     // Faded address dots that the cluster curve reaches, and whether an opaque
@@ -314,6 +326,9 @@ for (const file of selected) {
       arrows,
       accounts,
       fadedDots,
+      // Every address dot, with its 2-wide ring: getBBox stops at the
+      // geometry, so the ring reaches a unit past it on every side.
+      dots: nodes.filter(isDot).map((c) => { const b = box(c); return { x1: b.x1 - 1, y1: b.y1 - 1, x2: b.x2 + 1, y2: b.y2 + 1 }; }),
       coins: [...svg.querySelectorAll("g.coin")].map(box),
       markers: [...svg.querySelectorAll(".marker")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
@@ -501,19 +516,37 @@ for (const file of selected) {
     }
   }
 
-  // 6. A box faded down to its heading has nothing below the title, so the
-  // icon and title sit in the middle of the box rather than hugging its top.
-  // Both halves are measured. The icon and the title are placed by separate
-  // numbers, so a figure copied from a neighbour can carry a centred icon over
-  // a title that sits low, which is how 173 of these boxes came to be wrong.
+  // 6. The icon and title are centred on their band: the whole box when it
+  // is collapsed to its heading, the title bar (box top to rule) when it has
+  // fields. Both halves are measured. The icon and the title are placed by
+  // separate numbers, so a figure copied from a neighbour can carry a centred
+  // icon over a title that sits low, which is how 173 collapsed boxes came to
+  // be wrong; and every ruled box sat its title 1.5 low until the bar was
+  // measured. The tolerance covers a reduced title size in a stepped-down figure.
   for (const a of fig.accounts) {
-    if (a.ruled) continue;
     for (const [part, what] of [[a.glyph, "icon"], [a.heading, "title"]]) {
       if (!part) continue;
-      const off = (part.y1 + part.y2) / 2 - (a.y1 + a.y2) / 2;
+      const off = (part.y1 + part.y2) / 2 - (a.band.y1 + a.band.y2) / 2;
       if (Math.abs(off) > 0.75) {
-        fail(`box collapsed to its heading at ${at(a)} sits its ${what} ${off.toFixed(1)} off centre; ` +
-             `centre the icon and title on the box's middle`);
+        fail(`box at ${at(a)} sits its ${what} ${off.toFixed(1)} off the centre of its ${a.ruled ? "title bar" : "box"}; ` +
+             `centre the icon and title on the ${a.ruled ? "bar's" : "box's"} middle`);
+      }
+    }
+  }
+
+  // 11. An address dot sits beside its account, never on it. The dot's ring
+  // and the box's border are both ink, so the test is on their outer edges:
+  // the ring clears the border by at least a unit. A dot on the curve hugs
+  // its box from above by 6 or more; an offcurve dot sits beside its seed
+  // list, above the box. Either way nothing about a dot belongs inside a
+  // rectangle, and a ring cut by a border reads as a hole in the account.
+  for (const d of fig.dots) {
+    for (const a of fig.accounts) {
+      const border = 0.9; // half the widest box stroke
+      const gap = Math.max(a.x1 - border - d.x2, d.x1 - (a.x2 + border), a.y1 - border - d.y2, d.y1 - (a.y2 + border));
+      if (gap < 0.95) { // a hair under a unit is rounding, not a touch
+        fail(`address dot at ${((d.x1 + d.x2) / 2).toFixed(0)},${((d.y1 + d.y2) / 2).toFixed(0)} ${gap < -1 ? "overlaps" : "touches"} the box at ${at(a)} ` +
+             `(${gap.toFixed(1)} clear); a dot sits beside its account with at least a unit between ring and border`);
       }
     }
   }
