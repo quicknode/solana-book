@@ -73,7 +73,7 @@ The table lists the extensions that matter for financial products:
 | **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |
 | **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
 
-Before building on a token you did not issue, check which extensions its mint carries: Solana Explorer lists them on the mint's page, and the table's last column says what each one does to a transfer your program makes.
+Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page, and the table's last column says what each one does to a transfer your program makes.
 
 ![](figures/transfer-using-transfer-fee-extension.svg)
 
@@ -83,7 +83,7 @@ Before building on a token you did not issue, check which extensions its mint ca
 - The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
-- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: check which extensions a mint carries in Solana Explorer before building on it.
+- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: before building on a token, check in Solana Explorer which extensions it uses.
 
 
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).
