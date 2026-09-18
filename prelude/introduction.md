@@ -2,7 +2,7 @@
 
 It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some end by showing you how to build your first onchain program.
 
-This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active] It explains ten complete financial products, from a two-party escrow to a perpetual futures venue, as the Solana programs they are, and the tested code behind each one is in a companion repository.
+This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active] It explains ten complete financial Solana programs, from a two-party escrow to a perpetual futures venue.
 
 ## Why Build Financial Programs on Solana?
 
