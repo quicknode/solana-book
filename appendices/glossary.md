@@ -179,13 +179,17 @@ Representing a continuous quantity as discrete integer steps. Onchain money is d
 
 The 8 bytes Anchor writes at the start of an account's data identifying its type, so a program cannot be fed one kind of account where another belongs.
 
+### drain
+
+To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. The word belongs to the attacker. A handler that legitimately moves a vault's whole balance out on its way to closing it empties the vault or pays it out. See the *Adversary* chapter.
+
 ### dust
 
 Sub-unit remainders left over by integer division: a fraction smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
 
 ### epoch
 
-A period of 432,000 slots over which a validator schedule holds, so its length in days depends on the slot time. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots over which a validator schedule holds, about a day at a 200 millisecond slot. Mostly relevant to staking; application logic usually counts slots.
 
 ### equity (position)
 
@@ -250,6 +254,14 @@ The party who owns an [option](#option) and may [exercise](#exercise) it. A hold
 ### impermanent loss
 
 The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
+
+### index
+
+The lending field's word for a stored number that grows over time and that every claim on a pool is a multiple of. Aave's borrow index, Compound's borrow index, and Save's cumulative borrow rate are all one. This book calls the lending market's index the [borrow accumulation factor](#borrow-accumulation-factor), and the perpetual futures venue's `cumulative_funding` is another: a position's funding owed is its size times the change in that index since it opened.
+
+### indexation
+
+Advancing an [index](#index) for the time elapsed since it was last updated, which is how interest and funding accrue without any position being touched. A reviewer's word rather than the book's; the *Time* chapter covers how elapsed time is measured.
 
 ### inflation attack
 
@@ -549,7 +561,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time: a window of a few hundred milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time: a window of 200 milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
 
 ### SOL
 
@@ -641,7 +653,7 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 
 ### writer
 
-The party who sells an [option](#option): they receive the [premium](#premium) and take on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
+The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called writing it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
 
 ### zero-copy
 

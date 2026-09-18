@@ -12,9 +12,9 @@ You are free to read, copy, redistribute, translate, and adapt this book in any 
 - **Do not use it commercially**: you may not sell copies of this book or derivatives of it. Quiknode Inc. retains the exclusive right to sell print and electronic editions.
 - **Share alike**: if you translate, remix, or build upon the text, distribute your contribution under this same license.
 
-## The code samples
+## The code
 
-Code samples appearing in the book are licensed under the **MIT license**, matching the [companion repository](https://github.com/quicknode/solana-program-examples), so nothing stops you from using them in your own software, commercial or otherwise.
+The book contains no code samples. The programs it describes live in the [companion repository](https://github.com/quicknode/solana-program-examples), which is licensed under the **MIT license**, so nothing stops you from using them in your own software, commercial or otherwise.
 
 ## The icons in the figures
 

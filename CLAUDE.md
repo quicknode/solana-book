@@ -7,8 +7,14 @@ Three commands, all of which must pass:
 ```
 npm run lint                        # banned phrases, heading rules, figure and chapter-reference rules
 node scripts/check-figure-geometry.mjs   # renders every SVG in Chromium: text overlap, arrowheads, coin marks
-npm run build-pdf                   # the whole book, and the page count is a useful smell test
+npm run build-pdf                   # the whole book; prints only the output path on success
 ```
+
+The first two also run in GitHub Actions on every pull request and every push to `main`
+(`.github/workflows/checks.yml`), so a pull request that fails them says so on its own page. The build
+does not run there, so run it yourself. The build reads the finished PDF back and fails if a straight
+quote printed outside the code face, which is the one check on the typographic quotes that does not
+trust the build's own conversion.
 
 `npm run preview -- <chapter> "<phrase>"` renders a single chapter around a phrase, which is faster than
 building the book when checking one edit.
@@ -17,6 +23,9 @@ building the book when checking one edit.
 deletion leaves when the columns around it stay put. It is advisory, not a gate: it over-reports on
 figures whose content is a curve rather than boxes, so each hit needs a look. Run it after removing
 anything from a figure.
+
+`npm run resize-cover` sizes the full-wrap cover export (`assets/cover-wrap.pdf`) for KDP; the math and
+the workflow are in `PRINT-SPECIFICATION.md` under Cover.
 
 ## A merged PR's branch is dead
 

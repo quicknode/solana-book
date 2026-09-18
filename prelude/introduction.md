@@ -1,8 +1,8 @@
 # Chapter 1: Introduction
 
-It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some even show you how to build your first onchain program.
+It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and Proof of History. Most of the existing materials go into the basics of minting and moving tokens. Some end by showing you how to build your first onchain program.
 
-This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active]
+This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active] It shows you how to build your first onchain program, then keeps going until you have built ten complete financial products.
 
 ## Why Build Financial Programs on Solana?
 
@@ -12,7 +12,7 @@ Financial products built on Solana have properties no traditional payment system
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed.
 - **Everyone reads the same accounts.** A traditional trade lands in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
 - **Money is programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
-- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Card payments take roughly 1.5% to 3.5% of each sale, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and 20% at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A flat fee changes what products are worth building.
+- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Think back to the last time you bought a coffee: the café that sold it paid roughly 1.5% to 3.5% of the price in card fees, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and up to 20% at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A flat fee changes what products are worth building.
 - **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real-world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] Solana is also one of the most active chains for trading crypto-native assets such as BTC.[^btc-scope]
 - **A deployed program reaches every user at once.** A traditional fund spends months working through intermediaries before it reaches investors: an exchange listing, market makers, brokerage approvals. Each gatekeeper adds cost and delay. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
 
@@ -42,16 +42,12 @@ However, **no AI can understand a program for you.** What this book should leave
 
 The book splits the work with two companions. Both are available at [solanabook.org](https://solanabook.org):
 
-- The **companion repository** holds the complete, tested programs that the program chapters walk through, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
+- The **companion repository** holds the complete, tested programs behind the program chapters, in Anchor and Quasar versions. Tests are run continuously, so the code stays correct and current in a way paper cannot.
 - The **companion AI plugin** distills this book's rules into a form AI coding tools apply automatically.
 
 The AI plugin improves the code your tools write. The book improves your own understanding of it.
 
-Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository, and check the errata page described next.
-
-## Corrections Are Welcome, and Expected
-
-Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
+Framework-specific code is kept in the companion repository. Where code appears in these pages, it is there to illustrate an idea, and the companion repository is the source of truth for running it. When the two disagree, trust the companion repository.
 
 ## Prerequisites
 
@@ -71,9 +67,9 @@ All technical and financial vocabulary this book uses is defined in the Glossary
 
 The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to money (the arithmetic, offchain truth, the adversary, testing, and admin power).
 
-**Building Financial Products** is ten chapters, and each one walks a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
+**Building Financial Products** is ten chapters, and each one builds a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a vault, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its money, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
 
-Real incidents appear throughout the book in boxed **War Story** sections. The incidents are years old and the mistakes behind them still recur. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
+Real incidents appear throughout the book in boxed **War Story** sections. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
 
 To keep the money easy to track, every character starts every chapter with the same wallet: **one SOL** for rent deposits and transaction fees, **one thousand USDC**, and whatever story-specific assets the chapter hands them (a share grant, a stock position, a token inventory).
 
@@ -81,7 +77,13 @@ To keep the money easy to track, every character starts every chapter with the s
 
 The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos Mike produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
 
-AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, carrying renames through the text, the figures, and the companion repository together, and keeping the diagrams in step with actual program state.
+AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, ensuring naming is consistent across the text, the figures, and the companion repository, and keeping the diagrams in step with actual program state.
+
+## Corrections Are Welcome, and Expected
+
+Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
+
+Follow @QuicknodeSolana on X for updates to the book, new chapters and editions as they ship, and the fastest way to ask a question or send feedback.[^quicknode-solana-x]
 
 ## Where to Start, Depending on What You Came For
 
@@ -101,3 +103,5 @@ Part I opens with the computer itself: one giant machine that spans the world, a
 [^rwa-scope]: [app.rwa.xyz](https://app.rwa.xyz) prices tokenized assets by class and by network, and [defillama.com/rwa/chains](https://defillama.com/rwa/chains) ranks the chains.
 
 [^btc-scope]: Blockworks Research put BTC spot volume on Solana near $80M in a day in August 2026. See [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin).
+
+[^quicknode-solana-x]: [x.com/QuicknodeSolana](https://x.com/QuicknodeSolana).

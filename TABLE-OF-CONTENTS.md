@@ -2,7 +2,7 @@
 
 ## Prelude
 
-[Copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [about the author](prelude/about-the-author.md), and [about the technical reviewers](prelude/about-the-technical-reviewers.md).
+[Copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [about the author](prelude/about-the-author.md), [about the technical reviewers](prelude/about-the-technical-reviewers.md), and the [epigraph](prelude/epigraph.md).
 
 ## [Chapter 1: Introduction](prelude/introduction.md)
 
@@ -25,7 +25,7 @@
 
 ## Part II: Building Financial Products in Solana
 
-Each chapter walks one complete, tested program from the [companion repository](https://github.com/quicknode/solana-program-examples).
+Each chapter explains one complete, tested program from the [companion repository](https://github.com/quicknode/solana-program-examples).
 
 - [Chapter 11: Escrow](building-financial-products-in-solana/escrow.md) - two strangers swap without trusting each other
 - [Chapter 12: Token Fundraiser](building-financial-products-in-solana/token-fundraiser.md) - onchain crowdfunding

@@ -252,13 +252,13 @@
   <text x="16" y="706" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
   <path d="M 237,238 C 332,248 400,258 430,300 C 443,318 440,380 440,450 L 440,545 C 440,558 440,569 444,569 L 461,569" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <path d="M 288,400 C 282,370 264,340 240,318" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
-  <path d="M 288,480 C 264,450 248,420 240,394" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
+  <path d="M 266,492 L 222,411.64" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <rect class="marker" x="409" y="330" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="417" y="341.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
   <g class="coin" transform="translate(439,338)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <rect class="marker" x="249.1" y="308.3" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="257.1" y="319.9" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
   <g class="coin" transform="translate(257.1,336.3)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="226.2" y="424.2" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="234.2" y="435.8" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <g class="coin" transform="translate(256.2,432.2)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="206" y="444" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="214" y="455.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(244,451)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <rect x="218" y="536" width="194" height="70" fill="#fff" stroke="#888" class="key"/>
   <rect class="marker" x="226" y="546.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="234" y="558.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
   <text x="252" y="558" font-size="10.5" font-weight="bold" fill="#1e7a3c">Burn Alice's 900 shares first</text>

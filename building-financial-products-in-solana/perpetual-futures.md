@@ -10,11 +10,11 @@ In the *Order Book Exchange* chapter, every long met a short: Carol's ask crosse
 
 That design decision creates the problem the program is organized around: the pool must be able to prove it can pay every winner, at every moment, **without ever iterating over the open positions**. A program that must touch every position to answer "am I solvent?" stops fitting in a transaction the day it succeeds. That requirement explains almost every field in the account model.
 
-![The pool sits at the center: LPs deposit on one side, longs and shorts open against it on the other, and every payout, loss, and fee flows through the same vault.](figures/perps-counterparty.svg)
+![](figures/perps-counterparty.svg)
 
 ## The Account Model: One Pool, One Vault, One Position per Side per Trader
 
-![The account map: the pool account, the single custody vault and LP share mint it controls, one position account per trader per side, and the oracle feed fixed at the pool's creation.](figures/perps-account-map.svg)
+![](figures/perps-account-map.svg)
 
 The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_slot`) and the live accounting this chapter keeps returning to:
 
@@ -71,7 +71,7 @@ By reserving the notional, the pool sets aside the most it could ever owe her, b
 
 Her transaction ends with the only token movement: 1,000 USDC from Alice's token account into the vault. Bob opens his mirror-image short the same way: 1,000 collateral, 5,000 size, entry $100, another 5 USDC fee to `protocol_fees`, another 5,000 reserved.
 
-![Alice's long at a glance: 1,000 in, 5 fee, 995 working collateral carrying 5,000 of exposure; the pool reserves 5,000 as her prepaid best case.](figures/perps-open-position.svg)
+![](figures/perps-open-position.svg)
 
 ## Funding Is a Fee the Crowded Side Pays
 
@@ -86,7 +86,7 @@ Production funding is proportional to the imbalance and flows between the sides;
 
 A flat rate is still a per-slot rate. The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate. A pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool operator bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
 
-![The funding index climbs while longs outweigh shorts and falls when shorts outweigh longs; each position pays or receives the index movement between its entry and its exit.](figures/perps-funding-index.svg)
+![](figures/perps-funding-index.svg)
 
 ## NVDAx Rallies: The Short Loses Value, and a Liquidator Is Paid to End It
 
@@ -101,7 +101,7 @@ At $115, Bob's equity is 995 − 750 = 245, under the 250 maintenance line. He s
 
 The pool cannot sell Bob's position; a program never acts on its own, somebody has to call it, so the design pays outsiders to call it at the right moment. Dave is the crank pattern from the *Lending and Borrowing* chapter with a profit motive. The example documents one gap: the liquidation fee comes out of *remaining equity*, so a position that gaps straight through zero pays Dave nothing, and positions nobody liquidates become losses the LPs absorb. Production venues fund the liquidator from an insurance fund so the incentive never disappears. When your design relies on someone showing up, check what happens when showing up stops paying.
 
-![Bob's liquidation at $115: his 245 of remaining equity splits 50 to Dave and 195 back to Bob, while the LPs keep the 750 his position lost.](figures/perps-liquidation.svg)
+![](figures/perps-liquidation.svg)
 
 ## Closing at $120, and the Pool Pays From Its Reservation
 
@@ -158,6 +158,6 @@ This chapter added four concepts:
 - **Funding.** A pool-wide index plus a per-position entry snapshot charges the crowded side a fee, the same accounting structure every production venue uses.
 - **Mark-to-market share pricing.** LP shares price against AUM including traders' unrealized PnL, so entering and leaving the pool is fair at any instant.
 
-This chapter used mints and token accounts, PDAs as vault authorities, shares priced against a pool, state rather than balances, and checks-effects-interactions, without stopping to explain any of them. It also used exits from every state, a signed external price checked before use, cranks run by profit-seekers, and integer arithmetic that rounds toward the house. Each of those was a chapter, and each appeared here as a single sentence. The companion repository holds the code.
+This chapter used mints and token accounts, PDAs as vault authorities, shares priced against a pool, state rather than balances, and checks-effects-interactions without explaining any of them, because earlier chapters already had. The same goes for exits from every state, a signed external price checked before use, cranks run by profit-seekers, and integer arithmetic that rounds toward the house. In the *Where to Go From Here* chapter we will cover what this book left out, and how to take a program of your own from an idea to mainnet. The companion repository holds the code.
 
 [^perps-volume]: [defillama.com](https://defillama.com) tracks spot and perpetual volumes side by side, so the gap between the two is one click away. It moves with the market.

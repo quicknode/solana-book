@@ -28,7 +28,7 @@ As well as the current total supply, the mint account also stores the token's de
 
 The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
-![The mint is a factory: new tokens exist only when the mint authority signs, and the supply and the holder's balance rise together. ACME is the stock of a fictional company.](figures/mint-factory.svg)
+![ACME is the stock of a fictional company.](figures/mint-factory.svg)
 
 ## Token Accounts Hold Tokens
 
@@ -42,11 +42,11 @@ The **associated token account** (ATA) is the canonical token account for a give
 
 An ATA is a **PDA**: a derived address that sits off the curve, with no private key, so no signature for it can ever exist and only the owning program can move what it holds. The *PDAs* chapter explains the mechanism.
 
-![Every ATA is a token account, and what makes it an ATA is only its address: the one anyone can derive from the owner, the token program, and the mint.](figures/token-accounts-and-atas.svg)
+![](figures/token-accounts-and-atas.svg)
 
 Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
 
-![All three sit off the curve with no private key behind them; only the derivation differs.](figures/token-accounts-off-the-curve.svg)
+![](figures/token-accounts-off-the-curve.svg)
 
 In this book, an address drawn **off** the curve is shown with the seeds its address was derived from (for an ATA: the owner's address, the token program, and the mint). 
 
@@ -73,9 +73,9 @@ The table lists the extensions that matter for financial products:
 | **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |
 | **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
 
-When you build on a token you did not issue, read its extensions first: several of them change what "I transferred X" means.
+Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page, and the table's last column says what each one does to a transfer your program makes.
 
-![A transfer through the Token Extensions Program: the mint's transfer fee withholds 1 USDC for the issuer, so 99 arrives where 100 was sent.](figures/transfer-using-transfer-fee-extension.svg)
+![](figures/transfer-using-transfer-fee-extension.svg)
 
 ## What You Learnt
 
@@ -83,7 +83,7 @@ When you build on a token you did not issue, read its extensions first: several 
 - The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
-- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**, and extensions can change what a transfer means: check a token's extensions before building on it.
+- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: before building on a token, check in Solana Explorer which extensions it uses.
 
 
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).

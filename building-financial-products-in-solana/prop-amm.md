@@ -31,7 +31,7 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 ## A Buyer Trades at the Ask
 
-![The band itself is the operator's revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
+![](figures/prop-amm-quote-band.svg)
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps:
 
@@ -53,7 +53,7 @@ A round trip costs 1.65 USDC: buying 5 NVDAx cost 825.825 and selling them back 
 
 NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory was sold below its value along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
 
-![Against a quote the price is flat whatever the size, until the inventory boundary, where the market refuses rather than reprices.](figures/prop-amm-curve-vs-quote.svg)
+![](figures/prop-amm-curve-vs-quote.svg)
 
 Reading the price has its own cost, though. Between oracle updates, even fresh ones inside the 150-slot bound, the market is quoting a number that is seconds old, and anyone who knows where the price went in those seconds can buy below true value or sell above it. Market makers call this **adverse selection**: the flow that finds you when your quote is wrong is the flow you did not want. It is the prop AMM's impermanent loss: the structural cost of the business, borne entirely by Maria.
 
@@ -77,7 +77,7 @@ The unit conversion is the one part that is not simple. Prices arrive at the ora
 
 - The quote brackets the oracle: bid at or below the price, ask at or above it, with each side's rounding favoring the market.
 - No swap hands out more value, at the raw oracle price, than it takes in, enforced onchain after the math, per fill.
-- Only the operator moves inventory, and the operator can always move all of it: `has_one = operator` on both inventory handlers is the entire access control.
+- Only the operator moves inventory, and the operator can always move all of it: checking the signer against the operator address stored in the market, on both inventory handlers, is the entire access control.
 - Traders carry no custody risk. A swap is a single atomic transaction against visible prices; nobody deposits anything into a prop AMM, so there is nothing of theirs to lose. Every risk in this design (stale quotes, adverse selection, a bad oracle) lands on Maria.
 
 ## The Failure Modes: What Attacks a Market Maker
@@ -89,7 +89,7 @@ The unit conversion is the one part that is not simple. Prices arrive at the ora
 
 ## Testing Considerations
 
-The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` assert Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` asserts the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` cover the two ways the quote moves. The rejection tests walk every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` checks the rule that defines the genre: the capital is Maria's, and without it the market refuses every swap.
+The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in both directions: `test_swap_buys_base_at_the_ask` and `test_swap_sells_base_at_the_bid` assert Alice's and Bob's exact numbers, and `test_round_trip_costs_exactly_the_spread` asserts the 1.65 USDC that makes the spread the fee. `test_quote_follows_the_oracle` and `test_set_quote_changes_the_spread` cover the two ways the quote moves. The rejection tests cover every gate: stale price, wide confidence, paused market, slippage, zero amounts, inventory bounds, and the three operator-only handlers against an imposter. And `test_operator_can_withdraw_everything_and_swaps_then_fail` checks the rule that defines the genre: the capital is Maria's, and without it the market refuses every swap.
 
 ## What You Learnt from Building the Prop AMM
 
@@ -103,6 +103,6 @@ Five concepts came with the prop AMM:
 - **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with exactly one depositor, the vault balances are the ledger.
 - **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from the *Adversary* chapter return "not applicable" because each of them needs a mechanism this design does not have.
 
-The price of the prop AMM's efficiency is concentrated trust (one firm, one feed, one pause switch), which traders accept per-swap because they custody nothing and see their price before they sign. The *Perpetual Futures* chapter takes the same oracle checks somewhere more dangerous: the same feed and the same staleness checks, but with leverage, other people's collateral, and positions that stay open after the transaction ends.
+Traders accept the prop AMM's concentrated trust (one firm, one feed, one pause switch) because they leave nothing in its custody and see their price before they sign. In the *Lending and Borrowing* chapter we will build a program where users do leave their money in the program's custody, as supplied loans and as collateral, and the same kind of oracle values that collateral continuously. You will see what a lender has to do to stay solvent when the collateral falls, and who is paid to do it.
 
 [^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, and with wherever the aggregators are routing that week.

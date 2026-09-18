@@ -30,6 +30,18 @@ const rules = [
   [/\boff-chain\b/i, 'write "offchain", unhyphenated'],
   [/\bcross-chain\b/i, 'write "crosschain", unhyphenated'],
   [/—/, "no em-dashes; use a regular dash or rewrite"],
+  // One framework's implementation of an account constraint dates the sentence: Anchor
+  // 2 dropped has_one for address= on the sibling, Quasar writes has_one(x),
+  // and the native version is an if-statement. Prose names the check (a
+  // stored-address check, an account created if it does not exist, closing
+  // an account and returning its rent to its payer); the one footnote that gives each framework's implementation is
+  // excepted below.
+  [/\bhas_one\b|\binit_if_needed\b|`init`|\bclose = \w+/,
+    'name the check, not one framework\'s implementation of it: "stored-address check", "created if it does not exist", "closes the account and returns its rent to the maker" (companion AI plugin)'],
+  // "Closes the account to the maker" is Anchor's close = maker read aloud;
+  // it says nothing about where the lamports go. Say what closing does.
+  [/\bclos(e|es|ed|ing)\b (the |its |both |that |each |every |his |her |their )?(\w+ ){0,3}(account|vault|receipt|offer|option|position|bet)s? to (the |its |her |his |their )?(maker|writer|holder|payer|contributor|bettor|owner|user|taker|manager|Alice|Bob|Carol|Dave|Maria|Victor|her|him|them|whoever)\b/,
+    'say what closing does: "closes the account and returns its rent to the maker", not "closes the account to the maker" (companion AI plugin)'],
   // Same category as the em-dash rule above: phrases a reader clocks as
   // machine-written before they have finished the sentence. Each one also
   // stands in for a mechanism rather than stating it, so the fix is the same
@@ -172,6 +184,7 @@ const rules = [
 
 // Allowed exceptions, matched against the full line.
 const exceptions = [
+  /^\[\^stored-address-per-framework\]:/, // the Adversary chapter's one footnote giving each framework's implementation of the check
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
@@ -339,6 +352,18 @@ for (const file of [...new Set(files)]) {
 // as its text and a code span as one word.
 const sentenceWordLimit = 45;
 
+// "Drain" is the attacker's word, and the manuscript used it for both an
+// exploit emptying a pool and a handler legitimately paying a vault out on
+// its way to closing it, so the escrow's own exits read as an incident. The
+// companion AI plugin's rule: a handler empties a vault or pays it out; a
+// drain is what an attacker does. A sentence may keep the word only when it
+// names the attack it belongs to.
+const drainWord = /\bdrain(?:s|ed|ing)?\b/i;
+const drainContext =
+  /\b(?:attack|attacker|exploit|adversar|auditor|hole|rounding|precision|arbitrage|stale|vacuous|uncapped|abuse|leak|steal|undercount|error|bug|manipulat|campaign|war story|empty-reserve)/i;
+const drainReason =
+  'a handler "empties" a vault or "pays it out"; "drain" is the attacker\'s word and stays only in a sentence naming the attack (companion AI plugin)';
+
 // Words with a plain equivalent and no meaning of their own in this domain.
 // Deliberately short: "execute", "yield", "provide", "present" and "operate"
 // all read as bureaucratic in a generic style guide and are exact here (a
@@ -381,6 +406,18 @@ const wordinessRules = [
   [/\bpin(?:s|ned|ning)?\b/i, 'a test enforces, checks, or asserts; a value is fixed or recorded at creation'],
   [/\bconfirms?\b(?! that a supermajority)/i,
     'say "check": "confirmed" is a commitment level in this book, not a synonym for checking'],
+  // "Walks" with a chapter, book, or suite as its subject is tour-guide
+  // framing: a chapter explains or builds, and a suite follows or runs a
+  // path. A loop that walks a tree or the states of a machine is mechanism,
+  // and stays.
+  [/\b(?:chapters?|book|suites?|tests?|guide|section) walks?\b/i,
+    'a chapter explains or builds; a suite follows or runs a path'],
+  [/\bwalks? through\b/i, 'say what the prose does: explains, builds, follows'],
+  // "Works" meaning succeeds or functions stays ("flips which handler
+  // works"). Working an example is tour-guide framing: the chapter shows
+  // or builds the example instead.
+  [/\bwork(?:s|ed|ing)? (?:an|the|a) examples?\b/i, 'the chapter shows or builds the example'],
+  [/\bworked examples?\b/i, 'the chapter shows or builds the example'],
 ];
 
 // Reduce a manuscript line to the prose a reader reads, so both checks above
@@ -437,6 +474,10 @@ for (const file of [...new Set(files)]) {
       }
 
       for (const sentence of toSentences(body)) {
+        if (drainWord.test(sentence) && !drainContext.test(sentence)) {
+          failures += 1;
+          console.error(`${file}:${index + 1}: ${drainReason}\n    ${sentence.slice(0, 160)}`);
+        }
         const words = sentence.split(/\s+/).length;
         if (words <= sentenceWordLimit) continue;
         failures += 1;
@@ -459,6 +500,10 @@ const figureDirs = [
 ];
 
 const svgRules = [
+  // Figure labels follow the same rule as the prose: a vault is emptied or
+  // paid out by a handler, and drained only by an attacker.
+  [/<text[^>]*>[^<]*\bdrain/i,
+    'a handler "empties" a vault or "pays it out"; "drain" is the attacker\'s word (companion AI plugin)'],
   // Figure text is typed with the same straight apostrophe and straight
   // quotes as the chapters, and the build sets both typographically when it
   // inlines the figure. Seventy figures once carried the curly forms as
