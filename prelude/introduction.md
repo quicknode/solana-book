@@ -8,15 +8,15 @@ This isn't a book about how Solana is built. It's about **building on it**. This
 
 Financial products built on Solana have properties no traditional payment system offers:
 
-- **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.
+- **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.[^after-hours]
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed.
 - **Everyone reads the same accounts.** A traditional trade lands in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
 - **Money is programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
-- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Think back to the last time you bought a coffee: the café that sold it paid roughly 1.5% to 3.5% of the price in card fees, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and up to 20% at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A flat fee changes what products are worth building.
-- **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real-world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] Solana is also one of the most active chains for trading crypto-native assets such as BTC.[^btc-scope]
+- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving money the traditional way costs a percentage of it. Think back to the last time you bought a coffee: the café that sold it paid roughly 1.5% to 3.5% of the price in card fees, plus a fixed 10 to 30 cents. Sending $200 across a border costs under 1% through a digital service like Wise, and up to 20% at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A flat fee changes what products are worth building.[^ticket-size]
+- **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real-world assets: equities, Treasury funds, private credit, commodities, real estate, and exotics.[^rwa-scope] Solana is also one of the most active chains for trading crypto-native assets such as BTC.[^btc-scope]
 - **A deployed program reaches every user at once.** A traditional fund spends months working through intermediaries before it reaches investors: an exchange listing, market makers, brokerage approvals. Each gatekeeper adds cost and delay. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
 
-Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require. Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
+Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require.[^tokenized-funds] Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
 ## A Long-Lived Technical Book for Solana
 
@@ -100,7 +100,13 @@ Part I opens with the computer itself: one giant machine that spans the world, a
 
 [^remittance-scope]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average near 6.5%. Source: The World Bank, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 
-[^rwa-scope]: [app.rwa.xyz](https://app.rwa.xyz) prices tokenized assets by class and by network, and [defillama.com/rwa/chains](https://defillama.com/rwa/chains) ranks the chains.
+[^after-hours]: Allium and the Solana Foundation measured 63% of Solana's tokenized-equity volume in the twelve months to August 18, 2026 as traded while US exchanges were closed, and 17% of it on weekends. See [allium.so/solana](https://allium.so/solana).
+
+[^ticket-size]: The median RWA trade on Solana in the twelve months to August 18, 2026 was $29, against $70 on other chains. Maple's tokenized private-credit fund, which trades on several chains, had a $24 median trade on Solana and $1,257 elsewhere. Source: Allium, [allium.so/solana](https://allium.so/solana).
+
+[^rwa-scope]: Allium counted $14.7B of the $46B in onchain RWA spot trading across 24 chains in the twelve months to August 18, 2026 on Solana: 32% of the volume and 47% of the trades, more than any other chain. Solana held 12% of RWA market cap on August 18, 2026, so the lead is in trading rather than in balances. The count is spot only and covers no real estate on Solana, where property is tokenized at [metawealth.co](https://metawealth.co) and city price indexes trade as perpetuals at [parcl.co](https://parcl.co). See [allium.so/solana](https://allium.so/solana). [app.rwa.xyz](https://app.rwa.xyz) prices tokenized assets by class and by network, and [defillama.com/rwa/chains](https://defillama.com/rwa/chains) ranks the chains.
+
+[^tokenized-funds]: BlackRock's tokenized Treasury fund, BUIDL, held $741M on Solana on August 18, 2026, 27% of the fund. Its Solana balance moved only by issuance and redemption with the issuer: no spot trade in the preceding twelve months. Securitize held $252M and State Street $160M of tokenized fixed income on Solana on the same day. Source: Allium, [allium.so/solana](https://allium.so/solana).
 
 [^btc-scope]: Blockworks Research put BTC spot volume on Solana near $80M in a day in August 2026. See [blockworks.com/analytics/solana/solana-bitcoin](https://blockworks.com/analytics/solana/solana-bitcoin).
 

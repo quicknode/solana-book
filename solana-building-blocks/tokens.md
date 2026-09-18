@@ -3,7 +3,7 @@
 Assets on Solana are **tokens**, and every token is defined by a mint account and held in token accounts (accounts formatted in a particular way to hold token balances), both managed by a token program. Every asset in this book is a token: 
 
 - stablecoins like USDC and USDT
-- equities like NVDAx, SPCXx, and TSLAx
+- equities like NVDAx, SPCXx, and TSLAx[^tokenized-equity-volume]
 - the share tokens the book's own programs mint
 
 So is every other asset on Solana.
@@ -88,3 +88,4 @@ Before building on a token you did not issue, check which extensions it uses: So
 
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).
 [^nvdax-address]: xStocks, the NVDAx issuer, lists its tokenized equities at [xstocks.fi/us/products](https://xstocks.fi/us/products).
+[^tokenized-equity-volume]: Tokens tracking Tesla and Nvidia traded $631M and $380M on Solana in the twelve months to August 18, 2026, among the eight most traded tokenized equities on the chain, behind the S&P 500 token's $2.0B. Source: Allium, [allium.so/solana](https://allium.so/solana).
