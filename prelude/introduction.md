@@ -81,7 +81,9 @@ AI tools did the mechanical work: checking spelling and grammar, keeping termino
 
 ## Corrections Are Welcome, and Expected
 
-Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). Quicknode's Solana account on X, @QuicknodeSolana, posts updates to the book, and is the quickest place to ask a question or send feedback.[^quicknode-solana-x] If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
+Long-lived technical books are not written once. They are corrected, edition after edition, by keen readers. The errata page sits alongside the two companions at [solanabook.org](https://solanabook.org). If a number here does not match the code, if a mechanism has changed, or if an explanation left you stuck, tell us. Contributors are credited by name.
+
+Follow @QuicknodeSolana on X for updates to the book, new chapters and editions as they ship, and the fastest way to ask a question or send feedback.[^quicknode-solana-x]
 
 ## Where to Start, Depending on What You Came For
 
