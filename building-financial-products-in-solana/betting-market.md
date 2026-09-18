@@ -10,7 +10,7 @@ In a bookmaker market, the house quotes odds and carries risk on every bet. In a
 
 **Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
-![The parimutuel split: at settlement the losing pool flows to the winners in proportion to their stakes, with a fee slice diverted to the house.](figures/betting-parimutuel-pools.svg)
+![](figures/betting-parimutuel-pools.svg)
 
 ## The Account Model: One Config, One Event, Its Outcomes, and a Bet per Bettor
 
@@ -33,7 +33,7 @@ Maria is the admin. Her key is recorded in the program's config, and only she ca
 
 One rule protects the bettors: **the outcome list locks the moment betting starts**. `add_outcome()` fails with `BettingAlreadyStarted` once any money is in the pool, so the field of choices cannot change out from under someone who already bet.
 
-![Maria's three setup calls build the config, the event with its empty vault, and the two outcome accounts.](figures/betting-maria-setup.svg)
+![](figures/betting-maria-setup.svg)
 
 ## Bettors Stake on Their Chosen Outcomes
 
@@ -43,7 +43,7 @@ Each bettor calls `place_bet()` with an amount. Zero-amount bets reject with `Ze
 
 After all three bets, the vault holds 600 USDC: 400 staked on Toy Story 5, 200 on Backrooms.
 
-![Three place_bet() transfers flow into the single event vault, while the outcome accounts tally 400 and 200 and the event's total_pool reaches 600.](figures/betting-place-bets.svg)
+![](figures/betting-place-bets.svg)
 
 ## The Film Grosses: The Operator Settles the Event
 
@@ -56,7 +56,7 @@ Settlement does four things, none of which involve paying bettors yet:
 - Does the fee math. The losing pool is `total_pool` minus the winning outcome's total: 600 − 400 = 200 USDC. The fee is 2% of the *losing pool only*: 4 USDC, computed in u128 and floored. The remaining 196 becomes the `distributable_losing_pool`, stored on the event. Charging the fee only on the losing side gives one guarantee: **a winner can never receive less than they staked**.
 - Transfers the 4 USDC fee out of the vault to the fee recipient's token account, signed by the event PDA.
 
-![Settlement splits the 600 USDC vault into the winning pool (400, untouched), the fee (4, flowing to Maria's account), and the distributable losing pool (196, earmarked for winners).](figures/betting-settlement.svg)
+![](figures/betting-settlement.svg)
 
 ## Winners Claim: Conviction Pays Three to One
 
@@ -75,7 +75,7 @@ Two orderings in this handler close attacks:
 
 There is no `claimed` boolean to forget to check, because the account's deletion is the exit.
 
-![Alice's claim_winnings(): 447 USDC leaves the vault signed by the event PDA, her bet account closes with rent returning to her, and her user index drops the bet.](figures/betting-alice-claim.svg)
+![](figures/betting-alice-claim.svg)
 
 ## Closing Out, and an Exit From Every State
 
@@ -83,7 +83,7 @@ Carol's losing bet pays nothing, but it still occupies one of her 32 position sl
 
 And what if the film festival burns down? An Open event has a second exit: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (checked by `test_cancel_and_refund`). Open, Settled, Cancelled: three states, and every one of them has an exit for every participant's money.
 
-![The event's state machine: an Open event takes bets, then exits to Settled (claims and losing-bet closes) or Cancelled (refunds), and every bet account is closed on every path.](figures/betting-state-machine.svg)
+![](figures/betting-state-machine.svg)
 
 ## The Math: One Division, Floored Once, Fee Off the Losers
 

@@ -14,7 +14,7 @@ Victor runs `initialize_registry()` once, creating the **registry**: the curator
 
 The approved set is stocks, bonds, whatever investors actually want. It cannot include the manager's own token: `add_asset()` checks approval by deriving the `ApprovedAsset` address for the mint it is handed, so adding an unapproved asset fails because the account does not exist (checked by `test_add_asset_rejects_unapproved`).
 
-![A manager may select from the approved set but never add to it; only Victor's authority creates an ApprovedAsset.](figures/vault-registry.svg)
+![](figures/vault-registry.svg)
 
 ## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
 
@@ -42,7 +42,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 **And the program, not the manager, decides the acceptable price.** For each leg, the handler computes the expected output *from the oracle price* and floors it by the strategy's slippage tolerance: the swap may return at most 1% less than the feed says it should, or the whole deposit reverts. A manager cannot approve a bad fill, because the minimum is never theirs to supply. **When an untrusted party routes the trade, the acceptable outcome must be computed from a price source they do not control.**
 
-![900 USDC in, 900 shares out, and every swap minimum comes from the same feeds the NAV loop reads.](figures/vault-deposit.svg)
+![](figures/vault-deposit.svg)
 
 ## The Market Moves and the Manager Rebalances
 
@@ -50,7 +50,7 @@ NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is wor
 
 But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's job. She runs `rebalance()`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums as deposits are. The weights return to 40/60. The money moved between strategy-owned vaults, through the approved router, at oracle-checked prices, and nowhere near Maria.
 
-![A $200 NVDA print drifts the weights to 37.5/62.5; two router legs restore 40/60 at feed-computed minimums.](figures/vault-rebalance.svg)
+![](figures/vault-rebalance.svg)
 
 ## A Later Investor Buys In at the New Price
 
@@ -60,7 +60,7 @@ Bob, the second investor, deposits 480 USDC of his standard wallet. He is not ea
 
 Traditional funds sell assets to pay the management fee. This program does what large onchain fund products do instead: it **mints new shares to the manager**, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees()` computes shares owed as total shares × fee rate × elapsed time over a year, from the strategy's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at strategy creation, so the deal investors joined under cannot be worsened. The *Betting Market* chapter snapshotted a fee per event; the same principle, at fund scale.
 
-![Fee by dilution: the share supply grows by 13.5 shares into Maria's account, every other holder's slice of the same pie shrinks proportionally, and no tokens leave any vault.](figures/vault-fee-dilution.svg)
+![](figures/vault-fee-dilution.svg)
 
 ## Withdrawing In Kind
 
