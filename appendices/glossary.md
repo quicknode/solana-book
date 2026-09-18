@@ -653,7 +653,7 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 
 ### writer
 
-The party who sells an [option](#option): they receive the [premium](#premium) and take on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
+The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called writing it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
 
 ### zero-copy
 
