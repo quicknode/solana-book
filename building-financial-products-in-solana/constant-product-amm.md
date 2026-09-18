@@ -25,23 +25,21 @@ The deeper the pool, the less any one trade moves the price.
 
 ![](figures/amm-curve.svg)
 
-## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
-
-![The pool config account owns both vaults and the LP mint and signs for them, so no person can move pool tokens.](figures/amm-account-map.svg)
-
-The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
-
-Each trading pair gets a **pool config** PDA, seeded by the config and the two mints, with one rule enforced at creation: `mint_a` must sort below `mint_b`, or creation fails with `InvalidMintOrder`. Without canonical ordering, an (ACME, USDC) pool and a (USDC, ACME) pool would both exist and split the liquidity between them.
-
-The tokens are held in two vaults, `pool_a` and `pool_b`, owned by the pool config account, alongside the **LP mint** (`liquidity_provider_mint`), whose tokens are the receipts liquidity providers hold. The pool config is a PDA, so the program can sign for the vaults and the mint with its seeds, and nobody else can.
-
-Two more fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool config. The admin's share of fees is never transferred during a swap; it accrues in these counters as a *virtual claim* while the tokens physically sit in the vaults. So every piece of LP-facing math runs on **effective reserves**: the raw vault balance minus the admin's owed slice. The admin's fees do not boost LP yield, do not distort the price, and get swept out later in one transfer. Keeping who is owed what separate from where it sits is the order book's fee vault, done with accounting instead of an account.
-
 ## Creating the Venue Sets the Launch Price
 
 Maria operates the AMM and is launching ACME today. She earns twice: an admin share of every trading fee, and LP fees on the liquidity she provides herself. Like every character in this book she starts with one SOL and 1,000 USDC; she also holds 400 ACME of founder stock.
 
 Maria runs `initialize_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, about one sixth of each fee, the classic Uniswap-style split. Then `initialize_pool()` for ACME/USDC, which creates the pool config, the LP mint, and the two empty vaults.
+
+Financial state on Solana is accounts, and those two transactions created the venue's five.
+
+The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
+
+The **pool config** is a PDA seeded by the config and the two mints, one per trading pair, with one rule enforced at creation: `mint_a` must sort below `mint_b`, or creation fails with `InvalidMintOrder`. Without canonical ordering, an (ACME, USDC) pool and a (USDC, ACME) pool would both exist and split the liquidity between them.
+
+The tokens are held in two vaults, `pool_a` and `pool_b`, owned by the pool config account, alongside the **LP mint** (`liquidity_provider_mint`), whose tokens are the receipts liquidity providers hold. The pool config is a PDA, so the program can sign for the vaults and the mint with its seeds, and nobody else can.
+
+Two more fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool config. The admin's share of fees is never transferred during a swap; it accrues in these counters as a *virtual claim* while the tokens physically sit in the vaults. So every piece of LP-facing math runs on **effective reserves**: the raw vault balance minus the admin's owed slice. The admin's fees do not boost LP yield, do not distort the price, and get swept out later in one transfer. Keeping who is owed what separate from where it sits is the order book's fee vault, done with accounting instead of an account.
 
 Empty pools cannot price anything, so Maria seeds it. She believes a fair launch price is $2.25, so she runs `deposit_liquidity()` with her 400 ACME and 900 USDC, the founder stock and nine-tenths of her cash. **The first deposit sets the price**, because the ratio she deposits *is* the ratio. X = 400, Y = 900, K = 360,000.
 
