@@ -81,7 +81,9 @@ function joinAngles(d) {
   return joins;
 }
 
-const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+// The same override the PDF build takes, for a machine whose Chromium lives
+// elsewhere (the CI runner installs Playwright's and passes its path).
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
 let failures = 0;
 

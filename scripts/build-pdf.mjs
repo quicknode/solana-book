@@ -1094,3 +1094,37 @@ if (strays.length > 0) {
   for (const { name, number } of strays) console.error(`  page ${number}: ${name}`);
   process.exitCode = 1;
 }
+
+// The quotes, read back from the finished PDF rather than trusted to the
+// conversion above: a straight apostrophe or quote belongs only in the code
+// face. pdf.js reports each run's face by family, and the one monospace face
+// in the book is the code font, so a straight quote in a serif or sans run is
+// prose the conversion missed. The check is independent of the converter's
+// own view of the HTML, which is the point. A book with no monospace run at
+// all means the face was not recognised, and the check reports that rather
+// than passing on an empty list.
+const straightQuotesInProse = [];
+let monospaceRuns = 0;
+{
+  const pdfjs = await import(pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.mjs")).href);
+  const loading = pdfjs.getDocument({ data: new Uint8Array(readFileSync(outputPath)) });
+  const finished = await loading.promise;
+  for (let number = 1; number <= finished.numPages; number += 1) {
+    const content = await (await finished.getPage(number)).getTextContent();
+    for (const item of content.items) {
+      if (!("str" in item)) continue;
+      const family = content.styles[item.fontName]?.fontFamily;
+      if (family === "monospace") monospaceRuns += 1;
+      else if (/["']/.test(item.str)) straightQuotesInProse.push(`page ${number}: ${item.str.trim()}`);
+    }
+  }
+  await loading.destroy();
+}
+if (monospaceRuns === 0) {
+  console.error("\nNo run in the code face was found in the finished PDF, so the quotes could not be checked.");
+  process.exitCode = 1;
+} else if (straightQuotesInProse.length > 0) {
+  console.error(`\n${straightQuotesInProse.length} straight quote(s) printed outside the code face:`);
+  for (const line of straightQuotesInProse.slice(0, 20)) console.error(`  ${line}`);
+  process.exitCode = 1;
+}

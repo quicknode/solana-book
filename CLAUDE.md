@@ -10,6 +10,12 @@ node scripts/check-figure-geometry.mjs   # renders every SVG in Chromium: text o
 npm run build-pdf                   # the whole book; prints only the output path on success
 ```
 
+The first two also run in GitHub Actions on every pull request and every push to `main`
+(`.github/workflows/checks.yml`), so a pull request that fails them says so on its own page. The build
+does not run there, so run it yourself. The build reads the finished PDF back and fails if a straight
+quote printed outside the code face, which is the one check on the typographic quotes that does not
+trust the build's own conversion.
+
 `npm run preview -- <chapter> "<phrase>"` renders a single chapter around a phrase, which is faster than
 building the book when checking one edit.
 
