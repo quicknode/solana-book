@@ -6,7 +6,7 @@
 
 **Building Financial Software on Solana** is a detailed, program-by-program guide to building financial products as Solana programs: how a financial idea becomes accounts, instruction handlers, arithmetic, and checks that hold when someone attacks them.
 
-Written for engineers shipping software that holds other people's money, it leaves the internals of consensus and validators to other books and covers the layer above: token mints and the authorities that are a token's real constitution, program derived addresses and vault custody, the two clocks and which one an adversary can bend, integer arithmetic in minor units, rounding as a security boundary, oracles and the provenance, freshness, and confidence checks a program runs before acting on a price, conservation invariants, state machines with an exit from every state, cranks, admin power, and the attack classes that have drained real markets.
+Written for engineers shipping software that holds other people's money, and for the analysts, risk officers, and product people who need to understand that software without writing it, it leaves the internals of consensus and validators to other books and covers the layer above: token mints and the authorities that are a token's real constitution, program derived addresses and vault custody, the two clocks and which one an adversary can bend, integer arithmetic in minor units, rounding as a security boundary, oracles and the provenance, freshness, and confidence checks a program runs before acting on a price, conservation invariants, state machines with an exit from every state, cranks, admin power, and the attack classes that have drained real markets.
 
 **Part I** builds the fundamentals: Solana's accounts, tokens, PDAs, and time, then financial software as a state machine, the arithmetic of money, offchain truth, the adversary, and operating a program in production. Exploit classes are taught through the incidents that made them famous, among them the $2.6B SPL token-lending rounding bug, Cashio ($52M), Wormhole ($325M), and Mango Markets ($116M).
 
@@ -14,7 +14,7 @@ Written for engineers shipping software that holds other people's money, it leav
 
 In the tradition of *TCP/IP Illustrated*, the book teaches the layer that does not change. Frameworks churn. The account model has been stable since Solana launched, the arithmetic of money will not change, and neither will the desire of adversaries to take your assets.
 
-No Solana experience and no finance background are assumed; both are built from first principles, with the people and the dollar amounts on the page before any code depends on them. Code is Rust, explained as it appears.
+No Solana experience, no finance background, and no programming are assumed. The first two are built from first principles, with the people and the dollar amounts on the page, and every program is explained in prose and figures, with its Rust in the companion repository.
 
 The tested programs live in a companion repository, where continuous integration keeps them current in a way paper cannot, and a companion AI skill applies the book's rules inside AI coding tools. An AI can write a Solana program on request. No AI can understand one on your behalf.
 
