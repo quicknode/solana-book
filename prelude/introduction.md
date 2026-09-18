@@ -102,7 +102,7 @@ Part I opens with the computer itself: one giant machine that spans the world, a
 
 [^after-hours]: Allium measured 63% of Solana's tokenized-equity volume in the twelve months to August 18, 2026 as traded while US exchanges were closed, and 17% of it on weekends. See [allium.so/solana](https://allium.so/solana).
 
-[^rwa-scope]: Allium counted $14.7B of the $46B in onchain RWA spot trading across 24 chains in the twelve months to August 18, 2026 on Solana: 32% of the volume and 47% of the trades, more than any other chain.
+[^rwa-scope]: Allium counted $14.7B of the $46B in onchain RWA spot trading across 24 chains in the twelve months to August 18, 2026 on Solana: 32% of the volume and 47% of the trades, more than any other chain. See [allium.so/solana](https://allium.so/solana).
 
 [^tokenized-funds]: By Allium's count, BlackRock's tokenized Treasury fund, BUIDL, had $741M of its shares issued as Solana tokens on August 18, 2026, 27% of the fund.
 
