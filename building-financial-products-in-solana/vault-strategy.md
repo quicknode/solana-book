@@ -16,21 +16,21 @@ The approved set is stocks, bonds, whatever investors actually want. It cannot i
 
 ![](figures/vault-registry.svg)
 
-## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
-
-![The strategy PDA owns every vault and the share mint, and one deposit pulls all of them in a single transaction.](figures/vault-account-map.svg)
-
-The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA (seeds: `"share_mint"`, the strategy) with the strategy as mint authority: shares only come into existence when the program's own math says so.
-
-Each basket asset gets an **asset config** PDA (seeds: `"asset"`, the strategy, an index byte) recording its mint, its feed (copied from its `ApprovedAsset` account), its weight in basis points, and its **vault**, a strategy-owned token account. The strategy holds up to `MAX_ASSETS` (16), and the cap is not about storage. A deposit has to reference every asset's accounts at once, five per asset, so a full basket runs to 94 accounts. That fits inside Solana's account-lock limit, but it is far past what a legacy transaction can hold, so clients of big baskets send v0 transactions with an address lookup table.
-
-The indexes guard the valuation: every handler that computes the fund's value walks indexes 0 through `asset_count` and refuses to run if any account is missing (`IncompleteAssetAccounts`), which makes it structurally impossible to omit an asset and understate the fund's value. A retired asset (weight set to zero) keeps its index forever rather than being reused, so the contiguous range the valuation loop depends on stays intact.
-
 ## The Manager Creates the Strategy and Sets the Weights
 
 Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy()` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund *by configuration*, and the cap is the program refusing to make that a parameter.
 
 She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight()`, and only Maria: the manager gate is checked by `test_set_weight_rejects_non_manager`.
+
+![](figures/vault-create-strategy.svg)
+
+Financial state on Solana is accounts, and Maria's three transactions created the seven the fund needs.
+
+The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA (seeds: `"share_mint"`, the strategy) with the strategy as mint authority: shares only come into existence when the program's own math says so. The strategy also owns a **USDC vault**, which every deposit passes through on its way into the basket.
+
+Each basket asset gets an **asset config** PDA (seeds: `"asset"`, the strategy, an index byte) recording its mint, its feed (copied from its `ApprovedAsset` account), its weight in basis points, and its **vault**, a strategy-owned token account. The strategy holds up to `MAX_ASSETS` (16), and the cap is not about storage. A deposit has to reference every asset's accounts at once, five per asset, so a full basket runs to 94 accounts. That fits inside Solana's account-lock limit, but it is far past what a legacy transaction can hold, so clients of big baskets send v0 transactions with an address lookup table.
+
+The indexes guard the valuation: every handler that computes the fund's value walks indexes 0 through `asset_count` and refuses to run if any account is missing (`IncompleteAssetAccounts`), which makes it structurally impossible to omit an asset and understate the fund's value. A retired asset (weight set to zero) keeps its index forever rather than being reused, so the contiguous range the valuation loop depends on stays intact.
 
 ## A Deposit Makes the Program Acquire Assets
 
