@@ -6,9 +6,9 @@ One word is overloaded. This chapter's market trades stocks like NVDAx and SPCXx
 
 ## The Account Model: A Market of Reserves, and an Obligation per Borrower
 
-![One market, and an obligation per borrower holding a collateral vault of share tokens.](figures/lending-account-map.svg)
+![](figures/lending-account-map.svg)
 
-![Each reserve owns a liquidity vault and a share mint and points at a price feed, so a token's pool, its receipt and its price all hang off one account.](figures/lending-reserves.svg)
+![](figures/lending-reserves.svg)
 
 The **lending market** PDA (seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
@@ -54,9 +54,9 @@ Bob needs cash but does not want to sell his five NVDAx (NVIDIA stock, $200 each
 
 The health check behind step 4 is conservative by construction: when `refresh_obligation()` values his position, collateral value is *floored* and debt value is *ceiled*, so every health evaluation errs against the borrower. Borrowing one unit past the allowance fails (`BorrowTooLarge`), and the test `borrow_up_to_max_ltv_then_one_more_fails` checks the boundary from both sides. His NVDAx is not sold, and he gets it back the moment he repays.
 
-![borrow_obligation_liquidity() sends 750 USDC out of the reserve's liquidity vault to Bob, against collateral already pledged.](figures/lending-borrow-ltv.svg)
+![](figures/lending-borrow-ltv.svg)
 
-![Debt sits at 75% of collateral value, with the liquidation threshold at 80% just above it: the gap is Bob's headroom before a price move makes him liquidatable.](figures/lending-borrow-ltv-headroom.svg)
+![The gap between the debt and the threshold is Bob's headroom before a price move makes him liquidatable.](figures/lending-borrow-ltv-headroom.svg)
 
 ## Shorting an Asset by Borrowing It
 
@@ -76,7 +76,7 @@ Those percentages are annual, and the accrual is per slot, so the conversion div
 
 Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 
-![The kinked rate curve: borrow APR against utilization, gentle to the 80% kink and steep after it, alongside the accumulation factor compounding across refreshes.](figures/lending-rate-curve.svg)
+![](figures/lending-rate-curve.svg)
 
 ## The Shorted Asset Rallies and the Position Becomes Liquidatable
 
@@ -93,11 +93,11 @@ Dave watches for liquidation opportunities. He is the reason the market stays so
 
 Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Taking half at a time is what the close factor buys: the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
-![The first call repays half the debt and seizes collateral worth the repayment plus a 5% bonus, every conversion rounded toward Carol.](figures/lending-liquidation.svg)
+![](figures/lending-liquidation.svg)
 
-![Carol is still slightly unhealthy, so Dave goes again for half of what is left: 0.75 SPCXx, seizing 236.25 shares.](figures/lending-liquidation-second-call.svg)
+![](figures/lending-liquidation-second-call.svg)
 
-![Each call may touch only half the debt, so 2.25 SPCXx of the 3 goes in two passes and Carol crosses back under the threshold rather than losing the whole position.](figures/lending-liquidation-health.svg)
+![](figures/lending-liquidation-health.svg)
 
 ## Cranks: Work With No Natural Caller
 
@@ -107,7 +107,7 @@ Dave is one instance of a pattern this market runs on. Some work in a financial 
 - **Idempotent: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve rewrites the same numbers), so a bot on a schedule never needs attention and never fails spuriously.
 - **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator paid per call: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
 
-![The crank loop: anyone's scheduled bot calls the permissionless handler, and every outcome is clean: work done, a no-op, or a refusal of work the state does not permit.](figures/crank-loop.svg)
+![](figures/crank-loop.svg)
 
 ## Repayment, Fees, and Yield: Everyone Leaves Whole
 

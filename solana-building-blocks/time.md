@@ -8,7 +8,7 @@ The jobs in this book split cleanly between them. A price freshness window count
 
 A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
-![The slot counter steps evenly and only forward; what a step is worth in milliseconds is a target rather than a promise.](figures/slot-counter.svg)
+![](figures/slot-counter.svg)
 
 Three things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know all three:
 
@@ -22,13 +22,13 @@ Before each **epoch** of 432,000 slots, about a day at 200 milliseconds, the net
 
 The **Unix timestamp** comes from the same Clock sysvar, but it is wall-clock time reported by validators rather than a count the runtime guarantees. It is accurate to within a few seconds, and validators can nudge it.
 
-![The wall clock, accurate to within a few seconds, and nudgeable by whoever reports it.](figures/unix-timestamp.svg)
+![](figures/unix-timestamp.svg)
 
 A validator can nudge it by a few seconds, and a few seconds is what it stays however long the span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, whoever can nudge that timestamp decides which side of the boundary a transaction lands on.
 
 ## Which Clock for Which Job
 
-![Yes goes right to an answer, no goes down to the next question; four noes leave the slot count.](figures/clock-decision-tree.svg)
+![](figures/clock-decision-tree.svg)
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. The vault's annual fee runs on the wall clock too, because a few seconds against a year change it by nothing anybody can see.
 
@@ -119,7 +119,7 @@ One expression, compared both ways, so there is no gap and no overlap between "y
 
 The trap is what "seven days" then means: the window ends at the first tick of day seven, not at the end of the seventh day.
 
-![One expression decides both windows, so they meet at an instant with no gap and no overlap.](figures/day-boundary.svg)
+![](figures/day-boundary.svg)
 
 Say which edge you mean when you write the terms down. A contributor reads "seven days to fund" as a window closing at the end of the seventh day, and this one closes at its start, a full day earlier than they think. Either edge is defensible; only one is what your users were told.
 

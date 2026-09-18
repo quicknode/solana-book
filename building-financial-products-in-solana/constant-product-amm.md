@@ -21,7 +21,7 @@ The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME r
 
 The deeper the pool, the less any one trade moves the price.
 
-![Three buys of 100 USDC each, a panel apiece: every trade slides the pool up the curve X × Y = K, and the same money buys 40.0 ACME, then 32.7, then 27.3, as the spot price climbs from $2.25 to $4.00.](figures/amm-curve.svg)
+![](figures/amm-curve.svg)
 
 ## The Account Model: One Config, One Pool per Pair, and a Virtual Fee Ledger
 
@@ -45,7 +45,7 @@ Empty pools cannot price anything, so Maria seeds it. She believes a fair launch
 
 Her LP tokens come from the formula the *Arithmetic of Money* chapter described: the **integer square root of X times Y**, computed by `integer_sqrt()`, the program's own Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`. That is a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address, as Uniswap V2 does; it never exists as supply, while the reserves it represents stay in the pool. Its value is a fraction of a cent. What makes it work is that it is always part of the share supply the pool divides by. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
-![√(400 × 900) = 600 LP, less the 100 minor units of MINIMUM_LIQUIDITY minted to nobody and locked forever.](figures/amm-first-deposit.svg)
+![](figures/amm-first-deposit.svg)
 
 > **A square root with no floats.** `integer_sqrt()` is **Newton's method** running on integers: start with a guess, then repeatedly replace it with the average of the guess and the target divided by the guess. The sequence converges on the square root in a few dozen iterations, and the result is floored. The same approach covers any real-valued function a program needs onchain (roots, exponentials, logs) becomes an integer iteration with a known, bounded error, because floats can never touch funds.
 
@@ -67,7 +67,7 @@ Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a t
 
 K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is K's second way of growing.
 
-![The 30-cent fee splits: about 5 cents to Maria's virtual claim, about 25 to the LPs, which never leaves the vault.](figures/amm-bob-swap.svg)
+![](figures/amm-bob-swap.svg)
 
 ## The Next Trader Pays the Price the Last One Made
 
@@ -89,7 +89,7 @@ Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC;
 
 That gap is **impermanent loss**, and it is the price of being an LP. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP is a bet on trading volume, not on price direction**: if accumulated fees outrun the divergence, LPing wins; if the price runs hard in one direction on thin volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, the loss would have evaporated. Nobody should provide liquidity without being able to draw this diagram.
 
-![Impermanent loss, to scale for Alice's $450 position. With no fee income (solid) the LP is behind holding at every price but $2.25, by $1.50 at the $2.64 withdrawal. With $10 of fee income (dashed) the LP is ahead of holding between about $1.40 and $3.30.](figures/amm-impermanent-loss.svg)
+![](figures/amm-impermanent-loss.svg)
 
 Fee income is what an LP is paid for carrying that gap, and the gap is small for ordinary moves. It grows with the square of the price change, so a move of a quarter costs Alice about $3 and a doubling about $39. The LPs keep 25 of every 30 basis points of fee and Alice holds a fifth of the pool, so she earns about five basis points of everything traded: $10 for every $20,000. The table sets the two against each other for her $450 position, counting fee income at face value. Each cell is what she has at withdrawal minus what she would have had by holding, and the fee columns are $20,000, $100,000, and $400,000 of trading, the last roughly a year of turning the pool over once a day.
 

@@ -16,17 +16,17 @@ The program for this chapter lives at `finance/escrow` in the companion reposito
 
 Alice starts, like every character in this book, with one SOL and 1,000 USDC; she wants a share of Tesla stock and is prepared to spend 250 USDC on it. Bob holds TSLAx and likes that price. They want to trade.
 
-![Alice holds 250 USDC and wants 1 TSLAx; Bob holds 1 TSLAx and wants 250 USDC. Each side holds exactly what the other wants.](figures/escrow-swap-intent.svg)
+![](figures/escrow-swap-intent.svg)
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? An **escrow** lets Alice and Bob swap without having to trust each other.
 
 Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent money overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
 
-![Traditional escrow: Alice and Bob each send funds to a third party in the middle, which forwards them onward minus the slice it keeps for itself.](figures/escrow-traditional-escrow.svg)
+![](figures/escrow-traditional-escrow.svg)
 
 A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed program itself: nobody, including the program's author, can move them except along the paths the code defines. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no key that matters. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
 
-![The same swap through the escrow program: both sides receive the full amount, and the box in the middle is a program, not a company.](figures/escrow-program-swap.svg)
+![](figures/escrow-program-swap.svg)
 
 ## The Deal: A Maker Offers, a Taker Accepts
 
@@ -41,13 +41,13 @@ The deal is priced the way all Solana money is priced: in **minor units**, the s
 
 The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every state needs an exit, and an open offer has two.
 
-![The offer's state machine: an open offer has exactly two exits, taken when Bob accepts or canceled when Alice withdraws, and both exits empty and close the vault.](figures/escrow-state-machine.svg)
+![](figures/escrow-state-machine.svg)
 
 ### The Maker Makes the Offer
 
 Alice calls `make_offer()` with three arguments: her chosen `id`, `token_a_offered_amount` (250,000,000 minor units of USDC), and `token_b_wanted_amount` (100,000,000 minor units of TSLAx).
 
-![make_offer() creates the offer account and the vault, and moves 250,000,000 minor units of USDC from Alice's token account into the vault. The vault's authority is the offer account, so no person can move the escrowed tokens.](figures/escrow-make-offer.svg)
+![](figures/escrow-make-offer.svg)
 
 Financial state on Solana is accounts, and this one transaction created the two the deal needs.
 
@@ -78,7 +78,7 @@ With the structure verified, the handler code is two small steps:
 
 Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
 
-![take_offer() sends Bob's 1 TSLAx straight to Alice's token account, pays the vault's 250 USDC to Bob, and closes both the vault and the offer account, returning their rent to Alice.](figures/escrow-take-offer.svg)
+![](figures/escrow-take-offer.svg)
 
 That is all Alice does. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
@@ -95,7 +95,7 @@ Both sides now hold exactly what the other offered. No percentage went to anyone
 
 If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
 
-![cancel_offer() returns the USDC from the vault to Alice's token account, closes the vault and the offer account, and returns the rent to Alice.](figures/escrow-cancel-offer.svg)
+![](figures/escrow-cancel-offer.svg)
 
 The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, and closes both the vault and the offer account, returning both rent deposits to Alice. Every lamport of rent she fronted is returned to her.
 

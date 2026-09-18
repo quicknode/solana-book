@@ -29,7 +29,7 @@ Rent deposits are small, but they belong to somebody. Two rules settle who pays 
 
 - The deposit comes back to whoever paid it when the account is closed (for example after a take, a cancel, a claim, or a refund). A program that leaves accounts unclosed when no longer needed has a slow leak of other people's lamports, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker's lamports round-trip exactly, and yours should too.
 
-![Both exits refund every lamport; the third path strands tokens and rent in an account with no handler to close it.](figures/rent-lifecycle.svg)
+![](figures/rent-lifecycle.svg)
 
 ## What You Learnt
 

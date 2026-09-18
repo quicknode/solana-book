@@ -31,7 +31,7 @@ Then `deposit_inventory()` moves 1,000 NVDAx and 200,000 USDC from the firm's tr
 
 ## A Buyer Trades at the Ask
 
-![The band itself is the operator's revenue: buyers cross downward from the ask, sellers upward from the bid.](figures/prop-amm-quote-band.svg)
+![](figures/prop-amm-quote-band.svg)
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps:
 
@@ -53,7 +53,7 @@ A round trip costs 1.65 USDC: buying 5 NVDAx cost 825.825 and selling them back 
 
 NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. Nothing else happened: no arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory was sold below its value along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
 
-![Against a quote the price is flat whatever the size, until the inventory boundary, where the market refuses rather than reprices.](figures/prop-amm-curve-vs-quote.svg)
+![](figures/prop-amm-curve-vs-quote.svg)
 
 Reading the price has its own cost, though. Between oracle updates, even fresh ones inside the 150-slot bound, the market is quoting a number that is seconds old, and anyone who knows where the price went in those seconds can buy below true value or sell above it. Market makers call this **adverse selection**: the flow that finds you when your quote is wrong is the flow you did not want. It is the prop AMM's impermanent loss: the structural cost of the business, borne entirely by Maria.
 

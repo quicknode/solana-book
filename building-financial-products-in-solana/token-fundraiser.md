@@ -16,7 +16,7 @@ The two exits are **mutually exclusive by construction**: the claim requires the
 
 Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. A crowdfunding platform can, and occasionally does, change campaign rules mid-campaign. Here the terms cannot change, because no handler exists to change them.
 
-![initialize_fundraiser() creates the fundraiser account, the terms sheet nothing can later change, and the vault it controls. No tokens move; Maria pays the rent for both.](figures/fundraiser-initialize.svg)
+![](figures/fundraiser-initialize.svg)
 
 Financial state on Solana is accounts, and this one transaction created the two the raise needs.
 
@@ -41,7 +41,7 @@ Alice tries to contribute her entire 1,000 USDC. The program refuses with `Contr
 
 She contributes 900 USDC instead, and this is the transaction every backer repeats: `contribute()` moves the tokens from her own token account into the vault, and adds 900 to `current_amount`. Alice signs; a transfer into the vault never needs a PDA signature, because the tokens are going in rather than out.
 
-![contribute() moves Alice's 900 USDC into the vault and creates her receipt; the counter, not the vault balance, is what records the contribution.](figures/fundraiser-contribute.svg)
+![](figures/fundraiser-contribute.svg)
 
 The transaction also created an account for her. Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, and `contribute()` creates it only when it does not exist yet, so a backer's first contribution opens the receipt, every later one adds to it, and it is closed when its purpose is served.
 
@@ -49,7 +49,7 @@ The cap is not just per call. Carol contributes 450 USDC, then comes back the ne
 
 So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten is the floor, not the usual case: it takes eleven here because most of them stopped short of the cap. Total: exactly 9,000 USDC.
 
-![Eleven contributors, none above 900 USDC, each slice as tall as what that backer gave: the 10% cap means the thermometer only fills with broad participation.](figures/fundraiser-cap.svg)
+![](figures/fundraiser-cap.svg)
 
 ## The Counter Is the Truth; the Vault Is Just Custody
 
@@ -61,7 +61,7 @@ The same rule protects the *Constant-Product AMM* chapter's pool pricing, and it
 
 `check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The fundraiser is not marked finished; its account is gone, so a second claim has nothing to read, and double-claiming is impossible without any flag to check. The test `test_check_contributions_success_pays_maker_and_closes_vault` asserts all three effects.
 
-![Success: one transaction pays the vault out to Maria and closes both the vault and the fundraiser; the contributor receipts are the one thing left standing.](figures/fundraiser-success.svg)
+![](figures/fundraiser-success.svg)
 
 One thing survives success, and you will meet it in your own designs: the eleven contributor receipts. `check_contributions()` does not close these accounts, and `refund()` does but only runs if the raise fails. So each backer's receipt rent (about a thousandth of a SOL) would sit in an account nothing could close, and the program carries one more handler for exactly that: `close_contributor()`. A backer signs, passes the address their receipt was written for, and the handler makes one check: the account at that address is no longer owned by the program. A live fundraiser is program-owned, and a closed one belongs to the system program again, so while the raise is open the call fails with `FundraiserStillOpen` and the receipt stays a live claim on the vault. Once the fundraiser is gone the receipt closes and the rent comes back, which `test_close_contributor_after_successful_claim_returns_rent` asserts. The handler pays nothing and checks nothing else, and it exists because of a rule to apply to your own programs: *for every account your program creates, name the handler that eventually closes it.*
 
@@ -71,7 +71,7 @@ Now take the other ending. Day seven arrives with only 3,600 USDC in the counter
 
 The order inside that handler is checks-effects-interactions: the receipt is zeroed and the counter decremented *before* the token transfer. The account close then makes a second refund impossible, because the receipt a second refund would read no longer exists. It is the same close-the-account-to-prevent-double-claims mechanic the escrow used to retire its offers, and it appears wherever money exits in this book.
 
-![Failure: after the deadline each contributor pulls back exactly their recorded amount, and each receipt closes as it pays.](figures/fundraiser-refunds.svg)
+![](figures/fundraiser-refunds.svg)
 
 Refunds are per-contributor and pull-based: each backer collects their own, whenever they like, with no deadline. The contributors are left exactly whole; the all-or-nothing promise was kept by the cheapest mechanism on the chain: an integer comparison.
 

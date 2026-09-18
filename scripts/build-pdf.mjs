@@ -349,7 +349,9 @@ const sections = chapterPaths.map((path) => {
     .parse(prepareMarkdown(markdown, path), { mangle: false, headerIds: false })
     .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
     // Inline SVG figures so the single-file HTML needs no external assets;
-    // the image's alt text becomes the printed caption. The paragraph marked
+    // the image's alt text becomes the printed caption, and a figure whose
+    // headline and annotations already say everything carries none, so an
+    // empty alt prints no caption element at all. The paragraph marked
     // wraps the image in goes with it: a <figure> inside a <p> is invalid
     // HTML, and the browser mends it by closing the paragraph early, which
     // left an empty <p> between each heading and the figure under it. Paged.js
@@ -359,7 +361,7 @@ const sections = chapterPaths.map((path) => {
     // its heading stranded at the foot of the one before.
     .replace(/<p><img src="([^"]+\.svg)" alt="([^"]*)"[^>]*><\/p>/g, (whole, src, alt) => {
       const svg = readFileSync(join(repoRoot, dirname(path), src), "utf8");
-      return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
+      return `<figure>${svg}${alt ? `<figcaption>${alt}</figcaption>` : ""}</figure>`;
     })
     .replace(/<code>([^<]+)<\/code>/g, (whole, text) => `<code>${breakableIdentifier(text)}</code>`);
   // A figure that was not alone in its paragraph is not inlined above, and
