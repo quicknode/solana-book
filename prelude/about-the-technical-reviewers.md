@@ -3,7 +3,7 @@
 PLACEHOLDER. Reviewers are credited here with their name, title, and project. Corrections that
 land in the manuscript are additionally credited in the Acknowledgements.
 
-Aaron Milano is a technical writer at the Solana Foundation, and was previously Senior Solana Technical Writer at Quicknode.
+Aaron Milano is a Developer Relations Engineer at the Solana Foundation, and was previously Senior Solana Technical Writer at Quicknode.
 
 Alex Kahn is the founder of Dropset, an onchain FX platform fixing global liquidity for non-US stablecoins.
 
