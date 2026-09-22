@@ -4,7 +4,7 @@ The *Order Book Exchange* chapter built an exchange where every price is a commi
 
 AMMs work where order books do not: tokens without much trading volume, where a taker might wait forever for a matching maker. So they are the standard venue for new token launches, and this chapter follows one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
-The K in "constant product" is held fixed only while the pool prices a trade. The pool then adds the liquidity providers' share of that trade's fee to the reserves, so every swap leaves K a little larger. Deposits grow K too, and withdrawals shrink it. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every trade.
+The K in "constant product" is held fixed only while the pool prices a trade. The pool then adds the liquidity providers' share of that trade's fee to the reserves, so every swap leaves K a little larger. Liquidity providers' deposits grow K too, and their withdrawals shrink it. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every trade.
 
 ## X Times Y Equals K, and K Prices Every Trade
 
@@ -16,10 +16,10 @@ The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME r
 
 **The curve holds K fixed while it prices a trade, and K changes between trades.** It grows two ways:
 
-- **Deposits** add more of both tokens at the same ratio.
+- **Liquidity deposits** add more of both tokens at the same ratio.
 - **Fees**: the liquidity providers' share of every trade's fee is added to the reserves without being used to price the trade. Nobody is paid it at the time; liquidity providers collect it as part of their slice when they withdraw.
 
-Withdrawals shrink K, by the withdrawer's share of both reserves.
+Liquidity withdrawals shrink K, by the withdrawer's share of both reserves.
 
 The deeper the pool, the less any one trade moves the price.
 
