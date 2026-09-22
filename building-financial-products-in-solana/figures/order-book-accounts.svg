@@ -1,20 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 706" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -9 640 733" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Every account the book touches</text>
   <!-- the account map for the NVDAx/USDC order book market -->
   <!-- the account map: the snapshot just after Carol's ask matched Bob's bid -->
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="468" y="45" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- the order book: created at a public key the client generates, so its dot is on the curve; its box sits above the curve at the dot, as a mint box does -->
   <g>
-  <circle cx="366" cy="53.634" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="358" y="19.0155" width="113" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(366,23.0155)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="386" y="33.52" font-size="10.5" font-weight="bold">NVDAx mint</text>
-  </g>
-  <g>
-  <circle cx="509" cy="77.581" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="501" y="40.4582" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(509,44.4582)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="529" y="54.96" font-size="10.5" font-weight="bold">USDC mint</text>
+  <circle cx="485" cy="72.865" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="477" y="-1" width="159" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(485,2.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="505" y="13.175" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
+  <line x1="485" y1="20" x2="628" y2="20" stroke="#888" stroke-width="0.8"/>
+  <text x="485" y="31" font-size="9.5">asks_root: Alice's ask, 10 @ 265</text>
+  <text x="485" y="43" font-size="9.5">bids_root: Bob's bid, 4 @ 250</text>
+  <text x="485" y="55" font-size="9.5">next_order_id: 3</text>
   </g>
   <g>
   <circle cx="108" cy="34.543" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -229,19 +228,8 @@
   <text x="485" y="365.37" font-size="9.5">is_active: true</text>
   </g>
   <g>
-  <circle cx="485" cy="394.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="398.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
-  <rect x="477" y="404.37" width="159" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(485,407.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="505" y="418.545" font-size="10.5" font-weight="bold">order book (&#8776;180 KB)</text>
-  <line x1="485" y1="425.37" x2="628" y2="425.37" stroke="#888" stroke-width="0.8"/>
-  <text x="485" y="436.37" font-size="9.5">asks_root: Alice's ask, 10 @ 265</text>
-  <text x="485" y="448.37" font-size="9.5">bids_root: Bob's bid, 4 @ 250</text>
-  <text x="485" y="460.37" font-size="9.5">next_order_id: 3</text>
-  </g>
-  <g>
   <circle cx="485" cy="489.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="493.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="493.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"BASE_VAULT" + MARKET ADDRESS</text>
   <rect x="477" y="499.37" width="159" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(485,502.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="505" y="513.545" font-size="10.5" font-weight="bold">base vault</text>
@@ -251,7 +239,7 @@
   </g>
   <g>
   <circle cx="485" cy="560.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="564.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="564.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"QUOTE_VAULT" + MARKET ADDRESS</text>
   <rect x="477" y="570.37" width="159" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(485,573.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="505" y="584.545" font-size="10.5" font-weight="bold">quote vault</text>
@@ -261,7 +249,7 @@
   </g>
   <g>
   <circle cx="485" cy="631.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="495" y="635.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">A CLIENT KEYPAIR</text>
+  <text x="495" y="635.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"FEE_VAULT" + MARKET ADDRESS</text>
   <rect x="477" y="641.37" width="159" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(485,644.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="505" y="655.545" font-size="10.5" font-weight="bold">fee vault</text>
@@ -271,4 +259,5 @@
   </g>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="560" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the snapshot is both orders resting, before anything matches</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="576" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the vaults hold what each resting order locked</text>
+  <text x="16" y="716" font-size="9.5" font-style="italic" fill="#444">not drawn: the NVDAx and USDC mints, which these accounts name only as seeds and fields</text>
 </svg>

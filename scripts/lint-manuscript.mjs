@@ -47,6 +47,13 @@ const rules = [
   // stands in for a mechanism rather than stating it, so the fix is the same
   // fix every time: name the thing and say what it does.
   [/\bload.bearing\b/i, 'say what depends on the thing and what breaks without it'],
+  // A key pair is two keys. Its public key is an address; the pair is not an
+  // address or an account, the private key is never shown, and an address
+  // made from a key pair is always on the curve - only a PDA is off it. The
+  // order-book figures once captioned four such addresses "A CLIENT KEYPAIR"
+  // beside dots drawn off the curve, which is every one of these at once.
+  [/\bkey ?pairs?(?:'s)? (?:address|account|PDA)\b|\b(?:address|account|PDA) of (?:a|an|the|its|their|each) (?:\w+ )?key ?pairs?\b|\b(?:off|on)[- ]curve key ?pairs?\b|\bkey ?pairs? (?:that (?:is|are|sits?) )?(?:off|on) the curve|\bPDA key ?pairs?\b|\bkey ?pair PDAs?\b|\bderived key ?pairs?\b/i,
+    'a key pair is two keys, of which the public one is the address: the pair is neither an address nor an account, and an address made from one is always on the curve (companion AI plugin)'],
   [/\b(delve|tapestry|intricate|multifaceted|holistic|myriad|seamlessly|seamless|robust|pivotal|crucial|elevate|testament to|deep dive|paradigm shift|game.chang(er|ing)|unlock the power|realm of|landscape of|in today's)\b/i,
     "reads as machine-written; name the specific thing instead"],
   [/it(?:'s| is) worth noting/i, "cut it: if the point is worth making, make it"],
@@ -530,6 +537,15 @@ const svgRules = [
   // does not belong in the label.
   [/>ATA PROGRAM/,
     'seed lists name seeds, not the deriving program: an ATA is OWNER\'S ADDRESS + TOKEN PROGRAM + MINT'],
+  // No caption names a key pair. An address made from one is a public key,
+  // so it is an unlabeled dot on the curve, with its account's box beside
+  // it. A caption reading "A CLIENT KEYPAIR"
+  // beside a dot drawn off the curve called the same address a PDA and a
+  // public key at once, and called the key pair an address, which it is not.
+  // The legend lines that teach the curve say "key pair" in lower case at
+  // body size; a caption is 7 units, and the caps form is a caption's.
+  [/<text[^>]*font-size="7"[^>]*>[^<]*\b[Kk][Ee][Yy] ?[Pp][Aa][Ii][Rr]|<text[^>]*>[^<]*\bKEY ?PAIRS?\b/,
+    'no caption names a key pair: an address made from one is an unlabeled r=6 dot on the curve beside its account box, never a labeled offcurve dot (DIAGRAMS.md)'],
   // The coin mark is three rings. Two rings read as a pair of address dots at
   // print size, where the accent colour is gone and the mark is about 2mm.
   [/<circle cx="4" cy="2" r="6"[^>]*stroke="#1e7a3c"/,

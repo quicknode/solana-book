@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 228" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Token accounts are always off curve</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Derived token accounts sit off the curve</text>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <circle cx="508" cy="77.5729" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -59,7 +59,7 @@
   <text x="380" y="175" font-size="9" fill="#444">500 USDC</text>
   </g>
   <path d="M 16,200 Q 36,204 48,207" fill="none" stroke="#111" stroke-width="3.5"/>
-  <circle cx="36" cy="204" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="36" cy="204" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="62" y="204" font-size="10.5" fill="#444" font-style="italic">on the curve: a public key, and someone</text>
   <text x="62" y="218" font-size="10.5" fill="#444" font-style="italic">holds the private key that signs for it</text>
   <circle cx="300" cy="207" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
