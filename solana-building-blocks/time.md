@@ -1,12 +1,14 @@
 # Chapter 5: Time
 
-Solana has two clocks, and a program reads both from the same account. The **slot** counts block opportunities and only goes up. The **Unix timestamp** is wall-clock time written by the leader of each block, accurate to within a few seconds.
+Solana has two clocks, and a program reads both from the same account. The **slot** is a count the network advances at a steady pace, and it only goes up. The **Unix timestamp** is wall-clock time, accurate to within a few seconds.
 
 The jobs in this book split cleanly between them. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Who queued first uses neither, and takes a counter the program keeps itself.
 
 ## The Slot Counter
 
-A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.[^forks]
+Solana runs on **validators**: computers that each hold a copy of every account and run every transaction. Time on the network is divided into **slots**, and for each slot one validator is the **leader**. It gathers transactions into a **block** and sends it to the others, and each block builds on the one before it, its **parent**. When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one.
+
+The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.[^forks]
 
 ![](figures/slot-counter.svg)
 
@@ -57,7 +59,7 @@ The length of a slot is a static value: currently 200 milliseconds.[^slot-simd]
 A program can get that length three ways:
 
 - **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on. Keep any rate that depends on the slot length in config, where a transaction can change it, which the section on a shortened slot covers.
-- **From the feature gates.** Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its gate activates, not from the moment it does, so check the epoch as well as the gate.
+- **From the feature gates.** Changes to the network ship as **features**, built into the validator software switched off and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its gate activates, not from the moment it does, so check the epoch as well as the gate.
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case that day has come.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
@@ -177,7 +179,7 @@ The table lists every program in Part II that touches time, and the clock each o
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
-[^forks]: Two validators can briefly build on different blocks, so a block for a lower slot on one fork can be produced after a block for a higher slot on another. The network settles on one of them, and a program only ever sees one.
+[^forks]: A block for a lower slot on one fork can be produced after a block for a higher slot on another, but a program only ever sees the fork the network settles on.
 
 [^alpenglow-clock]: Under Tower BFT, the timestamp was instead the stake-weighted median of times validators put in their votes. Alpenglow replaced it with the leader's own time, carried in a block footer. Source: Brennan Watt of Anza, in a message to the author in September 2026, and [github.com/anza-xyz/agave/issues/15441](https://github.com/anza-xyz/agave/issues/15441).
 
