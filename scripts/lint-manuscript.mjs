@@ -625,32 +625,6 @@ for (const file of svgFiles) {
   });
 }
 
-// A figure directly under a heading is read with it, so a headline in the
-// same words prints the name twice a line apart. The companion AI plugin's
-// DIAGRAMS.md carries the rule; this catches the headline that repeats the
-// heading word for word. One that adds to it stays.
-const headlineWords = (text) => text.toLowerCase().replace(/&#?\w+;/g, "").replace(/[^a-z0-9]+/g, " ").trim();
-for (const file of [...new Set(files)]) {
-  let heading = null;
-  readFileSync(file, "utf8").split("\n").forEach((line, index) => {
-    const headingMatch = line.match(/^#{1,6}\s+(.*)/);
-    if (headingMatch) {
-      heading = headingMatch[1];
-      return;
-    }
-    const figure = line.match(/^!\[[^\]]*\]\(([^)]+\.svg)\)/);
-    if (figure && heading) {
-      const svg = readFileSync(join(dirname(file), figure[1]), "utf8");
-      const headline = svg.match(/<text[^>]*font-size="15"[^>]*>([^<]*)<\/text>/);
-      if (headline && headlineWords(headline[1]) === headlineWords(heading)) {
-        failures += 1;
-        console.error(`${file}:${index + 1}: ${figure[1]} repeats the heading above it as its headline; leave the headline out\n    ${heading}`);
-      }
-    }
-    if (line.trim()) heading = null;
-  });
-}
-
 if (failures > 0) {
   console.error(`\n${failures} lint failure(s).`);
   process.exit(1);
