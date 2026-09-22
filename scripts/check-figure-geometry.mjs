@@ -451,7 +451,7 @@ for (const file of selected) {
     // box it enters, or threads a gap between columns: no arc can arrive within the angle limit, and the top
     // edge carries the box's seed label. Each needs a layout change, which is separate work.
     "building-financial-products-in-solana/figures/betting-alice-claim.svg 118,141 slides",
-    "building-financial-products-in-solana/figures/betting-place-bets.svg 470,601 slides",
+    "building-financial-products-in-solana/figures/betting-place-bets.svg 470,611 slides",
     "building-financial-products-in-solana/figures/lending-deposit-shares.svg 179,670 slides",
     "building-financial-products-in-solana/figures/lending-deposit-shares.svg start 97,183 corner",
     "building-financial-products-in-solana/figures/lending-liquidation.svg 470,692 slides",
