@@ -11,7 +11,7 @@ The jobs in this book split cleanly between them. A price freshness window count
 
 A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**.
 
-When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks.
+When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block.[^forks]
 
 The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
@@ -183,6 +183,8 @@ The table lists every program in Part II that touches time, and the clock each o
 - For order of arrival, use a number of your own: the order book gives each resting order the next number from a counter it keeps, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
+
+[^forks]: Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks.
 
 [^alpenglow-clock]: Under Tower BFT, the timestamp was instead the stake-weighted median of times validators put in their votes. Alpenglow replaced it with the leader's own time, carried in a block footer. Source: Brennan Watt of Anza, in a message to the author in September 2026, and [github.com/anza-xyz/agave/issues/15441](https://github.com/anza-xyz/agave/issues/15441).
 
