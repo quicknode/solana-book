@@ -56,7 +56,7 @@ The length of a slot is a static value: currently 200 milliseconds.[^slot-simd]
 
 A program can get that length three ways:
 
-- **From Anza's documentation, written into your program.**[^anza-docs] Good while no reduction is pending, and stale from the moment one activates. Keep any rate that depends on the slot length in config, where a transaction can change it, which the section on a shortened slot covers.
+- **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on. Keep any rate that depends on the slot length in config, where a transaction can change it, which the section on a shortened slot covers.
 - **From the feature gates.** Each shortening of the slot ships as a feature, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its gate activates, not from the moment it does, so check the epoch as well as the gate.
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case that day has come.
 
