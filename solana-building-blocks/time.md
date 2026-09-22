@@ -186,7 +186,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^forks]: Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks.
 
-[^alpenglow-clock]: Under Tower BFT, the timestamp was instead the stake-weighted median of times validators put in their votes. Alpenglow replaced it with the leader's own time, carried in a block footer. Source: Brennan Watt of Anza, in a message to the author in September 2026, and [github.com/anza-xyz/agave/issues/15441](https://github.com/anza-xyz/agave/issues/15441).
+[^alpenglow-clock]: The leader's time is carried in a footer at the end of its block. Source: Brennan Watt of Anza, in a message to the author in September 2026, and [github.com/anza-xyz/agave/issues/15441](https://github.com/anza-xyz/agave/issues/15441).
 
 [^slot-times]: The stages of that reduction are published at [solana.com/upgrades/reduced-slot-times](https://solana.com/upgrades/reduced-slot-times).
 
