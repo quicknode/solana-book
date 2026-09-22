@@ -22,7 +22,7 @@ Two things affect how much wall-clock time a number of slots adds up to, and any
 - **A slot is not exactly the length the network intends.** The network sets a target, 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around 3%.[^slot-time-live] A slot mostly runs long because its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
-Slots are grouped into **epochs** of 432,000 slots, about a day at 200 milliseconds. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
+Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and a little longer in practice because real slots run long. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ## The Unix Timestamp
 
