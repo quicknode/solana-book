@@ -193,7 +193,7 @@ Sub-unit remainders left over by integer division: a fraction smaller than one [
 
 ### epoch
 
-A period of 432,000 slots, about a day at a 200 millisecond slot. The schedule of [leaders](#leader) is drawn for each epoch, and some changes to the network, a new slot length among them, take effect only when a new epoch begins.
+A period of 432,000 slots: exactly a day at a 200 millisecond slot, and a little longer in practice because real slots run long. The schedule of [leaders](#leader) is drawn for each epoch, and some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ### equity (position)
 
