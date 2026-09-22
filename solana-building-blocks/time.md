@@ -19,7 +19,7 @@ The slot count is how many slots have gone by. Programs read the current count f
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **A slot is not exactly the length the network intends.** The network sets a target, currently 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around [PLACEHOLDER - measure slot drift as a percentage once 200 millisecond slots and Alpenglow are live].[^slot-time-live] A slot mostly runs long because its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **A slot is not exactly the length the network intends.** The network sets a target, currently 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live].[^slot-time-live] A slot mostly runs long because its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and a little longer in practice because real slots run long. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
@@ -38,7 +38,7 @@ A leader can pick any time inside the permitted range, which moves the timestamp
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. The vault's annual fee runs on the wall clock too, because a few seconds against a year change it by nothing anybody can see.
 
-The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs, while around [PLACEHOLDER - measure slot drift as a percentage once 200 millisecond slots and Alpenglow are live] of a slot count grows with the span, until across a week it is [PLACEHOLDER - measure how many hours a week of slots drifts once 200 millisecond slots and Alpenglow are live].
+The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs. Around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live] of a slot count grows with the span, until across a week it is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live].
 
 ## Interest and Funding Accrue by Slot
 
@@ -53,7 +53,7 @@ Two programs in this book accrue value over time, and both count it in slots:
   Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. Its rates are quoted annually, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The *Arithmetic of Money* chapter covers how to build that factor safely.
 - **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`. Its funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour.
 
-Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. An adversary running a leader could profit by shifting the time a few seconds at the liquidation line, so the accrual counts slots. The slot count's own error, around [PLACEHOLDER - measure slot drift as a percentage once 200 millisecond slots and Alpenglow are live] across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
+Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. An adversary running a leader could profit by shifting the time a few seconds at the liquidation line, so the accrual counts slots. The slot count's own error, around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live] across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
 
 ## How to Turn Time Into Slots
 
@@ -84,7 +84,7 @@ The vault strategy uses the wall clock twice:
 - **Its annual management fee accrues by timestamp**, because a few seconds either way, measured against a year, are nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by [PLACEHOLDER - measure how many hours a week of slots drifts once 200 millisecond slots and Alpenglow are live], which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
+When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live], which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
 
 ## Who Fills First Is a Counter, Not a Clock
 
@@ -164,7 +164,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
-| token fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER - measure how many hours a week of slots drifts once 200 millisecond slots and Alpenglow are live] out |
+| token fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live] out |
 | lending market | interest accrual, and price freshness | slots for both | seconds at the liquidation line are worth money |
 | perpetual futures | funding accrual, and price freshness | slots for both | the same, and leverage multiplies it |
 | prop AMM | price freshness | slots | a stale price is the attack |
@@ -198,6 +198,6 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^slot-simd]: During the second half of 2026, slot times were slowly reduced from 400 milliseconds to 200, under [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
 
-[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). [PLACEHOLDER - add the reading and the date it was taken, once 200 millisecond slots and Alpenglow are live]
+[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). [PLACEHOLDER: add the reading and its date after 200 ms slots and Alpenglow go live]
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
