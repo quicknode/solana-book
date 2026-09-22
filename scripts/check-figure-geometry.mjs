@@ -11,6 +11,7 @@
 //   7. A faded address dot still occludes the cluster curve.
 //   8. Every label sits inside the canvas.
 //   9. A public-key dot (r=6) sits on the curve; a derived-address dot (r=5.5) sits clear of it.
+//  12. Every address dot sits beside an account box, legend keys aside.
 //  11. No address dot touches or overlaps an account box.
 //
 // Usage: node scripts/check-figure-geometry.mjs [name-fragment ...]
@@ -323,25 +324,39 @@ for (const file of selected) {
       }
     }
 
-    // Every address dot, with its distance to the nearest piece of curve. The
-    // legend arcs count as curve: a dot on one of them is drawn as on the curve.
-    const curvePieces = [...svg.querySelectorAll("path")].filter(
-      (p) => p.getAttribute("stroke") === "#111" && p.getAttribute("stroke-width") === "3.5");
-    const addressDots = [];
-    if (curvePieces.length > 0) {
-      for (const c of nodes.filter(isDot)) {
-        const cx = parseFloat(c.getAttribute("cx")), cy = parseFloat(c.getAttribute("cy"));
-        let near = Infinity;
-        for (const piece of curvePieces) {
-          const len = piece.getTotalLength();
-          for (let i = 0; i <= 400; i += 1) {
-            const p = piece.getPointAtLength((len * i) / 400);
-            near = Math.min(near, Math.hypot(p.x - cx, p.y - cy));
-          }
-        }
-        addressDots.push({ cx, cy, r: parseFloat(c.getAttribute("r")), near });
+    // Every address dot in root coordinates, with its distance to the nearest
+    // piece of curve and to the nearest account box. Both are measured after
+    // transforms: the lending and vault figures place whole columns with a
+    // translate, and a dot's own cx/cy says nothing about where it prints.
+    // The legend arcs count as curve: a dot on one of them is drawn as on the
+    // curve.
+    const toRoot = (el) => inv.multiply(el.getScreenCTM());
+    const curvePoints = [...svg.querySelectorAll("path")]
+      .filter((p) => p.getAttribute("stroke") === "#111" && p.getAttribute("stroke-width") === "3.5")
+      .flatMap((piece) => {
+        const m = toRoot(piece), len = piece.getTotalLength(), points = [];
+        for (let i = 0; i <= 400; i += 1) points.push(piece.getPointAtLength((len * i) / 400).matrixTransform(m));
+        return points;
+      });
+    const accountRects = [...svg.querySelectorAll('rect[rx="6"]')].map(box);
+    const italics = [...svg.querySelectorAll("text")]
+      .filter((t) => t.getAttribute("font-style") === "italic").map(box);
+    const addressDots = nodes.filter(isDot).map((c) => {
+      const b = box(c);
+      const cx = (b.x1 + b.x2) / 2, cy = (b.y1 + b.y2) / 2;
+      const r = parseFloat(c.getAttribute("r"));
+      let near = Infinity;
+      for (const p of curvePoints) near = Math.min(near, Math.hypot(p.x - cx, p.y - cy));
+      // The ring's outer edge to the box's border, both ink.
+      let toBox = Infinity;
+      for (const q of accountRects) {
+        const dx = Math.max(q.x1 - cx, 0, cx - q.x2), dy = Math.max(q.y1 - cy, 0, cy - q.y2);
+        toBox = Math.min(toBox, Math.hypot(dx, dy) - r - 1);
       }
-    }
+      // A legend key is a lone dot with its explanation in italic beside it.
+      const legend = italics.some((t) => t.x1 >= cx && t.x1 - cx <= 40 && Math.abs((t.y1 + t.y2) / 2 - cy) <= 12);
+      return { cx, cy, r, near, toBox, legend };
+    });
 
     return {
       arrows,
@@ -589,15 +604,29 @@ for (const file of selected) {
   // as r=5.5 dots hanging in the program column, captioned "A CLIENT KEYPAIR",
   // which said "no private key" and "a private key" about the same address.
   for (const d of fig.addressDots) {
+    if (!Number.isFinite(d.near)) continue; // a figure with no curve at all
     const where = `${d.cx.toFixed(0)},${d.cy.toFixed(0)}`;
     if (d.r === 6 && d.near > d.r + 1.75) {
       fail(`public-key dot at ${where} sits ${(d.near - d.r - 1.75).toFixed(1)} off the curve; ` +
-           `an address made from a key pair is always on the curve: move the dot onto it (named there if its box cannot reach it), ` +
+           `an address made from a key pair is always on the curve: move the dot onto it, with its box beside it, ` +
            `or if the address is derived draw it r=5.5 beside its seeds`);
     } else if (d.r === 5.5 && d.near < d.r + 1.75 + 4) {
       fail(`derived-address dot at ${where} touches the curve; a PDA or built-in address is never on the curve: ` +
            `move it clear, or if the address is a public key draw it r=6 on the curve`);
     }
+  }
+
+  // 12. An address and its account are one thing drawn twice, so the dot
+  // sits beside its box: at most 20 from ring to border, the ceiling
+  // DIAGRAMS.md sets. A dot that cannot reach its box is a layout to change,
+  // not a label to add: the first fix for the order book's vaults named four
+  // dots on the curve and left their boxes 300 units below them. Legend keys
+  // are the one lone dot allowed, and they carry their explanation in italic
+  // beside them.
+  for (const d of fig.addressDots) {
+    if (d.legend || d.toBox <= 20) continue;
+    fail(`address dot at ${d.cx.toFixed(0)},${d.cy.toFixed(0)} is ${Number.isFinite(d.toBox) ? d.toBox.toFixed(0) : "far"} from the nearest account box; ` +
+         `a dot sits within 20 of its account's box: move the box to the dot, or the dot to the box`);
   }
 
   // 8. The PDF sets the figure at the text width and clips it to the viewBox,

@@ -538,14 +538,14 @@ const svgRules = [
   [/>ATA PROGRAM/,
     'seed lists name seeds, not the deriving program: an ATA is OWNER\'S ADDRESS + TOKEN PROGRAM + MINT'],
   // No caption names a key pair. An address made from one is a public key,
-  // so it is a dot on the curve: unlabeled, or named for its account when its
-  // box hangs too far below to reach it. A caption reading "A CLIENT KEYPAIR"
+  // so it is an unlabeled dot on the curve, with its account's box beside
+  // it. A caption reading "A CLIENT KEYPAIR"
   // beside a dot drawn off the curve called the same address a PDA and a
   // public key at once, and called the key pair an address, which it is not.
   // The legend lines that teach the curve say "key pair" in lower case at
   // body size; a caption is 7 units, and the caps form is a caption's.
   [/<text[^>]*font-size="7"[^>]*>[^<]*\b[Kk][Ee][Yy] ?[Pp][Aa][Ii][Rr]|<text[^>]*>[^<]*\bKEY ?PAIRS?\b/,
-    'no caption names a key pair: an address made from one is an r=6 dot on the curve, unlabeled or named for its account, never a labeled offcurve dot (DIAGRAMS.md)'],
+    'no caption names a key pair: an address made from one is an unlabeled r=6 dot on the curve beside its account box, never a labeled offcurve dot (DIAGRAMS.md)'],
   // The coin mark is three rings. Two rings read as a pair of address dots at
   // print size, where the accent colour is gone and the mark is about 2mm.
   [/<circle cx="4" cy="2" r="6"[^>]*stroke="#1e7a3c"/,
