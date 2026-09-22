@@ -53,7 +53,7 @@ Two programs in this book accrue value over time, and both count it in slots:
   Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. Its rates are quoted annually, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The *Arithmetic of Money* chapter covers how to build that factor safely.
 - **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`. Its funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour.
 
-Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. A few seconds at the liquidation line are worth money to whoever moves them, so the accrual counts slots. The slot count's own error, a percent or two across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
+Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. An adversary running a leader could profit by shifting the time a few seconds at the liquidation line, so the accrual counts slots. The slot count's own error, a percent or two across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
 
 ## How to Turn Time Into Slots
 
@@ -174,7 +174,7 @@ The table lists every program in Part II that touches time, and the clock each o
 ## What You Learnt
 
 - Solana has two clocks. The slot count only goes up and nobody can move it, though what it comes to in seconds varies a little and stops in a halt. The Unix timestamp is wall-clock time written by a leader, out by a few seconds somebody chose, however long the span.
-- Count slots for price freshness, for accrual, and for anything a few seconds could move money across. Use the wall clock for a span of days or years quoted to a person, with a margin. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
+- Count slots for price freshness, for accrual, and for anything an adversary running a leader could profit from by shifting the time a few seconds. Use the wall clock for a span of days or years quoted to a person, with a margin. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
 - To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
