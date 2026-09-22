@@ -44,7 +44,7 @@ An ATA is a **PDA**: a derived address that sits off the curve, with no private 
 
 ![](figures/token-accounts-and-atas.svg)
 
-Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is simply the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
+Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
 
 ![](figures/token-accounts-off-the-curve.svg)
 
@@ -52,7 +52,7 @@ In this book, an address drawn **off** the curve is shown with the seeds its add
 
 ## Decimals Define the Minor Unit
 
-The mint's **decimals** set the **minor unit**, the raw integer everything actually calculates and transfers in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
+The mint's **decimals** set the **minor unit**, the raw integer that programs calculate and transfer in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
 
 ## The Freeze Authority Can Freeze Any Holder's Account
 

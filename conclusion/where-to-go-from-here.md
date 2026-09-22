@@ -26,7 +26,7 @@ A payment sent on Friday evening arrives on Tuesday, because the rails carrying 
 
 Businesses have the same problems from the other side. A shop owner who wants a second location either sells a slice of the business to whoever is nearby with money, or borrows through an underwriting process built for loans ten times larger. A supplier delivers goods and waits sixty days for the invoice to be paid while their own payroll runs every two weeks. Someone holding shares who needs cash for a repair sells them, ending a position they wanted to keep and often creating a tax bill, because borrowing against a portfolio is a private-banking service, and so requires a significant minimum balance. Rents rise with the value of housing, and the people paying the rent own none of it.
 
-Every one of these has the same structure: parties standing between two people who have business with each other, each taking a cut and adding a delay, and a set of hours during which the arrangement operates at all. A program does not remove the need for underwriting, and it does not make a stranger's credit risk disappear. What it removes is the middleman whose entire function was holding the money and keeping the record, which is the function that a vault and an account already perform, for a fraction of a penny, at three in the morning on a Sunday.
+Every one of these has the same structure: parties standing between two people who have business with each other, each taking a cut and adding a delay, and a set of hours during which the arrangement operates at all. A program does not remove the need for underwriting, and it does not make a stranger's credit risk disappear. What it removes is the middleman whose job was holding the money and keeping the record, which is the function that a vault and an account already perform, for a fraction of a penny, at three in the morning on a Sunday.
 
 ## The Best Products Never Mention the Chain
 
@@ -59,11 +59,11 @@ Products of this kind have been shipped already, several of them with real users
 
 **Cash today for an invoice due in sixty days.** A supplier ships forty thousand dollars of goods on sixty-day terms and needs the money this week, so funders advance most of the face value and are repaid when the buyer pays. Pooling and interest come from the *Lending and Borrowing* chapter, repayment runs through escrow, and whether the invoice was really paid is an offchain fact, which makes the *Offchain Truth* chapter the one this product depends on most. The credit risk stays where it always was, on the buyer. What goes away is the underwriting time and the size floor.
 
-**Pay that lands the day the work is signed off.** Contractors in five countries paid on approval rather than whenever a batch runs, in amounts where a percentage fee would have eaten the difference between countries. Streaming payments are the natural build and the best first project on this page: the state machine is small and the arithmetic is a straight line against the clock.
+**Pay that arrives the day the work is signed off.** Contractors in five countries paid on approval rather than whenever a batch runs, in amounts where a percentage fee would have eaten the difference between countries. Streaming payments are the natural build and the best first project on this page: the state machine is small and the arithmetic is a straight line against the clock.
 
 **Payouts with no claim to file.** A flight lands three hours late; a region gets no rain for a month. Where the fact is measurable and comes from a source both sides agreed on in advance, the payout is a rule instead of a claims department: a pool that pays a fixed amount when the measurement crosses a line. Pool accounting from the *Betting Market* chapter, measurement from the *Offchain Truth* chapter. This is insurance in all but name, and insurance is licensed nearly everywhere. That makes it the plainest case of a rule that covers this whole page: what a product legally is follows from what it does for people, never from what it is built on.
 
-**Company cash that is not idle over the weekend.** Treasury that sits flat from Friday to Monday can sit in a vault instead, redeemable at a share price at any hour. The *Vault Strategy* chapter is the machinery, and who may change the mandate, and how fast, is the *Operating Financial Software* chapter's subject.
+**Company cash that is not idle over the weekend.** Treasury cash that earns nothing from Friday to Monday can be held in a vault instead, redeemable at a share price at any hour. The *Vault Strategy* chapter is the machinery, and who may change the mandate, and how fast, is the *Operating Financial Software* chapter's subject.
 
 In each of these cases there is a specific situation, an individual or organization, and a cost or a delay they never agreed to. Solving those makes a good financial product.
 
@@ -77,15 +77,15 @@ The better ideas are in the places where the machinery exists and no product has
 
 ## What This Book Left Out
 
-Some things were left out on purpose, and knowing which is part of knowing the field.
+Some things were left out on purpose.
 
-**Reward distribution** got no chapter of its own, though you have already met the whole of it. The reward-per-token index inside the lending market and the parimutuel pool is the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up. There is nothing more to the mechanism than that index.
+**Reward distribution** got no chapter of its own, though you have already met the whole of it. The reward-per-token index inside the lending market and the parimutuel pool is the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up.
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
 **Formal verification** appears here only briefly. The escrow program's formal proofs show what a machine-checked invariant looks like, but proving as a discipline, deciding what is worth proving and modeling the parts that cannot be executed symbolically, is a subject the size of this book.
 
-**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that key with a voting process is a real design problem and a different one.
+**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that key with a voting process is a separate design problem.
 
 **The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
 
@@ -93,7 +93,7 @@ Some things were left out on purpose, and knowing which is part of knowing the f
 
 One project separates reading this book from shipping, and it takes less time than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Give every state an exit, so every participant can get their money out from wherever the program stops. Write the tests that drive the machine down every path, especially the exits, and the invariant tests that assert what must never change.
 
-Then get a second (and third) opinion from an expert that did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
+Then get a second (and third) opinion from an expert who did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 
 Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 

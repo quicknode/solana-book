@@ -39,7 +39,7 @@ Maria runs the market, and her revenue is a cut of the interest: the reserve fac
 
 ## Supplying: Tokens In, Shares Out
 
-Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity()` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest grows the pool while the share supply is unchanged, so each share redeems for more than it did. There is no per-lender interest bookkeeping at all, and there does not need to be.
+Alice has her standard 1,000 USDC, plus four SPCXx (SpaceX stock, $250 each), sitting idle, and she wants yield. She runs `deposit_reserve_liquidity()` with her 1,000 USDC. The first deposit into a reserve mints shares one-to-one, so she receives 1,000 USDC shares; she does the same with her four SPCXx. Later deposits mint by the going rate: shares = amount × share supply ÷ total liquidity, floored, where total liquidity is available plus borrowed (with accrued interest) minus the house's accumulated fees. The share price is how yield arrives: interest grows the pool while the share supply is unchanged, so each share redeems for more than it did. The program keeps no per-lender interest records.
 
 ![Interest grows the pool while the share supply is unchanged, so the same shares redeem for more USDC later.](figures/lending-deposit-shares.svg)
 
@@ -62,7 +62,7 @@ The health check behind step 4 is conservative by construction: when `refresh_ob
 
 Carol thinks SpaceX is overvalued and wants to profit if it falls. Her trade is the classic short, and a lending market is where shorts are built: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
-One line of her position decides everything later: **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
+**Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
 
 ## Interest: One Index, No Transfers
 
@@ -72,7 +72,7 @@ Each reserve stores one number that starts at 1.0 and only grows. On every `refr
 
 The rate itself comes from a **kinked utilization curve**. Utilization is borrowed ÷ (available + borrowed). Below the kink at 80% utilization, the rate climbs gently from 2% toward 20% APR; above it, steeply toward 150%. Above the kink, when nearly everything is lent out, the rate spikes, which pushes borrowers to repay and pulls new suppliers in with yield.
 
-Those percentages are annual, and the accrual is per slot, so the conversion divides by a slots-per-year figure the reserve stores as `slots_per_year`. That divisor is the cluster's slot time written as a count, which is why it sits in the config rather than in the code: shorten the slot and the same curve charges more per day, with no number in the program changed to say so. The *Time* chapter covers where the current figure comes from.
+Those percentages are annual, and the accrual is per slot, so the conversion divides by a slots-per-year figure the reserve stores as `slots_per_year`. That divisor is the cluster's slot time written as a count, so it is stored in the config rather than in the code: shorten the slot and the same curve charges more per day, with no number in the program changed to say so. The *Time* chapter covers where the current figure comes from.
 
 Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_protocol_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 
@@ -84,7 +84,7 @@ The other thing that moves over time is prices. SPCXx rallies from $250 to $300,
 
 ## A Liquidator Closes the Gap, Twice, by the Rules
 
-Dave watches for liquidation opportunities. He is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler enforces three rules:
+Dave watches for liquidation opportunities. He is the reason the market stays solvent. He runs `liquidate_obligation()`, repaying some of Carol's SPCXx debt in exchange for her USDC collateral at a 5% bonus. The handler enforces four rules:
 
 - A healthy obligation cannot be touched: the health gate rejects with `ObligationHealthy` (checked by `healthy_obligation_cannot_be_liquidated`). A liquidator cannot choose their target; they can only take positions the market has already marked unhealthy.
 - The **close factor** caps one liquidation at 50% of the debt. Dave repays 1.5 SPCXx ($450).
@@ -105,11 +105,11 @@ Dave is one instance of a pattern this market runs on. Some work in a financial 
 
 - **Permissionless: the handler checks state, not identity.** If the work is valid, anyone's signature will do. `refresh_reserve()` and `refresh_obligation()` are the canonical examples: they bring interest and cached prices up to date for whoever asks, no special key required, and gating maintenance on the operator's key would turn the operator's absence into everyone's outage. Anyone can run the crank, so a crank that moves funds must calculate their destination from information the program itself stores (like values in a PDA), never by paying the signer: a crank that pays whoever called has made its funds claimable by strangers.
 - **Idempotent: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve rewrites the same numbers), so a bot on a schedule never needs attention and never fails spuriously.
-- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator paid per call: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk. If your design has work that must happen and nobody is paid to do it, you have found a bug in your incentives, not your code.
+- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator paid per call: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk.
 
 ![](figures/crank-loop.svg)
 
-## Repayment, Fees, and Yield: Everyone Leaves Whole
+## Repayment, Fees, and Yield: Everyone Settles Up
 
 Five weeks in, Bob's cash crunch has passed. His $750 debt has become about $758 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
 
@@ -143,7 +143,7 @@ Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
 - **Dangerous configurations are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
-- **The donation attack** dies against `available_liquidity` being the source of truth rather than the vault balance.
+- **The donation attack** fails because `available_liquidity`, not the vault balance, is the source of truth.
 - **Self-liquidation** is allowed, deliberately: it is only possible while unhealthy and is economically pointless, matching how Save and Kamino Lend behave. Not every strange-looking path needs a check; this one is harmless because it never pays.
 
 ## Testing Considerations
