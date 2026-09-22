@@ -6,7 +6,7 @@ The jobs in this book split cleanly between them. A price freshness window count
 
 ## The Slot Counter
 
-A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Along the chain a program runs on, slots only go up, and nobody can rewind the count or jump it forward.[^forks]
+A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.[^forks]
 
 ![](figures/slot-counter.svg)
 
