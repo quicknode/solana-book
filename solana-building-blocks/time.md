@@ -3,7 +3,7 @@
 Solana has two clocks, and a program reads both from the same account:
 
 - The slot is a count the network advances at a steady pace, and it only goes up.[^forks]
-- The Unix timestamp is wall-clock time, accurate to within a few seconds.
+- The Unix timestamp is wall-clock time, usually within a second or two.
 
 Which clock to use depends on the job. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Which order came first uses neither, and uses a counter the program keeps itself.
 
@@ -88,7 +88,7 @@ When the deadline is one you promised a person, use timestamps, and leave a marg
 
 ## Who Fills First Is a Counter, Not a Clock
 
-The order book exchange uses neither clock for the thing traders care most about: which order came first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. Two orders can arrive in the same slot and carry the same timestamp. The market's counter still gives them different numbers. A leader can move the timestamp by a few seconds, but has no way to change the numbers the counter hands out.
+The order book exchange uses neither clock for the thing traders care most about: which order came first. Each resting order takes the next number from a counter the market keeps, and matching compares those numbers. The order also records a `timestamp`, but this is only kept so offchain tooling can show an age. Two orders can arrive in the same slot and carry the same timestamp. The market's counter still gives them different numbers. A leader can move the timestamp slightly, but has no way to change the numbers the counter hands out.
 
 ## Every Consumer Sets Its Own Freshness Window
 
