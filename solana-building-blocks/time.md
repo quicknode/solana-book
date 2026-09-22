@@ -6,7 +6,7 @@ The jobs in this book split cleanly between them. A price freshness window count
 
 ## The Slot Counter
 
-Solana runs on **validators**: computers that each hold a copy of every account and run every transaction. Time on the network is divided into **slots**, and for each slot one validator is the **leader**. It gathers transactions into a **block** and sends it to the others, and each block builds on the one before it, its **parent**. When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one.
+Solana runs on **validators**: computers that each hold a copy of every account and run every transaction. Time on the network is divided into **slots**, and for each slot one validator is the **leader**. It gathers transactions into a **block** and sends it to the others, and each block builds on the one before it, its **parent**. When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks.
 
 The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
