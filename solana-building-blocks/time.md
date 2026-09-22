@@ -9,7 +9,9 @@ The jobs in this book split cleanly between them. A price freshness window count
 
 ## The Slot Counter
 
-A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**. When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks.
+A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**.
+
+When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks.
 
 The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
