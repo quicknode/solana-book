@@ -57,7 +57,7 @@ Each incident is researched from primary sources and placed inside the chapter n
 - SPL token-lending rounding (about $2.6B at risk): the rounding section of The Arithmetic of Money
 - Cashio ($48M kept after refunds, unvalidated account chain): the validation section of The Adversary
 - Wormhole ($326M, bypassed signature verification): the validation section of The Adversary
-- First-depositor inflation incidents (the ERC-4626 class): named incidents are the Hundred and Sonne stories below (their setup is the inflation attack); the empty-pool section of The Adversary teaches the class, and The Constant-Product AMM chapter teaches the locked-minimum defense without an incident box
+- First-depositor inflation incidents (the ERC-4626 class): named incidents are the Hundred and Sonne stories below (their setup is the inflation attack); the empty-pool section of The Adversary teaches the class, The Constant-Product AMM chapter teaches the locked-minimum defense without an incident box, and The Vault Strategy chapter teaches ignoring donations
 - Mango Markets ($116M): the price-manipulation section of The Adversary
 - The Hundred and Sonne precision drains: the precision-exploits section of The Adversary
 
