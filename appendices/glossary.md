@@ -209,7 +209,7 @@ To use the right an [option](#option) grants: buy the underlying at the strike (
 
 ### expiry
 
-The last moment an [option](#option) can be exercised. After it the writer reclaims whatever collateral was not taken. An expiry is a calendar date the parties agreed on, so the *Options* chapter measures it in wall-clock time.
+The last moment an [option](#option) can be exercised. After it the writer reclaims whatever collateral was not taken. An expiry is a calendar date the parties agreed on, so the *Options* chapter measures it in wall-clock time. Compare [tenor](#tenor), which is a length of time rather than a moment.
 
 ### exponentiation by squaring
 
@@ -618,6 +618,10 @@ The program at a well-known address that creates accounts and transfers SOL. Eve
 ### sysvar
 
 A system account the runtime itself keeps current, readable by any program: the Clock sysvar carries the slot and timestamp. Validating that a passed sysvar really is the sysvar matters; see the Wormhole War Story in the *Adversary* chapter.
+
+### tenor
+
+How long an [option](#option) runs: the time from the trade that creates it to its [expiry](#expiry). Options markets quote it as a period rather than a date, so a one-week, one-month, or three-month option is named by its tenor, and the expiry follows from the trade date. Once the option exists, the time it has left is its remaining tenor, or time to expiry, and it shrinks to zero at the expiry. The word applies to any contract with an end date: a loan, a bond, or a swap has a tenor too, measured to its maturity. In the *Options* chapter, Alice writes a call with a one-week tenor, and the program stores only the expiry, a timestamp one week after she writes it.
 
 ### tick size
 
