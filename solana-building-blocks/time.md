@@ -6,7 +6,7 @@ The jobs in this book split cleanly between them. A price freshness window count
 
 ## The Slot Counter
 
-A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Along the chain a program runs on, slots only go up, and nobody can rewind the count or jump it forward. Two validators can briefly build on different blocks, so a block for a lower slot on one fork can be produced after a block for a higher slot on another. The network settles on one of them, and a program only ever sees one.
+A **slot** is a window in which one leader may produce one block, and the slot count is how many have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Along the chain a program runs on, slots only go up, and nobody can rewind the count or jump it forward.[^forks]
 
 ![](figures/slot-counter.svg)
 
@@ -177,6 +177,8 @@ The table lists every program in Part II that touches time, and the clock each o
 - For order of arrival, use a number of your own: the order book gives each resting order the next number from a counter it keeps, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, so per-slot accrual stops, deadlines expire with nobody able to act on them, and a price that is hours old still looks one slot old.
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
+
+[^forks]: Two validators can briefly build on different blocks, so a block for a lower slot on one fork can be produced after a block for a higher slot on another. The network settles on one of them, and a program only ever sees one.
 
 [^skip-deadlines]: Under Alpenglow, the consensus mechanism that replaced Tower BFT and proof of history, validators vote to skip a slot whose block is late. Changes to those deadlines are proposed as SIMDs, such as [SIMD-0630](https://github.com/solana-foundation/solana-improvement-documents/pull/630). Source: Brennan Watt of Anza, in a message to the author in September 2026.
 
