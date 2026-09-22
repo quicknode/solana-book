@@ -38,7 +38,7 @@ A leader can pick any time inside the permitted range, which moves the timestamp
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. The vault's annual fee runs on the wall clock too, because a few seconds against a year change it by nothing anybody can see.
 
-The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs, while around PLACEHOLDER% of a slot count grows with the span, until across a week it is hours.
+The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs, while around PLACEHOLDER% of a slot count grows with the span, until across a week it is PLACEHOLDER hours.
 
 ## Interest and Funding Accrue by Slot
 
@@ -84,7 +84,7 @@ The vault strategy uses the wall clock twice:
 - **Its annual management fee accrues by timestamp**, because a few seconds either way, measured against a year, are nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by hours, which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
+When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by PLACEHOLDER hours, which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
 
 ## Who Fills First Is a Counter, Not a Clock
 
@@ -164,7 +164,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
-| token fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is hours out |
+| token fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is PLACEHOLDER hours out |
 | lending market | interest accrual, and price freshness | slots for both | seconds at the liquidation line are worth money |
 | perpetual futures | funding accrual, and price freshness | slots for both | the same, and leverage multiplies it |
 | prop AMM | price freshness | slots | a stale price is the attack |
