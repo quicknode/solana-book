@@ -633,7 +633,7 @@ In a lending reserve, borrowed divided by total liquidity. The input to the inte
 
 ### validator
 
-A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. The validator leading each block writes the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
+A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. A validator reports the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
 
 ### vault
 
