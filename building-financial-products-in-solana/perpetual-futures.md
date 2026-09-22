@@ -12,9 +12,13 @@ That design decision creates the problem the program is organized around: the po
 
 ![](figures/perps-counterparty.svg)
 
-## The Account Model: One Pool, One Vault, One Position per Side per Trader
+## Creating the Market, Where the Parameters Are Checked Against Each Other
 
-![](figures/perps-account-map.svg)
+Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `protocol_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, leaving its owner with no exit at all. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. Every state needs an exit, and here that principle reaches back into the *configuration* of the market.
+
+![](figures/perps-create-pool.svg)
+
+Financial state on Solana is accounts, and this one transaction created the three the market needs.
 
 The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_slot`) and the live accounting this chapter keeps returning to:
 
@@ -27,15 +31,9 @@ The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle f
 
 The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault mixes custody; the three ledger fields keep the ownership straight, and the rule that makes that safe is the *Token Fundraiser* chapter's: balances are custody, state is truth.
 
-Each position is a **position** PDA with seeds `"position"`, the pool, the owner, and the side (`"long"` or `"short"`), so a trader can hold at most one long and one short per market. The `Position` struct is a snapshot taken at open: `collateral` (net of the open fee), `size` (the notional exposure), `entry_price`, `size_scaled` (size divided by entry price, kept at `SIZE_PRECISION` fixed point), and `entry_funding` (the funding index at entry). Everything the program ever needs to settle the position is derivable from these fields plus the current price, which is what makes settlement **account-local**: closing or liquidating one position touches one position.
-
-## Creating the Market, Where the Parameters Are Checked Against Each Other
-
-Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `protocol_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, leaving its owner with no exit at all. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. Every state needs an exit, and here that principle reaches back into the *configuration* of the market.
-
 ## Liquidity Providers Fund the Pool and Get Shares Priced at Mark
 
-Carol is a liquidity provider. Her income is every losing trader's loss and every funding payment; her risk is every winning trader's profit. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`: a withheld 1,000 minor units, a tenth of a cent, that no one will ever own. That is the same first-depositor defense the *Constant-Product AMM* chapter built, and the one the *Vault Strategy* chapter named as its own missing guard. It closes the share-inflation attack before it opens. Later deposits mint shares pro rata against **assets under management marked to market**, rather than against the vault balance or `liquidity` alone: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a depositor could buy in cheap the moment traders were winning and dilute Carol at her worst moment. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly. Eleven more providers follow Carol in over the morning, and the pool opens for trading with 12,000 USDC of liquidity.
+Carol is a liquidity provider. Her income is every losing trader's loss and every funding payment; her risk is every winning trader's profit. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`: a withheld 1,000 minor units, a tenth of a cent, that no one will ever own. That is the same first-depositor defense the *Constant-Product AMM* chapter built, and the one the *Vault Strategy* chapter named as its own missing guard. It prevents the share-inflation attack. Later deposits mint shares pro rata against **assets under management marked to market**, rather than against the vault balance or `liquidity` alone: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a depositor could buy in cheap the moment traders were winning and dilute Carol at her worst moment. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly. Eleven more providers follow Carol in over the morning, and the pool opens for trading with 12,000 USDC of liquidity.
 
 Withdrawals have one extra gate: only **free** liquidity, `liquidity − reserved_liquidity`, may leave (`InsufficientLiquidity` otherwise, checked by `test_remove_liquidity_blocked_by_reserved`). Carol can never pull out money the pool has promised to a winner.
 
@@ -59,7 +57,7 @@ Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the oppos
 - **Born healthy**: net collateral must exceed the maintenance margin on her size, 5% of 5,000 = 250 USDC, else `PositionNotHealthy`. A position must not be liquidatable in the transaction that creates it.
 - **The reservation**: `reserved_liquidity` grows by her full size, 5,000, and the sum must stay within `liquidity`, else `InsufficientLiquidity` (checked by `test_open_rejects_when_pool_cannot_back_it`).
 
-By reserving the notional, the pool sets aside the most it could ever owe her, because **profit on a close is capped at the position's size**. The cap costs Alice something real: if NVDAx tripled to $300, her raw profit of 10,000 USDC would be paid as 5,000. In exchange, every winner's payout is pre-funded before the position exists, so the pool can never owe more than it holds. The test `test_profit_capped_at_reserved_notional` runs exactly the tripling and asserts the cap. Production venues layer insurance funds and auto-deleveraging above this floor; the floor is the part that must never be missing.
+By reserving the notional, the pool sets aside the most it could ever owe her, because **profit on a close is capped at the position's size**. The cap has a cost for Alice: if NVDAx tripled to $300, her raw profit of 10,000 USDC would be paid as 5,000. In exchange, every winner's payout is pre-funded before the position exists, so the pool can never owe more than it holds. The test `test_profit_capped_at_reserved_notional` runs the tripling and asserts the cap. Production venues layer insurance funds and auto-deleveraging above this floor; the floor is the part that must never be missing.
 
 > **Where a loss too big to pay goes.** A leveraged position can lose more than the collateral standing behind it, and somebody still has to pay the winner on the other side. Venues answer with a waterfall, where each tier takes the shortfall from someone different:
 >
@@ -73,6 +71,8 @@ Her transaction ends with the only token movement: 1,000 USDC from Alice's token
 
 ![](figures/perps-open-position.svg)
 
+Each open creates a **position** PDA with seeds `"position"`, the pool, the owner, and the side (`"long"` or `"short"`), so a trader can hold at most one long and one short per market. The `Position` struct is a snapshot taken at open: `collateral` (net of the open fee), `size` (the notional exposure), `entry_price`, `size_scaled` (size divided by entry price, kept at `SIZE_PRECISION` fixed point), and `entry_funding` (the funding index at entry). Everything the program ever needs to settle the position is derivable from these fields plus the current price, which is what makes settlement **account-local**: closing or liquidating one position touches one position.
+
 ## Funding Is a Fee the Crowded Side Pays
 
 A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. For example, with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots owes 50 USDC.
@@ -84,13 +84,13 @@ The example documents two simplifications:
 
 Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting structure, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, as the test suite's default market does.
 
-A flat rate is still a per-slot rate. The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate. A pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool operator bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
+The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate. A pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool operator bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
 
 ![](figures/perps-funding-index.svg)
 
 ## NVDAx Rallies: The Short Loses Value, and a Liquidator Is Paid to End It
 
-The quarter goes Alice's way: NVDAx climbs to $110. Mark both positions to market with the one PnL formula the program owns: size × price change ÷ entry price. Alice is up 500. Bob is down 500, and Bob's **equity**, working collateral plus PnL minus funding owed, is 995 − 500 = 495 USDC. His maintenance margin is 250, so he is safe, and `test_healthy_position_cannot_be_liquidated` guarantees Dave cannot touch a healthy position (`PositionHealthy`).
+The quarter goes Alice's way: NVDAx climbs to $110. Mark both positions to market with the program's PnL formula: size × price change ÷ entry price. Alice is up 500. Bob is down 500, and Bob's **equity**, working collateral plus PnL minus funding owed, is 995 − 500 = 495 USDC. His maintenance margin is 250, so he is safe, and `test_healthy_position_cannot_be_liquidated` guarantees Dave cannot touch a healthy position (`PositionHealthy`).
 
 At $115, Bob's equity is 995 − 750 = 245, under the 250 maintenance line. He should close, but that means admitting he was wrong, and he keeps putting it off. Dave watches liquidations: he runs a bot that calls `liquidate_position()` on any account whose equity has fallen to or below maintenance margin, and he does it for the liquidation fee, not for the good of the market. Anyone may call `liquidate_position()`, and his bot does; the health check is the only permission that matters. The payout waterfall, every branch of which the program walks in order:
 
@@ -134,7 +134,7 @@ The book's standing invariants hold here too. The vault balance always equals `l
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
 - **A stale or manipulated price** is the catastrophic one: with 10x leverage, a 1% price error is a 10% equity error, market-wide, simultaneously. That explains the five checks, the confidence cap, and the one trust decision the program leaves visible: the pool creator chooses the feed, and the feed account's owner is deliberately unchecked. Choose oracles the way you choose custodians.
-- **The unliquidated-position gap**: liquidations that pay nothing do not happen, and the LPs absorb the loss. Documented, and the reason production adds an insurance fund.
+- **The unliquidated-position gap**: liquidations that pay nothing do not happen, and the LPs absorb the loss. The example documents this gap, and it is why production venues add an insurance fund.
 - **First-depositor share inflation**: closed by `MINIMUM_LIQUIDITY`, and `test_first_deposit_below_minimum_fails` proves a dust first deposit cannot even open the pool.
 - **Winning too big**: profit beyond the reservation is clipped by the cap rather than bankrupting the pool, and traders know the cap before they open.
 - **Sandwiching and price drift**: every money handler takes a user-supplied bound and fails with `SlippageExceeded` instead of filling at a surprise price.

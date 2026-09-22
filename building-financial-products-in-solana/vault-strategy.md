@@ -16,21 +16,21 @@ The approved set is stocks, bonds, whatever investors actually want. It cannot i
 
 ![](figures/vault-registry.svg)
 
-## The Account Model: A Strategy, Its Vaults per Asset, and a Share Mint
-
-![The strategy PDA owns every vault and the share mint, and one deposit pulls all of them in a single transaction.](figures/vault-account-map.svg)
-
-The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA (seeds: `"share_mint"`, the strategy) with the strategy as mint authority: shares only come into existence when the program's own math says so.
-
-Each basket asset gets an **asset config** PDA (seeds: `"asset"`, the strategy, an index byte) recording its mint, its feed (copied from its `ApprovedAsset` account), its weight in basis points, and its **vault**, a strategy-owned token account. The strategy holds up to `MAX_ASSETS` (16), and the cap is not about storage. A deposit has to reference every asset's accounts at once, five per asset, so a full basket runs to 94 accounts. That fits inside Solana's account-lock limit, but it is far past what a legacy transaction can hold, so clients of big baskets send v0 transactions with an address lookup table.
-
-The indexes guard the valuation: every handler that computes the fund's value walks indexes 0 through `asset_count` and refuses to run if any account is missing (`IncompleteAssetAccounts`), which makes it structurally impossible to omit an asset and understate the fund's value. A retired asset (weight set to zero) keeps its index forever rather than being reused, so the contiguous range the valuation loop depends on stays intact.
-
 ## The Manager Creates the Strategy and Sets the Weights
 
 Maria is the fund manager: she creates the strategy, sets the weights, rebalances, and earns the fee. She runs `initialize_strategy()` with index 0, her fee of 100 basis points (1%), a `max_slippage_bps` of 100, and the swap router the strategy will trade through. Both the fee and the slippage tolerance are capped at 10%: the fee is collected by dilution (below), so an uncapped fee would let a manager drain the fund *by configuration*, and the cap is the program refusing to make that a parameter.
 
 She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. Weights may not overflow 100% (`WeightOverflow`), and **nobody can deposit until the weights sum to exactly 100%** (`StrategyNotFullyAllocated`). A deposit into this strategy is always fully invested, immediately, at target weights. There is no idle-cash mode, no "the manager will get to it." Maria can change weights later with `set_weight()`, and only Maria: the manager gate is checked by `test_set_weight_rejects_non_manager`.
+
+![](figures/vault-create-strategy.svg)
+
+Financial state on Solana is accounts, and Maria's three transactions created the seven the fund needs.
+
+The **strategy** PDA (seeds: `"strategy"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps` and `max_slippage_bps`, the `swap_router` it is allowed to trade through, its running `total_shares` and `total_weight_bps`, and `last_fee_accrual_timestamp` for the fee clock. The **share mint** is a PDA (seeds: `"share_mint"`, the strategy) with the strategy as mint authority: shares only come into existence when the program's own math says so. The strategy also owns a **USDC vault**, which every deposit passes through on its way into the basket.
+
+Each basket asset gets an **asset config** PDA (seeds: `"asset"`, the strategy, an index byte) recording its mint, its feed (copied from its `ApprovedAsset` account), its weight in basis points, and its **vault**, a strategy-owned token account. The strategy holds up to `MAX_ASSETS` (16), and the cap is not about storage. A deposit has to reference every asset's accounts at once, five per asset, so a full basket runs to 94 accounts. That fits inside Solana's account-lock limit, but it is far past what a legacy transaction can hold, so clients of big baskets send v0 transactions with an address lookup table.
+
+The indexes guard the valuation: every handler that computes the fund's value walks indexes 0 through `asset_count` and refuses to run if any account is missing (`IncompleteAssetAccounts`), which makes it structurally impossible to omit an asset and understate the fund's value. A retired asset (weight set to zero) keeps its index forever rather than being reused, so the contiguous range the valuation loop depends on stays intact.
 
 ## A Deposit Makes the Program Acquire Assets
 
@@ -64,7 +64,7 @@ Traditional funds sell assets to pay the management fee. This program does what 
 
 ## Withdrawing In Kind
 
-Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it hands her **her proportional slice of every vault, in kind**. That is her share of the USDC vault, of the TSLAx vault (about 1.5), and of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
+Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it transfers to her **her proportional slice of every vault, in kind**. That is her share of the USDC vault, of the TSLAx vault (about 1.5), and of the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
 
 She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for managing the fund. Victor took no fee on any of it. What he earned is what his platform sells: a track record of funds whose managers cannot take the assets.
 
@@ -86,7 +86,7 @@ Every formula in the program is a proportion, and they all round the same way. S
 
 - **The manager is the threat model**, and the program treats them as such: assets only from Victor's list, feeds only from Victor's entries, swaps only through the fixed router, minimums only from the oracle, fee capped and immutable, custody never theirs. What remains to a careless manager is churn: pointless rebalancing that pays market slippage. That hurts depositors, but it does not enrich the manager, which is the design's limit. Aligning *that* incentive is what the fee-on-assets structure is for.
 - **Every number in the fund depends on the feed.** A stale price is refused (`StalePriceFeed`, 60-second window), as is a non-positive price (`NegativePrice`) and a substituted feed account (`InvalidPriceFeed`), so no deposit, withdrawal, or rebalance runs on a bad price. What this example does not check is the feed's confidence interval; a production strategy should, and the *Offchain Truth* chapter explains what confidence means and why "fresh but uncertain" is its own failure mode.
-- **The first deposit has no dead-shares guard**: the empty-fund deposit mints one-to-one, with no locked minimum like the AMM's `MINIMUM_LIQUIDITY`. The design leans on two mitigations: deposits only open at full allocation, and every deposit deploys immediately, so there is no idle pot to donate into and skew. That narrows the classic inflation attack without formally closing it; a production strategy should add virtual shares or a dead-shares floor, and the empty-pool section of the *Adversary* chapter shows how. Know which defense your program relies on, and which it lacks.
+- **The first deposit has no dead-shares guard**: the empty-fund deposit mints one-to-one, with no locked minimum like the AMM's `MINIMUM_LIQUIDITY`. The design leans on two mitigations: deposits only open at full allocation, and every deposit deploys immediately, so there is no idle pot to donate into and skew. That narrows the classic inflation attack without formally closing it; a production strategy should add virtual shares or a dead-shares floor, and the empty-pool section of the *Adversary* chapter shows how.
 - **Partial baskets are refused**, on deposit, withdrawal, and valuation alike (`IncompleteAssetAccounts`): an attacker who could get the fund valued without its best-performing vault could buy shares at a discount.
 
 ## Testing Considerations
@@ -105,4 +105,4 @@ The vault added five concepts:
 - **NAV as the share price.** Value every vault with a fresh feed or refuse to run; a valuation that can skip an asset is a discount for whoever exploits it.
 - **Fees by dilution, snapshotted.** The fee mints shares against everyone proportionally, accrues by time rather than the manager's diligence, and has no setter, so the deal investors joined under cannot be worsened.
 
-In the *Options* chapter we will build a program that takes no credit risk at all. A writer posts the whole of what they might owe before the option is sold, so there is no margin, no liquidator, and no oracle, and you will see how much simpler the program is for it. The *Perpetual Futures* chapter then closes the book with the one program that needs all of it at once: vaults, shares, oracles, funding, margin, and liquidation.
+In the *Options* chapter we will build a program that takes no credit risk at all. A writer posts the whole of what they might owe before the option is sold, so there is no margin, no liquidator, and no oracle, and you will see how much simpler the program is for it. The *Perpetual Futures* chapter then closes the book with a program that needs all of it at once: vaults, shares, oracles, funding, margin, and liquidation.
