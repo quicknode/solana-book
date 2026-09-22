@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 465" font-family="Gelasio, Georgia, serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Which clock for which job</text>
-<g transform="translate(0,5)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 438" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<g transform="translate(0,-16)">
   <defs><marker id="clocktree-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
 
   <rect x="28" y="24" width="250" height="46" fill="#fff" stroke="#111" stroke-width="1.5"/>
@@ -28,8 +27,8 @@
   <text x="161" y="189" font-size="9.5" fill="#555" font-style="italic">no</text>
 
   <rect x="28" y="212" width="250" height="46" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="38" y="230" font-size="10.5">Would a few seconds at the</text>
-  <text x="38" y="244" font-size="10.5">boundary pay whoever moved them?</text>
+  <text x="38" y="230" font-size="10.5">Could an adversary's leader profit</text>
+  <text x="38" y="244" font-size="10.5">by shifting the time a few seconds?</text>
   <path d="M 282,235 L 364,235" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
   <text x="323" y="229" font-size="9.5" fill="#555" font-style="italic" text-anchor="middle">yes</text>
   <rect x="372" y="212" width="236" height="46" fill="#f4f4f2" stroke="#888"/>

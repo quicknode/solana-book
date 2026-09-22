@@ -30,11 +30,30 @@ const rules = [
   [/\boff-chain\b/i, 'write "offchain", unhyphenated'],
   [/\bcross-chain\b/i, 'write "crosschain", unhyphenated'],
   [/—/, "no em-dashes; use a regular dash or rewrite"],
+  // One framework's implementation of an account constraint dates the sentence: Anchor
+  // 2 dropped has_one for address= on the sibling, Quasar writes has_one(x),
+  // and the native version is an if-statement. Prose names the check (a
+  // stored-address check, an account created if it does not exist, closing
+  // an account and returning its rent to its payer); the one footnote that gives each framework's implementation is
+  // excepted below.
+  [/\bhas_one\b|\binit_if_needed\b|`init`|\bclose = \w+/,
+    'name the check, not one framework\'s implementation of it: "stored-address check", "created if it does not exist", "closes the account and returns its rent to the maker" (companion AI plugin)'],
+  // "Closes the account to the maker" is Anchor's close = maker read aloud;
+  // it says nothing about where the lamports go. Say what closing does.
+  [/\bclos(e|es|ed|ing)\b (the |its |both |that |each |every |his |her |their )?(\w+ ){0,3}(account|vault|receipt|offer|option|position|bet)s? to (the |its |her |his |their )?(maker|writer|holder|payer|contributor|bettor|owner|user|taker|manager|Alice|Bob|Carol|Dave|Maria|Victor|her|him|them|whoever)\b/,
+    'say what closing does: "closes the account and returns its rent to the maker", not "closes the account to the maker" (companion AI plugin)'],
   // Same category as the em-dash rule above: phrases a reader clocks as
   // machine-written before they have finished the sentence. Each one also
   // stands in for a mechanism rather than stating it, so the fix is the same
   // fix every time: name the thing and say what it does.
   [/\bload.bearing\b/i, 'say what depends on the thing and what breaks without it'],
+  // A key pair is two keys. Its public key is an address; the pair is not an
+  // address or an account, the private key is never shown, and an address
+  // made from a key pair is always on the curve - only a PDA is off it. The
+  // order-book figures once captioned four such addresses "A CLIENT KEYPAIR"
+  // beside dots drawn off the curve, which is every one of these at once.
+  [/\bkey ?pairs?(?:'s)? (?:address|account|PDA)\b|\b(?:address|account|PDA) of (?:a|an|the|its|their|each) (?:\w+ )?key ?pairs?\b|\b(?:off|on)[- ]curve key ?pairs?\b|\bkey ?pairs? (?:that (?:is|are|sits?) )?(?:off|on) the curve|\bPDA key ?pairs?\b|\bkey ?pair PDAs?\b|\bderived key ?pairs?\b/i,
+    'a key pair is two keys, of which the public one is the address: the pair is neither an address nor an account, and an address made from one is always on the curve (companion AI plugin)'],
   [/\b(delve|tapestry|intricate|multifaceted|holistic|myriad|seamlessly|seamless|robust|pivotal|crucial|elevate|testament to|deep dive|paradigm shift|game.chang(er|ing)|unlock the power|realm of|landscape of|in today's)\b/i,
     "reads as machine-written; name the specific thing instead"],
   [/it(?:'s| is) worth noting/i, "cut it: if the point is worth making, make it"],
@@ -108,17 +127,30 @@ const rules = [
   // reader doing something in the world, and stays.
   [/\bNote (?:what|who|where|the order)\b|\bNotice (?:what|who|how)\b|\bWatch \w+ in the (?:story|chapter|section|table|figure)\b/,
     'state what the reader would see, rather than telling them to look at it'],
+  // "Treats" for "discusses" ("the Lending chapter treats it fully", "admin
+  // power is treated in the Operating chapter") is academic register the
+  // author has ruled out. "Treats X as Y", the runtime treating a byte string
+  // as an address, is a different verb and is not matched.
+  [/\b(?:chapter|section|book|appendix) treats\b|\btreat(?:s|ed)? (?:it|them|this|that) (?:fully|in full|at length|below|later|here)\b|\bis treated (?:in|by) the\b/i,
+    'say "explains" or "covers"'],
   // American spelling, second batch: the doubled-l forms and the noun/verb
   // pairs British English splits. Identifiers keep whatever the code shipped.
   [/\b(?:cancelling|modelling|labelling|signalling|travelling)\b/i,
     "American spelling doubles the l only when the stress falls on the last syllable: canceling, modeling"],
   [/\bcancellable\b|\bcentre\b|\bcentrepiece\b|\blicence(?:s|d)?\b/i,
     'American spelling in prose: cancelable, center, centerpiece, license'],
-  // One apostrophe and one set of quotes across the manuscript. A curly
-  // apostrophe reached six figure captions by way of a word processor; the
-  // build sets whichever it is given, so the two forms print differently.
+  // One apostrophe and one set of quotes in the source, both straight. The
+  // build sets them typographically (’ and “ ”) in prose and leaves code
+  // alone, so nothing is gained by typing the curly forms and something is
+  // lost: a curly apostrophe reached six figure captions by way of a word
+  // processor once, and the two forms then read differently to grep.
   [/[\u2018\u2019\u201c\u201d]/,
-    "use a straight apostrophe (') and straight quotes (\"), as the rest of the manuscript does"],
+    "use a straight apostrophe (') and straight quotes (\"); the build sets them typographically"],
+  // The build sets every single quote as an apostrophe, because a quotation
+  // inside a quotation does not occur in the manuscript. A single quote that
+  // opens a word would print as an apostrophe hanging off its front.
+  [/(?:^|[\s(\[])'(?=[A-Za-z0-9])/,
+    "a single quote is always an apostrophe here; set a quotation in double quotes"],
   // One italic marker. Underscores also blind the chapter-reference check
   // below, because an underscore is a word character, so `\b` never fires
   // against the start of _Arithmetic of Money_ and the reference reads clean.
@@ -159,6 +191,7 @@ const rules = [
 
 // Allowed exceptions, matched against the full line.
 const exceptions = [
+  /^\[\^stored-address-per-framework\]:/, // the Adversary chapter's one footnote giving each framework's implementation of the check
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
@@ -326,6 +359,18 @@ for (const file of [...new Set(files)]) {
 // as its text and a code span as one word.
 const sentenceWordLimit = 45;
 
+// "Drain" is the attacker's word, and the manuscript used it for both an
+// exploit emptying a pool and a handler legitimately paying a vault out on
+// its way to closing it, so the escrow's own exits read as an incident. The
+// companion AI plugin's rule: a handler empties a vault or pays it out; a
+// drain is what an attacker does. A sentence may keep the word only when it
+// names the attack it belongs to.
+const drainWord = /\bdrain(?:s|ed|ing)?\b/i;
+const drainContext =
+  /\b(?:attack|attacker|exploit|adversar|auditor|hole|rounding|precision|arbitrage|stale|vacuous|uncapped|abuse|leak|steal|undercount|error|bug|manipulat|campaign|war story|empty-reserve)/i;
+const drainReason =
+  'a handler "empties" a vault or "pays it out"; "drain" is the attacker\'s word and stays only in a sentence naming the attack (companion AI plugin)';
+
 // Words with a plain equivalent and no meaning of their own in this domain.
 // Deliberately short: "execute", "yield", "provide", "present" and "operate"
 // all read as bureaucratic in a generic style guide and are exact here (a
@@ -359,8 +404,27 @@ const wordinessRules = [
   // "confirmed" is one of Solana's three commitment levels, alongside
   // processed and finalized. Using "confirm" loosely for "check" puts a
   // reserved word on an unrelated idea, in a book that teaches the levels.
+  // "Pin" in both of the manuscript's senses: what a test does ("pinned by
+  // test_x", "the test pins it") and a value fixed when an account is made
+  // ("pinned at creation"). The author ruled both out.
+  // "Capstone" rates a chapter's place in the book instead of saying what
+  // the chapter does; "this chapter", or the chapter's name, says it.
+  [/\bcapstone\b/i, 'say "this chapter" or name the chapter'],
+  [/\bpin(?:s|ned|ning)?\b/i, 'a test enforces, checks, or asserts; a value is fixed or recorded at creation'],
   [/\bconfirms?\b(?! that a supermajority)/i,
     'say "check": "confirmed" is a commitment level in this book, not a synonym for checking'],
+  // "Walks" with a chapter, book, or suite as its subject is tour-guide
+  // framing: a chapter explains or builds, and a suite follows or runs a
+  // path. A loop that walks a tree or the states of a machine is mechanism,
+  // and stays.
+  [/\b(?:chapters?|book|suites?|tests?|guide|section) walks?\b/i,
+    'a chapter explains or builds; a suite follows or runs a path'],
+  [/\bwalks? through\b/i, 'say what the prose does: explains, builds, follows'],
+  // "Works" meaning succeeds or functions stays ("flips which handler
+  // works"). Working an example is tour-guide framing: the chapter shows
+  // or builds the example instead.
+  [/\bwork(?:s|ed|ing)? (?:an|the|a) examples?\b/i, 'the chapter shows or builds the example'],
+  [/\bworked examples?\b/i, 'the chapter shows or builds the example'],
 ];
 
 // Reduce a manuscript line to the prose a reader reads, so both checks above
@@ -417,6 +481,10 @@ for (const file of [...new Set(files)]) {
       }
 
       for (const sentence of toSentences(body)) {
+        if (drainWord.test(sentence) && !drainContext.test(sentence)) {
+          failures += 1;
+          console.error(`${file}:${index + 1}: ${drainReason}\n    ${sentence.slice(0, 160)}`);
+        }
         const words = sentence.split(/\s+/).length;
         if (words <= sentenceWordLimit) continue;
         failures += 1;
@@ -439,6 +507,17 @@ const figureDirs = [
 ];
 
 const svgRules = [
+  // Figure labels follow the same rule as the prose: a vault is emptied or
+  // paid out by a handler, and drained only by an attacker.
+  [/<text[^>]*>[^<]*\bdrain/i,
+    'a handler "empties" a vault or "pays it out"; "drain" is the attacker\'s word (companion AI plugin)'],
+  // Figure text is typed with the same straight apostrophe and straight
+  // quotes as the chapters, and the build sets both typographically when it
+  // inlines the figure. Seventy figures once carried the curly forms as
+  // numeric entities and nine as literal characters, so the same label read
+  // three ways to grep.
+  [/&#821[67];|&#822[01];|&#x201[89a-d];|&(?:[lr]squo|[lr]dquo);|[\u2018\u2019\u201c\u201d]/,
+    "use a straight apostrophe (') and straight quotes (\") in figure text; the build sets them typographically"],
   [/<rect(?![^>]*class="marker")[^>]*\brx="(?!6")[^"]*"/, 'account corner radius is rx="6", one radius book-wide'],
   [/<rect[^>]*\bry="/, "set rx only on rects; ry duplicates it (ellipse glyphs are exempt)"],
   [/\bopacity="(?!0\.3")[^"]*"/, 'the only fade level is opacity="0.3"'],
@@ -458,6 +537,15 @@ const svgRules = [
   // does not belong in the label.
   [/>ATA PROGRAM/,
     'seed lists name seeds, not the deriving program: an ATA is OWNER\'S ADDRESS + TOKEN PROGRAM + MINT'],
+  // No caption names a key pair. An address made from one is a public key,
+  // so it is an unlabeled dot on the curve, with its account's box beside
+  // it. A caption reading "A CLIENT KEYPAIR"
+  // beside a dot drawn off the curve called the same address a PDA and a
+  // public key at once, and called the key pair an address, which it is not.
+  // The legend lines that teach the curve say "key pair" in lower case at
+  // body size; a caption is 7 units, and the caps form is a caption's.
+  [/<text[^>]*font-size="7"[^>]*>[^<]*\b[Kk][Ee][Yy] ?[Pp][Aa][Ii][Rr]|<text[^>]*>[^<]*\bKEY ?PAIRS?\b/,
+    'no caption names a key pair: an address made from one is an unlabeled r=6 dot on the curve beside its account box, never a labeled offcurve dot (DIAGRAMS.md)'],
   // The coin mark is three rings. Two rings read as a pair of address dots at
   // print size, where the accent colour is gone and the mark is about 2mm.
   [/<circle cx="4" cy="2" r="6"[^>]*stroke="#1e7a3c"/,
@@ -550,6 +638,32 @@ for (const file of svgFiles) {
       failures += 1;
       console.error(`${file}:${index + 1}: handler names carry parens: ${menlo[1].trim().split(/\s/)[0]}()\n    ${line.trim().slice(0, 160)}`);
     }
+  });
+}
+
+// A figure directly under a heading is read with it, so a headline in the
+// same words prints the name twice a line apart. The companion AI plugin's
+// DIAGRAMS.md carries the rule; this catches the headline that repeats the
+// heading word for word. One that adds to it stays.
+const headlineWords = (text) => text.toLowerCase().replace(/&#?\w+;/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+for (const file of [...new Set(files)]) {
+  let heading = null;
+  readFileSync(file, "utf8").split("\n").forEach((line, index) => {
+    const headingMatch = line.match(/^#{1,6}\s+(.*)/);
+    if (headingMatch) {
+      heading = headingMatch[1];
+      return;
+    }
+    const figure = line.match(/^!\[[^\]]*\]\(([^)]+\.svg)\)/);
+    if (figure && heading) {
+      const svg = readFileSync(join(dirname(file), figure[1]), "utf8");
+      const headline = svg.match(/<text[^>]*font-size="15"[^>]*>([^<]*)<\/text>/);
+      if (headline && headlineWords(headline[1]) === headlineWords(heading)) {
+        failures += 1;
+        console.error(`${file}:${index + 1}: ${figure[1]} repeats the heading above it as its headline; leave the headline out\n    ${heading}`);
+      }
+    }
+    if (line.trim()) heading = null;
   });
 }
 

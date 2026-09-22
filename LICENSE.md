@@ -12,9 +12,9 @@ You are free to read, copy, redistribute, translate, and adapt this book in any 
 - **Do not use it commercially**: you may not sell copies of this book or derivatives of it. Quiknode Inc. retains the exclusive right to sell print and electronic editions.
 - **Share alike**: if you translate, remix, or build upon the text, distribute your contribution under this same license.
 
-## The code samples
+## The code
 
-Code samples appearing in the book are licensed under the **MIT license**, matching the [companion repository](https://github.com/quicknode/solana-program-examples), so nothing stops you from using them in your own software, commercial or otherwise.
+The book contains no code samples. The programs it describes live in the [companion repository](https://github.com/quicknode/solana-program-examples), which is licensed under the **MIT license**, so nothing stops you from using them in your own software, commercial or otherwise.
 
 ## The icons in the figures
 
@@ -32,9 +32,10 @@ The Streamline mark carries an attribution requirement the rest do not; reproduc
 
 The typefaces the book is set in are bundled in `assets/fonts/` so that a build is identical on any machine:
 
-- **Gelasio** (body, running heads, and all figure text) — by Eben Sorkin, under the **SIL Open Font License 1.1**: <https://openfontlicense.org/>. Licence text: `assets/fonts/Gelasio-OFL.txt`.
-- **DejaVu Sans Mono** (code, addresses, and handler names in figures) — under the **DejaVu Fonts License**, a permissive Bitstream Vera derivative. Licence text: `assets/fonts/DejaVu-LICENSE.txt`.
-- **Denim INK** (headings) — a commercial face licensed to Quiknode Inc. It is **not** covered by the licenses above; a reproduction of the book that is not made by Quicknode should substitute its own heading face.
+- **Gelasio** (body and running heads) — by Eben Sorkin, under the **SIL Open Font License 1.1**: <https://openfontlicense.org/>. Licence text: `assets/fonts/Gelasio-OFL.txt`.
+- **DejaVu Sans Mono** (code, addresses in prose, and handler names in figures) — under the **DejaVu Fonts License**, a permissive Bitstream Vera derivative. Licence text: `assets/fonts/DejaVu-LICENSE.txt`.
+- **Denim INK** (headings and figure text) — a commercial face licensed to Quiknode Inc. It is **not** covered by the licenses above; a reproduction of the book that is not made by Quicknode should substitute its own heading face.
+- **Andale Mono** (seed lists and addresses in figures) — one of Microsoft's core fonts for the Web, free to use under its own end-user licence, which permits redistribution only as the original installer. It is therefore **not** bundled: `scripts/andale-mono.mjs` finds a system copy or fetches and unpacks the installer at build time.
 
 ## Exclusions
 

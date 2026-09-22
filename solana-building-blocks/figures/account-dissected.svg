@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">One account, dissected</text>
-  <rect x="40" y="40" width="240" height="224" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(48,45)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="68" y="56" font-size="12" font-weight="bold">One account</text>
+  <rect x="40" y="40" width="240" height="210" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(48,43.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="68" y="54.7" font-size="12" font-weight="bold">One account</text>
   <line x1="48" y1="61" x2="272" y2="61" stroke="#888" stroke-width="0.8"/>
   <rect x="56" y="68" width="208" height="38" fill="#f4f4f2" stroke="#888"/>
   <text x="64" y="84" font-size="11" font-weight="bold">address</text>
@@ -13,10 +13,10 @@
   <rect x="56" y="156" width="208" height="38" fill="#f4f4f2" stroke="#888"/>
   <text x="64" y="172" font-size="11" font-weight="bold">lamport balance</text>
   <text x="64" y="185" font-size="10" fill="#444">2,039,280 (the rent deposit)</text>
-  <rect x="56" y="200" width="208" height="64" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <rect x="56" y="200" width="208" height="42" fill="#fff" stroke="#111" stroke-width="1.5"/>
   <text x="64" y="218" font-size="11" font-weight="bold">data bytes</text>
   <text x="64" y="232" font-size="10" fill="#444" font-family="'DejaVu Sans Mono', Menlo, monospace">01 5f 3a 9c 44 07 e2 &#8230;</text>
-  <path d="M 266,206 L 358,84 M 266,256 L 358,276" stroke="#999" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <path d="M 266,206 L 358,84 M 266,238 L 358,276" stroke="#999" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
   <rect x="360" y="80" width="248" height="200" fill="none" stroke="#111" stroke-width="1.5"/>
   <text x="376" y="106" font-size="11.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold">struct Offer {</text>
   <text x="392" y="128" font-size="11" font-family="'DejaVu Sans Mono', Menlo, monospace">id: u64,</text>

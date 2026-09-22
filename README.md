@@ -17,16 +17,16 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Companion projects
 
-- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the book's **companion repository**: the tested, CI-verified programs that each program chapter walks through
+- [Solana Program Examples](https://github.com/quicknode/solana-program-examples) - the book's **companion repository**: the tested, CI-verified programs behind each program chapter
 - [Solana Finance Claude Plugin](https://github.com/quicknode/solana-finance-claude-plugin) - the book's **companion AI skill**: its rules are what the book distills, and its style guide is what the manuscript follows
 
 ## Building the PDF
 
-`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at; `npm run build-pdf -- --size letter` builds the same manuscript at US Letter for screen reading and office printers. [PRINT-SPECIFICATION.md](PRINT-SPECIFICATION.md) records the trim, margins, type, and the rest of the physical book. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
+`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at; `npm run build-pdf -- --size letter` builds the same manuscript at US Letter for screen reading and office printers. `npm run resize-cover` sizes the full-wrap cover export (`assets/cover-wrap.pdf`) to KDP's exact requirement, spine width included. [PRINT-SPECIFICATION.md](PRINT-SPECIFICATION.md) records the trim, margins, type, cover math, and the rest of the physical book. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
 
 ## Status
 
-Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, every program chapter, and the Glossary. Every figure is drawn as SVG in the chapters' `figures/` directories. The author bio is drafted so advance reviewers know who is behind the book; the dedication and acknowledgements are placeholders until the book is complete.
+Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, every program chapter, and the Glossary. Every figure is drawn as SVG in the chapters' `figures/` directories. The dedication and acknowledgements are drafted; the technical reviewers page keeps its placeholder line while reviews are still landing.
 
 ## License
 

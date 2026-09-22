@@ -17,6 +17,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
 import { chromium } from "playwright-core";
 import { PDFArray, PDFDocument, PDFName } from "pdf-lib";
+import { andaleMonoPath } from "./andale-mono.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -286,6 +287,57 @@ const markUrls = (html) =>
       : `${whole} (<span class="url">${breakableUrl(printedAddress(href))}</span>)`,
   );
 
+// Typographic quotes. The manuscript is typed with the straight apostrophe and
+// the straight double quote, one form each so that grep and the lint see one
+// thing, and this is where they become the marks a typeset book carries: the
+// apostrophe ’ and the pair “ ”. That is the convention of every technical
+// publisher (O'Reilly's house style sets them so), and a straight quote in
+// running text is the one typewriter habit a reader notices on a printed page.
+// Code keeps its straight quotes, in a span or a block, because "offer" in a
+// seed is the byte the program compares and not a mark of speech. Only text
+// runs are touched, so attributes, scripts, and styles pass through, and the
+// inlined figures get the same treatment as the captions beneath them.
+//
+// A double quote opens when nothing, whitespace, or an opening bracket comes
+// before it and closes otherwise; the character before is tracked across
+// inline tags so that ("<em>x</em>") and <em>word</em>" both come out right.
+// A single quote is always an apostrophe: the manuscript never nests a
+// quotation inside a quotation, and the lint holds it to that, so 'til and
+// '90s also print as the elisions they are.
+const untouchedElements = new Set(["code", "pre", "script", "style"]);
+const inlineElements = new Set(["a", "abbr", "b", "em", "i", "small", "span", "strong", "sub", "sup", "tspan"]);
+const typographicQuotes = (html) => {
+  let out = "";
+  let previous = "";
+  let untouchedUntil = null;
+  for (const token of html.split(/(<[^>]+>)/)) {
+    if (token.startsWith("<")) {
+      out += token;
+      const name = token.match(/^<\/?([a-zA-Z][a-zA-Z0-9]*)/)?.[1]?.toLowerCase();
+      if (untouchedUntil) {
+        if (token.startsWith("</") && name === untouchedUntil) untouchedUntil = null;
+      } else if (untouchedElements.has(name) && !token.startsWith("</")) {
+        untouchedUntil = name;
+      } else if (name && !inlineElements.has(name)) {
+        previous = "";
+      }
+      continue;
+    }
+    if (untouchedUntil || token === "") {
+      out += token;
+      continue;
+    }
+    const text = token.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    out += text.replace(/["']/g, (quote, index) => {
+      if (quote === "'") return "’";
+      const before = index === 0 ? previous : text[index - 1];
+      return before === "" || /[\s(\[{‘“]/.test(before) ? "“" : "”";
+    });
+    previous = text.at(-1);
+  }
+  return out;
+};
+
 const sections = chapterPaths.map((path) => {
   const markdown = readFileSync(join(repoRoot, path), "utf8");
   const id = idForPath(path);
@@ -298,12 +350,25 @@ const sections = chapterPaths.map((path) => {
     .parse(prepareMarkdown(markdown, path), { mangle: false, headerIds: false })
     .replace(/<h2>/g, () => `<h2 id="${id}-s${++htmlSubIndex}">`)
     // Inline SVG figures so the single-file HTML needs no external assets;
-    // the image's alt text becomes the printed caption.
-    .replace(/<img src="([^"]+\.svg)" alt="([^"]*)"[^>]*>/g, (whole, src, alt) => {
+    // the image's alt text becomes the printed caption, and a figure whose
+    // headline and annotations already say everything carries none, so an
+    // empty alt prints no caption element at all. The paragraph marked
+    // wraps the image in goes with it: a <figure> inside a <p> is invalid
+    // HTML, and the browser mends it by closing the paragraph early, which
+    // left an empty <p> between each heading and the figure under it. Paged.js
+    // keeps a heading on the page of whatever element follows it in the
+    // source (the stylesheet's break-after: avoid), and the empty paragraph
+    // was that element, so the figure was free to start the next page with
+    // its heading stranded at the foot of the one before.
+    .replace(/<p><img src="([^"]+\.svg)" alt="([^"]*)"[^>]*><\/p>/g, (whole, src, alt) => {
       const svg = readFileSync(join(repoRoot, dirname(path), src), "utf8");
-      return `<figure>${svg}<figcaption>${alt}</figcaption></figure>`;
+      return `<figure>${svg}${alt ? `<figcaption>${alt}</figcaption>` : ""}</figure>`;
     })
     .replace(/<code>([^<]+)<\/code>/g, (whole, text) => `<code>${breakableIdentifier(text)}</code>`);
+  // A figure that was not alone in its paragraph is not inlined above, and
+  // would print as a broken image.
+  const missed = htmlWithCode.match(/<img [^>]*\.svg[^>]*>/);
+  if (missed) throw new Error(`${path}: figure not inlined, is it on a line of its own? ${missed[0]}`);
   const html = markUrls(htmlWithCode);
   const title = cleanTitle((markdown.match(/^# (.+)$/m) ?? [null, basename(path, ".md")])[1]);
   return { id, title, html, path, subsections };
@@ -410,6 +475,8 @@ const body = sections
 
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
 const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
+// Andale Mono is found on the machine or fetched, never checked in: see andale-mono.mjs.
+const andaleMonoUrl = pathToFileURL(andaleMonoPath()).href;
 
 const workDir = mkdtempSync(join(tmpdir(), "solana-book-pdf-"));
 const defaultChromiumPath = existsSync("/opt/pw-browsers/chromium")
@@ -486,10 +553,11 @@ const html = `<!doctype html>
 @font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-Bold.ttf")}"); font-weight: bold; font-style: normal; }
 @font-face { font-family: "Denim INK"; src: url("${fontUrl("DenimINK-BoldItalic.ttf")}"); font-weight: bold; font-style: italic; }
 
-/* Gelasio is metric-compatible with Georgia, which is what the figures were
-   drawn against, and it is bundled so every machine sets the same widths.
+/* Gelasio is the body face, bundled so every machine sets the same widths.
    Static instances, not the variable build: Chromium's print-to-PDF
-   silently drops a variable font and falls back. */
+   silently drops a variable font and falls back. The figures are set in
+   Denim INK, with DejaVu Sans Mono for handler names and Andale Mono for
+   seed lists and addresses. */
 @font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Regular.ttf")}"); font-weight: normal; font-style: normal; }
 @font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Italic.ttf")}"); font-weight: normal; font-style: italic; }
 @font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Bold.ttf")}"); font-weight: bold; font-style: normal; }
@@ -498,6 +566,7 @@ const html = `<!doctype html>
 @font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-Bold.ttf")}"); font-weight: bold; font-style: normal; }
 @font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-Oblique.ttf")}"); font-weight: normal; font-style: italic; }
 @font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-BoldOblique.ttf")}"); font-weight: bold; font-style: italic; }
+@font-face { font-family: "Andale Mono"; src: url("${andaleMonoUrl}"); font-weight: normal; font-style: normal; }
 
 @page {
   size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;
@@ -565,7 +634,7 @@ a { color: #111 !important; text-decoration: none; }
 .book-toc { page: chapter-start; break-after: page; }
 .book-toc h1 { font-size: 24pt; }
 .book-toc ol { list-style: none; padding: 0; }
-.book-toc li { font-size: 10pt; }
+.book-toc li { font-size: 10pt; break-inside: avoid; }
 .book-toc li a { display: flex; align-items: baseline; }
 /* "Chapter 20" sets the width: at 54pt the two-digit labels wrapped, so the
    number printed on a line of its own under the word. Never wrap a label, and
@@ -575,7 +644,13 @@ a { color: #111 !important; text-decoration: none; }
    to the right of the chapter titles beneath them. */
 .book-toc .label { flex: 0 0 auto; min-width: 64pt; white-space: nowrap; }
 .book-toc .t { flex: 1; padding-right: 1em; }
-.book-toc .pg { flex: 0 0 auto; }
+/* The page numbers are written in after Paged.js has laid the pages out, so
+   the number's width has to be reserved while the span is still empty. Without
+   the reservation a title that just fitted the row wraps once its number
+   arrives, every row below it moves down, and the rows that no longer fit are
+   pushed into an overflow column off the right of the page: the last two rows
+   of the contents printed nowhere. 2.4em holds three digits with room. */
+.book-toc .pg { flex: 0 0 auto; min-width: 2.4em; text-align: right; }
 .book-toc li.toc-chapter { margin: 0.55em 0 0.1em 0; font-weight: bold; }
 .book-toc li.toc-section { margin: 0.08em 0 0.08em 1.6em; }
 .book-toc li.toc-part {
@@ -627,6 +702,16 @@ section.chapter:not(.prelude-item) { break-before: recto; page: chapter; }
 section.prelude-item + section.prelude-item { break-before: auto; }
 section.prelude-item h1 { font-size: 12pt; border-bottom: none; margin: 0.18in 0 0.08in 0; padding-bottom: 0; }
 section.prelude-item .cols { column-count: 1; }
+/* The epigraph sits alone on a right-hand page, the last thing before the
+   Introduction, with a blank reverse so the chapter opens on a right-hand page
+   too. Its heading is a file title for the build, not a line the reader sees.
+   The rule comes after the shared-flow rule above because paged.js resolves
+   break rules in source order. */
+section#ch-prelude-epigraph { break-before: recto; break-after: recto; page: chapter-start; }
+section#ch-prelude-epigraph h1 { display: none; }
+section#ch-prelude-epigraph .cols { margin: 2.6in 0.35in 0 0.35in; }
+section#ch-prelude-epigraph p { text-align: left; font-size: 11.5pt; line-height: 1.5; hyphens: none; text-wrap: pretty; }
+section#ch-prelude-epigraph p:last-child { margin-top: 0.8em; text-align: right !important; font-size: 10pt; color: #444; }
 section.chapter .cols { column-count: 1; }
 section.chapter h1 {
   string-set: chapter content(text);
@@ -743,13 +828,13 @@ ${includeCover ? `<div class="cover">${coverContent}</div>` : ""}
 <div class="title-page">
   <h1>${TITLE}</h1>
   <div class="author">${AUTHOR}</div>
-  <div class="note">${advanceNote}</div>
+  <div class="note">${typographicQuotes(advanceNote)}</div>
 </div>
 <nav class="book-toc">
   <h1>Contents</h1>
-  <ol>${printedToc}</ol>
+  <ol>${typographicQuotes(printedToc)}</ol>
 </nav>
-${body}
+${typographicQuotes(body)}
 <script>window.PagedConfig = { auto: false };</script>
 <script>${pagedPolyfill}</script>
 <script>
@@ -828,6 +913,93 @@ const openingPages = await page.evaluate(() => {
   return [...opening.values()].sort((a, b) => a.number - b.number);
 });
 
+// Nothing printed may fall outside its boundary. Paged.js clips every page to
+// its content area, and a figure is clipped to its own box, so a line that
+// lands past either edge is not a line in the margin but a line cut off: the
+// offer account's wanted amount lost its last three digits this way, and the
+// figure check did not see it because the label was measured in a fallback
+// face. Every text box is measured here in the faces the PDF embeds, against
+// the page it sits on, the footnote area if it is a note, and the figure box
+// if it is a figure label. Half a point of tolerance covers rounding.
+const overflows = await page.evaluate(() => {
+  const TOL = 0.75;
+  const out = [];
+  const within = (r, area, tol = TOL) =>
+    r.left >= area.left - tol && r.right <= area.right + tol && r.top >= area.top - tol && r.bottom <= area.bottom + tol;
+  const excess = (r, area) =>
+    [["left", area.left - r.left], ["right", r.right - area.right], ["top", area.top - r.top], ["bottom", r.bottom - area.bottom]]
+      .filter(([, by]) => by > TOL).map(([side, by]) => `${by.toFixed(1)}px past the ${side}`).join(", ");
+  for (const pageEl of document.querySelectorAll(".pagedjs_page")) {
+    const number = pageEl.getAttribute("data-page-number");
+    const content = pageEl.querySelector(".pagedjs_page_content");
+    if (!content) continue;
+    const footnotes = pageEl.querySelector(".pagedjs_footnote_area");
+    const roots = [[content, "text column"]];
+    if (footnotes) roots.push([footnotes, "footnote area"]);
+    for (const [root, name] of roots) {
+      const bound = root.getBoundingClientRect();
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        if (!node.textContent.trim() || node.parentElement.closest("svg")) continue;
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        for (const rect of range.getClientRects()) {
+          if (rect.width === 0 || rect.height === 0 || within(rect, bound)) continue;
+          out.push(`page ${number}: "${node.textContent.trim().slice(0, 50)}" is ${excess(rect, bound)} of the ${name}`);
+        }
+      }
+    }
+    const bound = content.getBoundingClientRect();
+    for (const block of content.querySelectorAll("pre, table, figure, blockquote")) {
+      const rect = block.getBoundingClientRect();
+      if (rect.width === 0 || within(rect, bound)) continue;
+      out.push(`page ${number}: a ${block.tagName.toLowerCase()} is ${excess(rect, bound)} of the text column`);
+    }
+    for (const svg of content.querySelectorAll("figure svg")) {
+      const box = svg.getBoundingClientRect();
+      for (const label of svg.querySelectorAll("text")) {
+        const rect = label.getBoundingClientRect();
+        if (rect.width === 0 || within(rect, box, 1)) continue;
+        out.push(`page ${number}: figure label "${label.textContent.trim().slice(0, 40)}" is ${excess(rect, box)} of its figure and clipped`);
+      }
+    }
+  }
+  return out;
+});
+
+// A heading directly followed by a figure is that figure's title, and the two
+// belong on one page: a title alone at the foot of a page, naming a figure
+// that is over the leaf, is the layout fault readers notice first. The
+// stylesheet says break-after: avoid on every heading, and Paged.js honours
+// that by pinning the heading to the element that follows it in the source,
+// so the pairs are read from the source it laid out and the pages their
+// copies landed on are compared.
+const headingFigurePairs = await page.evaluate(() => {
+  const parsed = window.PagedPolyfill?.chunker?.source;
+  const source = parsed?.querySelectorAll ? parsed : parsed?.dom;
+  if (!source) return null;
+  const pageOf = (element) =>
+    Number(document.querySelector(`.pagedjs_page [data-ref="${element.dataset.ref}"]`)?.closest(".pagedjs_page")?.getAttribute("data-page-number"));
+  const split = [];
+  let pairs = 0;
+  for (const figure of source.querySelectorAll("figure")) {
+    // An empty paragraph between the two is not a neighbour: it is what the
+    // parser leaves when a figure was emitted inside a <p> (see the figure
+    // inlining), and looking past it keeps this check reporting the split
+    // pairs rather than finding no pairs at all if that markup came back.
+    let heading = figure.previousElementSibling;
+    while (heading && heading.tagName === "P" && !heading.textContent.trim()) heading = heading.previousElementSibling;
+    if (!heading || !/^H[23]$/.test(heading.tagName)) continue;
+    pairs++;
+    const headingPage = pageOf(heading);
+    const figurePage = pageOf(figure);
+    if (headingPage !== figurePage) {
+      split.push(`"${heading.textContent.trim()}" is on page ${headingPage} and its figure on page ${figurePage}`);
+    }
+  }
+  return { pairs, split };
+});
+
 const printed = await page.pdf({ preferCSSPageSize: true });
 await browser.close();
 
@@ -857,8 +1029,7 @@ for (const sheet of pdf.getPages()) {
 }
 writeFileSync(outputPath, await pdf.save());
 
-const pageCount = pdf.getPageCount();
-console.log(`Wrote ${outputPath} (${pageCount} pages)`);
+console.log(`Wrote "${outputPath}"`);
 if (croppedPages > 0) console.log(`Cropped ${croppedPages} page(s) to the ${PAGE_WIDTH_IN} x ${PAGE_HEIGHT_IN}in trim.`);
 
 // Every URI action in the finished PDF, with the number of annotations
@@ -900,14 +1071,67 @@ if (unlinkedLines.length > 0) {
   process.exitCode = 1;
 }
 
+if (overflows.length > 0) {
+  console.error(`\n${overflows.length} piece(s) of text fall outside their boundary and print clipped:`);
+  for (const line of overflows) console.error(`  ${line}`);
+  process.exitCode = 1;
+}
+
+// The book has several such pairs, so an empty list means the source was not
+// found rather than that every pair kept its page.
+if (!headingFigurePairs || headingFigurePairs.pairs === 0) {
+  console.error("\nNo heading followed by a figure was found in the laid-out source, so their pages could not be checked.");
+  process.exitCode = 1;
+} else if (headingFigurePairs.split.length > 0) {
+  console.error(`\n${headingFigurePairs.split.length} heading(s) are parted from the figure that follows them by a page break:`);
+  for (const line of headingFigurePairs.split) console.error(`  ${line}`);
+  process.exitCode = 1;
+}
+
+// A selector that stops matching would otherwise turn the right-hand-page
+// check into a no-op that passes on an empty list.
+const titlePage = openingPages.find(({ name }) => name === "title page");
+if (!titlePage || openingPages.length < 2) {
+  console.error("\nThe title page and chapter openings were not found in the rendered book, so their pages could not be checked.");
+  process.exitCode = 1;
+}
 const strays = openingPages.filter(({ number }) => !Number.isInteger(number) || number % 2 === 0);
 if (strays.length > 0) {
   console.error(`\n${strays.length} opening page(s) did not land on a right-hand page:`);
   for (const { name, number } of strays) console.error(`  page ${number}: ${name}`);
   process.exitCode = 1;
-} else {
-  // Printed rather than kept silent, because a selector that stops matching
-  // would otherwise turn this check into a no-op that still reports success.
-  const titlePage = openingPages.find(({ name }) => name === "title page")?.number ?? "?";
-  console.log(`Title page on page ${titlePage}; ${openingPages.length - 1} part and chapter openings; all on right-hand pages.`);
+}
+
+// The quotes, read back from the finished PDF rather than trusted to the
+// conversion above: a straight apostrophe or quote belongs only in the code
+// face. pdf.js reports each run's face by family, and the one monospace face
+// in the book is the code font, so a straight quote in a serif or sans run is
+// prose the conversion missed. The check is independent of the converter's
+// own view of the HTML, which is the point. A book with no monospace run at
+// all means the face was not recognised, and the check reports that rather
+// than passing on an empty list.
+const straightQuotesInProse = [];
+let monospaceRuns = 0;
+{
+  const pdfjs = await import(pathToFileURL(join(repoRoot, "node_modules", "pdfjs-dist", "legacy", "build", "pdf.mjs")).href);
+  const loading = pdfjs.getDocument({ data: new Uint8Array(readFileSync(outputPath)) });
+  const finished = await loading.promise;
+  for (let number = 1; number <= finished.numPages; number += 1) {
+    const content = await (await finished.getPage(number)).getTextContent();
+    for (const item of content.items) {
+      if (!("str" in item)) continue;
+      const family = content.styles[item.fontName]?.fontFamily;
+      if (family === "monospace") monospaceRuns += 1;
+      else if (/["']/.test(item.str)) straightQuotesInProse.push(`page ${number}: ${item.str.trim()}`);
+    }
+  }
+  await loading.destroy();
+}
+if (monospaceRuns === 0) {
+  console.error("\nNo run in the code face was found in the finished PDF, so the quotes could not be checked.");
+  process.exitCode = 1;
+} else if (straightQuotesInProse.length > 0) {
+  console.error(`\n${straightQuotesInProse.length} straight quote(s) printed outside the code face:`);
+  for (const line of straightQuotesInProse.slice(0, 20)) console.error(`  ${line}`);
+  process.exitCode = 1;
 }

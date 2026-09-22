@@ -1,37 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 394" font-family="Gelasio, Georgia, serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Withdrawing realizes the loss</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 394" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Fee income decides whether an LP beats holding</text>
 <g transform="translate(0,14)">
   <defs>
     <marker id="amm-impermanent-loss-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto">
       <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
     </marker>
   </defs>
-  <!-- fee band (drawn first, under the lines) -->
-  <path d="M 150,260 Q 215,226 288,198 Q 360,170 430,147 L 430,134 Q 360,157 288,184 Q 215,212 150,246 Z" fill="#f4f4f2" stroke="none"/>
-  <path d="M 150,246 Q 215,212 288,184 Q 360,157 430,134" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <!-- axes -->
+  <!-- where the LP with fee income is ahead of holding (drawn first, under the lines) -->
+  <path d="M 170.3,150 L 170.3,150.0 L 173.1,147.9 L 175.9,145.9 L 178.6,143.9 L 181.4,142.0 L 184.2,140.2 L 187.0,138.4 L 189.7,136.7 L 192.5,135.1 L 195.3,133.5 L 198.0,132.0 L 200.8,130.6 L 203.6,129.2 L 206.4,127.8 L 209.1,126.5 L 211.9,125.3 L 214.7,124.1 L 217.5,123.0 L 220.2,122.0 L 223.0,120.9 L 225.8,120.0 L 228.6,119.1 L 231.3,118.2 L 234.1,117.4 L 236.9,116.6 L 239.6,115.9 L 242.4,115.2 L 245.2,114.6 L 248.0,114.0 L 250.7,113.4 L 253.5,112.9 L 256.3,112.5 L 259.1,112.0 L 261.8,111.7 L 264.6,111.3 L 267.4,111.0 L 270.2,110.8 L 272.9,110.5 L 275.7,110.4 L 278.5,110.2 L 281.2,110.1 L 284.0,110.0 L 286.8,110.0 L 289.6,110.0 L 292.3,110.0 L 295.1,110.1 L 297.9,110.2 L 300.7,110.4 L 303.4,110.5 L 306.2,110.7 L 309.0,111.0 L 311.8,111.3 L 314.5,111.6 L 317.3,111.9 L 320.1,112.3 L 322.8,112.7 L 325.6,113.1 L 328.4,113.5 L 331.2,114.0 L 333.9,114.5 L 336.7,115.1 L 339.5,115.7 L 342.3,116.3 L 345.0,116.9 L 347.8,117.6 L 350.6,118.2 L 353.4,119.0 L 356.1,119.7 L 358.9,120.5 L 361.7,121.3 L 364.4,122.1 L 367.2,122.9 L 370.0,123.8 L 372.8,124.7 L 375.5,125.6 L 378.3,126.5 L 381.1,127.5 L 383.9,128.5 L 386.6,129.5 L 389.4,130.5 L 392.2,131.6 L 395.0,132.7 L 397.7,133.8 L 400.5,134.9 L 403.3,136.1 L 406.0,137.3 L 408.8,138.5 L 411.6,139.7 L 414.4,140.9 L 417.1,142.2 L 419.9,143.5 L 422.7,144.8 L 425.5,146.1 L 428.2,147.4 L 431.0,148.8 L 433.4,150 Z" fill="#f4f4f2" stroke="none"/>
+  <!-- axes: the zero line is "just holding" -->
   <line x1="80" y1="330" x2="80" y2="38" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
   <line x1="80" y1="330" x2="614" y2="330" stroke="#111" stroke-width="1.8" marker-end="url(#amm-impermanent-loss-arr)"/>
-  <text x="88" y="28" font-size="13" font-weight="bold">value of Alice&#8217;s position</text>
-  <text x="612" y="352" font-size="13" font-weight="bold" text-anchor="end">ACME price</text>
-  <!-- just holding: a straight line -->
-  <line x1="80" y1="279" x2="600" y2="76" stroke="#111" stroke-width="1.6"/>
-  <text x="598" y="60" font-size="12" font-weight="bold" text-anchor="end">just holding 100 ACME + 225 USDC</text>
-  <!-- LP position: tangent below the line everywhere else -->
-  <path d="M 80,296 C 115,275 149,258 184,242 C 219,226 253,212 288,198 C 323,184 357,172 392,160 C 427,148 461,136 496,125 C 531,114 565,104 600,94" fill="none" stroke="#111" stroke-width="2.2"/>
-  <text x="96" y="320" font-size="12" font-weight="bold">LP position</text>
-  <!-- deposit price: the touching point -->
-  <line x1="288" y1="204" x2="288" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <circle cx="288" cy="198" r="5" fill="#111"/>
-  <text x="288" y="348" font-size="12" font-weight="bold" text-anchor="middle">$2.25 deposit</text>
-  <text x="230" y="148" font-size="11" font-style="italic" fill="#444" text-anchor="middle">touches only at the deposit price</text>
-  <!-- fee band label -->
-  <text x="105" y="182" font-size="11" font-style="italic" fill="#444">fees offset the gap</text>
-  <path d="M 172,188 L 210,216" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#amm-impermanent-loss-arr)"/>
-  <!-- Alice's withdrawal -->
-  <circle cx="319" cy="186" r="4" fill="#111"/>
-  <path d="M 346,232 L 325,193" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="350" y="238" font-size="10.5" font-style="italic" fill="#444">at withdrawal (spot &#8776; $2.64):</text>
-  <text x="350" y="253" font-size="10.5" font-style="italic" fill="#444">&#8776; $1.50 behind just holding</text>
+  <line x1="80" y1="150" x2="600" y2="150" stroke="#555" stroke-width="1.4"/>
+  <text x="88" y="28" font-size="13" font-weight="bold">Alice's LP position minus just holding</text>
+  <text x="612" y="366" font-size="13" font-weight="bold" text-anchor="end">ACME price at withdrawal</text>
+  <text x="74" y="114.0" font-size="10" fill="#444" text-anchor="end">+$10</text>
+  <text x="74" y="154.0" font-size="10" fill="#444" text-anchor="end">$0</text>
+  <text x="74" y="234.0" font-size="10" fill="#444" text-anchor="end">&#8722;$20</text>
+  <text x="74" y="314.0" font-size="10" fill="#444" text-anchor="end">&#8722;$40</text>
+  <text x="596" y="144" font-size="11" font-style="italic" fill="#444" text-anchor="end">same as just holding</text>
+  <!-- price ticks -->
+  <line x1="132.0" y1="330" x2="132.0" y2="325" stroke="#111" stroke-width="1.2"/>
+  <text x="132.0" y="346" font-size="11" text-anchor="middle">$1.13 (halves)</text>
+  <line x1="288.0" y1="154" x2="288.0" y2="326" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="288.0" y="346" font-size="11" font-weight="bold" text-anchor="middle">$2.25 deposit</text>
+  <line x1="600.0" y1="330" x2="600.0" y2="325" stroke="#111" stroke-width="1.2"/>
+  <text x="608" y="346" font-size="11" text-anchor="end">$4.50 (doubles)</text>
+  <!-- LP without fee income: behind holding at every price but the deposit price -->
+  <path d="M 80.0,310.8 L 86.9,296.7 L 93.9,283.7 L 100.8,271.6 L 107.7,260.4 L 114.7,250.0 L 121.6,240.4 L 128.5,231.4 L 135.5,223.1 L 142.4,215.5 L 149.3,208.4 L 156.3,201.8 L 163.2,195.7 L 170.1,190.1 L 177.1,185.0 L 184.0,180.3 L 190.9,176.0 L 197.9,172.1 L 204.8,168.6 L 211.7,165.4 L 218.7,162.5 L 225.6,160.0 L 232.5,157.8 L 239.5,155.9 L 246.4,154.3 L 253.3,152.9 L 260.3,151.9 L 267.2,151.0 L 274.1,150.5 L 281.1,150.1 L 288.0,150.0 L 294.9,150.1 L 301.9,150.4 L 308.8,151.0 L 315.7,151.7 L 322.7,152.6 L 329.6,153.8 L 336.5,155.1 L 343.5,156.5 L 350.4,158.2 L 357.3,160.0 L 364.3,162.0 L 371.2,164.2 L 378.1,166.5 L 385.1,168.9 L 392.0,171.5 L 398.9,174.3 L 405.9,177.2 L 412.8,180.2 L 419.7,183.4 L 426.7,186.7 L 433.6,190.1 L 440.5,193.6 L 447.5,197.3 L 454.4,201.1 L 461.3,205.0 L 468.3,209.0 L 475.2,213.2 L 482.1,217.4 L 489.1,221.8 L 496.0,226.2 L 502.9,230.8 L 509.9,235.4 L 516.8,240.2 L 523.7,245.0 L 530.7,250.0 L 537.6,255.0 L 544.5,260.2 L 551.5,265.4 L 558.4,270.7 L 565.3,276.1 L 572.3,281.6 L 579.2,287.2 L 586.1,292.9 L 593.1,298.6 L 600.0,304.4" fill="none" stroke="#111" stroke-width="2.2"/>
+  <!-- the same position after $10 of fee income -->
+  <path d="M 80.0,270.8 L 86.9,256.7 L 93.9,243.7 L 100.8,231.6 L 107.7,220.4 L 114.7,210.0 L 121.6,200.4 L 128.5,191.4 L 135.5,183.1 L 142.4,175.5 L 149.3,168.4 L 156.3,161.8 L 163.2,155.7 L 170.1,150.1 L 177.1,145.0 L 184.0,140.3 L 190.9,136.0 L 197.9,132.1 L 204.8,128.6 L 211.7,125.4 L 218.7,122.5 L 225.6,120.0 L 232.5,117.8 L 239.5,115.9 L 246.4,114.3 L 253.3,112.9 L 260.3,111.9 L 267.2,111.0 L 274.1,110.5 L 281.1,110.1 L 288.0,110.0 L 294.9,110.1 L 301.9,110.4 L 308.8,111.0 L 315.7,111.7 L 322.7,112.6 L 329.6,113.8 L 336.5,115.1 L 343.5,116.5 L 350.4,118.2 L 357.3,120.0 L 364.3,122.0 L 371.2,124.2 L 378.1,126.5 L 385.1,128.9 L 392.0,131.5 L 398.9,134.3 L 405.9,137.2 L 412.8,140.2 L 419.7,143.4 L 426.7,146.7 L 433.6,150.1 L 440.5,153.6 L 447.5,157.3 L 454.4,161.1 L 461.3,165.0 L 468.3,169.0 L 475.2,173.2 L 482.1,177.4 L 489.1,181.8 L 496.0,186.2 L 502.9,190.8 L 509.9,195.4 L 516.8,200.2 L 523.7,205.0 L 530.7,210.0 L 537.6,215.0 L 544.5,220.2 L 551.5,225.4 L 558.4,230.7 L 565.3,236.1 L 572.3,241.6 L 579.2,247.2 L 586.1,252.9 L 593.1,258.6 L 600.0,264.4" fill="none" stroke="#111" stroke-width="2.2" stroke-dasharray="7 4"/>
+  <text x="288.0" y="135" font-size="11.5" font-weight="bold" text-anchor="middle">LP ahead</text>
+  <text x="288.0" y="98.0" font-size="11" font-style="italic" fill="#444" text-anchor="middle">with $10 of fee income (from $20,000 traded)</text>
+  <text x="596" y="322" font-size="11" font-style="italic" fill="#444" text-anchor="end">with no fee income</text>
+  <text x="596" y="168" font-size="11.5" font-weight="bold" text-anchor="end">holding ahead</text>
+  <!-- the withdrawal in the story -->
+  <circle cx="342.1" cy="156.2" r="3.5" fill="#111"/>
+  <path d="M 344.1,162.2 L 350.1,234.2" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="312.1" y="248.2" font-size="10.5" font-style="italic" fill="#444">withdrawing at $2.64: $1.50 behind, no fees yet</text>
 </g>
 </svg>

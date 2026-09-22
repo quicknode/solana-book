@@ -1,6 +1,6 @@
 # Glossary
 
-The vocabulary of this book, in one place: Solana's terms alongside the financial vocabulary this field uses daily but rarely defines. Terms are alphabetical, and each is a heading so you can link straight to it. Where a chapter treats a term at length, the definition says so.
+The vocabulary of this book, in one place: Solana's terms alongside the financial vocabulary this field uses daily but rarely defines. Terms are alphabetical, and each is a heading so you can link straight to it. Where a chapter explains a term at length, the definition says so.
 
 ### account
 
@@ -16,7 +16,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow captures the difference. The *Prop AMM* chapter treats it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow captures the difference. The *Prop AMM* chapter explains it at length.
 
 ### all-or-nothing
 
@@ -62,6 +62,10 @@ One hundredth of one percent; 10,000 basis points is 100%. The universal unit fo
 
 An order to buy at or below a stated price. The buyer's side of an order book.
 
+### block
+
+A batch of transactions one [leader](#leader) produces for its [slot](#slot), built on the block before it, its parent. A slot whose block does not arrive in time is skipped and has no block.
+
 ### blockhash
 
 A recent block's hash, included in every transaction to bound its lifetime. When it expires, the transaction can never land.
@@ -80,15 +84,15 @@ The extra byte found while deriving a PDA that pushes the result off the ed25519
 
 ### call
 
-An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell, and the *Options* chapter's writer posts the underlying itself as collateral, which makes the call a [covered call](#covered-call).
+An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell, and the *Options* chapter's writer supplies the underlying asset to the program as collateral, which makes the call a [covered call](#covered-call).
 
 ### cash settlement
 
-Settling a derivative by paying the difference between the market price and the contract's price in money, with no asset changing hands. It needs a price feed, and every check the *Offchain Truth* chapter describes. Compare [physical settlement](#physical-settlement).
+Settling a derivative by paying the difference between the market price and the contract's price in the quote token, USDC in this book, with the underlying never changing hands. It needs a price feed, and every check the *Offchain Truth* chapter describes. Compare [physical settlement](#physical-settlement).
 
 ### cash-secured put
 
-A [put](#put) whose writer has posted the full strike, in the quote token, as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
+A [put](#put) whose writer has supplied enough of the quote token, USDC here, to buy every share at the strike price, held by the program as collateral, so the writer cannot fail to pay if the holder exercises. The *Options* chapter's puts are all cash-secured.
 
 ### ceil (ceiling)
 
@@ -135,9 +139,13 @@ An oracle's own statement of its uncertainty: a price of $250 ± $8 is a differe
 
 The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once, which is why the design is organized around the pool's solvency. See the *Perpetual Futures* chapter.
 
+### covered
+
+See [covered call](#covered-call).
+
 ### covered call
 
-A [call](#call) whose writer has posted the underlying itself as collateral, so the shares the holder might buy are already in custody and the writer cannot fail to deliver them. The *Options* chapter's calls are all covered.
+A [call](#call) whose writer has supplied the underlying asset to the program as collateral, so the shares the holder might buy are already in custody and the writer cannot fail to deliver them. The *Options* chapter's calls are all covered.
 
 ### CPI (cross-program invocation)
 
@@ -175,13 +183,17 @@ Representing a continuous quantity as discrete integer steps. Onchain money is d
 
 The 8 bytes Anchor writes at the start of an account's data identifying its type, so a program cannot be fed one kind of account where another belongs.
 
+### drain
+
+To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. The word belongs to the attacker. A handler that legitimately moves a vault's whole balance out on its way to closing it empties the vault or pays it out. See the *Adversary* chapter.
+
 ### dust
 
 Sub-unit remainders left over by integer division: a fraction smaller than one [minor unit](#minor-unit), worth nothing alone and worth taking a million transactions later. Who owns it is a [rounding](#rounding) decision. See the *Arithmetic of Money* chapter.
 
 ### epoch
 
-A period of 432,000 slots over which a validator schedule holds, so its length in days depends on the slot time. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots: exactly a day at a 200 millisecond slot, and a little longer in practice because real slots run long. The schedule of [leaders](#leader) is drawn for each epoch, and some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ### equity (position)
 
@@ -207,6 +219,10 @@ Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of th
 
 A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
 
+### feature
+
+A change to the network, built into the validator software switched off and turned on across the network at the start of an [epoch](#epoch). Each shortening of the [slot](#slot) has shipped as one, and the *Time* chapter covers reading them from a program.
+
 ### finality
 
 The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when its validators have voted the block final; how long that takes is set by the network's consensus and moves when it does. See [commitment level](#commitment-level).
@@ -222,6 +238,10 @@ A loan borrowed and repaid inside a single transaction, possible only because tr
 ### floor
 
 Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never promise a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
+
+### fork
+
+One of two competing chains, formed when validators briefly build on different blocks. The network settles on one, and a program only ever runs on one. A transaction in a block on the fork that loses vanishes, which is what the [commitment levels](#commitment-level) describe.
 
 ### funding rate
 
@@ -246,6 +266,14 @@ The party who owns an [option](#option) and may [exercise](#exercise) it. A hold
 ### impermanent loss
 
 The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
+
+### index
+
+The lending field's word for a stored number that grows over time and that every claim on a pool is a multiple of. Aave's borrow index, Compound's borrow index, and Save's cumulative borrow rate are all one. This book calls the lending market's index the [borrow accumulation factor](#borrow-accumulation-factor), and the perpetual futures venue's `cumulative_funding` is another: a position's funding owed is its size times the change in that index since it opened.
+
+### indexation
+
+Advancing an [index](#index) for the time elapsed since it was last updated, which is how interest and funding accrue without any position being touched. A reviewer's word rather than the book's; the *Time* chapter covers how elapsed time is measured.
 
 ### inflation attack
 
@@ -286,6 +314,10 @@ The bend in a lending reserve's interest rate curve, in this book at 80% [utiliz
 ### lamport
 
 The minor unit of SOL: one billionth. Named for Leslie Lamport.
+
+### leader
+
+The [validator](#validator) assigned to produce the [block](#block) for a [slot](#slot). The schedule of leaders is drawn before each [epoch](#epoch), with each validator's share of slots in proportion to its stake. A leader chooses which transactions go in its block and in what order, and writes the time the next block reads as its [Unix timestamp](#unix-timestamp).
 
 ### lending market
 
@@ -421,7 +453,7 @@ An address computed from a program's ID and chosen seeds. A PDA is not a public 
 
 ### perpetual future
 
-A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The capstone chapter of this book.
+A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The *Perpetual Futures* chapter builds one.
 
 ### phantom overflow
 
@@ -429,7 +461,7 @@ An overflow in the middle of a calculation whose final answer would have fit: `p
 
 ### physical settlement
 
-Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
+Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The name predates blockchains, and nothing about it happens offchain: onchain, physical means the underlying token itself changes hands, where cash settlement moves only a price difference in the quote token. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
 
 ### PnL (profit and loss)
 
@@ -473,7 +505,7 @@ A [put](#put) bought by someone who already holds the underlying, as insurance a
 
 ### put
 
-An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer posts the full strike as collateral, which makes the put a [cash-secured put](#cash-secured-put).
+An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer supplies the program with enough of the quote token to buy every share at the strike price, which makes the put a [cash-secured put](#cash-secured-put).
 
 ### quote token
 
@@ -545,7 +577,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time: a window of a few hundred milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time: a window in which one [leader](#leader) may produce a [block](#block). The network sets a target length, 200 milliseconds at the time of writing, and has shortened it before, so a slot count converts to seconds only at the slot length in force. A slot whose block does not arrive in time is skipped: the count moves on and that slot has no block. Adversarial logic counts slots, not wall-clock time, because the runtime guarantees the slot count while a leader chooses the timestamp.
 
 ### SOL
 
@@ -607,13 +639,21 @@ A signed bundle of instructions that executes atomically: all of it lands or non
 
 A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than rent it for one slot. See the *Adversary* chapter.
 
+### underlying
+
+The asset an [option](#option) or other derivative is about: what a [call](#call) buys and a [put](#put) sells at the [strike](#strike). It is short for the underlying asset, and every options market uses it as a noun on its own. In the *Options* chapter the underlying is NVDAx and the quote token is USDC.
+
+### Unix timestamp
+
+The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is accurate to within a few seconds and somebody chose where within them. Use it for spans quoted to people, and count [slots](#slot) wherever a few seconds would pay whoever moved them. See the *Time* chapter.
+
 ### utilization
 
 In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
 
 ### validator
 
-A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. A validator reports the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
+A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. The validator leading each block writes the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
 
 ### vault
 
@@ -633,7 +673,7 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 
 ### writer
 
-The party who sells an [option](#option): they receive the [premium](#premium) and take on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer posts the whole of that obligation before the lot can be sold. Compare [holder](#holder).
+The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called writing it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
 
 ### zero-copy
 

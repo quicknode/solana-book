@@ -1,112 +1,112 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 716" font-family="Gelasio, Georgia, serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 716" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">The drift, and the rebalance</text>
   <defs><marker id="vault-reb-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-reb-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
-  <path d="M 0,36 Q 400,36 640,116" fill="none" stroke="#111" stroke-width="3.5"/>
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <circle cx="112" cy="37.6625" r="7" fill="#fff"/>
+  <circle cx="114" cy="34.724" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="112" cy="37.6625" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="16" y="43.9168" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <circle cx="114" cy="34.724" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="43.9168" width="106" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,47.9168)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
   <text x="44" y="58.3168" font-size="9.5" font-weight="bold">Victor</text>
   </g>
   <g opacity="0.3">
   <circle cx="24" cy="109.917" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="108.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;REGISTRY&#8221; +</text>
-  <text x="34" y="117.917" font-size="7" letter-spacing="0.3" fill="#555">VICTOR&#8217;S ADDRESS</text>
-  <rect x="16" y="123.917" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="34" y="108.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"REGISTRY" +</text>
+  <text x="34" y="117.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">VICTOR'S ADDRESS</text>
+  <rect x="16" y="123.917" width="106" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(24,127.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="138.317" font-size="9.5" font-weight="bold">registry</text>
   </g>
   <g opacity="0.3">
   <circle cx="24" cy="194.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="188.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
-  <text x="34" y="197.917" font-size="7" letter-spacing="0.3" fill="#555">REGISTRY +</text>
-  <text x="34" y="206.917" font-size="7" letter-spacing="0.3" fill="#555">TSLAX MINT</text>
-  <rect x="16" y="212.917" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="34" y="188.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"APPROVED_ASSET" +</text>
+  <text x="34" y="197.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">REGISTRY +</text>
+  <text x="34" y="206.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TSLAX MINT</text>
+  <rect x="16" y="212.917" width="106" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(24,216.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="227.317" font-size="9.5" font-weight="bold">ApprovedAsset</text>
   </g>
   <g opacity="0.3">
   <circle cx="24" cy="283.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="277.917" font-size="7" letter-spacing="0.3" fill="#555">&#8220;APPROVED_ASSET&#8221; +</text>
-  <text x="34" y="286.917" font-size="7" letter-spacing="0.3" fill="#555">REGISTRY +</text>
-  <text x="34" y="295.917" font-size="7" letter-spacing="0.3" fill="#555">NVDAX MINT</text>
-  <rect x="16" y="301.917" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <text x="34" y="277.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"APPROVED_ASSET" +</text>
+  <text x="34" y="286.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">REGISTRY +</text>
+  <text x="34" y="295.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT</text>
+  <rect x="16" y="301.917" width="106" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(24,305.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="316.317" font-size="9.5" font-weight="bold">ApprovedAsset</text>
   </g>
-  <circle cx="224" cy="43.0914" r="7" fill="#fff"/>
+  <circle cx="226" cy="40.227" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="224" cy="43.0914" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="128" y="49.6439" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(136,53.6439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="156" y="64.0439" font-size="9.5" font-weight="bold">Alice</text>
+  <circle cx="226" cy="40.227" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="130" y="49.6439" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(138,53.6439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="158" y="64.0439" font-size="9.5" font-weight="bold">Alice</text>
   </g>
   <g opacity="0.3">
-  <circle cx="136" cy="120.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="146" y="114.644" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-  <text x="146" y="123.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="146" y="132.644" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="128" y="138.644" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(136,142.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="156" y="153.044" font-size="9.5" font-weight="bold">Alice&#8217;s USDC</text>
+  <circle cx="138" cy="120.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="148" y="114.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="148" y="123.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="148" y="132.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="130" y="138.644" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(138,142.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="158" y="153.044" font-size="9.5" font-weight="bold">Alice's USDC</text>
   </g>
   <g opacity="0.3">
-  <circle cx="136" cy="197.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="146" y="191.644" font-size="7" letter-spacing="0.3" fill="#555">ALICE&#8217;S ADDRESS +</text>
-  <text x="146" y="200.644" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="146" y="209.644" font-size="7" letter-spacing="0.3" fill="#555">SHARE MINT</text>
-  <rect x="128" y="215.644" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(136,219.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="156" y="230.044" font-size="9.5" font-weight="bold">Alice&#8217;s shares</text>
+  <circle cx="138" cy="197.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="148" y="191.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="148" y="200.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="148" y="209.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">SHARE MINT</text>
+  <rect x="130" y="215.644" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(138,219.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="158" y="230.044" font-size="9.5" font-weight="bold">Alice's shares</text>
   </g>
-  <circle cx="336" cy="53.138" r="7" fill="#fff"/>
+  <circle cx="336" cy="50.138" r="7" fill="#fff"/>
   <g opacity="0.3">
-  <circle cx="336" cy="53.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="240" y="60.0617" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,64.0617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="268" y="74.4617" font-size="9.5" font-weight="bold">Bob</text>
+  <circle cx="336" cy="50.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="242" y="60.0617" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(250,64.0617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="270" y="74.4617" font-size="9.5" font-weight="bold">Bob</text>
   </g>
   <g opacity="0.3">
-  <circle cx="248" cy="130.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="258" y="125.062" font-size="7" letter-spacing="0.3" fill="#555">BOB&#8217;S ADDRESS +</text>
-  <text x="258" y="134.062" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM +</text>
-  <text x="258" y="143.062" font-size="7" letter-spacing="0.3" fill="#555">USDC MINT</text>
-  <rect x="240" y="149.062" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(248,153.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="268" y="163.462" font-size="9.5" font-weight="bold">Bob&#8217;s USDC</text>
+  <circle cx="250" cy="130.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="260" y="125.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="260" y="134.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="260" y="143.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="242" y="149.062" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(250,153.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="270" y="163.462" font-size="9.5" font-weight="bold">Bob's USDC</text>
   </g>
   <g>
-  <circle cx="448" cy="69.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="448" cy="66.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="352" y="76.4364" width="104" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,81.4364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
-  <text x="380" y="92.4364" font-size="9.5" font-weight="bold">Maria</text>
+  <g transform="translate(360,79.9364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="380" y="90.2614" font-size="9.5">Maria</text>
   <line x1="360" y1="97.4364" x2="448" y2="97.4364" stroke="#888" stroke-width="0.8"/>
   <text x="360" y="118.936" font-size="9" fill="#444">1 SOL</text>
   </g>
   <!-- rebalance() takes both feeds by name: sell_price_feed and buy_price_feed -->
   <g>
   <rect x="352" y="140" width="104" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,145)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="380" y="156" font-size="9.5" font-weight="bold">Pyth TSLA</text>
+  <g transform="translate(360,143.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="380" y="153.825" font-size="9.5">Pyth TSLA</text>
   <line x1="360" y1="161" x2="448" y2="161" stroke="#888" stroke-width="0.8"/>
   <text x="360" y="172" font-size="9">price: $250</text>
   </g>
   <g>
   <text x="360" y="182.5" font-size="9">owner: Pyth Receiver</text>
   <rect x="352" y="206" width="104" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(360,211)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="380" y="222" font-size="9.5" font-weight="bold">Pyth NVDA</text>
+  <g transform="translate(360,209.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="380" y="219.825" font-size="9.5">Pyth NVDA</text>
   <line x1="360" y1="227" x2="448" y2="227" stroke="#888" stroke-width="0.8"/>
-  <text x="360" y="238" font-size="9" font-weight="bold">price: $200</text>
+  <text x="360" y="238" font-size="9">price: $200</text>
   </g>
   <g>
-  <circle cx="624" cy="110.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="624" cy="107.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="360" y="248.5" font-size="9">owner: Pyth Receiver</text>
   <rect x="464" y="119.37" width="168" height="120" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,124.37)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
-  <text x="492" y="135.37" font-size="10.5" font-weight="bold">vault-strategy program</text>
+  <g transform="translate(472,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="492" y="133.545" font-size="10.5" font-weight="bold">vault-strategy program</text>
   <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_registry()</text>
   <text x="472" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">approve_asset()</text>
@@ -120,123 +120,123 @@
   </g>
 <g transform="translate(0,-3)">
   <g>
-  <circle cx="472" cy="248.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="252.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;STRATEGY&#8221; + INDEX</text>
-  <rect x="464" y="258.37" width="168" height="103" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,263.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="274.37" font-size="10.5" font-weight="bold">strategy</text>
-  <line x1="472" y1="279.37" x2="624" y2="279.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="290.37" font-size="9">manager: Maria</text>
-  <text x="472" y="300.87" font-size="9">registry: Victor&#8217;s</text>
-  <text x="472" y="311.37" font-size="9">fee_bps: 100</text>
-  <text x="472" y="321.87" font-size="9">max_slippage_bps: 100</text>
-  <text x="472" y="332.37" font-size="9">total_shares: 900</text>
-  <text x="472" y="342.87" font-size="9">asset_count: 2</text>
-  <text x="472" y="353.37" font-size="9">total_weight_bps: 10,000</text>
+  <circle cx="472" cy="251.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="254.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"STRATEGY" + INDEX</text>
+  <rect x="464" y="260.87" width="168" height="103" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,264.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="275.045" font-size="10.5" font-weight="bold">strategy</text>
+  <line x1="472" y1="281.87" x2="624" y2="281.87" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="292.87" font-size="9">manager: Maria</text>
+  <text x="472" y="303.37" font-size="9">registry: Victor's</text>
+  <text x="472" y="313.87" font-size="9">fee_bps: 100</text>
+  <text x="472" y="324.37" font-size="9">max_slippage_bps: 100</text>
+  <text x="472" y="334.87" font-size="9">total_shares: 900</text>
+  <text x="472" y="345.37" font-size="9">asset_count: 2</text>
+  <text x="472" y="355.87" font-size="9">total_weight_bps: 10,000</text>
   </g>
 </g>
 <g transform="translate(0,-18)">
   <g>
-  <circle cx="472" cy="391.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="395.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
-  <rect x="464" y="401.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,406.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="417.37" font-size="10.5" font-weight="bold">asset config 0</text>
-  <line x1="472" y1="422.37" x2="624" y2="422.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="433.37" font-size="9">mint: TSLAx</text>
-  <text x="472" y="443.87" font-size="9">weight_bps: 4,000</text>
-  <text x="472" y="454.37" font-size="9">vault: the TSLAx vault</text>
+  <circle cx="472" cy="394.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="397.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"ASSET" + STRATEGY + INDEX</text>
+  <rect x="464" y="403.87" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,407.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="418.045" font-size="10.5" font-weight="bold">asset config 0</text>
+  <line x1="472" y1="424.87" x2="624" y2="424.87" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="435.87" font-size="9">mint: TSLAx</text>
+  <text x="472" y="446.37" font-size="9">weight_bps: 4,000</text>
+  <text x="472" y="456.87" font-size="9">vault: the TSLAx vault</text>
   </g>
 </g>
 <g transform="translate(0,-33)">
   <g>
-  <circle cx="472" cy="486.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="490.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;ASSET&#8221; + STRATEGY + INDEX</text>
-  <rect x="464" y="496.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(472,501.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="512.37" font-size="10.5" font-weight="bold">asset config 1</text>
-  <line x1="472" y1="517.37" x2="624" y2="517.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="528.37" font-size="9">mint: NVDAx</text>
-  <text x="472" y="538.87" font-size="9">weight_bps: 6,000</text>
-  <text x="472" y="549.37" font-size="9">vault: the NVDAx vault</text>
+  <circle cx="472" cy="489.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="492.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"ASSET" + STRATEGY + INDEX</text>
+  <rect x="464" y="498.87" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,502.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="513.045" font-size="10.5" font-weight="bold">asset config 1</text>
+  <line x1="472" y1="519.87" x2="624" y2="519.87" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="530.87" font-size="9">mint: NVDAx</text>
+  <text x="472" y="541.37" font-size="9">weight_bps: 6,000</text>
+  <text x="472" y="551.87" font-size="9">vault: the NVDAx vault</text>
   </g>
 </g>
 <g transform="translate(0,-48)">
   <g opacity="0.3">
-  <circle cx="472" cy="581.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="585.37" font-size="7" letter-spacing="0.3" fill="#555">&#8220;SHARE_MINT&#8221; + STRATEGY</text>
-  <rect x="464" y="591.37" width="168" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,595.37)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="492" y="605.87" font-size="10.5" font-weight="bold">share mint</text>
+  <circle cx="472" cy="584.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="587.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"SHARE_MINT" + STRATEGY</text>
+  <rect x="464" y="593.87" width="168" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,597.87)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="492" y="608.37" font-size="10.5" font-weight="bold">share mint</text>
   </g>
 </g>
-<g transform="translate(-224,-271.37)">
+<g transform="translate(-222,-271.37)">
   <g>
-  <circle cx="472" cy="657.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="656.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
-  <text x="482" y="665.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + USDC MINT</text>
-  <rect x="464" y="671.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,676.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="687.37" font-size="10.5" font-weight="bold">USDC vault</text>
-  <line x1="472" y1="692.37" x2="624" y2="692.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="703.37" font-size="9" fill="#444">0 USDC</text>
-  <text x="472" y="713.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <circle cx="472" cy="659.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="658.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">STRATEGY'S ADDRESS +</text>
+  <text x="482" y="667.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
+  <rect x="464" y="673.87" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,677.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="688.045" font-size="10.5" font-weight="bold">USDC vault</text>
+  <line x1="472" y1="694.87" x2="624" y2="694.87" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="705.87" font-size="9" fill="#444">0 USDC</text>
+  <text x="472" y="716.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
 </g>
-<g transform="translate(-224,-271.37)">
+<g transform="translate(-222,-271.37)">
   <g>
-  <circle cx="472" cy="737.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="736.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
-  <text x="482" y="745.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
-  <rect x="464" y="751.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,756.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="767.37" font-size="10.5" font-weight="bold">TSLAx vault</text>
-  <line x1="472" y1="772.37" x2="624" y2="772.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="783.37" font-size="9" font-weight="bold">&#8776;1.54 TSLAx</text>
-  <text x="472" y="793.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <circle cx="472" cy="739.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="738.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">STRATEGY'S ADDRESS +</text>
+  <text x="482" y="747.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
+  <rect x="464" y="753.87" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,757.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="768.045" font-size="10.5" font-weight="bold">TSLAx vault</text>
+  <line x1="472" y1="774.87" x2="624" y2="774.87" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="785.87" font-size="9">&#8776;1.54 TSLAx</text>
+  <text x="472" y="796.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
 </g>
-<g transform="translate(-224,-271.37)">
+<g transform="translate(-222,-271.37)">
   <g>
-  <circle cx="472" cy="817.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="816.37" font-size="7" letter-spacing="0.3" fill="#555">STRATEGY&#8217;S ADDRESS +</text>
-  <text x="482" y="825.37" font-size="7" letter-spacing="0.3" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
-  <rect x="464" y="831.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(472,836.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="492" y="847.37" font-size="10.5" font-weight="bold">NVDAx vault</text>
-  <line x1="472" y1="852.37" x2="624" y2="852.37" stroke="#888" stroke-width="0.8"/>
-  <text x="472" y="863.37" font-size="9" font-weight="bold">2.88 NVDAx</text>
-  <text x="472" y="873.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <circle cx="472" cy="819.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="818.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">STRATEGY'S ADDRESS +</text>
+  <text x="482" y="827.87" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
+  <rect x="464" y="833.87" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,837.37)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="848.045" font-size="10.5" font-weight="bold">NVDAx vault</text>
+  <line x1="472" y1="854.87" x2="624" y2="854.87" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="865.87" font-size="9">2.88 NVDAx</text>
+  <text x="472" y="876.37" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
   </g>
 </g>
   <g>
-  <rect x="16" y="640" width="212" height="50" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(24,645)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
-  <text x="44" y="656" font-size="9.5" font-weight="bold">swap router program</text>
-  <line x1="24" y1="661" x2="220" y2="661" stroke="#888" stroke-width="0.8"/>
+  <rect x="16" y="640" width="214" height="50" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,643.5)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="44" y="653.825" font-size="9.5">swap router program</text>
+  <line x1="24" y1="661" x2="222" y2="661" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="672" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">swap_asset_for_usdc()</text>
   <text x="24" y="682" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">swap_usdc_for_asset()</text>
   </g>
   <text x="16" y="706" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
-  <path d="M 237,600 C 234,614 226,624 216,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
-  <path d="M 100,637 C 92,560 140,462 234,424" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
-  <path d="M 237,446 C 205,490 165,560 140,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
-  <path d="M 185,637 C 192,600 200,560 234,520" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
-  <rect class="marker" x="199" y="611" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="207" y="622.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <g class="coin" transform="translate(229,619)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="99" y="508" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="107" y="519.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
-  <g class="coin" transform="translate(129,516)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="156" y="521" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="164" y="532.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <g class="coin" transform="translate(186,529)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="169" y="572" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="177" y="583.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
-  <g class="coin" transform="translate(199,580)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect x="240" y="272" width="220" height="88" fill="#fff" stroke="#888" class="key"/>
-  <rect class="marker" x="248" y="282.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="256" y="294.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <text x="274" y="294" font-size="10.5" font-weight="bold" fill="#1e7a3c">Sell 0.12 NVDAx through the router</text>
-  <rect class="marker" x="248" y="300.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="256" y="312.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
-  <text x="274" y="312" font-size="10.5" font-weight="bold" fill="#1e7a3c">Receive 24 USDC in return</text>
-  <rect class="marker" x="248" y="318.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="256" y="330.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <text x="274" y="330" font-size="10.5" font-weight="bold" fill="#1e7a3c">Spend the 24 USDC on the second leg</text>
-  <rect class="marker" x="248" y="336.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="256" y="348.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
-  <text x="274" y="348" font-size="10.5" font-weight="bold" fill="#1e7a3c">Receive 0.096 TSLAx into the vault</text>
+  <path d="M 239,600 C 236,614 228,624 218,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
+  <path d="M 102,637 C 94,560 142,462 236,424" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
+  <path d="M 240,438.5 C 208,482.5 167,560 142,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
+  <path d="M 187,637 C 194,600 202,560 236,520" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-reb-arr)"/>
+  <rect class="marker" x="201" y="611" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="209" y="622.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(231,619)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="101" y="508" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="109" y="519.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(131,516)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="158" y="521" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="166" y="532.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(188,529)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="171" y="572" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="179" y="583.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
+  <g class="coin" transform="translate(201,580)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="220" y="272" width="240" height="88" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="228" y="282.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="236" y="294.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="254" y="294" font-size="10.5" font-weight="bold" fill="#1e7a3c">Sell 0.12 NVDAx through the router</text>
+  <rect class="marker" x="228" y="300.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="236" y="312.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="254" y="312" font-size="10.5" font-weight="bold" fill="#1e7a3c">Receive 24 USDC in return</text>
+  <rect class="marker" x="228" y="318.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="236" y="330.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="254" y="330" font-size="10.5" font-weight="bold" fill="#1e7a3c">Spend the 24 USDC on the second leg</text>
+  <rect class="marker" x="228" y="336.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="236" y="348.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
+  <text x="254" y="348" font-size="10.5" font-weight="bold" fill="#1e7a3c">Receive 0.096 TSLAx into the vault</text>
 </svg>

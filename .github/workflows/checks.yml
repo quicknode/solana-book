@@ -1,0 +1,37 @@
+# The manuscript lint and the figure-geometry check, on every pull request and
+# every push to main. These are two of the three commands CLAUDE.md requires
+# before a push; the PDF build is the third and stays local, because it takes
+# minutes and the lint already covers everything the quote and phrase rules
+# check. Chromium comes from Playwright, at the version playwright-core in the
+# lockfile expects, and the geometry check is pointed at it.
+name: Manuscript checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # The figures' Andale Mono is fetched and unpacked by scripts/andale-mono.mjs,
+      # which needs cabextract for the core-fonts installer it comes in.
+      - run: sudo apt-get install -y cabextract
+      - name: Install Chromium
+        id: chromium
+        run: |
+          npx --yes "playwright@$(node -p "require('playwright-core/package.json').version")" install --with-deps chromium
+          echo "path=$(node -p "require('playwright-core').chromium.executablePath()")" >> "$GITHUB_OUTPUT"
+      - name: Lint the manuscript and figures
+        run: npm run lint
+      - name: Check figure geometry
+        run: node scripts/check-figure-geometry.mjs
+        env:
+          CHROMIUM_PATH: ${{ steps.chromium.outputs.path }}

@@ -7,16 +7,23 @@
 //   3. Every coin mark sits beside an amount label, one coin per amount.
 //   4. Value arrows are smooth: no tangent break where two segments join.
 //   5. Arrowheads point along the stroke they terminate.
-//   6. A box collapsed to its heading centres that heading vertically.
+//   6. The icon and title centre on their band: the box, or the title bar.
 //   7. A faded address dot still occludes the cluster curve.
+//   8. Every label sits inside the canvas.
+//   9. A public-key dot (r=6) sits on the curve; a derived-address dot (r=5.5) sits clear of it.
+//  12. Every address dot sits beside an account box, legend keys aside.
+//  11. No address dot touches or overlaps an account box.
 //
-// Usage: node scripts/check-figure-geometry.mjs
-// Exits nonzero if any check fails.
+// Usage: node scripts/check-figure-geometry.mjs [name-fragment ...]
+// With arguments, only figures whose path contains one of them are checked,
+// which is the quick loop while fixing one family. Exits nonzero if any check
+// fails.
 
 import { chromium } from "playwright-core";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { andaleMonoPath } from "./andale-mono.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const figureDirs = [
@@ -32,6 +39,12 @@ for (const dir of figureDirs) {
   }
 }
 files.sort();
+const only = process.argv.slice(2);
+const selected = only.length > 0 ? files.filter((f) => only.some((frag) => f.includes(frag))) : files;
+if (selected.length === 0) {
+  console.error(`No figure matches ${only.join(", ")}`);
+  process.exit(1);
+}
 
 // Tangent break at each interior join of a path, in degrees. The figures use
 // absolute M/L/C/Q only; anything else is left alone rather than guessed at.
@@ -72,7 +85,9 @@ function joinAngles(d) {
   return joins;
 }
 
-const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+// The same override the PDF build takes, for a machine whose Chromium lives
+// elsewhere (the CI runner installs Playwright's and passes its path).
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
 let failures = 0;
 
@@ -80,21 +95,39 @@ let failures = 0;
 // @font-face rules the page falls back to whatever generic serif the machine
 // has, and every clearance below is measured against a face the book will
 // never print in - which is how a coin sitting on a label passed this check.
+//
+// The faces are embedded as data URLs rather than named by file URL. The page
+// is loaded with setContent, which leaves it at about:blank, and Chromium will
+// not fetch a file: URL from there: every @font-face silently failed and the
+// check went on measuring the fallback, which is how a label 9 units past its
+// canvas edge passed. Reading the font here and inlining it has no origin to
+// be refused from, and fontsLoaded below fails the run if any face still does.
 const fontFace = (family, file, extra = "") =>
-  `@font-face{font-family:"${family}";src:url("${pathToFileURL(join(repoRoot, "assets", "fonts", file)).href}");${extra}}`;
+  `@font-face{font-family:"${family}";src:url("data:font/ttf;base64,${readFileSync(file.includes("/") ? file : join(repoRoot, "assets", "fonts", file)).toString("base64")}");${extra}}`;
 const FONTS = [
-  fontFace("Gelasio", "Gelasio-Regular.ttf", "font-weight:normal;font-style:normal;"),
-  fontFace("Gelasio", "Gelasio-Bold.ttf", "font-weight:bold;font-style:normal;"),
-  fontFace("Gelasio", "Gelasio-Italic.ttf", "font-weight:normal;font-style:italic;"),
+  fontFace("Denim INK", "DenimINK-Regular.ttf", "font-weight:normal;font-style:normal;"),
+  fontFace("Denim INK", "DenimINK-Bold.ttf", "font-weight:bold;font-style:normal;"),
+  fontFace("Denim INK", "DenimINK-RegularItalic.ttf", "font-weight:normal;font-style:italic;"),
+  fontFace("Denim INK", "DenimINK-BoldItalic.ttf", "font-weight:bold;font-style:italic;"),
   fontFace("DejaVu Sans Mono", "DejaVuSansMono.ttf", "font-weight:normal;font-style:normal;"),
   fontFace("DejaVu Sans Mono", "DejaVuSansMono-Bold.ttf", "font-weight:bold;font-style:normal;"),
+  fontFace("Andale Mono", andaleMonoPath(), "font-weight:normal;font-style:normal;"),
 ].join("");
 
-for (const file of files) {
+for (const file of selected) {
   await page.setContent(
     `<!doctype html><style>body{margin:0}${FONTS}</style>${readFileSync(file, "utf8")}`,
   );
-  await page.evaluate(() => document.fonts.ready);
+  // A face no label on this figure happens to use is never fetched on its own,
+  // so each is loaded by hand; what is checked is that none of them failed.
+  const unloaded = await page.evaluate(async () => {
+    await Promise.all([...document.fonts].map((f) => f.load().catch(() => {})));
+    return [...document.fonts].filter((f) => f.status !== "loaded").map((f) => `${f.family} ${f.weight} ${f.style}`);
+  });
+  if (unloaded.length > 0) {
+    console.error(`bundled font(s) failed to load, so nothing below is measured in the book's faces: ${unloaded.join(", ")}`);
+    process.exit(1);
+  }
   const fig = await page.evaluate(() => {
     const svg = document.querySelector("svg");
     const inv = svg.getScreenCTM().inverse();
@@ -163,6 +196,13 @@ for (const file of files) {
     // collinear or the stroke shows a corner. And an arrowhead drawn with
     // orient="auto" points along the tangent at the very last point, which
     // a short terminal hook can swing away from the line the reader sees.
+    const accountBoxes = [...svg.querySelectorAll('rect[rx="6"]')].map((r, i) => {
+      const b = box(r);
+      const t = [...svg.querySelectorAll("text")].map(box).map((tb, k) => ({ ...tb, s: svg.querySelectorAll("text")[k].textContent.trim() }))
+        .find((tb) => tb.x1 >= b.x1 && tb.x2 <= b.x2 && tb.y1 >= b.y1 && tb.y2 <= b.y2);
+      return { ...b, i, label: t ? t.s.slice(0, 24) : "a box" };
+    });
+    const seedLabels = [...svg.querySelectorAll("text")].filter((t) => parseFloat(t.getAttribute("font-size") || "10") < 8).map((t) => ({ ...box(t), s: t.textContent.trim().slice(0, 24) }));
     const arrows = [];
     for (const p of svg.querySelectorAll("path")) {
       const stroke = (p.getAttribute("stroke") || "").toLowerCase();
@@ -173,15 +213,42 @@ for (const file of files) {
       const total = p.getTotalLength();
       if (total < 8) continue;
       const width = parseFloat(p.getAttribute("stroke-width") || "1");
-      const end = p.getPointAtLength(total);
-      const nib = p.getPointAtLength(total - 0.25);
-      const behind = p.getPointAtLength(Math.max(0, total - Math.max(10, 9 * width)));
+      // Samples are taken in the path's own coordinates and mapped to the
+      // figure's, so an arrow inside a translated group is compared with the
+      // boxes where they are drawn.
+      const pm = inv.multiply(p.getScreenCTM());
+      const sample = (len) => {
+        const q = svg.createSVGPoint();
+        const z = p.getPointAtLength(len);
+        q.x = z.x; q.y = z.y;
+        return q.matrixTransform(pm);
+      };
+      const end = sample(total);
+      const nib = sample(total - 0.25);
+      const behind = sample(Math.max(0, total - Math.max(10, 9 * width)));
+      const start = sample(0);
+      const ahead = sample(Math.min(total, Math.max(10, 9 * width)));
+      // Everything the stroke passes over, other than the boxes it starts and
+      // ends on: a value arrow drawn across an account it does not connect
+      // reads as a movement through that account.
+      const samples = [];
+      for (let l = 0; l <= total; l += 2) samples.push(sample(l));
+      const within = (q, b, pad) => q.x > b.x1 + pad && q.x < b.x2 - pad && q.y > b.y1 + pad && q.y < b.y2 - pad;
+      const endBoxes = new Set(accountBoxes.filter((b) => within(samples[0], b, -10) || within(samples[samples.length - 1], b, -10)).map((b) => b.i));
+      const over = new Set();
+      for (const q of samples) {
+        // A stroke crosses a box when it is more than a unit inside it; a graze along the border is not a crossing.
+        for (const b of accountBoxes) if (!endBoxes.has(b.i) && within(q, b, 1)) over.add(b.label);
+        for (const t of seedLabels) if (within(q, t, 1)) over.add(`seed label "${t.s}"`);
+      }
       arrows.push({
-        accent, head,
+        accent, head, over: [...over],
         d: p.getAttribute("d") || "",
         end: [end.x, end.y],
         tangent: [end.x - nib.x, end.y - nib.y],
         approach: [end.x - behind.x, end.y - behind.y],
+        start: [start.x, start.y],
+        departure: [ahead.x - start.x, ahead.y - start.y],
       });
     }
 
@@ -194,15 +261,23 @@ for (const file of files) {
         const c = box(el);
         return c.x1 >= b.x1 && c.x2 <= b.x2 && c.y1 >= b.y1 && c.y2 <= b.y2;
       };
+      // The glyph is the 14-unit icon wrapper: a translated group whose first
+      // child is the mark's own group. A group that merely moves the whole box
+      // (translate(0,-90) round a faded account) also fits that description and
+      // also "holds" within the box, so the size rules it out.
       const glyph = [...svg.querySelectorAll("g[transform^='translate']")]
         .filter((g) => g.firstElementChild?.tagName === "g" && holds(g))
-        .map(box)[0];
-      const ruled = [...svg.querySelectorAll('line[stroke="#888"]')].some(holds);
-      // The heading only counts as one when it is the box's whole content: a
-      // second label means the box is a list, and rule 6 leaves it alone.
-      const labels = [...svg.querySelectorAll("text")].filter(holds);
-      const heading = labels.length === 1 ? box(labels[0]) : undefined;
-      return { ...b, glyph, heading, ruled };
+        .map(box)
+        .find((c) => c.x2 - c.x1 < 20 && c.y2 - c.y1 < 20);
+      const rule = [...svg.querySelectorAll('line[stroke="#888"]')].filter(holds).map(box).sort((p, q) => p.y1 - q.y1)[0];
+      const ruled = !!rule;
+      // In a collapsed box the heading is the whole content; in a ruled box it
+      // is the one label above the rule. Either way it and the icon are centred
+      // on their band: the box for the first, the title bar for the second.
+      const labels = [...svg.querySelectorAll("text")].filter(holds).map(box);
+      const heading = ruled ? labels.filter((l) => l.y2 <= rule.y1 + 1).sort((p, q) => p.y1 - q.y1)[0] : labels.length === 1 ? labels[0] : undefined;
+      const band = ruled ? { y1: b.y1, y2: rule.y1 } : { y1: b.y1, y2: b.y2 };
+      return { ...b, glyph, heading, ruled, band };
     });
 
     // Faded address dots that the cluster curve reaches, and whether an opaque
@@ -249,10 +324,48 @@ for (const file of files) {
       }
     }
 
+    // Every address dot in root coordinates, with its distance to the nearest
+    // piece of curve and to the nearest account box. Both are measured after
+    // transforms: the lending and vault figures place whole columns with a
+    // translate, and a dot's own cx/cy says nothing about where it prints.
+    // The legend arcs count as curve: a dot on one of them is drawn as on the
+    // curve.
+    const toRoot = (el) => inv.multiply(el.getScreenCTM());
+    const curvePoints = [...svg.querySelectorAll("path")]
+      .filter((p) => p.getAttribute("stroke") === "#111" && p.getAttribute("stroke-width") === "3.5")
+      .flatMap((piece) => {
+        const m = toRoot(piece), len = piece.getTotalLength(), points = [];
+        for (let i = 0; i <= 400; i += 1) points.push(piece.getPointAtLength((len * i) / 400).matrixTransform(m));
+        return points;
+      });
+    const accountRects = [...svg.querySelectorAll('rect[rx="6"]')].map(box);
+    const italics = [...svg.querySelectorAll("text")]
+      .filter((t) => t.getAttribute("font-style") === "italic").map(box);
+    const addressDots = nodes.filter(isDot).map((c) => {
+      const b = box(c);
+      const cx = (b.x1 + b.x2) / 2, cy = (b.y1 + b.y2) / 2;
+      const r = parseFloat(c.getAttribute("r"));
+      let near = Infinity;
+      for (const p of curvePoints) near = Math.min(near, Math.hypot(p.x - cx, p.y - cy));
+      // The ring's outer edge to the box's border, both ink.
+      let toBox = Infinity;
+      for (const q of accountRects) {
+        const dx = Math.max(q.x1 - cx, 0, cx - q.x2), dy = Math.max(q.y1 - cy, 0, cy - q.y2);
+        toBox = Math.min(toBox, Math.hypot(dx, dy) - r - 1);
+      }
+      // A legend key is a lone dot with its explanation in italic beside it.
+      const legend = italics.some((t) => t.x1 >= cx && t.x1 - cx <= 40 && Math.abs((t.y1 + t.y2) / 2 - cy) <= 12);
+      return { cx, cy, r, near, toBox, legend };
+    });
+
     return {
       arrows,
       accounts,
       fadedDots,
+      addressDots,
+      // Every address dot, with its 2-wide ring: getBBox stops at the
+      // geometry, so the ring reaches a unit past it on every side.
+      dots: nodes.filter(isDot).map((c) => { const b = box(c); return { x1: b.x1 - 1, y1: b.y1 - 1, x2: b.x2 + 1, y2: b.y2 + 1 }; }),
       coins: [...svg.querySelectorAll("g.coin")].map(box),
       markers: [...svg.querySelectorAll(".marker")].map(box),
       texts: [...svg.querySelectorAll("text")].map((t) => ({ ...box(t), s: t.textContent.trim() })),
@@ -366,19 +479,111 @@ for (const file of files) {
     }
   }
 
-  // 6. A box faded down to its heading has nothing below the title, so the
-  // icon and title sit in the middle of the box rather than hugging its top.
-  // Both halves are measured. The icon and the title are placed by separate
-  // numbers, so a figure copied from a neighbour can carry a centred icon over
-  // a title that sits low, which is how 173 of these boxes came to be wrong.
+  // 10. An arrow runs between the two accounts it connects and over nothing
+  // else: not across a third account box, and not through a seed label. The
+  // exceptions are routes that predate the rule and have no clear alternative
+  // in their figure; each is named so a change to it is noticed.
+  const arrowExceptions = new Set([
+    // Heads that slide along an edge or land near a corner because the stem runs within a few units of the
+    // box it enters, or threads a gap between columns: no arc can arrive within the angle limit, and the top
+    // edge carries the box's seed label. Each needs a layout change, which is separate work.
+    "building-financial-products-in-solana/figures/betting-alice-claim.svg 118,141 slides",
+    "building-financial-products-in-solana/figures/betting-place-bets.svg 470,601 slides",
+    "building-financial-products-in-solana/figures/lending-deposit-shares.svg 179,670 slides",
+    "building-financial-products-in-solana/figures/lending-deposit-shares.svg start 97,183 corner",
+    "building-financial-products-in-solana/figures/lending-liquidation.svg 470,692 slides",
+    "building-financial-products-in-solana/figures/lending-liquidation.svg start 401,189 corner",
+    "building-financial-products-in-solana/figures/lending-liquidation-second-call.svg 470,692 slides",
+    "building-financial-products-in-solana/figures/lending-liquidation-second-call.svg start 401,189 corner",
+    "building-financial-products-in-solana/figures/options-buy-call.svg 462,523 slides",
+    "building-financial-products-in-solana/figures/options-buy-put.svg 462,522 slides",
+    "building-financial-products-in-solana/figures/options-exercise.svg 462,522 slides",
+    "building-financial-products-in-solana/figures/options-put-exercised.svg 462,431 slides",
+    "building-financial-products-in-solana/figures/options-write-put.svg start 316,171 corner",
+    // the base vault's payout to Bob runs up his column with 3 units between stem and box; it slides along Bob's NVDAx
+    "building-financial-products-in-solana/figures/order-book-settle.svg 229,148 slides",
+    // Routes that predate the no-crossing rule and have no clear alternative in their figure.
+    "building-financial-products-in-solana/figures/lending-borrow-ltv.svg 186,346 over obligation",
+    "building-financial-products-in-solana/figures/lending-borrow-ltv.svg 186,346 over collateral vault",
+    "building-financial-products-in-solana/figures/order-book-settle.svg 229,148 over Bob's USDC",
+    "building-financial-products-in-solana/figures/vault-withdraw-in-kind.svg 240,318 over seed label \"TOKEN PROGRAM + TSLAX MI\"",
+  ]);
+  // 9. An arrow meets an account box on the flat of an edge, aimed into the
+  // box. A head that lands on the rounded corner covers the corner, and a
+  // value arrow that slides along an edge has its head lying across the
+  // border instead of pointing at the account. The box an end belongs to is
+  // the one the stroke is heading into (or, for a start, came out of), so a
+  // stroke passing a box's corner on its way elsewhere is not matched.
+  const edgeOf = (pt, dir, r, tol = 9) => {
+    if (pt[0] < r.x1 - tol || pt[0] > r.x2 + tol || pt[1] < r.y1 - tol || pt[1] > r.y2 + tol) return null;
+    const d = { left: Math.abs(pt[0] - r.x1), right: Math.abs(pt[0] - r.x2), top: Math.abs(pt[1] - r.y1), bottom: Math.abs(pt[1] - r.y2) };
+    const edge = Object.keys(d).sort((a, b) => d[a] - d[b])[0];
+    if (d[edge] > tol) return null;
+    const inward = { left: [1, 0], right: [-1, 0], top: [0, 1], bottom: [0, -1] }[edge];
+    const len = Math.hypot(dir[0], dir[1]) || 1;
+    if ((dir[0] * inward[0] + dir[1] * inward[1]) / len < -0.2) return null;
+    const along = edge === "left" || edge === "right" ? Math.min(pt[1] - r.y1, r.y2 - pt[1]) : Math.min(pt[0] - r.x1, r.x2 - pt[0]);
+    return { edge, along, off: between(dir, inward), at: `${r.x1.toFixed(0)},${r.y1.toFixed(0)}-${r.x2.toFixed(0)},${r.y2.toFixed(0)}` };
+  };
+  for (const a of fig.arrows) {
+    if (a.head) {
+      const hit = fig.accounts.map((r) => edgeOf(a.end, a.approach, r)).find(Boolean);
+      const tipKey = a.end.map((v) => v.toFixed(0)).join(",");
+      if (hit && hit.along < 10 && !arrowExceptions.has(`${name} ${tipKey} corner`)) {
+        fail(`arrowhead at ${tipKey} lands ${hit.along.toFixed(1)} from a corner of the box at ${hit.at}; ` +
+             `a head meets the flat of an edge, at least 10 from either corner`);
+      } else if (hit && a.accent && hit.off > 60 && !arrowExceptions.has(`${name} ${a.end.map((v) => v.toFixed(0)).join(",")} slides`)) {
+        fail(`arrowhead at ${a.end.map((v) => v.toFixed(0)).join(",")} slides ${hit.off.toFixed(0)}deg along the ${hit.edge} edge of the box at ${hit.at}; ` +
+             `aim the last stretch of the stroke into the box`);
+      }
+    }
+    const from = fig.accounts.map((r) => edgeOf(a.start, [-a.departure[0], -a.departure[1]], r)).find(Boolean);
+    if (from && from.along < 8 && !arrowExceptions.has(`${name} start ${a.start.map((v) => v.toFixed(0)).join(",")} corner`)) {
+      fail(`arrow starts at ${a.start.map((v) => v.toFixed(0)).join(",")}, ${from.along.toFixed(1)} from a corner of the box at ${from.at}; ` +
+           `leave from the flat of an edge`);
+    }
+  }
+
+  // 10, continued: the crossings themselves.
+  for (const a of fig.arrows) {
+    const tip = a.end.map((v) => v.toFixed(0)).join(",");
+    for (const what of a.over) {
+      if (arrowExceptions.has(`${name} ${tip} over ${what}`)) continue;
+      fail(`arrow ending at ${tip} passes over ${what}; route it around, or land on another edge`);
+    }
+  }
+
+  // 6. The icon and title are centred on their band: the whole box when it
+  // is collapsed to its heading, the title bar (box top to rule) when it has
+  // fields. Both halves are measured. The icon and the title are placed by
+  // separate numbers, so a figure copied from a neighbour can carry a centred
+  // icon over a title that sits low, which is how 173 collapsed boxes came to
+  // be wrong; and every ruled box sat its title 1.5 low until the bar was
+  // measured. The tolerance covers a reduced title size in a stepped-down figure.
   for (const a of fig.accounts) {
-    if (a.ruled) continue;
     for (const [part, what] of [[a.glyph, "icon"], [a.heading, "title"]]) {
       if (!part) continue;
-      const off = (part.y1 + part.y2) / 2 - (a.y1 + a.y2) / 2;
+      const off = (part.y1 + part.y2) / 2 - (a.band.y1 + a.band.y2) / 2;
       if (Math.abs(off) > 0.75) {
-        fail(`box collapsed to its heading at ${at(a)} sits its ${what} ${off.toFixed(1)} off centre; ` +
-             `centre the icon and title on the box's middle`);
+        fail(`box at ${at(a)} sits its ${what} ${off.toFixed(1)} off the centre of its ${a.ruled ? "title bar" : "box"}; ` +
+             `centre the icon and title on the ${a.ruled ? "bar's" : "box's"} middle`);
+      }
+    }
+  }
+
+  // 11. An address dot sits beside its account, never on it. The dot's ring
+  // and the box's border are both ink, so the test is on their outer edges:
+  // the ring clears the border by at least a unit. A dot on the curve hugs
+  // its box from above by 6 or more; an offcurve dot sits beside its seed
+  // list, above the box. Either way nothing about a dot belongs inside a
+  // rectangle, and a ring cut by a border reads as a hole in the account.
+  for (const d of fig.dots) {
+    for (const a of fig.accounts) {
+      const border = 0.9; // half the widest box stroke
+      const gap = Math.max(a.x1 - border - d.x2, d.x1 - (a.x2 + border), a.y1 - border - d.y2, d.y1 - (a.y2 + border));
+      if (gap < 0.95) { // a hair under a unit is rounding, not a touch
+        fail(`address dot at ${((d.x1 + d.x2) / 2).toFixed(0)},${((d.y1 + d.y2) / 2).toFixed(0)} ${gap < -1 ? "overlaps" : "touches"} the box at ${at(a)} ` +
+             `(${gap.toFixed(1)} clear); a dot sits beside its account with at least a unit between ring and border`);
       }
     }
   }
@@ -388,6 +593,57 @@ for (const file of files) {
     fail(`faded address dot at ${d.cx.toFixed(0)},${d.cy.toFixed(0)} lets the curve through; ` +
          `draw an opaque white disc behind it, before its faded group`);
   }
+
+  // 9. The dot's radius and its place against the curve say the same thing,
+  // and have to agree. An address made from a key pair is a public key, so it
+  // is on the curve - always, whoever generated the pair and whatever they did
+  // with the private key afterwards - and draws as an r=6 dot touching the
+  // curve. A PDA or a built-in address has no private key and never sits on
+  // it: r=5.5, clear of the curve, beside its seeds or its address. The
+  // order-book figures once drew four accounts created from client key pairs
+  // as r=5.5 dots hanging in the program column, captioned "A CLIENT KEYPAIR",
+  // which said "no private key" and "a private key" about the same address.
+  for (const d of fig.addressDots) {
+    if (!Number.isFinite(d.near)) continue; // a figure with no curve at all
+    const where = `${d.cx.toFixed(0)},${d.cy.toFixed(0)}`;
+    if (d.r === 6 && d.near > d.r + 1.75) {
+      fail(`public-key dot at ${where} sits ${(d.near - d.r - 1.75).toFixed(1)} off the curve; ` +
+           `an address made from a key pair is always on the curve: move the dot onto it, with its box beside it, ` +
+           `or if the address is derived draw it r=5.5 beside its seeds`);
+    } else if (d.r === 5.5 && d.near < d.r + 1.75 + 4) {
+      fail(`derived-address dot at ${where} touches the curve; a PDA or built-in address is never on the curve: ` +
+           `move it clear, or if the address is a public key draw it r=6 on the curve`);
+    }
+  }
+
+  // 12. An address and its account are one thing drawn twice, so the dot
+  // sits beside its box: at most 20 from ring to border, the ceiling
+  // DIAGRAMS.md sets. A dot that cannot reach its box is a layout to change,
+  // not a label to add: the first fix for the order book's vaults named four
+  // dots on the curve and left their boxes 300 units below them. Legend keys
+  // are the one lone dot allowed, and they carry their explanation in italic
+  // beside them.
+  for (const d of fig.addressDots) {
+    if (d.legend || d.toBox <= 20) continue;
+    fail(`address dot at ${d.cx.toFixed(0)},${d.cy.toFixed(0)} is ${Number.isFinite(d.toBox) ? d.toBox.toFixed(0) : "far"} from the nearest account box; ` +
+         `a dot sits within 20 of its account's box: move the box to the dot, or the dot to the box`);
+  }
+
+  // 8. The PDF sets the figure at the text width and clips it to the viewBox,
+  // so a label past the canvas edge is not a label that runs into the margin:
+  // it is a label with its end cut off. Anything past the edge fails; a label
+  // that stops within 2 units of it is printing against the trim of the figure.
+  for (const t of fig.texts) {
+    if (!t.s) continue; // an empty label has no box to be clipped
+    const over = Math.max(vx - t.x1, vy - t.y1, t.x2 - (vx + vw), t.y2 - (vy + vh));
+    if (over <= -2) continue;
+    const key = `canvas:${t.s}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    fail(over > 0
+      ? `"${t.s.slice(0, 40)}" runs ${over.toFixed(1)} past the canvas edge and is clipped`
+      : `"${t.s.slice(0, 40)}" stops within ${(-over).toFixed(1)} of the canvas edge`);
+  }
 }
 
 await browser.close();
@@ -396,4 +652,4 @@ if (failures > 0) {
   console.error(`\n${failures} figure geometry failure(s).`);
   process.exit(1);
 }
-console.log(`Figure geometry clean across ${files.length} figures.`);
+console.log(`Figure geometry clean across ${selected.length} figure(s).`);
