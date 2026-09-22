@@ -21,7 +21,7 @@
   <rect x="216" y="206" width="200" height="18" fill="#fff" stroke="#111" stroke-width="1.2"/>
   <text x="224" y="218.5" font-size="8.5">Bob&#8217;s 1,000 USDC</text>
   <text x="424" y="219" font-size="9.5">2,000.000001 USDC in the vault</text>
-  <text x="16" y="238" font-size="9" font-style="italic" fill="#444">Bob&#8217;s shares: 1,000 &#215; 1 &#247; 1,000.000001 = 0.999999999, floored to 0</text>
+  <text x="16" y="238" font-size="9" font-style="italic" fill="#444">Bob&#8217;s shares = floor(deposit &#215; shares outstanding &#247; pool value) = floor(1,000 &#215; 1 &#247; 1,000.000001) = 0</text>
   <text x="16" y="252" font-size="9" font-style="italic" fill="#444">1 share outstanding, still the attacker&#8217;s, now worth 2,000.000001 USDC</text>
   <!-- what the bars cannot say -->
   <text x="320" y="284" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the handler prices shares off the vault&#8217;s token balance, so a donation counts as value;</text>
