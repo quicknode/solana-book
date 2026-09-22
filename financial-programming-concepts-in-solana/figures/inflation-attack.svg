@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 312" font-family="Gelasio, Georgia, serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Bob&#8217;s deposit buys no shares</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Gelasio, Georgia, serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">An attacker makes Bob&#8217;s deposit buy no shares</text>
   <!-- step 1: the dust deposit through the handler -->
   <g class="coin" transform="translate(22,48)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <text x="36" y="52" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. The attacker deposits 0.000001 USDC through the deposit handler</text>
@@ -21,9 +21,11 @@
   <rect x="216" y="206" width="200" height="18" fill="#fff" stroke="#111" stroke-width="1.2"/>
   <text x="224" y="218.5" font-size="8.5">Bob&#8217;s 1,000 USDC</text>
   <text x="424" y="219" font-size="9.5">2,000.000001 USDC in the vault</text>
-  <text x="16" y="238" font-size="9" font-style="italic" fill="#444">Bob&#8217;s shares = floor(deposit &#215; shares outstanding &#247; pool value) = floor(1,000 &#215; 1 &#247; 1,000.000001) = 0</text>
-  <text x="16" y="252" font-size="9" font-style="italic" fill="#444">1 share outstanding, still the attacker&#8217;s, now worth 2,000.000001 USDC</text>
+  <path d="M 16,228 L 16,233 L 416,233 L 416,228 M 216,233 L 216,238" fill="none" stroke="#111" stroke-width="1.2"/>
+  <text x="216" y="250" font-size="9.5" font-weight="bold" text-anchor="middle">the attacker&#8217;s one share redeems for all 2,000.000001 USDC</text>
+  <text x="16" y="266" font-size="9" font-style="italic" fill="#444">Bob&#8217;s shares = floor(deposit &#215; shares outstanding &#247; pool value) = floor(1,000 &#215; 1 &#247; 1,000.000001) = 0</text>
+  <text x="16" y="286" font-size="10.5" font-weight="bold">The attacker put in 1,000.000001 USDC and can take out 2,000.000001 USDC: Bob&#8217;s 1,000 is theirs</text>
   <!-- what the bars cannot say -->
-  <text x="320" y="284" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the handler prices shares off the vault&#8217;s token balance, so a donation counts as value;</text>
-  <text x="320" y="298" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the share supply moves only through the handler, so the donation left it at one</text>
+  <text x="320" y="314" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the handler prices shares off the vault&#8217;s token balance, so a donation counts as value;</text>
+  <text x="320" y="328" font-size="10" font-style="italic" fill="#444" text-anchor="middle">the share supply moves only through the handler, so the donation left it at one</text>
 </svg>
