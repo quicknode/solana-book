@@ -9,9 +9,11 @@ Which clock to use depends on the job. A price freshness window counts slots. A 
 
 ## The Slot Counter
 
-A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**.
+A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. Leaders take **turns** of four slots in a row, assigned in advance in proportion to each validator's stake. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**.
 
-When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block.
+When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. The next block names the last block that did arrive as its parent.
+
+![](figures/leader-turns.svg)
 
 The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
@@ -30,7 +32,7 @@ The **Unix timestamp** comes from the same Clock sysvar, but it is a time a lead
 
 ![](figures/unix-timestamp.svg)
 
-A leader can pick any time inside the permitted range, which moves the timestamp by a fraction of a second for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader decides it through the time it writes, and through which transactions it puts in its block.
+A leader can pick any time inside the permitted range, which moves the timestamp by a fraction of a second for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader.
 
 ## Which Clock for Which Job
 
