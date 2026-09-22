@@ -14,6 +14,6 @@
   <text x="590" y="132" font-size="10" fill="#444" text-anchor="end" font-style="italic">a target slot time of 200 ms</text>
   <path d="M 416,168 C 392,158 370,140 352,120" stroke="#111" stroke-width="1.3" marker-end="url(#slotc)" fill="none"/>
   <text x="424" y="166" font-size="10.5">a step is not exactly that long:</text>
-  <text x="424" y="180" font-size="10.5" font-weight="bold">a count is off by around 3%</text>
+  <text x="424" y="180" font-size="10.5" font-weight="bold">a count is off by [PLACEHOLDER] %</text>
 </g>
 </svg>
