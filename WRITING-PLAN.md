@@ -74,7 +74,6 @@ Steps currently missing their per-step diagram, to be drawn in the visual pass:
 - Perpetual Futures: Alice's `close_position` payout.
 - The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
 - The Vault Strategy: Bob's deposit at the new share price.
-- Options: Maria's `initialize_market`.
 
 ## Reviewers, Feedback, and Editions
 
