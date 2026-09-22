@@ -4,7 +4,7 @@ The *Order Book Exchange* chapter built an exchange where every price is a commi
 
 AMMs work where order books do not: tokens without much trading volume, where a taker might wait forever for a matching maker. So they are the standard venue for new token launches, and this chapter follows one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
-The K in "constant product" is constant only inside a single trade: it grows every time someone deposits or a fee stays in the pool. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every trade.
+The K in "constant product" is held fixed only while the pool prices a trade. The pool then adds the liquidity providers' share of that trade's fee to the reserves, so every swap leaves K a little larger. Deposits grow K too, and withdrawals shrink it. The launch below runs with an operator, trading fees, and liquidity providers, and states X, Y, and K after every trade.
 
 ## X Times Y Equals K, and K Prices Every Trade
 
@@ -14,10 +14,12 @@ output = taxed_input × other_reserve ÷ (this_reserve + taxed_input)
 
 The spot price is just the ratio Y ÷ X, and every trade moves it: buying ACME removes X and adds Y, so the next buyer pays more. Big trades relative to the pool move the price a lot; that is price impact.
 
-**K is constant within a single trade and grows over time.** It grows two ways:
+**The curve holds K fixed while it prices a trade, and K changes between trades.** It grows two ways:
 
 - **Deposits** add more of both tokens at the same ratio.
-- **Fees** stay in the pool: the liquidity providers' share of every trade's fee is never paid out to anyone.
+- **Fees**: the liquidity providers' share of every trade's fee is added to the reserves without being used to price the trade. Nobody is paid it at the time; liquidity providers collect it as part of their slice when they withdraw.
+
+Withdrawals shrink K, by the withdrawer's share of both reserves.
 
 The deeper the pool, the less any one trade moves the price.
 
@@ -134,7 +136,7 @@ The order book needed a tree, a matching engine, and maker accounts, because hum
 Six concepts came with the curve:
 
 - **A formula as the market maker.** Output = taxed input × other reserve ÷ (this reserve + taxed input); the first deposit sets the price, and every trade pays its own price impact.
-- **How K grows.** Constant within a trade, growing across deposits and fees; and an invariant that can hold vacuously (new K ≥ 0 on an empty pool) is not an invariant.
+- **How K changes.** Fixed while a trade is priced, growing with deposits and every swap's fee, shrinking with withdrawals; and an invariant that can hold vacuously (new K ≥ 0 on an empty pool) is not an invariant.
 - **Assert after the math.** The post-trade product re-check catches every "computed the output wrong and overpaid" bug, including the ones not written yet.
 - **Effective reserves.** The admin's virtual fee claim is excluded from every piece of LP-facing math, the order book's fee vault implemented as accounting.
 - **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone, keeps the share divisor from ever being dust-sized.
