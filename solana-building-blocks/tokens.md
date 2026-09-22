@@ -52,7 +52,7 @@ In this book, an address drawn **off** the curve is shown with the seeds its add
 
 ## Decimals Define the Minor Unit
 
-The mint's **decimals** set the **minor unit**, the raw integer that programs calculate and transfer in: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
+The mint's **decimals** set the **minor unit**, the raw integers that programs use to calculate and transfer assets: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
 
 ## The Freeze Authority Can Freeze Any Holder's Account
 
