@@ -2,7 +2,7 @@
 
 Solana has two clocks, and a program reads both from the same account:
 
-- The slot is a count the network advances at a steady pace, and it only goes up.
+- The slot is a count the network advances at a steady pace, and it only goes up.[^forks]
 - The Unix timestamp is wall-clock time, accurate to within a few seconds.
 
 Which clock to use depends on the job. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Which order came first uses neither, and uses a counter the program keeps itself.
@@ -13,7 +13,7 @@ A Solana cluster runs on **validators**: physical computers that each hold a cop
 
 When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block.
 
-The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.[^forks]
+The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
 
 ![](figures/slot-counter.svg)
 
