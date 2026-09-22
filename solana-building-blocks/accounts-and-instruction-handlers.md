@@ -8,7 +8,7 @@ Solana (or more specifically, Solana mainnet and devnet) is better understood as
 
 Meet Alice. Alice has a **key pair**: two mathematically linked keys. Her **private key** is kept secret, stored securely on her device, and is used to sign. The matching **public key** can be shared with everyone, and is used to check those signatures: a valid signature proves that the holder of the private key that matches this public key, and nobody else, produced the signature.
 
-On Solana, as with most blockchains, the public key is also Alice's **address**, the identifier anyone can use to find her and transact with her. Solana public keys are points on a cryptographic curve, so this book draws them exactly that way: as addresses positioned on a curve.
+On Solana, as with most blockchains, the public key is also Alice's **address**, the identifier anyone can use to find her and transact with her. Solana public keys are points on a cryptographic curve, so this book draws them as addresses positioned on a curve.
 
 At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called rent) and the fees on her future transactions. Anyone who knows Alice's address can look up her account, see that balance, and send her more SOL. However, nobody can spend Alice's SOL without her private key.
 
@@ -69,7 +69,7 @@ Every instruction names which of the program's **instruction handlers** to run, 
 
 Alice runs her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
-The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the full discipline on this one idea.
+The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the rest of the book's money math on this rule.
 
 > **Why "lamport"?** Lamports are named after Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
 
@@ -79,7 +79,7 @@ The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **la
 
 Alice's transaction executes **atomically**: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed."
 
-For financial software, atomicity is a primitive you design with. Settlement risk between steps simply does not exist inside a transaction: 
+For financial software, atomicity is a primitive you design with. Inside a transaction there is no settlement risk between steps: 
 
 - the escrow program you're about to build moves Alice's payment and Bob's stock in one atomic unit, and no combination of failures leaves one side paid and the other empty-handed. 
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state
@@ -103,7 +103,7 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 - **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
 - **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
 
-That is why the transfer could debit Alice's account: she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything, because receiving requires no signature from the recipient, while nothing will ever leave his account until a transaction *he* signs asks for it.
+The transfer could debit Alice's account because she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything, because receiving requires no signature from the recipient, while nothing will ever leave his account until a transaction *he* signs asks for it.
 
 Solana uses the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
