@@ -13,7 +13,7 @@ Financial code fails at the edges the happy path never reaches: the refund, the 
 - **Test every attack by name.** Every rule in a program chapter's failure-modes section gets a test that tries to break it: the non-maker canceling an offer, the fee vault passed in place of the user vault, the second claim on a settled event.
 - **Assert invariants, not just account values.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). An invariant test catches a whole bug class; an assertion on one account's value catches one instance of it.
 
-Every test in this list is cheap to write and fast to run. The test runs the compiled program in-process in milliseconds, warping the slot makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs. Cashio and Wormhole, in the *Adversary* chapter, each lost their funds through a handler that accepted a substituted account. The fifth rule above turns that attack into a test: the fee vault passed in place of the user vault.
+Every test in this list is cheap to write and fast to run. The test runs the compiled program in-process in milliseconds, moving the clock forward makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs. Cashio and Wormhole, in the *Adversary* chapter, each lost their funds through a handler that accepted a substituted account. The fifth rule above turns that attack into a test: the fee vault passed in place of the user vault.
 
 ## Proving Goes Further Than Testing
 

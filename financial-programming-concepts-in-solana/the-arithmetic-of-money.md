@@ -83,19 +83,19 @@ One note from the same program: degenerate values like zero can make invariants 
 
 ## One Accumulation Factor Compounds Interest for Every Borrower
 
-A lending market can have thousands of open loans, and every one of them owes more with each slot that passes. Written naively, interest is a loop: every slot, visit every loan and multiply its debt by one plus the rate. Onchain that loop cannot run: there is no transaction large enough to include every borrower's account. Even a crank working through the loans in batches would spend compute rewriting thousands of accounts to record interest nobody is collecting yet.
+A lending market can have thousands of open loans, and every one of them owes more with each second that passes. Written naively, interest is a loop: every second, visit every loan and multiply its debt by one plus the rate. Onchain that loop cannot run: there is no transaction large enough to include every borrower's account. Even a crank working through the loans in batches would spend compute rewriting thousands of accounts to record interest nobody is collecting yet.
 
 The **accumulation factor** removes the loop. Each market stores one fixed-point number that starts at 1.0 and grows by the current rate each time anyone touches the market:
 
 ```
-new factor = old factor × (1 + rate per slot × elapsed slots)
+new factor = old factor × (1 + rate per second × elapsed seconds)
 ```
 
 Each loan stores only its principal, and a live debt is that principal multiplied by the current factor. One number moves instead of thousands, interest compounds across updates on its own, and no tokens move until someone repays or withdraws. The lending example calls the field `borrow_accumulation_factor`; the *Lending and Borrowing* chapter runs it.
 
 That update is an approximation of compounding, and it is the one the lending market runs. The exact form exists for the day a formula needs it:
 
-- **The everyday update approximates.** Multiplying by (1 + rate × elapsed slots) is simple interest over the interval. True compounding over n slots is (1 + rate)ⁿ, a power; the approximation is a multiply. The lending market grows `borrow_accumulation_factor` this way in `refresh_reserve()`, and every handler that moves money requires that refresh to have run first, so the intervals stay short. With a tiny per-slot rate and short intervals, the difference from true compounding is smaller than anything a borrower could measure.
+- **The everyday update approximates.** Multiplying by (1 + rate × elapsed seconds) is simple interest over the interval. True compounding over n seconds is (1 + rate)ⁿ, a power; the approximation is a multiply. The lending market grows `borrow_accumulation_factor` this way in `refresh_reserve()`, and every handler that moves money requires that refresh to have run first, so the intervals stay short. With a tiny per-second rate and short intervals, the difference from true compounding is smaller than anything a borrower could measure.
 - **When a formula needs the exact power, square.** For (1 + rate)ⁿ with a large n, do not multiply n times. Use repeated squaring instead: (1 + rate)⁸ is three squarings rather than seven multiplications, and in general about log₂(n) of them, each with checked math and floored the same way. This is **exponentiation by squaring**. No program in this book needs it, because the lending market refreshes often enough that the approximation stays closer than the rounding. It is the tool for a market that can sit untouched for a long stretch, where one catch-up update would otherwise treat months of interest as simple interest.
 
 The rate itself is a policy choice; the arithmetic above only applies whatever rate the market sets. Nearly every lending market sets it the same way, though: as a function of **utilization**, the share of the pool that is lent out. The rate rises gently up to a target utilization and steeply beyond it, so a pool that is nearly empty pays depositors more and charges borrowers more until deposits come back or loans are repaid.

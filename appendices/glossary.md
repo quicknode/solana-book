@@ -72,7 +72,7 @@ A recent block's hash, included in every transaction to bound its lifetime. When
 
 ### borrow accumulation factor
 
-A single number per reserve that starts at 1.0 and only grows, compounding the borrow rate over elapsed slots. A borrower's live debt is their stored principal multiplied by it, so interest accrues for everyone without any loan being touched. The lending example calls the field `borrow_accumulation_factor`; see the *Lending and Borrowing* chapter.
+A single number per reserve that starts at 1.0 and only grows, compounding the borrow rate over elapsed seconds. A borrower's live debt is their stored principal multiplied by it, so interest accrues for everyone without any loan being touched. The lending example calls the field `borrow_accumulation_factor`; see the *Lending and Borrowing* chapter.
 
 ### built-in address
 
@@ -213,7 +213,7 @@ The last moment an [option](#option) can be exercised. After it the writer recla
 
 ### exponentiation by squaring
 
-Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed slots in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
+Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed seconds in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
 
 ### faucet
 
