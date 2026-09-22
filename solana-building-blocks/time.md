@@ -19,7 +19,7 @@ The slot count is how many slots have gone by. Programs read the current count f
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **A slot is not exactly the length the network intends.** The network sets a target, 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around 3%.[^slot-time-live] A slot mostly runs long because its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **A slot is not exactly the length the network intends.** The network sets a target, 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around PLACEHOLDER%.[^slot-time-live] A slot mostly runs long because its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and a little longer in practice because real slots run long. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
@@ -38,7 +38,7 @@ A leader can pick any time inside the permitted range, which moves the timestamp
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. The vault's annual fee runs on the wall clock too, because a few seconds against a year change it by nothing anybody can see.
 
-The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs, while around 3% of a slot count grows with the span, until across a week it is hours.
+The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs, while around PLACEHOLDER% of a slot count grows with the span, until across a week it is hours.
 
 ## Interest and Funding Accrue by Slot
 
@@ -53,7 +53,7 @@ Two programs in this book accrue value over time, and both count it in slots:
   Elapsed slots is the current slot minus the slot of the last refresh, which the reserve stores. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. Its rates are quoted annually, so the conversion divides by the slots in a year, and the reserve stores that divisor as `slots_per_year` rather than working it out. The *Arithmetic of Money* chapter covers how to build that factor safely.
 - **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_slot`. Its funding rate is set per slot to begin with, so the slot time is what decides the cost of an hour.
 
-Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. An adversary running a leader could profit by shifting the time a few seconds at the liquidation line, so the accrual counts slots. The slot count's own error, a percent or two across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
+Both accumulate, both advance by elapsed slots, and both decide what somebody owes, which decides whether a position can be liquidated. An adversary running a leader could profit by shifting the time a few seconds at the liquidation line, so the accrual counts slots. The slot count's own error, around PLACEHOLDER% across a year, changes what a borrower pays, and the market owner corrects it by retuning `slots_per_year`.
 
 ## How to Turn Time Into Slots
 
@@ -198,6 +198,6 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^slot-simd]: During the second half of 2026, slot times were slowly reduced from 400 milliseconds to 200, under [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
 
-[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). In late August 2026, part way through the reduction, it read about 360 milliseconds against a 350 millisecond target, which is about 3% long.
+[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). PLACEHOLDER: the reading, and the date it was taken, once Alpenglow is active.
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
