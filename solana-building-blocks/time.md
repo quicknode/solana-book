@@ -5,7 +5,7 @@ Solana has two clocks, and a program reads both from the same account:
 - The slot is a count the network advances at a steady pace, and it only goes up.
 - The Unix timestamp is wall-clock time, accurate to within a few seconds.
 
-The jobs in this book split cleanly between them. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Which order came first uses neither, and uses a counter the program keeps itself.
+Which clock to use depends on the job. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Which order came first uses neither, and uses a counter the program keeps itself.
 
 ## The Slot Counter
 
