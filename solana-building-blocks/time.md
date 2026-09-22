@@ -10,13 +10,12 @@ A **slot** is a window in which one leader may produce one block, and the slot c
 
 ![](figures/slot-counter.svg)
 
-Three things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know all three:
+Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **A slot is not exactly the length the network intends.** The network sets a target, 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around 3%.[^slot-time-live]
-- **A leader sets the pace of its own slots.** It could produce its blocks faster than the target, but gains nothing by it. It can also produce them slowly, or not at all, which makes those slots take longer in wall-clock time. The other validators decide how slow is too slow: a block that has not arrived by a deadline is voted skipped, and the network moves on to the next slot. Those deadlines belong to the network's consensus mechanism and change with it, so check the current ones rather than building on a figure.[^skip-deadlines] Stretching loosens a slot-counted window rather than tightening it. How far one leader can stretch depends on how many slots it leads, and that is a matter of stake.
+- **A slot is not exactly the length the network intends.** The network sets a target, 200 milliseconds, and real slots run a little longer or shorter. A time counted in slots is accurate to around 3%.[^slot-time-live] A slot mostly runs long because its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That pauses per-slot accrual, which is usually what you want, and it makes an hours-old price look one slot old, which nobody wants.
 
-Before each **epoch** of 432,000 slots, about a day at 200 milliseconds, the network draws a **leader schedule**. Every slot is assigned to one validator, in turns of four consecutive slots, and a validator's chance at each turn is proportional to the stake delegated to it. A validator with 1% of the stake leads about 1% of the slots, in turns of four scattered across the epoch, and knows before the epoch starts which slots they are. A small validator can stretch its four slots, and then the schedule moves on. A validator with a large share of the stake leads a matching share of the slots in any window, so it can slow every turn it holds, and a slot-counted window runs long by a share that tracks that stake. Because the schedule is public in advance, it can also time a stretch to a boundary it wants to land on, an auction close or a funding interval. Each leader also writes the Unix timestamp that the next block's transactions read, so the same validator has the larger say over the next section's clock too. Neither lets it move the slot count: the count still advances one per slot, and its own slots are the only ones it can slow.
+Slots are grouped into **epochs** of 432,000 slots, about a day at 200 milliseconds. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ## The Unix Timestamp
 
@@ -24,7 +23,7 @@ The **Unix timestamp** comes from the same Clock sysvar, but it is a time a lead
 
 ![](figures/unix-timestamp.svg)
 
-A leader has two ways to move the time a transaction sees. It can pick any time inside the permitted range, and it can stretch its slots, so that the world outside moves on while the timestamp in the sysvar stands still. Either is worth a few seconds, and a few seconds is what it stays however long the span, because each block's time is checked against the one before it and the next leader writes its own clock's time. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, whoever leads the slots around it decides which side of the boundary a transaction lands on.
+A leader can pick any time inside the permitted range. That is worth a few seconds, and a few seconds is what it stays however long the span, because each block's time is checked against the one before it and the next leader writes its own clock's time. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, whoever leads the slots around it decides which side of the boundary a transaction lands on. It does that by the time it writes, and by which transactions it puts in its block.
 
 ## Which Clock for Which Job
 
@@ -167,7 +166,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 ## What You Learnt
 
-- Solana has two clocks. The **slot** count only goes up and nobody can move it, though what it comes to in seconds varies a little, stops in a halt, and stretches under the leader of the moment, by a share that tracks that leader's stake. The **Unix timestamp** is wall-clock time written by a leader, out by a few seconds somebody chose, however long the span.
+- Solana has two clocks. The **slot** count only goes up and nobody can move it, though what it comes to in seconds varies a little and stops in a halt. The **Unix timestamp** is wall-clock time written by a leader, out by a few seconds somebody chose, however long the span.
 - Count slots for price freshness, for accrual, and for anything a few seconds could move money across. Use the wall clock for a span of days or years quoted to a person, with a margin. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
 - To accrue interest or funding without touching every account, store each account's principal and one shared **accumulation factor** that advances by elapsed slots. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
@@ -179,8 +178,6 @@ The table lists every program in Part II that touches time, and the clock each o
 - Pair every slot-counted freshness window with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
 [^forks]: Two validators can briefly build on different blocks, so a block for a lower slot on one fork can be produced after a block for a higher slot on another. The network settles on one of them, and a program only ever sees one.
-
-[^skip-deadlines]: Under Alpenglow, the consensus mechanism that replaced Tower BFT and proof of history, validators vote to skip a slot whose block is late. Changes to those deadlines are proposed as SIMDs, such as [SIMD-0630](https://github.com/solana-foundation/solana-improvement-documents/pull/630). Source: Brennan Watt of Anza, in a message to the author in September 2026.
 
 [^alpenglow-clock]: Under Tower BFT, the timestamp was instead the stake-weighted median of times validators put in their votes. Alpenglow replaced it with the leader's own time, carried in a block footer. Source: Brennan Watt of Anza, in a message to the author in September 2026, and [github.com/anza-xyz/agave/issues/15441](https://github.com/anza-xyz/agave/issues/15441).
 
