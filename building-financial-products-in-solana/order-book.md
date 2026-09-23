@@ -92,6 +92,8 @@ Bob decides three shares is enough. He calls `cancel_order()` on his order accou
 
 ![](figures/order-book-cancel.svg)
 
+There is no instruction to change a resting order. To move its price or size, Bob cancels it and places a new one, and both instructions can go in one transaction, so either both happen or neither does. The new order joins the back of the queue at its price.
+
 ## Settlement Turns Claims Into Tokens
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
