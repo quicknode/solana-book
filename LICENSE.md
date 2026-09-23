@@ -23,7 +23,7 @@ The account figures name each account's kind with an icon drawn from a published
 - **Person** — [`octicon:person-16`](https://icon-sets.iconify.design/octicon/person-16/), from Octicons by GitHub (MIT).
 - **Token account / vault** — [`hugeicons:piggy-bank`](https://icon-sets.iconify.design/hugeicons/piggy-bank/), from Hugeicons (MIT).
 - **Token mint** — [`boxicons:bank`](https://icon-sets.iconify.design/boxicons/bank/), from Boxicons (MIT).
-- **Data-struct PDA** — [`tabler:table`](https://icon-sets.iconify.design/tabler/table/), from Tabler Icons by Paweł Kuna (MIT).
+- **Data-struct account** — [`tabler:table`](https://icon-sets.iconify.design/tabler/table/), from Tabler Icons by Paweł Kuna (MIT).
 - **Program** — [`streamline-flex:cog`](https://icon-sets.iconify.design/streamline-flex/cog/), from Streamline's Flex free icons (**CC BY 4.0**: <https://creativecommons.org/licenses/by/4.0/>).
 
 The Streamline mark carries an attribution requirement the rest do not; reproductions of the figures should keep this section with them.

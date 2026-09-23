@@ -2,7 +2,7 @@
 
 Escrow is the simplest program in this book. It lets two people swap tokens without trusting each other or paying a middleman, and it does that with three instruction handlers. It also teaches the mechanics that every later program reuses:
 
-- holding tokens in a vault whose authority is an account the program controls, so nobody, including the program's author, can move them except along the paths the code defines
+- holding tokens in a vault whose authority is an address only the program can sign for, so nobody, including the program's author, can move them except along the paths the code defines
 - storing the terms of a deal in an account the program owns, and checking every later instruction against them
 - letting who signed, and what the stored terms say, decide what may happen next
 - giving every state an exit that returns the tokens and the account rent deposits, so neither is stranded
@@ -59,13 +59,13 @@ The **offer account** stores what Alice wants in return. It is the program's cus
 - `token_b_wanted_amount`, how much of token B the maker wants, in minor units
 - `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
 
-The offer account is a **PDA** (program derived address), derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
+The offer account lives at a **PDA** (program derived address), an address derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
 
-The **vault** is where Alice's USDC waits. It is an ordinary token account with one difference: its authority is the offer account, not Alice and not the program's author. The offer account is a PDA, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
+The **vault** is where Alice's USDC waits. It is an ordinary token account with one difference: its authority is the offer PDA, not Alice and not the program's author. The offer PDA has no private key, so only the escrow program can sign as it, which means tokens leave the vault only along the code paths the program defines. Concretely, the vault is the offer account's **associated token account** for token mint A, so its address is derivable by anyone from the offer's address and the mint's address.
 
 Around these two sit the accounts every token program interaction needs: the two mint accounts, Alice's token account for each mint, the System Program (which creates accounts), the token program, and the Associated Token Program (which derives where a wallet stores a given token). The escrow accepts either token program through one interface, so the same code works whether the tokens involved use the Classic Token Program or the Token Extensions Program; the constraints only require that every token account in one transaction uses the same one. Bob's accounts are faded in the figure because this transaction never touches them.
 
-Before the handler code runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here, with space for the data fields plus the discriminator that marks the account's type, at the PDA address derived from `"offer"`, Alice's address, and the ID. If that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
+Before the handler code runs, the account constraints in `MakeOfferAccountConstraints` have already enforced the structure of the deal. Alice must have signed, and she is marked mutable because she pays to create the accounts this handler makes. Both mint accounts must belong to the token program named in the transaction. `maker_token_account_a` must be Alice's associated token account for token mint A, which is the account her USDC leaves. The offer account is created here, with space for the data fields plus the discriminator that marks the account's type, at the PDA derived from `"offer"`, Alice's address, and the ID. If that account already exists, creation fails and the whole transaction aborts, which is the ID-reuse check. The vault is also created here, as the offer's associated token account for token mint A.
 
 `maker_token_account_b` is Alice's account for the token she *wants*: the TSLAx account Bob will pay into. She may not have one yet, so `make_offer()` creates it if it does not exist, and Alice pays the rent. Creating it now means Bob never has to. When he takes the offer the account is already there, and `take_offer()` only checks that it is. Otherwise Bob would be paying rent on an account that belongs to Alice.
 
@@ -76,7 +76,7 @@ With the structure verified, the handler code is two small steps:
 
 ### The Taker Takes the Offer
 
-Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump prove the offer is the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
+Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump prove the offer account sits at the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
 
 ![](figures/escrow-take-offer.svg)
 
@@ -85,7 +85,7 @@ That is all Alice does. She does not need to be awake, online, or anywhere in pa
 The handler code runs two steps:
 
 - **`handle_send_wanted_tokens_to_maker()`** moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it.
-- **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer account, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
+- **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer PDA, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
 
 Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and the offer account itself is closed, refunding that rent to Alice too.
 
@@ -145,7 +145,7 @@ In traditional finance, an escrow means a trusted third party: a company that ho
 
 The escrow gave you five concepts:
 
-- **Program custody.** Tokens held in a vault whose authority is an account the program controls (a PDA), so funds move only along the code paths the program defines.
+- **Program custody.** Tokens held in a vault whose authority is a PDA, an address only the program can sign for, so funds move only along the code paths the program defines.
 - **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler checks its accounts against that stored data.
 - **State transitions gated by signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
 - **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.

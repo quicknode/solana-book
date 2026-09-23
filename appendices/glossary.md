@@ -527,7 +527,7 @@ Trading a fund back toward its target weights after prices have moved it away. I
 
 ### receipt
 
-A per-participant account, usually a PDA, recording what the program owes one person: a contributor's amount, a bettor's stake. The program writes it for itself, and refunds and claims pay what the receipt records rather than what a vault happens to hold. Every receipt needs a closing path, or its rent deposit is stranded once the product it belonged to is gone.
+A per-participant account, usually at a PDA, recording what the program owes one person: a contributor's amount, a bettor's stake. The program writes it for itself, and refunds and claims pay what the receipt records rather than what a vault happens to hold. Every receipt needs a closing path, or its rent deposit is stranded once the product it belonged to is gone.
 
 ### rent
 
