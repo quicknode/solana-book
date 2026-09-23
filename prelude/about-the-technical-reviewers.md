@@ -13,7 +13,7 @@ Angus Scott is the founder of the Solana Research Institute, and was previously 
 
 Arihant Bansal is an engineer at Arcium, an encrypted compute network on Solana.
 
-Brennan Watt is an engineer at Anza, the team behind the Agave validator client.
+Brennan Watt is the CEO of Anza, the team behind the Agave validator client.
 
 Callum McIntyre is an engineer at Anza, and was previously Developer Relations for Payments at the Solana Foundation.
 
