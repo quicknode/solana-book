@@ -71,7 +71,7 @@ What is specific to the book: the conventions are fixed during the single visual
 
 Steps currently missing their per-step diagram, to be drawn in the visual pass:
 
-- Lending and Borrowing: Maria's opening deposit into each reserve, and her three share accounts in the account map; Carol's short; Bob's repayment and collateral withdrawal.
+- Lending and Borrowing: Carol's short; Bob's repayment and collateral withdrawal.
 - Perpetual Futures: Alice's `close_position` payout.
 - The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
 - The Vault Strategy: Bob's deposit at the new share price.
