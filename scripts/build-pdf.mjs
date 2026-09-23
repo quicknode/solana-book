@@ -40,9 +40,11 @@ const PAGE_SIZES = {
   letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
 };
 
-const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
+const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [--final] [output.pdf]
 
   --size <name>   Page size; defaults to "print". See PRINT-SPECIFICATION.md.
+  --final         Leave out the prerelease markings: the draft note on the
+                  title page and the marker in every page's footer.
   --help          Print this and exit.
 
 Environment:
@@ -64,12 +66,15 @@ const die = (message) => {
 // dropped rather than taken for an output path.
 const argv = process.argv.slice(2).filter((arg) => arg !== "--");
 let sizeName = "print";
+let isFinal = false;
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
   const arg = argv[i];
   if (arg === "--help" || arg === "-h") {
     console.log(USAGE);
     process.exit(0);
+  } else if (arg === "--final") {
+    isFinal = true;
   } else if (arg.startsWith("--size=")) {
     sizeName = arg.slice("--size=".length);
   } else if (arg === "--size") {
@@ -111,6 +116,9 @@ const escapeCssString = (text) =>
 
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
 const reviewerName = (process.env.REVIEWER_NAME ?? "").trim();
+// A reviewer's copy exists to be traced back to its reviewer, so a final build
+// carrying one is a contradiction rather than a combination.
+if (isFinal && reviewerName) die("--final and REVIEWER_NAME cannot be combined: a review copy is not final.");
 const buildDate = new Date().toISOString().slice(0, 10);
 
 // A reviewer's copy also carries the commit it was built from. The manuscript
@@ -135,7 +143,12 @@ const commit = reviewerName ? describeCommit() : "";
 
 const advanceNote = reviewerName
   ? `Advance review copy for ${escapeHtml(reviewerName)}. Please don't redistribute. Built ${buildDate}${commit ? ` from commit ${escapeHtml(commit)}` : ""}.`
-  : `Prerelease draft, built ${buildDate}.`;
+  : isFinal
+    ? ""
+    : `Prerelease draft, built ${buildDate}.`;
+const draftFooter = isFinal
+  ? ""
+  : `@bottom-left { content: "PRERELEASE DRAFT (${buildDate})\\A NOT FOR DISTRIBUTION"; white-space: pre; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }`;
 // The title page names the reviewer once; the footer names them on every page,
 // so a single printed or photographed leaf still says whose copy it came from,
 // and which revision of the text it was.
@@ -578,7 +591,7 @@ const html = `<!doctype html>
      the measure fits two running heads, and a third box wraps both of them.
      The marker is two lines by design, broken before the second phrase; left
      to wrap on its own the box broke inside the date. */
-  @bottom-left { content: "PRERELEASE DRAFT (${buildDate})\\A NOT FOR DISTRIBUTION"; white-space: pre; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
+  ${draftFooter}
   ${reviewerFooter}
   @top-left { content: "${TITLE}"; font-family: Gelasio, Georgia, serif; font-size: 8pt; font-style: italic; color: #444; }
   @top-right { content: string(chapter); font-family: Gelasio, Georgia, serif; font-size: 8pt; font-style: italic; color: #444; }
