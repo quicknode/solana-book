@@ -18,9 +18,9 @@
   <path d="M 120,86 C 200,26 380,22 476,44" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
   <text x="290" y="28" font-size="10" fill="#444" text-anchor="middle">one taker crosses the whole order</text>
   <path d="M 130,134 C 220,200 380,196 476,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
-  <text x="280" y="212" font-size="10" fill="#444" text-anchor="middle">cancel_order(), remaining lock credited back</text>
+  <text x="280" y="212" font-size="10" fill="#444" text-anchor="middle">cancel_order() or eviction, remaining lock credited back</text>
   <path d="M 370,134 C 410,158 440,168 476,172" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
-  <text x="424" y="142" font-size="10" fill="#444" text-anchor="middle">cancel_order()</text>
+  <text x="362" y="160" font-size="10" fill="#444" text-anchor="end">cancel_order() or eviction</text>
   <!-- terminal note -->
   <text x="540" y="90" font-size="9.5" fill="#444" text-anchor="middle">terminal: OrderNotCancellable</text>
   <text x="540" y="216" font-size="9.5" fill="#444" text-anchor="middle">terminal: leaf out of the tree</text>
