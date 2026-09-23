@@ -20,14 +20,14 @@ Maria creates the pool and is its `authority`; her revenue is the open and close
 
 Financial state on Solana is accounts, and this one transaction created the three the market needs.
 
-The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_slot`) and the live accounting this chapter keeps returning to:
+The **pool** is a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
 
 - `liquidity`: what the LPs own. It grows with deposits, trader losses, and funding; it shrinks with withdrawals and trader profits.
 - `reserved_liquidity`: the portion of `liquidity` currently pledged as the maximum payout of open positions.
 - `total_collateral`: trader money held for open positions. It is tracked separately from `liquidity` because it is not the LPs' money.
 - `protocol_fees`: Maria's accrued fees, separate again.
 - `long_size`, `short_size`, `long_size_scaled`, `short_size_scaled`: per-side open-interest accumulators, which make solvency checkable without iteration.
-- `cumulative_funding` and `last_funding_slot`: the funding index.
+- `cumulative_funding` and `last_funding_timestamp`: the funding index.
 
 The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault mixes custody; the three ledger fields keep the ownership straight, and the rule that makes that safe is the *Token Fundraiser* chapter's: balances are custody, state is truth.
 
@@ -75,16 +75,16 @@ Each open creates a **position** PDA with seeds `"position"`, the pool, the owne
 
 ## Funding Is a Fee the Crowded Side Pays
 
-A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_slot` every slot, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. For example, with a rate of 5,000 per slot, a 5,000 USDC position held through 2,000 slots owes 50 USDC.
+A perpetual never expires, so what stops its price drifting away from the asset it tracks? On every venue the answer is **funding**: a periodic payment that makes the popular side pay for its popularity, nudging traders toward balance. This program implements funding in its simplest form: a pool-wide index, `cumulative_funding`, advances by `funding_rate_per_second` every second, in whichever direction the open interest leans; whichever side is heavier pays. Each position remembers the index at its entry (`entry_funding`), and settlement charges size × the index movement since entry, at `FUNDING_PRECISION` fixed point. For example, with a rate of 5,000 per second, a 5,000 USDC position held for 2,000 seconds owes 50 USDC.
 
 The example documents two simplifications:
 
 - **The payment goes to the pool**, to the LPs, rather than to the lighter side of traders.
 - **The rate is flat**, rather than scaling with how lopsided the book is.
 
-Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting structure, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, warps two thousand slots, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, as the test suite's default market does.
+Production funding is proportional to the imbalance and flows between the sides; the mechanism here teaches the accounting structure, an index plus per-position entry snapshots, which is the part that survives into every real implementation. The test `test_funding_charged_to_long` opens a lone long, lets two thousand seconds pass, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, as the test suite's default market does.
 
-The rate is quoted per slot, so what a position costs per hour follows the cluster's slot time as well as the rate. A pool that outlives a shortening of the slot charges the heavier side more per hour than it was set up to. `set_funding_rate()` lets the pool operator bring it back in line, advancing the index at the old rate before storing the new one so the slots already elapsed are charged at the rate that applied to them. The *Time* chapter covers why any rate counted in slots needs that.
+The rate is quoted per second of wall-clock time, and the index stores the Clock's timestamp at its last advance, so what a position costs per hour is the rate alone, whatever the network's slot length. `set_funding_rate()` lets the pool operator change the rate, advancing the index at the old rate before storing the new one so the seconds already elapsed are charged at the rate that applied to them. The *Time* chapter covers why funding counts seconds and freshness counts slots.
 
 ![](figures/perps-funding-index.svg)
 
