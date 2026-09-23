@@ -47,6 +47,8 @@ const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).joi
 
 Environment:
   NO_COVER=1      Build the interior without the cover page.
+  NO_LINKS=1      Leave out the clickable links, which paper cannot carry and
+                  KDP strips from an interior as non-printable markup.
   REVIEWER_NAME   Stamp as an advance copy for that reviewer: named on the
                   title page, and in the footer of every page carrying a folio.
                   The commit the copy was built from is stamped beside the
@@ -1027,15 +1029,13 @@ for (const sheet of pdf.getPages()) {
   sheet.setCropBox(0, height - trimHeight, trimWidth, trimHeight);
   croppedPages++;
 }
-writeFileSync(outputPath, await pdf.save());
 
-console.log(`Wrote "${outputPath}"`);
-if (croppedPages > 0) console.log(`Cropped ${croppedPages} page(s) to the ${PAGE_WIDTH_IN} x ${PAGE_HEIGHT_IN}in trim.`);
-
-// Every URI action in the finished PDF, with the number of annotations
-// carrying it. A viewer follows these, not the printed characters.
+// Every URI action Chromium printed, with the number of annotations carrying
+// it. A viewer follows these, not the printed characters. They are counted
+// before NO_LINKS takes them out, so the checks below still hold for the
+// screen edition that build shares its layout with.
 const printedDestinations = new Map();
-for (const pdfPage of (await PDFDocument.load(readFileSync(outputPath))).getPages()) {
+for (const pdfPage of pdf.getPages()) {
   const annotations = pdfPage.node.get(PDFName.of("Annots"));
   if (!annotations) continue;
   for (const entry of pdfPage.node.context.lookup(annotations, PDFArray).asArray()) {
@@ -1046,6 +1046,24 @@ for (const pdfPage of (await PDFDocument.load(readFileSync(outputPath))).getPage
     printedDestinations.set(destination, (printedDestinations.get(destination) ?? 0) + 1);
   }
 }
+
+// A link is an annotation laid over the page, not ink on it, so paper cannot
+// carry one. KDP removes them from an uploaded interior and asks for the pages
+// they were on to be checked, which is every page with a table of contents
+// entry, a cross-reference or an address. The interior sent to press leaves
+// them out, and the named destinations the internal links pointed at with
+// them, so there is nothing for KDP to remove. The printed text is the same
+// either way: an address is printed in full after its link text.
+const stripLinks = process.env.NO_LINKS === "1";
+if (stripLinks) {
+  for (const pdfPage of pdf.getPages()) pdfPage.node.delete(PDFName.of("Annots"));
+  pdf.catalog.delete(PDFName.of("Dests"));
+}
+writeFileSync(outputPath, await pdf.save());
+
+console.log(`Wrote "${outputPath}"`);
+if (croppedPages > 0) console.log(`Cropped ${croppedPages} page(s) to the ${PAGE_WIDTH_IN} x ${PAGE_HEIGHT_IN}in trim.`);
+
 
 // A destination the book does not contain is a destination something split:
 // the address broke over two lines and one of the pieces was written as if it

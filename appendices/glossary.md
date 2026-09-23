@@ -1,7 +1,5 @@
 # Glossary
 
-The vocabulary of this book, in one place: Solana's terms alongside the financial vocabulary this field uses daily but rarely defines. Terms are alphabetical, and each is a heading so you can link straight to it. Where a chapter explains a term at length, the definition says so.
-
 ### account
 
 Some data with an [address](#address). In a program, the data is a Rust struct. Wallets, token balances, program code, and everything a program stores are all accounts; each also has a lamport balance and an owner program that may change it. Financial state is accounts.
@@ -16,7 +14,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow captures the difference. The *Prop AMM* chapter explains it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and [informed flow](#informed-flow) captures the difference. The *Prop AMM* chapter explains it at length.
 
 ### all-or-nothing
 
@@ -203,6 +201,10 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
 
+### eviction
+
+What an order book does when a side is full and a better order arrives: the worst resting order on that side, the lowest bid or the highest ask, is removed and refunded to make room. Without it, anyone able to fill a side's slots could keep every new order off that side. The *Order Book Exchange* chapter's program evicts to stop book spam.
+
 ### exercise
 
 To use the right an [option](#option) grants: buy the underlying at the strike (a [call](#call)) or sell it there (a [put](#put)). In the *Options* chapter the holder may exercise while the clock is before `expiry`, and not after.
@@ -278,6 +280,10 @@ Advancing an [index](#index) for the time elapsed since it was last updated, whi
 ### inflation attack
 
 The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. Defenses include locked minimum liquidity, virtual shares, and state-tracked pool size. See the *Adversary* chapter.
+
+### informed flow
+
+Trades from someone who knows where the price is about to move, such as an arbitrage bot that has seen the price change on another venue before a market maker's quote has caught up. "Informed" says nothing about how experienced the trader is. A market maker loses on every informed trade, because the trader only trades when the quote is wrong in their favor. So informed flow is the customer a maker least wants, even though informed traders would welcome the tightest spread of anyone. The maker quotes it wider, or refuses it, and saves its tightest spread for uninformed flow: people who trade because they want the asset. The *Prop AMM* chapter covers it with [adverse selection](#adverse-selection) and [order segmentation](#order-segmentation).
 
 ### instruction
 
@@ -443,6 +449,10 @@ A service that publishes signed statements of offchain facts, most often prices,
 
 The resting [bids](#bid) and [asks](#ask) for one market, best prices first, plus the matching engine that pairs them under [price-time priority](#price-time-priority). The traditional venue design, the one NYSE, NASDAQ and CME run, and the one an AMM replaces with a formula. See the *Order Book Exchange* chapter.
 
+### order segmentation
+
+A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is [informed](#informed-flow). The *Prop AMM* chapter covers it as a defense against adverse selection.
+
 ### parimutuel
 
 A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. The odds are the pool. See the *Betting Market* chapter.
@@ -570,6 +580,10 @@ An account whose private key signed the transaction. "Is this account a signer" 
 ### significand
 
 The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
+
+### size ladder
+
+A prop AMM's quote as a set of tiers, each a size at a spread, so the unit price rises with the size taken. Set by the firm from its inventory risk, never read from the vault balances. The *Prop AMM* chapter contrasts it with the single flat quote its program makes.
 
 ### slippage
 

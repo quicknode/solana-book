@@ -94,6 +94,12 @@ const rules = [
   [/\bis the one that matters\b|\bmatters more than it (?:looks|sounds)\b/i,
     'say why: "the path an attacker will drive", not "the one that matters"'],
   [/\bit is worth being\b/i, "cut it: if the point is worth making, make it"],
+  // A disclaimer about a companion program is a bug report filed in the wrong
+  // repository. The program gets the fix and a test that runs the attack, and
+  // the chapter describes the defense and names the test (CLAUDE.md, "A flaw in
+  // a companion program is fixed there, not described here").
+  [/\bknown (?:limitation|issue|weakness)s?\b|\bnot (?:yet )?production[- ]ready\b|\bleft as an exercise\b|\b(?:a|any) (?:production|real|mainnet) (?:version|program|deployment|system|implementation) (?:would|should|must|needs?)\b|\bin production,? you (?:would|should)\b/i,
+    "fix the program in the companion repository and describe the fixed behavior; do not describe a flaw it still has"],
   // Words that rate the writing instead of doing it. "Honest" appeared twenty
   // times in this manuscript and never once meant honesty ("the honest way to
   // make it", "an honest limitation, stated as one"); "quietly" dressed up a
