@@ -121,6 +121,6 @@ Traders accept the prop AMM's concentrated trust (one firm, one feed, one pause 
 
 [^lifinity-wind-down]: [solanafloor.com/news/lifinity-distribute-43m-token-holders-solana-original-prop-amm-winds-down](https://solanafloor.com/news/lifinity-distribute-43m-token-holders-solana-original-prop-amm-winds-down) reports the December 2025 governance vote that wound the venue down and returned its treasury to its token holders.
 
-[^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, with wherever the aggregators are routing that week, and with which venues are quoting at all: HumidiFi halted trading in August 2026 after an incident in its own systems, reported at [cryptobriefing.com/humidifi-halts-trading-internal-network-incident](https://cryptobriefing.com/humidifi-halts-trading-internal-network-incident/).
+[^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, and with wherever the aggregators are routing that week.
 
 [^ultra-signaling]: [dev.jup.ag/docs/blog/ultra-v3](https://dev.jup.ag/docs/blog/ultra-v3) is Jupiter's own description of Ultra V3, including the signal that tells a venue whether a swap came from Jupiter's own users.
