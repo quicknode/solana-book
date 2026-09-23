@@ -20,7 +20,7 @@ The first instinct is to store the bids and asks as sorted arrays. Arrays get sl
 
 So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which yields the exchange rule you want for free: walking the tree visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
 
-A critbit tree does not balance itself: asks at 2, 4, 8, and so on each add a level to the path to the cheapest ask. The key caps the damage. Prices fill its top 64 bits, so they can add at most 64 levels, and at that depth an insert, fill, or cancel costs under 15,000 extra compute units.
+A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8, and so on to deepen the tree. That only adds a minor cost: 64 levels at most, and under 15,000 extra compute units per instruction, out of a default budget of 200,000.
 
 ![](figures/order-book-critbit.svg)
 
