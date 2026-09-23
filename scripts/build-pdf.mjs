@@ -49,6 +49,8 @@ Environment:
   NO_COVER=1      Build the interior without the cover page.
   NO_LINKS=1      Leave out the clickable links, which paper cannot carry and
                   KDP strips from an interior as non-printable markup.
+  FINAL=1         Leave out the prerelease markings: the draft note on the
+                  title page and the marker in every page's footer.
   REVIEWER_NAME   Stamp as an advance copy for that reviewer: named on the
                   title page, and in the footer of every page carrying a folio.
                   The commit the copy was built from is stamped beside the
@@ -111,6 +113,10 @@ const escapeCssString = (text) =>
 
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
 const reviewerName = (process.env.REVIEWER_NAME ?? "").trim();
+const isFinal = process.env.FINAL === "1";
+// A reviewer's copy exists to be traced back to its reviewer, so a final build
+// carrying one is a contradiction rather than a combination.
+if (isFinal && reviewerName) die("FINAL=1 and REVIEWER_NAME cannot be combined: a review copy is not final.");
 const buildDate = new Date().toISOString().slice(0, 10);
 
 // A reviewer's copy also carries the commit it was built from. The manuscript
@@ -135,7 +141,12 @@ const commit = reviewerName ? describeCommit() : "";
 
 const advanceNote = reviewerName
   ? `Advance review copy for ${escapeHtml(reviewerName)}. Please don't redistribute. Built ${buildDate}${commit ? ` from commit ${escapeHtml(commit)}` : ""}.`
-  : `Prerelease draft, built ${buildDate}.`;
+  : isFinal
+    ? ""
+    : `Prerelease draft, built ${buildDate}.`;
+const draftFooter = isFinal
+  ? ""
+  : `@bottom-left { content: "PRERELEASE DRAFT (${buildDate})\\A NOT FOR DISTRIBUTION"; white-space: pre; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }`;
 // The title page names the reviewer once; the footer names them on every page,
 // so a single printed or photographed leaf still says whose copy it came from,
 // and which revision of the text it was.
@@ -578,7 +589,7 @@ const html = `<!doctype html>
      the measure fits two running heads, and a third box wraps both of them.
      The marker is two lines by design, broken before the second phrase; left
      to wrap on its own the box broke inside the date. */
-  @bottom-left { content: "PRERELEASE DRAFT (${buildDate})\\A NOT FOR DISTRIBUTION"; white-space: pre; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }
+  ${draftFooter}
   ${reviewerFooter}
   @top-left { content: "${TITLE}"; font-family: Gelasio, Georgia, serif; font-size: 8pt; font-style: italic; color: #444; }
   @top-right { content: string(chapter); font-family: Gelasio, Georgia, serif; font-size: 8pt; font-style: italic; color: #444; }
