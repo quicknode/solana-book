@@ -16,7 +16,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. Most address
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and informed flow captures the difference. The *Prop AMM* chapter explains it at length.
+A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. Even a fresh oracle trails the true price by seconds, and [informed flow](#informed-flow) captures the difference. The *Prop AMM* chapter explains it at length.
 
 ### all-or-nothing
 
@@ -279,6 +279,10 @@ Advancing an [index](#index) for the time elapsed since it was last updated, whi
 
 The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. Defenses include locked minimum liquidity, virtual shares, and state-tracked pool size. See the *Adversary* chapter.
 
+### informed flow
+
+Trades from someone who knows where the price is about to move, such as an arbitrage bot that has seen the price change on another venue before a market maker's quote has caught up. "Informed" says nothing about how experienced the trader is. A market maker loses on every informed trade, because the trader only trades when the quote is wrong in their favor. So informed flow is the customer a maker least wants, even though informed traders would welcome the tightest spread of anyone. The maker quotes it wider, or refuses it, and saves its tightest spread for uninformed flow: people who trade because they want the asset. The *Prop AMM* chapter covers it with [adverse selection](#adverse-selection) and [order segmentation](#order-segmentation).
+
 ### instruction
 
 The input a transaction carries to a program: which handler to run, which accounts it may touch, and the arguments. Distinct from the function that processes it; see [instruction handler](#instruction-handler).
@@ -445,7 +449,7 @@ The resting [bids](#bid) and [asks](#ask) for one market, best prices first, plu
 
 ### order segmentation
 
-A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is informed. The *Prop AMM* chapter covers it as a defense against adverse selection.
+A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is [informed](#informed-flow). The *Prop AMM* chapter covers it as a defense against adverse selection.
 
 ### parimutuel
 
