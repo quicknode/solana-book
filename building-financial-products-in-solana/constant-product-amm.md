@@ -51,7 +51,7 @@ Her LP tokens come from the formula the *Arithmetic of Money* chapter described:
 
 ## Adding Liquidity in Ratio Does Not Move the Price
 
-Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and guarded by her `minimum_lp_tokens_out`.
+Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and guarded by her `minimum_lp_tokens_out`. Her share is measured against the LP supply plus `MINIMUM_LIQUIDITY`, because the floor is part of the supply the reserves are divided among.
 
 X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Deposits grow K without touching the price**; that is the first of K's two ways of growing.
 
@@ -83,7 +83,7 @@ Whenever she likes, Maria runs `claim_admin_fees()`. It zeroes both owed counter
 
 ## Withdrawing Realizes Impermanent Loss
 
-Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a pro-rata slice of both effective reserves, with one adjustment: the divisor is the LP supply *plus* `MINIMUM_LIQUIDITY`. The locked floor is backed by reserves but absent from the supply counter, and forgetting it would overpay every withdrawer.
+Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a pro-rata slice of both effective reserves, dividing by the LP supply *plus* `MINIMUM_LIQUIDITY`, the same divisor her deposit was minted against. The locked floor is backed by reserves but absent from the supply counter. Leaving it out here would overpay every withdrawer, and leaving it out of the deposit would underpay every depositor.
 
 Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had simply held her original tokens in her wallet: a small number at launch scale, and the same number becomes serious money once the pool has six more zeroes on it.
 
@@ -112,13 +112,13 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 - After every swap, effective X times effective Y is at least what it was before, enforced onchain, after the transfers, not assumed from the algebra.
 - The admin's owed fees never participate in pricing, LP minting, or withdrawal: all LP-facing math uses effective reserves.
-- LP tokens are a fixed-share claim: mint pro rata on the way in, burn pro rata on the way out, with the locked floor added back to the divisor on the way out, the one place forgetting it would overpay.
+- LP tokens are a fixed-share claim: mint pro rata on the way in and burn pro rata on the way out, dividing by the supply plus the locked floor both ways.
 - The pool never prices against an empty side (see below).
 
 ## The Failure Modes: Empty Pools, First Deposits, and the Vacuous Invariant
 
 - **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other). The invariant check would not catch it either, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A guard requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs.
-- **The inflation attack.** The empty-pool attack from the *Adversary* chapter: a first depositor minting dust-level LP supply, donating tokens to skew the share price, and rounding later depositors down to zero. The `MINIMUM_LIQUIDITY` floor makes the attack uneconomic: because the locked units are always counted in the supply, share supply can never be dust-sized relative to the pool, and inflating the value behind each share means inflating the value behind units the attacker can never own.
+- **The inflation attack.** The empty-pool attack from the *Adversary* chapter: a first depositor mints dust-level LP supply, donates tokens straight to the vaults to inflate the value behind each LP token, and waits for a later deposit to round down to zero. The `MINIMUM_LIQUIDITY` floor makes the attack uneconomic, because `deposit_liquidity()` and `withdraw_liquidity()` both divide by the LP supply plus the floor. The smallest pool an attacker can open leaves them 1 LP token out of 101 units of supply. Rounding a deposit down to zero then takes a donation of about 101 times that deposit, and 100/101 of the donation belongs to units nobody can redeem. The floor has to be in both divisors: a deposit divided by the bare supply of 1 rounds down against a donation merely as large as itself. `test_donation_cannot_round_a_later_deposit_to_zero` runs the attack with a donation of 1,000,000 minor units to each vault: the victim's equal deposit is minted 100 LP tokens, and the attacker's 1 LP token redeems 9,950 minor units of each token.
 - **The first deposit sets the price, and anyone can be first.** The program's own source notes that pool creation can be front-run with a bad ratio. The floor bounds the share-math games, but a launch operator should still expect arbitrage traffic (or hostile seeding) until the pool's price matches the market's, and seed with size.
 - **Slippage and sandwiches.** Every trade and deposit carries a caller-supplied minimum (`min_output_amount`, `minimum_lp_tokens_out`, the withdrawal minimums), and the tests prove each one rejects (`SlippageExceeded`, `DepositBelowMinimum`, `WithdrawalBelowMinimum`). What the program cannot do is choose the number for you; a zero minimum is legal and is what a sandwich attacker hopes you send.
 - **Liquidity fragmentation.** Canonical mint ordering, one pool per pair, by construction.
@@ -137,7 +137,7 @@ Six concepts came with the curve:
 - **How K changes.** Fixed while a trade is priced, growing with deposits and every swap's fee, shrinking with withdrawals; and an invariant that can hold vacuously (new K ≥ 0 on an empty pool) is not an invariant.
 - **Assert after the math.** The post-trade product re-check catches every "computed the output wrong and overpaid" bug, including the ones not written yet.
 - **Effective reserves.** The admin's virtual fee claim is excluded from every piece of LP-facing math, the order book's fee vault implemented as accounting.
-- **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone, keeps the share divisor from ever being dust-sized.
+- **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone and counted in the divisor on the way in and on the way out, keeps the share divisor from ever being dust-sized.
 - **Impermanent loss.** An LP is a bet on trading volume, not price direction, and nobody should provide liquidity without being able to draw the diagram.
 
 In the *Prop AMM* chapter we will build a market maker that quotes its own capital at prices taken from an oracle. There is no curve, so a trade does not move the price and there is no impermanent loss, but the firm carries a different risk: the traders who arrive while its quote is stale know something it does not. The *Vault Strategy* chapter, later in the book, uses venues like these to trade other people's money, and the question there is what the manager is allowed to do with it.
