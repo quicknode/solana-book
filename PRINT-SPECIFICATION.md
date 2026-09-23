@@ -107,7 +107,7 @@ npm install
 npm run build-pdf                          # print size, into build/
 npm run build-pdf -- --size letter         # US Letter
 NO_COVER=1 npm run build-pdf               # interior only
-NO_COVER=1 NO_LINKS=1 npm run build-pdf    # the interior uploaded to KDP (add -- --final for release)
+NO_COVER=1 NO_LINKS=1 npm run build-pdf -- --final   # the interior uploaded to KDP
 npm run build-pdf -- --final               # no "prerelease draft" note on the title page or in the footers
 REVIEWER_NAME="..." npm run build-pdf      # advance copy: name and commit hash on the title page and every folio
 npm run build-pdf -- out.pdf               # explicit output path

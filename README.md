@@ -26,10 +26,10 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Preparing for press
 
-1. Build the interior without the cover page or clickable links, which KDP would otherwise strip as non-printable markup:
+1. Build the interior without the cover page, without the clickable links that KDP would otherwise strip as non-printable markup, and without the prerelease draft markings:
 
    ```
-   NO_COVER=1 NO_LINKS=1 npm run build-pdf
+   NO_COVER=1 NO_LINKS=1 npm run build-pdf -- --final
    ```
 
 2. Export the full-wrap cover (back, spine and front, with bleed) from Figma as a PDF to `assets/cover-wrap.pdf`.
