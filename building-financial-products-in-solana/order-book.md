@@ -20,7 +20,7 @@ The first instinct is to store the bids and asks as sorted arrays. Arrays get sl
 
 So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which yields the exchange rule you want for free: walking the tree visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
 
-A critbit tree does not balance itself, so a trader who places orders at prices that double each time grows one path by a level per order, and every insert or walk that shares that path reads every node on it. A leaf's depth is bounded by the bits in which the resting keys differ, so the cost is extra compute on those paths rather than an outage, and every price on the chain costs its owner the minimum order size from the next section.
+A critbit tree does not balance itself: asks at 2, 4, 8, and so on each add a level to the path to the cheapest ask. The key caps the damage. Prices fill its top 64 bits, so they can add at most 64 levels, and at that depth an insert, fill, or cancel costs under 15,000 extra compute units.
 
 ![](figures/order-book-critbit.svg)
 
@@ -147,6 +147,7 @@ The suite in `tests/test_order_book.rs` builds all state through the program's o
 - The fairness rules: `resting_orders_at_same_price_fill_by_time_priority` and `taker_bid_gets_price_improvement_from_resting_ask`.
 - The money: `fee_vault_receives_exactly_bps_of_taker_gross`, `fee_rounds_up_when_gross_is_not_a_bps_multiple`, `cancel_and_settle_bid_refunds_full_quote`, and `settle_funds_after_match_pays_out_both_unsettled_balances`.
 - The adversarial cases: `settle_funds_rejects_fee_vault_substituted_for_quote_vault`, `cancel_order_rejects_non_owner`, and `authority_can_withdraw_fees_after_match`.
+- The tree's worst case: `doubling_prices_build_the_deepest_path_prices_allow` and `deepest_path_adds_little_compute_to_insert_fill_and_cancel`.
 - Eviction, each test starting from a bid side filled with 512 orders: `full_side_refuses_an_order_no_better_than_its_worst`, `better_order_evicts_the_worst_and_rests`, `evicted_maker_settles_their_refund`, `eviction_rejects_missing_or_wrong_evicted_accounts`, and `trader_can_evict_their_own_worst_order`.
 
 If you write one test after reading this chapter, write the vault-swap one for your own program. The code path where two accounts are interchangeable to the token program but not to your accounting is the path the bug lives in.
