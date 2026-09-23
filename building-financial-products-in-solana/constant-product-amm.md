@@ -33,11 +33,11 @@ Maria runs `initialize_config()` with a fee of 30 basis points and an admin shar
 
 Financial state on Solana is accounts, and those two transactions created the venue's five.
 
-The **config** is a singleton PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
+The **config** is a singleton account at a PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 
-The **pool config** is a PDA seeded by the config and the two mints, one per trading pair, with one rule enforced at creation: `mint_a` must sort below `mint_b`, or creation fails with `InvalidMintOrder`. Without canonical ordering, an (ACME, USDC) pool and a (USDC, ACME) pool would both exist and split the liquidity between them.
+The **pool config** is an account at a PDA seeded by the config and the two mints, one per trading pair, with one rule enforced at creation: `mint_a` must sort below `mint_b`, or creation fails with `InvalidMintOrder`. Without canonical ordering, an (ACME, USDC) pool and a (USDC, ACME) pool would both exist and split the liquidity between them.
 
-The tokens are held in two vaults, `pool_a` and `pool_b`, owned by the pool config account, alongside the **LP mint** (`liquidity_provider_mint`), whose tokens are the receipts liquidity providers hold. The pool config is a PDA, so the program can sign for the vaults and the mint with its seeds, and nobody else can.
+The tokens are held in two vaults, `pool_a` and `pool_b`, whose authority is the pool config PDA, alongside the **LP mint** (`liquidity_provider_mint`), whose tokens are the receipts liquidity providers hold and whose mint authority is the same PDA. Only the program can sign as that PDA, with the pool config's seeds, so nobody else can move the vaults' tokens or mint LP tokens.
 
 Two more fields are `admin_fees_owed_a` and `admin_fees_owed_b` on the pool config. The admin's share of fees is never transferred during a swap; it accrues in these counters as a *virtual claim* while the tokens physically sit in the vaults. So every piece of LP-facing math runs on **effective reserves**: the raw vault balance minus the admin's owed slice. The admin's fees do not boost LP yield, do not distort the price, and get swept out later in one transfer. Keeping who is owed what separate from where it sits is the order book's fee vault, done with accounting instead of an account.
 

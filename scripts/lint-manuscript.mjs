@@ -54,6 +54,13 @@ const rules = [
   // beside dots drawn off the curve, which is every one of these at once.
   [/\bkey ?pairs?(?:'s)? (?:address|account|PDA)\b|\b(?:address|account|PDA) of (?:a|an|the|its|their|each) (?:\w+ )?key ?pairs?\b|\b(?:off|on)[- ]curve key ?pairs?\b|\bkey ?pairs? (?:that (?:is|are|sits?) )?(?:off|on) the curve|\bPDA key ?pairs?\b|\bkey ?pair PDAs?\b|\bderived key ?pairs?\b/i,
     'a key pair is two keys, of which the public one is the address: the pair is neither an address nor an account, and an address made from one is always on the curve (companion AI plugin)'],
+  // A PDA is an address and an account is the data at it: a program derives
+  // the offer PDA and then writes the offer account. Every product chapter
+  // once introduced its state as "the market is a PDA holding...", and two
+  // called a vault's authority "the offer account" where the subject was
+  // signing, which is the PDA's job.
+  [/(?<!address )\b(?:is|are) (?:a |an )?(?:single |singleton )?PDAs? (?:\(|with\b|seeded\b|holding\b)|\bPDAs? (?:holds?|holding|stores?|storing|records?|recording|keeps?|tracks?|contains?)\b|\bPDA(?:'s|s') (?:fields?|balances?|lamports|data|rent|struct|space|size)\b|\bPDA accounts?\b|\b(?:clos(?:e|es|ed|ing)|allocat\w+|resiz\w+|realloc\w*) (?:the |a |an |each |every |its |their )?(?:\w+ )?PDAs?\b|\bauthority (?:is|of) (?:the|a|an|its) (?:\w+ )?account\b/i,
+    'a PDA is an address and an account is the data at it: the account lives at a PDA and holds the fields, and the PDA is what signs, derives and is an authority (companion AI plugin)'],
   [/\b(delve|tapestry|intricate|multifaceted|holistic|myriad|seamlessly|seamless|robust|pivotal|crucial|elevate|testament to|deep dive|paradigm shift|game.chang(er|ing)|unlock the power|realm of|landscape of|in today's)\b/i,
     "reads as machine-written; name the specific thing instead"],
   [/it(?:'s| is) worth noting/i, "cut it: if the point is worth making, make it"],

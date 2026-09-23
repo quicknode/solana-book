@@ -20,7 +20,7 @@ Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration
 
 Financial state on Solana is accounts, and this one transaction created the two the raise needs.
 
-The **fundraiser** account is a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the terms sheet:
+The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, is the terms sheet:
 
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.
@@ -43,7 +43,7 @@ She contributes 900 USDC instead, and this is the transaction every backer repea
 
 ![](figures/fundraiser-contribute.svg)
 
-The transaction also created an account for her. Each backer gets a **contributor** account, a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, and `contribute()` creates it only when it does not exist yet, so a backer's first contribution opens the receipt, every later one adds to it, and it is closed when its purpose is served.
+The transaction also created an account for her. Each backer gets a **contributor** account at a PDA with seeds `"contributor"`, the fundraiser, and their own address, holding a single number: `amount`, their cumulative contribution. It is a receipt the program writes for itself, and `contribute()` creates it only when it does not exist yet, so a backer's first contribution opens the receipt, every later one adds to it, and it is closed when its purpose is served.
 
 The cap is not just per call. Carol contributes 450 USDC, then comes back the next day with 450 more, and her contributor account's running total reaches the 900 cap; a third contribution would fail with `MaximumContributionsReached`, because the check runs against her *cumulative* total, not the transaction's amount. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
 
@@ -120,7 +120,7 @@ The fundraiser added five concepts on top of the escrow's:
 
 - **A deadline that flips which exit is open.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
 - **The counter is the truth; the vault is just custody.** A gate that unlocks money must read state the program itself wrote, never a token balance anyone can inflate by donation.
-- **A receipt PDA per participant**, created on first use, topped up on repeats, and closed when its purpose is served, so double refunds fail once the account is gone.
+- **A receipt account per participant**, at a PDA, created on first use, topped up on repeats, and closed when its purpose is served, so double refunds fail once the account is gone.
 - **Cumulative caps.** Per-participant limits checked against running totals, which make broad participation a requirement rather than a hope.
 - **Name the closer for every account.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
 
