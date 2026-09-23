@@ -40,17 +40,17 @@ const PAGE_SIZES = {
   letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
 };
 
-const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [--final] [output.pdf]
+const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
 
   --size <name>   Page size; defaults to "print". See PRINT-SPECIFICATION.md.
-  --final         Leave out the prerelease markings: the draft note on the
-                  title page and the marker in every page's footer.
   --help          Print this and exit.
 
 Environment:
   NO_COVER=1      Build the interior without the cover page.
   NO_LINKS=1      Leave out the clickable links, which paper cannot carry and
                   KDP strips from an interior as non-printable markup.
+  FINAL=1         Leave out the prerelease markings: the draft note on the
+                  title page and the marker in every page's footer.
   REVIEWER_NAME   Stamp as an advance copy for that reviewer: named on the
                   title page, and in the footer of every page carrying a folio.
                   The commit the copy was built from is stamped beside the
@@ -66,15 +66,12 @@ const die = (message) => {
 // dropped rather than taken for an output path.
 const argv = process.argv.slice(2).filter((arg) => arg !== "--");
 let sizeName = "print";
-let isFinal = false;
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
   const arg = argv[i];
   if (arg === "--help" || arg === "-h") {
     console.log(USAGE);
     process.exit(0);
-  } else if (arg === "--final") {
-    isFinal = true;
   } else if (arg.startsWith("--size=")) {
     sizeName = arg.slice("--size=".length);
   } else if (arg === "--size") {
@@ -116,9 +113,10 @@ const escapeCssString = (text) =>
 
 // Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
 const reviewerName = (process.env.REVIEWER_NAME ?? "").trim();
+const isFinal = process.env.FINAL === "1";
 // A reviewer's copy exists to be traced back to its reviewer, so a final build
 // carrying one is a contradiction rather than a combination.
-if (isFinal && reviewerName) die("--final and REVIEWER_NAME cannot be combined: a review copy is not final.");
+if (isFinal && reviewerName) die("FINAL=1 and REVIEWER_NAME cannot be combined: a review copy is not final.");
 const buildDate = new Date().toISOString().slice(0, 10);
 
 // A reviewer's copy also carries the commit it was built from. The manuscript
