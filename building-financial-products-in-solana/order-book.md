@@ -96,7 +96,7 @@ Bob decides three shares is enough. He calls `cancel_order()` on his order accou
 
 ![](figures/order-book-cancel.svg)
 
-Traditional exchanges also offer a resize, which changes a resting order's quantity in place. This program has no handler for it: to change a price or a quantity, Bob cancels and places again, and the new order goes to the back of the queue at its price.
+Traditional exchanges also let a trader shrink a resting order in place and keep its place in the queue; a larger size or a new price goes to the back, as a new order would. This program has no handler for either: Bob cancels and places again, in one transaction so either both happen or neither does, and the new order goes to the back of the queue at its price.
 
 ## Settlement Turns Claims Into Tokens
 
