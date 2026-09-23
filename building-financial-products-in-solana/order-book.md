@@ -1,6 +1,6 @@
 # Chapter 14: The Order Book Exchange
 
-NYSE, NASDAQ, and the CME are order book exchanges. On Solana, OpenBook and Phoenix are order book exchanges. All of them run the same machinery: orders arrive carrying a price their owner refuses to cross, wait in two sorted lists, trade when one order reaches across the gap, and settle out of vaults the venue's operator cannot reach.
+NYSE, NASDAQ, and the CME are order book exchanges. On Solana, Manifest, OpenBook, and Phoenix are order book exchanges, and by mid-2026 Manifest was carrying more spot volume than any other order book on the network.[^order-book-venues] All of them run the same machinery: orders arrive carrying a price their owner refuses to cross, wait in two sorted lists, trade when one order reaches across the gap, and settle out of vaults the venue's operator cannot reach.
 
 The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the *Escrow* chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement gated by who signed. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
 
@@ -20,6 +20,8 @@ The first instinct is to store the bids and asks as sorted arrays. Arrays get sl
 
 So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which yields the exchange rule you want for free: walking the tree visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
 
+A critbit tree does not balance itself, so a trader who places orders at prices that double each time grows one path by a level per order, and every insert or walk that shares that path reads every node on it. A leaf's depth is bounded by the bits in which the resting keys differ, so the cost is extra compute on those paths rather than an outage, and every price on the chain costs its owner the minimum order size from the next section.
+
 ![](figures/order-book-critbit.svg)
 
 ## The Market Authority Opens the NVDAx/USDC Market
@@ -30,7 +32,9 @@ Maria runs the exchange. She is the market authority: she creates the market and
 
 Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, because a fee above 100% is nonsense. It creates the market account and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
 
-The tick size and minimum order size keep the book usable. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. Orders below `min_order_size` are rejected outright, which keeps spam from filling the trees.
+The tick size and minimum order size keep the book usable, and they do different jobs. Orders below `min_order_size` are rejected outright, and this is the gate that protects the book: every slot in the tree costs its occupant at least that much locked capital, so filling the tree costs real money. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. The tick also sets the price of queue-jumping: a maker who wants to stand in front of the queue must improve the price by a whole tick, which is an improvement the taker actually receives.
+
+Both are set per market, at creation, and cannot change afterward. A tick right for a $250 stock is far too coarse for a token priced at a fraction of a cent, so somebody has to choose one for each market, and the choice is final. Manifest removed the tick entirely and lets an order name any price in minor units. Its own README states the trade: without a tick, the newest order can stand in front of the queue by improving the price by a negligible amount, which inverts time priority.[^manifest-tickless]
 
 ![](figures/order-book-initialize-market.svg)
 
@@ -92,6 +96,8 @@ Bob decides three shares is enough. He calls `cancel_order()` on his order accou
 
 ![](figures/order-book-cancel.svg)
 
+Traditional exchanges also offer a resize, which changes a resting order's quantity in place. This program has no handler for it: to change a price or a quantity, Bob cancels and places again, and the new order goes to the back of the queue at its price.
+
 ## Settlement Turns Claims Into Tokens
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
@@ -108,7 +114,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 
 ## The Math: Lots, Ticks, and a Fee That Rounds Up
 
-**Lots.** The program never stores "shares" or "dollars"; both sides of the book are denominated in **lots**. The market defines `base_lot_size` and `quote_lot_size`, and the two conversion rules are: raw base = quantity × base lot size, and raw quote = price × quantity × quote lot size. Choosing the lot sizes from the two tokens' decimals (each is ten to the power of the decimal difference, floored at one) makes `price` read as the human quote-per-base rate regardless of how mismatched the mints' decimals are. For NVDAx (8 decimals) over USDC (6 decimals) that gives a base lot of 100 raw NVDAx and a quote lot of 1, and a stored price of 250 reads directly as $250.00 per share. Every real order book on Solana, OpenBook and Phoenix included, uses a lot model like this.
+**Lots.** The program never stores "shares" or "dollars"; both sides of the book are denominated in **lots**. The market defines `base_lot_size` and `quote_lot_size`, and the two conversion rules are: raw base = quantity × base lot size, and raw quote = price × quantity × quote lot size. Choosing the lot sizes from the two tokens' decimals (each is ten to the power of the decimal difference, floored at one) makes `price` read as the human quote-per-base rate regardless of how mismatched the mints' decimals are. For NVDAx (8 decimals) over USDC (6 decimals) that gives a base lot of 100 raw NVDAx and a quote lot of 1, and a stored price of 250 reads directly as $250.00 per share. OpenBook and Phoenix both use a lot model like this. Manifest instead stores every quantity in minor units and widens the arithmetic, as this program already does for its intermediates.
 
 **Wider intermediates.** The bid lock and the gross fill amount both multiply three u64 values (price × quantity × lot size), which can overflow 64 bits with high-decimal mints. The program promotes to u128 for the multiplication and narrows back down afterward, so the failure mode is an explicit error on an amount too large to transfer, never wrong arithmetic.
 
@@ -157,3 +163,7 @@ The order book added five concepts on top of the escrow's:
 - **Vault separation plus stored-address checks.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep user money and fee money apart.
 
 In the *Constant-Product AMM* chapter we will build a market with no order book. Two vaults hold the pair of tokens, and a formula sets the price from their balances, so anyone can trade at any time without waiting for a counterparty to post an order. You will see what the people who fill the vaults earn for it, and what it costs them.
+
+[^order-book-venues]: [blockworks.com/analytics/solana/solana-spot-dexs](https://blockworks.com/analytics/solana/solana-spot-dexs) ranks Solana's spot venues by volume, order books and AMMs together. In June 2026 Manifest held about a tenth of weekly spot volume, second only to the prop AMM BisonFi and ahead of every other order book. The share moves week to week.
+
+[^manifest-tickless]: [github.com/Bonasa-Tech/manifest](https://github.com/Bonasa-Tech/manifest) is Manifest's source. Its README describes the atomic lot sizes, and asks in its own words whether tickless is a good idea.

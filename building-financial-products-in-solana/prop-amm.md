@@ -2,7 +2,7 @@
 
 The *Constant-Product AMM* chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: *proprietary* trading is trading the firm's own money.
 
-Lifinity pioneered the model on Solana; by early 2026, venues like SolFi, HumidiFi, ZeroFi, Tessera, and Obric were trading among the highest volumes on the network.[^prop-amm-share] You have probably never visited any of them, because they have no user interfaces. Their flow arrives through Jupiter, the aggregator that routes each swap to whichever venue quotes best, and a firm quoting live oracle prices with its own inventory usually quotes best. The program lives at `finance/prop-amm` in the companion repository.
+Lifinity pioneered the model on Solana and wound down in December 2025, by which time the firms that followed it had taken most of its flow.[^lifinity-wind-down] By mid-2026 the venues doing that volume were BisonFi, HumidiFi, SolFi, ZeroFi, Tessera, and Obric, trading among the highest volumes on the network.[^prop-amm-share] You have probably never visited any of them, because they have no user interfaces. Their flow arrives through Jupiter, the aggregator that routes each swap to whichever venue quotes best, and a firm quoting live oracle prices with its own inventory usually quotes best. The program lives at `finance/prop-amm` in the companion repository.
 
 ## The Oracle Is the Price, the Spread Is the Fee
 
@@ -49,6 +49,14 @@ Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instructio
 
 A round trip costs 1.65 USDC: buying 5 NVDAx cost 825.825 and selling them back returned 824.175. That difference is the round-trip spread, and it is all of the venue's revenue, held in the quote vault rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
+## Real Venues Price by Size, and the Ladder Is the Proprietary Part
+
+This program quotes one price per side for any size up to its inventory: one large bid and one large ask at the oracle price plus the spread. That is the simplest quote a prop AMM can make, and some venues run exactly this shape. Most quote a **size ladder** instead. The first 50 NVDAx go at 5 basis points, the next 200 at 20, the next 750 at 50, so a taker who wants 300 pays the first two tiers in full and 50 tokens' worth of the third. A small buyer pays less than Alice did and a large one pays more, and the unit price rises with the size taken.
+
+![A size ladder against this chapter's flat quote: the small taker pays less than the flat price, the large taker pays more, and the 300-token buy takes the first two tiers and part of the third.](figures/prop-amm-size-ladder.svg)
+
+That looks like the constant-product pool's price impact, and it is not. The ladder never reads the vault balances. The firm sets it, and reprices it from its own inventory risk: a 300-token fill leaves Maria short 300 NVDAx that she must buy back somewhere else, and the ladder charges more for the sizes that cost more to hedge. The model that sets the tiers and reprices them is the proprietary part of a prop AMM. It lives offchain, in the firm's own systems, with the firm's own view of the market; only the resulting ladder lands onchain, where the program's job is to fill against it and to refuse when the feed is stale. This chapter's program keeps the single tier because the ladder adds arithmetic and no new mechanism: each tier is the quote math above, run once per tier, with the size that tier still has left.
+
 ## The Oracle Moves and the Quote Moves With It
 
 NVIDIA reports earnings and the feed reprices to $170. The very next swap fills at a $170.17 ask. No arbitrageur had to buy against a stale curve until the pool's ratio caught up, no LP inventory was sold below its value along the way. A constant-product pool only reaches a new price when traders arbitrage it there, and the profit those traders make comes out of the LPs; a prop AMM reads the new price instead.
@@ -62,6 +70,12 @@ Reading the price has its own cost, though. Between oracle updates, even fresh o
 Her defense is `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx), and when her own view of the market diverges from the feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see this: their quotes vanish from the aggregator and reappear minutes later, wider. Pulling quotes is routine for a market maker.
 
 The oracle gates pull the quote automatically, for the same reasons Maria pulls it by hand. A price older than 150 slots is refused (`StalePrice`), because a lagging quote is a free option for whoever notices first. A price whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`), because a tight spread around a number the oracle itself is unsure of will fill at prices well away from the real one, in whichever direction costs Maria money. For every other program in this book the staleness check protects users; for a market maker it protects the firm's own capital.
+
+## The Firm Chooses Whom It Fills
+
+Maria's other commercial defense is choosing her counterparties. `swap()` fills any signer at the same quote, and no real venue does that. The teams that run prop AMMs come from sequencing and MEV, and they know that flow is not all alike. A retail swap routed through an aggregator is almost never informed: whoever sent it wants NVDAx, not an edge on the price. An arbitrage bot or a rival market maker hitting the quote the moment the feed moves is informed by definition, since that is the only reason it trades. Adverse selection comes from the second kind, so the venues segment their flow: a tighter spread for flow they believe is uninformed, and a wider one, or none, for flow they believe is not. Jupiter built the signal for this into its Ultra router in 2025. A swap that came from Jupiter's own users is marked as such when it reaches the venue, and the prop AMMs quote tighter for it.[^ultra-signaling]
+
+Some venues go further and keep a deny list of addresses they will not fill at all. That starts a cat-and-mouse game, because the refused firm moves to fresh wallets and the venue looks for the pattern behind them. In this program a deny list would be one more `require!` in `swap()` against a list the operator maintains on the market account, and the list would need updating as fast as the other side rotates wallets.
 
 ## The Market Maker Leaves, Whole
 
@@ -83,7 +97,7 @@ The unit conversion is the only complicated part. Prices arrive at the oracle's 
 ## The Failure Modes: What Attacks a Market Maker
 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why the staleness and confidence gates run before every swap (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter meets the same failure with leverage multiplying it.
-- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: spread wide enough to pay for it, quotes pulled when the world is moving. The `paused` flag is a risk control Maria expects to use.
+- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: a spread wide enough to pay for it, a ladder that charges for size, quotes pulled when the world is moving, and flow segmented by where it came from. The `paused` flag is a risk control Maria expects to use.
 - **The oracle is a chosen trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the *Perpetual Futures* chapter makes, with one difference: a bad oracle here loses *Maria's* money, not her users'. A production reader should still verify the feed's owning program, and the companion repository's oracle module documents that upgrade to a verified read.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and whole categories return "not applicable". No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 
@@ -99,10 +113,14 @@ Five concepts came with the prop AMM:
 
 - **Oracle-priced quoting.** The price comes from a feed, not from reserves, so there is no price impact and nothing to sandwich; the spread is the entire fee.
 - **For a market maker the oracle checks protect its own capital.** Staleness and confidence gates in front of every swap, because a lagging quote is a free option for whoever notices first.
-- **Adverse selection.** The flow that finds you when your quote is wrong is the flow you did not want: the market maker's structural cost, mitigated commercially (wider spreads, pulled quotes), never by a `require!`.
+- **Adverse selection.** The flow that finds you when your quote is wrong is the flow you did not want: the market maker's structural cost, mitigated commercially (wider spreads, a size ladder, segmented flow, pulled quotes), never by a `require!`.
 - **When balances legitimately are the accounting.** Every deposit-side defense earlier chapters needed exists to protect depositors from each other; with one depositor, the vault balances are the ledger.
 - **Attack surface that was never built.** No shares, no curve, no fee ledger: entire classes from the *Adversary* chapter return "not applicable" because each of them needs a mechanism this design does not have.
 
 Traders accept the prop AMM's concentrated trust (one firm, one feed, one pause switch) because they leave nothing in its custody and see their price before they sign. In the *Lending and Borrowing* chapter we will build a program where users do leave their money in the program's custody, as supplied loans and as collateral, and the same kind of oracle values that collateral continuously. You will see what a lender has to do to stay solvent when the collateral falls, and who is paid to do it.
 
+[^lifinity-wind-down]: [solanafloor.com/news/lifinity-distribute-43m-token-holders-solana-original-prop-amm-winds-down](https://solanafloor.com/news/lifinity-distribute-43m-token-holders-solana-original-prop-amm-winds-down) reports the December 2025 governance vote that wound the venue down and returned its treasury to its token holders.
+
 [^prop-amm-share]: [defillama.com/dexs/chain/solana](https://defillama.com/dexs/chain/solana) ranks Solana's venues by rolling volume. The share these firms hold moves with the market, and with wherever the aggregators are routing that week.
+
+[^ultra-signaling]: [dev.jup.ag/docs/blog/ultra-v3](https://dev.jup.ag/docs/blog/ultra-v3) is Jupiter's own description of Ultra V3, including the signal that tells a venue whether a swap came from Jupiter's own users.
