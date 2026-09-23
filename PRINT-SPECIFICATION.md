@@ -107,6 +107,7 @@ npm install
 npm run build-pdf                          # print size, into build/
 npm run build-pdf -- --size letter         # US Letter
 NO_COVER=1 npm run build-pdf               # interior only
+NO_COVER=1 NO_LINKS=1 npm run build-pdf    # the interior uploaded to KDP
 REVIEWER_NAME="..." npm run build-pdf      # advance copy: name and commit hash on the title page and every folio
 npm run build-pdf -- out.pdf               # explicit output path
 npm run build-pdf -- --help                # the switches, from the script itself
@@ -116,6 +117,8 @@ npm run preview -- <name> "<phrase>"       # rasterize one page to check it
 An unrecognized switch, a `--size` with no value or an unknown one, and more than one output path all print the usage and exit nonzero, rather than taking the stray argument for a filename.
 
 The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cover-less Letter build.
+
+**The interior uploaded to KDP carries no links.** A link in a PDF is an annotation laid over the page rather than ink on it, and KDP removes every one it finds, then reports each page it removed one from as "non-printable markup" to be checked: every table of contents page, and every page with a cross-reference or an address. Nothing printed changes when they go, because every address is printed in full after its link text, but the report cannot say so. `NO_LINKS=1` builds the file without them, and without the named destinations the internal links pointed at, so KDP has nothing to remove. Every other build keeps them, for reading on screen.
 
 The build needs a Chromium binary, found at `/opt/pw-browsers/chromium` or wherever `CHROMIUM_PATH` points.
 
