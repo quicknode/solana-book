@@ -203,10 +203,6 @@ What a leveraged position is worth to its owner right now: collateral plus unrea
 
 A neutral holder of funds that releases them only when agreed conditions are met. The first program in this book, and the pattern inside every other one.
 
-### eviction
-
-An order book's answer to a full side: when no slot is free, the resting order furthest from the spread is removed to make room, and only if the new order is better than the one removed. The *Order Book Exchange* chapter explains what its program does instead.
-
 ### exercise
 
 To use the right an [option](#option) grants: buy the underlying at the strike (a [call](#call)) or sell it there (a [put](#put)). In the *Options* chapter the holder may exercise while the clock is before `expiry`, and not after.
