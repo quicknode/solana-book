@@ -88,6 +88,30 @@ first and this repository follows, so the book never describes a name that was n
 repositories before and after: no occurrence of the old name should survive here, and every new name
 should resolve to a real definition there.
 
+## A flaw in a companion program is fixed there, not described here
+
+When writing or reviewing a chapter turns up a defect in the program it describes (an attack it is
+still open to, like a donation that inflates the share price; a resource that can fill up and wedge
+it, like an order book with no eviction handler; a participant with no reason to take part), the
+deliverable is a pull request to `quicknode/solana-program-examples`, not a paragraph in the book.
+
+- The fix goes into the program with a test that runs the attack, or fills the resource, and asserts
+  the program now holds. Run the program's tests before opening the PR.
+- The book follows the fix, as it does for renames: the chapter describes the defense and names the test
+  that proves it, and never describes a defense that has not shipped. If the book change cannot wait,
+  leave the chapter silent on the point until the example PR merges; do not write the warning in the
+  meantime.
+- No "known limitations" paragraph, no "a production version would add", no "left as an exercise".
+  `scripts/lint-manuscript.mjs` rejects those phrasings, but the rule covers any wording that tells the
+  reader about a flaw the program still has.
+- Teaching an attack class stays: the *Adversary* chapter's empty-pool section works because every
+  program it names defends against the attack and has a test that runs it.
+- Ask before fixing only when the fix needs a decision the author has to make, such as a change of
+  economic design or a choice between two defenses. Bring the proposed fix with the question.
+
+The general form of this rule is in the companion AI plugin's `SUMMARIZING-PROGRAMS.md`, under *Fix a
+flawed program - don't document the flaw*.
+
 ## Writing
 
 `WRITING-PLAN.md` holds the house style and the conventions the linter enforces. Read it before editing
