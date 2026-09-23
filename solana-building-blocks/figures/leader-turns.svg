@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 410" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Leaders take turns filling blocks</text>
+  <defs><marker id="turns-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker><marker id="turns-acc" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
+  <text x="196.5" y="50" font-size="10.5" font-weight="bold" text-anchor="middle">leader A's turn</text>
+  <path d="M 116,62 L 116,57 L 277,57 L 277,62" stroke="#111" stroke-width="1.2" fill="none"/>
+  <text x="368.5" y="50" font-size="10.5" font-weight="bold" text-anchor="middle">leader B's turn</text>
+  <path d="M 288,62 L 288,57 L 449,57 L 449,62" stroke="#111" stroke-width="1.2" fill="none"/>
+  <text x="540.5" y="50" font-size="10.5" font-weight="bold" text-anchor="middle">leader C's turn</text>
+  <path d="M 460,62 L 460,57 L 621,57 L 621,62" stroke="#111" stroke-width="1.2" fill="none"/>
+  <text x="135.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">101</text>
+  <text x="176.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">102</text>
+  <text x="217.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">103</text>
+  <text x="258.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">104</text>
+  <text x="307.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">105</text>
+  <text x="348.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">106</text>
+  <text x="389.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">107</text>
+  <text x="430.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">108</text>
+  <text x="479.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">109</text>
+  <text x="520.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">110</text>
+  <text x="561.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">111</text>
+  <text x="602.0" y="80" font-size="8.5" text-anchor="middle" font-family="'DejaVu Sans Mono', Menlo, monospace">112</text>
+  <text x="16" y="129" font-size="10.5" font-weight="bold">leader A packs</text>
+  <text x="16" y="143" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 103</text>
+  <rect x="116" y="110" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="122" y1="119" x2="148" y2="119" stroke="#888" stroke-width="2"/>
+  <line x1="122" y1="127" x2="148" y2="127" stroke="#888" stroke-width="2"/>
+  <line x1="122" y1="135" x2="148" y2="135" stroke="#888" stroke-width="2"/>
+  <rect x="117" y="145" width="36" height="8" fill="#111"/>
+  <rect x="157" y="110" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="163" y1="119" x2="189" y2="119" stroke="#888" stroke-width="2"/>
+  <line x1="163" y1="127" x2="189" y2="127" stroke="#888" stroke-width="2"/>
+  <line x1="163" y1="135" x2="189" y2="135" stroke="#888" stroke-width="2"/>
+  <rect x="158" y="145" width="36" height="8" fill="#111"/>
+  <rect x="198" y="110" width="38" height="44" fill="#fff" stroke="#1e7a3c" stroke-width="2.2"/>
+  <line x1="204" y1="145" x2="230" y2="145" stroke="#1e7a3c" stroke-width="2"/>
+  <line x1="204" y1="137" x2="230" y2="137" stroke="#1e7a3c" stroke-width="2"/>
+  <rect x="205.0" y="89" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="214.0" y="89" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="223.0" y="89" width="6" height="6" fill="#1e7a3c"/>
+  <path d="M 217.0,98 L 217.0,118" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
+  <rect x="239" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="288" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="329" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="370" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="411" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="460" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="501" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="542" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="583" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="16" y="219" font-size="10.5" font-weight="bold">leader B packs</text>
+  <text x="16" y="233" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 107</text>
+  <rect x="116" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="122" y1="209" x2="148" y2="209" stroke="#888" stroke-width="2"/>
+  <line x1="122" y1="217" x2="148" y2="217" stroke="#888" stroke-width="2"/>
+  <line x1="122" y1="225" x2="148" y2="225" stroke="#888" stroke-width="2"/>
+  <rect x="117" y="235" width="36" height="8" fill="#111"/>
+  <rect x="157" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="163" y1="209" x2="189" y2="209" stroke="#888" stroke-width="2"/>
+  <line x1="163" y1="217" x2="189" y2="217" stroke="#888" stroke-width="2"/>
+  <line x1="163" y1="225" x2="189" y2="225" stroke="#888" stroke-width="2"/>
+  <rect x="158" y="235" width="36" height="8" fill="#111"/>
+  <rect x="198" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="204" y1="209" x2="230" y2="209" stroke="#888" stroke-width="2"/>
+  <line x1="204" y1="217" x2="230" y2="217" stroke="#888" stroke-width="2"/>
+  <line x1="204" y1="225" x2="230" y2="225" stroke="#888" stroke-width="2"/>
+  <rect x="199" y="235" width="36" height="8" fill="#111"/>
+  <rect x="239" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="245" y1="209" x2="271" y2="209" stroke="#888" stroke-width="2"/>
+  <line x1="245" y1="217" x2="271" y2="217" stroke="#888" stroke-width="2"/>
+  <line x1="245" y1="225" x2="271" y2="225" stroke="#888" stroke-width="2"/>
+  <rect x="240" y="235" width="36" height="8" fill="#111"/>
+  <rect x="288" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="294" y1="209" x2="320" y2="209" stroke="#888" stroke-width="2"/>
+  <line x1="294" y1="217" x2="320" y2="217" stroke="#888" stroke-width="2"/>
+  <line x1="294" y1="225" x2="320" y2="225" stroke="#888" stroke-width="2"/>
+  <rect x="289" y="235" width="36" height="8" fill="#111"/>
+  <rect x="329" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="348.0" y="225" font-size="8" fill="#555" font-style="italic" text-anchor="middle">skipped</text>
+  <rect x="370" y="200" width="38" height="44" fill="#fff" stroke="#1e7a3c" stroke-width="2.2"/>
+  <line x1="376" y1="235" x2="402" y2="235" stroke="#1e7a3c" stroke-width="2"/>
+  <line x1="376" y1="227" x2="402" y2="227" stroke="#1e7a3c" stroke-width="2"/>
+  <rect x="377.0" y="179" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="386.0" y="179" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="395.0" y="179" width="6" height="6" fill="#1e7a3c"/>
+  <path d="M 389.0,188 L 389.0,208" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
+  <rect x="411" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="460" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="501" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="542" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="583" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <path d="M 389.0,246 C 389.0,268 307.0,268 307.0,264 L 307.0,250" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="348.0" y="278" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
+  <text x="16" y="309" font-size="10.5" font-weight="bold">leader C packs</text>
+  <text x="16" y="323" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 111</text>
+  <rect x="116" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="122" y1="299" x2="148" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="122" y1="307" x2="148" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="122" y1="315" x2="148" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="117" y="325" width="36" height="8" fill="#111"/>
+  <rect x="157" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="163" y1="299" x2="189" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="163" y1="307" x2="189" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="163" y1="315" x2="189" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="158" y="325" width="36" height="8" fill="#111"/>
+  <rect x="198" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="204" y1="299" x2="230" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="204" y1="307" x2="230" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="204" y1="315" x2="230" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="199" y="325" width="36" height="8" fill="#111"/>
+  <rect x="239" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="245" y1="299" x2="271" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="245" y1="307" x2="271" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="245" y1="315" x2="271" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="240" y="325" width="36" height="8" fill="#111"/>
+  <rect x="288" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="294" y1="299" x2="320" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="294" y1="307" x2="320" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="294" y1="315" x2="320" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="289" y="325" width="36" height="8" fill="#111"/>
+  <rect x="329" y="290" width="38" height="44" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="348.0" y="315" font-size="8" fill="#555" font-style="italic" text-anchor="middle">skipped</text>
+  <rect x="370" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="376" y1="299" x2="402" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="376" y1="307" x2="402" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="376" y1="315" x2="402" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="371" y="325" width="36" height="8" fill="#111"/>
+  <rect x="411" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="417" y1="299" x2="443" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="417" y1="307" x2="443" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="417" y1="315" x2="443" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="412" y="325" width="36" height="8" fill="#111"/>
+  <rect x="460" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="466" y1="299" x2="492" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="466" y1="307" x2="492" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="466" y1="315" x2="492" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="461" y="325" width="36" height="8" fill="#111"/>
+  <rect x="501" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="507" y1="299" x2="533" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="507" y1="307" x2="533" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="507" y1="315" x2="533" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="502" y="325" width="36" height="8" fill="#111"/>
+  <rect x="542" y="290" width="38" height="44" fill="#fff" stroke="#1e7a3c" stroke-width="2.2"/>
+  <line x1="548" y1="325" x2="574" y2="325" stroke="#1e7a3c" stroke-width="2"/>
+  <line x1="548" y1="317" x2="574" y2="317" stroke="#1e7a3c" stroke-width="2"/>
+  <rect x="549.0" y="269" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="558.0" y="269" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="567.0" y="269" width="6" height="6" fill="#1e7a3c"/>
+  <path d="M 561.0,278 L 561.0,298" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
+  <rect x="583" y="290" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <path d="M 389.0,336 C 389.0,358 307.0,358 307.0,354 L 307.0,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="348.0" y="368" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
+  <path d="M 441,336 C 441,358 468,358 468,354 L 468,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="454.5" y="368" font-size="9" fill="#555" font-style="italic" text-anchor="middle">block 109 reads the time block 108 wrote</text>
+  <path d="M 94,171 L 120,157" stroke="#111" stroke-width="1.1" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="16" y="180" font-size="9" fill="#555" font-style="italic">footer: the time</text>
+  <text x="16" y="191" font-size="9" fill="#555" font-style="italic">the leader wrote</text>
+</svg>

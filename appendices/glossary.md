@@ -62,6 +62,10 @@ One hundredth of one percent; 10,000 basis points is 100%. The universal unit fo
 
 An order to buy at or below a stated price. The buyer's side of an order book.
 
+### block
+
+A batch of transactions one [leader](#leader) produces for its [slot](#slot), built on the block before it, its parent. A slot whose block does not arrive in time is skipped and has no block.
+
 ### blockhash
 
 A recent block's hash, included in every transaction to bound its lifetime. When it expires, the transaction can never land.
@@ -189,7 +193,7 @@ Sub-unit remainders left over by integer division: a fraction smaller than one [
 
 ### epoch
 
-A period of 432,000 slots over which a validator schedule holds, about a day at a 200 millisecond slot. Mostly relevant to staking; application logic usually counts slots.
+A period of 432,000 slots: exactly a day at a 200 millisecond slot, and a little longer in practice because real slots run long. The schedule of [leaders](#leader) is drawn for each epoch, and some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ### equity (position)
 
@@ -215,6 +219,10 @@ Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of th
 
 A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
 
+### feature
+
+A change to the network, built into the validator software switched off and turned on across the network at the start of an [epoch](#epoch). Each shortening of the [slot](#slot) has shipped as one, and the *Time* chapter covers reading them from a program.
+
 ### finality
 
 The point past which a block cannot be reorganized away and the transactions in it are the record. Solana reaches it when its validators have voted the block final; how long that takes is set by the network's consensus and moves when it does. See [commitment level](#commitment-level).
@@ -230,6 +238,10 @@ A loan borrowed and repaid inside a single transaction, possible only because tr
 ### floor
 
 Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never promise a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
+
+### fork
+
+One of two competing chains, formed when validators briefly build on different blocks. The network settles on one, and a program only ever runs on one. A transaction in a block on the fork that loses vanishes, which is what the [commitment levels](#commitment-level) describe.
 
 ### funding rate
 
@@ -302,6 +314,10 @@ The bend in a lending reserve's interest rate curve, in this book at 80% [utiliz
 ### lamport
 
 The minor unit of SOL: one billionth. Named for Leslie Lamport.
+
+### leader
+
+The [validator](#validator) assigned to produce the [block](#block) for a [slot](#slot). The schedule of leaders is drawn before each [epoch](#epoch), with each validator's share of slots in proportion to its stake. A leader chooses which transactions go in its block and in what order, and writes the time the next block reads as its [Unix timestamp](#unix-timestamp).
 
 ### lending market
 
@@ -561,7 +577,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time: a window of 200 milliseconds in which a leader may produce a block. The network sets a target length and has shortened it before, so a slot count converts to seconds only at the slot length in force. Adversarial logic counts slots, not wall-clock time, because slot progression is guaranteed by the runtime while timestamps are validator-influenced.
+Solana's basic unit of time: a window in which one [leader](#leader) may produce a [block](#block). The network sets a target length, 200 milliseconds at the time of writing, and has shortened it before, so a slot count converts to seconds only at the slot length in force. A slot whose block does not arrive in time is skipped: the count moves on and that slot has no block. Adversarial logic counts slots, not wall-clock time, because the runtime guarantees the slot count while a leader chooses the timestamp.
 
 ### SOL
 
@@ -627,13 +643,17 @@ A time-weighted average price: the average of a market's price over a window, us
 
 The asset an [option](#option) or other derivative is about: what a [call](#call) buys and a [put](#put) sells at the [strike](#strike). It is short for the underlying asset, and every options market uses it as a noun on its own. In the *Options* chapter the underlying is NVDAx and the quote token is USDC.
 
+### Unix timestamp
+
+The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is accurate to within a few seconds and somebody chose where within them. Use it for spans quoted to people, and count [slots](#slot) wherever a few seconds would pay whoever moved them. See the *Time* chapter.
+
 ### utilization
 
 In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
 
 ### validator
 
-A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. A validator reports the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
+A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. The validator leading each block writes the wall-clock timestamp the Clock [sysvar](#sysvar) carries, which is why adversarial logic counts [slots](#slot) instead, and enough validators building on a block is what gives it [finality](#finality).
 
 ### vault
 

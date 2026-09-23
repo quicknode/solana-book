@@ -4,7 +4,7 @@ Every bug class in this chapter has shipped in a real program, and the worst of 
 
 ## Money Is Integers: No Floats Near Funds
 
-Every validator that executes your program must compute exactly the same result, or the network cannot agree on state, so a program's float operations are emulated in software rather than run on the hardware. That makes them slow. They also accumulate representation error (0.1 has no exact binary form) and round to nearest, a direction nobody chose. Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For money it is exact, because money really does come in whole units.
+Every validator that executes your program must compute exactly the same result, or the network cannot agree on state, so a program's float operations are emulated in software rather than run on the hardware. That makes them slow. They also accumulate representation error (0.1 has no exact binary form) and round to nearest, a direction nobody chose. Money itself is discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For money it is exact, because money comes in whole units.
 
 So the rule is: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that uses them internally. When a calculation needs fractions, scale integers up instead, as the WADs and Lots section below describes. When it needs a square root or an exponential, compute it with integer iteration: Newton's method for the square root, which the *Constant-Product AMM* chapter runs for real, and exponentiation by squaring for a power, both covered later in this chapter. None of the programs in this book uses a float, and your programs should not either.
 
@@ -77,7 +77,7 @@ An **invariant** is a property that must hold before and after every state chang
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 
-Check them **after the math, not just before.** The AMM re-checks its product after the transfers have actually landed, and that one check catches every bug above it that would overpay a user, including bugs in code that has not been written yet. The check costs a few hundred compute units; the drain an attacker could make without it is unbounded.
+Check them **after the math, not just before.** The AMM re-checks its product after the transfers complete, and that check catches every bug above it that would overpay a user, including bugs in code that has not been written yet. The check costs a few hundred compute units; the drain an attacker could make without it is unbounded.
 
 One note from the same program: degenerate values like zero can make invariants hold even in dangerous situations. K is the product of the two reserves, so K is zero whenever either reserve is zero, even though the pool still holds every token of the other. In that state `new_k >= old_k` reads `new_k >= 0`, which every outcome satisfies, while the swap formula pays out the whole remaining reserve for any input at all. So the AMM guards the degenerate case directly, requiring both reserves positive before it prices anything.
 
