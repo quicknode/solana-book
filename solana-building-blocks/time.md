@@ -1,11 +1,14 @@
 # Chapter 5: Time
 
-Solana has two clocks, and a program reads both from the same account:
+A Solana program has three ways to observe the passage of time:
 
-- The slot is a count the network advances at a steady pace, and it only goes up.[^forks]
-- The Unix timestamp is wall-clock time, usually within a second or two.
+- **The Unix timestamp** is wall-clock time, usually within a second or two of the real time.
+- **The slot** is a count the network advances at a steady pace, and it only goes up.[^forks]
+- **A counter** is a number the program keeps itself and adds one to each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
 
-Which clock to use depends on the job. A price freshness window counts slots. A week promised to a contributor runs on the wall clock. Which order came first uses neither, and uses a counter the program keeps itself.
+The runtime supplies the first two, and a program reads both from the same account. The program keeps the third.
+
+Which one to use depends on the job. A week promised to a contributor runs on the wall clock. A price freshness window counts slots. Which order came first uses a counter.
 
 ## The Slot Counter
 
@@ -176,7 +179,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 ## What You Learnt
 
-- Solana has two clocks. The slot count only goes up and nobody can move it, though what it comes to in seconds varies a little and stops in a halt. The Unix timestamp is wall-clock time written by a leader, out by a few seconds somebody chose, however long the span.
+- A program has three ways to observe the passage of time. The Unix timestamp is wall-clock time written by a leader, usually out by a few seconds somebody chose. The slot count only goes up and nobody can move it, though what it comes to in seconds varies a little and stops in a halt. A counter the program keeps records order and nothing else.
 - Count slots for price freshness and for anything an adversary running a leader could profit from by shifting the time a few seconds. Use the wall clock for a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
 - To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed seconds. A current balance is the principal multiplied by the factor.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
