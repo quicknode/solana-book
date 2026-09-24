@@ -263,6 +263,7 @@ for (const file of [...new Set(files)]) {
 
 const chapterTitles = [
   "Core Building Blocks of Solana",
+  "State Machines",
   "Arithmetic of Money",
   "Offchain Truth",
   "Adversary",
@@ -299,7 +300,7 @@ for (const file of [...new Set(files)]) {
 }
 
 // "Financial Programming Concepts in Solana" heads a section of five chapters,
-// and is also chapter 6's title. A reference to it lands the reader on a
+// and was once chapter 6's title too. A reference to it lands the reader on a
 // section rather than a subject: thirteen of them meant the *Adversary* or
 // *Arithmetic of Money* chapter. It is not in the title list above because the
 // message there would tell an author to call a five-chapter section a chapter.

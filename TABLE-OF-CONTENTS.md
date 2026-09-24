@@ -17,7 +17,7 @@
 
 ### Financial Programming Concepts in Solana
 
-- [Chapter 6: Financial Programming Concepts in Solana](financial-programming-concepts-in-solana/intro.md) - financial software is a state machine
+- [Chapter 6: State Machines](financial-programming-concepts-in-solana/intro.md) - financial software is a state machine
 - [Chapter 7: The Arithmetic of Money](financial-programming-concepts-in-solana/the-arithmetic-of-money.md) - integers, scale, rounding, and interest
 - [Chapter 8: Offchain Truth](financial-programming-concepts-in-solana/offchain-truth.md) - how real-world facts (prices, event outcomes, anything the chain cannot see) get onchain, and how a program verifies them
 - [Chapter 9: The Adversary](financial-programming-concepts-in-solana/the-adversary.md) - how onchain money gets stolen, exploit class by exploit class

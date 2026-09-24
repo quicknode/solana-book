@@ -1,4 +1,4 @@
-# Chapter 6: Financial Programming Concepts in Solana
+# Chapter 6: State Machines
 
 This chapter covers the shape every financial program shares: a state machine, in which every participant can get their money out of every state, and every account returns its rent deposit when it closes.
 
