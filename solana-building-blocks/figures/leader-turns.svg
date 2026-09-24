@@ -88,8 +88,8 @@
   <rect x="501" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="542" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="583" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
-  <path d="M 389.0,246 C 389.0,268 307.0,268 307.0,264 L 307.0,250" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
-  <text x="348.0" y="278" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
+  <path d="M 389.0,246 C 389.0,276 307.0,278 307.0,264 L 307.0,250" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="348.0" y="283" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
   <text x="16" y="309" font-size="10.5" font-weight="bold">leader C packs</text>
   <text x="16" y="323" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 111</text>
   <rect x="116" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
@@ -147,10 +147,10 @@
   <rect x="567.0" y="269" width="6" height="6" fill="#1e7a3c"/>
   <path d="M 561.0,278 L 561.0,298" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
   <rect x="583" y="290" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
-  <path d="M 389.0,336 C 389.0,358 307.0,358 307.0,354 L 307.0,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
-  <text x="348.0" y="368" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
-  <path d="M 441,336 C 441,358 468,358 468,354 L 468,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
-  <text x="454.5" y="368" font-size="9" fill="#555" font-style="italic" text-anchor="middle">block 109 reads the time block 108 wrote</text>
+  <path d="M 389.0,336 C 389.0,366 307.0,368 307.0,354 L 307.0,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="348.0" y="373" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
+  <path d="M 441,336 C 441,360 468,364 468,354 L 468,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="454.5" y="373" font-size="9" fill="#555" font-style="italic" text-anchor="middle">block 109 reads the time block 108 wrote</text>
   <path d="M 94,171 L 120,157" stroke="#111" stroke-width="1.1" fill="none" marker-end="url(#turns-arr)"/>
   <text x="16" y="180" font-size="9" fill="#555" font-style="italic">footer: the time</text>
   <text x="16" y="191" font-size="9" fill="#555" font-style="italic">the leader wrote</text>
