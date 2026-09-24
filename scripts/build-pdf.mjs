@@ -720,6 +720,12 @@ section.prelude-item .cols { column-count: 1; }
    too. Its heading is a file title for the build, not a line the reader sees.
    The rule comes after the shared-flow rule above because paged.js resolves
    break rules in source order. */
+/* The dedication gets the same treatment: alone on a right-hand page, with no
+   heading, set a third of the way down and centered, and a blank reverse. */
+section#ch-prelude-dedication { break-before: recto; break-after: recto; page: chapter-start; }
+section#ch-prelude-dedication h1 { display: none; }
+section#ch-prelude-dedication .cols { margin: 2.6in 0.35in 0 0.35in; }
+section#ch-prelude-dedication p { text-align: center !important; font-size: 11.5pt; font-style: italic; line-height: 1.5; hyphens: none; }
 section#ch-prelude-epigraph { break-before: recto; break-after: recto; page: chapter-start; }
 section#ch-prelude-epigraph h1 { display: none; }
 section#ch-prelude-epigraph .cols { margin: 2.6in 0.35in 0 0.35in; }
