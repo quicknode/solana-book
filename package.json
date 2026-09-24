@@ -5,6 +5,7 @@
   "scripts": {
     "build-pdf": "node scripts/build-pdf.mjs",
     "lint": "node scripts/lint-manuscript.mjs",
+    "measure-slot-drift": "node scripts/measure-slot-drift.mjs",
     "preview": "node scripts/preview-page.mjs",
     "resize-cover": "node scripts/resize-cover.mjs"
   },
