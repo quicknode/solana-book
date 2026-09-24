@@ -1,6 +1,6 @@
 # Chapter 6: Financial Programming Concepts in Solana
 
-This part covers the money: calculating with it, bringing facts about assets onchain, defending assets, and operating a program that holds them.
+This chapter covers the shape every financial program shares: a state machine, in which every participant can get their money out of every state, and every account returns its rent deposit when it closes.
 
 ## Financial Software Is a State Machine
 
