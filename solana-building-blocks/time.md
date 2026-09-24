@@ -4,9 +4,9 @@ A Solana program has three ways to observe the passage of time:
 
 - **The Unix timestamp** is wall-clock time, usually within a second or two of the real time.
 - **The slot** is a count the network advances at a steady pace, and it only goes up.[^forks]
-- **A counter** is a number the program stores in one of its own accounts and adds one to each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
+- **A counter** is something a program can implement: a number stored in one of its own accounts that goes up by one each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
 
-The runtime supplies the first two, and a program reads both from the same account. The program supplies the third.
+The runtime supplies the first two, and a program reads both from the same account. A program implements the third itself.
 
 Which one to use depends on the job. A week promised to a contributor runs on the wall clock. A price freshness window counts slots. Which order came first uses a counter.
 
