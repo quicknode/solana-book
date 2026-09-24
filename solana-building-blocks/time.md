@@ -43,7 +43,7 @@ A leader can pick any time inside the permitted range, which moves the timestamp
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. Interest, funding, and the vault's annual fee run on the wall clock too. Each is a rate quoted to somebody per year or per hour, and a few seconds against a year change it by nothing anybody can see.
 
-The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs. A slot count's error of about 10% grows with the span, until across a week it is about 16 hours.
+The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs. A slot count stays about 10% short of the time that passed, so its error adds up slot by slot as the span grows, until across a week it is about 16 hours.
 
 ## Interest and Funding Accrue by the Wall Clock
 
