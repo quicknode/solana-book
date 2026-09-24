@@ -10,7 +10,7 @@ See [borrow accumulation factor](#borrow-accumulation-factor).
 
 ### address
 
-The 32-byte identifier of an account, usually shown base58-encoded. Most addresses are public keys; PDAs are addresses without private keys.
+The 32-byte identifier of an account, usually shown base58-encoded. Most addresses are public keys. The rest have no private key: [PDAs](#pda-program-derived-address), derived from seeds, and [built-in addresses](#built-in-address), chosen by Solana's core developers.
 
 ### adverse selection
 
@@ -74,7 +74,7 @@ A single number per reserve that starts at 1.0 and only grows, compounding the b
 
 ### built-in address
 
-An address chosen rather than computed: the System Program, the token programs, and the sysvars each sit at a fixed byte string the runtime treats as that thing. Neither a [public key](#address) somebody holds the private key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
+An address chosen rather than computed: the System Program, the token programs, the Memo Program, and the sysvars each sit at a fixed byte string the runtime treats as that thing. Neither a [public key](#address) somebody holds the private key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
 
 ### bump
 
@@ -627,7 +627,7 @@ The price at which an [option](#option) trades if its holder exercises. The *Opt
 
 ### System Program
 
-The program at a well-known address that creates accounts and transfers SOL. Every wallet account is owned by it, and every account any program creates is born through it.
+The program at the [built-in address](#built-in-address) `11111111111111111111111111111111` that creates accounts and transfers SOL. Every wallet account is owned by it, and every account any program creates is born through it.
 
 ### sysvar
 
