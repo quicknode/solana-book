@@ -24,7 +24,7 @@ The slot count is how many slots have gone by. Programs read the current count f
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it. A time counted in slots is accurate to around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live].[^slot-time-live] A slot runs long when its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it. On testnet, the only network running Alpenglow at the time of writing, slots averaged 219 milliseconds over an hour, so a time counted in slots ran about 10% long.[^slot-time-live] A slot runs long when its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That makes an hours-old price look one slot old.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and a little longer in practice because real slots run long. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
@@ -43,7 +43,7 @@ A leader can pick any time inside the permitted range, which moves the timestamp
 
 A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. Interest, funding, and the vault's annual fee run on the wall clock too. Each is a rate quoted to somebody per year or per hour, and a few seconds against a year change it by nothing anybody can see.
 
-The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs. Around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live] of a slot count grows with the span, until across a week it is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live].
+The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs. A slot count's error of about 10% grows with the span, until across a week it is about 16 hours.
 
 ## Interest and Funding Accrue by the Wall Clock
 
@@ -91,7 +91,7 @@ The managed fund uses the wall clock twice:
 - **Its annual management fee accrues by timestamp**, because a few seconds either way, measured against a year, are nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
 
-When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live], which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
+When the deadline is one you promised a person, use timestamps, and leave a margin so a few seconds cannot change who gets paid. A contributor told they have a week to fund is owed seven days of wall-clock time. A week counted in slots is out by about 16 hours, which breaks that promise, while a week of wall clock is out by seconds, which the margin covers.
 
 ## Who Fills First Is a Counter, Not a Clock
 
@@ -170,7 +170,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
-| fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live] out |
+| fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is about 16 hours out |
 | lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price is the attack |
 | perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
 | prop AMM | price freshness | slots | a stale price is the attack |
@@ -208,6 +208,6 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^slot-simd]: During the second half of 2026, slot times were slowly reduced from 400 milliseconds to 200, under [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md).
 
-[^slot-time-live]: Solana's slot time tracker at [solana.com/200ms](https://solana.com/200ms). [PLACEHOLDER: add the reading and its date after 200 ms slots and Alpenglow go live]
+[^slot-time-live]: Solana Explorer's live cluster statistics for testnet, at [explorer.solana.com/?cluster=testnet](https://explorer.solana.com/?cluster=testnet), read on 24 September 2026: 219 milliseconds averaged over the last hour, and 215 over the last minute. Mainnet was not yet running Alpenglow then. Solana's slot time tracker for mainnet is at [solana.com/200ms](https://solana.com/200ms).
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).
