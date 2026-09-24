@@ -24,7 +24,7 @@ The slot count is how many slots have gone by. Programs read the current count f
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it, now and then a little under. A time counted in slots is accurate to around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live].[^slot-time-live] A slot runs long when its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it. A time counted in slots is accurate to around [PLACEHOLDER: measure slot drift % after 200 ms slots and Alpenglow go live].[^slot-time-live] A slot runs long when its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That makes an hours-old price look one slot old.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and a little longer in practice because real slots run long. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
