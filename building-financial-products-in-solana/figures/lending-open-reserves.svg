@@ -86,9 +86,9 @@
   </g>
   <g>
   <circle cx="380" cy="136" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="390" y="130.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="390" y="139.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="390" y="148.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="390" y="130.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="390" y="139.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="390" y="148.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="372" y="154.5" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,158)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="400" y="167.975" font-size="8.5">Maria's USDC</text>
@@ -97,9 +97,9 @@
   </g>
   <g>
   <circle cx="380" cy="218" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="390" y="212.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="390" y="221.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="390" y="230.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC SHARE MINT</text>
+  <text x="390" y="212.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="390" y="221.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="390" y="230.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC SHARE MINT</text>
   <rect x="372" y="236.5" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,240)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="400" y="249.975" font-size="8.5">USDC shares</text>
@@ -108,8 +108,8 @@
   </g>
   <g>
   <circle cx="12" cy="140.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="139.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"RESERVE" + MARKET +</text>
-  <text x="22" y="148.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT ADDRESS</text>
+  <text x="22" y="139.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"RESERVE" + MARKET +</text>
+  <text x="22" y="148.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT ADDRESS</text>
   <rect x="4" y="154.5" width="164" height="71.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(12,158)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="32" y="168.325" font-size="9.5">USDC reserve</text>
@@ -121,8 +121,8 @@
   </g>
   <g>
   <circle cx="192" cy="140.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="202" y="139.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"LIQUIDITY_VAULT"</text>
-  <text x="202" y="148.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">+ RESERVE</text>
+  <text x="202" y="139.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"LIQUIDITY_VAULT"</text>
+  <text x="202" y="148.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">+ RESERVE</text>
   <rect x="184" y="154.5" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(192,158)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="212" y="168.325" font-size="9.5">USDC liquidity vault</text>
@@ -132,7 +132,7 @@
   </g>
   <g>
   <circle cx="192" cy="227" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="202" y="230.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"SHARE_MINT" + RESERVE</text>
+  <text x="202" y="230.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"SHARE_MINT" + RESERVE</text>
   <rect x="184" y="236.5" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(192,240)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="212" y="250.325" font-size="9.5">USDC share mint</text>
@@ -142,9 +142,9 @@
   </g>
   <g>
   <circle cx="380" cy="300" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="390" y="294.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="390" y="303.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="390" y="312.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT</text>
+  <text x="390" y="294.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="390" y="303.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="390" y="312.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT</text>
   <rect x="372" y="318.5" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,322)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="400" y="331.975" font-size="8.5">Maria's NVDAx</text>
@@ -153,9 +153,9 @@
   </g>
   <g>
   <circle cx="380" cy="382" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="390" y="376.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="390" y="385.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="390" y="394.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX SHARE MINT</text>
+  <text x="390" y="376.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="390" y="385.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="390" y="394.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX SHARE MINT</text>
   <rect x="372" y="400.5" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,404)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="400" y="413.975" font-size="8.5">NVDAx shares</text>
@@ -164,8 +164,8 @@
   </g>
   <g>
   <circle cx="12" cy="304.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="303.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"RESERVE" + MARKET +</text>
-  <text x="22" y="312.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT ADDRESS</text>
+  <text x="22" y="303.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"RESERVE" + MARKET +</text>
+  <text x="22" y="312.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT ADDRESS</text>
   <rect x="4" y="318.5" width="164" height="71.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(12,322)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="32" y="332.325" font-size="9.5">NVDAx reserve</text>
@@ -177,8 +177,8 @@
   </g>
   <g>
   <circle cx="192" cy="304.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="202" y="303.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"LIQUIDITY_VAULT"</text>
-  <text x="202" y="312.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">+ RESERVE</text>
+  <text x="202" y="303.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"LIQUIDITY_VAULT"</text>
+  <text x="202" y="312.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">+ RESERVE</text>
   <rect x="184" y="318.5" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(192,322)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="212" y="332.325" font-size="9.5">NVDAx liquidity vault</text>
@@ -188,7 +188,7 @@
   </g>
   <g>
   <circle cx="192" cy="391" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="202" y="394.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"SHARE_MINT" + RESERVE</text>
+  <text x="202" y="394.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"SHARE_MINT" + RESERVE</text>
   <rect x="184" y="400.5" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(192,404)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="212" y="414.325" font-size="9.5">NVDAx share mint</text>
@@ -198,9 +198,9 @@
   </g>
   <g>
   <circle cx="380" cy="464" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="390" y="458.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="390" y="467.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="390" y="476.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">SPCXX MINT</text>
+  <text x="390" y="458.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="390" y="467.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="390" y="476.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SPCXX MINT</text>
   <rect x="372" y="482.5" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,486)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="400" y="495.975" font-size="8.5">Maria's SPCXx</text>
@@ -209,9 +209,9 @@
   </g>
   <g>
   <circle cx="380" cy="546" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="390" y="540.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="390" y="549.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="390" y="558.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">SPCXX SHARE MINT</text>
+  <text x="390" y="540.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="390" y="549.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="390" y="558.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SPCXX SHARE MINT</text>
   <rect x="372" y="564.5" width="96" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,568)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="400" y="577.975" font-size="8.5">SPCXx shares</text>
@@ -220,8 +220,8 @@
   </g>
   <g>
   <circle cx="12" cy="468.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="22" y="467.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"RESERVE" + MARKET +</text>
-  <text x="22" y="476.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">SPCXX MINT ADDRESS</text>
+  <text x="22" y="467.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"RESERVE" + MARKET +</text>
+  <text x="22" y="476.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SPCXX MINT ADDRESS</text>
   <rect x="4" y="482.5" width="164" height="71.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(12,486)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="32" y="496.325" font-size="9.5">SPCXx reserve</text>
@@ -233,8 +233,8 @@
   </g>
   <g>
   <circle cx="192" cy="468.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="202" y="467.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"LIQUIDITY_VAULT"</text>
-  <text x="202" y="476.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">+ RESERVE</text>
+  <text x="202" y="467.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"LIQUIDITY_VAULT"</text>
+  <text x="202" y="476.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">+ RESERVE</text>
   <rect x="184" y="482.5" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(192,486)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="212" y="496.325" font-size="9.5">SPCXx liquidity vault</text>
@@ -244,7 +244,7 @@
   </g>
   <g>
   <circle cx="192" cy="555" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="202" y="558.5" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"SHARE_MINT" + RESERVE</text>
+  <text x="202" y="558.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"SHARE_MINT" + RESERVE</text>
   <rect x="184" y="564.5" width="130" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(192,568)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="212" y="578.325" font-size="9.5">SPCXx share mint</text>

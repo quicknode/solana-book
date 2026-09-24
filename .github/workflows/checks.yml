@@ -21,9 +21,6 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # The figures' Andale Mono is fetched and unpacked by scripts/andale-mono.mjs,
-      # which needs cabextract for the core-fonts installer it comes in.
-      - run: sudo apt-get install -y cabextract
       - name: Install Chromium
         id: chromium
         run: |

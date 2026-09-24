@@ -6,9 +6,9 @@
   <g transform="translate(0,18)">
 
   <circle cx="24" cy="21.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="16" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"OFFER" +</text>
-  <text x="34" y="25" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="34" y="34" font-size="7" font-family="'Andale Mono', monospace" fill="#555">1</text>
+  <text x="34" y="16" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OFFER" +</text>
+  <text x="34" y="25" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="34" y="34" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">1</text>
   <rect x="16" y="40" width="290" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,43.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="54.175" font-size="10.5" font-weight="bold">offer</text>
@@ -18,9 +18,9 @@
   <text x="24" y="96" font-size="9.5">token_mint_b: TSLAx</text>
 
   <circle cx="342" cy="21.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="16" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"OFFER" +</text>
-  <text x="352" y="25" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="352" y="34" font-size="7" font-family="'Andale Mono', monospace" fill="#555">2</text>
+  <text x="352" y="16" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OFFER" +</text>
+  <text x="352" y="25" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="352" y="34" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">2</text>
   <rect x="334" y="40" width="290" height="64" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,43.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="54.175" font-size="10.5" font-weight="bold">offer</text>
@@ -30,8 +30,8 @@
   <text x="342" y="96" font-size="9.5">token_mint_b: USDC</text>
 
   <circle cx="24" cy="120" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="119" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"FUNDRAISER" +</text>
-  <text x="34" y="128" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS</text>
+  <text x="34" y="119" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>
+  <text x="34" y="128" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS</text>
   <rect x="16" y="134" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,137.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="148.175" font-size="10.5" font-weight="bold">fundraiser</text>
@@ -40,8 +40,8 @@
   <text x="24" y="178" font-size="9.5">amount_to_raise: 9,000</text>
 
   <circle cx="342" cy="120" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="119" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"FUNDRAISER" +</text>
-  <text x="352" y="128" font-size="7" font-family="'Andale Mono', monospace" fill="#555">DAVE'S ADDRESS</text>
+  <text x="352" y="119" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>
+  <text x="352" y="128" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">DAVE'S ADDRESS</text>
   <rect x="334" y="134" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,137.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="148.175" font-size="10.5" font-weight="bold">fundraiser</text>
@@ -50,9 +50,9 @@
   <text x="342" y="178" font-size="9.5">amount_to_raise: 25,000</text>
 
   <circle cx="24" cy="207.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="202" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
-  <text x="34" y="211" font-size="7" font-family="'Andale Mono', monospace" fill="#555">FUNDRAISER +</text>
-  <text x="34" y="220" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
+  <text x="34" y="202" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
+  <text x="34" y="211" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUNDRAISER +</text>
+  <text x="34" y="220" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
   <rect x="16" y="226" width="290" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,229.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="240.175" font-size="10.5" font-weight="bold">contributor</text>
@@ -60,9 +60,9 @@
   <text x="24" y="258" font-size="9.5">amount: 900</text>
 
   <circle cx="342" cy="207.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="202" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
-  <text x="352" y="211" font-size="7" font-family="'Andale Mono', monospace" fill="#555">FUNDRAISER +</text>
-  <text x="352" y="220" font-size="7" font-family="'Andale Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
+  <text x="352" y="202" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
+  <text x="352" y="211" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUNDRAISER +</text>
+  <text x="352" y="220" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
   <rect x="334" y="226" width="290" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,229.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="240.175" font-size="10.5" font-weight="bold">contributor</text>
@@ -70,9 +70,9 @@
   <text x="342" y="258" font-size="9.5">amount: 900</text>
 
   <circle cx="24" cy="287.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="282" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"MARKET" +</text>
-  <text x="34" y="291" font-size="7" font-family="'Andale Mono', monospace" fill="#555">NVDAX MINT +</text>
-  <text x="34" y="300" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="34" y="282" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"MARKET" +</text>
+  <text x="34" y="291" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT +</text>
+  <text x="34" y="300" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="16" y="306" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,309.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="320.175" font-size="10.5" font-weight="bold">market</text>
@@ -81,9 +81,9 @@
   <text x="24" y="350" font-size="9.5">quote_mint: USDC</text>
 
   <circle cx="342" cy="287.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="282" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"MARKET" +</text>
-  <text x="352" y="291" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TSLAX MINT +</text>
-  <text x="352" y="300" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="352" y="282" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"MARKET" +</text>
+  <text x="352" y="291" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TSLAX MINT +</text>
+  <text x="352" y="300" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="334" y="306" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,309.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="320.175" font-size="10.5" font-weight="bold">market</text>
@@ -92,9 +92,9 @@
   <text x="342" y="350" font-size="9.5">quote_mint: USDC</text>
 
   <circle cx="24" cy="379.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="374" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"OBLIGATION" +</text>
-  <text x="34" y="383" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET +</text>
-  <text x="34" y="392" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS</text>
+  <text x="34" y="374" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OBLIGATION" +</text>
+  <text x="34" y="383" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET +</text>
+  <text x="34" y="392" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS</text>
   <rect x="16" y="398" width="290" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,401.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="412.175" font-size="10.5" font-weight="bold">obligation</text>
@@ -102,9 +102,9 @@
   <text x="24" y="430" font-size="9.5">owner: Bob</text>
 
   <circle cx="342" cy="379.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="374" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"OBLIGATION" +</text>
-  <text x="352" y="383" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARKET +</text>
-  <text x="352" y="392" font-size="7" font-family="'Andale Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
+  <text x="352" y="374" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OBLIGATION" +</text>
+  <text x="352" y="383" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET +</text>
+  <text x="352" y="392" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
   <rect x="334" y="398" width="290" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,401.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="412.175" font-size="10.5" font-weight="bold">obligation</text>
@@ -112,10 +112,10 @@
   <text x="342" y="430" font-size="9.5">owner: Carol</text>
 
   <circle cx="24" cy="463" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="34" y="457" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"POSITION" +</text>
-  <text x="34" y="466" font-size="7" font-family="'Andale Mono', monospace" fill="#555">POOL +</text>
-  <text x="34" y="475" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="34" y="484" font-size="7" font-family="'Andale Mono', monospace" fill="#555">LONG</text>
+  <text x="34" y="457" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"POSITION" +</text>
+  <text x="34" y="466" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">POOL +</text>
+  <text x="34" y="475" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="34" y="484" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">LONG</text>
   <rect x="16" y="490" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,493.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="504.175" font-size="10.5" font-weight="bold">position</text>
@@ -124,10 +124,10 @@
   <text x="24" y="534" font-size="9.5">collateral: 1,000</text>
 
   <circle cx="342" cy="463" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="352" y="457" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"POSITION" +</text>
-  <text x="352" y="466" font-size="7" font-family="'Andale Mono', monospace" fill="#555">POOL +</text>
-  <text x="352" y="475" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
-  <text x="352" y="484" font-size="7" font-family="'Andale Mono', monospace" fill="#555">SHORT</text>
+  <text x="352" y="457" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"POSITION" +</text>
+  <text x="352" y="466" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">POOL +</text>
+  <text x="352" y="475" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="352" y="484" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SHORT</text>
   <rect x="334" y="490" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,493.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="504.175" font-size="10.5" font-weight="bold">position</text>

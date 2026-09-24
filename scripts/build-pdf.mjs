@@ -17,7 +17,6 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
 import { chromium } from "playwright-core";
 import { PDFArray, PDFDocument, PDFName } from "pdf-lib";
-import { andaleMonoPath } from "./andale-mono.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -488,8 +487,6 @@ const body = sections
 
 const pagedPolyfill = readFileSync(join(repoRoot, "node_modules", "pagedjs", "dist", "paged.polyfill.js"), "utf8");
 const fontUrl = (file) => pathToFileURL(join(repoRoot, "assets", "fonts", file)).href;
-// Andale Mono is found on the machine or fetched, never checked in: see andale-mono.mjs.
-const andaleMonoUrl = pathToFileURL(andaleMonoPath()).href;
 
 const workDir = mkdtempSync(join(tmpdir(), "solana-book-pdf-"));
 const defaultChromiumPath = existsSync("/opt/pw-browsers/chromium")
@@ -569,8 +566,8 @@ const html = `<!doctype html>
 /* Gelasio is the body face, bundled so every machine sets the same widths.
    Static instances, not the variable build: Chromium's print-to-PDF
    silently drops a variable font and falls back. The figures are set in
-   Denim INK, with DejaVu Sans Mono for handler names and Andale Mono for
-   seed lists and addresses. */
+   Denim INK, with DejaVu Sans Mono for handler names, seed lists and
+   addresses. */
 @font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Regular.ttf")}"); font-weight: normal; font-style: normal; }
 @font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Italic.ttf")}"); font-weight: normal; font-style: italic; }
 @font-face { font-family: "Gelasio"; src: url("${fontUrl("Gelasio-Bold.ttf")}"); font-weight: bold; font-style: normal; }
@@ -579,7 +576,6 @@ const html = `<!doctype html>
 @font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-Bold.ttf")}"); font-weight: bold; font-style: normal; }
 @font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-Oblique.ttf")}"); font-weight: normal; font-style: italic; }
 @font-face { font-family: "DejaVu Sans Mono"; src: url("${fontUrl("DejaVuSansMono-BoldOblique.ttf")}"); font-weight: bold; font-style: italic; }
-@font-face { font-family: "Andale Mono"; src: url("${andaleMonoUrl}"); font-weight: normal; font-style: normal; }
 
 @page {
   size: ${PAGE_WIDTH_IN}in ${PAGE_HEIGHT_IN}in;

@@ -23,7 +23,6 @@ import { chromium } from "playwright-core";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { andaleMonoPath } from "./andale-mono.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const figureDirs = [
@@ -103,7 +102,7 @@ let failures = 0;
 // canvas edge passed. Reading the font here and inlining it has no origin to
 // be refused from, and fontsLoaded below fails the run if any face still does.
 const fontFace = (family, file, extra = "") =>
-  `@font-face{font-family:"${family}";src:url("data:font/ttf;base64,${readFileSync(file.includes("/") ? file : join(repoRoot, "assets", "fonts", file)).toString("base64")}");${extra}}`;
+  `@font-face{font-family:"${family}";src:url("data:font/ttf;base64,${readFileSync(join(repoRoot, "assets", "fonts", file)).toString("base64")}");${extra}}`;
 const FONTS = [
   fontFace("Denim INK", "DenimINK-Regular.ttf", "font-weight:normal;font-style:normal;"),
   fontFace("Denim INK", "DenimINK-Bold.ttf", "font-weight:bold;font-style:normal;"),
@@ -111,7 +110,6 @@ const FONTS = [
   fontFace("Denim INK", "DenimINK-BoldItalic.ttf", "font-weight:bold;font-style:italic;"),
   fontFace("DejaVu Sans Mono", "DejaVuSansMono.ttf", "font-weight:normal;font-style:normal;"),
   fontFace("DejaVu Sans Mono", "DejaVuSansMono-Bold.ttf", "font-weight:bold;font-style:normal;"),
-  fontFace("Andale Mono", andaleMonoPath(), "font-weight:normal;font-style:normal;"),
 ].join("");
 
 for (const file of selected) {

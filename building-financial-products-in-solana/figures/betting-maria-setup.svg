@@ -19,9 +19,9 @@
   </g>
   <g opacity="0.3">
   <circle cx="16" cy="102.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="26" y="96.9168" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="26" y="105.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="26" y="114.917" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="26" y="96.9168" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="26" y="105.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="26" y="114.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="8" y="120.917" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(16,124.917)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="36" y="135.42" font-size="10.5" font-weight="bold">Alice's USDC</text>
@@ -35,9 +35,9 @@
   </g>
   <g opacity="0.3">
   <circle cx="133" cy="108.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="143" y="102.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
-  <text x="143" y="111.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="143" y="120.644" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="143" y="102.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="143" y="111.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="143" y="120.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="125" y="126.644" width="105" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(133,130.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="153" y="141.14" font-size="10.5" font-weight="bold">Bob's USDC</text>
@@ -51,9 +51,9 @@
   </g>
   <g opacity="0.3">
   <circle cx="245" cy="118.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="255" y="113.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
-  <text x="255" y="122.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="255" y="131.062" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="255" y="113.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
+  <text x="255" y="122.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="255" y="131.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="237" y="137.062" width="111" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(245,141.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="265" y="151.56" font-size="10.5" font-weight="bold">Carol's USDC</text>
@@ -68,9 +68,9 @@
   </g>
   <g opacity="0.3">
   <circle cx="363" cy="134.936" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="373" y="129.436" font-size="7" font-family="'Andale Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
-  <text x="373" y="138.436" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="373" y="147.436" font-size="7" font-family="'Andale Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="373" y="129.436" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="373" y="138.436" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="373" y="147.436" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
   <rect x="355" y="153.436" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(363,157.436)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="383" y="167.94" font-size="10.5" font-weight="bold">Maria's USDC</text>
@@ -94,7 +94,7 @@
   </g>
   <g>
   <circle cx="482" cy="256.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="260.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"CONFIG"</text>
+  <text x="492" y="260.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONFIG"</text>
   <rect x="474" y="266.37" width="158" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,269.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="280.545" font-size="10.5" font-weight="bold">config</text>
@@ -107,7 +107,7 @@
   </g>
   <g>
   <circle cx="482" cy="351.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="355.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"EVENT" + EVENT ID</text>
+  <text x="492" y="355.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"EVENT" + EVENT ID</text>
   <rect x="474" y="361.37" width="158" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,364.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="375.545" font-size="10.5" font-weight="bold">event</text>
@@ -120,8 +120,8 @@
   </g>
   <g>
   <circle cx="482" cy="451.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="450.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
-  <text x="492" y="459.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ADDRESS + INDEX</text>
+  <text x="492" y="450.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
+  <text x="492" y="459.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="465.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,468.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="479.545" font-size="10.5" font-weight="bold">outcome 0: Toy Story 5</text>
@@ -131,8 +131,8 @@
   </g>
   <g>
   <circle cx="482" cy="519.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="518.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
-  <text x="492" y="527.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">ADDRESS + INDEX</text>
+  <text x="492" y="518.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
+  <text x="492" y="527.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="533.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,536.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="547.545" font-size="10.5" font-weight="bold">outcome 1: Backrooms</text>
@@ -142,8 +142,8 @@
   </g>
   <g>
   <circle cx="482" cy="587.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="492" y="586.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">EVENT'S ADDRESS +</text>
-  <text x="492" y="595.37" font-size="7" font-family="'Andale Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
+  <text x="492" y="586.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">EVENT'S ADDRESS +</text>
+  <text x="492" y="595.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
   <rect x="474" y="601.37" width="158" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(482,604.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="502" y="615.545" font-size="10.5" font-weight="bold">vault: the event's USDC</text>
