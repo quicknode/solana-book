@@ -26,7 +26,7 @@ Some technical books are out of date as soon as the release they document is. A 
 
 Solana changes quickly: network releases, framework versions, chain constants, and tools churn frequently. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
-*Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will also not change. Nor will the desire of adversaries to take your assets.
+*Building Financial Software on Solana* teaches the durable layer: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will not change. Nor will the desire of adversaries to take your assets.
 
 In this book you'll learn how each of the classic financial products works as a Solana program, how to handle assets without losing a penny, and how to prove your program works.
 
