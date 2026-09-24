@@ -16,6 +16,8 @@ Financial products built on Solana have properties no traditional payment system
 - **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real-world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] Solana is also one of the most active chains for trading crypto-native assets such as BTC.[^btc-scope]
 - **A deployed program reaches every user at once.** A traditional fund spends months working through intermediaries before it reaches investors: an exchange listing, market makers, brokerage approvals. Each gatekeeper adds cost and delay. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
 
+Other blockchains offer some of these properties. Only Solana offers all of them.
+
 Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require.[^tokenized-funds] Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
 ## A Long-Lived Technical Book for Solana
