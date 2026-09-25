@@ -184,10 +184,10 @@
   <line x1="16" y1="521" x2="192" y2="521" stroke="#888" stroke-width="0.8"/>
   <text x="16" y="532" font-size="8.5">NVDAx: $115</text>
   </g>
-  <path d="M 504,432.37 C 395,470 104,460 104,420 C 104,349.14 104,278.28 104,207.42 C 104,202.33 90.2,185.37 62.61,156.54" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
+  <path d="M 504,432.37 C 395,470 104,460 104,420 C 104,349.14 104,278.28 104,207.42 C 104,190 83,170 95,168 L 107,166" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
   <path d="M 504,416.37 C 445,440 306,420 306,360 C 306,325.18 306,290.36 306,255.54 C 306,244.35 318.39,225.7 343.17,199.59" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="293" y="317" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="end">2. Bob is refunded 195 USDC</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="149.25" y="333" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">his equity, less the liquidator's fee</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="321" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. Bob is refunded 195 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="337" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">his equity, less the liquidator's fee</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="284" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. Dave takes 50 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="300" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">1% of the 5,000 notional, capped at equity</text>
   <path d="M 202,273.56 C 206,267.56 204,270.06 204,262.06 L 204,88.06 C 204,80.06 201.26,75.02 201,74.06" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#perps-liq-arr-grey)"/>
@@ -195,6 +195,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="386" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. equity 995 &#8722; 750 = 245,</text>
   <text x="116" y="402" font-size="9" fill="#444" font-style="italic" text-anchor="start">at or under the 250 maintenance margin</text>
   <text x="116" y="424" font-size="10.5" fill="#1e7a3c" font-style="italic" text-anchor="start" font-weight="bold">4. the position account closes</text>
-  <g class="coin" transform="translate(306,312.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <g class="coin" transform="translate(104,316.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(305.5,279.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
