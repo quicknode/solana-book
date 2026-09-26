@@ -3,7 +3,7 @@
 A Solana program has three ways to observe the passage of time:
 
 - **The Unix timestamp** is wall-clock time, usually within a second or two of the real time.
-- **The slot** is a count the network advances at a steady pace, and it only goes up.[^forks]
+- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 milliseconds, and it only goes up.[^forks]
 - **A counter** is something a program can implement: a number stored in one of its own accounts that goes up by one each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
 
 The runtime supplies the first two, and a program reads both from the same account. A program implements the third itself.
@@ -24,10 +24,10 @@ The slot count is how many slots have gone by. Programs read the current count f
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it. On testnet, the only network running Alpenglow at the time of writing, slots averaged 219 milliseconds over an hour, so a time counted in slots ran about 10% long.[^slot-time-live] That extra time adds up but does not compound, because slots do not get slower as they go, and each adds only its own delay. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for, and a week of them runs about 16 hours long. A slot runs long when its leader was slow or its block was skipped, so a slot-counted window usually covers a little more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it. On testnet, the only network running Alpenglow at the time of writing, slots averaged 219 milliseconds over an hour, so a time counted in slots ran about 10% long.[^slot-time-live] A slot runs long when its leader was slow or its block was skipped. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for, and a week of them runs about 16 hours long. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while the world outside keeps moving. That makes an hours-old price look one slot old.
 
-Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and a little longer in practice because real slots run long. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
+Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and about two hours longer at testnet's 219. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ## The Unix Timestamp
 
@@ -35,15 +35,15 @@ The **Unix timestamp** comes from the same Clock sysvar, but it is a time a lead
 
 ![](figures/unix-timestamp.svg)
 
-A leader can pick any time inside the permitted range, which moves the timestamp by a fraction of a second for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader.
+A leader can pick any time inside the permitted range, which moves the timestamp by a fraction of a second for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. For a boundary days away the timestamp is still the right clock, because a slot count would miss it by hours. The defense is a margin: close betting well before the result can be known, and exercise an option before its last seconds.
 
 ## Which Clock for Which Job
 
 ![](figures/clock-decision-tree.svg)
 
-A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. Interest, funding, and the vault's annual fee run on the wall clock too. Each is a rate quoted to somebody per year or per hour, and a few seconds against a year change it by nothing anybody can see.
+A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. An option's expiry and a betting market's close are dates quoted to people, days away, so they run on the wall clock too: a leader can move them by a second or two, and a slot count would miss them by hours. Interest, funding, and the vault's annual fee run on the wall clock too. Each is a rate quoted to somebody per year or per hour, and a few seconds against a year change it by nothing anybody can see.
 
-The four questions rest on one comparison. A few seconds of wall clock stay a few seconds however long the span runs. A slot count stays about 10% short of the time that passed, so its error adds up slot by slot as the span grows, until across a week it is about 16 hours.
+The four questions rest on one comparison. Outside a halt, the timestamp's few seconds of error stay a few seconds however long the span runs. A slot count converted at 200 milliseconds stays about 9% short of the time that passed, so its error adds up slot by slot as the span grows, until across a week it is about 16 hours.
 
 ## Interest and Funding Accrue by the Wall Clock
 
@@ -146,7 +146,7 @@ A halt is rare: at the time of writing, block production has not stopped for yea
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart carries a slot roughly where the last one left off. Its timestamp cannot jump the hours the halt took either, because each block can move it at most two slot lengths for each slot since its parent. The timestamp trails real time after a restart and gains on it at about one second per second, so a nine-hour halt leaves it trailing for about nine hours more.[^clock-catch-up] That gap has three consequences:
 
-- **Accrual by timestamp charges the halt, a little late.** The lending market's interest, the perpetual futures venue's funding, and the vault's fee all count seconds, so a nine-hour halt accrues nine hours. It arrives over the nine hours of catch-up rather than in the first block. The loans were outstanding and the suppliers' money was locked for those nine hours, so charging for them is accurate.
+- **Accrual by timestamp charges the halt, late.** The lending market's interest, the perpetual futures venue's funding, and the vault's fee all count seconds, so a nine-hour halt accrues nine hours. It arrives over the nine hours of catch-up rather than in the first block. The loans were outstanding and the suppliers' money was locked for those nine hours, so charging for them is accurate.
 - **Neither kind of freshness window refuses the old price on its own.** The lending market's 25-slot window sees a price stamped one slot ago and would accept a number nine hours old. The vault's sixty-second window does no better, because the timestamp it reads is trailing, so a price published just before the halt looks seconds old. The damage is largest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
 - **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours. A contributor with an hour left before the halt gets about half an hour after it, because the timestamp runs at twice real speed while it catches up. That program survives it because its refund path has no deadline; a design whose only exit was a narrow window would have stranded them.
 
@@ -175,13 +175,15 @@ The table lists every program in Part II that touches time, and the clock each o
 | perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
 | prop AMM | price freshness | slots | a stale price is the attack |
 | managed fund | an annual fee, and price freshness | timestamps for both | seconds against a year are nothing, and the feed stamps seconds |
+| options | its expiry | the timestamp | a date the two parties agreed, days away |
+| betting market | when betting closes | the timestamp | a time published to bettors, days away |
 | order book | which order came first | a sequence number, neither clock | neither clock is fine enough to order by |
 
 ## What You Learnt
 
-- A program has three ways to observe the passage of time. The Unix timestamp is wall-clock time written by a leader, usually out by a few seconds somebody chose. The slot count only goes up and nobody can move it, though what it comes to in seconds varies a little and stops in a halt. A program's own counter records order and nothing else.
-- Count slots for price freshness and for anything an adversary running a leader could profit from by shifting the time a few seconds. Use the wall clock for a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
-- To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed seconds. A current balance is the principal multiplied by the factor.
+- A program has three ways to observe the passage of time. The Unix timestamp is wall-clock time written by a leader, usually out by a few seconds somebody chose. The slot count only goes up and nobody can move it, but each slot starts when the last one ends, so it runs about 10% long on testnet and stops in a halt. A program's own counter records order and nothing else.
+- Count slots for price freshness and for any short window an adversary running a leader could profit from shifting by a few seconds. Use the wall clock for a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
+- To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed seconds. A current balance is the principal multiplied by the factor. Counting slots instead collects about 9% less than the quoted rate at testnet's slot length.
 - A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - A shortened slot is rare and arrives all at once. Every slot-counted window tightens, so keep windows where a transaction can retune them. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
