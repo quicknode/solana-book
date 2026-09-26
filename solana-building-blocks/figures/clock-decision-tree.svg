@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 532" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 438" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
 <g transform="translate(0,-16)">
   <defs><marker id="clocktree-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
 
@@ -39,30 +39,18 @@
   <text x="161" y="283" font-size="9.5" fill="#555" font-style="italic">no</text>
 
   <rect x="28" y="306" width="250" height="46" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="38" y="324" font-size="10.5">Is it a rate or a deadline quoted</text>
-  <text x="38" y="338" font-size="10.5">to somebody in human time?</text>
+  <text x="38" y="324" font-size="10.5">Is the span shorter than</text>
+  <text x="38" y="338" font-size="10.5">about 20 seconds?</text>
   <path d="M 282,329 L 364,329" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
   <text x="323" y="323" font-size="9.5" fill="#555" font-style="italic" text-anchor="middle">yes</text>
   <rect x="372" y="306" width="236" height="46" fill="#f4f4f2" stroke="#888"/>
-  <text x="382" y="324" font-size="10.5" font-weight="bold">the wall clock</text>
-  <text x="382" y="338" font-size="9.5" fill="#444" font-style="italic">give a deadline a margin of seconds</text>
+  <text x="382" y="324" font-size="10.5" font-weight="bold">the slot count</text>
+  <text x="382" y="338" font-size="9.5" fill="#444" font-style="italic">its 10% is at most a second or two</text>
 
-  <path d="M 153,352 L 153,396" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
-  <text x="161" y="377" font-size="9.5" fill="#555" font-style="italic">no</text>
-
-  <rect x="28" y="400" width="250" height="46" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="38" y="418" font-size="10.5">Is the span shorter than</text>
-  <text x="38" y="432" font-size="10.5">about 20 seconds?</text>
-  <path d="M 282,423 L 364,423" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
-  <text x="323" y="417" font-size="9.5" fill="#555" font-style="italic" text-anchor="middle">yes</text>
+  <path d="M 153,352 L 153,423 L 364,423" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
+  <text x="161" y="384" font-size="9.5" fill="#555" font-style="italic">no</text>
   <rect x="372" y="400" width="236" height="46" fill="#f4f4f2" stroke="#888"/>
-  <text x="382" y="418" font-size="10.5" font-weight="bold">the slot count</text>
-  <text x="382" y="432" font-size="9.5" fill="#444" font-style="italic">its 10% is at most a second or two</text>
-
-  <path d="M 153,446 L 153,517 L 364,517" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
-  <text x="161" y="478" font-size="9.5" fill="#555" font-style="italic">no</text>
-  <rect x="372" y="494" width="236" height="46" fill="#f4f4f2" stroke="#888"/>
-  <text x="382" y="512" font-size="10.5" font-weight="bold">the Unix timestamp</text>
-  <text x="382" y="526" font-size="9.5" fill="#444" font-style="italic">the default: off by seconds, not 10%</text>
+  <text x="382" y="418" font-size="10.5" font-weight="bold">the Unix timestamp</text>
+  <text x="382" y="432" font-size="9.5" fill="#444" font-style="italic">the default: give a deadline a margin</text>
 </g>
 </svg>
