@@ -13,6 +13,8 @@
 //   9. A public-key dot (r=6) sits on the curve; a derived-address dot (r=5.5) sits clear of it.
 //  12. Every address dot sits beside an account box, legend keys aside.
 //  11. No address dot touches or overlaps an account box.
+//  13. Every coin mark sits on a value arrow, and no value arrow carries two.
+//  14. The file is well-formed SVG, not just HTML the browser can repair.
 //
 // Usage: node scripts/check-figure-geometry.mjs [name-fragment ...]
 // With arguments, only figures whose path contains one of them are checked,
@@ -113,9 +115,17 @@ const FONTS = [
 ].join("");
 
 for (const file of selected) {
-  await page.setContent(
-    `<!doctype html><style>body{margin:0}${FONTS}</style>${readFileSync(file, "utf8")}`,
-  );
+  const source = readFileSync(file, "utf8");
+  await page.setContent(`<!doctype html><style>body{margin:0}${FONTS}</style>${source}`);
+  // The book inlines each figure into HTML, whose parser forgives a stray or
+  // missing </g> by guessing where the group ends, so a malformed file prints
+  // and every check below passes it. Anything that opens the file as SVG
+  // shows an error page instead; lending-borrow-ltv left a group open that
+  // way, and the guess shifted its arrow and coin 26 units down.
+  const xmlError = await page.evaluate((src) => {
+    const err = new DOMParser().parseFromString(src, "image/svg+xml").querySelector("parsererror");
+    return err ? err.textContent.replace(/\s+/g, " ").replace(/^.*?(error on line)/, "$1").replace(/ Below is a rendering.*$/, "") : null;
+  }, source);
   // A face no label on this figure happens to use is never fetched on its own,
   // so each is loaded by hand; what is checked is that none of them failed.
   const unloaded = await page.evaluate(async () => {
@@ -241,6 +251,7 @@ for (const file of selected) {
       }
       arrows.push({
         accent, head, over: [...over],
+        points: samples.map((q) => [q.x, q.y]),
         d: p.getAttribute("d") || "",
         end: [end.x, end.y],
         tangent: [end.x - nib.x, end.y - nib.y],
@@ -380,6 +391,7 @@ for (const file of selected) {
 
   const name = file.slice(repoRoot.length + 1);
   const fail = (msg) => { failures += 1; console.error(`${name}: ${msg}`); };
+  if (xmlError) fail(`is not well-formed SVG: ${xmlError.slice(0, 160)}`);
   const overlaps = (a, b, pad = 1) =>
     a.x2 > b.x1 + pad && a.x1 < b.x2 - pad && a.y2 > b.y1 + pad && a.y1 < b.y2 - pad;
   const contains = (outer, inner, pad = 1) =>
@@ -449,6 +461,37 @@ for (const file of selected) {
       fail(`coin at ${at(c)} is beside neither an amount label nor a step marker`);
     }
   }
+
+  // 13. A coin marks value moving along one arrow, so it sits on the stroke
+  // it marks, and a value arrow carries one movement and so at most one coin.
+  // The liquidation figure once put Bob's refund coin and Dave's fee coin on
+  // Dave's arrow, which read as one transfer paying both of them. A figure
+  // with no value arrows, a bar chart of vault balances say, marks its steps
+  // with coins and has no stroke to put them on.
+  const valueArrows = fig.arrows.filter((a) => a.accent);
+  const carried = valueArrows.map(() => []);
+  for (const c of valueArrows.length ? fig.coins : []) {
+    const cx = (c.x1 + c.x2) / 2, cy = (c.y1 + c.y2) / 2;
+    let best = -1, bestD = Infinity;
+    valueArrows.forEach((a, i) => {
+      for (const [x, y] of a.points) {
+        const d = Math.hypot(x - cx, y - cy);
+        if (d < bestD) { bestD = d; best = i; }
+      }
+    });
+    if (bestD > 4) {
+      fail(`coin at ${at(c)} sits ${Number.isFinite(bestD) ? bestD.toFixed(1) : "far"} off the nearest value arrow; ` +
+           `a coin sits on the stroke of the transfer it marks`);
+    } else {
+      carried[best].push(c);
+    }
+  }
+  carried.forEach((coins, i) => {
+    if (coins.length < 2) return;
+    const tip = valueArrows[i].end.map((v) => v.toFixed(0)).join(",");
+    fail(`value arrow ending at ${tip} carries ${coins.length} coins (at ${coins.map(at).join(" and ")}); ` +
+         `one arrow is one transfer, so each coin goes on the arrow of the transfer it marks`);
+  });
 
   // 4 and 5. Arrows read as one smooth stroke, ending in a head that points
   // where the stroke is going.
