@@ -265,4 +265,5 @@
   <text x="16" y="716" font-size="7.5" font-style="italic" fill="#444">not drawn: Maria's USDC, NVDAx and SPCXx accounts and her three share accounts, which this step does not touch</text>
   <text x="16" y="727" font-size="7.5" font-style="italic" fill="#444">balances and supplies leave out Maria's opening deposit into each reserve,</text>
   <text x="16" y="738" font-size="7.5" font-style="italic" fill="#444">1,001 minor units in and one minor unit of shares out</text>
+</g>
 </svg>
