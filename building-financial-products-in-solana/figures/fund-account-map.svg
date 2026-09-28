@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 678" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Every account the strategy holds</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Every account the fund holds</text>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- Victor, the curator -->
@@ -137,11 +137,11 @@
   <text x="360" y="248.5" font-size="9">owner: Pyth Receiver</text>
   <rect x="464" y="119.37" width="168" height="120" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
-  <text x="492" y="133.545" font-size="10.5" font-weight="bold">vault-strategy program</text>
+  <text x="492" y="133.545" font-size="10.5" font-weight="bold">managed-fund program</text>
   <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_registry()</text>
   <text x="472" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">approve_asset()</text>
-  <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_strategy()</text>
+  <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_fund()</text>
   <text x="472" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">add_asset()</text>
   <text x="472" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">set_weight()</text>
   <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">deposit()</text>
@@ -151,10 +151,10 @@
   </g>
   <g>
   <circle cx="472" cy="248.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="252.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"STRATEGY" + INDEX</text>
+  <text x="482" y="252.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUND" + INDEX</text>
   <rect x="464" y="258.37" width="168" height="103" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,261.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="492" y="272.545" font-size="10.5" font-weight="bold">strategy</text>
+  <text x="492" y="272.545" font-size="10.5" font-weight="bold">fund</text>
   <line x1="472" y1="279.37" x2="624" y2="279.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="290.37" font-size="9">manager: Maria</text>
   <text x="472" y="300.87" font-size="9">registry: Victor's</text>
@@ -166,7 +166,7 @@
   </g>
   <g>
   <circle cx="472" cy="391.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="395.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ASSET" + STRATEGY + INDEX</text>
+  <text x="482" y="395.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ASSET" + FUND + INDEX</text>
   <rect x="464" y="401.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,404.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="415.545" font-size="10.5" font-weight="bold">asset config 0</text>
@@ -177,7 +177,7 @@
   </g>
   <g>
   <circle cx="472" cy="486.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="490.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ASSET" + STRATEGY + INDEX</text>
+  <text x="482" y="490.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ASSET" + FUND + INDEX</text>
   <rect x="464" y="496.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,499.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="510.545" font-size="10.5" font-weight="bold">asset config 1</text>
@@ -188,47 +188,47 @@
   </g>
   <g>
   <circle cx="472" cy="581.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="585.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"SHARE_MINT" + STRATEGY</text>
+  <text x="482" y="585.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"SHARE_MINT" + FUND</text>
   <rect x="464" y="591.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,594.87)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="492" y="605.545" font-size="10.5" font-weight="bold">share mint</text>
   <line x1="472" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="623.37" font-size="9">supply: 1,350 shares</text>
-  <text x="472" y="633.87" font-size="7.5" font-style="italic" fill="#444">mint authority: the strategy PDA</text>
+  <text x="472" y="633.87" font-size="7.5" font-style="italic" fill="#444">mint authority: the fund PDA</text>
   </g>
   <g transform="translate(-214,-230.37)">
   <g>
   <circle cx="472" cy="597.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="596.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">STRATEGY'S ADDRESS +</text>
+  <text x="482" y="596.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUND'S ADDRESS +</text>
   <text x="482" y="605.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
   <rect x="464" y="611.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,614.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="492" y="625.545" font-size="10.5" font-weight="bold">USDC vault</text>
   <line x1="472" y1="632.37" x2="624" y2="632.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="643.37" font-size="9" fill="#444">0 USDC</text>
-  <text x="472" y="653.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <text x="472" y="653.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
   </g>
   <g>
   <circle cx="472" cy="677.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="676.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">STRATEGY'S ADDRESS +</text>
+  <text x="482" y="676.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUND'S ADDRESS +</text>
   <text x="482" y="685.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
   <rect x="464" y="691.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,694.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="492" y="705.545" font-size="10.5" font-weight="bold">TSLAx vault</text>
   <line x1="472" y1="712.37" x2="624" y2="712.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="723.37" font-size="9" fill="#444">&#8776;2.30 TSLAx</text>
-  <text x="472" y="733.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <text x="472" y="733.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
   </g>
   <g>
   <circle cx="472" cy="757.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="482" y="756.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">STRATEGY'S ADDRESS +</text>
+  <text x="482" y="756.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUND'S ADDRESS +</text>
   <text x="482" y="765.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
   <rect x="464" y="771.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(472,774.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="492" y="785.545" font-size="10.5" font-weight="bold">NVDAx vault</text>
   <line x1="472" y1="792.37" x2="624" y2="792.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="803.37" font-size="9" fill="#444">&#8776;4.32 NVDAx</text>
-  <text x="472" y="813.87" font-size="7.5" font-style="italic" fill="#444">authority: the strategy PDA</text>
+  <text x="472" y="813.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
   </g>
   </g>
   <g transform="translate(0,-260)">

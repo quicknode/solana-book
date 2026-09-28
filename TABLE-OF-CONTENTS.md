@@ -28,13 +28,13 @@
 Each chapter explains one complete, tested program from the [companion repository](https://github.com/quicknode/solana-program-examples).
 
 - [Chapter 11: Escrow](building-financial-products-in-solana/escrow.md) - two strangers swap without trusting each other
-- [Chapter 12: Token Fundraiser](building-financial-products-in-solana/token-fundraiser.md) - onchain crowdfunding
+- [Chapter 12: The Fundraiser](building-financial-products-in-solana/fundraiser.md) - onchain crowdfunding
 - [Chapter 13: The Betting Market](building-financial-products-in-solana/betting-market.md) - a parimutuel pool with no bookmaker
 - [Chapter 14: The Order Book Exchange](building-financial-products-in-solana/order-book.md) - a traditional NYSE/NASDAQ/CME style exchange
 - [Chapter 15: The Constant-Product AMM](building-financial-products-in-solana/constant-product-amm.md) - instant swaps priced by a formula
 - [Chapter 16: The Prop AMM](building-financial-products-in-solana/prop-amm.md) - a market maker quoting its own capital at oracle prices
 - [Chapter 17: Lending and Borrowing](building-financial-products-in-solana/lending.md) - deposits, collateral, interest, liquidation, and cranks
-- [Chapter 18: The Vault Strategy](building-financial-products-in-solana/vault-strategy.md) - an onchain index fund
+- [Chapter 18: The Managed Fund](building-financial-products-in-solana/managed-fund.md) - an onchain mutual fund, also called a vault strategy
 - [Chapter 19: Options](building-financial-products-in-solana/options.md) - calls and puts, fully collateralized and physically settled
 - [Chapter 20: Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) - leveraged bets on a price, and the last of the ten programs
 

@@ -257,8 +257,8 @@ for (const file of [...new Set(files)]) {
 // "The" is dropped inside the italics, because "the *The Adversary* chapter"
 // reads badly: write "the *Adversary* chapter".
 //
-// Only the distinctive multi-word titles are checked. Time, Tokens, PDAs and
-// Escrow are ordinary words far too often to match mechanically, so the
+// Only the distinctive multi-word titles are checked. Time, Tokens, PDAs,
+// Escrow and Fundraiser are ordinary words far too often to match mechanically, so the
 // convention covers them and this check does not.
 
 const chapterTitles = [
@@ -267,13 +267,12 @@ const chapterTitles = [
   "Offchain Truth",
   "Adversary",
   "Operating Financial Software",
-  "Token Fundraiser",
   "Betting Market",
   "Order Book Exchange",
   "Constant-Product AMM",
   "Prop AMM",
   "Lending and Borrowing",
-  "Vault Strategy",
+  "Managed Fund",
   "Perpetual Futures",
   "Where to Go From Here",
 ];

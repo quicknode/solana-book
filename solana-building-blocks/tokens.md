@@ -14,7 +14,7 @@ Each kind of token is defined by its own **mint account**.
 
 - `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` defines USDC on mainnet [^usdc-address]
 - `Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh` defines NVDAx on mainnet [^nvdax-address]
-- An address you will create in the *Vault Strategy* chapter defines the shares that fund issues (on devnet, and on mainnet too if you choose to deploy it for real).
+- An address you will create in the *Managed Fund* chapter defines the shares that fund issues (on devnet, and on mainnet too if you choose to deploy it for real).
 
 A mint is not itself a token: it is the account a token comes from, and no amount of anything is held in the mint.
 

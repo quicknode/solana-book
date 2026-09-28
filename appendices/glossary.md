@@ -18,7 +18,7 @@ A market maker's structural loss: the trades that find you when your quote is wr
 
 ### all-or-nothing
 
-A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Token Fundraiser* chapter builds it onchain.
+A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Fundraiser* chapter builds it onchain.
 
 ### American option / European option
 
@@ -159,7 +159,7 @@ A binary tree keyed on the first bit where entries differ. Used for order books 
 
 ### curator
 
-In a fund, the authority that decides which assets may be held at all and which price feed prices each one, kept separate from the [manager](#manager) who picks the allocation. The split is what stops a manager listing a token they minted themselves, or pairing a real asset with a feed they control. See the *Vault Strategy* chapter.
+In a fund, the authority that decides which assets may be held at all and which price feed prices each one, kept separate from the [manager](#manager) who picks the allocation. The split is what stops a manager listing a token they minted themselves, or pairing a real asset with a feed they control. See the *Managed Fund* chapter.
 
 ### custody
 
@@ -377,9 +377,13 @@ The human-scale denomination of an asset: the dollar, the SOL, the whole share. 
 
 The maker posted the resting order; the taker crossed the spread to hit it. Fills execute at the maker's posted price, and fee schedules usually distinguish the two roles.
 
+### managed fund
+
+The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the money sits in. See the *Managed Fund* chapter.
+
 ### manager
 
-In a fund, the authority that sets the allocation and earns the management fee, and that can do nothing else: no instruction handler gives them a path to the assets. What a careless manager can still cost depositors is churn, rebalancing that pays [slippage](#slippage) for nothing. See [curator](#curator) and the *Vault Strategy* chapter.
+In a fund, the authority that sets the allocation and earns the management fee, and that can do nothing else: no instruction handler gives them a path to the assets. What a careless manager can still cost depositors is churn, rebalancing that pays [slippage](#slippage) for nothing. See [curator](#curator) and the *Managed Fund* chapter.
 
 ### mantissa
 
@@ -523,7 +527,7 @@ The thing a market states its prices in (USDC), and the unit a **quote amount** 
 
 ### rebalance
 
-Trading a fund back toward its target weights after prices have moved it away. In this book's fund every leg routes through the same swap program at oracle-anchored minimums, so a rebalance cannot be dressed up as a withdrawal. See the *Vault Strategy* chapter.
+Trading a fund back toward its target weights after prices have moved it away. In this book's fund every leg routes through the same swap program at oracle-anchored minimums, so a rebalance cannot be dressed up as a withdrawal. See the *Managed Fund* chapter.
 
 ### receipt
 
@@ -617,10 +621,6 @@ A token designed to hold a fixed value, usually one dollar. The quote asset of n
 
 A technique for storing bulk data offchain with onchain proofs, used for things like very large NFT collections. It is the reason "nearly all", rather than "all", data on Solana lives in accounts; none of the financial state in this book uses it.
 
-### strategy
-
-The fund-shaped product: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Distinct from a [vault](#vault), which in this book is only ever the token account the money sits in. See the *Vault Strategy* chapter.
-
 ### strike
 
 The price at which an [option](#option) trades if its holder exercises. The *Options* chapter stores it as an amount of the quote token per contract rather than as a price, so every settlement is a multiplication with no division to round.
@@ -675,7 +675,11 @@ A computer running the Solana software: it executes transactions, votes on block
 
 ### vault
 
-A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a [strategy](#strategy).
+A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a [managed fund](#managed-fund).
+
+### vault strategy
+
+Another name for a [managed fund](#managed-fund), used by several Solana platforms, and the name this book's managed-fund example had before it took the finance term. This book avoids it because a [vault](#vault) here is a token account, not a product. See the *Managed Fund* chapter.
 
 ### WAD
 

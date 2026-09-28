@@ -504,7 +504,7 @@ for (const file of selected) {
     "building-financial-products-in-solana/figures/lending-borrow-ltv.svg 186,346 over obligation",
     "building-financial-products-in-solana/figures/lending-borrow-ltv.svg 186,346 over collateral vault",
     "building-financial-products-in-solana/figures/order-book-settle.svg 229,148 over Bob's USDC",
-    "building-financial-products-in-solana/figures/vault-withdraw-in-kind.svg 240,318 over seed label \"TOKEN PROGRAM + TSLAX MI\"",
+    "building-financial-products-in-solana/figures/fund-withdraw-in-kind.svg 240,318 over seed label \"TOKEN PROGRAM + TSLAX MI\"",
   ]);
   // 9. An arrow meets an account box on the flat of an edge, aimed into the
   // box. A head that lands on the rounded corner covers the corner, and a

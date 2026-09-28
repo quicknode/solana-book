@@ -1,8 +1,8 @@
-# Chapter 12: Token Fundraiser
+# Chapter 12: The Fundraiser
 
 Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real; or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. That rule is this chapter's program: an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
-The program lives at `finance/token-fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The custody machinery is the same, with one addition: a **deadline**.
+The program lives at `finance/fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The custody machinery is the same, with one addition: a **deadline**.
 
 The program calls the fundraiser's creator the **maker**: Maria here, and her incentive is straightforward: she gets her production run funded all-or-nothing, because 3,600 USDC of a 9,000 USDC mold is scrap metal. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are rent deposits on the accounts.
 
@@ -112,7 +112,7 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 
 The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Its anchors are the paired lifecycle tests: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and watches the claim, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and proves the same wallet can raise again. Around them, one test per gate. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` proves close is where strays are finally swept to the maker).
 
-## What You Learnt from Building the Token Fundraiser
+## What You Learnt from Building the Fundraiser
 
 Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter made the same promise a property of code: no platform, no fee, and terms that cannot change because no handler exists to change them.
 

@@ -57,7 +57,7 @@ Each incident is researched from primary sources and placed inside the chapter n
 - SPL token-lending rounding (about $2.6B at risk): the rounding section of The Arithmetic of Money
 - Cashio ($48M kept after refunds, unvalidated account chain): the validation section of The Adversary
 - Wormhole ($326M, bypassed signature verification): the validation section of The Adversary
-- First-depositor inflation incidents (the ERC-4626 class): named incidents are the Hundred and Sonne stories below (their setup is the inflation attack); the empty-pool section of The Adversary teaches the class, The Constant-Product AMM chapter teaches the locked-minimum defense without an incident box, and The Vault Strategy chapter teaches ignoring donations
+- First-depositor inflation incidents (the ERC-4626 class): named incidents are the Hundred and Sonne stories below (their setup is the inflation attack); the empty-pool section of The Adversary teaches the class, The Constant-Product AMM chapter teaches the locked-minimum defense without an incident box, and The Managed Fund chapter teaches ignoring donations
 - Mango Markets ($116M): the price-manipulation section of The Adversary
 - The Hundred and Sonne precision drains: the precision-exploits section of The Adversary
 
@@ -74,7 +74,7 @@ Steps currently missing their per-step diagram, to be drawn in the visual pass:
 - Lending and Borrowing: Carol's short; Bob's repayment and collateral withdrawal.
 - Perpetual Futures: Alice's `close_position` payout.
 - The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
-- The Vault Strategy: Bob's deposit at the new share price.
+- The Managed Fund: Bob's deposit at the new share price.
 
 ## Reviewers, Feedback, and Editions
 
@@ -85,7 +85,7 @@ Steps currently missing their per-step diagram, to be drawn in the visual pass:
 ## Milestones
 
 - **Voice samples first** (drafted): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
-- The remaining program chapters, one per example, in table-of-contents order (all ten drafted: Escrow, Token Fundraiser, The Betting Market, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, Lending and Borrowing, The Vault Strategy, Options, Perpetual Futures). They run as three groups: custody and pooling, then market making, then credit and derivatives. A chapter's place is set by what it assumes the reader already has, so The Betting Market sits third, where its only prerequisite is Escrow, and Options sits just before Perpetual Futures, because a fully collateralized derivative is the case the leveraged one relaxes.
+- The remaining program chapters, one per example, in table-of-contents order (all ten drafted: Escrow, The Fundraiser, The Betting Market, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, Lending and Borrowing, The Managed Fund, Options, Perpetual Futures). They run as three groups: custody and pooling, then market making, then credit and derivatives. A chapter's place is set by what it assumes the reader already has, so The Betting Market sits third, where its only prerequisite is Escrow, and Options sits just before Perpetual Futures, because a fully collateralized derivative is the case the leveraged one relaxes.
 - The two Fundamentals sections (Solana Building Blocks; Financial Programming Concepts in Solana), with technical reviewers engaged per chapter as each completes.
 - The remaining appendices. The Glossary is drafted.
 - The placeholder front-matter pages last.
