@@ -151,6 +151,6 @@ The escrow gave you five concepts:
 - **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
-In the *Token Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
+In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
 
 [^remittance-cost]: The World Bank's figures for the third quarter of 2025, which put the global average near 6.5% with thirteen corridors above 20%. See [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).

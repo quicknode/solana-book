@@ -29,7 +29,7 @@ The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, an
 - `long_size`, `short_size`, `long_size_scaled`, `short_size_scaled`: per-side open-interest accumulators, which make solvency checkable without iteration.
 - `cumulative_funding` and `last_funding_timestamp`: the funding index.
 
-The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault mixes custody; the three ledger fields keep the ownership straight, and the rule that makes that safe is the *Token Fundraiser* chapter's: balances are custody, state is truth.
+The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault mixes custody; the three ledger fields keep the ownership straight, and the rule that makes that safe is the *Fundraiser* chapter's: balances are custody, state is truth.
 
 ## Liquidity Providers Fund the Pool and Get Shares Priced at Mark
 

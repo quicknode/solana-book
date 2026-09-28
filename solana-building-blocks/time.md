@@ -114,7 +114,7 @@ For a price fresh to within two seconds, turn that into a slot count once, and c
 
 ## Integer Day Counts Have a Boundary, and Both Sides Must Use It
 
-A clock gives a program seconds, so counting days means dividing by 86,400. That division is integer division, which throws the remainder away: six and a half days counts as six, and anything short of a full day counts as none of it. The token fundraiser stores `time_started` and a duration in days, and both of its later handlers reconstruct elapsed days the same way:
+A clock gives a program seconds, so counting days means dividing by 86,400. That division is integer division, which throws the remainder away: six and a half days counts as six, and anything short of a full day counts as none of it. The fundraiser stores `time_started` and a duration in days, and both of its later handlers reconstruct elapsed days the same way:
 
 ```
 elapsed days = (now − time_started) / 86,400
@@ -167,7 +167,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
-| token fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live] out |
+| fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live] out |
 | lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price is the attack |
 | perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
 | prop AMM | price freshness | slots | a stale price is the attack |

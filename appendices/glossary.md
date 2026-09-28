@@ -18,7 +18,7 @@ A market maker's structural loss: the trades that find you when your quote is wr
 
 ### all-or-nothing
 
-A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Token Fundraiser* chapter builds it onchain.
+A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Fundraiser* chapter builds it onchain.
 
 ### American option / European option
 
