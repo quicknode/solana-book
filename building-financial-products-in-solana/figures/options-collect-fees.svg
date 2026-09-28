@@ -142,6 +142,6 @@
   <text x="472" y="540.71" font-size="9" font-style="italic" fill="#444">authority: the market</text>
   </g>
   <path d="M 464,519 C 300,554 60,420 78,165" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#opt-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="250" y="540" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1. collect_fees() · 0.45 USDC</text>
-  <g class="coin" transform="translate(269,539)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="395" y="545" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">1. collect_fees() · 0.45 USDC</text>
+  <g class="coin" transform="translate(404,524)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>
