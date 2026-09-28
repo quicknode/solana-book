@@ -83,7 +83,7 @@ A program that needs a long span in wall-clock time should store a timestamp bes
 
 ## The Wall Clock Measures Human Time
 
-The vault strategy uses the wall clock twice:
+The managed fund uses the wall clock twice:
 
 - **Its annual management fee accrues by timestamp**, because a few seconds either way, measured against a year, are nothing.
 - **It checks its price feed's age in seconds rather than slots.** A **price feed** is an account that some publisher keeps updated with a price and the time they published it. This one publishes a wall-clock time, so the comparison has to be made in the unit the number arrived in.
@@ -108,7 +108,7 @@ The *Offchain Truth* chapter answers the first, along with everything else a pro
 | the lending market | 25 slots | slots |
 | the prop AMM | 150 slots | slots |
 | the perpetual futures venue | 150 slots | slots |
-| the vault strategy | 60 seconds | seconds |
+| the managed fund | 60 seconds | seconds |
 
 For a price fresh to within two seconds, turn that into a slot count once, and check every price against that number of slots. Nobody can move that boundary, and the check needs no conversion. Three of the four count slots, because in a window this short a few seconds of clock would be most of the margin. The vault counts seconds because that is the unit its feed publishes, and a program cannot compare someone else's seconds against its own slots without assuming a slot length. What the three slot counts come to in seconds depends on that length, so a window sized once in slots covers less wall-clock time if the slot is ever shortened.
 
@@ -147,7 +147,7 @@ No block is produced during a halt, so the slot count does not move. Wall-clock 
 - **Neither kind of freshness window refuses the old price on its own.** The lending market's 25-slot window sees a price stamped one slot ago and would accept a number nine hours old. The vault's sixty-second window does no better, because the timestamp it reads is trailing, so a price published just before the halt looks seconds old. The damage is largest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
 - **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours. A contributor with an hour left before the halt gets less than an hour after it, because the timestamp runs fast while it catches up. That program survives it because its refund path has no deadline; a design whose only exit was a narrow window would have stranded them.
 
-Every freshness window needs one more check. The `LastRestartSlot` sysvar[^last-restart-slot] carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, the perpetual futures venue, and the vault strategy all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program that checks a price's age, in slots or in seconds.
+Every freshness window needs one more check. The `LastRestartSlot` sysvar[^last-restart-slot] carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, the perpetual futures venue, and the managed fund all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program that checks a price's age, in slots or in seconds.
 
 The order book comes through a halt untouched, because it reads neither clock: queue positions resume exactly as they were.
 
@@ -171,7 +171,7 @@ The table lists every program in Part II that touches time, and the clock each o
 | lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price is the attack |
 | perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
 | prop AMM | price freshness | slots | a stale price is the attack |
-| vault strategy | an annual fee, and price freshness | timestamps for both | seconds against a year are nothing, and the feed stamps seconds |
+| managed fund | an annual fee, and price freshness | timestamps for both | seconds against a year are nothing, and the feed stamps seconds |
 | order book | which order came first | a sequence number, neither clock | neither clock is fine enough to order by |
 
 ## What You Learnt

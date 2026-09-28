@@ -20,7 +20,7 @@
 // It over-reports on figures whose content is a curve rather than boxes: a
 // steep chart line covers few columns and scores as DEAD. Six such bands are
 // known and deliberate as of writing — amm-impermanent-loss (2),
-// lending-rate-curve, vault-fee-dilution, rent-lifecycle, and the caption gap
+// lending-rate-curve, fund-fee-dilution, rent-lifecycle, and the caption gap
 // in escrow-swap-intent. So --strict is for checking a figure you just edited
 // (`--strict path/to/one.svg`), not for gating the whole book.
 //

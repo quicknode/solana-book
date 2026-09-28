@@ -57,7 +57,7 @@ The table covers money changing hands. The same direction applies to the numbers
 
 ### A Ceiled Fee Is a Capped Fee
 
-Rounding up must never make a fee larger than the amount it is charged on. The order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written, too: the order book refuses a fee rate above 100%, and the vault strategy caps its manager's fee at 10%. No configuration can express a fee its program does not allow, so no manager can abuse one to drain the fund.
+Rounding up must never make a fee larger than the amount it is charged on. The order book backs its ceiling division with a check that the fee never exceeds the gross. Fee *parameters* are bounded when they are written, too: the order book refuses a fee rate above 100%, and the managed fund caps its manager's fee at 10%. No configuration can express a fee its program does not allow, so no manager can abuse one to drain the fund.
 
 ### Ceiling Debt Is What "Paid in Full" Means Onchain
 

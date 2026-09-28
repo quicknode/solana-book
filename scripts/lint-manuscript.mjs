@@ -273,7 +273,7 @@ const chapterTitles = [
   "Constant-Product AMM",
   "Prop AMM",
   "Lending and Borrowing",
-  "Vault Strategy",
+  "Managed Fund",
   "Perpetual Futures",
   "Where to Go From Here",
 ];
