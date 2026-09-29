@@ -39,8 +39,8 @@
   <text x="352" y="186.5" font-size="9.5">0 &#8594; 550 ACME</text>
   </g>
   <path d="M 176,98.15 L 338,168" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#mint-factory-a)"/>
-  <g class="coin" transform="translate(228,164)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="242" y="168" font-size="11" fill="#1e7a3c" font-weight="bold">550 ACME</text>
-  <text x="242" y="182" font-size="10" fill="#444" font-style="italic">mint_to()</text>
+  <g class="coin" transform="translate(257,133)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="248" y="155" font-size="11" fill="#1e7a3c" font-weight="bold" text-anchor="end">550 ACME</text>
+  <text x="248" y="169" font-size="10" fill="#444" font-style="italic" text-anchor="end">mint_to()</text>
 </g>
 </svg>

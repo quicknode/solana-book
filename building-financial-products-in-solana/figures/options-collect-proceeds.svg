@@ -165,8 +165,8 @@
   <text x="472" y="540.71" font-size="9" font-style="italic" fill="#444">authority: the market</text>
   </g>
   <path d="M 464,519 C 409,519 360.65,445.89 331,308.54 C 326.74,288.82 317.74,270.11 304,252.43" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#opt-arr)"/>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="364" y="400" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">1. Alice collects</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="364" y="413" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">900 USDC</text>
-  <g class="coin" transform="translate(345,412)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="380.5" y="400" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">1. Alice collects</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="380.5" y="413" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="start">900 USDC</text>
+  <g class="coin" transform="translate(361.5,412)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <text x="234" y="462" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">closed: rent refunds to Alice</text>
 </svg>
