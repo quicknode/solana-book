@@ -5,7 +5,7 @@ title: "review: "
 labels: review
 ---
 
-**Page and section** (from your advance PDF, e.g. "p. 62, 'The Counter Is the Truth'"):
+**Page and section** (from your advance PDF, e.g. "p. 62, 'The Claim Reads the Program's Counter'"):
 
 **What the text says** (quote the sentence or number):
 
