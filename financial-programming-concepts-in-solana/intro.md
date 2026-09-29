@@ -19,11 +19,11 @@ Most programs are conceptually simple, with design rules that come straight from
 - **Make the state explicit.** A `status` enum on the account, or, often better, the account's own existence: the betting market's `Bet` account closes when the position ends, so "already claimed" means the account is gone. Using existence rather than a status is better since the state is recorded in one place rather than two. A state inferred from other fields is worse than either. The betting market could treat an empty pool as "still being set up", but then anyone's first bet would end the setup, so it records a Draft status that only the admin can change.
 - **Check state, not just signers.** Betting on a settled event, canceling a filled order, and liquidating a healthy loan must fail because the *state* forbids them, with an error that names the rule.
 - **From every state, every participant must be able to get their money out.** Walking the states with this rule turns up the handler nobody wrote. An escrow with no cancel handler strands the maker's tokens the day nobody takes the offer. A betting market with no cancel-and-refund path strands every stake the day the event is called off. Walk each state and ask: how does each party's money leave from here? If any state has no answer, the program strands funds, and correct arithmetic will not fix that.
-- **An exit is not finished until nothing is left behind.** The vault is empty, the accounts are closed, and the rent is back with whoever paid it.
+- **The handler that pays out the last of the money also closes everything.** It empties the vault, closes the vault and the state accounts, and returns each account's rent deposit to whoever paid it.
 
 ## Whoever Opens an Account Pays Its Rent, and Gets It Back
 
-The last of the state-machine rules above says an exit returns the rent deposit. The *Core Building Blocks of Solana* chapter showed that every account holds one for the space it occupies. That raises two questions for a program that creates accounts on its users' behalf: who pays the deposit, and who gets it back when the account closes?
+Closing an account returns its rent deposit. The *Core Building Blocks of Solana* chapter showed that every account holds one for the space it occupies. That raises two questions for a program that creates accounts on its users' behalf: who pays the deposit, and who gets it back when the account closes?
 
 - Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds their own token account (if it did not exist already) to receive what the maker offered. Rent burdens follow the party who chose to create the state.
 
@@ -34,4 +34,4 @@ The last of the state-machine rules above says an exit returns the rent deposit.
 ## What You Learnt
 
 - Every financial product is a small state machine: draw it before writing any handler, name every state and transition, and make sure every participant can get their money out of every state.
-- Give each transition its own handler, and check the account's state, not only who signed. An exit empties the vault, closes the accounts, and sends the rent deposit back to whoever paid it.
+- Give each transition its own handler, and check the account's state, not only who signed. The handler that pays out the last of the money also closes the vault and the state accounts, and returns each rent deposit to whoever paid it.

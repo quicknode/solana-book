@@ -157,7 +157,7 @@
   <text x="472" y="315.37" font-size="9.5">time_started: day 0</text>
   <text x="472" y="327.37" font-size="9.5">duration: 7 days</text>
   </g>
-  <!-- the vault: custody only, never the gate -->
+  <!-- the vault: holds the tokens; the claim checks current_amount, not this balance -->
   <g>
   <circle cx="472" cy="353.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="348.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER'S ADDRESS +</text>

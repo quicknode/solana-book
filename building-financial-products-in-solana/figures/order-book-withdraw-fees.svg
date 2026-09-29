@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 724" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria withdraws the fees</text>
-  <!-- withdraw_fees(): the fee vault drains to Maria, gated on the recorded authority -->
-  <!-- Maria withdraws the fee vault to her own USDC account, authority-gated -->
+  <!-- withdraw_fees(): the fee vault drains to Maria, allowed only for the recorded authority -->
+  <!-- Maria withdraws the fee vault to her own USDC account, only the recorded authority may sign -->
   <defs><marker id="order-book-withdraw-fees-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="468" y="45" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>

@@ -183,6 +183,22 @@ const rules = [
   [/\bmempool/i, "Solana has no mempool"],
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
   [/\bbase units?\b/i, 'say "minor unit"'],
+  // Coined labels that read as jargon, so neither the writer nor a reviewer
+  // flags them as metaphor, and each chapter reused the last one's until they
+  // looked like house style. The reader still decodes each one: "the claim
+  // handler's one gate" is "the claim handler compares", "the two exits" is
+  // "the claim or a refund", "state is truth" is the field the handler reads.
+  // Solana's feature gates are the real term and stay.
+  [/(?<!feature )\bgat(?:e|es|ed|ing)\b/i, 'name the check, the handler, and the error it fails with, not a "gate" (companion AI plugin)'],
+  [/\bexits?\b/i, 'name the handler, or say who gets what money out, not an "exit" (companion AI plugin)'],
+  [/(?<!offchain[ -])\btruth\b/i, 'name the field the program reads, not "the truth" ("Offchain Truth" is a chapter title) (companion AI plugin)'],
+  [/\bby construction\b/i, 'say which code makes it so (companion AI plugin)'],
+  [/\b\w+-based\b/i, 'say what happens: "each backer calls refund() themselves", not "pull-based" (companion AI plugin)'],
+  // A test runs one scenario, so "proves" overclaims. Kani proofs, signatures
+  // and proof-of-personhood really do prove, and none of them is named test_.
+  [/`test_\w+`[^.;]*\bprov(?:e|es|ed)\b|\btests? (?:suite )?prov(?:e|es)\b|\bproves? (?:it|that it|the program) works\b/i,
+    'a test checks one scenario: say "checks that ...", not "proves" (companion AI plugin)'],
+  [/\bis (?:just |only )?an? (?:integer |single )?comparison\b/i, 'cut it: the size of the code is not the point (companion AI plugin)'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
   // "Property" also names an account's fields, so "property test" reads two
   // ways in a book about accounts. The book's word for what a test or proof

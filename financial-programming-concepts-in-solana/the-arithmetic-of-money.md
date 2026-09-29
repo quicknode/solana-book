@@ -28,7 +28,7 @@ Two conventions build on minor units:
 
 Use checked arithmetic everywhere: `checked_add`, `checked_mul`, `checked_sub`, with a named overflow error. A plain `+` or `*` in a Rust release build **wraps**: when the result is too big for the type, it starts again from zero, so a `u64` balance one lamport past the maximum becomes a balance of almost nothing instead of an error. Overflow checks can be turned on in the build profile, but a financial program should not depend on a build setting.
 
-`saturating_*` clamps at the type's limit instead of failing, and that is right in one situation only: where the operand cannot go the wrong way by construction and the clamp is the answer you want. The programs in this book use it for a price feed's age, which floors at zero when the feed's slot is momentarily ahead of the local clock, and for the interest accrued since the last refresh, which cannot be negative because the factor only grows. On a value the accounting relies on it is worse than wrapping: `saturating_sub` turns 5 minus 10 into 0 rather than an error, so a debt that should have failed the calculation is recorded as no debt at all, and nothing anywhere reports a problem. The order book's fill accounting uses `checked_sub` there and says why in a comment: a silent clamp on the filled quantity would hide a remainder larger than the order, which is a bug the program must refuse rather than absorb.
+`saturating_*` clamps at the type's limit instead of failing, and that is right in one situation only: where a result past the limit has no meaning and the clamp is the answer you want. The programs in this book use it for a price feed's age, which floors at zero when the feed's slot is momentarily ahead of the local clock, and for the interest accrued since the last refresh, which cannot be negative because the factor only grows. On a value the accounting relies on it is worse than wrapping: `saturating_sub` turns 5 minus 10 into 0 rather than an error, so a debt that should have failed the calculation is recorded as no debt at all, and nothing anywhere reports a problem. The order book's fill accounting uses `checked_sub` there and says why in a comment: a silent clamp on the filled quantity would hide a remainder larger than the order, which is a bug the program must refuse rather than absorb.
 
 ## Multiply Before Divide, with Wider Intermediates
 
@@ -71,9 +71,9 @@ Over-repayment clamps to the debt, so nobody is overcharged either.
 
 ## Invariants and Conservation: Assert After the Math
 
-An **invariant** is a property that must hold before and after every state change, stated in code, checked at runtime. A check on the way in catches bad inputs; a check on the way out catches *your own bug*. The most useful invariants are conservation laws:
+An **invariant** is a condition that must hold before and after every state change, stated in code, checked at runtime. A check on the way in catches bad inputs; a check on the way out catches *your own bug*. The most useful invariants are conservation laws:
 
-- **Total in equals total out.** Every minor unit locked into an escrow, order lock, or bet pool is accounted for on every exit path: paid out, refunded, or taken as fee, summing exactly.
+- **Total in equals total out.** Every minor unit locked into an escrow, order lock, or bet pool is accounted for on every path out of the program: paid out, refunded, or taken as fee, summing exactly.
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 

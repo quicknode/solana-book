@@ -163,7 +163,7 @@ In a fund, the authority that decides which assets may be held at all and which 
 
 ### custody
 
-Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. Balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
+Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. What the program owes is what its own accounts record, never what happens to be in the vault.
 
 ### decimals
 
@@ -171,11 +171,11 @@ The number of minor units in one major unit of a token, declared on the mint. US
 
 ### degenerate value
 
-A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it is structurally valid and worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it passes the usual checks and is worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
 
 ### discretization
 
-Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
+Representing a continuous quantity as discrete integer steps. Onchain amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
 
 ### discriminator
 
@@ -239,7 +239,7 @@ A loan borrowed and repaid inside a single transaction, possible only because tr
 
 ### floor
 
-Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never promise a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
+Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never pay out a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
 
 ### fork
 
@@ -395,7 +395,7 @@ On a perpetual futures market, the index price is the oracle's statement of the 
 
 ### mark to market
 
-Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because money moves on today's valuation.
+Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation checks, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because money moves on today's valuation.
 
 ### market maker
 

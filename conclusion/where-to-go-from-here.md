@@ -10,7 +10,7 @@ What is left is deciding what to build with them.
 
 You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it ten times.
 
-You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and which state needs an exit handler. That is the same checklist an auditor opens with.
+You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and whether every participant can get their money out of every state. That is the same checklist an auditor opens with.
 
 You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's money.
 
@@ -53,7 +53,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **A savings club with no bookkeeper.** Everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, under a different name in each country.[^rosca-scope] It is a tanda in Mexico, a susu in West Africa and the Caribbean, a hui in China and Vietnam, and a chit fund in India. Economists call all of them a rotating savings and credit association, or ROSCA. The thing that goes wrong is always the organizer holding the pot between rounds. Contributions to a vault, the rotation as a state machine, the schedule against the clock as covered in the *Time* chapter, and the *Escrow* chapter's custody pattern underneath.
 
-**A rental deposit that pays its interest to the tenant.** A month or two of rent sits for a year in the landlord's account or an agency's, earning for whoever holds it. In a vault neither party controls it can pay the tenant instead, and still be released to either side by the rules. The design work is the state where the two sides disagree about damage, and giving that state an exit for both of them.
+**A rental deposit that pays its interest to the tenant.** A month or two of rent sits for a year in the landlord's account or an agency's, earning for whoever holds it. In a vault neither party controls it can pay the tenant instead, and still be released to either side when the lease ends. The design work is the state where the two sides disagree about damage, and making sure neither side's money can be stuck there.
 
 **Money raised from the people who already buy from you.** A roaster who needs eighty thousand dollars for a second location can raise it from the customers who drink the coffee: all-or-nothing against a deadline, refunds if the target is missed, repayment as a share of revenue. That is the *Fundraiser* chapter almost unchanged, and what it displaces is a chain of intermediaries, each with a minimum size below which the call is not worth returning.
 
@@ -93,7 +93,7 @@ The book keeps changing after you close it. New chapters, corrections, and editi
 
 ## Build One, Then Have It Attacked
 
-One project separates reading this book from shipping, and it takes less time than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Give every state an exit, so every participant can get their money out from wherever the program stops. Write the tests that drive the machine down every path, especially the exits, and the invariant tests that assert what must never change.
+One project separates reading this book from shipping, and it takes less time than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Make sure every participant can get their money out of every state the program can stop in. Write the tests that drive the machine down every path, especially the ones that pay money out, and the invariant tests that assert what must never change.
 
 Then get a second (and third) opinion from an expert who did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
 

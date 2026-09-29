@@ -102,7 +102,7 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (checked by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
 - **Contributing after the deadline** fails with `FundraiserEnded` (checked by `test_contribute_after_deadline_fails`).
 - **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (checked by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
-- **Inflating the vault directly** moves tokens but never moves the counter, so it unlocks nothing.
+- **Inflating the vault directly** moves tokens but never moves the counter, so the claim still fails with `TargetNotMet` (checked by `test_check_contributions_ignores_direct_vault_donations`).
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
 - **Closing the fundraiser early or with money inside** fails with `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
@@ -114,7 +114,7 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 
 ## What You Learnt from Building the Fundraiser
 
-Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter's program makes the same promise in code: no platform, no fee, and terms that cannot change because no handler exists to change them.
+Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter's program enforces the same all-or-nothing outcome in code: no platform, no fee, and terms that cannot change because no handler exists to change them.
 
 The fundraiser added five concepts on top of the escrow's:
 
@@ -122,10 +122,10 @@ The fundraiser added five concepts on top of the escrow's:
 - **Checks read the program's counter, not the vault balance.** A check that releases money must read a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
 - **A receipt account per participant**, at a PDA, created on first use, added to on later contributions, and closed on refund, so a second refund finds nothing to read.
 - **Cumulative caps.** Per-participant limits checked against running totals, so a raise cannot succeed without many participants.
-- **Name the closer for every account.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
+- **Every account has a handler that closes it.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
 
 In the *Betting Market* chapter we will build a pool that many people pay into, where who gets paid is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the money while trusting them for the result.
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
 
-[^proof-of-personhood]: The cap counts wallets, and a wallet costs nothing to create, so ten receipts prove ten wallets rather than ten people. A raise that needs distinct people has to bring that proof from outside the program. Proof-of-personhood services exist to supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. Two such services are World ID ([world.org](https://world.org)) and VeryAI ([very.org](https://very.org)). How each proof reaches a Solana program differs by service, and checking one is outside this book.
+[^proof-of-personhood]: The cap counts wallets, and a wallet costs nothing to create, so ten receipts show ten wallets rather than ten people. A raise that needs distinct people has to bring that proof from outside the program. Proof-of-personhood services exist to supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. Two such services are World ID ([world.org](https://world.org)) and VeryAI ([very.org](https://very.org)). How each proof reaches a Solana program differs by service, and checking one is outside this book.

@@ -33,7 +33,7 @@ A missing check lets the attacker **substitute** an account: pass a different ac
 
 ## The Empty Pool: Inflation and Donation Attacks
 
-Every share-based pool (vault, LP pool, lending reserve) prices a share as the pool's value divided by the number of shares. That formula breaks down at the start, when both numbers are tiny, and the **inflation attack** exploits it. The attacker makes a tiny first deposit and receives a tiny number of shares. Then they *donate* assets straight into the pool's vault with an ordinary token transfer, without calling the deposit handler. The donation raises the value behind each of their few shares. The next depositor's shares are computed as deposit × shares outstanding ÷ pool value, floored. With the pool value enormous compared with the shares outstanding, that division floors to zero or close to it: the victim's deposit buys nothing, and it now belongs to the attacker's shares.
+Every pool that issues shares (vault, LP pool, lending reserve) prices a share as the pool's value divided by the number of shares. That formula breaks down at the start, when both numbers are tiny, and the **inflation attack** exploits it. The attacker makes a tiny first deposit and receives a tiny number of shares. Then they *donate* assets straight into the pool's vault with an ordinary token transfer, without calling the deposit handler. The donation raises the value behind each of their few shares. The next depositor's shares are computed as deposit × shares outstanding ÷ pool value, floored. With the pool value enormous compared with the shares outstanding, that division floors to zero or close to it: the victim's deposit buys nothing, and it now belongs to the attacker's shares.
 
 Take a pool that prices its shares from the token balance in its vault, as the book's managed fund did before it chose a defense. The first deposit into an empty pool mints one share per minor unit. Every later deposit mints shares in proportion to the value it adds, so a deposit that doubles the pool's value doubles the share supply:
 
@@ -96,7 +96,7 @@ The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K 
 
 - Every mistake on a public chain is money anyone can take: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
 - Every supplied account is a claim to verify, and every chain of accounts must start from an account the program itself derived or recorded.
-- A share-based pool needs a defense against the inflation attack built into the program: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
+- A pool that issues shares needs a defense against the inflation attack built into the program: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
 - A true price can still be a manipulated price: time-weight it, act on the confidence interval, cap how much can move per window, and never lend more against a token than it would cost to move its market.
 - A rounding error in the user's favor gets repeated until the pool is empty, and a round-trip invariant test catches it.
 - Checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
