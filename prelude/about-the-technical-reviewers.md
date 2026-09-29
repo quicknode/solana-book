@@ -13,3 +13,5 @@ Callum McIntyre is an engineer at Anza, and was previously Developer Relations f
 Chase Barker was Solana's first developer advocate, and ran developer relations at the Solana Foundation.
 
 Dean Little is the founder of Blueshift, a Solana education and research initiative.
+
+Marius Gugat is a security researcher at Neodyme, a security firm that audits Solana programs.
