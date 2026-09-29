@@ -1,3 +1,3 @@
 # Dedication
 
-For Victoria, Mabel, and Laodan.
+For Victoria and Mabel.

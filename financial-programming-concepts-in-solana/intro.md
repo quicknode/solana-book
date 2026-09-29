@@ -1,6 +1,6 @@
-# Chapter 6: Financial Programming Concepts in Solana
+# Chapter 6: State Machines
 
-This part covers the money: calculating with it, bringing facts about assets onchain, defending assets, and operating a program that holds them.
+This chapter covers the shape every financial program shares: a state machine, in which every participant can get their money out of every state, and every account returns its rent deposit when it closes.
 
 ## Financial Software Is a State Machine
 
@@ -21,9 +21,9 @@ Most programs are conceptually simple, with design rules that come straight from
 - **From every state, every participant must be able to get their money out.** Walking the states with this rule turns up the handler nobody wrote. An escrow with no cancel handler strands the maker's tokens the day nobody takes the offer. A betting market with no cancel-and-refund path strands every stake the day the event is called off. Walk each state and ask: how does each party's money leave from here? If any state has no answer, the program strands funds, and correct arithmetic will not fix that.
 - **An exit is not finished until nothing is left behind.** The vault is empty, the accounts are closed, and the rent is back with whoever paid it.
 
-## Whoever Wants the Account Pays the Rent Deposit, and Gets It Back When the Account Is Closed
+## Whoever Opens an Account Pays Its Rent, and Gets It Back
 
-Rent deposits are small, but they belong to somebody. Two rules settle who pays them:
+The last of the state-machine rules above says an exit returns the rent deposit. The *Core Building Blocks of Solana* chapter showed that every account holds one for the space it occupies. That raises two questions for a program that creates accounts on its users' behalf: who pays the deposit, and who gets it back when the account closes?
 
 - Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds their own token account (if it did not exist already) to receive what the maker offered. Rent burdens follow the party who chose to create the state.
 

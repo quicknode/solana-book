@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 196" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Programs sit on the curve too</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 206" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Programs have addresses too</text>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <circle cx="132" cy="35.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -18,7 +18,8 @@
   <line x1="248" y1="82.751" x2="350" y2="82.751" stroke="#888" stroke-width="0.8"/>
   <text x="248" y="93.751" font-size="9.5" fill="#444">1 SOL</text>
   </g>
-  <circle cx="488" cy="73.4582" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="390" y="78.0704" font-size="8.5" font-family="'DejaVu Sans Mono', monospace" fill="#555">11111111111111&#8230;</text>
+  <circle cx="380" cy="75.0704" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <rect x="372" y="84.0704" width="124" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(380,87.5704)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="400" y="98.2454" font-size="10.5" font-weight="bold">System Program</text>
@@ -31,7 +32,9 @@
   <text x="532" y="128.498" font-size="10.5" font-weight="bold">Memo Program</text>
   <line x1="512" y1="135.323" x2="614" y2="135.323" stroke="#888" stroke-width="0.8"/>
   <text x="512" y="146.323" font-size="9" font-family="'DejaVu Sans Mono', Menlo, monospace">memo()</text>
-  <circle cx="30" cy="168" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="46" y="165" font-size="11" fill="#444">an address: a public key, on the curve</text>
-  <text x="46" y="181" font-size="10" fill="#444" font-style="italic">people and programs alike, each with its own private key</text>
+  <path d="M 10,164 Q 30,168 42,171" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="30" cy="168" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="46" y="172" font-size="10" fill="#444" font-style="italic">on the curve: a public key, with a private key behind it</text>
+  <circle cx="30" cy="190" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="46" y="194" font-size="10" fill="#444" font-style="italic">off the curve: a built-in address, and no private key exists</text>
 </svg>

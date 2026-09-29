@@ -50,11 +50,11 @@ Meet Bob. Bob has his own key pair, and his public key is another point on the s
 
 Alice wants to send Bob some SOL. The only way to change anything on this computer, whether that is moving a balance or storing data, is to send it a **transaction**.
 
-A transaction carries one or more **instructions**, and each instruction is input for a public function called an **instruction handler** that is part of an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address on the same curve:
+A transaction carries one or more **instructions**, and each instruction is input for a public function called an **instruction handler** that is part of an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address:
 
-- The **System Program** sits at a well-known address, and has instruction handlers to create accounts and transfer SOL.
-- The **Memo Program** sits at another, and has an instruction handler that writes notes into the transaction log.
-- The programs in this book each get an address of their own the day you deploy them.
+- The **System Program** has instruction handlers to create accounts and transfer SOL. It sits at `11111111111111111111111111111111`, a **built-in address** chosen by Solana's core developers rather than generated from a key pair. Nobody holds a private key for it, so the figures hang its dot off the curve, labeled with the address itself.
+- The **Memo Program** has an instruction handler that writes notes into the transaction log. It was deployed from a key pair like any other program, so its address is a public key, on the curve like Alice's and Bob's.
+- The programs in this book are deployed the same way, so each gets a public key of its own the day you deploy it.
 
 ![](figures/programs-on-the-curve.svg)
 
@@ -138,7 +138,7 @@ Every account sits at a 32-byte **address**, usually shown base58-encoded. Addre
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
 - **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds. You'll learn more about these in the *PDAs* chapter. Since PDA addresses aren't public keys, they don't have private keys. 
-- **Built-in addresses.** The System Program, the two token programs, and the sysvars sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads, `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` is the Token Extensions program. Some of these byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them.
+- **Built-in addresses.** The System Program, the sysvars, and the few other programs built into the validator itself sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `11111111111111111111111111111111` is the System Program, `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads. Other programs, the token programs among them, are deployed from key pairs like the programs in this book, so their addresses are public keys even when they start with a memorable prefix. Some of these byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them.
 
 ![](figures/address-types.svg)
 
