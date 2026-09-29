@@ -10,7 +10,7 @@ The program calls the fundraiser's creator the **maker**, Maria here. She wants 
 
 Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
 
-The two exits can never both be open. The claim requires the total to have reached the target, the refund requires it not to have, and the same comparison decides both.
+A fundraiser can only end one way. The claim requires the total to have reached the target and a refund requires it not to have, so whichever one the total allows, it rules out the other.
 
 ## The Maker Starts the Fundraiser
 
@@ -93,8 +93,8 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - `current_amount` equals the sum of all live contributor receipts, at every moment: contributions add to both together, refunds subtract from both together.
 - Tokens that entered through `contribute()` equal `current_amount` plus tokens already refunded; the vault can only exceed that by direct donations, which no check ever reads.
 - No contributor's receipt ever exceeds 10% of the target.
-- The claim requires `current_amount` to be at least the target and the refund requires it to be below, so at most one exit is ever open.
-- Money leaves the vault only through those two exits, both signed by the fundraiser PDA, one gated on the maker's signature and the counter, the other gated on the contributor's signature, the deadline, and their own receipt.
+- The claim requires `current_amount` to be at least the target and the refund requires it to be below, so a fundraiser can only end one way.
+- Money leaves the vault only through the claim or a refund, both signed by the fundraiser PDA, one gated on the maker's signature and the counter, the other gated on the contributor's signature, the deadline, and their own receipt.
 
 ## The Failure Modes: One Gate per Attack
 
@@ -118,13 +118,13 @@ Kickstarter's all-or-nothing promise is a company policy: the platform holds the
 
 The fundraiser added five concepts on top of the escrow's:
 
-- **A deadline that flips which exit is open.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
+- **A deadline that decides which handlers work.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
 - **Gates read the program's counter, not the vault balance.** A check that releases money must read a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
 - **A receipt account per participant**, at a PDA, created on first use, added to on later contributions, and closed on refund, so a second refund finds nothing to read.
 - **Cumulative caps.** Per-participant limits checked against running totals, so a raise cannot succeed without many participants.
 - **Name the closer for every account.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
 
-In the *Betting Market* chapter we will build a pool that many people pay into, where the exit is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the money while trusting them for the result.
+In the *Betting Market* chapter we will build a pool that many people pay into, where who gets paid is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the money while trusting them for the result.
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
 
