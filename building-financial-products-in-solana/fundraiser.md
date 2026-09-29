@@ -53,13 +53,13 @@ So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight
 
 ## The Claim Reads the Program's Counter, Not the Vault Balance
 
-The claim handler's one gate compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and walk off with 3,600 USDC of contributions the target was meant to protect. Because the gate reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
+The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and walk off with 3,600 USDC of contributions the target was meant to protect. Because the check reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
 
 The same applies to any check that releases money: **it should read a number the program itself wrote**, because anyone can pass a check on a token balance by transferring tokens in.
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
-`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and the counter passes the `TargetNotMet` gate. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The program sets no "finished" flag. A second claim fails because the fundraiser account it would read no longer exists. The test `test_check_contributions_success_pays_maker_and_closes_vault` asserts all three effects.
+`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and `current_amount` has reached the target, so the handler does not fail with `TargetNotMet`. Three things then happen in one transaction: the vault's entire balance transfers to Maria's token account (signed by the fundraiser PDA), the vault closes, and the fundraiser account closes too, returning both rent deposits to her. The program sets no "finished" flag. A second claim fails because the fundraiser account it would read no longer exists. The test `test_check_contributions_success_pays_maker_and_closes_vault` asserts all three effects.
 
 ![](figures/fundraiser-success.svg)
 
@@ -94,9 +94,9 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - Tokens that entered through `contribute()` equal `current_amount` plus tokens already refunded; the vault can only exceed that by direct donations, which no check ever reads.
 - No contributor's receipt ever exceeds 10% of the target.
 - The claim requires `current_amount` to be at least the target and the refund requires it to be below, so a fundraiser can only end one way.
-- Money leaves the vault only through the claim or a refund, both signed by the fundraiser PDA, one gated on the maker's signature and the counter, the other gated on the contributor's signature, the deadline, and their own receipt.
+- Money leaves the vault only through the claim or a refund, both signed by the fundraiser PDA, the claim requiring the maker's signature and the counter at the target, a refund requiring the contributor's signature, a passed deadline, and their own receipt.
 
-## The Failure Modes: One Gate per Attack
+## The Failure Modes: One Check per Attack
 
 - **Claiming early or after a miss** fails on the counter: `TargetNotMet`.
 - **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (checked by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
@@ -105,12 +105,12 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - **Inflating the vault directly** moves tokens but never moves the counter, so it unlocks nothing.
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
-- **Closing the fundraiser early or with money inside** fails on the close gates: `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
+- **Closing the fundraiser early or with money inside** fails with `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
 - **Closing a receipt while its raise is live** fails because the fundraiser account still belongs to the program: `FundraiserStillOpen` (checked by `test_close_contributor_while_fundraiser_open_fails`).
 
 ## Testing Considerations
 
-The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Three tests follow a whole lifecycle: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and claims it, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again. The rest test one gate each. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
+The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Three tests follow a whole lifecycle: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and claims it, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
 
 ## What You Learnt from Building the Fundraiser
 
@@ -119,7 +119,7 @@ Kickstarter's all-or-nothing promise is a company policy: the platform holds the
 The fundraiser added five concepts on top of the escrow's:
 
 - **A deadline that decides which handlers work.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
-- **Gates read the program's counter, not the vault balance.** A check that releases money must read a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
+- **Checks read the program's counter, not the vault balance.** A check that releases money must read a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
 - **A receipt account per participant**, at a PDA, created on first use, added to on later contributions, and closed on refund, so a second refund finds nothing to read.
 - **Cumulative caps.** Per-participant limits checked against running totals, so a raise cannot succeed without many participants.
 - **Name the closer for every account.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
