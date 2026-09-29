@@ -171,7 +171,7 @@ The number of minor units in one major unit of a token, declared on the mint. US
 
 ### degenerate value
 
-A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it passes the usual checks and is worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it passes the usual checks but is worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
 
 ### discretization
 
