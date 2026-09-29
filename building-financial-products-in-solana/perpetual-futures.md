@@ -6,7 +6,7 @@ The program lives at `finance/perpetual-futures` in the companion repository. It
 
 ## The Pool Is the Other Side of the Trade
 
-In the *Order Book Exchange* chapter, every long met a short: Carol's ask crossed Bob's bid, and the program merely kept score. A perp that trades against a pool has no orders to match. **Liquidity providers fund one pool, and the pool is the counterparty to every position.** When a trader wins, the pool pays; when a trader loses, the pool keeps the loss. So an LP's return is fees and funding collected, minus whatever the winning traders take.
+In the *Order Book Exchange* chapter, every long met a short: Carol's ask crossed Bob's bid, and the program merely kept score. A perp that trades against a pool has no orders to match. **Liquidity providers fund one pool, and the pool is the counterparty to every position.** When a trader wins, the pool pays; when a trader loses, the pool keeps the loss. So an LP's return is the losing traders' losses plus the funding the pool collects, minus whatever the winning traders take. The open and close fees go to the pool's creator, not to the LPs.
 
 That design decision creates the problem the program is organized around: the program must be able to check that the pool can pay every winner, at every moment, **without ever iterating over the open positions**. A program that must touch every position to answer "am I solvent?" stops fitting in a transaction the day it succeeds. That requirement explains almost every field in the account model.
 
@@ -113,7 +113,7 @@ Here is where everyone ends up:
 - **Bob** turned 1,000 into 195 by being wrong and slow.
 - **Dave** collected 50 USDC for one well-timed transaction.
 - **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, the only handler that requires her signature, and only to zero the fee ledger (`test_collect_fees_requires_authority` checks that anyone else is refused).
-- **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus fees and funding on the next thousand traders.
+- **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus the losses and funding of the next thousand traders.
 ## The Math: One Formula per Concept, All Floored in the Pool's Favor
 
 Every calculation is checked u128 integer arithmetic, multiply before divide, and every division rounds in the pool's favor: `basis_points_of()` floors fees and margin thresholds, share minting and withdrawal amounts floor against AUM, and PnL truncates toward zero. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the cost constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price, so AUM, and with it LP share pricing and solvency, computes in constant time forever.
