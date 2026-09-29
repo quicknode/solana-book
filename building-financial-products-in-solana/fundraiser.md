@@ -25,7 +25,7 @@ The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the make
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.
 - `current_amount`: the running total the program itself has counted, which is deliberately not the same number as the vault's balance.
-- `time_started` and `duration`: the clock's Unix timestamp at creation, and the window length in days. The program stores no deadline; it computes one from these two fields.
+- `time_started` and `duration`: the clock's Unix timestamp at creation, and the window length in days. The program does not store a deadline; it computes one from these two fields.
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
