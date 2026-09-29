@@ -74,7 +74,7 @@ A single number per reserve that starts at 1.0 and only grows, compounding the b
 
 ### built-in address
 
-An address chosen rather than computed: the System Program, the sysvars, and the few other programs built into the validator each sit at a fixed byte string the runtime treats as that thing. The token programs are not among them: they were deployed from key pairs, so their addresses are public keys. Neither a [public key](#address) somebody holds the private key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
+An address chosen rather than computed: the System Program, the sysvars, and the few other programs built into the validator each sit at a fixed byte string the runtime treats as that thing. Neither a [public key](#address) somebody holds the private key for nor a [PDA](#pda-program-derived-address) derived from seeds, so a program uses it as a constant to compare against. Whether one happens to decode to a point on the ed25519 curve is an accident of the bytes and carries no meaning.
 
 ### bump
 
