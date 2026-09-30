@@ -102,7 +102,7 @@ The rate itself is a policy choice; the arithmetic above only applies whatever r
 
 ## What You Learnt
 
-- Onchain amounts are integers: no floats near funds, every amount at a declared scale read from the mint, lots for order books and WADs for fractions.
+- Keep onchain amounts as integers: no floats near funds, every amount at a declared scale read from the mint, lots for order books and WADs for fractions.
 - Multiply before divide, promote intermediates to u128, and check every operation with a named overflow error.
 - Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
 - Assert invariants after the math, and know the degenerate values that let an invariant hold in a dangerous state.

@@ -95,11 +95,11 @@ The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K 
 ## What You Learnt
 
 - Anyone can take the tokens a mistake on a public chain exposes: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
-- Every supplied account is a claim to verify, and every chain of accounts must start from an account the program itself derived or recorded.
-- A pool that issues shares needs a defense against the inflation attack built into the program: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
+- Verify every supplied account, and start every chain of accounts from an account the program itself derived or recorded.
+- Build a defense against the inflation attack into any pool that issues shares: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
 - A true price can still be a manipulated price: time-weight it, act on the confidence interval, cap how much can move per window, and never lend more against a token than it would cost to move its market.
-- A rounding error in the user's favor gets repeated until the pool is empty, and a round-trip invariant test catches it.
-- Checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
+- A rounding error in the user's favor gets repeated until the pool is empty, so write a round-trip invariant test to catch it.
+- Apply checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
 
 [^confused-deputy]: Norm Hardy named it in "The Confused Deputy (or why capabilities might have been invented)", ACM SIGOPS Operating Systems Review 22(4), October 1988, at [dl.acm.org/doi/10.1145/54289.871709](https://dl.acm.org/doi/10.1145/54289.871709).
 

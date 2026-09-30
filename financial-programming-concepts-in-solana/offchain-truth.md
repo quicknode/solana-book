@@ -40,7 +40,7 @@ The price-manipulation section of the *Adversary* chapter covers the case these 
 ## What You Learnt
 
 - A program can act on a fact from outside the chain once someone it trusts has signed it with their private key, either by signing your transaction directly or by signing offchain for an oracle program to verify and record in an account. Either way the publication is input: check its provenance, its freshness (in the right clock), its confidence, and its degenerate values.
-- Trust is an engineering parameter: a single signer, a committee, or a feed network, chosen by asking who publishes, what lying costs them, and what happens when they go silent.
+- Treat trust as an engineering parameter: choose a single signer, a committee, or a feed network by asking who publishes, what lying costs them, and what happens when they go silent.
 - Fix the fact's meaning when participants commit their tokens, and make sure every participant is able to get their assets out of every state without waiting on a new fact.
 
 [^negative-oil]: WTI crude oil futures traded as low as −$40.32 a barrel on 20 April 2020, the first negative price since the contract began trading in 1983, after storage filled and holders of the expiring May contract paid counterparties to take delivery off their hands. The EIA's account is at [eia.gov/todayinenergy/detail.php?id=43495](https://www.eia.gov/todayinenergy/detail.php?id=43495).
