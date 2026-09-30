@@ -174,7 +174,7 @@ A binary tree keyed on the first bit where entries differ. Used for order books 
 
 ### crypto
 
-In the context of finance, the industry built on blockchains: distributed ledgers such as Solana. Crypto is not an asset class in itself, although the term is frequently misused that way. Crypto is a wrapper for trading a wide variety of asset classes, including equities such as NVDAx, commodities such as gold, derivatives such as the perpetual futures in this book, and native crypto assets such as SOL. Each of these is held onchain as a [token](#token). When a sentence means one of those [assets](#asset), name its class instead.
+In the context of finance, the industry built on blockchains: distributed ledgers such as Solana. Crypto is not an asset class in itself, although the term is frequently misused that way. Crypto is a wrapper for trading a wide variety of asset classes, including equities such as NVDAx, commodities such as gold, derivatives such as the perpetual futures in this book, and native crypto assets such as SOL. Each of these is held onchain as a [token](#token).
 
 ### curator
 
