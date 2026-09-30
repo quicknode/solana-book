@@ -118,7 +118,7 @@
   <text x="482" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
   <text x="482" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
   <text x="482" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">liquidate_obligation()</text>
-  <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_protocol_fees()</text>
+  <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_program_fees()</text>
   </g>
   <g>
   <circle cx="482" cy="314.676" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -145,7 +145,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="167" y="457.84" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="12" y="467.84" font-size="8.5">borrowed_principal: 0</text>
   <text x="12" y="478.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="12" y="488.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="12" y="488.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
   <g>
   <circle cx="12" cy="607.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -194,7 +194,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="402" y="457.84" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="247" y="467.84" font-size="8.5">borrowed_principal: 0</text>
   <text x="247" y="478.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="247" y="488.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="247" y="488.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
   <g>
   <circle cx="247" cy="515.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -243,7 +243,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="628" y="457.84" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="482" y="467.84" font-size="8.5">borrowed_principal: 0</text>
   <text x="482" y="478.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="482" y="488.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="482" y="488.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
   <g>
   <circle cx="482" cy="515.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

@@ -174,10 +174,12 @@ const rules = [
   [/\bmemecoin|meme token/i, "no meme tokens"],
   [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
   // "protocol" names the network and the programs on it, so it tells a reader
-  // neither. Identifiers that ship with the word keep it: the lookarounds skip
-  // anything backticked or joined by an underscore.
-  [/(?<![`\w])protocols?\b(?![\w`])/i,
-    'say "network" for Solana and the rules it enforces, "program" for onchain code; "protocol" names both (identifiers like `accumulated_protocol_fees` are exempt)'],
+  // neither. That goes for identifiers too: the companion programs name their
+  // fees `program_fees`, so a backticked `protocol_...` is a stale name. Only
+  // the Solend organization's name in a GitHub link keeps the word.
+  [/protocol/i,
+    'say "network" for Solana and the rules it enforces, "program" for onchain code; "protocol" names both, in prose and in identifiers',
+    /github\.com\/solendprotocol\//],
   [/Quicknode Press|QuickNode|QuikNode|Quiknode(?! Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode Inc."; there is no Quicknode Press'],
   [/\bgas fees?\b|\bgas costs?\b/i, 'say "transaction fees"'],
   [/\bmempool/i, "Solana has no mempool"],

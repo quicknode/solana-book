@@ -14,7 +14,7 @@ That design decision creates the problem the program is organized around: the pr
 
 ## Creating the Market, Where the Parameters Are Checked Against Each Other
 
-Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `protocol_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, and neither `close_position()` nor `liquidate_position()` would accept it, leaving its owner no way to get their collateral out. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. So the requirement that every participant must be able to get their assets out of every state is enforced in the market's *configuration*, before any position exists.
+Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `program_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, and neither `close_position()` nor `liquidate_position()` would accept it, leaving its owner no way to get their collateral out. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. So the requirement that every participant must be able to get their assets out of every state is enforced in the market's *configuration*, before any position exists.
 
 ![](figures/perps-create-pool.svg)
 
@@ -25,11 +25,11 @@ The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, an
 - `liquidity`: what the LPs own. It grows with deposits, trader losses, and funding; it shrinks with withdrawals and trader profits.
 - `reserved_liquidity`: the portion of `liquidity` currently pledged as the maximum payout of open positions.
 - `total_collateral`: traders' collateral held for open positions. It is tracked separately from `liquidity` because it belongs to the traders, not the LPs.
-- `protocol_fees`: Maria's accrued fees, separate again.
+- `program_fees`: Maria's accrued fees, separate again.
 - `long_size`, `short_size`, `long_size_scaled`, `short_size_scaled`: per-side open-interest accumulators, which make solvency checkable without iteration.
 - `cumulative_funding` and `last_funding_timestamp`: the funding index.
 
-The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault holds everyone's tokens together, and the three ledger fields, `liquidity`, `total_collateral`, and `protocol_fees`, record how much of it belongs to whom. As in the *Fundraiser* chapter, every handler computes amounts from those fields, never from the vault balance.
+The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault holds everyone's tokens together, and the three ledger fields, `liquidity`, `total_collateral`, and `program_fees`, record how much of it belongs to whom. As in the *Fundraiser* chapter, every handler computes amounts from those fields, never from the vault balance.
 
 ## Liquidity Providers Fund the Pool and Get Shares Priced at Mark
 
@@ -67,7 +67,7 @@ By reserving the notional, the pool sets aside the most it could ever owe her, b
 >
 > This program stops at the first tier and caps profit at the reservation, so the shortfall can never open in the first place. An insurance fund and auto-deleveraging do not make a venue's losses smaller. They name, before the loss happens, which users pay for it.
 
-Her transaction ends with the only token movement: 1,000 USDC from Alice's token account into the vault. Bob opens his mirror-image short the same way: 1,000 collateral, 5,000 size, entry $100, another 5 USDC fee to `protocol_fees`, another 5,000 reserved.
+Her transaction ends with the only token movement: 1,000 USDC from Alice's token account into the vault. Bob opens his mirror-image short the same way: 1,000 collateral, 5,000 size, entry $100, another 5 USDC fee to `program_fees`, another 5,000 reserved.
 
 ![](figures/perps-open-position.svg)
 
@@ -105,14 +105,14 @@ The pool cannot sell Bob's position; a program never acts on its own, somebody h
 
 ## Closing at $120, and the Pool Pays From Its Reservation
 
-At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `protocol_fees` collects the 5, her position account closes, and the vault pays her out under the pool's signature. The same handler protects the pool from the other direction. A position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and can only be closed by `liquidate_position()`, and any payout the pool arithmetic cannot cover is refused with `PoolInsolvent` rather than overdrawing the LPs.
+At $120 Alice takes her win. `close_position()` marks her position one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC, under her 5,000 cap; close fee 10 basis points of size = 5; payout 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. Her 5,000 reservation releases, the LPs' `liquidity` drops by her 1,000 profit, `program_fees` collects the 5, her position account closes, and the vault pays her out under the pool's signature. The same handler protects the pool from the other direction. A position whose equity cannot cover its own close fee is refused with `PositionNotHealthy` and can only be closed by `liquidate_position()`, and any payout the pool arithmetic cannot cover is refused with `PoolInsolvent` rather than overdrawing the LPs.
 
 Here is where everyone ends up:
 
 - **Alice** turned 1,000 into 1,990 by being right with leverage.
 - **Bob** turned 1,000 into 195 by being wrong and slow.
 - **Dave** collected 50 USDC for one well-timed transaction.
-- **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, which pays out what the fee ledger holds and sets it to zero. That handler and `set_funding_rate()` both refuse any signer but her (`test_collect_fees_requires_authority`, `test_only_authority_can_set_funding_rate`).
+- **Maria**'s `program_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, which pays out what the fee ledger holds and sets it to zero. That handler and `set_funding_rate()` both refuse any signer but her (`test_collect_fees_requires_authority`, `test_only_authority_can_set_funding_rate`).
 - **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus the losses and funding of the next thousand traders.
 ## The Math: One Formula per Concept, All Floored in the Pool's Favor
 
@@ -126,7 +126,7 @@ The example's design notes point at Percolator, Anatoly Yakovenko's Kani-checked
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
 - **Bounded progress**: no operation's cost grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
 
-The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + protocol_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy can, at all times, be closed by either `close_position()` or `liquidate_position()`.
+The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + program_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy can, at all times, be closed by either `close_position()` or `liquidate_position()`.
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 

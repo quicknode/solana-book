@@ -227,7 +227,7 @@
   <text x="482" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
   <text x="482" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
   <text x="482" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">liquidate_obligation()</text>
-  <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_protocol_fees()</text>
+  <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_program_fees()</text>
   </g>
   <g opacity="0.3">
   <circle cx="482" cy="314.676" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -248,7 +248,7 @@
   <text x="12" y="576.34" font-size="8.5">available_liquidity: 1,250</text>
   <text x="12" y="586.84" font-size="8.5">borrowed_principal: 750</text>
   <text x="12" y="597.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="12" y="607.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="12" y="607.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
 <g transform="translate(0,-100.34)">  <g opacity="0.3">
   <circle cx="12" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -285,7 +285,7 @@
   <text x="482" y="576.34" font-size="8.5">available_liquidity: 3.25</text>
   <text x="482" y="586.84" font-size="8.5">borrowed_principal: 0.75</text>
   <text x="482" y="597.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="482" y="607.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="482" y="607.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
 <g transform="translate(0,-100.34)">  <g>
   <circle cx="482" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
