@@ -578,7 +578,7 @@ The URL a program or wallet sends its transactions to: a server holding a [clust
 
 ### RWA (real-world asset)
 
-A traditional [asset](#asset) represented as a [token](#token) onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading.
+A traditional [asset](#asset) represented as a [token](#token) onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading. "RWA" lumps very different things together, so it is usually clearer to name the asset class instead: tokenized stocks, tokenized Treasury bills, gold.
 
 ### sandwich
 
