@@ -213,10 +213,10 @@ const rules = [
   [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -]|\bput |\bsen(?:t|ding) |\breal |\bwhose |want their |the same )\bmoney\b(?! market| back\b| in a savings account)/i,
     'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)',
     // The Conclusion's product ideas talk about the offchain world, where
-    // "money" is the plain word: the shop owner's investor, the middleman,
+    // "money" is the plain word: the middleman,
     // the friends' pot, the roaster's raise, the supplier's invoice, the
     // licenses that move money between banks and the chain.
-    /nearby with money|holding the money and keeping|Money in the pot|let money cross|\*\*Money raised from|needs the money this week/],
+    /holding the money and keeping|Money in the pot|let money cross|\*\*Money raised from|needs the money this week/],
   // Kani marks a harness #[kani::proof], and prose picked up the word: "the
   // Kani proofs", "formally verified". The companion repository has model
   // checks, not formal proofs. The one sentence that draws the distinction
