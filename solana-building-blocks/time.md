@@ -168,9 +168,9 @@ The table lists every program in Part II that touches time, and the clock each o
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
 | fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live] out |
-| lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price is the attack |
+| lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price can be exploited |
 | perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
-| prop AMM | price freshness | slots | a stale price is the attack |
+| prop AMM | price freshness | slots | a stale price can be exploited |
 | managed fund | an annual fee, and price freshness | timestamps for both | seconds against a year are nothing, and the feed stamps seconds |
 | order book | which order came first | a sequence number, neither clock | neither clock is fine enough to order by |
 
