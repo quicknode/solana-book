@@ -39,7 +39,7 @@ Maria wants the raise to show that many people want the machine, so one large ba
 
 Alice tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, multiply before divide, as in every other chapter.
 
-She contributes 900 USDC instead, and every backer makes the same call: `contribute()` moves the tokens from her own token account into the vault, and adds 900 to `current_amount`. The program can deduct from Alice's token account because she signed the transaction.
+She contributes 900 USDC instead, and every backer makes the same call: `contribute()` moves the tokens from Alice's own token account into the vault, and adds 900 to `current_amount`. The program can deduct from Alice's token account because she signed the transaction.
 
 ![](figures/fundraiser-contribute.svg)
 

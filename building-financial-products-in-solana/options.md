@@ -154,7 +154,7 @@ Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for 
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
-The put is the mirror image, and it also shows how an option ends when nobody exercises it. Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, 5 contracts, 1 NVDAx per contract, a strike of 150 USDC per contract, a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike, so 5 times 150 USDC, 750 USDC, leaves her account for the quote vault, and `quote_locked` rises to match. Her 1,000 USDC is 250.
+The put is the mirror image, and it also shows how an option ends when nobody exercises it. Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, 5 contracts, 1 NVDAx per contract, a strike of 150 USDC per contract, a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike, so 5 times 150 USDC, 750 USDC, leaves Carol's account for the quote vault, and `quote_locked` rises to match. Her 1,000 USDC is 250.
 
 ![](figures/options-write-put.svg)
 
