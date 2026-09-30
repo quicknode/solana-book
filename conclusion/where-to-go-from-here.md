@@ -35,7 +35,7 @@ Nobody in the paragraphs above wants a blockchain. They want their money on Satu
 So aim at consumers and businesses rather than at a crypto audience. In practice that means:
 
 - Quote everything in dollars and in time, whether it is a rate, a limit, or a settlement time. Never basis points, token symbols, or pool utilization.
-- Keep keys and signing behind the product. Someone should be able to use it having never downloaded wallet software or held a token deliberately, and never learn that they now do.
+- Keep private keys and signing behind the product. Someone should be able to use it having never downloaded wallet software or held a token deliberately, and never learn that they now do.
 - Put the benefit on the front page in the user's own words: "get paid the day you invoice", "spend without selling your shares", "nobody can walk off with the pot".
 - Say the risk in the same plain words. Liquidation is not a footnote for somebody spending against their shares, and a rate that comes from borrowers can fall when borrowing does.
 
@@ -83,7 +83,7 @@ Some things were left out on purpose.
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
-**Governance** is deliberately absent. Every program here has an operator with a key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that key with a voting process is a separate design problem.
+**Governance** is deliberately absent. Every program here has an operator with a private key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that private key with a voting process is a separate design problem.
 
 **The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
 

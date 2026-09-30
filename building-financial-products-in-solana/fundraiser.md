@@ -20,7 +20,7 @@ Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration
 
 This transaction created the two accounts the raise needs.
 
-The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, holds the raise's terms:
+The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same public key finds the account already in existence and fails. Its struct, `Fundraiser`, holds the raise's terms:
 
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.

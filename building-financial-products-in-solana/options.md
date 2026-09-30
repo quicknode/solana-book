@@ -53,7 +53,7 @@ Maria runs the venue. Her incentive is a fee of 1% on every premium paid, and he
 - A venue whose underlying and quote are the same token.
 - A fee of 100% or more, which would leave a writer nothing from a sale.
 
-A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_fee_venue_pays_the_writer_the_whole_premium` checks that the fee transfer is then skipped rather than sent for nothing. Her key is stored as the market's `admin`, and the only handler that reads it is `collect_fees()`.
+A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_fee_venue_pays_the_writer_the_whole_premium` checks that the fee transfer is then skipped rather than sent for nothing. Her public key is stored as the market's `admin`, and the only handler that reads it is `collect_fees()`.
 
 ![](figures/options-open-venue.svg)
 

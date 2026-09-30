@@ -423,7 +423,7 @@ The onchain account that defines a type of token: its supply, decimals, and auth
 
 ### multisig
 
-An account that records a set of owners and how many must agree before it acts, used wherever one person holding a key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority. A transaction can carry several signatures natively; a multisig is that idea made into standing policy.
+An account that records a set of owners and how many must agree before it acts, used wherever one person holding a private key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority. A transaction can carry several signatures natively; a multisig is that idea made into standing policy.
 
 ### NAV (net asset value)
 
@@ -699,7 +699,7 @@ A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 follow
 
 ### wallet
 
-A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet. **Wallet software** is the tool that holds those keys, signs transactions with them, and shows the balances they control, whether a phone or desktop app or browser extension.
+A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet. **Wallet software** is the tool that holds the private keys, signs transactions with them, and shows the balances they control, whether a phone or desktop app or browser extension.
 
 ### wrapping
 

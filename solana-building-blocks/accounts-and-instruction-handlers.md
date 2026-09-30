@@ -95,7 +95,7 @@ The budget for work done by instructions is metered in **compute units** per tra
 
 One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction, not a similar one and not an edited one. Anyone can use Alice's public key to verify a signature that claims to be from Alice.
 
- You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh signature that the card is genuine and issued by your bank.
+ You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that private key produces a fresh signature that the card is genuine and issued by your bank.
 
 The signature is also a grant of authority. By signing, Alice authorizes what the transaction does in her name:
 
@@ -167,7 +167,7 @@ Two payments toured every building block the rest of the book uses:
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
-- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a key nor seeds.
+- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no private key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a private key nor seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
 
 [^faucets]: The `solana airdrop` command sends devnet SOL, as does the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana). Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC.

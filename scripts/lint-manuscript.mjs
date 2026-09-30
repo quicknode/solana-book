@@ -213,6 +213,13 @@ const rules = [
   // is excepted below; `kani-proofs` and proof_* in backticks are identifiers.
   [/\bformal(?:ly)? (?:verif\w*|proofs?)\b|\bmachine-checked proofs?\b|(?<!`)\bKani[- ]proofs?\b|\b(?:is|are) proved\b|\bKani-verified\b/i,
     'a Kani harness is a model check: say "model-checks" or "the Kani harness checks", not "proof" or "formally verified" (companion AI plugin)'],
+  // A bare "key" leaves the reader to guess which half of the key pair is
+  // meant. A private key signs; a public key is stored, recorded and checked.
+  // The third element exempts only this rule: the PDA chapter's key/value
+  // store and the order book's critbit keys are the database meaning.
+  [/(?<!\b(?:public|private) )\bkeys?\b(?!\s?pairs?\b|[/-]value)/i,
+    'say "private key" (it signs) or "public key" (it is stored and checked), not a bare "key" (companion AI plugin)',
+    /key\/value|exists per key|binary key|keys differ|its key (?:diverges|splits)|The key is built|the two keys|linked keys|"Key" here/],
   [/\bis (?:just |only )?an? (?:integer |single )?comparison\b/i, 'cut it: the size of the code is not the point (companion AI plugin)'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
   // "Property" also names an account's fields, so "property test" reads two
@@ -257,8 +264,8 @@ let failures = 0;
 for (const file of [...new Set(files)]) {
   const lines = readFileSync(file, "utf8").split("\n");
   lines.forEach((line, index) => {
-    for (const [pattern, reason] of rules) {
-      if (pattern.test(line) && !exceptions.some((ok) => ok.test(line))) {
+    for (const [pattern, reason, ruleException] of rules) {
+      if (pattern.test(line) && !(ruleException && ruleException.test(line)) && !exceptions.some((ok) => ok.test(line))) {
         failures += 1;
         console.error(`${file}:${index + 1}: ${reason}\n    ${line.trim().slice(0, 160)}`);
       }
