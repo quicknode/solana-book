@@ -73,7 +73,7 @@ Over-repayment clamps to the debt, so nobody is overcharged either.
 
 An **invariant** is a condition that must hold before and after every state change, stated in code, checked at runtime. A check on the way in catches bad inputs; a check on the way out catches *your own bug*. The most useful invariants are conservation laws:
 
-- **Total in equals total out.** Every minor unit locked into an escrow, order lock, or bet pool is accounted for on every path out of the program: paid out, refunded, or taken as fee, summing exactly.
+- **Total in equals total out.** Every minor unit held in an escrow's vault, an order book's vaults, or a betting pool is accounted for on every path out of the program: paid out, refunded, or taken as fee, summing exactly.
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 

@@ -237,7 +237,7 @@
   <path d="M 473,516 C 425,475.5 364,453.5 307,446 C 269,442 232.539,444.018 232,424 L 227.056,166.092 C 227.101,152.617 228.459,150.17 229,148" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
   <!-- the quote vault pays Carol her net proceeds -->
   <path d="M 473,580 C 449,551.5 435,529.5 435,501.5 L 435,269.5 C 435,251.5 416.052,241.025 400,239.5 L 354.109,233.639" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
-  <!-- the quote vault pays Bob back the lock his cancel released -->
+  <!-- the quote vault pays Bob back the USDC his cancel released -->
   <path d="M 473,608 C 405,609.5 184,602 134,576 C 120,568.7 100,556 100,536 L 100,250 Q 100,223 108,223 L 119,223" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#order-book-settle-arr)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="634" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">each handler zeroes the counters before it makes the transfers:</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="650" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">checks-effects-interactions, so a re-entrant caller finds nothing left</text>
