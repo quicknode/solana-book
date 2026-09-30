@@ -115,8 +115,8 @@
   <text x="472" y="287.71" font-size="9.5">admin: Maria</text>
   <text x="472" y="299.71" font-size="9.5">underlying_mint: NVDAx</text>
   <text x="472" y="311.71" font-size="9.5">quote_mint: USDC</text>
-  <text x="472" y="323.71" font-size="9.5">underlying_locked: 0 NVDAx</text>
-  <text x="472" y="335.71" font-size="9.5">quote_locked: 0 USDC</text>
+  <text x="472" y="323.71" font-size="9.5">underlying_owed: 0 NVDAx</text>
+  <text x="472" y="335.71" font-size="9.5">quote_owed: 0 USDC</text>
   <text x="472" y="347.71" font-size="9.5">fees_owed: 0 USDC</text>
   <text x="472" y="359.71" font-size="9.5">fee_bps: 100</text>
   </g>
