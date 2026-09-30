@@ -17,17 +17,17 @@ Every test in this list is cheap to write and fast to run. The test runs the com
 
 ## Model Checking Goes Further Than Testing
 
-A test checks the inputs you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
+A test checks the values you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
-- **Invariant tests** assert a condition that must hold on every input (a round trip creates no value, an index never decreases) against generated inputs, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
-- **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact input that breaks it.
+- **Invariant tests** assert a condition that must hold for every value (a round trip creates no value, an index never decreases) against generated values, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
+- **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact values that break it.
 
-A model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
+Though Kani calls its checks proofs, a model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
 
 The escrow program in the companion repository ships Kani harnesses for the parts of it a model checker can reach. Kani marks a harness with `#[kani::proof]`, which is why the crate is called `kani-proofs` and the harnesses are named `proof_*`; each one is a model check:
 
-- `proof_take_offer_conserves_value` checks that taking an offer conserves the total of each token, for every input rather than only the tested ones.
+- `proof_take_offer_conserves_value` checks that taking an offer conserves the total of each token, for every value rather than only the tested ones.
 - `proof_cancel_offer_returns_all_to_maker` checks that the refund path returns every vault token to the maker.
 - `proof_offer_id_seed_injective` checks that two different offer IDs can never derive the same address.
 
@@ -56,8 +56,8 @@ Every market in this book has an operator with real power: withdrawing fees, set
 - **Bound what configuration can express.** Validate every parameter at write time against a limit that makes abuse impossible by configuration. The managed fund refuses a management fee above 1,000 basis points a year, because `collect_fees` mints shares to the manager and dilutes every depositor, so an uncapped fee would drain the vault. The lending program refuses a loan-to-value ratio above the liquidation threshold, so no loan it grants is liquidatable the moment it is taken.
 - **Snapshot terms when participants commit their tokens.** The betting market copies the config's fee onto each event when the event is created, along with the time betting closes, so the fee an event pays and the window bettors get are fixed before anyone can bet. The managed fund's fee has no setter at all. A parameter the admin can change applies to deposits that arrive after the change, never to deposits already inside.
 - **Give the admin no path to principal.** No instruction handler in the book's programs, under any parameters, moves user deposits to the operator. The way to make that checkable is to keep the operator's fees in their own place. The order book's fee vault holds only taker fees, and `withdraw_fees` moves only from that vault to the market authority. The lending reserve keeps its share in `accumulated_program_fees`, which the exchange rate subtracts before valuing a supplier's shares, so collecting it changes nothing a supplier is owed. Rebalancing moves funds between program-owned vaults, and settlement pays by formula. When that holds in your program, say it in those words rather than claiming "non-custodial": the rules are the deployed program, and the operator is not in them.
-- **A pause may stop deposits and trades, never withdrawals.** A pause that refuses new deposits and new positions during an incident protects users; one that refuses withdrawals traps their deposits. The prop AMM's `paused` flag, set through `set_quote`, makes `swap` refuse and is read by no other handler. Whatever a pause stops, every participant must still be able to get their assets out of every state, paused included.
-- **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And plan for the day the price feed stops publishing. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than freezing every user in place until a price arrives.
+- **Let a pause stop deposits and trades, never withdrawals.** A pause that refuses new deposits and new positions during an incident protects users; one that refuses withdrawals traps their deposits. The prop AMM's `paused` flag, set through `set_quote`, makes `swap` refuse and is read by no other handler. Whatever a pause stops, every participant must still be able to get their assets out of every state, paused included.
+- **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And plan for what happens if the price feed stops publishing. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than freezing every user in place until a price arrives.
 - **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than a single private key on one person's laptop, and say so where users can read it. A user who reads that knows a change to the code takes several named people to sign, and that one stolen laptop cannot ship one.
 
 ## Ship To Mainnet With a Second (or Third) Opinion
@@ -66,10 +66,10 @@ Before a program that holds other people's assets touches mainnet, get a **secon
 
 ## What You Learnt
 
-- Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
-- Model checking goes further than testing: invariant tests over generated inputs, then a model checker over every input to the arithmetic core, and how far to go is set by how much the program's vaults will hold.
+- Bugs live at numerical boundaries, so push your test suite to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
+- Model checking goes further than testing: invariant tests over generated values, then a model checker over every value the arithmetic core can take, and how far to go is set by how much the program's vaults will hold.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their payment arrived waits for `finalized`.
-- Admin power runs on a written specification: bounded config, snapshotted terms, and no path to principal. A pause may stop deposits and trades but never withdrawals, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
+- Write admin power down as a specification: bounded config, snapshotted terms, and no path to principal. Let a pause stop deposits and trades but never withdrawals, make sure nothing a user does waits on the operator, and give upgrade authority to a named multisig.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 
 [^kani]: Kani is a Rust model checker, at [github.com/model-checking/kani](https://github.com/model-checking/kani).

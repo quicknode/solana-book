@@ -8,7 +8,7 @@ The program lives at `finance/perpetual-futures` in the companion repository. It
 
 In the *Order Book Exchange* chapter, every long met a short: Carol's ask crossed Bob's bid, and the program merely kept score. A perp that trades against a pool has no orders to match. **Liquidity providers fund one pool, and the pool is the counterparty to every position.** When a trader wins, the pool pays; when a trader loses, the pool keeps the loss. So an LP's return is the losing traders' losses plus the funding the pool collects, minus whatever the winning traders take. The open and close fees go to the pool's creator, not to the LPs.
 
-That design decision creates the problem the program is organized around: the program must be able to check that the pool can pay every winner, at every moment, **without ever iterating over the open positions**. A program that must touch every position to answer "am I solvent?" stops fitting in a transaction the day it succeeds. That requirement explains almost every field in the account model.
+That design decision creates the problem the program is organized around: the program must be able to check that the pool can pay every winner, at every moment, **without ever iterating over the open positions**. A program that must touch every position to answer "am I solvent?" stops fitting in a transaction once it has enough open positions. That requirement explains almost every field in the account model.
 
 ![](figures/perps-counterparty.svg)
 

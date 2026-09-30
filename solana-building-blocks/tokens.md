@@ -80,7 +80,7 @@ Before building on a token you did not issue, check which extensions it uses: So
 ## What You Learnt
 
 - Every distinct token has its own **mint account**, and that account's address identifies the token, whatever name and symbol it shows. A mint defines a token; it is not one.
-- The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
+- Ask about the **mint authority** and **freeze authority** of any token first: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
 - Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: before building on a token, check in Solana Explorer which extensions it uses.

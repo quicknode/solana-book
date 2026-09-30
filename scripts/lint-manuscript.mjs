@@ -211,7 +211,12 @@ const rules = [
   // programs ("put money on", "get their money back", "sending money
   // abroad", "real money", "whose money is stuck") stay.
   [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -]|\bput |\bsen(?:t|ding) |\breal |\bwhose |want their |the same )\bmoney\b(?! market| back\b| in a savings account)/i,
-    'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)'],
+    'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)',
+    // The Conclusion's product ideas talk about the offchain world, where
+    // "money" is the plain word: the middleman,
+    // the friends' pot, the roaster's raise, the supplier's invoice, the
+    // licenses that move money between banks and the chain.
+    /holding the money and keeping|Money in the pot|let money cross|\*\*Money raised from|needs the money this week/],
   // Kani marks a harness #[kani::proof], and prose picked up the word: "the
   // Kani proofs", "formally verified". The companion repository has model
   // checks, not formal proofs. The one sentence that draws the distinction
@@ -252,7 +257,7 @@ const exceptions = [
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /call this property-based testing/, // the one pointer to the testing libraries' own term
-  /^A model check is not a formal proof\./, // the one sentence that distinguishes the two
+  /^Though Kani calls its checks proofs, a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
 

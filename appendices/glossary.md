@@ -172,6 +172,10 @@ A permissionless instruction handler that performs maintenance work nobody owns 
 
 A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it visits orders in price-time priority. See the *Order Book Exchange* chapter.
 
+### crypto
+
+In the context of finance, the industry built on blockchains: distributed ledgers such as Solana. Crypto is not an asset class in itself, although the term is frequently misused that way. Crypto is a wrapper for trading a wide variety of asset classes, including equities such as NVDAx, commodities such as gold, derivatives such as the perpetual futures in this book, and native crypto assets such as SOL. Each of these is held onchain as a [token](#token).
+
 ### curator
 
 In a fund, the authority that decides which assets may be held at all and which price feed prices each one, kept separate from the [manager](#manager) who picks the allocation. The split is what stops a manager listing a token they minted themselves, or pairing a real asset with a feed they control. See the *Managed Fund* chapter.
@@ -314,7 +318,7 @@ Capital a venue sets aside to absorb losses larger than the collateral behind th
 
 ### invariant
 
-A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker checks one against every possible input; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated values, and a model checker checks one against every possible value; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
 
 ### inventory
 
@@ -578,7 +582,7 @@ The URL a program or wallet sends its transactions to: a server holding a [clust
 
 ### RWA (real-world asset)
 
-A traditional asset represented as a token onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading.
+A traditional [asset](#asset) represented as a [token](#token) onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading. "RWA" lumps very different things together, so it is usually clearer to name the asset class instead: tokenized stocks, tokenized Treasury bills, gold.
 
 ### sandwich
 
@@ -619,6 +623,10 @@ Solana's basic unit of time: a window in which one [leader](#leader) may produce
 ### SOL
 
 Solana's **native token**: the asset the network understands without any token program, used to pay transaction fees and to fund the rent deposit on every account. Denominated in [lamports](#lamport), a billionth of a SOL each. Every other token is an [SPL token](#spl-token).
+
+### Solana
+
+A public blockchain: a network of validators that run programs and keep a shared record of every account. Programs on it hold and move [tokens](#token), and transactions settle in under a second for a fraction of a cent. Solana is not an asset: its native token, [SOL](#sol), is the asset. Nor is Solana an organization. Many organizations work on Solana.
 
 ### SPL token
 
