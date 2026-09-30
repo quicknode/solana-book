@@ -22,7 +22,7 @@ And you can carry the responsibility that comes with all of it. Programs holding
 
 Look away from the chain for a moment, at what the people around you deal with every week.
 
-A payment sent on Friday evening arrives on Tuesday, because the rails carrying it keep office hours and observe public holidays. A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending a payment to family abroad pays a rate set by which two countries they happen to be standing in, which can reach as high as 20%.[^remittance-corridors] A deposit in a savings account earns close to nothing while the same dollars are lent out at several times that, and the gap between the two is the bank's business rather than a price the depositor could shop for.
+A payment sent on Friday evening arrives on Tuesday, because the rails carrying it keep office hours and observe public holidays. A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending money to family abroad pays a rate set by which two countries they happen to be standing in, which can reach as high as 20%.[^remittance-corridors] Money in a savings account earns close to nothing while the same money is lent out at several times that, and the gap between the two is the bank's business rather than a price the depositor could shop for.
 
 Businesses have the same problems from the other side. A shop owner who wants a second location either sells a slice of the business to whoever is nearby with capital to invest, or borrows through an underwriting process built for loans ten times larger. A supplier delivers goods and waits sixty days for the invoice to be paid while their own payroll runs every two weeks. Someone holding shares who needs cash for a repair sells them, ending a position they wanted to keep and often creating a tax bill, because borrowing against a portfolio is a private-banking service, and so requires a significant minimum balance. Rents rise with the value of housing, and the people paying the rent own none of it.
 
@@ -30,7 +30,7 @@ Every one of these has the same structure: parties standing between two people w
 
 ## The Best Products Never Mention the Chain
 
-Nobody in the paragraphs above wants a blockchain. They want their payment on Saturday, a better rate, their shares kept, or their invoice paid this week. The onchain products that have found real users are the ones a user can describe without saying the word: dollars sent abroad that arrive in seconds, dollars held in an account outside the banking system they were born into.
+Nobody in the paragraphs above wants a blockchain. They want their money on Saturday, a better rate, their shares kept, or their invoice paid this week. The onchain products that have found real users are the ones a user can describe without saying the word: dollars sent abroad that arrive in seconds, dollars held in an account outside the banking system they were born into.
 
 So aim at consumers and businesses rather than at a crypto audience. In practice that means:
 
@@ -41,7 +41,7 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 
 ## What Products Worth Building Have in Common
 
-Products of this kind have been shipped already, several of them with real users and real deposits behind them. Study what they have in common rather than copying them line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
+Products of this kind have been shipped already, several of them with real users and real money behind them. Study what they have in common rather than copying them line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on machinery from a chapter of this book.
 
 **An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The product moves at the speed of the legacy system where it has to, and settles instantly everywhere else. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Managed Fund* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licenses that let dollars cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
 
@@ -97,7 +97,7 @@ Then get a second (and third) opinion from an expert who did not work on it. Eve
 
 Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
-Ten programs in, choosing what problem to solve is the hard part. Find someone whose payment is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
 
 
 [^remittance-corridors]: The Introduction's note on remittance costs gives the corridors where a rate this high applies, and the World Bank source for them.

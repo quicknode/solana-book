@@ -20,7 +20,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? An **escrow** lets Alice and Bob swap without having to trust each other.
 
-Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent a payment overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
+Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent money overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
 
 ![](figures/escrow-traditional-escrow.svg)
 
