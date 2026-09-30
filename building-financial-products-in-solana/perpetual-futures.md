@@ -120,7 +120,7 @@ Every calculation is checked u128 integer arithmetic, multiply before divide, an
 
 ## The Invariants: Percolator's Three, Simplified
 
-The example's design notes point at Percolator, Anatoly Yakovenko's formally verified perp risk engine, and the three invariants it enforces are the ones to learn, because this program is a simplified working model of each:
+The example's design notes point at Percolator, Anatoly Yakovenko's Kani-checked perp risk engine, and the three invariants it enforces are the ones to learn, because this program is a simplified working model of each:
 
 - **Realizable credit**: every payout the system may ever owe is backed before it can be owed. Here: reservations at open, the profit cap, the free-liquidity check in `remove_liquidity()`, and the `PoolInsolvent` checks that refuse a payout the pool cannot cover.
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.

@@ -10,7 +10,7 @@ Escrow is the simplest program in this book. It lets two people swap tokens with
 
 The chapters that follow add what escrow does not have: a formula that sets a price, an outcome that decides a payout, time and interest, and an operator who must be constrained.
 
-The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus machine-checked proofs of its core invariants under `kani-proofs`. This chapter covers the Anchor version.
+The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus Kani model checks of its core invariants under `kani-proofs`. This chapter covers the Anchor version.
 
 ## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
@@ -137,7 +137,7 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
 
-The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository proves the conservation invariants formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
+The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository model-checks the conservation invariants over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The model-checking section of the *Operating Financial Software* chapter explains the technique.
 
 ## What You Learnt from Building the Escrow
 

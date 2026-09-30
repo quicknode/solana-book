@@ -208,7 +208,7 @@ Every checked operation maps to `MathOverflow`. There is no rounding rule to cho
 - **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else; no handler moves collateral or a strike payment to the admin under any parameters.
 - **Physical settlement moves exactly the posted terms.** What the writer collects is what the holder paid, and what the holder receives is what the writer posted, to the minor unit, for every option the program would accept.
 
-The companion repository's `kani-proofs` crate proves the last two and the first. `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, ends each with a cancel, a reclaim, or an exercise and collection, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` is the second invariant over every pair of timestamps.
+The companion repository's `kani-proofs` crate model-checks the last two and the first. `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, ends each with a cancel, a reclaim, or an exercise and collection, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` checks the second invariant for every pair of timestamps.
 
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
@@ -217,7 +217,7 @@ The companion repository's `kani-proofs` crate proves the last two and the first
 - **A writer blocks the exercise.** If the strike were paid to the writer's token account inside `exercise_option()`, a writer could close that account and make every exercise fail, keeping the premium and the collateral both. The strike goes into the vault instead, owed to the writer, and the holder's exercise depends on no account of the writer's.
 - **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
 - **What the design gives up.** A held option cannot be resold, and an option cannot be exercised in part. Venues that want both represent each option as two tokens, an option token the holder can sell on any exchange and a writer token that claims the proceeds. Adding that back means introducing the tokens, and with them an accounting of who holds how much of each option.
-- **What is absent.** Most of the usual attacks on a financial program return "not applicable" here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain, because there is no division. The venue's entire risk surface is the custody ledger and the two comparisons against the clock, which is why both are proved rather than only tested.
+- **What is absent.** Most of the usual attacks on a financial program return "not applicable" here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain, because there is no division. The venue's entire risk surface is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
 
 ## Testing Considerations
 
@@ -242,7 +242,7 @@ The options venue added six concepts:
 - **Physical settlement needs no price.** The holder's decision replaces the feed, and the program's job is to enforce the terms, not to value them.
 - **Amounts as products, not prices.** Storing the strike as an amount per contract makes every settlement a checked multiplication, with no division and no rounding direction to defend.
 - **A ledger for mixed custody.** When one vault holds several parties' tokens, the state account counts what each is owed and every handler asserts the vault still covers it, after the math.
-- **One deadline, compared both ways.** Exercise requires `now < expiry` and reclaim requires `now >= expiry`, so at every moment exactly one of them works, which the tests check from both sides and the Kani proofs check for every timestamp.
+- **One deadline, compared both ways.** Exercise requires `now < expiry` and reclaim requires `now >= expiry`, so at every moment exactly one of them works, which the tests check from both sides and the Kani model checks cover every timestamp.
 
 In the *Perpetual Futures* chapter we will relax the collateral rule. Traders post a fraction of their exposure, an oracle values the rest continuously, and a liquidator is paid to close what the fraction no longer covers. Keeping such a venue solvent takes a price check in every handler, liquidity reserved for every winner, and a liquidator paid to close positions whose collateral no longer covers what they owe.
 

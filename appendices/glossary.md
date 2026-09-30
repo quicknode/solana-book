@@ -32,6 +32,10 @@ Buying where an asset is cheap and selling where it is dear until the two prices
 
 An order to sell at or above a stated price. The seller's side of an [order book](#order-book).
 
+### asset
+
+Something of value a participant owns and a program can hold for them, such as USDC or a stock like NVDAx or TSLAx. Assets on Solana are represented as [tokens](#token). The book says "assets" where no single token is meant, as in "every participant must be able to get their assets out of every state". See [RWA](#rwa-real-world-asset).
+
 ### associated token account (ATA)
 
 The canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the token program that manages the mint, and the mint. ATAs are why a program can know where Alice's USDC lives without asking her.
@@ -299,7 +303,7 @@ Capital a venue sets aside to absorb losses larger than the collateral behind th
 
 ### invariant
 
-A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker proves one over every possible input; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker checks one against every possible input; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
 
 ### inventory
 
@@ -640,6 +644,10 @@ How long an [option](#option) runs: the time from the trade that creates it to i
 ### tick size
 
 The minimum price increment of a market. Prices must land on a multiple of it, which keeps the book from fragmenting into dust price levels.
+
+### token
+
+A unit of an [asset](#asset) on Solana. [SOL](#sol) is Solana's **native token**, used to pay transaction fees, and every account holds it directly as [lamports](#lamport). All other tokens, such as USDC and NVDAx, are [SPL tokens](#spl-token): each type is defined by a [mint](#mint-account), and a wallet's balance of it is held in a [token account](#token-account). Two tokens from the same mint are the same asset; tokens from different mints are different assets, whatever their names and symbols say. Amounts are integers in [minor units](#minor-unit).
 
 ### token account
 

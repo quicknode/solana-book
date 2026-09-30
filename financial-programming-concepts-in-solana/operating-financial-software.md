@@ -15,21 +15,23 @@ Financial code fails at the edges the happy path never reaches: the refund, the 
 
 Every test in this list is cheap to write and fast to run. The test runs the compiled program in-process in milliseconds, moving the clock forward makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs. Cashio and Wormhole, in the *Adversary* chapter, each lost their funds through a handler that accepted a substituted account. A test that passes the fee vault in place of the user vault runs that attack against your own program.
 
-## Proving Goes Further Than Testing
+## Model Checking Goes Further Than Testing
 
-A test checks the inputs you thought of. A proof checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
+A test checks the inputs you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
 - **Invariant tests** assert a condition that must hold on every input (a round trip creates no value, an index never decreases) against generated inputs, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
-- **Formal verification** hands a function to a model checker like Kani,[^kani] which explores *every* possible input, bit by bit, and either proves the invariant holds or hands you the exact input that breaks it.
+- **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact input that breaks it.
 
-The escrow program in the companion repository ships Kani harnesses for the parts of it a proof can reach:
+A model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
 
-- `proof_take_offer_conserves_value` proves that taking an offer conserves the total of each token, on every input rather than only the tested ones.
-- `proof_cancel_offer_returns_all_to_maker` proves the refund path returns every vault token to the maker.
-- `proof_offer_id_seed_injective` proves two different offer IDs can never derive the same address.
+The escrow program in the companion repository ships Kani harnesses for the parts of it a model checker can reach. Kani marks a harness with `#[kani::proof]`, which is why the crate is called `kani-proofs` and the harnesses are named `proof_*`; each one is a model check:
 
-A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and proves those. Percolator, Anatoly Yakovenko's Kani-verified perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole. Each invariant in a program chapter's invariants section is a claim a harness like these can settle.
+- `proof_take_offer_conserves_value` checks that taking an offer conserves the total of each token, for every input rather than only the tested ones.
+- `proof_cancel_offer_returns_all_to_maker` checks that the refund path returns every vault token to the maker.
+- `proof_offer_id_seed_injective` checks that two different offer IDs can never derive the same address.
+
+A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and checks those. Percolator, Anatoly Yakovenko's Kani-checked perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole. Each invariant in a program chapter's invariants section is a claim a harness like these can check.
 
 ## Wait for Finality Before Doing Anything You Cannot Undo
 
@@ -65,7 +67,7 @@ Before a program that holds other people's assets touches mainnet, get a **secon
 ## What You Learnt
 
 - Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
-- Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much the program's vaults will hold.
+- Model checking goes further than testing: invariant tests over generated inputs, then a model checker over every input to the arithmetic core, and how far to go is set by how much the program's vaults will hold.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their payment arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, and no path to principal. A pause may stop deposits and trades but never withdrawals, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.

@@ -205,6 +205,12 @@ const rules = [
   // Arithmetic of Money chapter's title are real names.
   [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -])\bmoney\b(?! market)/i,
     'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)'],
+  // Kani marks a harness #[kani::proof], and prose picked up the word: "the
+  // Kani proofs", "formally verified". The companion repository has model
+  // checks, not formal proofs. The one sentence that draws the distinction
+  // is excepted below; `kani-proofs` and proof_* in backticks are identifiers.
+  [/\bformal(?:ly)? (?:verif\w*|proofs?)\b|\bmachine-checked proofs?\b|(?<!`)\bKani[- ]proofs?\b|\b(?:is|are) proved\b|\bKani-verified\b/i,
+    'a Kani harness is a model check: say "model-checks" or "the Kani harness checks", not "proof" or "formally verified" (companion AI plugin)'],
   [/\bis (?:just |only )?an? (?:integer |single )?comparison\b/i, 'cut it: the size of the code is not the point (companion AI plugin)'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
   // "Property" also names an account's fields, so "property test" reads two
@@ -232,6 +238,7 @@ const exceptions = [
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /call this property-based testing/, // the one pointer to the testing libraries' own term
+  /^A model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
 
