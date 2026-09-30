@@ -112,7 +112,7 @@ Here is where everyone ends up:
 - **Alice** turned 1,000 into 1,990 by being right with leverage.
 - **Bob** turned 1,000 into 195 by being wrong and slow.
 - **Dave** collected 50 USDC for one well-timed transaction.
-- **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, the only handler that requires her signature, and only to zero the fee ledger (`test_collect_fees_requires_authority` checks that anyone else is refused).
+- **Maria**'s `protocol_fees` holds 15, from two opens and one close (Bob's liquidation charges no close fee). She sweeps it with `collect_fees()`, which pays out what the fee ledger holds and sets it to zero. That handler and `set_funding_rate()` both refuse any signer but her (`test_collect_fees_requires_authority`, `test_only_authority_can_set_funding_rate`).
 - **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus the losses and funding of the next thousand traders.
 ## The Math: One Formula per Concept, All Floored in the Pool's Favor
 
