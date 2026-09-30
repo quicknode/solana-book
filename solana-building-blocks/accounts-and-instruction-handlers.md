@@ -26,13 +26,13 @@ A **wallet** is a key pair being used to sign transactions, with the private key
 
 The curve in the figure is labeled **Solana devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
 
-| Cluster      | Purpose                                       | Assets have value?  | Where it runs                |
-| ------------ | --------------------------------------------- | ------------------- | ---------------------------- |
-| **mainnet**  | Production: where real financial products run | Yes                 | Globally                     |
-| **devnet**   | Same software as mainnet, for testing         | No: tokens are free | Globally                     |
-| **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
+| Cluster      | Purpose                                                             | Assets have value?  | Where it runs                |
+| ------------ | ------------------------------------------------------------------- | ------------------- | ---------------------------- |
+| **mainnet**  | Production: where real financial products run                       | Yes                 | Globally                     |
+| **devnet**   | A global network where developers deploy their in-progress software | No: tokens are free | Globally                     |
+| **localnet** | Development and fast test loops                                     | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a single new feature. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a particular proposed network feature. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which Solana cluster software the Solana SDK uses to read, write, and deploy to.
 
