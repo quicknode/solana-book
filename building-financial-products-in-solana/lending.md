@@ -129,7 +129,15 @@ The final balances are:
 
 ## The Math: Two Rounding Helpers and a Rule
 
-Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use: **quantities favorable to the user round down, debt and house-owed quantities round up.** Shares minted: floored. Redemptions: floored. Collateral value: floored. Debt: ceiled. Health checks: collateral floored, debt ceiled, doubly conservative. The payoff is an invariant the tests can check: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` checks it by trying.
+Every number in this program flows through `mul_div_floor()` or `mul_div_ceil()`, u128 in, multiply before divide, checked everywhere. The rule deciding which to use: **quantities favorable to the user round down, debt and house-owed quantities round up.**
+
+- **Shares minted:** floored.
+- **Redemptions:** floored.
+- **Collateral value:** floored.
+- **Debt:** ceiled.
+- **Health checks:** collateral floored and debt ceiled, so both roundings count against the borrower.
+
+The payoff is an invariant the tests can check: the market never loses a minor unit to rounding, so dust cannot be extracted by repeated round trips, and the test `deposit_redeem_round_trip_creates_no_value` checks it by trying.
 
 ## The Invariants: What Keeps the Market Solvent
 

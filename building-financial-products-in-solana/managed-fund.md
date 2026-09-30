@@ -74,7 +74,14 @@ She entered with $900, rode NVIDIA up, paid Maria 1% by dilution, and left with 
 
 ## The Math: One Valuation Loop, Floors Toward the Fund
 
-Every formula in the program is a proportion, and they all round the same way. Shares minted: deposit × supply ÷ NAV, floored. Withdrawal legs: recorded holding × shares ÷ supply, floored per asset, with each payout subtracted from the record. Fee shares: supply × rate × time over a year, floored. Deployment per leg: deposit × weight ÷ 10,000, floored. All u128 intermediates, all multiply-before-divide, remainders staying with the fund rather than the transactor. The one multiplication that is not a proportion is the valuation itself, amount × price at the feed's 10^8 precision, and the share price is right only if that line runs over every asset, on every deposit, with a fresh price.
+Every formula in the program is a proportion, and they all round the same way:
+
+- **Shares minted:** deposit × supply ÷ NAV, floored.
+- **Withdrawal legs:** recorded holding × shares ÷ supply, floored per asset, with each payout subtracted from the record.
+- **Fee shares:** supply × rate × time over a year, floored.
+- **Deployment per leg:** deposit × weight ÷ 10,000, floored.
+
+All of them use u128 intermediates and multiply before dividing, and the remainders stay with the fund rather than the transactor. The one multiplication that is not a proportion is the valuation itself, amount × price at the feed's 10^8 precision, and the share price is right only if that line runs over every asset, on every deposit, with a fresh price.
 
 ## The Invariants: Assets Stay in the Fund's Vaults
 

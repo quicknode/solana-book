@@ -110,7 +110,13 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 
 ## Testing Considerations
 
-The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Three tests follow a whole lifecycle: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and claims it, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
+The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Three tests follow a whole lifecycle:
+
+- `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and claims it.
+- `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund.
+- `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again.
+
+The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
 
 ## What You Learnt from Building the Fundraiser
 

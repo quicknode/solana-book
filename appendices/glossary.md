@@ -10,7 +10,11 @@ See [borrow accumulation factor](#borrow-accumulation-factor).
 
 ### address
 
-The 32-byte identifier of an account, usually shown base58-encoded. An address is one of three kinds: a public key, which has a matching private key; a [PDA](#pda-program-derived-address), derived from seeds, which has no private key; or a [built-in address](#built-in-address), chosen rather than computed, which has no private key either.
+The 32-byte identifier of an account, usually shown base58-encoded. An address is one of three kinds:
+
+- a public key, which has a matching private key
+- a [PDA](#pda-program-derived-address), derived from seeds, which has no private key
+- a [built-in address](#built-in-address), chosen rather than computed, which has no private key either
 
 ### adverse selection
 
@@ -114,7 +118,14 @@ In a lending market, the fraction of a debt one liquidation may repay (typically
 
 ### cluster
 
-One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine; testnet is where the Solana software itself is tested. An account exists on one cluster, not all of them. Each is reached at an [RPC endpoint](#rpc-endpoint).
+One running instance of Solana: the same software, a separate world.
+
+- **Mainnet** holds real value.
+- **Devnet** is identical machinery with free, valueless tokens for building and testing.
+- **Localnet** runs on your own machine.
+- **Testnet** is where the Solana software itself is tested.
+
+An account exists on one cluster, not all of them. Each is reached at an [RPC endpoint](#rpc-endpoint).
 
 ### collateral
 
