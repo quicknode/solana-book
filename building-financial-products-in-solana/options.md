@@ -108,7 +108,7 @@ There is no strike *price* to multiply by a quantity and divide by a decimals fa
 
 One more account is set up here. Alice's USDC account, where her premium will arrive, is created if it does not exist, paid for by Alice, so that `buy_option()` can require it to exist rather than make the buyer pay rent on an account that belongs to the writer.
 
-Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` checks it. If `cancel_option()` didn't exist, an option nobody buys would hold the writer's shares forever.
+Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` checks it. If `cancel_option()` didn't exist, the shares a writer posted for an option nobody buys would stay locked in the market's vault forever.
 
 ## A Buyer Pays the Premium, and the Collateral Does Not Move
 
