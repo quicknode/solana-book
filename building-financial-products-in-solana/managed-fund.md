@@ -48,7 +48,7 @@ Alice invests from the standard wallet of one SOL and 1,000 USDC. She runs `depo
 
 ## The Market Moves and the Manager Rebalances
 
-NVDAx climbs from $180 to $200. The fund is now worth $960, so each share is worth about $1.07, and nothing needs to happen for that to be true. The program does not store a share price; each deposit divides the NAV, valued from the feeds at that moment, by the share supply.
+NVDAx climbs from $180 to $200. The 1.44 TSLAx and 3 NVDAx in the fund's vaults are now worth $960, and 900 shares exist, so each share is worth about $1.07. The program does not store a share price; each deposit divides the NAV, valued from the feeds at that moment, by the share supply.
 
 But the weights have drifted: NVDAx's gain pushed it to 62.5% of the fund against a 60% target. This is Maria's job. She runs `rebalance()`, which sells the over-weighted asset for USDC and buys the under-weighted one: 0.12 NVDAx sold for $24, $24 of TSLAx bought, both legs through the fixed router, both legs floored by oracle-anchored minimums as deposits are. The weights return to 40/60. The tokens moved between fund-owned vaults, through the approved router, at oracle-checked prices, and nowhere near Maria.
 

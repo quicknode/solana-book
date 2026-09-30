@@ -91,7 +91,7 @@ The **accumulation factor** removes the loop. Each market stores one fixed-point
 new factor = old factor × (1 + rate per second × elapsed seconds)
 ```
 
-Each loan stores only its principal, and a live debt is that principal multiplied by the current factor. One number moves instead of thousands, interest compounds across updates on its own, and no tokens move until someone repays or withdraws. The lending example calls the field `borrow_accumulation_factor`; the *Lending and Borrowing* chapter runs it.
+Each loan stores only its principal, and a live debt is that principal multiplied by the current factor. One number moves instead of thousands, interest compounds because each update multiplies the factor by that period's growth, and no tokens move until someone repays or withdraws. The lending example calls the field `borrow_accumulation_factor`; the *Lending and Borrowing* chapter runs it.
 
 That update is an approximation of compounding, and it is the one the lending market runs. The exact form exists for the day a formula needs it:
 

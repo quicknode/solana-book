@@ -159,7 +159,7 @@ A permissionless instruction handler that performs maintenance work nobody owns 
 
 ### critbit tree
 
-A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it yields price-time priority for free. See the *Order Book Exchange* chapter.
+A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it visits orders in price-time priority. See the *Order Book Exchange* chapter.
 
 ### curator
 

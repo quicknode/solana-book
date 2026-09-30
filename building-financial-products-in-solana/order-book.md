@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a *central limit* order boo
 
 The first instinct is to store the bids and asks as sorted arrays. Arrays get slow when an exchange gets busy: inserting into the middle of a sorted list means shifting everything after it, and on a chain where compute is metered, your users pay that cost.
 
-So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which yields the exchange rule you want for free: walking the tree visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
+So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which puts the tree in exchange order: walking it visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
 
 A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8, and so on to deepen the tree. That only adds a minor cost: 64 levels at most, and under 15,000 extra compute units per instruction, out of a default budget of 200,000.
 
@@ -159,7 +159,7 @@ NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a se
 The order book added six concepts on top of the escrow's:
 
 - **Every resting order is a funded commitment.** `place_order()` locks the tokens before the order rests, so no matched order can turn out to be backed by nothing.
-- **A data structure chosen for onchain cost.** The critbit tree gives insertion without shifting and price-time priority for free, on a chain where compute is metered.
+- **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority, on a chain where compute is metered.
 - **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them before the transfer (checks-effects-interactions) makes double-withdrawal impossible.
 - **A fee whose rounding direction is a security decision.** Ceiling division on the fee closes a leak an attacker could industrialize through thousands of tiny fills.
 - **Vault separation plus stored-address checks.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep users' balances and the market's fees apart.

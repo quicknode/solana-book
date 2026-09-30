@@ -12,7 +12,7 @@ Three things follow from that derivation:
 - A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it.
 - No private key exists for the result, so tokens can only leave the account via the program that owns the token account.
 
-These three properties hold for any **program derived address**, or PDA. A PDA is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so nobody has to search for it again. Only the program whose ID derived the address can "sign" as the PDA, and what "sign" really means gets its own boxout below.
+These three properties hold for any **program derived address**, or PDA. A PDA is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA, and what "sign" really means gets its own boxout below.
 
 **PDAs are where Solana programs store data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs and gets the same three properties. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is where the value lives, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
 
@@ -30,7 +30,7 @@ Each of those three properties again, in the general form every chapter of this 
 
 ## Seeds Make Data Findable
 
-The market for a token pair, a user's position in it, and the offer with a given ID all live at addresses anyone can compute from the seeds, so exactly one thing exists per key and nobody has to remember where anything is.
+The market for a token pair, a user's position in it, and the offer with a given ID all live at addresses anyone can compute from the seeds, so exactly one thing exists per key. A program finds any of them by recomputing its address from the seeds.
 
 ## Seeds Make Relationships Verifiable
 
