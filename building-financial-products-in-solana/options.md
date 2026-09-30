@@ -61,8 +61,8 @@ Financial state on Solana is accounts, and this one transaction created the thre
 
 The **market** account lives at a PDA with seeds `"market"`, the underlying mint, and the quote mint, so one venue exists per pair: every call and put on NVDAx settled in USDC shares the same two vaults and the same fee schedule. Its struct, `Market`, holds the `admin`, the two mints, the two vault addresses, the `fee_bps` charged on every premium, and three counters that are the reason the account exists:
 
-- `underlying_locked`: how much of the underlying vault the market owes, as call writers' collateral and as put holders' deliveries waiting for the writer to collect them.
-- `quote_locked`: how much of the quote vault the market owes, as put writers' collateral and as call holders' strike payments waiting to be collected.
+- `underlying_owed`: how much of the underlying vault the market owes, as call writers' collateral and as put holders' deliveries waiting for the writer to collect them.
+- `quote_owed`: how much of the quote vault the market owes, as put writers' collateral and as call holders' strike payments waiting to be collected.
 - `fees_owed`: how much of the quote vault belongs to the admin.
 
 The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's tokens, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. The three counters record how much of each vault is owed, and after every transfer `check_custody()` checks that each vault still holds at least that much.
@@ -81,7 +81,7 @@ The handler checks the terms before it touches a token:
 Then the effects come before the transfer, in this order:
 
 1. The `OptionContract` is written with status `Listed` and an empty holder.
-2. The market's `underlying_locked` rises by 5 NVDAx.
+2. The market's `underlying_owed` rises by 5 NVDAx.
 3. The custody check runs against what the vault balance will be once the transfer lands.
 4. Alice's 5 NVDAx move into the underlying vault.
 
@@ -108,7 +108,7 @@ There is no strike *price* to multiply by a quantity and divide by a decimals fa
 
 One more account is set up here. Alice's USDC account, where her premium will arrive, is created if it does not exist, paid for by Alice, so that `buy_option()` can require it to exist rather than make the buyer pay rent on an account that belongs to the writer.
 
-Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` checks it. If `cancel_option()` didn't exist, the shares a writer posted for an option nobody buys would stay locked in the market's vault forever.
+Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` checks it. If `cancel_option()` didn't exist, the shares a writer posted for an option nobody buys would stay in the market's vault forever.
 
 ## A Buyer Pays the Premium, and the Collateral Does Not Move
 
@@ -131,8 +131,8 @@ NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` b
 
 - Bob pays the strike, 5 times 180 USDC, 900 USDC, into the quote vault.
 - The underlying vault pays Bob the 5 NVDAx.
-- The market's `underlying_locked` falls by 5 NVDAx, because that collateral is no longer owed to anyone.
-- The market's `quote_locked` rises by 900 USDC, because the strike is now owed to Alice.
+- The market's `underlying_owed` falls by 5 NVDAx, because that collateral is no longer owed to anyone.
+- The market's `quote_owed` rises by 900 USDC, because the strike is now owed to Alice.
 
 ![](figures/options-exercise.svg)
 
@@ -146,7 +146,7 @@ A put exercises the same way with the two tokens swapped: the holder delivers th
 
 ## The Writer Collects the Strike, and the Account Closes
 
-Alice calls `collect_proceeds()`. The handler requires the option to be `Exercised` (`OptionNotExercised`) and the signer to be the writer, pays her the 900 USDC from the quote vault, reduces `quote_locked` by the same amount, and closes the option with its rent back to her.
+Alice calls `collect_proceeds()`. The handler requires the option to be `Exercised` (`OptionNotExercised`) and the signer to be the writer, pays her the 900 USDC from the quote vault, reduces `quote_owed` by the same amount, and closes the option with its rent back to her.
 
 ![](figures/options-collect-proceeds.svg)
 
@@ -154,7 +154,7 @@ Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for 
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
-The put is the mirror image, and it also shows how an option ends when nobody exercises it. Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, 5 contracts, 1 NVDAx per contract, a strike of 150 USDC per contract, a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike, so 5 times 150 USDC, 750 USDC, leaves Carol's account for the quote vault, and `quote_locked` rises to match. Her 1,000 USDC is 250.
+The put is the mirror image, and it also shows how an option ends when nobody exercises it. Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, 5 contracts, 1 NVDAx per contract, a strike of 150 USDC per contract, a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike, so 5 times 150 USDC, 750 USDC, leaves Carol's account for the quote vault, and `quote_owed` rises to match. Her 1,000 USDC is 250.
 
 ![](figures/options-write-put.svg)
 
@@ -166,7 +166,7 @@ The week passes with NVDAx above $150, and Dave does nothing: selling at 150 whe
 
 - The option must be `Held`, because an exercised option has no collateral left to reclaim (`OptionNotHeld`).
 - The clock must be at or past `expiry` (`OptionNotExpired`).
-- It returns her 750 USDC from the quote vault, reduces `quote_locked`, and closes the account.
+- It returns her 750 USDC from the quote vault, reduces `quote_owed`, and closes the account.
 
 ![](figures/options-reclaim.svg)
 
@@ -202,7 +202,7 @@ Every checked operation maps to `MathOverflow`. There is no rounding rule to cho
 
 ## The Invariants: The Vaults Cover the Ledger, and Expiry Separates Exercise From Reclaim
 
-- **Each vault covers what the market owes.** The underlying vault holds at least `underlying_locked`; the quote vault holds at least `quote_locked` plus `fees_owed`. Every handler that moves tokens updates the counters first and then calls `check_custody()` against the balances its transfers will leave behind, and fails with `CustodyInvariantViolated` if a refactor ever breaks the accounting. The tests strengthen it to equality after every step, because nothing in them donates to a vault.
+- **Each vault covers what the market owes.** The underlying vault holds at least `underlying_owed`; the quote vault holds at least `quote_owed` plus `fees_owed`. Every handler that moves tokens updates the counters first and then calls `check_custody()` against the balances its transfers will leave behind, and fails with `CustodyInvariantViolated` if a refactor ever breaks the accounting. The tests strengthen it to equality after every step, because nothing in them donates to a vault.
 - **At every instant, exactly one of `exercise_option()` and `reclaim_collateral()` accepts a held option.** Before `expiry` the holder can exercise and the writer cannot reclaim; at and after it, the reverse. There is no moment at which both can claim the same collateral and none at which neither can.
 - **`cancel_option()`, `collect_proceeds()`, and `reclaim_collateral()` all close the account.** Each ends by closing the option account and returning its rent to the writer, so an option cannot be collected twice: the account is gone.
 - **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else; no handler moves collateral or a strike payment to the admin under any parameters.
