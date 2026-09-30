@@ -624,6 +624,10 @@ Solana's basic unit of time: a window in which one [leader](#leader) may produce
 
 Solana's **native token**: the asset the network understands without any token program, used to pay transaction fees and to fund the rent deposit on every account. Denominated in [lamports](#lamport), a billionth of a SOL each. Every other token is an [SPL token](#spl-token).
 
+### Solana
+
+A public blockchain: a network of validators that run programs and keep a shared record of every account. Programs on it hold and move [tokens](#token), and transactions settle in under a second for a fraction of a cent. Solana is not an asset: its native token, [SOL](#sol), is the asset. Nor is Solana an organization. Many organizations work on it, including the Solana Foundation, Anza, Jump, Blueshift and Quicknode.
+
 ### SPL token
 
 Any token other than [SOL](#sol): one defined by a token program rather than by the network itself. The name comes from the Solana Program Library the original token program shipped in. Most people just say "token", and so does this book.
