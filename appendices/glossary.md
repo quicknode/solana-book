@@ -445,6 +445,10 @@ A borrower's loan file in a lending market: their collateral deposits, their bor
 
 The total notional of positions currently open on a market, usually tracked per side. A perpetual futures venue's funding direction and solvency reasoning both read it.
 
+### open source
+
+Software released under a license that meets the [Open Source Definition](https://opensource.org/osd), which requires, among other things, that anyone may read, modify and redistribute the source code. Publishing the source is not enough on its own: code whose license forbids modifying or redistributing it is not open source.
+
 ### option
 
 The right, but not the obligation, to buy ([call](#call)) or sell ([put](#put)) an asset at a fixed price (the [strike](#strike)) before a fixed date (the [expiry](#expiry)), bought from a [writer](#writer) for a [premium](#premium). The *Options* chapter builds a venue for them.
