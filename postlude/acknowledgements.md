@@ -6,4 +6,4 @@ I'd also like to thank my mentors, many of whom probably didn't know they were m
 
 The technical reviewers made this a better book. Angus Scott improved the *Introduction* and *State Machines* chapters.
 
-Finally, I'd like to thank the developers of open source projects across all blockchains, many of whom inspired not only this book but also each other.  
+Finally, I'd like to thank the developers of open source projects across all blockchains, many of whom inspired not only this book but also each other. Every pattern in this book began as an innovation in one open source program, some on Solana and others on older chains like Ethereum.  
