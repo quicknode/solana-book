@@ -92,6 +92,17 @@ Two more rules for these boundaries:
 
 The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K after the transfers land, follow the same rule: check your own state before anyone else's code runs.
 
+## Every Role Holder Is Also a User
+
+Most programs in this book give someone a role: an operator who creates a market, a manager who runs a fund, an admin who settles an event. The handlers that need that role's signature are only part of what that person can do. They can also call every handler anyone else can call, from their own wallet or from a new one the program has no way to link to them. A program cannot stop its operator trading in their own market, so design as if they will.
+
+For each role, list what its handlers can change, then ask what that change is worth to someone who also trades, deposits, or bets in the same program. A parameter that is harmless on its own becomes an attack when the person who sets it also holds a position:
+
+- **The perpetual futures operator.** Funding is paid to the lighter side of open interest out of the liquidity providers' deposits. If Maria could change the funding rate at will, she could open a small position on the lighter side, raise the rate, and close the position a few seconds later. The program fixes the rate when the pool is created and refuses one above `MAX_FUNDING_RATE_PER_SECOND`, and `test_operator_on_the_lighter_side_earns_only_the_fixed_rate` checks that a wallet on the lighter side earns only that rate.
+- **The managed fund's manager.** A manager who could add any token and price it from any feed could buy a token they had minted themselves at a price they reported. The fund takes assets only from Victor's list and feeds only from Victor's entries (`test_add_asset_rejects_unapproved`), swaps only through the router fixed at creation with minimums taken from the oracle, and caps the manager's fee and fixes it at creation (`test_initialize_rejects_excessive_fee`).
+
+Where the role is the one reporting a result, like the betting market's admin settling an event they have bet on, the question is who to trust, which the *Offchain Truth* chapter covers.
+
 ## What You Learnt
 
 - Anyone can take the tokens a mistake on a public chain exposes: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
@@ -100,6 +111,7 @@ The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K 
 - A true price can still be a manipulated price: time-weight it, act on the confidence interval, cap how much can move per window, and never lend more against a token than it would cost to move its market.
 - A rounding error in the user's favor gets repeated until the pool is empty, so write a round-trip invariant test to catch it.
 - Apply checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
+- Treat everyone with a role as a user too: for each role, ask what its handlers can change, and what that change is worth to someone who also trades, deposits, or bets in the same program.
 
 [^confused-deputy]: Norm Hardy named it in "The Confused Deputy (or why capabilities might have been invented)", ACM SIGOPS Operating Systems Review 22(4), October 1988, at [dl.acm.org/doi/10.1145/54289.871709](https://dl.acm.org/doi/10.1145/54289.871709).
 
