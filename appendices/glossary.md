@@ -318,7 +318,7 @@ Capital a venue sets aside to absorb losses larger than the collateral behind th
 
 ### invariant
 
-A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker checks one against every possible input; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated values, and a model checker checks one against every possible value; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
 
 ### inventory
 

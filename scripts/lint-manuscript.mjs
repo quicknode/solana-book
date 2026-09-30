@@ -257,7 +257,7 @@ const exceptions = [
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /call this property-based testing/, // the one pointer to the testing libraries' own term
-  /^A model check is not a formal proof\./, // the one sentence that distinguishes the two
+  /^Though Kani calls its checks proofs, a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
 

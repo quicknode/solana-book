@@ -17,17 +17,17 @@ Every test in this list is cheap to write and fast to run. The test runs the com
 
 ## Model Checking Goes Further Than Testing
 
-A test checks the inputs you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
+A test checks the values you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
-- **Invariant tests** assert a condition that must hold on every input (a round trip creates no value, an index never decreases) against generated inputs, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
-- **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact input that breaks it.
+- **Invariant tests** assert a condition that must hold for every value (a round trip creates no value, an index never decreases) against generated values, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
+- **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact values that break it.
 
-A model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
+Though Kani calls its checks proofs, a model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
 
 The escrow program in the companion repository ships Kani harnesses for the parts of it a model checker can reach. Kani marks a harness with `#[kani::proof]`, which is why the crate is called `kani-proofs` and the harnesses are named `proof_*`; each one is a model check:
 
-- `proof_take_offer_conserves_value` checks that taking an offer conserves the total of each token, for every input rather than only the tested ones.
+- `proof_take_offer_conserves_value` checks that taking an offer conserves the total of each token, for every value rather than only the tested ones.
 - `proof_cancel_offer_returns_all_to_maker` checks that the refund path returns every vault token to the maker.
 - `proof_offer_id_seed_injective` checks that two different offer IDs can never derive the same address.
 
@@ -67,7 +67,7 @@ Before a program that holds other people's assets touches mainnet, get a **secon
 ## What You Learnt
 
 - Bugs live at numerical boundaries, so push your test suite to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
-- Model checking goes further than testing: invariant tests over generated inputs, then a model checker over every input to the arithmetic core, and how far to go is set by how much the program's vaults will hold.
+- Model checking goes further than testing: invariant tests over generated values, then a model checker over every value the arithmetic core can take, and how far to go is set by how much the program's vaults will hold.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their payment arrived waits for `finalized`.
 - Write admin power down as a specification: bounded config, snapshotted terms, and no path to principal. Let a pause stop deposits and trades but never withdrawals, make sure nothing a user does waits on the operator, and give upgrade authority to a named multisig.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
