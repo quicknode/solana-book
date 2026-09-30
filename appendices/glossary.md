@@ -98,7 +98,7 @@ Rounding up to the next whole [minor unit](#minor-unit). The direction used for 
 
 ### checked arithmetic
 
-Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on money in this book is checked.
+Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on an amount in this book is checked.
 
 ### checks-effects-interactions
 
@@ -171,7 +171,7 @@ The number of minor units in one major unit of a token, declared on the mint. US
 
 ### degenerate value
 
-A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it passes the usual checks but is worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. A constant-product pool multiplies its two reserves to get [K](#k) and refuses any trade that makes K fall. If either reserve is empty, K is zero and that check passes whatever the trade pays out. A price of zero or a negative [mantissa](#mantissa) means a broken feed. An offer with nothing in it passes the usual checks but is worthless. Check for each one explicitly rather than relying on the general checks to catch it. See [invariant](#invariant).
 
 ### discretization
 
@@ -219,7 +219,7 @@ Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of th
 
 ### faucet
 
-A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
+A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs mainnet tokens.
 
 ### feature
 
@@ -251,7 +251,7 @@ The periodic payment between longs and shorts on a perpetual futures market that
 
 ### half-up
 
-Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on money here: it rounds in the user's favor half the time, and a caller can size a deposit and withdrawal pair to collect that half repeatedly. The 2021 SPL token-lending bug was this. See [rounding](#rounding).
+Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on amounts here: it rounds in the user's favor half the time, and a caller can size a deposit and withdrawal pair to collect that half repeatedly. The 2021 SPL token-lending bug was this. See [rounding](#rounding).
 
 ### halt
 
@@ -295,11 +295,11 @@ The onchain function that processes an instruction. This book always says "instr
 
 ### insurance fund
 
-Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. It does not make a venue lose less money; it names, before the loss happens, who pays for it. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
+Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. It does not make a venue's losses smaller; it names, before the loss happens, who pays for it. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
 
 ### invariant
 
-A property that must hold before and after every state change: K must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker proves one over every possible input; the *Operating Financial Software* chapter sets how far to go by how much money the program will hold.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker proves one over every possible input; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
 
 ### inventory
 
@@ -379,7 +379,7 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 ### managed fund
 
-The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the money sits in. See the *Managed Fund* chapter.
+The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the deposits sit in. See the *Managed Fund* chapter.
 
 ### manager
 
@@ -395,7 +395,7 @@ On a perpetual futures market, the index price is the oracle's statement of the 
 
 ### mark to market
 
-Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation checks, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because money moves on today's valuation.
+Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation checks, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because tokens change hands at today's prices.
 
 ### market maker
 
@@ -567,11 +567,11 @@ Wrapping someone's pending trade in two of your own: buy ahead of it to move the
 
 ### saturating
 
-What Rust's `saturating_add` and `saturating_mul` do when a result will not fit: clamp to the type's maximum or minimum and continue. Less silent than [wrapping](#wrapping) and still wrong on a balance, because the number returned is not the answer. Money uses [checked arithmetic](#checked-arithmetic).
+What Rust's `saturating_add` and `saturating_mul` do when a result will not fit: clamp to the type's maximum or minimum and continue. Less silent than [wrapping](#wrapping) and still wrong on a balance, because the number returned is not the answer. Balances use [checked arithmetic](#checked-arithmetic).
 
 ### settlement
 
-Paying out what a contract finally owes, and closing it. A betting market settles when the authority records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances. Before settlement the numbers are marks, not money.
+Paying out what a contract finally owes, and closing it. A betting market settles when the authority records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances. Before settlement the numbers are marks, not balances.
 
 ### share
 
@@ -583,7 +583,7 @@ An account whose private key signed the transaction. "Is this account a signer" 
 
 ### significand
 
-The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
+The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from token amounts and prices (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
 
 ### size ladder
 
@@ -691,7 +691,7 @@ A key pair used as an identity for holding and moving assets, with the private k
 
 ### wrapping
 
-What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Silent, and catastrophic on a balance, which is why money uses [checked arithmetic](#checked-arithmetic) instead.
+What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Silent, and catastrophic on a balance, which is why every amount in this book uses [checked arithmetic](#checked-arithmetic) instead.
 
 ### writer
 

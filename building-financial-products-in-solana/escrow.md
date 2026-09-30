@@ -20,7 +20,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 The naive version is that Alice sends Bob her USDC and waits. But what if Bob takes the USDC and leaves? An **escrow** lets Alice and Bob swap without having to trust each other.
 
-Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent money overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
+Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent a payment overseas knows, the third party takes a percentage of the amount for itself: 6.5% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
 
 ![](figures/escrow-traditional-escrow.svg)
 
@@ -35,11 +35,11 @@ Two roles run through this chapter, and the code names them the same way:
 - **Alice is the maker.** She creates the offer: 250 USDC for 1 TSLAx.
 - **Bob is the taker.** He accepts the offer as it stands.
 
-The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. The same integer meaning two different things is why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth.
+The deal is priced the way every Solana token amount is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. The same integer meaning two different things is why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth.
 
 ## The Instruction Handlers
 
-The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every participant must be able to get their money out of every state, and an open offer can be ended by either of those two handlers.
+The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every participant must be able to get their assets out of every state, and an open offer can be ended by either of those two handlers.
 
 ![](figures/escrow-state-machine.svg)
 
@@ -101,9 +101,9 @@ The constraints make it maker-only: the signer must match the maker address stor
 
 ## The Math
 
-Escrow has less arithmetic than any other program in this book, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
+Escrow has less arithmetic than any other program in this book, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more check against minor-unit confusion.
 
-The money math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). Whether the offer is taken or canceled, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
+The lamport math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). Whether the offer is taken or canceled, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
 ## The Invariants
 
@@ -135,7 +135,7 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 - `test_make_offer` calls `make_offer()` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (ID, maker) match what Alice sent.
 - `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Symmetric flows get tested in both directions, because a bug that favors one side is invisible if you only assert the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so asserts the rent economics.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
-- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where money goes to the wrong person.
+- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
 
 The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository proves the conservation invariants formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
 
@@ -151,6 +151,6 @@ The escrow gave you five concepts:
 - **Every state has a handler that empties the vault.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
-In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which handlers work: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account and, in every state, a handler that empties it, and change what decides who is paid.
+In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which handlers work: the contributions go to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account and, in every state, a handler that empties it, and change what decides who is paid.
 
 [^remittance-cost]: The World Bank's figures for the third quarter of 2025, which put the global average near 6.5% with thirteen corridors above 20%. See [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).

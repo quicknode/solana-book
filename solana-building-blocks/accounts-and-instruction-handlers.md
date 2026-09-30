@@ -38,7 +38,7 @@ Each cluster is reached at a URL. Programs and wallets never talk to the network
 
 The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several. We, and most benchmarks, would also say it's the best! 
 
-Alice's SOL is devnet SOL: think of it as the pretend money from a board game: it feels like real money inside the game but buys nothing outside it. Devnet tokens cost nothing: devnet SOL, devnet USDC and other devnet tokens are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
+Alice's SOL is devnet SOL: think of it as the paper banknotes from a board game: they feel real inside the game but buy nothing outside it. Devnet tokens cost nothing: devnet SOL, devnet USDC and other devnet tokens are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs mainnet tokens to work through.
 
 ## Receiving Doesn't Need A Signature, Spending Does
 
@@ -69,7 +69,7 @@ Every instruction names which of the program's **instruction handlers** to run, 
 
 Alice runs her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
-The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the rest of the book's money math on these integer minor units.
+The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the rest of the book's arithmetic from these integer minor units.
 
 > **Why "lamport"?** Lamports are named after Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
 
@@ -83,7 +83,7 @@ For financial software, atomicity is a primitive you design with. Inside a trans
 
 - the escrow program you're about to build moves Alice's payment and Bob's stock in one atomic unit, and no combination of failures leaves one side paid and the other empty-handed. 
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state
-- A **flash loan**, a crypto specific concept, borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
+- A **flash loan**, a crypto specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 

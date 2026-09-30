@@ -1,6 +1,6 @@
 # Chapter 10: Operating Financial Software
 
-Correct code is only the start. The rest of the job is testing it on every flow and running it safely once it holds other people's money.
+Correct code is only the start. The rest of the job is testing it on every flow and running it safely once it holds other people's assets.
 
 ## Test the Edges of Every Interaction
 
@@ -17,7 +17,7 @@ Every test in this list is cheap to write and fast to run. The test runs the com
 
 ## Proving Goes Further Than Testing
 
-A test checks the inputs you thought of. A proof checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much money the program will hold:
+A test checks the inputs you thought of. A proof checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
 - **Invariant tests** assert a condition that must hold on every input (a round trip creates no value, an index never decreases) against generated inputs, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
@@ -43,7 +43,7 @@ The code that reads the chain has to answer that question, because it acts on wh
 | **finalized** | The validators have voted the block final, and no fork can replace it | Nothing. This is the record |
 
 - **A liquidator bot scans at `processed`**, because it is reading only to decide which transaction to send next, and a transaction aimed at a state that vanished fails.
-- **Anything that leaves the chain and cannot be recalled waits for `finalized`**: paying out fiat, emailing a customer that their money arrived, crediting a balance in your own books.
+- **Anything that leaves the chain and cannot be recalled waits for `finalized`**: paying out fiat, emailing a customer that their payment arrived, crediting a balance in your own books.
 
 The rule underneath is to match the level to how reversible your reaction is, because the chain can drop a block that is not final, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rules, not by anything in your code.
 
@@ -52,21 +52,21 @@ The rule underneath is to match the level to how reversible your reaction is, be
 Every market in this book has an operator with real power: withdrawing fees, settling events, setting prices, changing weights. Admin power is normal, and on Solana upgrade authority is expected, because a program has to be fixable when a bug turns up. The failure is *unbounded* power. Write the admin key a specification with three parts: what it can do, what it can never do, and what happens when it goes rogue or goes silent. The rules below are that specification, as the book's programs implement it.
 
 - **Bound what configuration can express.** Validate every parameter at write time against a limit that makes abuse impossible by configuration. The managed fund refuses a management fee above 1,000 basis points a year, because `collect_fees` mints shares to the manager and dilutes every depositor, so an uncapped fee would drain the vault. The lending program refuses a loan-to-value ratio above the liquidation threshold, so no loan it grants is liquidatable the moment it is taken.
-- **Snapshot terms when money commits.** The betting market copies the config's fee onto each event when the event is created, along with the time betting closes, so the fee an event pays and the window bettors get are fixed before anyone can bet. The managed fund's fee has no setter at all. A parameter the admin can change applies to money that arrives after the change, never to money already inside.
-- **Give the admin no path to principal.** No instruction handler in the book's programs, under any parameters, moves user deposits to the operator. The way to make that checkable is to keep the operator's money in its own place. The order book's fee vault holds only taker fees, and `withdraw_fees` moves only from that vault to the market authority. The lending reserve keeps its share in `accumulated_protocol_fees`, which the exchange rate subtracts before valuing a supplier's shares, so collecting it changes nothing a supplier is owed. Rebalancing moves funds between program-owned vaults, and settlement pays by formula. When that holds in your program, say it in those words rather than claiming "non-custodial": the rules are the deployed program, and the operator is not in them.
-- **A pause may stop deposits and trades, never withdrawals.** A pause that refuses new deposits and new positions during an incident protects users; one that refuses withdrawals traps their money. The prop AMM's `paused` flag, set through `set_quote`, makes `swap` refuse and is read by no other handler. Whatever a pause stops, every participant must still be able to get their money out of every state, paused included.
+- **Snapshot terms when participants commit their tokens.** The betting market copies the config's fee onto each event when the event is created, along with the time betting closes, so the fee an event pays and the window bettors get are fixed before anyone can bet. The managed fund's fee has no setter at all. A parameter the admin can change applies to deposits that arrive after the change, never to deposits already inside.
+- **Give the admin no path to principal.** No instruction handler in the book's programs, under any parameters, moves user deposits to the operator. The way to make that checkable is to keep the operator's fees in their own place. The order book's fee vault holds only taker fees, and `withdraw_fees` moves only from that vault to the market authority. The lending reserve keeps its share in `accumulated_protocol_fees`, which the exchange rate subtracts before valuing a supplier's shares, so collecting it changes nothing a supplier is owed. Rebalancing moves funds between program-owned vaults, and settlement pays by formula. When that holds in your program, say it in those words rather than claiming "non-custodial": the rules are the deployed program, and the operator is not in them.
+- **A pause may stop deposits and trades, never withdrawals.** A pause that refuses new deposits and new positions during an incident protects users; one that refuses withdrawals traps their deposits. The prop AMM's `paused` flag, set through `set_quote`, makes `swap` refuse and is read by no other handler. Whatever a pause stops, every participant must still be able to get their assets out of every state, paused included.
 - **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And plan for the day the price feed stops publishing. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than freezing every user in place until a price arrives.
 - **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than a single key on one person's laptop, and say so where users can read it. A user who reads that knows a change to the code takes several named people to sign, and that one stolen laptop cannot ship one.
 
 ## Ship To Mainnet With a Second (or Third) Opinion
 
-Before a program that holds other people's money touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. Every check in the program chapters' failure-modes sections exists because someone's first opinion missed it. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
+Before a program that holds other people's assets touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. Every check in the program chapters' failure-modes sections exists because someone's first opinion missed it. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
 
 ## What You Learnt
 
 - Bugs live at numerical boundaries, so a test suite pushes to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
-- Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much money the program will hold.
-- A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their money arrived waits for `finalized`.
+- Proving goes further than testing: invariant tests over generated inputs, then formal verification of the arithmetic core, and how far to go is set by how much the program's vaults will hold.
+- A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their payment arrived waits for `finalized`.
 - Admin power runs on a written specification: bounded config, snapshotted terms, and no path to principal. A pause may stop deposits and trades but never withdrawals, nothing a user does waits on the operator, and upgrade authority is held by a named multisig.
 - Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
 

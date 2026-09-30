@@ -2,9 +2,9 @@
 
 The same half-dozen kinds of attack have drained onchain markets for a decade, on every chain and in every framework.
 
-## Every Mistake Is Money Anyone Can Take
+## Anyone Can Take the Tokens a Mistake Exposes
 
-Financial software on a public chain faces a harsher threat model than most software. Every instruction handler can be called by anyone, under any name, for a fraction of a cent. Your compiled program is public, and often your source is too. A mispriced trade, a leaked minor unit, or an unchecked account is money, and it goes to whoever finds it first.
+Financial software on a public chain faces a harsher threat model than most software. Every instruction handler can be called by anyone, under any name, for a fraction of a cent. Your compiled program is public, and often your source is too. A mispriced trade, a leaked minor unit, or an unchecked account lets tokens out of a vault, and they go to whoever finds the mistake first.
 
 Three consequences follow:
 
@@ -68,7 +68,7 @@ The defenses make manipulation expensive and slow:
 
 - **Time-weight the price.** A **time-weighted average price** (TWAP) over several minutes forces the attacker to hold the pushed price for that long, paying arbitrageurs the whole time, instead of paying for one slot of it.
 - **Act on the confidence interval.** When a thin market is being pushed, its oracle's confidence interval widens. A program that pauses borrowing or tightens limits when that happens takes away the profit.
-- **Cap how much can move per window.** A limit on how much can be borrowed or withdrawn in each window forces the attacker to take the money over many slots, where people can see it happening and respond.
+- **Cap how much can move per window.** A limit on how much can be borrowed or withdrawn in each window forces the attacker to take the vault's tokens over many slots, where people can see it happening and respond.
 - **Do not lend more against a token than it would cost to move its market.** If pushing the price costs less than the loan the push unlocks, someone will eventually do it.
 
 ## A Rounding Error Repeated Enough Times Drains the Pool
@@ -94,7 +94,7 @@ The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K 
 
 ## What You Learnt
 
-- Every mistake on a public chain is money anyone can take: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
+- Anyone can take the tokens a mistake on a public chain exposes: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
 - Every supplied account is a claim to verify, and every chain of accounts must start from an account the program itself derived or recorded.
 - A pool that issues shares needs a defense against the inflation attack built into the program: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
 - A true price can still be a manipulated price: time-weight it, act on the confidence interval, cap how much can move per window, and never lend more against a token than it would cost to move its market.

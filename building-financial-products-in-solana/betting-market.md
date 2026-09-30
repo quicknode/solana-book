@@ -1,12 +1,12 @@
 # Chapter 13: The Betting Market
 
-What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' money in proportion to how much they staked. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
+What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone stake USDC on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' stakes in proportion to how much they staked. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
 
 The program lives at `finance/betting-market` in the companion repository. Structurally it is the *Escrow* chapter with many parties and one new, serious question: who decides what happened in the real world?
 
 ## Nobody Sets the Odds: The Pool Is the Odds
 
-In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk. All stakes on all outcomes pool together. When the event settles, the losing side's money (minus the house fee) is distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
+In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk. All stakes on all outcomes pool together. When the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
 **Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
@@ -29,9 +29,9 @@ The **event** is an account at a PDA (seeds: `"event"`, the event ID) with a des
 
 Each **outcome** is an account at a PDA (seeds: `"outcome"`, the event, an index byte) holding its label, its `total_amount` staked, and its `bet_count`.
 
-One rule protects the bettors: **the outcome list is fixed before any money can arrive**. `add_outcome()` works only on a Draft and fails with `EventNotDraft` once the event is Open. `place_bet()` on a Draft fails with `EventNotOpen`, so nobody can bet while the list is still changing. `open_betting()` refuses a market with fewer than two outcomes (`NotEnoughOutcomes`), because a single outcome has no losing side to pay its winners from. The tests `test_outcomes_lock_when_betting_opens` and `test_open_betting_needs_two_outcomes` check all three rules.
+One rule protects the bettors: **the outcome list is fixed before any stake can arrive**. `add_outcome()` works only on a Draft and fails with `EventNotDraft` once the event is Open. `place_bet()` on a Draft fails with `EventNotOpen`, so nobody can bet while the list is still changing. `open_betting()` refuses a market with fewer than two outcomes (`NotEnoughOutcomes`), because a single outcome has no losing side to pay its winners from. The tests `test_outcomes_lock_when_betting_opens` and `test_open_betting_needs_two_outcomes` check all three rules.
 
-The Draft status is what keeps the list fixed. The simpler design locks the list at the first bet, by refusing `add_outcome()` once the pool holds any money. That lets anyone freeze a half-built market with a one-minor-unit bet on its only outcome. It also lets Maria's last `add_outcome()` and the first bet land in either order, so the first bettor can stake on a list with an outcome their screen never showed. An explicit status that only Maria can change has neither problem.
+The Draft status is what keeps the list fixed. A simpler but naive design would lock the list at the first bet, by refusing `add_outcome()` once the pool holds any stakes. That would let anyone freeze a half-built market with a one-minor-unit bet on its only outcome. It would also let Maria's last `add_outcome()` and the first bet land in either order, so the first bettor can stake on a list with an outcome their screen never showed. An explicit status that only Maria can change has neither problem.
 
 ## Bettors Stake on Their Chosen Outcomes
 
@@ -62,7 +62,7 @@ Settlement does four things, none of which involve paying bettors yet:
 
 ## Winners Claim: Conviction Pays Three to One
 
-Winners come and get their money whenever they like; nothing pays out automatically. Alice calls `claim_winnings()`. Her payout is her stake back plus her pro-rata share of the distributable losing pool:
+Winners come and claim their payouts whenever they like; nothing pays out automatically. Alice calls `claim_winnings()`. Her payout is her stake back plus her pro-rata share of the distributable losing pool:
 
 payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
@@ -79,11 +79,11 @@ There is no `claimed` boolean to forget to check.
 
 ![](figures/betting-alice-claim.svg)
 
-## Closing Out, and Getting Money Out of Every State
+## Closing Out, and Getting Assets Out of Every State
 
 Carol's losing bet pays nothing, but it still occupies one of her 32 position slots and holds rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this cheaper path rejects with `BetWon` and must use `claim_winnings()`), then closes the account and frees the slot. Both rules are checked by `test_close_losing_bet_only_after_settle_and_only_for_losers` and `test_closing_a_bet_frees_a_slot_for_a_new_bet`.
 
-And what if the film festival burns down? An Open event can also end another way: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (checked by `test_cancel_and_refund`). `cancel_event()` works on a Draft too, which is how Maria abandons a market she set up wrong before anyone has money in it. Draft, Open, Settled, Cancelled: four states, and in each one every bet account has a handler that pays it out or closes it.
+And what if the film festival burns down? An Open event can also end another way: `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (checked by `test_cancel_and_refund`). `cancel_event()` works on a Draft too, which is how Maria abandons a market she set up wrong before anyone has staked on it. Draft, Open, Settled, Cancelled: four states, and in each one every bet account has a handler that pays it out or closes it.
 
 ![](figures/betting-state-machine.svg)
 
@@ -129,7 +129,7 @@ This chapter added five concepts:
 
 - **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so conviction pays proportionally and no one sets odds.
 - **A designated signer decides the result.** The operator's signature is the oracle, and the program's job is making that trust visible and narrow: they pick the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
-- **Terms locked when money commits.** An explicit Draft status keeps bets out until the admin opens the market, so the outcome list is fixed before the first stake. The fee and close time are fixed at event creation, so the question bettors staked on cannot be rewritten.
+- **Terms locked before bettors commit stakes.** An explicit Draft status keeps bets out until the admin opens the market, so the outcome list is fixed before the first stake. The fee and close time are fixed at event creation, so the question bettors staked on cannot be rewritten.
 - **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize.
 - **Cancellation refunds every stake.** Draft and Open events can be canceled, and stakes in a canceled event are refunded in full, so a burned-down film festival strands nobody's stake.
 

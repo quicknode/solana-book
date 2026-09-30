@@ -210,6 +210,6 @@
   <text x="8" y="482" font-size="8" fill="#444" font-style="italic">effects before interactions</text>
   <text x="8" y="498" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. bet account closed</text>
   <text x="228" y="659" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147 = 447; the 149 left is Bob's exact claim</text>
-  <text x="228" y="677" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account is the double-claim guard: no account, no second claim</text>
+  <text x="228" y="677" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account prevents a double claim: no account, no second claim</text>
   <g class="coin" transform="translate(184.96,495.93)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

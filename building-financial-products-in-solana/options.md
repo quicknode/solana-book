@@ -31,7 +31,7 @@ Every option has exactly two endings, and the price at expiry decides which: the
 Traditional options venues let a writer take on that obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault.**
 
 - A call writer supplies the underlying asset to the program, so the call is **covered**: the shares the holder might buy are already in custody, and the writer cannot fail to deliver them.
-- A put writer supplies the program with enough of the quote token to buy every share at the strike price, so the put is **cash-secured**: the money the holder might be paid is already in custody, and the writer cannot fail to pay.
+- A put writer supplies the program with enough of the quote token to buy every share at the strike price, so the put is **cash-secured**: the quote tokens the holder might be paid are already in custody, and the writer cannot fail to pay.
 
 Nothing in this program is ever undercollateralized, so it has no margin, no health factor, no liquidator, and no oracle.
 
@@ -65,7 +65,7 @@ The **market** account lives at a PDA with seeds `"market"`, the underlying mint
 - `quote_locked`: how much of the quote vault the market owes, as put writers' collateral and as call holders' strike payments waiting to be collected.
 - `fees_owed`: how much of the quote vault belongs to the admin.
 
-The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's money, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. The three counters record how much of each vault is owed, and after every transfer `check_custody()` checks that each vault still holds at least that much.
+The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's tokens, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. The three counters record how much of each vault is owed, and after every transfer `check_custody()` checks that each vault still holds at least that much.
 
 ## A Writer Posts the Whole Obligation and Names a Price
 
@@ -121,7 +121,7 @@ Bob calls `buy_option()`. The handler does four things:
 
 ![](figures/options-buy-call.svg)
 
-The premium is the only money that changes hands, and it is Alice's from this moment whatever Bob does later. The 5 NVDAx do not move. Bob's downside is fixed at the 25 USDC he just paid, and Alice's upside on the shares is capped at $180 until the week is out.
+The premium is the only payment in the purchase, and it is Alice's from this moment whatever Bob does later. The 5 NVDAx do not move. Bob's downside is fixed at the 25 USDC he just paid, and Alice's upside on the shares is capped at $180 until the week is out.
 
 A writer cannot buy their own option. Their address would fill both the `buyer` and `writer` slots, and the premium's source and destination would be the same token account in two mutable slots, which the runtime rejects before the handler runs (`test_writer_cannot_buy_their_own_option`). A second buyer is refused because the option is no longer `Listed` (`test_buy_is_refused_once_sold`).
 
@@ -241,7 +241,7 @@ The options venue added six concepts:
 - **Full collateralization removes whole categories.** A covered call and a cash-secured put cannot default, so the program needs no margin, no liquidator, and no oracle; everything the *Perpetual Futures* chapter adds is the cost of letting writers post less than they owe.
 - **Physical settlement needs no price.** The holder's decision replaces the feed, and the program's job is to enforce the terms, not to value them.
 - **Amounts as products, not prices.** Storing the strike as an amount per contract makes every settlement a checked multiplication, with no division and no rounding direction to defend.
-- **A ledger for mixed custody.** When one vault holds several parties' money, the state account counts what each is owed and every handler asserts the vault still covers it, after the math.
+- **A ledger for mixed custody.** When one vault holds several parties' tokens, the state account counts what each is owed and every handler asserts the vault still covers it, after the math.
 - **One deadline, compared both ways.** Exercise requires `now < expiry` and reclaim requires `now >= expiry`, so at every moment exactly one of them works, which the tests check from both sides and the Kani proofs check for every timestamp.
 
 In the *Perpetual Futures* chapter we will relax the collateral rule. Traders post a fraction of their exposure, an oracle values the rest continuously, and a liquidator is paid to close what the fraction no longer covers. Keeping such a venue solvent takes a price check in every handler, liquidity reserved for every winner, and a liquidator paid to close positions whose collateral no longer covers what they owe.

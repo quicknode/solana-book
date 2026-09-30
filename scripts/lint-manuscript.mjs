@@ -198,6 +198,13 @@ const rules = [
   // and proof-of-personhood really do prove, and none of them is named test_.
   [/`test_\w+`[^.;]*\bprov(?:e|es|ed)\b|\btests? (?:suite )?prov(?:e|es)\b|\bproves? (?:it|that it|the program) works\b/i,
     'a test checks one scenario: say "checks that ...", not "proves" (companion AI plugin)'],
+  // "Guard" is the same coined label as "gate". Wormhole's guardians are a
+  // real name, and \b keeps "guardian" from matching.
+  [/\bguard(?:s|ed|ing)?\b/i, 'say "check" or "test" and what it refuses, not "guard" (companion AI plugin)'],
+  // "Money" names no asset and no amount. The option terms and the
+  // Arithmetic of Money chapter's title are real names.
+  [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -])\bmoney\b(?! market)/i,
+    'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)'],
   [/\bis (?:just |only )?an? (?:integer |single )?comparison\b/i, 'cut it: the size of the code is not the point (companion AI plugin)'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
   // "Property" also names an account's fields, so "property test" reads two
