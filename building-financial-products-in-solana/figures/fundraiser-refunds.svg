@@ -161,7 +161,7 @@
   <text x="472" y="315.37" font-size="9.5">time_started: day 0</text>
   <text x="472" y="327.37" font-size="9.5">duration: 7 days</text>
   </g>
-  <!-- the vault: custody only, never the gate -->
+  <!-- the vault: holds the tokens; the claim checks current_amount, not this balance -->
   <g>
   <circle cx="472" cy="353.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="348.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER'S ADDRESS +</text>
@@ -174,7 +174,7 @@
   <text x="472" y="404.37" font-size="9.5">900 USDC</text>
   <text x="472" y="416.37" font-size="9" font-style="italic" fill="#444">authority: the fundraiser PDA</text>
   </g>
-  <!-- three pull-based refunds: each pays exactly its own receipt -->
+  <!-- three refunds, each called by its backer: each pays exactly its own receipt -->
   <path d="M 464,402 C 368,404 189.25,391.25 132,340 C 117.25,326.8 116,314 116,300 C 116,259.69 116,230.66 116,210.19 C 116,194.43 111,178.67 101,162.92" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="104" y="285.59" font-size="10.5" font-weight="bold" fill="#1e7a3c">900 USDC</text>
   <path d="M 464,388 C 400,376 286,368 248,340 C 230,326 222,312 222,296 C 222,264.38 222,237.95 222,217.05 C 222,200.91 217,184.78 207,168.64" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#fund-ref-a)"/>

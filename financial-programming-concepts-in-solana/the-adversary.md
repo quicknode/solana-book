@@ -2,9 +2,9 @@
 
 The same half-dozen kinds of attack have drained onchain markets for a decade, on every chain and in every framework.
 
-## Every Mistake Is Money Anyone Can Take
+## Anyone Can Take the Tokens a Mistake Exposes
 
-Financial software on a public chain faces a harsher threat model than most software. Every instruction handler can be called by anyone, under any name, for a fraction of a cent. Your compiled program is public, and often your source is too. A mispriced trade, a leaked minor unit, or an unchecked account is money, and it goes to whoever finds it first.
+Financial software on a public chain faces a harsher threat model than most software. Every instruction handler can be called by anyone, under any name, for a fraction of a cent. Your compiled program is public, and often your source is too. A mispriced trade, a leaked minor unit, or an unchecked account lets tokens out of a vault, and they go to whoever finds the mistake first.
 
 Three consequences follow:
 
@@ -33,7 +33,7 @@ A missing check lets the attacker **substitute** an account: pass a different ac
 
 ## The Empty Pool: Inflation and Donation Attacks
 
-Every share-based pool (vault, LP pool, lending reserve) prices a share as the pool's value divided by the number of shares. That formula breaks down at the start, when both numbers are tiny, and the **inflation attack** exploits it. The attacker makes a tiny first deposit and receives a tiny number of shares. Then they *donate* assets straight into the pool's vault with an ordinary token transfer, without calling the deposit handler. The donation raises the value behind each of their few shares. The next depositor's shares are computed as deposit × shares outstanding ÷ pool value, floored. With the pool value enormous compared with the shares outstanding, that division floors to zero or close to it: the victim's deposit buys nothing, and it now belongs to the attacker's shares.
+Every pool that issues shares (vault, LP pool, lending reserve) prices a share as the pool's value divided by the number of shares. That formula breaks down at the start, when both numbers are tiny, and the **inflation attack** exploits it. The attacker makes a tiny first deposit and receives a tiny number of shares. Then they *donate* assets straight into the pool's vault with an ordinary token transfer, without calling the deposit handler. The donation raises the value behind each of their few shares. The next depositor's shares are computed as deposit × shares outstanding ÷ pool value, floored. With the pool value enormous compared with the shares outstanding, that division floors to zero or close to it: the victim's deposit buys nothing, and it now belongs to the attacker's shares.
 
 Take a pool that prices its shares from the token balance in its vault, as the book's managed fund did before it chose a defense. The first deposit into an empty pool mints one share per minor unit. Every later deposit mints shares in proportion to the value it adds, so a deposit that doubles the pool's value doubles the share supply:
 
@@ -68,7 +68,7 @@ The defenses make manipulation expensive and slow:
 
 - **Time-weight the price.** A **time-weighted average price** (TWAP) over several minutes forces the attacker to hold the pushed price for that long, paying arbitrageurs the whole time, instead of paying for one slot of it.
 - **Act on the confidence interval.** When a thin market is being pushed, its oracle's confidence interval widens. A program that pauses borrowing or tightens limits when that happens takes away the profit.
-- **Cap how much can move per window.** A limit on how much can be borrowed or withdrawn in each window forces the attacker to take the money over many slots, where people can see it happening and respond.
+- **Cap how much can move per window.** A limit on how much can be borrowed or withdrawn in each window forces the attacker to take the vault's tokens over many slots, where people can see it happening and respond.
 - **Do not lend more against a token than it would cost to move its market.** If pushing the price costs less than the loan the push unlocks, someone will eventually do it.
 
 ## A Rounding Error Repeated Enough Times Drains the Pool
@@ -94,12 +94,12 @@ The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K 
 
 ## What You Learnt
 
-- Every mistake on a public chain is money anyone can take: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
-- Every supplied account is a claim to verify, and every chain of accounts must start from an account the program itself derived or recorded.
-- A share-based pool needs a defense against the inflation attack built into the program: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
+- Anyone can take the tokens a mistake on a public chain exposes: attacks are automated, anyone can get their transaction ordered around yours, and attacks start at the extremes of a range.
+- Verify every supplied account, and start every chain of accounts from an account the program itself derived or recorded.
+- Build a defense against the inflation attack into any pool that issues shares: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
 - A true price can still be a manipulated price: time-weight it, act on the confidence interval, cap how much can move per window, and never lend more against a token than it would cost to move its market.
-- A rounding error in the user's favor gets repeated until the pool is empty, and a round-trip invariant test catches it.
-- Checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
+- A rounding error in the user's favor gets repeated until the pool is empty, so write a round-trip invariant test to catch it.
+- Apply checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
 
 [^confused-deputy]: Norm Hardy named it in "The Confused Deputy (or why capabilities might have been invented)", ACM SIGOPS Operating Systems Review 22(4), October 1988, at [dl.acm.org/doi/10.1145/54289.871709](https://dl.acm.org/doi/10.1145/54289.871709).
 

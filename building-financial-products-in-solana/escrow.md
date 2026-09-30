@@ -5,12 +5,12 @@ Escrow is the simplest program in this book. It lets two people swap tokens with
 - holding tokens in a vault whose authority is an address only the program can sign for, so nobody, including the program's author, can move them except along the paths the code defines
 - storing the terms of a deal in an account the program owns, and checking every later instruction against them
 - letting who signed, and what the stored terms say, decide what may happen next
-- giving every state an exit that returns the tokens and the account rent deposits, so neither is stranded
+- giving every state a handler that empties the vault and closes the accounts, so no tokens or rent deposits are stranded
 - counting every amount in minor units, the integers the token program moves
 
 The chapters that follow add what escrow does not have: a formula that sets a price, an outcome that decides a payout, time and interest, and an operator who must be constrained.
 
-The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus machine-checked proofs of its core invariants under `kani-proofs`. This chapter covers the Anchor version.
+The program for this chapter lives at `finance/escrow` in the companion repository, with Anchor, Quasar, and native versions, plus Kani model checks of its core invariants under `kani-proofs`. This chapter covers the Anchor version.
 
 ## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
@@ -24,7 +24,7 @@ Traditional finance solves this with a trusted third party. Alice sends her fund
 
 ![](figures/escrow-traditional-escrow.svg)
 
-A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed program itself: nobody, including the program's author, can move them except along the paths the code defines. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no key that matters. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
+A Solana program replaces the third party. The program holds Alice's tokens under rules that are the deployed program itself: nobody, including the program's author, can move them except along the paths the code defines. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no private key that matters. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
 
 ![](figures/escrow-program-swap.svg)
 
@@ -35,11 +35,11 @@ Two roles run through this chapter, and the code names them the same way:
 - **Alice is the maker.** She creates the offer: 250 USDC for 1 TSLAx.
 - **Bob is the taker.** He accepts the offer as it stands.
 
-The deal is priced the way all Solana money is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. The same integer meaning two different things is why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth.
+The deal is priced the way every Solana token amount is priced: in **minor units**, the smallest denomination of each token, the raw integers programs operate on. USDC has six decimals, so Alice's 250 USDC is 250,000,000 minor units. TSLAx has eight decimals, so the single Tesla share she wants is 100,000,000 minor units, the same integer that means one hundred dollars in a USDC account. The same integer meaning two different things is why programs track each token's decimals instead of assuming them. The minor-units section of the *Arithmetic of Money* chapter covers this in depth.
 
 ## The Instruction Handlers
 
-The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every state needs an exit, and an open offer has two.
+The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. Every participant must be able to get their assets out of every state, and an open offer can be ended by either of those two handlers.
 
 ![](figures/escrow-state-machine.svg)
 
@@ -76,7 +76,7 @@ With the structure verified, the handler code is two small steps:
 
 ### The Taker Takes the Offer
 
-Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump prove the offer account sits at the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
+Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. The account constraints then verify that every other account in the transaction is the one that offer implies. The maker account must match the address stored in the offer, and the two mint accounts must match the mints stored there. The seeds and stored bump check that the offer account sits at the program's own PDA. The vault must be the offer's associated token account for mint A, and the payment destination must be the maker's associated token account for mint B. Bob cannot substitute an account he controls anywhere in this structure, because every address is derived or checked against the offer's stored data. This is the account-substitution defense the validation section of the *Adversary* chapter covers in full.
 
 ![](figures/escrow-take-offer.svg)
 
@@ -93,24 +93,24 @@ Both sides now hold exactly what the other offered. No percentage went to anyone
 
 ### The Maker Cancels the Offer
 
-If nobody takes the offer, Alice needs her USDC back. Without an exit, her tokens would sit in the vault forever, which is a stranded-funds bug. The exit is `cancel_offer()`.
+If nobody takes the offer, Alice needs her USDC back. Without a handler that returns them, her tokens would sit in the vault forever, which is a stranded-funds bug. That handler is `cancel_offer()`.
 
 ![](figures/escrow-cancel-offer.svg)
 
-The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, and the test suite proves it (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, and closes both the vault and the offer account, returning both rent deposits to Alice.
+The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, which `test_cancel_offer_rejects_non_maker` checks (more below). `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, and closes both the vault and the offer account, returning both rent deposits to Alice.
 
 ## The Math
 
-Escrow has less arithmetic than any other program in this book, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more guard against minor-unit confusion.
+Escrow has less arithmetic than any other program in this book, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more check against minor-unit confusion.
 
-The money math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). On either exit path, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
+The lamport math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). Whether the offer is taken or canceled, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
 ## The Invariants
 
 Five things must hold before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account.
-- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until an exit runs (a direct donation could push it above, and changes nothing), and both exits empty the vault completely before closing it.
+- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until `take_offer()` or `cancel_offer()` runs (a direct donation could push it above, and changes nothing), and both handlers empty the vault completely before closing it.
 - The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler, so there is nothing to get wrong.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
 - Rent returns to whoever paid it, on every path.
@@ -125,7 +125,7 @@ Five things must hold before and after every handler:
 
   Each is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, stored-address checks bind the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter shows what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
-- **The abandoned offer.** The failure mode that is a missing feature: without `cancel_offer()`, an untaken offer strands the maker's tokens permanently. Every state needs an exit.
+- **The abandoned offer.** If `cancel_offer()` didn't exist, an untaken offer would leave the maker's offered tokens stranded in the program.
 - **Degenerate offers.** An offer with zero tokens on one side, or of a token for a different amount of itself, means someone is about to be cheated. `make_offer()` refuses an offer of zero tokens on either side with `ZeroAmount` (`test_make_offer_rejects_zero_offered_amount` and `test_make_offer_rejects_zero_wanted_amount`). An offer of a token for itself never reaches the handler: with one mint, the maker's token A and token B accounts are the same account, and Anchor refuses the same writable account twice with `ConstraintDuplicateMutableAccount`, which `test_make_offer_rejects_same_mint` checks.
 
 ## Testing Considerations
@@ -135,22 +135,22 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 - `test_make_offer` calls `make_offer()` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (ID, maker) match what Alice sent.
 - `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Symmetric flows get tested in both directions, because a bug that favors one side is invisible if you only assert the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so asserts the rent economics.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
-- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where money goes to the wrong person.
+- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
 
-The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository proves the conservation invariants formally, over every possible input, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The proving section of the *Operating Financial Software* chapter explains the technique.
+The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository model-checks the conservation invariants over every possible value, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The model-checking section of the *Operating Financial Software* chapter explains the technique.
 
 ## What You Learnt from Building the Escrow
 
-In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, takes a percentage for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no key that matters, and whose fee is a fraction of a cent.
+In traditional finance, an escrow means a trusted third party: a company that holds both sides' assets, takes a percentage for the privilege, and must itself be trusted not to walk away. This chapter replaced that company with a program whose rules are its own deployed code, whose operator earns nothing and holds no private key that matters, and whose fee is a fraction of a cent.
 
 The escrow gave you five concepts:
 
 - **Program custody.** Tokens held in a vault whose authority is a PDA, an address only the program can sign for, so funds move only along the code paths the program defines.
 - **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler checks its accounts against that stored data.
-- **State transitions gated by signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
-- **An exit from every state.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
+- **State transitions checked against signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
+- **Every state has a handler that empties the vault.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 - **Minor units.** Every amount is an integer at the mint's declared scale, and identical integers can mean entirely different things.
 
-In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which exit opens: the money goes to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account with an exit from every state, and change what decides the exit.
+In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault until a deadline, and the deadline decides which handlers work: the contributions go to the person raising it if the target was reached, and back to every contributor if it was not. Most programs in the rest of this part keep this chapter's shape, a vault owned by a data account and, in every state, a handler that empties it, and change what decides who is paid.
 
 [^remittance-cost]: The World Bank's figures for the third quarter of 2025, which put the global average near 6.5% with thirteen corridors above 20%. See [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).

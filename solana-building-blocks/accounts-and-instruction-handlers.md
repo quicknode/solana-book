@@ -26,19 +26,19 @@ A **wallet** is a key pair being used to sign transactions, with the private key
 
 The curve in the figure is labeled **Solana devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
 
-| Cluster      | Purpose                                       | Assets have value?  | Where it runs                |
-| ------------ | --------------------------------------------- | ------------------- | ---------------------------- |
-| **mainnet**  | Production: where real financial products run | Yes                 | Globally                     |
-| **devnet**   | Identical machinery for building and testing  | No: tokens are free | Globally                     |
-| **localnet** | Development and fast test loops               | No                  | Locally, on your own machine |
+| Cluster      | Purpose                                                             | Assets have value?  | Where it runs                |
+| ------------ | ------------------------------------------------------------------- | ------------------- | ---------------------------- |
+| **mainnet**  | Production: where real financial products run                       | Yes                 | Globally                     |
+| **devnet**   | A global network where developers deploy their in-progress software | No: tokens are free | Globally                     |
+| **localnet** | Development and fast test loops                                     | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a single new feature. Those exist to test the network itself. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same machinery real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a particular proposed network feature. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which Solana cluster software the Solana SDK uses to read, write, and deploy to.
 
 The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several. We, and most benchmarks, would also say it's the best! 
 
-Alice's SOL is devnet SOL: think of it as the pretend money from a board game: it feels like real money inside the game but buys nothing outside it. Devnet tokens cost nothing: devnet SOL, devnet USDC and other devnet tokens are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs real money to work through.
+Alice's SOL is devnet SOL: think of it as the paper banknotes from a board game: they feel real inside the game but buy nothing outside it. Devnet tokens cost nothing: devnet SOL, devnet USDC and other devnet tokens are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs mainnet tokens to work through.
 
 ## Receiving Doesn't Need A Signature, Spending Does
 
@@ -69,7 +69,7 @@ Every instruction names which of the program's **instruction handlers** to run, 
 
 Alice runs her first transaction. It carries two instructions: the first tells the System Program's `transfer()` handler to move 0.05 SOL from her account to Bob's, and the second tells the Memo Program to write "thanks" to the log.
 
-The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the rest of the book's money math on this rule.
+The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **lamports**, SOL's **minor unit**: one billion lamports make one SOL, the way one hundred cents make one dollar. Balances are stored as, and calculated with, integers of lamports, so the balance an explorer displays as 1 SOL is the integer 1,000,000,000. Every asset in this book gets the same treatment. The *Arithmetic of Money* chapter builds the rest of the book's arithmetic from these integer minor units.
 
 > **Why "lamport"?** Lamports are named after Leslie Lamport, the Turing Award-winning computer scientist whose work on time, ordering, and consensus in distributed systems underpins every blockchain, Solana included.
 
@@ -83,7 +83,7 @@ For financial software, atomicity is a primitive you design with. Inside a trans
 
 - the escrow program you're about to build moves Alice's payment and Bob's stock in one atomic unit, and no combination of failures leaves one side paid and the other empty-handed. 
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state
-- A **flash loan**, a crypto specific concept, borrows in a transaction's first instruction, uses the money in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
+- A **flash loan**, a crypto specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
@@ -95,7 +95,7 @@ The budget for work done by instructions is metered in **compute units** per tra
 
 One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction, not a similar one and not an edited one. Anyone can use Alice's public key to verify a signature that claims to be from Alice.
 
- You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that key produces a fresh signature that the card is genuine and issued by your bank.
+ You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that private key produces a fresh signature that the card is genuine and issued by your bank.
 
 The signature is also a grant of authority. By signing, Alice authorizes what the transaction does in her name:
 
@@ -150,7 +150,7 @@ SOL is the network's **native token**, the asset it understands without any prog
 
 Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two. Bob does not need to ask Alice where her USDC lives. Bob's wallet computes where Alice's USDC account must be, and sends the tokens there. The *Tokens* chapter covers token accounts properly.
 
-So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, the same integer rule as lamports. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
+So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, and like a lamport amount it is an integer of minor units. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
 
 ![](figures/bobs-usdc-transaction.svg)
 
@@ -163,11 +163,11 @@ Bob's transfer instruction names every account it touches: Bob's USDC account, A
 Two payments toured every building block the rest of the book uses:
 
 - A **key pair**'s public key is an address, and at an address lives an **account**: a user's holds their balance of **SOL**, stored as an integer of **lamports**, its minor unit.
-- **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee: all authority reduces to whose signature a transaction carries.
+- **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee.
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
-- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a key nor seeds.
+- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no private key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a private key nor seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
 
 [^faucets]: The `solana airdrop` command sends devnet SOL, as does the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana). Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC.

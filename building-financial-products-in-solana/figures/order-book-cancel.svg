@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -9 640 711" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Bob cancels, and the lock returns</text>
-  <!-- cancel_order(): Bob's leaf leaves the bid tree and his lock becomes a claim -->
-  <!-- Bob cancels the rest of his order: the leaf comes out, the lock becomes a claim -->
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Bob cancels, and his USDC is credited back</text>
+  <!-- cancel_order(): Bob's leaf leaves the bid tree and the USDC held for it becomes a claim -->
+  <!-- Bob cancels the rest of his order: the leaf comes out, the USDC held for it becomes a claim -->
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="468" y="45" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- the order book: created at a public key the client generates, so its dot is on the curve; its box sits above the curve at the dot, as a mint box does -->

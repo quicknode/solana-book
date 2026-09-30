@@ -172,17 +172,65 @@ const rules = [
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],
+  // A label that sounds like a term of art and names nothing: say which program,
+  // handler, instructions or software is meant.
+  [/\bmachinery\b/i, 'name the program, handler or software instead of "the machinery"'],
   [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
   // "protocol" names the network and the programs on it, so it tells a reader
-  // neither. Identifiers that ship with the word keep it: the lookarounds skip
-  // anything backticked or joined by an underscore.
-  [/(?<![`\w])protocols?\b(?![\w`])/i,
-    'say "network" for Solana and the rules it enforces, "program" for onchain code; "protocol" names both (identifiers like `accumulated_protocol_fees` are exempt)'],
+  // neither. That goes for identifiers too: the companion programs name their
+  // fees `program_fees`, so a backticked `protocol_...` is a stale name. Only
+  // the Solend organization's name in a GitHub link keeps the word.
+  [/protocol/i,
+    'say "network" for Solana and the rules it enforces, "program" for onchain code; "protocol" names both, in prose and in identifiers',
+    /github\.com\/solendprotocol\//],
   [/Quicknode Press|QuickNode|QuikNode|Quiknode(?! Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode Inc."; there is no Quicknode Press'],
   [/\bgas fees?\b|\bgas costs?\b/i, 'say "transaction fees"'],
   [/\bmempool/i, "Solana has no mempool"],
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
   [/\bbase units?\b/i, 'say "minor unit"'],
+  // Coined labels that read as jargon, so neither the writer nor a reviewer
+  // flags them as metaphor, and each chapter reused the last one's until they
+  // looked like house style. The reader still decodes each one: "the claim
+  // handler's one gate" is "the claim handler compares", "the two exits" is
+  // "the claim or a refund", "state is truth" is the field the handler reads.
+  // Solana's feature gates are the real term and stay.
+  [/(?<!feature )\bgat(?:e|es|ed|ing)\b/i, 'name the check, the handler, and the error it fails with, not a "gate" (companion AI plugin)'],
+  [/\bexits?\b/i, 'name the handler, or say who gets what money out, not an "exit" (companion AI plugin)'],
+  [/(?<!offchain[ -])\btruth\b/i, 'name the field the program reads, not "the truth" ("Offchain Truth" is a chapter title) (companion AI plugin)'],
+  [/\bby construction\b/i, 'say which code makes it so (companion AI plugin)'],
+  [/\b\w+-based\b/i, 'say what happens: "each backer calls refund() themselves", not "pull-based" (companion AI plugin)'],
+  // A test runs one scenario, so "proves" overclaims. Kani proofs, signatures
+  // and proof-of-personhood really do prove, and none of them is named test_.
+  [/`test_\w+`[^.;]*\bprov(?:e|es|ed)\b|\btests? (?:suite )?prov(?:e|es)\b|\bproves? (?:it|that it|the program) works\b/i,
+    'a test checks one scenario: say "checks that ...", not "proves" (companion AI plugin)'],
+  // "Guard" is the same coined label as "gate". Wormhole's guardians are a
+  // real name, and \b keeps "guardian" from matching.
+  [/\bguard(?:s|ed|ing)?\b/i, 'say "check" or "test" and what it refuses, not "guard" (companion AI plugin)'],
+  // "Money" names no asset and no amount. The option terms, the Arithmetic
+  // of Money chapter's title, and everyday idioms about people rather than
+  // programs ("put money on", "get their money back", "sending money
+  // abroad", "real money", "whose money is stuck") stay.
+  [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -]|\bput |\bsen(?:t|ding) |\breal |\bwhose |want their |the same )\bmoney\b(?! market| back\b| in a savings account)/i,
+    'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)',
+    // The Conclusion's product ideas talk about the offchain world, where
+    // "money" is the plain word: the middleman,
+    // the friends' pot, the roaster's raise, the supplier's invoice, the
+    // licenses that move money between banks and the chain.
+    /holding the money and keeping|Money in the pot|let money cross|\*\*Money raised from|needs the money this week/],
+  // Kani marks a harness #[kani::proof], and prose picked up the word: "the
+  // Kani proofs", "formally verified". The companion repository has model
+  // checks, not formal proofs. The one sentence that draws the distinction
+  // is excepted below; `kani-proofs` and proof_* in backticks are identifiers.
+  [/\bformal(?:ly)? (?:verif\w*|proofs?)\b|\bmachine-checked proofs?\b|(?<!`)\bKani[- ]proofs?\b|\b(?:is|are) proved\b|\bKani-verified\b/i,
+    'a Kani harness is a model check: say "model-checks" or "the Kani harness checks", not "proof" or "formally verified" (companion AI plugin)'],
+  // A bare "key" leaves the reader to guess which half of the key pair is
+  // meant. A private key signs; a public key is stored, recorded and checked.
+  // The third element exempts only this rule: the PDA chapter's key/value
+  // store and the order book's critbit keys are the database meaning.
+  [/(?<!\b(?:public|private) )\bkeys?\b(?!\s?pairs?\b|[/-]value)/i,
+    'say "private key" (it signs) or "public key" (it is stored and checked), not a bare "key" (companion AI plugin)',
+    /key\/value|exists per key|binary key|keys differ|its key (?:diverges|splits)|The key is built|the two keys|linked keys|"Key" here/],
+  [/\bis (?:just |only )?an? (?:integer |single )?comparison\b/i, 'cut it: the size of the code is not the point (companion AI plugin)'],
   [/\bworked (example|scenario)\b/i, 'just "example", "scenario", or "walkthrough"'],
   // "Property" also names an account's fields, so "property test" reads two
   // ways in a book about accounts. The book's word for what a test or proof
@@ -209,6 +257,7 @@ const exceptions = [
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
   /call this property-based testing/, // the one pointer to the testing libraries' own term
+  /^Though Kani calls its checks proofs, a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
 
@@ -225,8 +274,8 @@ let failures = 0;
 for (const file of [...new Set(files)]) {
   const lines = readFileSync(file, "utf8").split("\n");
   lines.forEach((line, index) => {
-    for (const [pattern, reason] of rules) {
-      if (pattern.test(line) && !exceptions.some((ok) => ok.test(line))) {
+    for (const [pattern, reason, ruleException] of rules) {
+      if (pattern.test(line) && !(ruleException && ruleException.test(line)) && !exceptions.some((ok) => ok.test(line))) {
         failures += 1;
         console.error(`${file}:${index + 1}: ${reason}\n    ${line.trim().slice(0, 160)}`);
       }

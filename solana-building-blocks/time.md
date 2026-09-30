@@ -68,14 +68,14 @@ The network's target slot length is 200 milliseconds at the time of writing.[^sl
 A program can get that length three ways:
 
 - **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on. Keep any window that depends on the slot length in config, where a transaction can change it, which the section on a shortened slot covers.
-- **From the feature gates.** Changes to the network ship as **features**, built into the validator software switched off and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its gate activates, not from the moment it does, so check the epoch as well as the gate.
+- **From the feature gates.** Changes to the network ship as **features**, built into the validator software switched off and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its feature gate activates, not from the moment it does, so check the epoch as well as the feature gate.
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case such an account now exists.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
-The gates give the length the network aims for, and the network can run slower than that. When slots take longer than the configured length, a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
+The feature gates give the length the network aims for, and the network can run slower than that. When slots take longer than the configured length, a 150-slot freshness window covers more wall-clock time than it was sized for, so it accepts older prices.
 
-To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Guard that division: the divisor is zero on an epoch's first slot. That measurement comes from the leader-written timestamp, so it belongs in offchain tooling, not in a handler. A handler that needs wall-clock time should read the timestamp itself, as the lending market's interest does. Multiplying a slot count by a measured slot length carries the timestamp's error and adds the slot count's.
+To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Check the divisor before that division: it is zero on an epoch's first slot. That measurement comes from the leader-written timestamp, so it belongs in offchain tooling, not in a handler. A handler that needs wall-clock time should read the timestamp itself, as the lending market's interest does. Multiplying a slot count by a measured slot length carries the timestamp's error and adds the slot count's.
 
 > **One conversion covers one slot time.** Converting only works over a period where the slot time in milliseconds was constant. If the slot time changed during the period being measured, multiplying by the current figure understates the time that passed, since slots in the past were longer. Converting over a period where the slot time changed means splitting it at each change, which always falls on an epoch boundary, and converting each piece at the slot time the network used then. A slot count that reaches back across the reduction to 200 milliseconds needs that split, while one that starts after it does not. At the time of writing, no reduction below 200 milliseconds is planned.
 
@@ -125,9 +125,9 @@ Both handlers compare that one count against the same duration:
 - `contribute()` requires it to be *less than* the duration.
 - `refund()` requires it to be *at least* the duration.
 
-Because both handlers compare the same expression, there is no gap and no overlap between "you may still contribute" and "you may now refund". At the moment the count reaches the duration, contributions turn off and refunds turn on, by arithmetic rather than by a second stored flag anybody has to keep in step.
+Because both handlers compare the same expression, there is no gap and no overlap between "you may still contribute" and "you may now refund". At the moment the count reaches the duration, `contribute()` starts failing with `FundraiserEnded` and `refund()` stops failing with `FundraiserNotEnded`, with no second stored flag that has to be kept in step with the count.
 
-The trap is what "seven days" then means: the window ends at the first tick of day seven, not at the end of the seventh day.
+The trap is what "seven days" means to the people using it. The program closes the window exactly 168 hours after `time_started`, at the same time of day it opened, not at midnight at the end of the seventh calendar day.
 
 ![](figures/day-boundary.svg)
 
@@ -143,9 +143,9 @@ A halt is rare: at the time of writing, block production has not stopped for yea
 
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart carries a slot roughly where the last one left off. Its timestamp cannot jump the hours the halt took either, because the network rejects a block whose time runs further ahead than the slots since its parent allow. The timestamp trails real time after a restart and catches up over the blocks that follow. That gap has three consequences:
 
-- **Accrual by timestamp charges the halt, a little late.** The lending market's interest, the perpetual futures venue's funding, and the vault's fee all count seconds, so a nine-hour halt accrues nine hours. It arrives over the catch-up rather than in the first block. The loans were outstanding and the suppliers' money was locked for those nine hours, so charging for them is accurate.
+- **Accrual by timestamp charges the halt, a little late.** The lending market's interest, the perpetual futures venue's funding, and the vault's fee all count seconds, so a nine-hour halt accrues nine hours. It arrives over the catch-up rather than in the first block. The loans were outstanding and the suppliers' deposits were locked for those nine hours, so charging for them is accurate.
 - **Neither kind of freshness window refuses the old price on its own.** The lending market's 25-slot window sees a price stamped one slot ago and would accept a number nine hours old. The vault's sixty-second window does no better, because the timestamp it reads is trailing, so a price published just before the halt looks seconds old. The damage is largest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
-- **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours. A contributor with an hour left before the halt gets less than an hour after it, because the timestamp runs fast while it catches up. That program survives it because its refund path has no deadline; a design whose only exit was a narrow window would have stranded them.
+- **A deadline can pass with nobody able to act on it.** The fundraiser's day count runs through a halt like any other nine hours. A contributor with an hour left before the halt gets less than an hour after it, because the timestamp runs fast while it catches up. The fundraiser survives it because `refund()` has no closing deadline, so contributors can still get their money back after the halt. A design that allowed refunds only during a narrow window would have left them unable to.
 
 Every freshness window needs one more check. The `LastRestartSlot` sysvar[^last-restart-slot] carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, the perpetual futures venue, and the managed fund all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program that checks a price's age, in slots or in seconds.
 
@@ -155,7 +155,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 The network has shortened the slot before, most recently in stages from 400 milliseconds to 200.[^slot-times] The change is rare and happens in one step: the number holds for years, then moves once.
 
-A freshness window sized in slots gets stricter. A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That costs availability and never safety, and it announces itself the first time a price is refused. The defense is to keep the window where a transaction can reach it, so the change needs a configuration transaction rather than a redeploy.
+A freshness window sized in slots gets stricter. A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That costs availability and never safety, and it announces itself the first time a price is refused. The defense is to store the window in an account a transaction can update, so the change needs a configuration transaction rather than a redeploy.
 
 A rate counted in seconds is untouched. The lending market's interest and the perpetual futures venue's funding charge the same per hour at any slot length, with nothing to retune. A rate counted in slots gives no such warning when the slot shortens. An annual rate divided by a fixed slots-per-year number assumes a slot length, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
 
@@ -168,9 +168,9 @@ The table lists every program in Part II that touches time, and the clock each o
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
 | fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is [PLACEHOLDER: measure hours of drift per week after 200 ms slots and Alpenglow go live] out |
-| lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price is the attack |
+| lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price can be exploited |
 | perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
-| prop AMM | price freshness | slots | a stale price is the attack |
+| prop AMM | price freshness | slots | a stale price can be exploited |
 | managed fund | an annual fee, and price freshness | timestamps for both | seconds against a year are nothing, and the feed stamps seconds |
 | order book | which order came first | a sequence number, neither clock | neither clock is fine enough to order by |
 
@@ -179,10 +179,10 @@ The table lists every program in Part II that touches time, and the clock each o
 - Solana has two clocks. The slot count only goes up and nobody can move it, though what it comes to in seconds varies a little and stops in a halt. The Unix timestamp is wall-clock time written by a leader, out by a few seconds somebody chose, however long the span.
 - Count slots for price freshness and for anything an adversary running a leader could profit from by shifting the time a few seconds. Use the wall clock for a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival, and whatever unit the publisher stamped for somebody else's number.
 - To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed seconds. A current balance is the principal multiplied by the factor.
-- A price needs a freshness window, each consumer sets its own, and the unit follows the source: slots where the program chooses, seconds where the feed published seconds.
+- Give every price a freshness window, set by each consumer, in the unit the source uses: slots where the program chooses, seconds where the feed published seconds.
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch, and better still hold it as a figure you can update without a redeploy. Anza's documentation carries the current figure, and the companion repository the current way to get it.
-- A shortened slot is rare and arrives all at once. Every slot-counted window tightens, so keep windows where a transaction can retune them. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
-- A deadline counted in whole days floors, so both sides of it must be computed from the same expression, and the window ends at the first tick of the last day. Say which edge you meant when you write the terms down.
+- The network occasionally shortens its slot time, as it did when slots went from 400 milliseconds to 200, in stages. Each change takes effect everywhere at the start of an epoch, with no transition. Every slot-counted window then covers less time, so store windows in an account a transaction can update. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
+- A deadline counted in whole days floors, so compute both sides of it from the same expression. The window closes exactly that many 24-hour periods after it opened, at the same time of day, so say so when you write the terms down.
 - For order of arrival, use a number of your own: the order book gives each resting order the next number from a counter it keeps, and keeps its timestamp for display only.
 - Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, but the timestamp cannot jump, so it trails after a restart and catches up. Accrual by timestamp charges the halt during the catch-up, deadlines expire with nobody able to act on them, and a price that is hours old still looks fresh.
 - Pair every freshness window, in slots or in seconds, with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
