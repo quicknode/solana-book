@@ -172,6 +172,9 @@ const rules = [
   [/can(?:not|'t) verify the price/i, "negative offchain-truth framing"],
   [/\bBONK\b/, "no meme tokens; use USDC and RWA stocks (NVDAx, TSLAx, SPCXx)"],
   [/\bmemecoin|meme token/i, "no meme tokens"],
+  // A label that sounds like a term of art and names nothing: say which program,
+  // handler, instructions or software is meant.
+  [/\bmachinery\b/i, 'name the program, handler or software instead of "the machinery"'],
   [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
   // "protocol" names the network and the programs on it, so it tells a reader
   // neither. That goes for identifiers too: the companion programs name their

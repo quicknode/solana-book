@@ -121,7 +121,7 @@ In a lending market, the fraction of a debt one liquidation may repay (typically
 One running instance of Solana: the same software, a separate world.
 
 - **Mainnet** holds real value.
-- **Devnet** is identical machinery with free, valueless tokens for building and testing.
+- **Devnet** runs the same software as mainnet, with free, valueless tokens, for building and testing.
 - **Localnet** runs on your own machine.
 - **Testnet** is where the Solana software itself is tested.
 
