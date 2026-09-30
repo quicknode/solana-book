@@ -119,7 +119,7 @@ Every checked operation maps to `MathOverflow`. There are no rates and no curves
 
 ## Testing Considerations
 
-The suite builds all state through the program's own handlers, and its centerpiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: the admin-only handlers, the outcome list locking when betting opens, the two-outcome minimum, both edges of the close time, a close time in the past, bet-after-settle, double claims, empty-outcome settlement, cancel-and-refund, and when a losing bet may close. When you write your own market, copy the shape: the happy path checks the math, and every adversarial code path gets a test whose name says what it refuses to allow.
+The suite builds all state through the program's own handlers, and its centerpiece is `test_full_lifecycle`: the exact story above, config through claims, with balances asserted at each step. Around it, one test per failure mode: the admin-only handlers, the outcome list locking when betting opens, the two-outcome minimum, both edges of the close time, a close time in the past, bet-after-settle, double claims, empty-outcome settlement, and cancel-and-refund. `test_close_losing_bet_only_after_settle_and_only_for_losers` checks that `close_losing_bet()` works only on a settled event and only for a bet that lost. When you write your own market, copy the shape: the happy path checks the math, and every adversarial code path gets a test whose name says what it refuses to allow.
 
 ## What You Learnt from Building the Betting Market
 
