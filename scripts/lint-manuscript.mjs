@@ -201,9 +201,10 @@ const rules = [
   // "Guard" is the same coined label as "gate". Wormhole's guardians are a
   // real name, and \b keeps "guardian" from matching.
   [/\bguard(?:s|ed|ing)?\b/i, 'say "check" or "test" and what it refuses, not "guard" (companion AI plugin)'],
-  // "Money" names no asset and no amount. The option terms and the
-  // Arithmetic of Money chapter's title are real names.
-  [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -])\bmoney\b(?! market)/i,
+  // "Money" names no asset and no amount. The option terms, the Arithmetic
+  // of Money chapter's title, and the idioms "put money on" and "get their
+  // money back" stay.
+  [/(?<!(?:in|at) the |out of the |arithmetic[ -]of[ -]|\bput )\bmoney\b(?! market| back\b)/i,
     'name what it is: the stake, the collateral, the deposit, the USDC, or "assets" or "amounts" (companion AI plugin)'],
   // Kani marks a harness #[kani::proof], and prose picked up the word: "the
   // Kani proofs", "formally verified". The companion repository has model
