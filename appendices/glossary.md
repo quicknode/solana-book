@@ -172,6 +172,10 @@ A permissionless instruction handler that performs maintenance work nobody owns 
 
 A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it visits orders in price-time priority. See the *Order Book Exchange* chapter.
 
+### crypto
+
+In the context of finance, the industry built on blockchains: distributed ledgers such as Solana. Crypto is not an asset class in itself, although the term is frequently misused that way. Crypto is a wrapper for trading a wide variety of asset classes, including equities such as NVDAx, commodities such as gold, derivatives such as the perpetual futures in this book, and native crypto assets such as SOL. Each of these is held onchain as a [token](#token). When a sentence means one of those [assets](#asset), name its class instead.
+
 ### curator
 
 In a fund, the authority that decides which assets may be held at all and which price feed prices each one, kept separate from the [manager](#manager) who picks the allocation. The split is what stops a manager listing a token they minted themselves, or pairing a real asset with a feed they control. See the *Managed Fund* chapter.
