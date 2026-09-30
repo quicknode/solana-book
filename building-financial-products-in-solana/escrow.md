@@ -126,7 +126,7 @@ Five things must hold before and after every handler:
   Each is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, stored-address checks bind the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter shows what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
 - **The abandoned offer.** If `cancel_offer()` didn't exist, an untaken offer would leave the maker's offered tokens stranded in the program.
-- **Degenerate offers.** The account constraints do the structural validation, and structure is most of an escrow. Two handler-level checks belong in any escrow headed to production: reject amounts of zero, and reject offers where the two mints are the same. A swap of a token for a different amount of itself means someone is about to be cheated.
+- **Degenerate offers.** An offer with zero tokens on one side, or of a token for a different amount of itself, means someone is about to be cheated. `make_offer()` refuses an offer of zero tokens on either side with `ZeroAmount` (`test_make_offer_rejects_zero_offered_amount` and `test_make_offer_rejects_zero_wanted_amount`). An offer of a token for itself never reaches the handler: with one mint, the maker's token A and token B accounts are the same account, and Anchor refuses the same writable account twice with `ConstraintDuplicateMutableAccount`, which `test_make_offer_rejects_same_mint` checks.
 
 ## Testing Considerations
 
