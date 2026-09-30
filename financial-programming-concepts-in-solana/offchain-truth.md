@@ -19,7 +19,7 @@ Either way, by the time your program sees the fact it is an ordinary instruction
 
 > **How a Pyth price reaches your program.** Publishers sign their prices, and the aggregate is attested by the signatures of Wormhole's guardians. Anyone can then post that signed update to Solana, where the **Pyth Receiver program** verifies those guardian signatures and writes a `PriceUpdateV2` account that it owns. Your program reads that account in a later transaction, and what it checks are `feed_id`, `publish_time`, and `conf`, never a signature, because the receiver already did that. One more field beyond the four checks above: `verification_level` records whether the full guardian set was checked or only some of its signatures, so a partially verified update is a weaker fact than a fully verified one. The companion repository's Pyth example reads these fields.
 
-An oracle's publication is as untrusted as any other input. The program must check it for substitution, staleness, uncertainty and degenerate values, or every health check, liquidation, and payout downstream runs on the wrong number.
+An oracle update is as untrusted as any other input. The program must check it for substitution, staleness, uncertainty and degenerate values, or every health check, liquidation, and payout downstream runs on the wrong number.
 
 ## Trust Is an Engineering Parameter
 
