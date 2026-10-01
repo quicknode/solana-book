@@ -300,6 +300,10 @@ Advancing an [index](#index) for the time elapsed since it was last updated, whi
 
 The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. See the *Adversary* chapter.
 
+### initial margin
+
+The minimum collateral a leveraged position needs to open, usually stated in basis points of its notional. It sets the maximum leverage: a 10% initial margin is 10x. It sits above the [maintenance margin](#maintenance-margin), so a new position has room to move before it can be liquidated. See the *Perpetual Futures* chapter.
+
 ### informed flow
 
 Trades from someone who knows where the price is about to move, such as an arbitrage bot that has seen the price change on another venue before a market maker's quote has caught up. "Informed" says nothing about how experienced the trader is. Its opposite is uninformed flow: people who trade because they want the asset. The *Prop AMM* chapter covers it with [adverse selection](#adverse-selection) and [order segmentation](#order-segmentation).
@@ -350,7 +354,7 @@ A pooled borrow-lend venue: suppliers earn interest, borrowers pay it against co
 
 ### leverage
 
-Controlling more exposure than the collateral posted: a 5,000 USDC position over 1,000 USDC of collateral is 5x leverage. Leverage multiplies both the gain and the loss of every price move.
+Controlling more exposure than the collateral posted: a 5,000 USDC position over 1,000 USDC of collateral is 5x leverage. Leverage multiplies both the gain and the loss of every price move. The maximum leverage a venue allows is one over its [initial margin](#initial-margin).
 
 ### limit order
 
@@ -386,7 +390,7 @@ The receipt token minted to a liquidity provider, representing a proportional cl
 
 ### maintenance margin
 
-The minimum equity a leveraged position must keep, usually stated in basis points of its notional. Below it, the position may be liquidated by anyone.
+The minimum equity a leveraged position must keep, usually stated in basis points of its notional. Below it, the position may be liquidated by anyone. It is lower than the [initial margin](#initial-margin) needed to open the position. See the *Perpetual Futures* chapter.
 
 ### major unit
 
@@ -686,7 +690,7 @@ A signed bundle of instructions that executes atomically: all of it lands or non
 
 ### TWAP
 
-A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than for one slot. See the *Adversary* chapter.
+A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than for one slot. See the *Adversary* chapter, and the *Perpetual Futures* chapter for a program that keeps its own average of an oracle's price and refuses trades at prices too far from it.
 
 ### underlying
 
