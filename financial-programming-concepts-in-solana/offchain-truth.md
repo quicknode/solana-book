@@ -27,7 +27,7 @@ Who signs the fact is a design decision with a range of answers, and the way to 
 
 At one end is the **single trusted signer**. The betting market's admin settles the event with one signature: `settle_event()` writes their answer to the event account's `winning_outcome_index`, and every payout follows from it. For a small market whose operator's business is its reputation, this can be the right design, and the program's job is to make the trust *visible and narrow*. The admin picks the winning outcome, but they cannot touch the pro-rata math, exceed the snapshotted fee, or reach the vault by any other path. A reader of the code can see what their signature can and cannot do.
 
-In the middle are **committees and multi-party resolution**: several parties must agree before a fact is recorded, so lying requires collusion and any single defector breaks the lie. The cost is coordination and latency.
+In the middle are **committees and multi-party resolution**: several parties must agree before a fact is recorded, so lying requires collusion and any single defector breaks the lie. The drawback is coordination and latency.
 
 At the far end are **price feed networks** like Pyth, which aggregate many independent publishers (exchanges, market makers) into a single signed publication with a confidence interval, updated continuously. Lying requires bribing a meaningful share of publishers whose businesses depend on being right, which is the strongest economic answer available to "what does it cost them to lie." This is what the lending market and perpetual futures exchange consume. Which network, and which crate decodes it, is a convention that lives in the companion repository; the checks in the previous section apply to all of them.
 

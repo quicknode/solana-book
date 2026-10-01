@@ -138,6 +138,6 @@ Six concepts came with the curve:
 - **Assert after the math.** The post-trade product re-check catches every "computed the output wrong and overpaid" bug, including the ones not written yet.
 - **Effective reserves.** The admin's virtual fee claim is excluded from every piece of LP-facing math, and kept in two counters on the pool config rather than in a separate fee vault.
 - **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone and counted in the divisor on the way in and on the way out, keeps the share divisor from ever being dust-sized.
-- **Impermanent loss.** An LP is a bet on trading volume, not price direction: the further the price moves in either direction, the more the LP loses against simply holding the two tokens, and only fees make up for it.
+- **Impermanent loss.** An LP position profits from trading volume, not from price direction: the further the price moves in either direction, the more the LP loses against simply holding the two tokens, and only fees make up for it.
 
 In the *Prop AMM* chapter we will build a market maker that quotes its own capital at prices taken from an oracle. There is no curve, so a trade does not move the price and there is no impermanent loss, but the firm carries a different risk: the traders who arrive while its quote is stale know something it does not. The *Managed Fund* chapter, later in the book, uses venues like these to trade investors' deposits, and the question there is what the manager is allowed to do with them.

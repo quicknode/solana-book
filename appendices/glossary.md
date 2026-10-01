@@ -402,7 +402,7 @@ The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which
 
 ### manager
 
-In a fund, the authority that sets the allocation and earns the management fee, and that can do nothing else: no instruction handler gives them a path to the assets. What a careless manager can still cost depositors is churn, rebalancing that pays [slippage](#slippage) for nothing. See [curator](#curator) and the *Managed Fund* chapter.
+In a fund, the authority that sets the allocation and earns the management fee, and that can do nothing else: no instruction handler gives them a path to the assets. What a careless manager can still cost depositors is churn, rebalancing that pays [slippage](#slippage) without improving the portfolio. See [curator](#curator) and the *Managed Fund* chapter.
 
 ### mantissa
 

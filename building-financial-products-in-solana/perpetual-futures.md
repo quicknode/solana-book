@@ -124,7 +124,7 @@ The example's design notes point at Percolator, Anatoly Yakovenko's Kani-checked
 
 - **Realizable credit**: every payout the system may ever owe is backed before it can be owed. Here: reservations at open, the profit cap, the free-liquidity check in `remove_liquidity()`, and the `PoolInsolvent` checks that refuse a payout the pool cannot cover.
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
-- **Bounded progress**: no operation's cost grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
+- **Bounded progress**: no operation's compute grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
 
 The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + program_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy can, at all times, be closed by either `close_position()` or `liquidate_position()`.
 

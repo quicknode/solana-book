@@ -127,7 +127,7 @@ A racetrack's parimutuel pool needs a tote board, a licensed operator, and a pay
 
 This chapter added five concepts:
 
-- **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so conviction pays proportionally and no one sets odds.
+- **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so a larger stake wins proportionally more and no one sets odds.
 - **A designated signer decides the result.** The operator acts as the oracle, and the program's job is making that trust visible and narrow: they pick the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
 - **Terms locked before bettors commit stakes.** An explicit Draft status keeps bets out until the admin opens the market, so the outcome list is fixed before the first stake. The fee and close time are fixed at event creation, so the question bettors staked on cannot be rewritten.
 - **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize.
