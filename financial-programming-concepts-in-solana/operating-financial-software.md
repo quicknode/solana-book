@@ -13,7 +13,7 @@ Financial code fails at the edges the happy path never reaches: the refund, the 
 - **Test every attack by name.** Every check in a program chapter's failure-modes section gets a test that tries to get past it: the non-maker canceling an offer, the fee vault passed in place of the user vault, the second claim on a settled event.
 - **Assert invariants, not just account values.** Conservation (a round trip creates no value), monotonicity (an index never decreases), directional rounding (no path rounds in the user's favor). An invariant test catches a whole bug class; an assertion on one account's value catches one instance of it.
 
-Every test in this list is cheap to write and fast to run. The test runs the compiled program in-process in milliseconds, moving the clock forward makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs. Cashio and Wormhole, in the *Adversary* chapter, each lost their funds through a handler that accepted a substituted account. A test that passes the fee vault in place of the user vault runs that attack against your own program.
+Every test in this list is quick to write and fast to run. The test runs the compiled program in-process in milliseconds, moving the clock forward makes weeks of interest accrue inside one test, and an injected feed account sets whatever price the test needs. Cashio and Wormhole, in the *Adversary* chapter, each lost their funds through a handler that accepted a substituted account. A test that passes the fee vault in place of the user vault runs that attack against your own program.
 
 ## Model Checking Goes Further Than Testing
 
@@ -35,7 +35,7 @@ A handler that moves tokens through the Token Program cannot be model-checked en
 
 ## Wait for Finality Before Doing Anything You Cannot Undo
 
-A handler cannot ask whether the block it is running in will survive. There is no sysvar for it and no check to write, because a program always executes in a block no validator has voted on yet. If that block is skipped or loses a fork, the transaction did not happen, and every account it touched goes back with it.
+A handler cannot ask whether the block it is running in will be finalized. There is no sysvar for it and no check to write, because a program always executes in a block no validator has voted on yet. If that block is skipped or loses a fork, the transaction did not happen, and every account it touched goes back with it.
 
 The code that reads the chain has to answer that question, because it acts on what it finds: the liquidator bot, the crank on a schedule, the backend that marks an order paid, the ledger your accountants close the month with. Some of what they do cannot be taken back. A reader of the chain asks for one of two states,[^confirmed] by the commitment level it passes with the request:[^commitment-levels]
 
@@ -47,7 +47,7 @@ The code that reads the chain has to answer that question, because it acts on wh
 - **A liquidator bot scans at `processed`**, because it is reading only to decide which transaction to send next, and a transaction aimed at a state that vanished fails.
 - **Anything that leaves the chain and cannot be recalled waits for `finalized`**: paying out fiat, emailing a customer that their payment arrived, crediting a balance in your own books.
 
-The rule underneath is to match the level to how reversible your reaction is, because the chain can drop a block that is not final, and your bank will not take the wire back. Waiting costs latency, and how much is set by the network's consensus rules, not by anything in your code.
+The rule underneath is to match the level to how reversible your reaction is, because the chain can drop a block that is not final, and your bank will not take the wire back. Waiting adds latency, and how much is set by the network's consensus rules, not by anything in your code.
 
 ## Admin Power Runs on a Written Specification
 
@@ -57,8 +57,8 @@ Every market in this book has an operator with real power: withdrawing fees, set
 - **Snapshot terms when participants commit their tokens.** The betting market copies the config's fee onto each event when the event is created, along with the time betting closes, so the fee an event pays and the window bettors get are fixed before anyone can bet. The managed fund's fee has no setter at all. A parameter the admin can change applies to deposits that arrive after the change, never to deposits already inside.
 - **Give the admin no path to principal.** No instruction handler in the book's programs, under any parameters, moves user deposits to the operator. The way to make that checkable is to keep the operator's fees in their own place. The order book's fee vault holds only taker fees, and `withdraw_fees` moves only from that vault to the market authority. The lending reserve keeps its share in `accumulated_program_fees`, which the exchange rate subtracts before valuing a supplier's shares, so collecting it changes nothing a supplier is owed. Rebalancing moves funds between program-owned vaults, and settlement pays by formula. When that holds in your program, say it in those words rather than claiming "non-custodial": the rules are the deployed program, and the operator is not in them.
 - **Let a pause stop deposits and trades, never withdrawals.** A pause that refuses new deposits and new positions during an incident protects users; one that refuses withdrawals traps their deposits. The prop AMM's `paused` flag, set through `set_quote`, makes `swap` refuse and is read by no other handler. Whatever a pause stops, every participant must still be able to get their assets out of every state, paused included.
-- **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And plan for what happens if the price feed stops publishing. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than freezing every user in place until a price arrives.
-- **Make upgrade authority worth trusting.** Ship fixes through a multisig with named holders rather than a single private key on one person's laptop, and say so where users can read it. A user who reads that knows a change to the code takes several named people to sign, and that one stolen laptop cannot ship one.
+- **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And plan for what happens if the price feed stops publishing. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than blocking every user's withdrawals until a price arrives.
+- **Make upgrade authority trustworthy.** Ship fixes through a multisig with named holders rather than a single private key on one person's laptop, and say so where users can read it. A user who reads that knows a change to the code takes several named people to sign, and that one stolen laptop cannot ship one.
 
 ## Ship To Mainnet With a Second (or Third) Opinion
 

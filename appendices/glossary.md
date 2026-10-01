@@ -86,7 +86,7 @@ An address chosen rather than computed: the System Program, the sysvars, and the
 
 ### bump
 
-The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address cheaply.
+The extra byte found while deriving a PDA that pushes the result off the ed25519 curve. Programs store the bump at creation so later calls can rebuild the address without searching for the bump again.
 
 ### call
 
@@ -110,11 +110,11 @@ Arithmetic that reports failure instead of producing a wrong answer: Rust's `che
 
 ### checks-effects-interactions
 
-The ordering rule for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the books already settled. See the *Adversary* chapter.
+The ordering rule for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the program's state already updated. See the *Adversary* chapter.
 
 ### close factor
 
-In a lending market, the fraction of a debt one liquidation may repay (typically 50%). Turns liquidation into a correction rather than an execution. See the *Lending and Borrowing* chapter.
+In a lending market, the fraction of a debt one liquidation may repay (typically 50%). So a liquidation reduces a debt partway rather than closing it all at once. See the *Lending and Borrowing* chapter.
 
 ### cluster
 
@@ -266,7 +266,7 @@ One of two competing chains, formed when validators briefly build on different b
 
 ### funding rate
 
-The periodic payment between longs and shorts on a perpetual futures market that tethers the perpetual's price to the index price.
+The periodic payment between longs and shorts on a perpetual futures market that keeps the perpetual's price close to the index price.
 
 ### half-up
 
@@ -366,7 +366,7 @@ The debt-to-collateral ratio at which a position becomes liquidatable. Always ab
 
 ### liquidity provider (LP)
 
-Someone who deposits assets into a pool for traders to trade against, earning fees in exchange. An LP is a bet on volume, not on price direction.
+Someone who deposits assets into a pool for traders to trade against, earning fees in exchange. An LP position profits from trading volume, not from price direction.
 
 ### loan-to-value (LTV)
 
@@ -490,7 +490,7 @@ An address computed from a program's ID and chosen seeds. A PDA is not a public 
 
 ### perpetual future
 
-A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate tethers its price to the asset it tracks. The *Perpetual Futures* chapter builds one.
+A contract paying the price movement of an asset, long or short, with leverage and no expiry date; a funding rate keeps its price close to the asset it tracks. The *Perpetual Futures* chapter builds one.
 
 ### phantom overflow
 
@@ -510,7 +510,7 @@ What the buyer of an [option](#option) pays its [writer](#writer) for the right,
 
 ### price impact
 
-How far your own trade moves the price it is executing against. A trade on a constant-product pool walks along the curve as it fills, so the average price paid is worse than the price quoted before it started, and the pool's [spot price](#spot-price) afterwards is where the next trade begins. It is what the formula charges for instant liquidity, and what a sandwich squeezes. Contrast [slippage](#slippage), which also covers the market moving before you land.
+How far your own trade moves the price it is executing against. A trade on a constant-product pool walks along the curve as it fills, so the average price paid is worse than the price quoted before it started, and the pool's [spot price](#spot-price) afterwards is where the next trade begins. It is what the formula charges for instant liquidity, and what a sandwich attack profits from. Contrast [slippage](#slippage), which also covers the market moving before you land.
 
 ### price-time priority
 
@@ -574,7 +574,7 @@ A limit order that did not match on arrival and now waits on the book, funded an
 
 ### rounding
 
-The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder always settles with the program. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
+The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder always stays with the program. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
 
 ### RPC endpoint
 
@@ -686,7 +686,7 @@ A signed bundle of instructions that executes atomically: all of it lands or non
 
 ### TWAP
 
-A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than rent it for one slot. See the *Adversary* chapter.
+A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than for one slot. See the *Adversary* chapter.
 
 ### underlying
 
@@ -694,7 +694,7 @@ The asset an [option](#option) or other derivative is about: what a [call](#call
 
 ### Unix timestamp
 
-The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is accurate to within a few seconds and somebody chose where within them. Use it for spans quoted to people, and count [slots](#slot) wherever a few seconds would pay whoever moved them. See the *Time* chapter.
+The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is accurate to within a few seconds and somebody chose where within them. Use it for spans quoted to people, and count [slots](#slot) for a short window, where moving the time a few seconds would profit whoever moved it. See the *Time* chapter.
 
 ### utilization
 
@@ -730,6 +730,6 @@ The party who creates an [option](#option) and sells the right it carries. In fi
 
 ### zero-copy
 
-Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs afford large accounts like a 180 KB order book.
+Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs use large accounts like a 180 KB order book.
 
 [^confirmed]: A third state, `confirmed`, was available under the older Tower BFT mechanism that was replaced with Alpenglow: a block a supermajority of stake had voted for, which the network still permitted to lose. Alpenglow's first round of votes finalizes the block, so `confirmed` now means the same as `finalized`.

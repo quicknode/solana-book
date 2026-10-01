@@ -6,7 +6,7 @@ The program lives at `finance/perpetual-futures` in the companion repository. It
 
 ## The Pool Is the Other Side of the Trade
 
-In the *Order Book Exchange* chapter, every long met a short: Carol's ask crossed Bob's bid, and the program merely kept score. A perp that trades against a pool has no orders to match. **Liquidity providers fund one pool, and the pool is the counterparty to every position.** When a trader wins, the pool pays; when a trader loses, the pool keeps the loss. So an LP's return is the losing traders' losses plus the funding the pool collects, minus whatever the winning traders take. The open and close fees go to the pool's creator, not to the LPs.
+In the *Order Book Exchange* chapter, every long met a short: Carol's ask crossed Bob's bid, and the program only recorded the result. A perp that trades against a pool has no orders to match. **Liquidity providers fund one pool, and the pool is the counterparty to every position.** When a trader wins, the pool pays; when a trader loses, the pool keeps the loss. So an LP's return is the losing traders' losses plus the funding the pool collects, minus whatever the winning traders take. The open and close fees go to the pool's creator, not to the LPs.
 
 That design decision creates the problem the program is organized around: the program must be able to check that the pool can pay every winner, at every moment, **without ever iterating over the open positions**. A program that must touch every position to answer "am I solvent?" stops fitting in a transaction once it has enough open positions. That requirement explains almost every field in the account model.
 
@@ -97,7 +97,7 @@ At $115, Bob's equity is 995 − 750 = 245, under the 250 maintenance line. He s
 - Bob's remaining equity, floored at zero: 245 USDC.
 - Dave takes the liquidation fee, 1% of the 5,000 notional = 50 USDC, capped at remaining equity: 50.
 - Bob is refunded the rest: 195 USDC, plus the rent from his position account, which closes.
-- The LPs absorb the difference between Bob's collateral and what walked out: 995 − 245 = 750 USDC to `liquidity`.
+- The LPs absorb the difference between Bob's collateral and what was paid out: 995 − 245 = 750 USDC to `liquidity`.
 
 The pool cannot sell Bob's position; a program never acts on its own, somebody has to call it, so the design pays outsiders to call it at the right moment. Dave is the crank pattern from the *Lending and Borrowing* chapter with a profit motive. The example documents one gap: the liquidation fee comes out of *remaining equity*, so a position that gaps straight through zero pays Dave nothing, and positions nobody liquidates become losses the LPs absorb. Production venues fund the liquidator from an insurance fund so the incentive never disappears.
 
@@ -116,7 +116,7 @@ Here is where everyone ends up:
 - **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers, plus the losses and funding of the next thousand traders.
 ## The Math: One Formula per Concept, All Floored in the Pool's Favor
 
-Every calculation is checked u128 integer arithmetic, multiply before divide, and every division rounds in the pool's favor: `basis_points_of()` floors fees and margin thresholds, share minting and withdrawal amounts floor against AUM, and PnL truncates toward zero. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the cost constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price, so AUM, and with it LP share pricing and solvency, computes in constant time forever.
+Every calculation is checked u128 integer arithmetic, multiply before divide, and every division rounds in the pool's favor: `basis_points_of()` floors fees and margin thresholds, share minting and withdrawal amounts floor against AUM, and PnL truncates toward zero. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the compute per transaction constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price, so AUM, and with it LP share pricing and solvency, computes in constant time forever.
 
 ## The Invariants: Percolator's Three, Simplified
 
@@ -155,6 +155,6 @@ This chapter added four concepts:
 - **Funding.** A pool-wide index plus a per-position entry snapshot charges the crowded side a fee, the same accounting structure every production venue uses.
 - **Mark-to-market share pricing.** LP shares price against AUM including traders' unrealized PnL, so entering and leaving the pool is fair at any instant.
 
-This chapter used mints and token accounts, PDAs as vault authorities, shares priced against a pool, amounts read from state fields rather than vault balances, and checks-effects-interactions without explaining any of them, because earlier chapters already had. The same goes for a way out of every state for every participant, a signed external price checked before use, cranks run by profit-seekers, and integer arithmetic that rounds toward the house. In the *Where to Go From Here* chapter we will cover what this book left out, and how to take a program of your own from an idea to mainnet. The companion repository holds the code.
+This chapter used mints and token accounts, PDAs as vault authorities, shares priced against a pool, amounts read from state fields rather than vault balances, and checks-effects-interactions without explaining any of them, because earlier chapters already had. The same goes for a way out of every state for every participant, a signed external price checked before use, cranks run by profit-seekers, and integer arithmetic that rounds in the program's favor. In the *Where to Go From Here* chapter we will cover what this book left out, and how to take a program of your own from an idea to mainnet. The companion repository holds the code.
 
-[^perps-volume]: [defillama.com](https://defillama.com) tracks spot and perpetual volumes side by side, so the gap between the two is one click away. It moves with the market.
+[^perps-volume]: [defillama.com](https://defillama.com) tracks spot and perpetual volumes side by side, so the two can be compared on one page. It moves with the market.

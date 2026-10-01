@@ -57,7 +57,7 @@ The **offer account** stores what Alice wants in return. It is the program's cus
 - `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
 - `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
 - `token_b_wanted_amount`, how much of token B the maker wants, in minor units
-- `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
+- `bump`, saved once at creation so later instruction handlers can rebuild the account's address without searching for the bump again
 
 The offer account lives at a **PDA** (program derived address), an address derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
 
