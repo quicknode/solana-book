@@ -65,7 +65,7 @@ Both accumulate, both advance by elapsed time, and both decide what somebody owe
 
 Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. The conversion is wrong on nearly every slot, and the errors add up rather than cancel. If slots average 219 milliseconds, a market that assumes 200 collects about 9% less than it quotes, so a borrower quoted 20% a year pays about 18.3%. Counted in seconds, the error is the second or two a leader can move the clock. Counted in slots, it is nearly a tenth of all the interest.
 
-Both programs treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. The network already rejects a block whose time goes backwards, so this costs nothing, and it means no second is ever charged twice.
+Both programs treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. The network already rejects a block whose time goes backwards, so the rule never drops any elapsed time, and it means no second is ever charged twice.
 
 ## How to Turn Time Into Slots
 
@@ -163,7 +163,7 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 The network has shortened the slot before, most recently in stages from 400 milliseconds to 200.[^slot-times] The change is rare and happens in one step: the number holds for years, then moves once.
 
-A freshness window sized in slots gets stricter. A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That costs availability and never safety, and it announces itself the first time a price is refused. The defense is to store the window in an account a transaction can update, so the change needs a configuration transaction rather than a redeploy.
+A freshness window sized in slots gets stricter. A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That can make the program refuse a price it should accept, but never accept one it should refuse, and the first refusal shows the window needs retuning. The defense is to store the window in an account a transaction can update, so the change needs a configuration transaction rather than a redeploy.
 
 A rate counted in seconds is untouched. The lending market's interest and the perpetual futures venue's funding charge the same per hour at any slot length, with nothing to retune. A rate counted in slots gives no such warning when the slot shortens. An annual rate divided by a fixed slots-per-year number assumes a slot length, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
 
