@@ -8,7 +8,7 @@ The program calls the fundraiser's creator the **maker**, Maria here. She wants 
 
 ## Success and Failure Are Both Written Down in Advance
 
-Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with USDC she has not yet earned: until the target is hit, her claim handler refuses to run.
+Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with USDC she is not yet entitled to: until the target is hit, her claim handler refuses to run.
 
 A fundraiser can only end one way. The claim requires the total to have reached the target and a refund requires it not to have, so whichever one the total allows, it rules out the other.
 
@@ -53,7 +53,7 @@ So the contributions arrive like this: Alice 900, Bob 900, Carol 450 and 450, an
 
 ## The Claim Reads the Program's Counter, Not the Vault Balance
 
-The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and walk off with 3,600 USDC of contributions the target was meant to protect. Because the check reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
+The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and take 3,600 USDC of contributions the target was meant to protect. Because the check reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
 
 The same applies to any check that releases tokens from the vault: **it should read a number the program itself wrote**, because anyone can pass a check on a token balance by transferring tokens in.
 

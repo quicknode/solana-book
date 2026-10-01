@@ -17,7 +17,7 @@ Two things are absent as a result:
 
 Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. Her personal wallet is the standard one SOL and 1,000 USDC every character carries; the inventory she deploys is the firm's. The market trades NVDAx, the NVIDIA stock the *Order Book Exchange* chapter traded, against USDC, and the oracle quotes NVDAx at $165.
 
-Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price for free while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
+Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (quoting the oracle price with no spread while paying adverse selection on every fill is a configuration mistake, not a strategy) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
 
 ![](figures/prop-amm-open-market.svg)
 
@@ -75,7 +75,7 @@ The oracle checks in `swap()` pull the quote automatically, for the same reasons
 
 Maria's other commercial defense is choosing her counterparties. `swap()` fills any signer at the same quote, and no real venue does that. The teams that run prop AMMs come from sequencing and MEV, and they know that flow is not all alike. A retail swap routed through an aggregator is almost never informed: whoever sent it wants NVDAx, not an edge on the price. An arbitrage bot or a rival market maker hitting the quote the moment the feed moves is informed by definition, since that is the only reason it trades. Adverse selection comes from the second kind, so the venues segment their flow: a tighter spread for flow they believe is uninformed, and a wider one, or none, for flow they believe is not. Jupiter built the signal for this into its Ultra router in 2025. A swap that came from Jupiter's own users is marked as such when it reaches the venue, and the prop AMMs quote tighter for it.[^ultra-signaling]
 
-Some venues go further and keep a deny list of addresses they will not fill at all. That starts a cat-and-mouse game, because the refused firm moves to fresh wallets and the venue looks for the pattern behind them. In this program a deny list would be one more `require!` in `swap()` against a list the operator maintains on the market account, and the list would need updating as fast as the other side rotates wallets.
+Some venues go further and keep a deny list of addresses they will not fill at all. That starts a cycle that does not end, because the refused firm moves to fresh wallets and the venue looks for the pattern behind them. In this program a deny list would be one more `require!` in `swap()` against a list the operator maintains on the market account, and the list would need updating as fast as the other side rotates wallets.
 
 ## The Market Maker Leaves, Whole
 
@@ -97,7 +97,7 @@ The unit conversion is the only complicated part. Prices arrive at the oracle's 
 ## The Failure Modes: What Attacks a Market Maker
 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free, which is why `swap()` checks staleness and confidence before every fill (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter meets the same failure with leverage multiplying it.
-- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: a spread wide enough to pay for it, a ladder that charges for size, quotes pulled when the world is moving, and flow segmented by where it came from. The `paused` flag is a risk control Maria expects to use.
+- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something"; the mitigations are commercial: a spread wide enough to pay for it, a ladder that charges for size, quotes pulled when prices are moving fast, and flow segmented by where it came from. The `paused` flag is a risk control Maria expects to use.
 - **The operator chooses which oracle to trust.** The operator picks the feed at creation, and the program deliberately does not verify the feed account's owner, the same visible trust decision the *Perpetual Futures* chapter makes, with one difference: a bad oracle here loses *Maria's* capital, not her users'. A production reader should still verify the feed's owning program, and the companion repository's oracle module documents that upgrade to a verified read.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and whole categories return "not applicable". No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects (`InsufficientInventory`) because inventory bounds the fill rather than pricing it. Each of those attacks needs a mechanism this program does not have.
 
@@ -107,7 +107,7 @@ The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in 
 
 ## What You Learnt from Building the Prop AMM
 
-A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when the world moves. In this program the desk is the pool: one firm quotes its own capital at oracle prices, with no depositor, curve, or LP token involved. The oracle is the trader quoting two-sided prices, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when the world moves, and `paused` is the desk pulling them entirely.
+A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when prices move fast. In this program the desk is the pool: one firm quotes its own capital at oracle prices, with no depositor, curve, or LP token involved. The oracle is the trader quoting two-sided prices, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when prices move fast, and `paused` is the desk pulling them entirely.
 
 Five concepts came with the prop AMM:
 

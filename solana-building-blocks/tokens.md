@@ -70,7 +70,7 @@ The table lists the extensions that matter for financial products:
 | **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (the ordering section of the *Adversary* chapter takes this seriously) |
 | **confidential transfers** | Amounts are hidden onchain | Balances are visible only to the parties and whoever holds the auditor's private key |
 | **permanent delegate** | An authority can move any holder's tokens | A seizure power some regulated assets require |
-| **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |
+| **interest-bearing** | A rate is stored in the mint | Balances display accrual without the supply changing |
 | **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
 
 Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page, and the table's last column says what each one does to a transfer your program makes.
