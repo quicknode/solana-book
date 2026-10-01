@@ -27,7 +27,7 @@
   <text x="474" y="134" font-size="11" font-weight="bold">canceled</text>
   <path d="M 506,86 L 530,86 L 530,130 L 520,130" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3"/>
   <path d="M 530,86 C 534,34 300,30 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
-  <text x="624" y="22" font-size="10.5" fill="#444" text-anchor="end" font-style="italic">both exits close the accounts and refund every lamport to the maker</text>
+  <text x="624" y="22" font-size="10.5" fill="#444" text-anchor="end" font-style="italic">a take or a cancel closes both accounts, rent back to the maker</text>
   <path d="M 312,150 L 312,186" fill="none" stroke="#999" stroke-width="1.4" marker-end="url(#rent-x)"/>
   <text x="322" y="166" font-size="10" fill="#444" font-style="italic">in a program with no cancel handler,</text>
   <text x="322" y="180" font-size="10" fill="#444" font-style="italic">nothing closes an untaken offer's vault</text>

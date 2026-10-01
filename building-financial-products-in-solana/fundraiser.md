@@ -1,6 +1,6 @@
 # Chapter 12: The Fundraiser
 
-Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real, or she could put one rule onchain: **everyone's money comes back unless the whole amount shows up**. This chapter's program enforces that rule. It is an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
+Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real, or she could put one rule onchain: **everyone's contribution comes back unless the full target amount is raised**. This chapter's program enforces that rule. It is an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
 The program lives at `finance/fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The vault and the PDA that signs for it work the same way, with one addition: a **deadline**.
 
@@ -8,7 +8,7 @@ The program calls the fundraiser's creator the **maker**, Maria here. She wants 
 
 ## Success and Failure Are Both Written Down in Advance
 
-Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with money she has not yet earned: until the target is hit, her claim handler refuses to run.
+Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with USDC she has not yet earned: until the target is hit, her claim handler refuses to run.
 
 A fundraiser can only end one way. The claim requires the total to have reached the target and a refund requires it not to have, so whichever one the total allows, it rules out the other.
 
@@ -20,7 +20,7 @@ Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration
 
 This transaction created the two accounts the raise needs.
 
-The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same key finds the account already in existence and fails. Its struct, `Fundraiser`, holds the raise's terms:
+The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the maker's address, which means one live fundraiser per maker; a second `initialize_fundraiser()` from the same public key finds the account already in existence and fails. Its struct, `Fundraiser`, holds the raise's terms:
 
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.
@@ -39,7 +39,7 @@ Maria wants the raise to show that many people want the machine, so one large ba
 
 Alice tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, multiply before divide, as in every other chapter.
 
-She contributes 900 USDC instead, and every backer makes the same call: `contribute()` moves the tokens from her own token account into the vault, and adds 900 to `current_amount`. The program can deduct from Alice's token account because she signed the transaction.
+She contributes 900 USDC instead, and every backer makes the same call: `contribute()` moves the tokens from Alice's own token account into the vault, and adds 900 to `current_amount`. The program can deduct from Alice's token account because she signed the transaction.
 
 ![](figures/fundraiser-contribute.svg)
 
@@ -47,7 +47,7 @@ The transaction also created an account for her. Each backer gets a **contributo
 
 The cap applies to each backer's total across all their calls. Carol contributes 450 USDC, then comes back the next day with 450 more, and her contributor account's running total reaches the 900 cap. A third contribution would fail with `MaximumContributionsReached`. And at the bottom end, anything under one major unit rejects with `ContributionTooSmall`, so nobody spams the raise with dust.
 
-So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten backers is the minimum; this raise took eleven because most of them gave less than the cap. Total: exactly 9,000 USDC.
+So the contributions arrive like this: Alice 900, Bob 900, Carol 450 and 450, and eight more backers between 550 and 900 apiece. Ten backers is the minimum; this raise took eleven because most of them gave less than the cap. Total: exactly 9,000 USDC.
 
 ![](figures/fundraiser-cap.svg)
 
@@ -55,7 +55,7 @@ So the money arrives like this: Alice 900, Bob 900, Carol 450 and 450, and eight
 
 The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and walk off with 3,600 USDC of contributions the target was meant to protect. Because the check reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
 
-The same applies to any check that releases money: **it should read a number the program itself wrote**, because anyone can pass a check on a token balance by transferring tokens in.
+The same applies to any check that releases tokens from the vault: **it should read a number the program itself wrote**, because anyone can pass a check on a token balance by transferring tokens in.
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
@@ -94,7 +94,7 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - Tokens that entered through `contribute()` equal `current_amount` plus tokens already refunded; the vault can only exceed that by direct donations, which no check ever reads.
 - No contributor's receipt ever exceeds 10% of the target.
 - The claim requires `current_amount` to be at least the target and the refund requires it to be below, so a fundraiser can only end one way.
-- Money leaves the vault only through the claim or a refund, both signed by the fundraiser PDA, the claim requiring the maker's signature and the counter at the target, a refund requiring the contributor's signature, a passed deadline, and their own receipt.
+- Tokens leave the vault only through the claim or a refund, both signed by the fundraiser PDA, the claim requiring the maker's signature and the counter at the target, a refund requiring the contributor's signature, a passed deadline, and their own receipt.
 
 ## The Failure Modes: One Check per Attack
 
@@ -102,30 +102,36 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 - **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (checked by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
 - **Contributing after the deadline** fails with `FundraiserEnded` (checked by `test_contribute_after_deadline_fails`).
 - **Capture by one large backer** fails on the cumulative cap: `ContributionTooBig` per call, `MaximumContributionsReached` across calls (checked by `test_contribute_above_cap_fails` and `test_cumulative_contributions_above_cap_fail`).
-- **Inflating the vault directly** moves tokens but never moves the counter, so it unlocks nothing.
+- **Inflating the vault directly** moves tokens but never moves the counter, so the claim still fails with `TargetNotMet` (checked by `test_check_contributions_ignores_direct_vault_donations`).
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
-- **Closing the fundraiser early or with money inside** fails with `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
+- **Closing the fundraiser early or with contributions inside** fails with `FundraiserNotEnded` before the deadline, `TargetMet` after a win, and `RefundsOutstanding` while any contribution remains unrefunded.
 - **Closing a receipt while its raise is live** fails because the fundraiser account still belongs to the program: `FundraiserStillOpen` (checked by `test_close_contributor_while_fundraiser_open_fails`).
 
 ## Testing Considerations
 
-The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Three tests follow a whole lifecycle: `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and claims it, `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund, and `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
+The suite warps the clock with a helper that advances whole days, and asserts balances after every move. Three tests follow a whole lifecycle:
+
+- `test_check_contributions_success_pays_maker_and_closes_vault` funds the raise with ten contributors at the cap and claims it.
+- `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund.
+- `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again.
+
+The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
 
 ## What You Learnt from Building the Fundraiser
 
-Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter's program makes the same promise in code: no platform, no fee, and terms that cannot change because no handler exists to change them.
+Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter's program enforces the same all-or-nothing outcome in code: no platform, no fee, and terms that cannot change because no handler exists to change them.
 
 The fundraiser added five concepts on top of the escrow's:
 
 - **A deadline that decides which handlers work.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
-- **Checks read the program's counter, not the vault balance.** A check that releases money must read a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
+- **Checks read the program's counter, not the vault balance.** A check that releases tokens from a vault must read a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
 - **A receipt account per participant**, at a PDA, created on first use, added to on later contributions, and closed on refund, so a second refund finds nothing to read.
 - **Cumulative caps.** Per-participant limits checked against running totals, so a raise cannot succeed without many participants.
-- **Name the closer for every account.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
+- **Every account has a handler that closes it.** A successful raise closes the vault and the fundraiser but cannot reach the receipts, so a handler exists whose only job is to close one once the fundraiser is gone.
 
-In the *Betting Market* chapter we will build a pool that many people pay into, where who gets paid is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the money while trusting them for the result.
+In the *Betting Market* chapter we will build a pool that many people pay into, where who gets paid is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the pooled stakes while trusting them for the result.
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
 
-[^proof-of-personhood]: The cap counts wallets, and a wallet costs nothing to create, so ten receipts prove ten wallets rather than ten people. A raise that needs distinct people has to bring that proof from outside the program. Proof-of-personhood services exist to supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. Two such services are World ID ([world.org](https://world.org)) and VeryAI ([very.org](https://very.org)). How each proof reaches a Solana program differs by service, and checking one is outside this book.
+[^proof-of-personhood]: The cap counts wallets, and a wallet costs nothing to create, so ten receipts show ten wallets rather than ten people. A raise that needs distinct people has to bring that proof from outside the program. Proof-of-personhood services exist to supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. Two such services are World ID ([world.org](https://world.org)) and VeryAI ([very.org](https://very.org)). How each proof reaches a Solana program differs by service, and checking one is outside this book.

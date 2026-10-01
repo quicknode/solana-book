@@ -145,7 +145,7 @@
   <line x1="464" y1="235.37" x2="632" y2="335.37" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="235.37" x2="464" y2="335.37" stroke="#999" stroke-width="1.6"/>
   </g>
-  <!-- the vault: custody only, never the gate -->
+  <!-- the vault: holds the tokens; the claim checks current_amount, not this balance -->
   <g>
   <circle cx="472" cy="353.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="348.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER'S ADDRESS +</text>

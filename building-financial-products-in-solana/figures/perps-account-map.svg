@@ -173,7 +173,7 @@
   <text x="515" y="279.37" font-size="8.5">liquidity: 12,000 USDC</text>
   <text x="515" y="289.87" font-size="8.5">reserved_liquidity: 10,000</text>
   <text x="515" y="300.37" font-size="8.5">total_collateral: 1,990</text>
-  <text x="515" y="310.87" font-size="8.5">protocol_fees: 10</text>
+  <text x="515" y="310.87" font-size="8.5">program_fees: 10</text>
   <text x="515" y="321.37" font-size="8.5">long_size: 5,000</text>
   <text x="515" y="331.87" font-size="8.5">short_size: 5,000</text>
   <text x="515" y="342.37" font-size="8.5">cumulative_funding: 0</text>

@@ -6,7 +6,7 @@ Assets on Solana are **tokens**, and every token is defined by a mint account an
 - equities like NVDAx, SPCXx, and TSLAx[^tokenized-equity-volume]
 - the share tokens the book's own programs mint
 
-So is every other asset on Solana.
+So is every other asset on Solana.[^tokens-xyz]
 
 ## Every Distinct Token Has Its Own Mint
 
@@ -18,7 +18,7 @@ Each kind of token is defined by its own **mint account**.
 
 A mint is not itself a token: it is the account a token comes from, and no amount of anything is held in the mint.
 
-Two tokens are the same asset if they come from the same mint address, and different assets if they do not: anyone can create a mint whose name and symbol say "USDC", so the address is the identity and the label is decoration. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account. Instruction handlers are given account addresses as arguments, and must check that any mint account address matches the expected value, so that the asset is the one it claims to be. 
+Two tokens are the same asset if they come from the same mint address, and different assets if they do not. Anyone can create a mint whose name and symbol say "USDC", so the mint address identifies the asset and the name and symbol do not. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account. Instruction handlers are given account addresses as arguments, and must check that any mint account address matches the expected value, so that the asset is the one it claims to be. 
 
 ## A Mint Is a Factory, and the Mint Authority Is Its Boss
 
@@ -26,7 +26,7 @@ A mint does not just describe a type of token; it manufactures it. New tokens co
 
 As well as the current total supply, the mint account also stores the token's decimals (how many minor units are in a major unit), and its authorities. 
 
-The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for money), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so issuance follows code, not a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
+The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
 ![ACME is the stock of a fictional company.](figures/mint-factory.svg)
 
@@ -60,7 +60,7 @@ The mint's other authority is the **freeze authority**, which can freeze and tha
 
 ## Two Token Programs: Classic and Token Extensions
 
-Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core machinery, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every account in one transaction uses the same token program. Every program in this book works that way.
+Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core instructions and accounts, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every account in one transaction uses the same token program. Every program in this book works that way.
 
 The table lists the extensions that matter for financial products:
 
@@ -68,7 +68,7 @@ The table lists the extensions that matter for financial products:
 | --- | --- | --- |
 | **transfer fees** | A cut is withheld on every transfer, for the issuer to collect | Send 100 and 99 arrives: "I transferred X" no longer delivers X |
 | **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (the ordering section of the *Adversary* chapter takes this seriously) |
-| **confidential transfers** | Amounts are hidden onchain | Balances are visible only to the parties and an auditor key |
+| **confidential transfers** | Amounts are hidden onchain | Balances are visible only to the parties and whoever holds the auditor's private key |
 | **permanent delegate** | An authority can move any holder's tokens | A seizure power some regulated assets require |
 | **interest-bearing** | A rate is stamped on the mint | Balances display accrual without the supply changing |
 | **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
@@ -79,8 +79,8 @@ Before building on a token you did not issue, check which extensions it uses: So
 
 ## What You Learnt
 
-- Every distinct token has its own **mint account**, and that account's address is the token's identity: the label is decoration. A mint defines a token; it is not one.
-- The **mint authority** and **freeze authority** are the first questions to ask about any token: who can mint, and who can freeze.
+- Every distinct token has its own **mint account**, and that account's address identifies the token, whatever name and symbol it shows. A mint defines a token; it is not one.
+- Ask about the **mint authority** and **freeze authority** of any token first: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
 - Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: before building on a token, check in Solana Explorer which extensions it uses.
@@ -89,3 +89,4 @@ Before building on a token you did not issue, check which extensions it uses: So
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).
 [^nvdax-address]: xStocks, the NVDAx issuer, lists its tokenized equities at [xstocks.fi/us/products](https://xstocks.fi/us/products).
 [^tokenized-equity-volume]: Tokens tracking Tesla and Nvidia traded $631M and $380M on Solana in the twelve months to August 18, 2026, among the eight most traded tokenized equities on the chain, behind the S&P 500 token's $2.0B. Source: Allium, [allium.so/solana](https://allium.so/solana).
+[^tokens-xyz]: [tokens.xyz](https://tokens.xyz) lists which assets are available as Solana tokens.

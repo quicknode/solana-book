@@ -121,7 +121,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="279.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="515" y="289.87" font-size="8.5">reserved_liquidity: 0</text>
   <text x="515" y="300.37" font-size="8.5">total_collateral: 0</text>
-  <text x="515" y="310.87" font-size="8.5">protocol_fees: 0</text>
+  <text x="515" y="310.87" font-size="8.5">program_fees: 0</text>
   <text x="515" y="321.37" font-size="8.5">long_size: 0</text>
   <text x="515" y="331.87" font-size="8.5">short_size: 0</text>
   <text x="515" y="342.37" font-size="8.5">cumulative_funding: 0</text>

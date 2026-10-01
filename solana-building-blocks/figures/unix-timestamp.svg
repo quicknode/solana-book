@@ -7,7 +7,7 @@
   <line x1="140" y1="128" x2="140" y2="106" stroke="#111" stroke-width="1.6"/>
   <line x1="140" y1="128" x2="158" y2="134" stroke="#111" stroke-width="1.6"/>
   <path d="M 140,86 A 42,42 0 0 1 178,112" fill="none" stroke="#bbb" stroke-width="6"/>
-  <text x="192" y="106" font-size="10" fill="#777" font-style="italic">wobble: validator-influenced</text>
+  <text x="192" y="106" font-size="10" fill="#777" font-style="italic">each leader nudges it</text>
   <path d="M 418,140 C 340,146 260,142 186,134" stroke="#111" stroke-width="1.3" marker-end="url(#unixts)" fill="none"/>
   <text x="424" y="136" font-size="10.5">out by a few seconds outside a halt:</text>
   <text x="424" y="150" font-size="10.5" font-weight="bold">seconds somebody chose</text>

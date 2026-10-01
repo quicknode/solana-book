@@ -227,7 +227,7 @@
   <text x="482" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
   <text x="482" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
   <text x="482" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">liquidate_obligation()</text>
-  <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_protocol_fees()</text>
+  <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_program_fees()</text>
   </g>
   <g opacity="0.3">
   <circle cx="482" cy="314.676" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -248,7 +248,7 @@
   <text x="12" y="576.34" font-size="8.5">available_liquidity: 1,250</text>
   <text x="12" y="586.84" font-size="8.5">borrowed_principal: 750</text>
   <text x="12" y="597.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="12" y="607.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="12" y="607.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
 <g transform="translate(0,-100.34)">  <g opacity="0.3">
   <circle cx="12" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -285,7 +285,7 @@
   <text x="482" y="576.34" font-size="8.5">available_liquidity: 2.5</text>
   <text x="482" y="586.84" font-size="8.5">borrowed_principal: 1.5</text>
   <text x="482" y="597.34" font-size="8.5">borrow_accumulation_factor: 1.0</text>
-  <text x="482" y="607.84" font-size="8.5">accumulated_protocol_fees: 0</text>
+  <text x="482" y="607.84" font-size="8.5">accumulated_program_fees: 0</text>
   </g>
 <g transform="translate(0,-100.34)">  <g>
   <circle cx="482" cy="726.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -309,7 +309,7 @@
   <rect class="marker" x="472" y="552" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="480" y="563.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
   <rect x="351" y="440" width="275" height="88" fill="#fff" stroke="#888" class="key"/>
   <rect class="marker" x="362" y="450.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="370" y="462.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
-  <text x="388" y="462" font-size="10.5" font-weight="bold" fill="#1e7a3c">Health check gates the call</text>
+  <text x="388" y="462" font-size="10.5" font-weight="bold" fill="#1e7a3c">Carol must be unhealthy</text>
   <rect class="marker" x="362" y="468.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="370" y="480.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
   <text x="388" y="480" font-size="10.5" font-weight="bold" fill="#1e7a3c">Repay 1.5 SPCXx into the reserve</text>
   <rect class="marker" x="362" y="486.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="370" y="498.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>

@@ -10,7 +10,11 @@ See [borrow accumulation factor](#borrow-accumulation-factor).
 
 ### address
 
-The 32-byte identifier of an account, usually shown base58-encoded. An address is one of three kinds: a public key, which has a matching private key; a [PDA](#pda-program-derived-address), derived from seeds, which has no private key; or a [built-in address](#built-in-address), chosen rather than computed, which has no private key either.
+The 32-byte identifier of an account, usually shown base58-encoded. An address is one of three kinds:
+
+- a public key, which has a matching private key
+- a [PDA](#pda-program-derived-address), derived from seeds, which has no private key
+- a [built-in address](#built-in-address), chosen rather than computed, which has no private key either
 
 ### adverse selection
 
@@ -31,6 +35,10 @@ Buying where an asset is cheap and selling where it is dear until the two prices
 ### ask
 
 An order to sell at or above a stated price. The seller's side of an [order book](#order-book).
+
+### asset
+
+Something of value a participant owns and a program can hold for them, such as USDC or a stock like NVDAx or TSLAx. Assets on Solana are represented as [tokens](#token). The book says "assets" where no single token is meant, as in "every participant must be able to get their assets out of every state". See [RWA](#rwa-real-world-asset).
 
 ### associated token account (ATA)
 
@@ -98,7 +106,7 @@ Rounding up to the next whole [minor unit](#minor-unit). The direction used for 
 
 ### checked arithmetic
 
-Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on money in this book is checked.
+Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping). Every operation on an amount in this book is checked.
 
 ### checks-effects-interactions
 
@@ -110,7 +118,14 @@ In a lending market, the fraction of a debt one liquidation may repay (typically
 
 ### cluster
 
-One running instance of Solana: the same software, a separate world. Mainnet holds real value; devnet is identical machinery with free, valueless tokens for building and testing; localnet runs on your own machine; testnet is where the Solana software itself is tested. An account exists on one cluster, not all of them. Each is reached at an [RPC endpoint](#rpc-endpoint).
+One running instance of Solana: the same software, a separate world.
+
+- **Mainnet** holds real value.
+- **Devnet** runs the same software as mainnet, with free, valueless tokens, for building and testing.
+- **Localnet** runs on your own machine.
+- **Testnet** is where the Solana software itself is tested.
+
+An account exists on one cluster, not all of them. Each is reached at an [RPC endpoint](#rpc-endpoint).
 
 ### collateral
 
@@ -155,7 +170,11 @@ A permissionless instruction handler that performs maintenance work nobody owns 
 
 ### critbit tree
 
-A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it yields price-time priority for free. See the *Order Book Exchange* chapter.
+A binary tree keyed on the first bit where entries differ. Used for order books because insertion never shifts other entries and walking it visits orders in price-time priority. See the *Order Book Exchange* chapter.
+
+### crypto
+
+In the context of finance, the industry built on blockchains: distributed ledgers such as Solana. Crypto is not an asset class in itself, although the term is frequently misused that way. Crypto is a wrapper for trading a wide variety of asset classes, including equities such as NVDAx, commodities such as gold, derivatives such as the perpetual futures in this book, and native crypto assets such as SOL. Each of these is held onchain as a [token](#token).
 
 ### curator
 
@@ -163,7 +182,7 @@ In a fund, the authority that decides which assets may be held at all and which 
 
 ### custody
 
-Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. Balances are custody and state is truth: what the program owes is what its own accounts record, never what happens to be in the vault.
+Holding assets that belong to someone else. A program takes custody when tokens sit in a [vault](#vault) whose authority is its PDA. What the program owes is what its own accounts record, never what happens to be in the vault.
 
 ### decimals
 
@@ -171,11 +190,11 @@ The number of minor units in one major unit of a token, declared on the mint. US
 
 ### degenerate value
 
-A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An empty reserve makes K zero, so `new_k >= old_k` accepts every outcome; a price of zero or a negative [mantissa](#mantissa) means a broken feed; an offer with nothing in it is structurally valid and worthless. Guard each one explicitly rather than trusting the general check to catch it. See [invariant](#invariant).
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. A constant-product pool multiplies its two reserves to get [K](#k) and refuses any trade that makes K fall. If either reserve is empty, K is zero and that check passes whatever the trade pays out. A price of zero or a negative [mantissa](#mantissa) means a broken feed. An offer with nothing in it passes the usual checks but is worthless. Check for each one explicitly rather than relying on the general checks to catch it. See [invariant](#invariant).
 
 ### discretization
 
-Representing a continuous quantity as discrete integer steps. Onchain money is discretized by construction: amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
+Representing a continuous quantity as discrete integer steps. Onchain amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
 
 ### discriminator
 
@@ -219,7 +238,7 @@ Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of th
 
 ### faucet
 
-A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs real money.
+A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com). Faucets are why nothing in this book needs mainnet tokens.
 
 ### feature
 
@@ -239,7 +258,7 @@ A loan borrowed and repaid inside a single transaction, possible only because tr
 
 ### floor
 
-Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never promise a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
+Rounding down to the whole [minor unit](#minor-unit) below. The direction used for anything the program pays out, so withdrawals, winnings, and swap outputs never pay out a fraction the program does not hold. The opposite of [ceil](#ceil-ceiling). See [rounding](#rounding) and [dust](#dust).
 
 ### fork
 
@@ -251,7 +270,7 @@ The periodic payment between longs and shorts on a perpetual futures market that
 
 ### half-up
 
-Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on money here: it rounds in the user's favor half the time, and a caller can size a deposit and withdrawal pair to collect that half repeatedly. The 2021 SPL token-lending bug was this. See [rounding](#rounding).
+Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on amounts here: it rounds in the user's favor half the time, and a caller can size a deposit and withdrawal pair to collect that half repeatedly. The 2021 SPL token-lending bug was this. See [rounding](#rounding).
 
 ### halt
 
@@ -295,11 +314,11 @@ The onchain function that processes an instruction. This book always says "instr
 
 ### insurance fund
 
-Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. It does not make a venue lose less money; it names, before the loss happens, who pays for it. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
+Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. It does not make a venue's losses smaller; it names, before the loss happens, who pays for it. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
 
 ### invariant
 
-A property that must hold before and after every state change: K must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated inputs, and a model checker proves one over every possible input; the *Operating Financial Software* chapter sets how far to go by how much money the program will hold.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. Asserted in code after the math, not just assumed from it. An **invariant test** asserts one against generated values, and a model checker checks one against every possible value; the *Operating Financial Software* chapter sets how far to go by the value of the assets the program will hold.
 
 ### inventory
 
@@ -379,7 +398,7 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 ### managed fund
 
-The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the money sits in. See the *Managed Fund* chapter.
+The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the deposits sit in. See the *Managed Fund* chapter.
 
 ### manager
 
@@ -395,7 +414,7 @@ On a perpetual futures market, the index price is the oracle's statement of the 
 
 ### mark to market
 
-Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation gates, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because money moves on today's valuation.
+Valuing a position or pool at current prices rather than at the prices it was entered at. Health checks, liquidation checks, and LP share pricing (see [AUM](#aum-assets-under-management)) all mark to market, because tokens change hands at today's prices.
 
 ### market maker
 
@@ -419,7 +438,7 @@ The onchain account that defines a type of token: its supply, decimals, and auth
 
 ### multisig
 
-An account that records a set of owners and how many must agree before it acts, used wherever one person holding a key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority. A transaction can carry several signatures natively; a multisig is that idea made into standing policy.
+An account that records a set of owners and how many must agree before it acts, used wherever one person holding a private key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority. A transaction can carry several signatures natively; a multisig is that idea made into standing policy.
 
 ### NAV (net asset value)
 
@@ -440,6 +459,10 @@ A borrower's loan file in a lending market: their collateral deposits, their bor
 ### open interest
 
 The total notional of positions currently open on a market, usually tracked per side. A perpetual futures venue's funding direction and solvency reasoning both read it.
+
+### open source
+
+Software released under a license that meets the [Open Source Definition](https://opensource.org/osd), which requires, among other things, that anyone may read, modify and redistribute the source code. Publishing the source is not enough on its own: code whose license forbids modifying or redistributing it is not open source.
 
 ### option
 
@@ -559,7 +582,7 @@ The URL a program or wallet sends its transactions to: a server holding a [clust
 
 ### RWA (real-world asset)
 
-A traditional asset represented as a token onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading.
+A traditional [asset](#asset) represented as a [token](#token) onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. As of mid-2026, Solana is the most popular chain for RWA trading. "RWA" lumps very different things together, so it is usually clearer to name the asset class instead: tokenized stocks, tokenized Treasury bills, gold.
 
 ### sandwich
 
@@ -567,11 +590,11 @@ Wrapping someone's pending trade in two of your own: buy ahead of it to move the
 
 ### saturating
 
-What Rust's `saturating_add` and `saturating_mul` do when a result will not fit: clamp to the type's maximum or minimum and continue. Less silent than [wrapping](#wrapping) and still wrong on a balance, because the number returned is not the answer. Money uses [checked arithmetic](#checked-arithmetic).
+What Rust's `saturating_add` and `saturating_mul` do when a result will not fit: clamp to the type's maximum or minimum and continue. Less silent than [wrapping](#wrapping) and still wrong on a balance, because the number returned is not the answer. Balances use [checked arithmetic](#checked-arithmetic).
 
 ### settlement
 
-Paying out what a contract finally owes, and closing it. A betting market settles when the authority records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances. Before settlement the numbers are marks, not money.
+Paying out what a contract finally owes, and closing it. A betting market settles when the authority records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances. Before settlement the numbers are marks, not balances.
 
 ### share
 
@@ -583,7 +606,7 @@ An account whose private key signed the transaction. "Is this account a signer" 
 
 ### significand
 
-The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from money (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
+The digits of a number stated separately from its scale: a price feed holding significand 25,000,000 and exponent −5 means $250. Storing the two as integers is how oracle prices stay exact onchain; floating point packs the same two parts into one machine word, with the representation error that keeps floats away from token amounts and prices (see the *Arithmetic of Money* chapter). "Significand" is the preferred term because "[mantissa](#mantissa)" has a different meaning in mathematics (the fractional part of a logarithm), but some oracle operators say "mantissa" for the digits, with exactly the meaning given here.
 
 ### size ladder
 
@@ -600,6 +623,10 @@ Solana's basic unit of time: a window in which one [leader](#leader) may produce
 ### SOL
 
 Solana's **native token**: the asset the network understands without any token program, used to pay transaction fees and to fund the rent deposit on every account. Denominated in [lamports](#lamport), a billionth of a SOL each. Every other token is an [SPL token](#spl-token).
+
+### Solana
+
+A public blockchain: a network of validators that run programs and keep a shared record of every account. Programs on it hold and move [tokens](#token), and transactions settle in under a second for a fraction of a cent. Solana is not an asset: its native token, [SOL](#sol), is the asset. Nor is Solana an organization. Many organizations work on Solana.
 
 ### SPL token
 
@@ -640,6 +667,10 @@ How long an [option](#option) runs: the time from the trade that creates it to i
 ### tick size
 
 The minimum price increment of a market. Prices must land on a multiple of it, which keeps the book from fragmenting into dust price levels.
+
+### token
+
+A unit of an [asset](#asset) on Solana. [SOL](#sol) is Solana's **native token**, used to pay transaction fees, and every account holds it directly as [lamports](#lamport). All other tokens, such as USDC and NVDAx, are [SPL tokens](#spl-token): each type is defined by a [mint](#mint-account), and a wallet's balance of it is held in a [token account](#token-account). Two tokens from the same mint are the same asset; tokens from different mints are different assets, whatever their names and symbols say. Amounts are integers in [minor units](#minor-unit).
 
 ### token account
 
@@ -687,11 +718,11 @@ A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 follow
 
 ### wallet
 
-A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet. **Wallet software** is the tool that holds those keys, signs transactions with them, and shows the balances they control, whether a phone or desktop app or browser extension.
+A key pair used as an identity for holding and moving assets, with the private key stored safely. On disk, a key pair file is just 64 bytes; whoever holds them is the wallet. **Wallet software** is the tool that holds the private keys, signs transactions with them, and shows the balances they control, whether a phone or desktop app or browser extension.
 
 ### wrapping
 
-What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Silent, and catastrophic on a balance, which is why money uses [checked arithmetic](#checked-arithmetic) instead.
+What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Silent, and catastrophic on a balance, which is why every amount in this book uses [checked arithmetic](#checked-arithmetic) instead.
 
 ### writer
 
