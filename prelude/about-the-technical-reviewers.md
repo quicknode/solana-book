@@ -20,4 +20,4 @@ Marius Gugat is a security researcher at Neodyme, a security firm that audits So
 
 Noah Prince is an engineer at Velocity, and previously led engineering at the Helium Foundation.
 
-Pavan Katepalli is the founder of Mori, a covered call platform on Solana.
+Pavan Katepalli is the founder of Mori Finance, a covered call platform on Solana.
