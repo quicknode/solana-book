@@ -54,7 +54,7 @@ The address whose signature a particular action requires. A program records the 
 
 ### auto-deleveraging (ADL)
 
-A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. See the *Perpetual Futures* chapter.
+A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The *Perpetual Futures* chapter's program uses a [haircut](#haircut) instead.
 
 ### base token
 
@@ -268,6 +268,10 @@ One of two competing chains, formed when validators briefly build on different b
 
 The periodic payment between longs and shorts on a perpetual futures market that keeps the perpetual's price close to the index price.
 
+### haircut
+
+On a perpetual futures pool, the fraction of a winner's profit the pool pays when it cannot pay every winner in full: what the pool holds to pay profits, divided by what traders are owed, capped at 1. Every winner who closes is paid the same fraction, so no early closer is paid in full while the rest go unpaid. See the *Perpetual Futures* chapter.
+
 ### half-up
 
 Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on amounts in this book. See [rounding](#rounding).
@@ -318,7 +322,7 @@ The onchain function that processes an instruction. This book always says "instr
 
 ### insurance fund
 
-Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
+Capital a venue sets aside, usually from a share of its fees, to absorb losses larger than the collateral behind them before those losses reach the liquidity providers. What the fund cannot cover is taken from the liquidity providers, then from winners by a [haircut](#haircut) or [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
 
 ### invariant
 
@@ -524,6 +528,10 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join.
 
+### profit warm-up
+
+On a perpetual futures pool, the number of slots a position must be open before its profit can be taken. A trader who pushes the oracle to a false price cannot open a position and cash out the profit before the price has had that long to correct. Losses are not delayed. See the *Perpetual Futures* chapter.
+
 ### program
 
 Executable code deployed onchain; the thing this book builds. Called a "smart contract" on other chains.
@@ -563,10 +571,6 @@ A per-participant account, usually at a PDA, recording what the program owes one
 ### rent
 
 The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit.
-
-### reservation
-
-On a perpetual futures pool, the liquidity pledged when a position opens as the most that position could ever be paid: profit is capped at it, liquidity providers cannot withdraw against it, and a position the pool cannot back is refused outright. See the *Perpetual Futures* chapter.
 
 ### reserve
 
