@@ -10,7 +10,7 @@ The runtime supplies the first two, and a program reads both from the same accou
 
 Which one to use depends on the job. A week promised to a contributor runs on the wall clock. A price freshness window counts slots. Which order came first uses a counter.
 
-## The Slot Counter
+## Leaders Take Turns Producing Blocks
 
 A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. Leaders take **turns** of four slots in a row, assigned in advance in proportion to each validator's stake. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**.
 
@@ -18,7 +18,17 @@ When a leader's block does not arrive in time, the others vote to skip that slot
 
 ![](figures/leader-turns.svg)
 
-The slot count is how many slots have gone by. Programs read the current count from the **Clock sysvar**, a system account the runtime keeps fresh. Slots only go up, and nobody can rewind the count or jump it forward.
+## The Unix Timestamp
+
+Programs read the **Unix timestamp** from the **Clock sysvar**, a system account the runtime keeps fresh. It is a time a leader reports, within a range the network enforces: a block whose time goes backwards, or runs more than two slot lengths ahead for each slot since its parent block, is rejected.[^alpenglow-clock] Each leader writes its own clock's time into the end of its block, and the transactions in the next block read that value. The value stays the same for the whole slot, so every transaction in a block sees one timestamp. The timestamp is usually within a second or two of real time. It counts whole seconds, and it was written one block earlier.
+
+![](figures/unix-timestamp.svg)
+
+At 200-millisecond slots, a block one slot after its parent can carry a time up to 400 milliseconds past the parent's. Real time moves about 200 milliseconds a slot, so a leader can push the timestamp ahead of real time, or hold it behind, by up to about 200 milliseconds for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. For a boundary days away the timestamp is still the right clock, because a slot count would miss it by hours: a contributor told they have a week to fund is owed seven days, and a week of slots runs about 16 hours over. The defense is a margin: close betting well before the result can be known, exercise an option before its last seconds, and set any deadline so a few seconds cannot change who gets paid.
+
+## The Slot Counter
+
+The slot count is how many slots have gone by. Programs read it from the same Clock sysvar as the timestamp. Slots only go up, and nobody can rewind the count or jump it forward.
 
 ![](figures/slot-counter.svg)
 
@@ -28,14 +38,6 @@ Two things affect how much wall-clock time a number of slots adds up to, and any
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while real time moves on. The section on halts below covers what that does.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and about two hours longer if slots actually average 219 milliseconds. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
-
-## The Unix Timestamp
-
-The **Unix timestamp** comes from the same Clock sysvar, but it is a time a leader reports rather than a count the runtime guarantees. Each leader writes its own clock's time into the end of its block, and the transactions in the next block read that value. The value stays the same for the whole slot, so every transaction in a block sees one timestamp. The network rejects a block whose time goes backwards, or runs more than two slot lengths ahead for each slot since its parent block, so a leader chooses its time only within that range.[^alpenglow-clock] The timestamp is usually within a second or two of real time. It counts whole seconds, and it was written one block earlier.
-
-![](figures/unix-timestamp.svg)
-
-At 200-millisecond slots, a block one slot after its parent can carry a time up to 400 milliseconds past the parent's. Real time moves about 200 milliseconds a slot, so a leader can push the timestamp ahead of real time, or hold it behind, by up to about 200 milliseconds for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. For a boundary days away the timestamp is still the right clock, because a slot count would miss it by hours: a contributor told they have a week to fund is owed seven days, and a week of slots runs about 16 hours over. The defense is a margin: close betting well before the result can be known, exercise an option before its last seconds, and set any deadline so a few seconds cannot change who gets paid.
 
 ## Which Clock for Which Job
 
