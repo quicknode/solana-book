@@ -26,7 +26,7 @@ A mint does not just describe a type of token; it manufactures it. New tokens co
 
 As well as the current total supply, the mint account also stores the token's decimals (how many minor units are in a major unit), and its authorities. 
 
-The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by program-owned addresses, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
+The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
 ![ACME is the stock of a fictional company.](figures/mint-factory.svg)
 
@@ -38,13 +38,15 @@ A **token account** holds one owner's balance of a particular type of token, and
 - the account owner
 - how much of the token that owner has
 
-The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the mint, and token program used for that token mint. Put in Alice's address and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a program knows where Alice's USDC lives without asking her, and how account constraints can verify that a supplied token account really is hers.
+> **A token account's "owner" is not its owner program.** Every account has an owner program, and for a token account that is always the token program: the only program that can change its bytes. The **owner** recorded in a token account's data is something else: the address that can move its tokens. Alice is the owner of her USDC account, and the Token Program moves USDC out of it only when Alice signs (or a **delegate** she has approved, up to the amount she approved). Solana's own tools use "owner" for both. In this book, when an address "owns" a token account or "holds" its tokens, it means the second: that address is the token account's owner, and its signature is what moves the tokens.
 
-An ATA lives at a **PDA**: a derived address that sits off the curve, with no private key, so no signature for it can ever exist and only the owning program can move what it holds. The *PDAs* chapter explains the mechanism.
+The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the mint, and token program used for that token mint. Put in Alice's address and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a wallet finds Alice's USDC account from nothing but her address, and how account constraints can verify that a token account an instruction supplies really is hers.
+
+An ATA lives at a **PDA**: a derived address that sits off the curve, with no private key, so no signature for the address itself can ever exist. That does not stop Alice spending her USDC: she is the token account's owner, and her signature is what moves it. The *PDAs* chapter explains the mechanism.
 
 ![](figures/token-accounts-and-atas.svg)
 
-Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are plain token accounts at addresses the program chose. The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
+Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are token accounts at PDAs of the program itself (the order book's three vaults are derived from the market). The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
 
 ![](figures/token-accounts-off-the-curve.svg)
 
