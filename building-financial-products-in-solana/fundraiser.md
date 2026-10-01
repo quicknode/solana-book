@@ -35,9 +35,11 @@ The handler stamps `time_started` from the cluster clock and stores the duration
 
 Eleven backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise. They will trust a program that gives Maria no way to redirect the vault to herself, and whose deployed code is verified to match its published source.
 
-Maria wants the raise to show that many people want the machine, so one large backer should not be able to fund it alone. The program caps each backer at a tenth of the target, so **a successful raise needs at least ten contributors**. A single backer who wanted to fill the raise would need ten wallets, and the fundraiser would record ten receipts.[^proof-of-personhood]
+Maria wants the raise to show that many people want the machine, so one large backer should not be able to fund it alone. The program caps each backer at a tenth of the target, so **a successful raise needs at least ten contributors**. A single backer who wanted to fill the raise would need ten wallets, and the fundraiser would record ten receipts.
 
-Alice tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100, and the multiply runs in u128 before one floor division, multiply before divide, as in every other chapter.
+> **One person, many wallets.** The cap counts wallets, and a wallet costs nothing to create, so ten receipts show ten wallets rather than ten people. Anyone, Maria included, could split one large contribution across a series of wallets and pass the cap every time. One person posing as many participants is a **Sybil attack**, and stopping it takes proof from outside the program that each contributor is a distinct person. Proof-of-personhood services supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. World ID and VeryAI are two such services.[^personhood-services] Each delivers its proof to a Solana program differently, so this program checks none of them, but a raise that requires one stops a single person from acting as many contributors.
+
+Alice tries to contribute her entire 1,000 USDC. The program refuses with `ContributionTooBig`. Her limit, computed by `calculate_max_contribution()`, is 10% of the target: 900 USDC. The constants behind it, `MAX_CONTRIBUTION_PERCENTAGE` over `PERCENTAGE_SCALER`, read 10/100. They are compiled into the program rather than stored on the fundraiser, so Maria cannot choose a different cap: every raise this program runs caps each backer at a tenth. The multiply runs in u128 before one floor division, multiply before divide, as in every other chapter.
 
 She contributes 900 USDC instead, and every backer makes the same call: `contribute()` moves the tokens from Alice's own token account into the vault, and adds 900 to `current_amount`. The program can deduct from Alice's token account because she signed the transaction.
 
@@ -53,9 +55,11 @@ So the contributions arrive like this: Alice 900, Bob 900, Carol 450 and 450, an
 
 ## The Claim Reads the Program's Counter, Not the Vault Balance
 
-The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, Maria could top her own vault up with 5,400 USDC on day six, "reach" the target, and take 3,600 USDC of contributions the target was meant to protect. Because the check reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
+The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required. If the check read the vault balance, a transfer that skipped `contribute()` would count toward the target although no receipt recorded it and neither the cap nor the deadline applied to it. Because the check reads the counter, that transfer changes nothing: the test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails.
 
 The same applies to any check that releases tokens from the vault: **it should read a number the program itself wrote**, because anyone can pass a check on a token balance by transferring tokens in.
+
+The counter cannot tell Maria's own contributions from a stranger's. If she contributes through a series of wallets she controls, each contribution is a real one, so the counter moves and the claim can succeed. The boxout *One person, many wallets*, earlier in this chapter, covers that attack and the proof-of-personhood services that stop it.
 
 ## The Target Is Met: The Maker Claims, and Everything Closes
 
@@ -92,7 +96,7 @@ Every addition and subtraction on `current_amount` and the receipts is checked a
 
 - `current_amount` equals the sum of all live contributor receipts, at every moment: contributions add to both together, refunds subtract from both together.
 - Tokens that entered through `contribute()` equal `current_amount` plus tokens already refunded; the vault can only exceed that by direct donations, which no check ever reads.
-- No contributor's receipt ever exceeds 10% of the target.
+- No contributor's receipt ever exceeds 10% of the target, a fixed constant rather than a setting the maker chooses.
 - The claim requires `current_amount` to be at least the target and the refund requires it to be below, so a fundraiser can only end one way.
 - Tokens leave the vault only through the claim or a refund, both signed by the fundraiser PDA, the claim requiring the maker's signature and the counter at the target, a refund requiring the contributor's signature, a passed deadline, and their own receipt.
 
@@ -134,4 +138,4 @@ In the *Betting Market* chapter we will build a pool that many people pay into, 
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
 
-[^proof-of-personhood]: The cap counts wallets, and a wallet costs nothing to create, so ten receipts show ten wallets rather than ten people. A raise that needs distinct people has to bring that proof from outside the program. Proof-of-personhood services exist to supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. Two such services are World ID ([world.org](https://world.org)) and VeryAI ([very.org](https://very.org)). How each proof reaches a Solana program differs by service, and checking one is outside this book.
+[^personhood-services]: World ID is at [world.org](https://world.org), and VeryAI at [very.org](https://very.org).
