@@ -129,6 +129,21 @@ const rules = [
   // writer did not choose; the fix is to say the thing.
   [/\bwhales?\b|\bfoot-?guns?\b|\bzombie\b|\brugged\b|\bfat-finger|\bbabysit|\bgriefing\b|\bafter the whistle\b|\bmid-flight\b|\bhot path\b|\bhand-rolled\b|\bcomes? off the top\b|\bpays? for itself\b|\bcomes? home\b|\bripped off\b|\bdunk on\b|\bsliver\b|\byou do you\b|\bcomes? in hot\b|\bdouble duty\b|\brungs?\b|\bup the ladder\b/i,
     'say the plain thing: "a large backer", "a dangerous configuration", "absorb the loss", "the third level"'],
+  // Money words used figuratively. In a book about money a reader takes
+  // "buy", "cost", "pay", "earn", "cheap", "price", "trade" and "bet" at
+  // their word, so a figurative one reads as a claim about money that the
+  // sentence never meant. Each phrase below was found in one audit, with the
+  // plain statement that replaced it: "conviction pays three to one" was
+  // "winnings are proportional to stake", "keep the design cheap" was "keep
+  // each fill's compute low", "the price of queue-jumping" was "what it takes
+  // to jump the queue", and "rounds toward the house" was "rounds in the
+  // program's favor". Literal costs, prices and payments stay.
+  [/\bconviction pays\b|\bcheap to write\b|\bworth trusting\b|\bthe price of (?:queue-jumping|being an)\b|\brounds? toward the house\b|\bcheapest deletion\b|\bcheaper path\b|\baddress cheaply\b|\bdesign cheap\b|\bclose factor buys\b|\bwhat he sells\b|\bwhat his platform sells\b|\bkept score\b|\bwalk(?:s|ed)? off with [\d$]|\bfrom (?:his|her|their) own pocket\b|\bcash crunch\b|\bfor free while\b|\bis a bet on (?:trading )?volume\b|\bsent for nothing\b|\bthe payoff of storing\b|\bwaiting costs latency\b/i,
+    'a money word used figuratively reads as a claim about money: say the plain thing, "compute", "proportional to stake", "in the program\'s favor"'],
+  // Other figures of speech from the same audit, each replaced by the plain
+  // statement of the same length or shorter.
+  [/\bindustriali[sz]e[ds]?\b|\btethers?\b|\bthe world (?:is moving|moves)\b|\bcat-and-mouse\b|\bone click away\b|\bcloses the book\b|\btook that road\b|\bhas no opinion about\b|\bgoes quiet\b|\bescape hatch\b|\bslow leak\b|\bround-trip exactly\b|\blives forever\b|\bsix more zeroes\b|\bevaporated\b|\bare behind you\b|\bis behind you\b|\bwhy anyone shows up\b|\bstand behind what you ship\b|\bchurn frequently\b|\bshave the debt\b|\bwhat walked out\b|\brode \w+ up\b|\bnowhere near \w+\.|\bsandwich squeezes\b|\bgrow out of a single signer\b|\bchanging the game\b/i,
+    'say the plain thing the figure stands for: "keeps close to", "prices move fast", "stops publishing", "you have built"'],
   // "Fail open" means "stop working" to an electrician (an open circuit) and
   // "let everything through" to everyone else (an open door), and "fail
   // closed" flips the same way, so half the readers take each one backwards.

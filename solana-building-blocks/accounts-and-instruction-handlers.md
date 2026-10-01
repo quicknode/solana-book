@@ -52,7 +52,7 @@ Alice wants to send Bob some SOL. The only way to change anything on this comput
 
 A transaction carries one or more **instructions**, and each instruction is input for a public function called an **instruction handler** that is part of an **onchain program**: the programs that run on this giant computer. Just like people, every program has its own address:
 
-- The **System Program** has instruction handlers to create accounts and transfer SOL. It sits at `11111111111111111111111111111111`, a **built-in address** chosen by Solana's core developers rather than generated from a key pair. Nobody holds a private key for it, so the figures hang its dot off the curve, labeled with the address itself.
+- The **System Program** has instruction handlers to create accounts and transfer SOL. It sits at `11111111111111111111111111111111`, a **built-in address** chosen by Solana's core developers rather than generated from a key pair. Nobody holds a private key for it, so the figures draw its dot off the curve, labeled with the address itself.
 - The **Memo Program** has an instruction handler that writes notes into the transaction log. It was deployed from a key pair like any other program, so its address is a public key, on the curve like Alice's and Bob's.
 - The programs in this book are deployed the same way, so each gets a public key of its own the day you deploy it.
 
@@ -126,7 +126,7 @@ Besides its address, every account records three things: a lamport balance, some
 
 ![](figures/account-dissected.svg)
 
-Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum lives forever, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is held by the space her account occupies, which is why a large account costs more to keep than a small one.
+Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum stays until it is closed, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is held by the space her account occupies, which is why a large account costs more to keep than a small one.
 
 The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts [^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. 
 
@@ -160,7 +160,7 @@ Bob's transfer instruction names every account it touches: Bob's USDC account, A
 
 ## What You Learnt
 
-Two payments toured every building block the rest of the book uses:
+Two payments introduced every building block the rest of the book uses:
 
 - A **key pair**'s public key is an address, and at an address lives an **account**: a user's holds their balance of **SOL**, stored as an integer of **lamports**, its minor unit.
 - **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee.

@@ -12,7 +12,7 @@ Every valuation in this chapter multiplies an amount by a price, and the prices 
 
 ## The Market Owner Opens the Market
 
-Maria runs the market, and her revenue is a cut of the interest, the reserve factor set on every reserve below. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `borrow_accumulation_factor` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single second's interest does not truncate to zero while staying far inside u128's ceiling. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
+Maria runs the market, and her revenue is a cut of the interest, the reserve factor set on every reserve below. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `borrow_accumulation_factor` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single second's interest does not truncate to zero while staying far below u128's maximum. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
 
 ![](figures/lending-open-market.svg)
 
@@ -93,7 +93,7 @@ Dave watches for liquidation opportunities. He is the reason the market stays so
 - The **bonus** prices his service: he seizes $450 × 1.05 = $472.50 of Carol's collateral, paid in USDC shares, every step of the conversion floored toward the borrower.
 - Overreach fails the whole call: asking to seize more collateral than the obligation holds rejects with `LiquidationTooLarge` rather than silently capping, because a silent cap would make the liquidator pay full price for less collateral (checked by `over_seizing_liquidation_rejected_smaller_succeeds`).
 
-Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. Taking half at a time is what the close factor buys: the borrower loses the minimum collateral needed to restore health, rather than the whole position.
+Carol is still slightly unhealthy, so Dave goes again: half of the remaining 1.5 SPCXx debt, 0.75 SPCXx ($225), seizing $236.25. Her loan is healthy again, still hers, partially paid down by her own collateral. Across both passes Dave repaid $675 of debt and collected $708.75, a $33.75 profit: 5% for keeping the market solvent. The close factor takes half at a time, so the borrower loses the minimum collateral needed to restore health, rather than the whole position.
 
 ![](figures/lending-liquidation.svg)
 
@@ -107,13 +107,13 @@ Dave is one instance of a pattern this market runs on. Some work in a financial 
 
 - **Permissionless: the handler checks state, not identity.** If the work is valid, anyone's signature will do. `refresh_reserve()` and `refresh_obligation()` are the canonical examples: they bring interest and cached prices up to date for whoever asks, no special signer required, and requiring the operator's signature for maintenance would turn the operator's absence into everyone's outage. Anyone can run the crank, so a crank that moves funds must calculate their destination from information the program itself stores in its own accounts, never by paying the signer: a crank that pays whoever called has made its funds claimable by strangers.
 - **Idempotent: a no-op succeeds.** Calling the crank when there is nothing to do succeeds cleanly (refreshing an already-fresh reserve rewrites the same numbers), so a bot on a schedule never needs attention and never fails spuriously.
-- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator paid per call: he is a principal who repays someone else's debt from his own pocket and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk.
+- **Paid, if you need it reliable.** The strongest maintenance carries its own incentive, and Dave is the boundary case. He is not a crank operator paid per call: he is a principal who repays someone else's debt with his own funds and takes their collateral at a discount, risking his own capital on prices holding while he does it. The market stays solvent because that job pays well enough to be worth the risk.
 
 ![](figures/crank-loop.svg)
 
 ## Repayment, Fees, and Yield: Everyone Settles Up
 
-Five weeks in, Bob's cash crunch has passed. His $750 debt has become about $758 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
+Five weeks in, Bob no longer needs the cash. His $750 debt has become about $758 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about eight dollars, and he never sold his NVIDIA.
 
 Maria runs `collect_program_fees()` whenever she likes and receives the accumulated 10% of interest, about 78 cents (`NothingToCollect` refuses a collection when nothing is owed, and `program_fees_accrue_and_owner_can_collect` covers the flow). Of every dollar of interest Bob paid, ninety cents went to the suppliers, ten to the house.
 

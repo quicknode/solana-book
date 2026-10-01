@@ -27,7 +27,7 @@ Closing an account returns its rent deposit. The *Core Building Blocks of Solana
 
 - Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds their own token account (if it did not exist already) to receive what the maker offered. Rent burdens follow the party who chose to create the state.
 
-- The deposit comes back to whoever paid it when the account is closed (for example after a take, a cancel, a claim, or a refund). A program that leaves accounts unclosed when no longer needed has a slow leak of other people's lamports, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker's lamports round-trip exactly, and yours should too.
+- The deposit comes back to whoever paid it when the account is closed (for example after a take, a cancel, a claim, or a refund). A program that leaves accounts unclosed when no longer needed leaves other people's lamports locked in them, so for every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker gets back exactly the lamports they paid, and yours should too.
 
 ![](figures/rent-lifecycle.svg)
 

@@ -57,7 +57,7 @@ The **offer account** stores what Alice wants in return. It is the program's cus
 - `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
 - `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
 - `token_b_wanted_amount`, how much of token B the maker wants, in minor units
-- `bump`, saved once at creation so later instruction handlers can rebuild the account's address cheaply
+- `bump`, saved once at creation so later instruction handlers can rebuild the account's address without searching for the bump again
 
 The offer account lives at a **PDA** (program derived address), an address derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
 
@@ -103,7 +103,7 @@ The constraints make it maker-only: the signer must match the maker address stor
 
 Escrow has less arithmetic than any other program in this book, because the offer is all-or-nothing: there are no partial fills, no division, and so no rounding policy to decide. The amounts the maker states are the amounts that move. The only multiplication in the program is in `transfer_checked()`, which the `transfer_tokens()` helper uses so that every transfer verifies the mint's decimals match what the caller believes they are, one more check against minor-unit confusion.
 
-The lamport math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). Whether the offer is taken or canceled, both program-created accounts close and both deposits return to her; when her token B account already existed, her lamports round-trip exactly, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
+The lamport math that remains is rent. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). Whether the offer is taken or canceled, both program-created accounts close and both deposits return to her; when her token B account already existed, she gets back exactly the lamports she paid in, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
 ## The Invariants
 

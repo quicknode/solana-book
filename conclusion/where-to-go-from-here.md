@@ -1,6 +1,6 @@
 # Chapter 21: Where to Go From Here
 
-Ten programs are behind you: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a managed fund, an options venue, and a perpetual futures venue. Between them they cover the parts most financial products are built from.
+You have built ten programs: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a managed fund, an options venue, and a perpetual futures venue. Between them they cover the parts most financial products are built from.
 
 The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those are no longer sales points for a platform. They are materials you can build with.
 
@@ -14,7 +14,7 @@ You can read somebody else's program and ask the right questions: which accounts
 
 You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's tokens.
 
-You can reason about who earns what, and why anyone shows up. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
+You can reason about who earns what, and why anyone takes part. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
 And you can carry the responsibility that comes with all of it. Programs holding other people's assets are not a place to find out whether an idea works.
 
@@ -45,7 +45,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The product moves at the speed of the legacy system where it has to, and settles instantly everywhere else. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Managed Fund* chapter. The hard parts are at the edges rather than in the middle: banking partners, the licenses that let money cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
 
-**Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that hold up are the ones that say the awkward part up front. Deposits earn interest because they are lent out, so when most of the pool is on loan, the cash left in the reserve may not cover a withdrawal until borrowers repay. A depositor should read that on the screen before they deposit, not learn it from a refused withdrawal.
+**Savings that pay what borrowers pay.** The deposit side of the *Lending and Borrowing* chapter, with a balance, a rate, and a withdraw button in front of it and nothing else on the screen. The versions that succeed are the ones that state the awkward part first. Deposits earn interest because they are lent out, so when most of the pool is on loan, the cash left in the reserve may not cover a withdrawal until borrowers repay. A depositor should read that on the screen before they deposit, not learn it from a refused withdrawal.
 
 **Spending against your shares instead of selling them.** Someone holding NVDAx who needs two thousand dollars can sell, ending a position they wanted to keep and in many countries creating a tax bill, or borrow against it and keep it. The second option is the *Lending and Borrowing* chapter in full: shares as collateral, a price from a feed as covered in the *Offchain Truth* chapter, and a liquidation path when the collateral falls. Around it sits a card, a spending limit, and a warning that arrives long before a liquidator does.
 
@@ -55,7 +55,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **A rental deposit that pays its interest to the tenant.** A month or two of rent sits for a year in the landlord's account or an agency's, earning for whoever holds it. In a vault neither party controls it can pay the tenant instead, and still be released to either side when the lease ends. The design work is the state where the two sides disagree about damage, and making sure the deposit cannot be stuck there.
 
-**Money raised from the people who already buy from you.** A roaster who needs eighty thousand dollars for a second location can raise it from the customers who drink the coffee: all-or-nothing against a deadline, refunds if the target is missed, repayment as a share of revenue. That is the *Fundraiser* chapter almost unchanged, and what it displaces is a chain of intermediaries, each with a minimum size below which the call is not worth returning.
+**Money raised from the people who already buy from you.** A roaster who needs eighty thousand dollars for a second location can raise it from the customers who drink the coffee: all-or-nothing against a deadline, refunds if the target is missed, repayment as a share of revenue. That is the *Fundraiser* chapter almost unchanged, and what it displaces is a chain of intermediaries, each with a minimum deal size below which it will not take the work.
 
 **Cash today for an invoice due in sixty days.** A supplier ships forty thousand dollars of goods on sixty-day terms and needs the money this week, so funders advance most of the face value and are repaid when the buyer pays. Pooling and interest come from the *Lending and Borrowing* chapter, repayment runs through escrow, and whether the invoice was really paid is an offchain fact, which makes the *Offchain Truth* chapter the one this product depends on most. The credit risk stays where it always was, on the buyer. What goes away is the underwriting time and the size floor.
 
@@ -71,7 +71,7 @@ In each of these cases there is a specific situation, an individual or organizat
 
 The better ideas are in the places where the programs exist and no product has shipped.
 
-**Rent that rises without you.** Rent tracks the housing market and a renter's savings do not, so every increase is a loss with nothing on the other side of it. Put a monthly amount into an asset that moves with the same market, and the asset's gain covers part of the next rise. The *Managed Fund* chapter's program already does this: it takes deposits, issues shares at a share price, and holds a basket against target weights, priced as the *Offchain Truth* chapter describes. The challenge is not the program. One city's rents and any tradable index of housing move together only loosely, and a renter told their rent is covered when it might not be is worse off than one never offered the product. The work is in the disclosure and the product design: saying how much of the next rise the asset is likely to cover, and how much it might not.
+**Rent that rises without you.** Rent tracks the housing market and a renter's savings do not, so every increase is a loss with no offsetting gain. Put a monthly amount into an asset that moves with the same market, and the asset's gain covers part of the next rise. The *Managed Fund* chapter's program already does this: it takes deposits, issues shares at a share price, and holds a basket against target weights, priced as the *Offchain Truth* chapter describes. The challenge is not the program. One city's rents and any tradable index of housing move together only loosely, and a renter told their rent is covered when it might not be is worse off than one never offered the product. The work is in the disclosure and the product design: saying how much of the next rise the asset is likely to cover, and how much it might not.
 
 **Credit for people with no collateral to post.** Every program in this book lends against collateral worth more than the loan, because that is the only kind of credit a program can enforce by itself. The credit most people actually need is the other kind, and the things that make it work, an income record, a reputation, somewhere to take a defaulter, all live offchain.
 
@@ -85,7 +85,7 @@ Some things were left out on purpose.
 
 **Governance** is deliberately absent. Every program here has an operator with a private key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that private key with a voting process is a separate design problem.
 
-**The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and the program is behind you.
+**The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and you have already built it.
 
 The book keeps changing after you close it. New chapters, corrections, and editions are announced at @QuicknodeSolana on X, which is also the fastest way to ask a question or suggest what the next edition should cover.[^follow-quicknode-solana]
 
@@ -97,7 +97,7 @@ Then get a second (and third) opinion from an expert who did not work on it. Eve
 
 Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
-Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or leaking a percentage nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
 
 
 [^remittance-corridors]: The Introduction's note on remittance costs gives the corridors where a rate this high applies, and the World Bank source for them.
