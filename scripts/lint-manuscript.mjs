@@ -259,6 +259,14 @@ const rules = [
   [/\bSolend\b/, "renamed: say Save"],
   [/\bSerum\b/, "collapsed project: cite OpenBook or Phoenix"],
   [/\bfavour|behaviour|\bcancelled\b|\bapologise\b|\blabelled\b/, "American spelling in prose (identifiers like the Cancelled enum are exempt: write them capitalized)"],
+  // "Buys" and "costs" used figuratively, from the Time chapter: in a book
+  // about money they read as claims about money. "A slot count would buy
+  // nothing here and cost a guess" was "counting slots would have no advantage
+  // here, and would be inaccurate", and "so this costs nothing, and it means no
+  // second is ever charged twice" was "so no second is ever charged twice".
+  // Literal purchases and costs stay.
+  [/\bbuys? nothing here\b|\bcosts? a guess\b|\bso this costs nothing\b|\bcosts availability\b|\bthat guess is wrong\b/i,
+    'a money word used figuratively reads as a claim about money: say what you mean, "has no advantage", "is inaccurate"'],
   // An address is only set as an address in the PDF if the build can find it,
   // and the build finds links. A host written as loose prose prints as prose.
   [/(?<![([\/`\w.])[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|org|io|dev|net|xyz)\b(?!\w)/,
