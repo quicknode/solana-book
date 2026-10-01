@@ -19,3 +19,5 @@ Dean Little is the founder of Blueshift, a Solana education and research initiat
 Marius Gugat is a security researcher at Neodyme, a security firm that audits Solana programs.
 
 Noah Prince is an engineer at Velocity, and previously led engineering at the Helium Foundation.
+
+Pavan Katepalli is the founder of Mori Finance, a covered call platform on Solana.
