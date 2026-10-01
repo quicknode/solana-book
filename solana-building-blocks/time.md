@@ -43,7 +43,7 @@ A leader can pick any time later than its parent block's and no more than two sl
 
 The 20 seconds in the last question is where the two clocks' errors meet:
 
-- **The timestamp's error stays a second or two, however long the span.** That is as far as a leader can move it, outside a halt.
+- **The timestamp's error stays under a second or two, however long the span.** One leader can move it up to 800 milliseconds in its turn, and it counts only whole seconds. Outside a halt, nothing makes that error grow.
 - **A slot count's error grows with the span.** Converted at 200 milliseconds, it falls about 9% short of the time that passed: about 2 seconds across 20 seconds, and about 16 hours across a week.
 
 The table at the end of this chapter shows where each program in this book lands.
@@ -61,11 +61,11 @@ Two programs in this book accrue value over time, and both count it in seconds:
   Elapsed seconds is the Clock's current timestamp minus the one the reserve stored at its last accrual, `last_accrual_timestamp`. Rather than recalculating every borrower's debt, the market stores each borrower's principal and updates the one shared factor, so a borrower's current debt is their principal multiplied by that factor. Its rates are quoted annually, so the conversion divides by the seconds in a year. The *Arithmetic of Money* chapter covers how to build that factor safely.
 - **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_timestamp`, and its operator sets the rate per second.
 
-Both accumulate, both advance by elapsed time, and both decide what somebody owes, which decides whether a position can be liquidated. A leader can move the timestamp by a second or two, and at a 20% annual rate two seconds of interest is about one hundred-millionth of the debt. A position that close to the liquidation line crosses it anyway if the leader waits two seconds, so moving the clock gains the leader nothing.
+Both accumulate, both advance by elapsed time, and both decide what somebody owes, which decides whether a position can be liquidated. A leader can move the timestamp by up to 800 milliseconds in its turn, and at a 20% annual rate even two seconds of interest is about one hundred-millionth of the debt. A position that close to the liquidation line crosses it anyway if the leader waits two seconds, so moving the clock gains the leader nothing.
 
-Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. The conversion is wrong on nearly every slot, and the errors add up rather than cancel. If slots average 219 milliseconds, a market that assumes 200 collects about 9% less than it quotes, so a borrower quoted 20% a year pays about 18.3%. Counted in seconds, the error is the second or two a leader can move the clock. Counted in slots, it is nearly a tenth of all the interest.
+Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. The conversion is wrong on nearly every slot, and the errors add up rather than cancel. If slots average 219 milliseconds, a market that assumes 200 collects about 9% less than it quotes, so a borrower quoted 20% a year pays about 18.3%. Counted in seconds, the error is at most the 800 milliseconds a leader can move the clock in its turn. Counted in slots, it is nearly a tenth of all the interest.
 
-Both programs treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. The network already rejects a block whose time goes backwards, so the rule never drops any elapsed time, and it means no second is ever charged twice.
+Both programs treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. The network already rejects a block whose time goes backwards, so no second is ever charged twice.
 
 ## How to Turn Time Into Slots
 
