@@ -24,6 +24,11 @@ deletion leaves when the columns around it stay put. It is advisory, not a gate:
 figures whose content is a curve rather than boxes, so each hit needs a look. Run it after removing
 anything from a figure.
 
+`npm run measure-slot-drift` reads block times from an RPC node (testnet by default, `--rpc` for another)
+and prints the average slot length, the drift from the 200 ms target, the hours a week of slots runs
+long, and the skip rate. Those are the figures the *Time* chapter's slot drift placeholders wait on;
+cite the network and the date with any number taken from it.
+
 `npm run resize-cover` sizes the full-wrap cover export (`assets/cover-wrap.pdf`) for KDP; the math and
 the workflow are in `PRINT-SPECIFICATION.md` under Cover.
 
