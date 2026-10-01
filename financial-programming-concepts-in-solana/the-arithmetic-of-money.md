@@ -20,9 +20,13 @@ Programs calculate in **minor units**, the smallest denomination of each token: 
 
 Two conventions build on minor units:
 
-- Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so 1.05 is stored as 1_050_000_000_000_000_000. The conventional constant is 10^18, and a value at that scale is called a **WAD**, a convention borrowed from the Ethereum blockchain. It has since become the usual word for 18-decimal fixed point on every chain, Solana included.
+- Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so at a scale of 10^18, 1.05 is stored as 1_050_000_000_000_000_000. A value at that scale is called a **WAD**, a name borrowed from the Ethereum blockchain, and a common scale on Solana too.
 
-- Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the *Order Book Exchange* chapter shows examples of lots).
+- Order books often use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the *Order Book Exchange* chapter shows examples of lots). Another approach converts both mints' amounts to one shared number of decimals before any price math runs.
+
+The WAD is not a standard, though: Solana has no single fixed-point format. SPL's token-lending program used WADs, but the spl-math library's `PreciseNumber` scales by 10^12. Kamino's lending program uses binary fixed point instead. Its numbers are u128s with the last 60 bits after the binary point, so 1.0 is stored as 2^60.[^fixed-point-formats] That gives about the same precision as a WAD, and rescaling becomes a bit shift rather than a division. The companion repository mixes scales too: the lending program's `FIXED_POINT_SCALE` is 10^18, and the perpetual futures program's `FUNDING_PRECISION` is 10^9.
+
+So the rule for decimals applies to fixed point as well: **read the format of every number you did not produce; never assume it.** Before using a rate, an index, or a price from another program, find its scale in that program's source, and convert it to yours once, where it enters your code. A 10^12 value read as a WAD is a million times too small, and nothing fails.
 
 ## Every Operation Is Checked
 
@@ -102,10 +106,12 @@ The rate itself is a policy choice; the arithmetic above only applies whatever r
 
 ## What You Learnt
 
-- Keep onchain amounts as integers: no floats near funds, every amount at a declared scale read from the mint, lots for order books and WADs for fractions.
+- Keep onchain amounts as integers: no floats near funds, every amount at a declared scale read from the mint, and fractions in fixed point. Fixed-point formats differ between programs, so read the scale of any number another program produced before using it.
 - Multiply before divide, promote intermediates to u128, and check every operation with a named overflow error.
 - Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
 - Assert invariants after the math, and know the degenerate values that let an invariant hold in a dangerous state.
 - One accumulation factor compounds interest for every borrower at once, and rates rise with utilization as a pool empties, so borrowers repay and suppliers arrive.
 
 [^spl-lending]: Neodyme published the bug, the exploit, and the coordinated disclosure in December 2021, at [neodyme.io/en/blog/lending_disclosure](https://neodyme.io/en/blog/lending_disclosure/). The $2.6B is the total value locked across the forks at the time, not a loss: the fix shipped before anyone else found it.
+
+[^fixed-point-formats]: Each format is defined in its program's source: SPL token-lending's `WAD` in [github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/math/common.rs](https://github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/math/common.rs), spl-math's `PreciseNumber` in [github.com/solana-labs/solana-program-library/blob/master/libraries/math/src/precise_number.rs](https://github.com/solana-labs/solana-program-library/blob/master/libraries/math/src/precise_number.rs), and Kamino's `Fraction`, the `U68F60` type from the `fixed` crate, in [github.com/Kamino-Finance/klend/blob/master/programs/klend/src/utils/fraction.rs](https://github.com/Kamino-Finance/klend/blob/master/programs/klend/src/utils/fraction.rs). All three were read on October 1, 2026.
