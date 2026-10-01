@@ -20,7 +20,7 @@ When a leader's block does not arrive in time, the others vote to skip that slot
 
 ## The Unix Timestamp
 
-Programs read the **Unix timestamp** from the **Clock sysvar**, a system account the runtime keeps fresh. It is a time a leader reports rather than a count the runtime guarantees. Each leader writes its own clock's time into the end of its block, and the transactions in the next block read that value. The value stays the same for the whole slot, so every transaction in a block sees one timestamp. The network rejects a block whose time goes backwards, or runs more than two slot lengths ahead for each slot since its parent block, so a leader chooses its time only within that range.[^alpenglow-clock] The timestamp is usually within a second or two of real time. It counts whole seconds, and it was written one block earlier.
+Programs read the **Unix timestamp** from the **Clock sysvar**, a system account the runtime keeps fresh. It is a time a leader reports, within a range the network enforces: a block whose time goes backwards, or runs more than two slot lengths ahead for each slot since its parent block, is rejected.[^alpenglow-clock] Each leader writes its own clock's time into the end of its block, and the transactions in the next block read that value. The value stays the same for the whole slot, so every transaction in a block sees one timestamp. The timestamp is usually within a second or two of real time. It counts whole seconds, and it was written one block earlier.
 
 ![](figures/unix-timestamp.svg)
 
