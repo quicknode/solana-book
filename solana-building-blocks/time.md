@@ -41,9 +41,12 @@ A leader can pick any time later than its parent block's and no more than two sl
 
 ![](figures/clock-decision-tree.svg)
 
-A price three seconds stale can be worth a liquidation to whoever arranged the delay, so freshness counts slots. A contribution three seconds late is worth one contribution, and a margin covers it, so the fundraiser's week runs on the wall clock. An option's expiry and a betting market's close are dates quoted to people, days away, so they run on the wall clock too: a leader can move them by a second or two, and a slot count would miss them by hours. Interest, funding, and the managed fund's annual fee run on the wall clock too. Each is a rate quoted to somebody per year or per hour, and a few seconds against a year change it by nothing anybody can see.
+The 20 seconds in the last question is where the two clocks' errors meet:
 
-The three questions rest on one comparison. Outside a halt, the timestamp's few seconds of error stay a few seconds however long the span runs. A slot count converted at 200 milliseconds stays about 9% short of the time that passed, so its error adds up slot by slot as the span grows, until across a week it is about 16 hours. The two errors meet at about 20 seconds, where a tenth of the span is the second or two a leader can move the timestamp. Below that the tree counts slots, and above it the timestamp is the default.
+- **The timestamp's error stays a second or two, however long the span.** That is as far as a leader can move it, outside a halt.
+- **A slot count's error grows with the span.** Converted at 200 milliseconds, it falls about 9% short of the time that passed: about 2 seconds across 20 seconds, and about 16 hours across a week.
+
+The table at the end of this chapter shows where each program in this book lands.
 
 ## Interest and Funding Accrue by the Wall Clock
 
