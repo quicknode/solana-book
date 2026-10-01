@@ -49,7 +49,7 @@ Carol is a liquidity provider. She gains what losing traders lose and pays what 
 
 ## The Price Comes From Outside, So Every Handler Checks It Before Using It
 
-Every trading and liquidity handler begins the same way: read the oracle, validate it, accrue funding. The pool records one **oracle feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. The feed carries a price written onchain and signed by the feed network that published it, read with the same five checks the *Prop AMM* chapter ran. In the companion repository the feed is `mock-price-feed`, a program labeled not-for-production whose authority sets the price with `set_price()`, so the tests can move it; the production path is a real feed network's account, decoded and verified with that network's own crate. Either way the program runs five checks on what it reads, in order:
+Every trading and liquidity handler begins the same way: read the oracle, validate it, accrue funding, and update the pool's average of the price. The pool records one **oracle feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. The feed carries a price written onchain and signed by the feed network that published it, read with the same five checks the *Prop AMM* chapter ran. In the companion repository the feed is `mock-price-feed`, a program labeled not-for-production whose authority sets the price with `set_price()`, so the tests can move it; the production path is a real feed network's account, decoded and verified with that network's own crate. Either way the program runs five checks on what it reads, in order:
 
 - the account is long enough to contain a price (`OracleDataTooShort`),
 - the price is positive (`NonPositivePrice`),
@@ -58,6 +58,24 @@ Every trading and liquidity handler begins the same way: read the oracle, valida
 - and the feed's own uncertainty band, divided by the price, is within `max_confidence_bps` (`OracleConfidenceTooWide`). A leveraged venue trading on a price the oracle itself is unsure of is how liquidation cascades start.
 
 A stale price here invites arbitrage. Anyone who can trade a leveraged market at a stale price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` check both refusals.
+
+## The Pool Averages the Price Itself, and Trades Only Near the Average
+
+The five checks refuse a price that is malformed, stale, or uncertain. A feed can also publish a confident, fresh price that is wrong, because the markets it reads from were pushed for a few minutes: the *Adversary* chapter's Mango Markets story is that attack. So the pool keeps its own **time-weighted average** of the oracle's price, in `average_price`, and refuses to trade at a price too far from it.
+
+The average updates every time a handler reads the oracle. `last_oracle_price` holds the price seen at the previous read, and the program assumes that price held until now:
+
+- The elapsed time since `average_price_timestamp`, capped at `PRICE_AVERAGE_WINDOW_SECONDS` (600 seconds), is the weight.
+- The average moves toward `last_oracle_price` by that weight's share of the window: (`last_oracle_price` − `average_price`) × elapsed ÷ 600, multiplied before dividing.
+- Then the price just read becomes `last_oracle_price`, and the timestamp becomes now.
+
+A price only starts counting from the moment it is read. A manipulated price moves the average only if a later read still sees it, by the seconds between the two reads, and any read of the real price in between replaces it. `test_one_manipulated_read_after_idle_does_not_move_average` leaves the pool idle for 15 minutes, reads a price of $160, and asserts the average is still exactly $100.
+
+`open_position()`, `close_position()`, `add_liquidity()` and `remove_liquidity()` compare the oracle's price with the stored average before folding it in. A price more than `max_price_deviation_bps` from the average, 20% in this pool, fails with `PriceOutsideBand` (checked by `test_open_rejected_when_oracle_jumps_outside_band`, `test_close_rejected_when_oracle_jumps_outside_band` and `test_liquidity_changes_rejected_when_oracle_jumps_outside_band`).
+
+`liquidate_position()` folds the price in without the band check. A genuine crash is when positions go underwater, and if liquidations waited for the average to catch up, the losses would grow in the LPs' pool while they waited. `test_liquidation_runs_outside_band` checks that a liquidation succeeds where a close at the same price is refused.
+
+After a genuine move, the average has to catch up before anyone can trade again. Anyone may call `update_price_average()`, which reads and checks the oracle, accrues funding, and folds the price in, with no band check. Calling it as time passes pulls the average toward the new price: `test_price_average_catches_up_after_genuine_move` moves the price to $130 and calls it every two minutes, and trading reopens on the third call, with the average at $110.80. Traders who want to trade, LPs who want to withdraw, and liquidators all have a reason to send it.
 
 ## Opening a Long, and the Pool Reserves the Best Case
 
@@ -139,7 +157,7 @@ The book's standing invariants hold here too. The vault balance always equals `l
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
-- **A stale or manipulated price** is the catastrophic one: with 10x leverage, a 1% price error is a 10% equity error, market-wide, simultaneously. That explains the five checks, the confidence cap, and the one trust decision the program leaves visible: the pool creator chooses the feed, and the feed account's owner is deliberately unchecked, so whoever controls that feed sets every price the pool settles at.
+- **A stale or manipulated price** is the catastrophic one: with 10x leverage, a 1% price error is a 10% equity error, market-wide, simultaneously. That explains the five checks, the confidence cap, and the band around the pool's own average price. One trust decision stays visible: the pool creator chooses the feed, and the feed account's owner is deliberately unchecked. Whoever controls that feed sets the prices the pool settles at, held within the band and moving only as fast as the average follows.
 - **The unliquidated-position gap**: liquidations that pay nothing do not happen, and the LPs absorb the loss. The example documents this gap, and it is why production venues add an insurance fund.
 - **First-depositor share inflation**: a donation to the vault moves nothing, because AUM reads `liquidity`, not the vault balance. But `liquidity` grows with every funding payment and trader loss, and a liquidity provider can also be the pool's only trader. An attacker holding a single share can pay funding into the pool from their own position to make that share expensive, then wait for a deposit to round down. The withheld `MINIMUM_LIQUIDITY` makes this cost them, because it counts as 1,000 shares in both divisors: the attacker's share is 1 of 1,001, and almost everything they pay in stays with the locked shares. A deposit mints deposit × (shares outstanding + 1,000) ÷ AUM. In the test the attacker holds a long for ten simulated years at the highest funding rate a pool may have, pumping AUM to about 88,000 minor units. The victim deposits just under twice that, which mints the victim 2,001 shares against the attacker's 1. Dividing by the bare supply of 1 would have minted the victim a single share. `test_inflating_liquidity_through_own_trades_does_not_pay` runs the attack: the attacker pays about 87,000 minor units of funding and gets back 88. Divided by the bare supply instead, the same attack returns them about 132,500, about 44,000 of it from the victim's deposit. `test_first_deposit_below_minimum_fails` checks that a first deposit smaller than `MINIMUM_LIQUIDITY` is refused with `DepositTooSmall`.
 - **Winning too big**: profit beyond the reservation is clipped by the cap rather than bankrupting the pool, and traders know the cap before they open.
@@ -151,16 +169,20 @@ The book's standing invariants hold here too. The vault balance always equals `l
 
 The suite is the largest in the companion repository: a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. The pattern to copy is **one test per invariant, named as the sentence it checks**: `test_profit_capped_at_reserved_notional`, `test_remove_liquidity_blocked_by_reserved`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`.
 
+The band tests set a price, move the clock, and assert the average to the minor unit: `test_single_update_moves_average_by_elapsed_fraction` checks that one read moves nothing and the next moves the average by exactly the elapsed share of the window.
+
 The happy-path tests (`test_close_long_in_profit`, `test_close_long_in_loss`, `test_close_short_in_profit`) check the same hand-computed payouts this chapter walked through. `test_liquidation_of_underwater_long` runs Dave's whole waterfall. When a future change breaks an invariant, the failing test's name says which one.
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
 A traditional futures exchange is a matching engine, a clearing house with a margin department, a funding desk, and a floor of liquidation clerks. One reservation does most of that work: every position reserves its maximum payout when it opens, so the pool can never owe more than it holds. The pool is the clearing house and the counterparty, the maintenance margin and the reservation are its margin department, the funding index is the funding desk, and a liquidator's bot is the liquidation clerk, paid per correction.
 
-This chapter added four concepts:
+This chapter added six concepts:
 
 - **Pre-funded solvency.** Reserve every position's maximum payout at open, cap profit at the reservation, and limit LP withdrawals to free liquidity, so the pool can never owe more than it holds.
 - **Constant-time accounting.** Per-side scaled accumulators and entry snapshots make solvency, AUM, and settlement computable without ever iterating open positions: realizable credit, account-local safety, and bounded progress, in miniature.
+- **Two margins.** Require an initial margin to open a position and a lower maintenance margin to keep it, so a new position has room to move before it can be liquidated. Maximum leverage is one divided by the initial margin.
+- **A price band around the program's own average.** Keep a time-weighted average of the oracle's price, credit each interval to the price seen at its start, and refuse trades at prices too far from the average, while letting liquidations through.
 - **Funding.** A pool-wide index plus a per-position entry snapshot charges the crowded side a fee without visiting every position. Production venues keep the same bookkeeping and scale the rate with the imbalance.
 - **Mark-to-market share pricing.** LP shares price against AUM including traders' unrealized PnL, so entering and leaving the pool is fair at any instant.
 
