@@ -14,13 +14,22 @@ That design decision creates the problem the program is organized around: the pr
 
 ## Creating the Market, Where the Parameters Are Checked Against Each Other
 
-Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `program_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, 10x maximum leverage, a 5% maintenance margin, a 1% liquidation fee, and a 1% cap on oracle confidence. The funding rate is set here too, and no handler can change it once the pool exists. The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and one cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, and neither `close_position()` nor `liquidate_position()` would accept it, leaving its owner no way to get their collateral out. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. So the requirement that every participant must be able to get their assets out of every state is enforced in the market's *configuration*, before any position exists.
+Maria creates the pool and is its `authority`; her revenue is the open and close fees that accrue to `program_fees`, and the program gives her no path to anyone's collateral. She calls `initialize_pool()` with the market's risk parameters: 10 basis-point open and close fees, a 10% initial margin, a 5% maintenance margin, a 1% liquidation fee, a 1% cap on oracle confidence, and a 20% band around the pool's average price. The funding rate is set here too, and no handler can change any of them once the pool exists.
+
+The two margins are the two collateral thresholds every leveraged venue has, measured as a share of the position's size:
+
+- The **initial margin**, `initial_margin_bps`, is what a trader must have to open a position. A 10% initial margin means a 5,000 USDC position needs at least 500 USDC of collateral left after the open fee.
+- The **maintenance margin**, `maintenance_margin_bps`, is the lower line an open position must stay above. When that position's equity falls to 250 USDC, 5% of its size, anyone may liquidate it.
+
+The initial margin and the **maximum leverage** are the same rule stated two ways: maximum leverage is one divided by the initial margin, so a 10% initial margin is 10x and a 5% initial margin would be 20x. Traders usually quote the leverage; the program stores the margin, so both thresholds are in the same unit. The gap between the two is the room a new position has before it can be liquidated, so `initialize_pool()` refuses an initial margin at or below the maintenance margin with `InitialMarginNotAboveMaintenance` (checked by `test_initialize_pool_rejects_initial_margin_at_or_below_maintenance`).
+
+The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and a second cross-check prevents a dead state: `maintenance_margin_bps` must exceed `close_fee_bps`. Otherwise a position could exist that is too healthy to liquidate but too poor to pay its own close fee, and neither `close_position()` nor `liquidate_position()` would accept it, leaving its owner no way to get their collateral out. The test `test_initialize_pool_rejects_close_fee_at_or_above_maintenance_margin` checks it. So the requirement that every participant must be able to get their assets out of every state is enforced in the market's *configuration*, before any position exists.
 
 ![](figures/perps-create-pool.svg)
 
 Financial state on Solana is accounts, and this one transaction created the three the market needs.
 
-The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`max_leverage`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
+The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`initial_margin_bps`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `max_price_deviation_bps`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
 
 - `liquidity`: what the LPs own. It grows with deposits, trader losses, and funding; it shrinks with withdrawals and trader profits.
 - `reserved_liquidity`: the portion of `liquidity` currently pledged as the maximum payout of open positions.
@@ -28,6 +37,7 @@ The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, an
 - `program_fees`: Maria's accrued fees, separate again.
 - `long_size`, `short_size`, `long_size_scaled`, `short_size_scaled`: per-side open-interest accumulators, which make solvency checkable without iteration.
 - `cumulative_funding` and `last_funding_timestamp`: the funding index.
+- `average_price`, `last_oracle_price` and `average_price_timestamp`: the pool's own running average of the oracle's price, described below.
 
 The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"`) and the token authority of the **custody vault** (seeds `"vault"`), a single token account holding LP liquidity, trader collateral, and fees together, and signs for both with its own seeds. The vault holds everyone's tokens together, and the three ledger fields, `liquidity`, `total_collateral`, and `program_fees`, record how much of it belongs to whom. As in the *Fundraiser* chapter, every handler computes amounts from those fields, never from the vault balance.
 
@@ -51,10 +61,9 @@ A stale price here invites arbitrage. Anyone who can trade a leveraged market at
 
 ## Opening a Long, and the Pool Reserves the Best Case
 
-Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage check; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the handler makes three checks, in order, and refuses the position if any fails:
+Alice thinks the quarter goes NVIDIA's way and goes long; Bob believes the opposite and will open the mirror-image short. Alice calls `open_position()`: side Long, 1,000 USDC collateral, 5,000 USDC size, and an acceptable-price bound (her slippage check; a long opening above it fails with `SlippageExceeded`). Size five times her collateral means **5x leverage**: every 1% move in NVDAx moves her equity by about 5%. The handler charges the open fee on **notional size, not collateral**: 10 basis points of 5,000 is 5 USDC, so her working collateral is 995. Fees scale with exposure because exposure, not deposit, is what the pool underwrites. Then the handler makes two checks, in order, and refuses the position if either fails:
 
-- **Leverage**: size must not exceed net collateral times `max_leverage`. 5,000 against 995 × 10 = 9,950 passes; her effective leverage is about 5x. Eleven-x fails with `LeverageTooHigh` (checked by `test_open_rejects_excess_leverage`).
-- **Born healthy**: net collateral must exceed the maintenance margin on her size, 5% of 5,000 = 250 USDC, else `PositionNotHealthy`. A position must not be liquidatable in the transaction that creates it.
+- **Initial margin**: net collateral must be at least `initial_margin_bps` of the size: 10% of 5,000 is 500, and her 995 passes. The largest position 995 USDC can open is 9,950 USDC, which is the 10x maximum; she is opening about 5x. Anything larger fails with `InitialMarginNotMet` (checked by `test_open_rejects_position_below_initial_margin`). Because the initial margin is above the maintenance margin, no position can be liquidatable in the transaction that creates it.
 - **The reservation**: `reserved_liquidity` grows by her full size, 5,000, and the sum must stay within `liquidity`, else `InsufficientLiquidity` (checked by `test_open_rejects_when_pool_cannot_back_it`).
 
 By reserving the notional, the pool sets aside the most it could ever owe her, because **profit on a close is capped at the position's size**. The cap has a cost for Alice: if NVDAx tripled to $300, her raw profit of 10,000 USDC would be paid as 5,000. In exchange, every winner's payout is pre-funded before the position exists, so the pool can never owe more than it holds. The test `test_profit_capped_at_reserved_notional` runs the tripling and asserts the cap. Production venues add insurance funds and auto-deleveraging on top of this reservation.
@@ -126,7 +135,7 @@ The example's design notes point at Percolator, Anatoly Yakovenko's Kani-checked
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
 - **Bounded progress**: no operation's compute grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
 
-The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + program_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position born healthy can, at all times, be closed by either `close_position()` or `liquidate_position()`.
+The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + program_fees` plus dust; share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances; and every position opened above the initial margin can, at all times, be closed by either `close_position()` or `liquidate_position()`.
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
@@ -136,7 +145,7 @@ The book's standing invariants hold here too. The vault balance always equals `l
 - **Winning too big**: profit beyond the reservation is clipped by the cap rather than bankrupting the pool, and traders know the cap before they open.
 - **Sandwiching and price drift**: every trader and LP handler takes a user-supplied bound and fails with `SlippageExceeded` instead of filling at a surprise price.
 - **Double close, double liquidation**: the position account closes when the position is closed or liquidated; the second call finds no account.
-- **Dangerous configurations**: parameter validation at pool creation, including the maintenance-versus-close-fee cross-check.
+- **Dangerous configurations**: parameter validation at pool creation, including the two cross-checks: the initial margin above the maintenance margin, and the maintenance margin above the close fee.
 
 ## Testing Considerations
 
