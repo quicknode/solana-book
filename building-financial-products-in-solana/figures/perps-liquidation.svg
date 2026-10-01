@@ -153,9 +153,9 @@
   <text x="535" y="261.545" font-size="10.5" font-weight="bold">Pool</text>
   <line x1="515" y1="268.37" x2="624" y2="268.37" stroke="#888" stroke-width="0.8"/>
   <text x="515" y="279.37" font-size="8.5">liquidity: 12,750 USDC</text>
-  <text x="515" y="289.87" font-size="8.5">reserved_liquidity: 5,000</text>
-  <text x="515" y="300.37" font-size="8.5">total_collateral: 995</text>
-  <text x="515" y="310.87" font-size="8.5">program_fees: 10</text>
+  <text x="515" y="289.87" font-size="8.5">total_collateral: 995</text>
+  <text x="515" y="300.37" font-size="8.5">program_fees: 5</text>
+  <text x="515" y="310.87" font-size="8.5">insurance_fund: 5</text>
   <text x="515" y="321.37" font-size="8.5">long_size: 5,000</text>
   <text x="515" y="331.87" font-size="8.5">short_size: 0</text>
   <text x="515" y="342.37" font-size="8.5">cumulative_funding: 0</text>
