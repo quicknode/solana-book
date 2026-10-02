@@ -12,8 +12,9 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 
 Options have some unique terminology:
 
+- Its **underlying** is the asset the option is about: NVDAx in this chapter, though an option on Tesla stock would have TSLAx as its underlying. The word is short for *underlying asset*, and options traders use it as a noun on its own. Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
 - Its **premium** is what the buyer pays for the right, once, up front.
-- Its **kind** is a **call**, the right to buy the underlying asset, or a **put**, the right to sell it.
+- Its **kind** is a **call**, the right to buy the underlying, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
 - The **writer** creates the option, which is called **writing** it, and in doing so agrees to sell or buy the underlying asset at the strike.
@@ -32,9 +33,11 @@ Every option has exactly two endings, and the price at expiry decides which: the
 
 A call and a put are the same contract pointed in opposite directions. Every row below swaps between the two columns, and the rest of this chapter follows one of each: Alice's call and Carol's put.
 
-| | Call | Put |
+> **A contract here is an option, not code.** In finance, an option is a contract: an agreement between its writer and its holder. One option can also cover several **contracts**, each a fixed amount of the underlying: Alice's call is five contracts of one NVDAx each. Neither use means the program. Code deployed onchain is a **program** in this book, the thing other chains call a "smart contract", and this program records each option it holds as an `OptionContract` account.
+
+| | Call Option | Put Option |
 | --- | --- | --- |
-| Who writes it | an owner of the asset who would sell at the strike | someone with cash who would buy at the strike |
+| Who writes (makes) it | an owner of the asset who would sell at the strike | someone with cash who would buy at the strike |
 | The writer agrees to | sell the underlying at the strike | buy the underlying at the strike |
 | The writer posts | the underlying | the strike, in the quote token |
 | Who buys it | someone who wants the upside without paying for the asset | an owner of the asset who wants insurance against a fall |
