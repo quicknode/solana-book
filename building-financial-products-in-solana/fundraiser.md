@@ -47,7 +47,7 @@ So the contributions arrive like this: Alice 1,000, Bob 800, Carol 500 and 500, 
 
 The program sets no limit on what one backer may give, and does not stop Maria contributing to her own raise. A per-backer limit would count wallets, and a wallet costs nothing to create, so it would not stop one person funding most of a raise. What the program guarantees is narrower: Maria receives the vault only when the counter shows the full 9,000 USDC, so she never receives the partial raise that cannot buy a mold. Whether she then builds the machine is outside the program, as it is on Kickstarter.
 
-> **One person, many wallets.** A wallet costs nothing to create, so a count of wallets or receipts says nothing about how many people backed a raise: eleven receipts can be eleven people or one. One person posing as many participants is a **Sybil attack**, and a raise that needs distinct backers has to get proof from outside the program that each contributor is a distinct person. Proof-of-personhood services supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. World ID and VeryAI are two such services.[^personhood-services] Each delivers its proof to a Solana program differently, and this program checks none of them.
+> **One person, many wallets.** A wallet costs nothing to create, so a count of wallets or receipts says nothing about how many people backed a raise: eleven receipts can be eleven people or one. One person posing as many participants is a **Sybil attack**, and a raise that needs distinct backers has to get proof from outside the program that each contributor is a distinct person. Proof-of-personhood services supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. VeryAI and World ID are two such services.[^personhood-services] Each delivers its proof to a Solana program differently, and this program checks none of them.
 
 ## The Claim Reads the Program's Counter, Not the Vault Balance
 
@@ -152,4 +152,4 @@ In the *Betting Market* chapter we will build a pool that many people pay into, 
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
 
-[^personhood-services]: World ID is at [world.org](https://world.org), and VeryAI at [very.org](https://very.org).
+[^personhood-services]: VeryAI is at [very.org](https://very.org), and World ID at [world.org](https://world.org).
