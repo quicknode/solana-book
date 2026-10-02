@@ -1,6 +1,6 @@
 # Chapter 13: The Betting Market
 
-What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' stakes in proportion to how much they staked. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
+What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' stakes in proportion to how much they staked. Payouts are fixed by the pools as they stand when betting closes, not by the odds showing when each bet was placed. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
 
 The program lives at `finance/betting-market` in the companion repository. Structurally it is the *Escrow* chapter with many parties and one new, serious question: who decides what happened in the real world?
 
@@ -67,6 +67,8 @@ Winners come and claim their payouts whenever they like; nothing pays out automa
 payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
 For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 100 + 49 = **149 USDC**. Alice staked three times what Bob staked and won exactly three times the winnings. Carol staked 200 and receives nothing; had Backrooms won, she alone would have taken the entire 400-dollar losing side, minus the fee.
+
+None of these payouts depended on when anyone bet. Had Alice bet first, when Toy Story 5 held only her stake, or last, after Bob, she would still receive 447 USDC, because the payout reads the pools at the close. A racetrack's tote board works the same way: the odds it shows keep moving until the race starts, and every winning ticket is paid at the final odds. Odds locked in at the moment of the bet are fixed-odds betting, which needs a bookmaker to carry the risk of paying winners more than the losers staked.
 
 The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last. The *Arithmetic of Money* chapter explains both choices: multiply before dividing, and round so that the leftover dust stays with the program rather than going to a claimant.
 

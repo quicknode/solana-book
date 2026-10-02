@@ -47,6 +47,8 @@ So the contributions arrive like this: Alice 1,000, Bob 800, Carol 500 and 500, 
 
 The program sets no limit on what one backer may give, and does not stop Maria contributing to her own raise. A per-backer limit would count wallets, and a wallet costs nothing to create, so it would not stop one person funding most of a raise. What the program guarantees is narrower: Maria receives the vault only when the counter shows the full 9,000 USDC, so she never receives the partial raise that cannot buy a mold. Whether she then builds the machine is outside the program, as it is on Kickstarter.
 
+> **One person, many wallets.** A wallet costs nothing to create, so a count of wallets or receipts says nothing about how many people backed a raise: eleven receipts can be eleven people or one. One person posing as many participants is a **Sybil attack**, and a raise that needs distinct backers has to get proof from outside the program that each contributor is a distinct person. Proof-of-personhood services supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. World ID and VeryAI are two such services.[^personhood-services] Each delivers its proof to a Solana program differently, and this program checks none of them.
+
 ## The Claim Reads the Program's Counter, Not the Vault Balance
 
 The claim handler compares the target against `current_amount`, the program's own count of accepted contributions, and **never against the vault's token balance**. Anyone can transfer tokens to any token account on Solana, no permission required, and a transfer straight into the vault moves the balance without moving the counter.
@@ -54,6 +56,8 @@ The claim handler compares the target against `current_amount`, the program's ow
 `refund()` decides that a raise failed by reading `current_amount`, so the claim has to read the same number. If the claim read the balance instead, a transfer into the vault could make both handlers accept at once. Suppose 3,600 USDC had come in through `contribute()` and someone transferred 5,400 more straight into the vault. The balance would read 9,000, so the claim would pay all of it to Maria. The counter would still read 3,600, so `refund()` would promise each backer their contribution back, out of a vault that was now empty.
 
 Reading the counter keeps the two endings exclusive: the claim needs the counter at or above the target and a refund needs it below. The test `test_check_contributions_ignores_direct_vault_donations` transfers the full target straight into the vault and asserts that the claim still fails with `TargetNotMet`. Apply the same check to any handler that releases tokens from a vault: compare a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
+
+The counter cannot tell Maria's own contributions from a stranger's. If she contributes through wallets she controls, each contribution is a real one, so the counter moves and the claim can succeed. The boxout *One person, many wallets*, earlier in this chapter, covers that.
 
 ## The Target Is Met: The Maker Claims
 
@@ -147,3 +151,5 @@ The fundraiser added five concepts on top of the escrow's:
 In the *Betting Market* chapter we will build a pool that many people pay into, where who gets paid is decided by something the program cannot see: which outcome happened in the real world. Someone has to tell the program the answer, and you will see how the program limits what that person can do with the pooled stakes while trusting them for the result.
 
 [^any-mint]: Any mint works, Token Extensions mints included, because every account is declared through the token interface.
+
+[^personhood-services]: World ID is at [world.org](https://world.org), and VeryAI at [very.org](https://very.org).

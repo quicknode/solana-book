@@ -544,6 +544,10 @@ A program's address: the account instructions are addressed to. The compiled cod
 
 The account holding a deployed program's compiled code, the slot it was last deployed in, and its upgrade authority. Under Solana's upgradeable loader the account at the program's address is only a 36-byte stub pointing here, so a deployed program occupies two accounts; newer loaders fold them back into one.
 
+### proof of personhood
+
+Evidence, issued by a service outside the program, that a participant is a unique human rather than one of many wallets held by the same person. A program that requires it can defend against a [Sybil attack](#sybil-attack). The *Fundraiser* chapter explains where it fits.
+
 ### proprietary AMM (prop AMM)
 
 An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. The dominant venue type by volume on Solana; the *Prop AMM* chapter builds one.
@@ -659,6 +663,10 @@ A technique for storing bulk data offchain with onchain proofs, used for things 
 ### strike
 
 The price at which an [option](#option) trades if its holder exercises.
+
+### Sybil attack
+
+One person acting as many participants by creating many wallets, to get past a limit meant to apply per person, such as a cap on what each contributor may give. A program sees only public keys, so it needs [proof of personhood](#proof-of-personhood) from outside to stop one. The *Fundraiser* chapter explains why counting wallets cannot show how many people took part.
 
 ### System Program
 
