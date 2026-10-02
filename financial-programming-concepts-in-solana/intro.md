@@ -23,7 +23,7 @@ Most programs are conceptually simple, with design rules that come straight from
 
 ## Whoever Opens an Account Pays Its Rent, and Gets It Back
 
-Closing an account returns its rent deposit. The *Core Building Blocks of Solana* chapter showed that every account holds one for the space it occupies. That raises two questions for a program that creates accounts on its users' behalf: who pays the deposit, and who gets it back when the account closes?
+The last rule above ends with each account's rent deposit going back to whoever paid it. The *Core Building Blocks of Solana* chapter showed that every account holds one for the space it occupies. That raises two questions for a program that creates accounts on its users' behalf: who pays the deposit, and who gets it back when the account closes?
 
 - Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds their own token account (if it did not exist already) to receive what the maker offered. Rent burdens follow the party who chose to create the state.
 
