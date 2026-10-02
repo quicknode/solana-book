@@ -12,13 +12,15 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 
 Options have some unique terminology:
 
-- Its **underlying** is the asset the option is about: NVDAx in this chapter, though an option on Tesla stock would have TSLAx as its underlying. The word is short for *underlying asset*, and options traders use it as a noun on its own. Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
+- An option is a **contract**: an agreement between the two parties to it.
+- Its **underlying**, short for *underlying asset*, is the asset the option is about: NVDAx in this chapter, though an option on Tesla stock would have TSLAx as its underlying. Options traders drop the word "asset" and just say "the underlying". Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
 - Its **premium** is what the buyer pays for the right, once, up front.
 - Its **kind** is a **call**, the right to buy the underlying, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
 - The **writer** creates the option, which is called **writing** it, and in doing so agrees to sell or buy the underlying asset at the strike.
 - The **holder** buys the option and may use the right it carries. Using the right is **exercising** the option.
+- An option worth exercising is **in the money**, and one that is not is **out of the money**.
 
 The two sides have different payoffs:
 
@@ -33,7 +35,7 @@ Every option has exactly two endings, and the price at expiry decides which: the
 
 A call and a put are the same contract pointed in opposite directions. Every row below swaps between the two columns, and the rest of this chapter follows one of each: Alice's call and Carol's put.
 
-> **A contract here is an option, not code.** In finance, an option is a contract: an agreement between its writer and its holder. One option can also cover several **contracts**, each a fixed amount of the underlying: Alice's call is five contracts of one NVDAx each. Neither use means the program. Code deployed onchain is a **program** in this book, the thing other chains call a "smart contract", and this program records each option it holds as an `OptionContract` account.
+> **A contract here is an option, not code.** In this chapter, "contract" always means an option and never the program. Code deployed onchain is a **program** in this book, the thing other chains call a "smart contract", and this program records each option it holds as an `OptionContract` account.
 
 | | Call Option | Put Option |
 | --- | --- | --- |
@@ -46,8 +48,6 @@ A call and a put are the same contract pointed in opposite directions. Every row
 | On exercise, the holder | pays the strike and takes the underlying | delivers the underlying and takes the strike |
 | The holder profits past | the strike plus the premium | the strike minus the premium |
 | In this chapter | Alice writes, Bob buys: strike $180, premium $5 a share, profit past $185 | Carol writes, Dave buys: strike $150, premium $4 a share, profit past $146 |
-
-An option worth exercising is **in the money**, and one that is not is **out of the money**.
 
 Traditional options venues let a writer take on the obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault**, which is the table's third row. That makes a call **covered** and a put **cash-secured**: what the holder might claim is already in custody, so the writer cannot fail to deliver or to pay.
 
