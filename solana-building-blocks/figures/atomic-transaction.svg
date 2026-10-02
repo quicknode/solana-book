@@ -8,10 +8,10 @@
   <text x="86" y="76" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. lending program</text>
   <text x="86" y="90" font-size="10" fill="#444"><tspan font-family="'DejaVu Sans Mono', Menlo, monospace">borrow()</tspan> 1,000 USDC</text>
   <rect x="78" y="108" width="204" height="40" fill="#f4f4f2" stroke="#888"/>
-  <text x="86" y="124" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. AMM program</text>
+  <text x="86" y="124" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. exchange program</text>
   <text x="86" y="138" font-size="10" fill="#444"><tspan font-family="'DejaVu Sans Mono', Menlo, monospace">swap()</tspan> 1,000 USDC for 5 SOL</text>
   <rect x="78" y="156" width="204" height="40" fill="#f4f4f2" stroke="#888"/>
-  <text x="86" y="172" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. another AMM program</text>
+  <text x="86" y="172" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. another exchange program</text>
   <text x="86" y="186" font-size="10" fill="#444"><tspan font-family="'DejaVu Sans Mono', Menlo, monospace">swap()</tspan> 5 SOL for 1,010 USDC</text>
   <rect x="78" y="204" width="204" height="40" fill="#f4f4f2" stroke="#888"/>
   <text x="86" y="220" font-size="10.5" font-weight="bold" fill="#1e7a3c">4. lending program</text>
