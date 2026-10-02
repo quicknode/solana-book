@@ -6,7 +6,7 @@ Every bug class in this chapter has shipped in a real program, and the worst of 
 
 Every validator that executes your program must compute exactly the same result, or the network cannot agree on state, so a program's float operations are emulated in software rather than run on the hardware. That makes them slow. They also accumulate representation error (0.1 has no exact binary form) and round to nearest, a direction nobody chose. Token amounts are discrete anyway; there is no such thing as half a lamport. Representing quantities as whole integer steps is called **discretization**. For token amounts it is exact, because every token comes in whole minor units.
 
-So the rule is: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that uses them internally. When a calculation needs fractions, scale integers up instead, as the WADs and Lots section below describes. When it needs a square root or an exponential, compute it with integer iteration: Newton's method for the square root, which the *Constant-Product AMM* chapter runs for real, and exponentiation by squaring for a power, both covered later in this chapter. None of the programs in this book uses a float, and your programs should not either.
+So the rule is: token amounts, prices, rates, and everything derived from them are integers, u64 for amounts and u128 for intermediate math. No `f32`, no `f64`, no `powf`, no library that uses them internally. When a calculation needs fractions, scale integers up instead, as the Wads and Lots section below describes. When it needs a square root or an exponential, compute it with integer iteration: Newton's method for the square root, which the *Constant-Product AMM* chapter runs for real, and exponentiation by squaring for a power, both covered later in this chapter. None of the programs in this book uses a float, and your programs should not either.
 
 ## Every Amount Is an Integer at a Declared Scale
 
@@ -16,13 +16,17 @@ Programs calculate in **minor units**, the smallest denomination of each token: 
 - **Never mix scales in one calculation.** An amount in USDC minor units times a price per whole share is nonsense with a plausible magnitude, which is the hardest kind of bug to notice. Name variables with their unit and scale.
 - **Use `transfer_checked()`**, which makes every transfer state the decimals it believes and fails if the mint disagrees.
 
-## WADs and Lots
+## Wads and Lots
 
 Two conventions build on minor units:
 
-- Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so 1.05 is stored as 1_050_000_000_000_000_000. The conventional constant is 10^18, and a value at that scale is called a **WAD**, a convention borrowed from the Ethereum blockchain. It has since become the usual word for 18-decimal fixed point on every chain, Solana included.
+- Fractional values (interest rates, indexes, exchange rates) use **fixed point**: scale everything by a large constant, so at a scale of 10^18, 1.05 is stored as 1_050_000_000_000_000_000. A value at that scale is called a **wad**,[^wad-origin] and it is a common scale on Solana. A wad is typically stored as a u128, because the largest u64, about 1.8 × 10^19, is only about 18 at a scale of 10^18. Multiplying two wads needs a wider intermediate still, such as a U192 or U256. Their raw product is at a scale of 10^36 until one 10^18 is divided back out, and it overflows a u128 once both values pass about 18.
 
-- Order books use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the *Order Book Exchange* chapter shows examples of lots).
+- Order books often use **lots**: a market-level quantity unit chosen from the two mints' decimals so that prices read as human numbers regardless of how mismatched the mints are (the *Order Book Exchange* chapter shows examples of lots). Another approach converts both mints' amounts to one shared number of decimals before any price math runs.
+
+The wad is not a standard, though: Solana has no single fixed-point format. SPL's token-lending program used wads, held in a 192-bit `Decimal` type, but the spl-math library's `PreciseNumber` scales by 10^12. Kamino's lending program uses binary fixed point instead. Its numbers are u128s with the last 60 bits after the binary point, so 1.0 is stored as 2^60.[^fixed-point-formats] That gives about the same precision as a wad, and rescaling becomes a bit shift rather than a division. The companion repository mixes scales too: the lending program's `FIXED_POINT_SCALE` is 10^18, and the perpetual futures program's `FUNDING_PRECISION` is 10^9.
+
+So the rule for decimals applies to fixed point as well: **read the format of every number you did not produce; never assume it.** Before using a rate, an index, or a price from another program, find its scale in that program's source, and convert it to yours once, where it enters your code. An interest rate stored at 10^12 and read as a wad comes out a million times too small. Every operation on it still succeeds, so the program raises no error: it charges borrowers a millionth of the interest they owe.
 
 ## Every Operation Is Checked
 
@@ -102,10 +106,14 @@ The rate itself is a policy choice; the arithmetic above only applies whatever r
 
 ## What You Learnt
 
-- Keep onchain amounts as integers: no floats near funds, every amount at a declared scale read from the mint, lots for order books and WADs for fractions.
+- Keep onchain amounts as integers: no floats near funds, every amount at a declared scale read from the mint, and fractions in fixed point. Fixed-point formats differ between programs, so read the scale of any number another program produced before using it.
 - Multiply before divide, promote intermediates to u128, and check every operation with a named overflow error.
 - Rounding is a policy decision: floor what the program pays, ceil what the user owes, round once, and keep health checks conservative.
 - Assert invariants after the math, and know the degenerate values that let an invariant hold in a dangerous state.
 - One accumulation factor compounds interest for every borrower at once, and rates rise with utilization as a pool empties, so borrowers repay and suppliers arrive.
 
 [^spl-lending]: Neodyme published the bug, the exploit, and the coordinated disclosure in December 2021, at [neodyme.io/en/blog/lending_disclosure](https://neodyme.io/en/blog/lending_disclosure/). The $2.6B is the total value locked across the forks at the time, not a loss: the fix shipped before anyone else found it.
+
+[^fixed-point-formats]: Each format is defined in its program's source: SPL token-lending's `WAD` in [github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/math/common.rs](https://github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/math/common.rs), spl-math's `PreciseNumber` in [github.com/solana-labs/solana-program-library/blob/master/libraries/math/src/precise_number.rs](https://github.com/solana-labs/solana-program-library/blob/master/libraries/math/src/precise_number.rs), and Kamino's `Fraction`, the `U68F60` type from the `fixed` crate, in [github.com/Kamino-Finance/klend/blob/master/programs/klend/src/utils/fraction.rs](https://github.com/Kamino-Finance/klend/blob/master/programs/klend/src/utils/fraction.rs). SPL token-lending keeps its general values in `Decimal`, a wad held in a 192-bit integer, in [github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/math/decimal.rs](https://github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/math/decimal.rs). All four were read on October 1, 2026.
+
+[^wad-origin]: The name comes from DappHub's ds-math library, written for MakerDAO in 2017. The library is at [github.com/dapphub/ds-math](https://github.com/dapphub/ds-math), and the commit that brought `WAD` and `RAY` into it, on 29 March 2017, is at [github.com/dapphub/ds-math/commit/e4d8737b40](https://github.com/dapphub/ds-math/commit/e4d8737b40). DappHub announced the library, and said the types were made for MakerDAO, at [medium.com/dapphub/introducing-ds-math-an-innovative-safe-math-library-d58bc88313da](https://medium.com/dapphub/introducing-ds-math-an-innovative-safe-math-library-d58bc88313da). None of them says why the words were chosen.

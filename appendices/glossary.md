@@ -250,7 +250,7 @@ The point past which a block cannot be reorganized away and the transactions in 
 
 ### fixed point
 
-Representing fractions as scaled integers: 1.05 stored as 1,050,000,000,000,000,000 at 10^18 scale. How onchain programs do fractional math without floats. See [WAD](#wad).
+Representing fractions as scaled integers: 1.05 stored as 1,050,000,000,000,000,000 at 10^18 scale. How onchain programs do fractional math without floats. See [wad](#wad).
 
 ### flash loan
 
@@ -728,9 +728,9 @@ A token account whose authority is a program's PDA, where a program holds funds 
 
 Another name for a [managed fund](#managed-fund), used by several Solana platforms, and the name this book's managed-fund example had before it took the finance term. This book avoids it because a [vault](#vault) here is a token account, not a product. See the *Managed Fund* chapter.
 
-### WAD
+### wad
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. The scale used for accumulation factors and rate math. Borrowed from the Ethereum blockchain, and now the usual word for 18-decimal fixed point on every chain, Solana included.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. A common scale for accumulation factors and rate math, though not the only one: Solana programs also use other decimal scales and binary fixed point, so check the format of any number another program produced. The name comes from DappHub's ds-math library, written for MakerDAO in 2017, and is now the usual word for 18-decimal fixed point on every chain, Solana included.
 
 ### wallet
 
