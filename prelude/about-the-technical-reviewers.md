@@ -16,6 +16,8 @@ Cory Abdalla is the founder of LivingIP, which tokenizes intellectual property.
 
 Dean Little is the founder of Blueshift, a Solana education and research initiative.
 
+Francis Endrinal writes Solana Technical Weekly, a newsletter on the engineering work behind Solana.
+
 Marius Gugat is a security researcher at Neodyme, a security firm that audits Solana programs.
 
 Mitch Gildenberg is the CTO and co-founder of Switchboard, an oracle network on Solana.
