@@ -20,7 +20,7 @@ Francis Endrinal writes Solana Technical Weekly, a newsletter on the engineering
 
 Marius Gugat is a security researcher at Neodyme, a security firm that audits Solana programs.
 
-Mitch Gildenberg was the CTO and co-founder of Switchboard, an oracle network on Solana.
+Mitch Gildenberg is the founder of Escalate Labs, and was previously CTO and co-founder of Switchboard, an oracle network on Solana.
 
 Noah Prince is an engineer at Velocity, and previously led engineering at the Helium Foundation.
 
