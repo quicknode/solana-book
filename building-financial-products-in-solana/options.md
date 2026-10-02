@@ -21,7 +21,7 @@ Options have some unique terminology:
 
 The two sides have different payoffs:
 
-- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation: to sell the underlying at the strike (a call) or to buy it at the strike (a put) whenever the holder asks. The writer's gain is capped at the premium, and the writer's obligation is not.
+- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation to trade the underlying at the strike whenever the holder asks. The writer's gain is capped at the premium, and the writer's obligation is not.
 - **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
 
 Every option has exactly two endings, and the price at expiry decides which: the holder exercises, or the option expires and the writer takes the collateral back. Where the price lands inside each ending decides how much each side made.
@@ -44,15 +44,15 @@ A call and a put are the same contract pointed in opposite directions. Every row
 | On exercise, the holder | pays the strike and takes the underlying | delivers the underlying and takes the strike |
 | In this chapter | Alice writes, Bob buys: strike $180, premium $5 a share, profit past $185 | Carol writes, Dave buys: strike $150, premium $4 a share, profit past $146 |
 
-An option worth exercising is **in the money**, and one that is not is **out of the money**. A call is in the money when the price is above its strike and a put when the price is below it, so a single price can put one in and the other out.
+An option worth exercising, by the table's third row, is **in the money**, and one that is not is **out of the money**.
 
-Traditional options venues let a writer take on the obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault**, which is the table's second-to-last row. A call writer's shares are already in custody, so the call is **covered** and the writer cannot fail to deliver them. A put writer's quote tokens are already in custody, enough to buy every share at the strike, so the put is **cash-secured** and the writer cannot fail to pay.
+Traditional options venues let a writer take on the obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. This program does something simpler. **A writer posts the whole obligation, up front, into the vault**, which is the table's second-to-last row. That makes a call **covered** and a put **cash-secured**: what the holder might claim is already in custody, so the writer cannot fail to deliver or to pay.
 
 Nothing in this program is ever undercollateralized, so it has no margin, no health factor, no liquidator, and no oracle.
 
 ## Settlement Is Physical, So No Price Is Read
 
-Exercising moves the two tokens the table's last row names, through the vaults, and no price is computed. This is **physical settlement**, and it is why the program has no oracle.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain. Physical here means the underlying asset itself changes hands at the strike, where cash settlement moves only the difference between the strike and the market price, in the quote token, and the underlying stays where it was. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and never reads a price.
+Exercising moves the two tokens the table's last row names, through the vaults, and no price is computed. This is **physical settlement**, and it is why the program has no oracle.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain. Physical here means the underlying asset itself changes hands at the strike. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and never reads a price.
 
 The other design, **cash settlement**, pays the holder the difference between the market price and the strike in the quote token, USDC here, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets used that design on Solana, with margin and an oracle.[^zeta]
 
@@ -152,7 +152,7 @@ Bob now holds 5 NVDAx worth $1,000 and has spent 925 USDC to get them, 25 of pre
 
 The strike payment stays in the vault, owed to Alice, rather than being sent to her directly. Paying the writer inside the exercise would mean requiring the writer's token account to exist at that moment, and a writer who closed it could then block the holder from ever exercising. The vault holds it instead, and the writer withdraws it later with `collect_proceeds()`.
 
-A put exercises the same way with the two tokens swapped: the holder delivers the underlying into the underlying vault and the quote vault pays them the strike. `test_put_lifecycle_delivers_the_underlying_for_the_strike` runs that path with five puts at a 150 strike, whose writer collects five NVDAx at the end.
+A put exercises the same way with the two tokens swapped. `test_put_lifecycle_delivers_the_underlying_for_the_strike` runs that path with five puts at a 150 strike, whose writer collects five NVDAx at the end.
 
 ## The Writer Collects the Strike, and the Account Closes
 
