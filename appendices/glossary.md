@@ -730,7 +730,7 @@ Another name for a [managed fund](#managed-fund), used by several Solana platfor
 
 ### wad
 
-A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. A common scale for accumulation factors and rate math, though not the only one: Solana programs also use other decimal scales and binary fixed point, so check the format of any number another program produced. The name comes from DappHub's ds-math library, written for MakerDAO on Ethereum in 2017, and is now the usual word for 18-decimal fixed point on every chain, Solana included.
+A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. A common scale for accumulation factors and rate math, though not the only one: Solana programs also use other decimal scales and binary fixed point, so check the format of any number another program produced. The name comes from DappHub's ds-math library, written for MakerDAO in 2017, and is now the usual word for 18-decimal fixed point on every chain, Solana included.
 
 ### wallet
 
