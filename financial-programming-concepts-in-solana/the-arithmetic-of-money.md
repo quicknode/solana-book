@@ -26,7 +26,7 @@ Two conventions build on minor units:
 
 The WAD is not a standard, though: Solana has no single fixed-point format. SPL's token-lending program used WADs, but the spl-math library's `PreciseNumber` scales by 10^12. Kamino's lending program uses binary fixed point instead. Its numbers are u128s with the last 60 bits after the binary point, so 1.0 is stored as 2^60.[^fixed-point-formats] That gives about the same precision as a WAD, and rescaling becomes a bit shift rather than a division. The companion repository mixes scales too: the lending program's `FIXED_POINT_SCALE` is 10^18, and the perpetual futures program's `FUNDING_PRECISION` is 10^9.
 
-So the rule for decimals applies to fixed point as well: **read the format of every number you did not produce; never assume it.** Before using a rate, an index, or a price from another program, find its scale in that program's source, and convert it to yours once, where it enters your code. A 10^12 value read as a WAD is a million times too small, and nothing fails.
+So the rule for decimals applies to fixed point as well: **read the format of every number you did not produce; never assume it.** Before using a rate, an index, or a price from another program, find its scale in that program's source, and convert it to yours once, where it enters your code. An interest rate stored at 10^12 and read as a WAD comes out a million times too small. Every operation on it still succeeds, so the program raises no error: it charges borrowers a millionth of the interest they owe.
 
 ## Every Operation Is Checked
 
