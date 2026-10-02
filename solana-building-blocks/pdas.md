@@ -1,6 +1,6 @@
 # Chapter 4: PDAs: Where Solana Programs Store Data
 
-You have been using PDAs since the *Tokens* chapter. Every wallet's token balance in this book lives in an associated token account, and nobody ever generated that account's address: the Associated Token Program computes it from three seeds:
+You have been using PDAs since the *Tokens* chapter. Every wallet's token balance in this book lives in an associated token account, and nobody chose that account's address or generated a key pair for it. The address is derived from three seeds, which the wallet computes to put the account in the instruction, and the Associated Token Program recomputes to verify it:
 
 - the owner's address
 - the mint
@@ -8,9 +8,9 @@ You have been using PDAs since the *Tokens* chapter. Every wallet's token balanc
 
 Three things follow from that derivation:
 
-- Anyone can recompute this address, so a program can find Alice's USDC without asking her where it is.
+- Anyone can recompute this address, so an app needs only Alice's address and the USDC mint to find her USDC account and pass it to a program.
 - A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it.
-- No private key exists for the result, so tokens can only leave the account via the program that owns the token account.
+- No private key exists for the result, so nobody can sign as the address itself. Only the program that derived it could, and the Associated Token Program never moves tokens: Alice's USDC leaves only when Alice, the token account's owner, signs.
 
 These three properties hold for any **program derived address**, or PDA. A PDA is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA, and what "sign" really means gets its own boxout below.
 

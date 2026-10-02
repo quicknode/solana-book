@@ -54,7 +54,7 @@ The address whose signature a particular action requires. A program records the 
 
 ### auto-deleveraging (ADL)
 
-A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. See the *Perpetual Futures* chapter.
+A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The *Perpetual Futures* chapter's program uses a [haircut](#haircut) instead.
 
 ### base token
 
@@ -268,6 +268,10 @@ One of two competing chains, formed when validators briefly build on different b
 
 The periodic payment between longs and shorts on a perpetual futures market that keeps the perpetual's price close to the index price.
 
+### haircut
+
+On a perpetual futures pool, the fraction of a winner's profit the pool pays when it cannot pay every winner in full: what the pool holds to pay profits, divided by what traders are owed, capped at 1. Every winner who closes is paid the same fraction, so no early closer is paid in full while the rest go unpaid. See the *Perpetual Futures* chapter.
+
 ### half-up
 
 Rounding to the nearest whole unit with exact halves going up, which is what Rust's `round` does. Never used on amounts in this book. See [rounding](#rounding).
@@ -300,6 +304,10 @@ Advancing an [index](#index) for the time elapsed since it was last updated, whi
 
 The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. See the *Adversary* chapter.
 
+### initial margin
+
+The minimum collateral a leveraged position needs to open, usually stated in basis points of its notional. It sets the maximum leverage: a 10% initial margin is 10x. It sits above the [maintenance margin](#maintenance-margin), so a new position has room to move before it can be liquidated. See the *Perpetual Futures* chapter.
+
 ### informed flow
 
 Trades from someone who knows where the price is about to move, such as an arbitrage bot that has seen the price change on another venue before a market maker's quote has caught up. "Informed" says nothing about how experienced the trader is. Its opposite is uninformed flow: people who trade because they want the asset. The *Prop AMM* chapter covers it with [adverse selection](#adverse-selection) and [order segmentation](#order-segmentation).
@@ -314,7 +322,7 @@ The onchain function that processes an instruction. This book always says "instr
 
 ### insurance fund
 
-Capital a venue sets aside to absorb losses larger than the collateral behind them, before those losses reach the liquidity providers. The tier above it is [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
+Capital a venue sets aside, usually from a share of its fees, to absorb losses larger than the collateral behind them before those losses reach the liquidity providers. What the fund cannot cover is taken from the liquidity providers, then from winners by a [haircut](#haircut) or [auto-deleveraging](#auto-deleveraging-adl). See the *Perpetual Futures* chapter.
 
 ### invariant
 
@@ -350,7 +358,7 @@ A pooled borrow-lend venue: suppliers earn interest, borrowers pay it against co
 
 ### leverage
 
-Controlling more exposure than the collateral posted: a 5,000 USDC position over 1,000 USDC of collateral is 5x leverage. Leverage multiplies both the gain and the loss of every price move.
+Controlling more exposure than the collateral posted: a 5,000 USDC position over 1,000 USDC of collateral is 5x leverage. Leverage multiplies both the gain and the loss of every price move. The maximum leverage a venue allows is one over its [initial margin](#initial-margin).
 
 ### limit order
 
@@ -386,7 +394,7 @@ The receipt token minted to a liquidity provider, representing a proportional cl
 
 ### maintenance margin
 
-The minimum equity a leveraged position must keep, usually stated in basis points of its notional. Below it, the position may be liquidated by anyone.
+The minimum equity a leveraged position must keep, usually stated in basis points of its notional. Below it, the position may be liquidated by anyone. It is lower than the [initial margin](#initial-margin) needed to open the position. See the *Perpetual Futures* chapter.
 
 ### major unit
 
@@ -520,6 +528,10 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join.
 
+### profit warm-up
+
+On a perpetual futures pool, the number of slots a position must be open before its profit can be taken. A trader who pushes the oracle to a false price cannot open a position and cash out the profit before the price has had that long to correct. Losses are not delayed. See the *Perpetual Futures* chapter.
+
 ### program
 
 Executable code deployed onchain; the thing this book builds. Called a "smart contract" on other chains.
@@ -563,10 +575,6 @@ A per-participant account, usually at a PDA, recording what the program owes one
 ### rent
 
 The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit.
-
-### reservation
-
-On a perpetual futures pool, the liquidity pledged when a position opens as the most that position could ever be paid: profit is capped at it, liquidity providers cannot withdraw against it, and a position the pool cannot back is refused outright. See the *Perpetual Futures* chapter.
 
 ### reserve
 
@@ -658,7 +666,7 @@ The price at which an [option](#option) trades if its holder exercises.
 
 ### Sybil attack
 
-One person acting as many participants by creating many wallets, to get past a limit meant to apply per person, such as the *Fundraiser* chapter's cap on each contributor. A program sees only public keys, so it needs [proof of personhood](#proof-of-personhood) from outside to stop one.
+One person acting as many participants by creating many wallets, to get past a limit meant to apply per person, such as a cap on what each contributor may give. A program sees only public keys, so it needs [proof of personhood](#proof-of-personhood) from outside to stop one. The *Fundraiser* chapter explains why counting wallets cannot show how many people took part.
 
 ### System Program
 
@@ -694,7 +702,7 @@ A signed bundle of instructions that executes atomically: all of it lands or non
 
 ### TWAP
 
-A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than for one slot. See the *Adversary* chapter.
+A time-weighted average price: the average of a market's price over a window, used instead of the instantaneous price so a manipulator must hold a distortion for the whole window rather than for one slot. See the *Adversary* chapter, and the *Perpetual Futures* chapter for a program that keeps its own average of an oracle's price and refuses trades at prices too far from it.
 
 ### underlying
 
