@@ -756,4 +756,4 @@ The party who creates an [option](#option) and sells the right it carries. In fi
 
 Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs use large accounts like a 180 KB order book.
 
-[^confirmed]: A third state, `confirmed`, was available under the older Tower BFT mechanism that was replaced with Alpenglow: a block a supermajority of stake had voted for, which the network still permitted to lose. Alpenglow finalizes a block in one round of votes when 80% of stake votes for it, or in two rounds when 60% does, a fraction of a second after the block arrives, so `confirmed` now means the same as `finalized`.
+[^confirmed]: A third state, `confirmed`, was available on older Solana networks. `confirmed` now means the same as `finalized`.
