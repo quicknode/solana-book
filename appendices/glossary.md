@@ -536,6 +536,10 @@ How far your own trade moves the price it is executing against. A trade on a con
 
 The order-matching fairness rule: better-priced orders fill first, and among equal prices, earlier orders fill first.
 
+### principal
+
+The amount lent or borrowed, before any interest. A lending program stores each loan's principal and computes the live debt from it with the [borrow accumulation factor](#borrow-accumulation-factor).
+
 ### pro rata
 
 In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join.
