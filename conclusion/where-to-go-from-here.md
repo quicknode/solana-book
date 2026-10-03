@@ -1,6 +1,6 @@
 # Chapter 21: Where to Go From Here
 
-The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those are no longer advocacy points for building on a platform. They are tools you can build with. 
+The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those are no longer advocacy points for building on a platform. They are tools you can build with.
 
 What is left is deciding what to build with them.
 
