@@ -70,7 +70,7 @@ For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 1
 
 None of these payouts depended on when anyone bet. Had Alice bet first, when Toy Story 5 held only her stake, or last, after Bob, she would still receive 447 USDC, because the payout reads the pools at the close. A racetrack's tote board works the same way: the odds it shows keep moving until the race starts, and every winning ticket is paid at the final odds. Odds locked in at the moment of the bet are fixed-odds betting, which needs a bookmaker to carry the risk of paying winners more than the losers staked.
 
-The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last. The *Arithmetic of Money* chapter explains both choices: multiply before dividing, and round so that the leftover dust stays with the program rather than going to a claimant.
+The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last.
 
 Two orderings in this handler close attacks:
 
