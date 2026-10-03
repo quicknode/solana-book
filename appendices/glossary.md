@@ -460,6 +460,10 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the *Constant-Product AMM* chapter.
 
+### NFT (non-fungible token)
+
+A token that stands for one unique thing, such as a ticket to a particular seat, a deed to a property, or a work of art. Its mint has 0 decimals (so it cannot be fractionalized) and a supply of one (making it unique), and nobody can mint another. Each NFT has its own mint, so a collection of 10,000 NFTs is 10,000 mints. See the *Tokens* chapter.
+
 ### notional
 
 The face value of a position, as opposed to the margin posted against it. Five NVDAx at $200 is $1,000 notional whatever the collateral behind it.
@@ -531,6 +535,10 @@ How far your own trade moves the price it is executing against. A trade on a con
 ### price-time priority
 
 The order-matching fairness rule: better-priced orders fill first, and among equal prices, earlier orders fill first.
+
+### principal
+
+The amount lent or borrowed, before any interest. A lending program stores each loan's principal and computes the live debt from it with the [borrow accumulation factor](#borrow-accumulation-factor).
 
 ### pro rata
 
