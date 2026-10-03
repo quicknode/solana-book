@@ -14,7 +14,7 @@ Options have some unique terminology:
 
 - An option is a **contract**: an agreement between the two parties to it.
 - Its **underlying**, short for "underlying asset", is the asset the option is about: NVDAx in this chapter. Options traders drop the word "asset" and just say "the underlying". Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
-- Its **kind** is a **call**, the right to buy the underlying, or a **put**, the right to sell it.
+- Its **kind** is either a **call**, the right to buy the underlying, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
 - The **writer** creates the option, which is called **writing** it, and posts what the holder would receive on exercise: the underlying for a call, the strike for a put.
