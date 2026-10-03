@@ -14,12 +14,13 @@ Options have some unique terminology:
 
 - An option is a **contract**: an agreement between the two parties to it.
 - Its **underlying**, short for "underlying asset", is the asset the option is about: NVDAx in this chapter. Options traders drop the word "asset" and just say "the underlying". Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
-- Its **kind** is a **call**, the right to buy the underlying, or a **put**, the right to sell it.
+- Its **kind** is either a **call**, the right to buy the underlying, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
 - The **writer** creates the option, which is called **writing** it, and posts what the holder would receive on exercise: the underlying for a call, the strike for a put.
 - Its **premium** is what the buyer pays for the right, once, up front.
 - The **holder** buys the option and may use the right it carries. Using the right is **exercising** the option.
+- An option the holder may exercise at any moment before expiry is **American**, and one that can be exercised only at expiry is **European**; the names are historical, not geographic. This program's options are American.
 - An option worth exercising is **in the money**, and one that is not is **out of the money**.
 
 The two sides have different payoffs:
@@ -37,7 +38,7 @@ A call and a put are the same contract pointed in opposite directions. Every row
 
 > **A "contract" here is an option, not a Solana program.** Other chains call a program a "smart contract". In this chapter the word always means the option, which the program records as an `OptionContract` account.
 >
-> On an exchange, "contract" also means a unit of size: a US stock option contract covers 100 shares, and a trade is for some number of identical contracts, which the buyer can later sell or exercise one at a time. This program's options are closer to a private agreement between two parties: one option, of any size, bought and exercised whole.
+> On an exchange, "contract" also means a unit of size: a US stock option contract covers 100 shares, and a trade is for some number of identical contracts, which the buyer can later sell or exercise one at a time. In this program, each option covers any amount of the underlying, and is bought and exercised whole.
 
 | | Call Option | Put Option |
 | --- | --- | --- |
