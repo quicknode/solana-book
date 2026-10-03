@@ -13,7 +13,7 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 Options have some unique terminology:
 
 - An option is a **contract**: an agreement between the two parties to it.
-- Its **underlying**, short for *underlying asset*, is the asset the option is about: NVDAx in this chapter. Options traders drop the word "asset" and just say "the underlying". Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
+- Its **underlying**, short for "underlying asset", is the asset the option is about: NVDAx in this chapter. Options traders drop the word "asset" and just say "the underlying". Markets write a pair as base/quote, NVDAx/USDC, and the underlying is the base token, the first of the two. USDC, which the strike and premium are paid in, is the quote token.
 - Its **kind** is a **call**, the right to buy the underlying, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
 - Its **expiry** is the last moment the right can be used.
@@ -55,7 +55,7 @@ Nothing in this program is ever undercollateralized, so it has no margin, no hea
 
 ## Settlement Is Physical, So No Price Is Read
 
-Exercising moves the two tokens in the table's on-exercise rows, through the vaults, and no price is computed. This is **physical settlement**, and it is why the program has no oracle.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain. Physical here means the underlying asset itself changes hands at the strike. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and never reads a price.
+Exercising moves the two tokens in the table's on-exercise rows, through the vaults, and no price is computed. This is **physical settlement**, and it is why the program has no oracle.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain. "Physical" here means the underlying asset itself changes hands at the strike. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and never reads a price.
 
 The other design, **cash settlement**, pays the holder the difference between the market price and the strike in the quote token, USDC here, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets used that design on Solana, with margin and an oracle.[^zeta]
 
@@ -70,7 +70,7 @@ A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_
 
 ![](figures/options-open-venue.svg)
 
-Financial state on Solana is accounts, and this one transaction created the three the venue needs.
+This one transaction created the three accounts the venue needs.
 
 The **market** account lives at a PDA with seeds `"market"`, the underlying mint, and the quote mint, so one venue exists per pair: every call and put on NVDAx settled in USDC shares the same two vaults and the same fee schedule. Its struct, `Market`, holds the `admin`, the two mints, the two vault addresses, the `fee_bps` charged on every premium, and three counters that are the reason the account exists:
 
@@ -108,7 +108,7 @@ The transaction also created the option itself. Each option is an `OptionContrac
 - `writer` and `holder`. The holder is empty until someone buys.
 - `contracts`, `underlying_per_contract`, and `strike_per_contract`. Alice's option is 5 contracts, each on 1 NVDAx, each with a strike of 180 USDC.
 - `premium`, in the quote token, for the whole option.
-- `expiry`, a Unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots. Nothing in this program reads a price, so slot-measured freshness never comes into it.
+- `expiry`, a Unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots.
 
 The three quantities are the account's most deliberate decision. **Every amount the option ever moves is a product of two of them.**
 
@@ -226,7 +226,7 @@ The companion repository's `kani-proofs` crate model-checks the last two and the
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
 - **The writer defaults.** This cannot happen. `write_option()` takes the entire obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder's window has closed. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` check the two refusals that must hold while a holder could still exercise.
-- **The clock.** Expiry is a Unix timestamp read from the Clock sysvar, which validators set and which can drift from wall-clock time by seconds. A holder who waits until the final second to exercise risks that drift putting the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
+- **The clock.** Expiry is a Unix timestamp, and the network's clock can drift from wall-clock time by seconds. A holder who waits until the final second to exercise risks that drift putting the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides: exercise at `expiry` minus one second succeeds and at `expiry` fails, and reclaim does the reverse (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** If the strike were paid to the writer's token account inside `exercise_option()`, a writer could close that account and make every exercise fail, keeping the premium and the collateral both. The strike goes into the vault instead, owed to the writer, and the holder's exercise depends on no account of the writer's.
 - **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
 - **What the design gives up.** A held option cannot be resold, and an option cannot be exercised in part. Venues that want both represent each option as two tokens, an option token the holder can sell on any exchange and a writer token that claims the proceeds. Adding that back means introducing the tokens, and with them an accounting of who holds how much of each option.
