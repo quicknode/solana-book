@@ -197,7 +197,7 @@
   <text x="492" y="459.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="465.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,468.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="502" y="479.545" font-size="10.5" font-weight="bold">outcome 0: Toy Story 5</text>
+  <text x="502" y="479.545" font-size="10.5" font-weight="bold">outcome 0: Glowbugs 3</text>
   <line x1="482" y1="486.37" x2="624" y2="486.37" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="497.37" font-size="9.5">total_amount: 400</text>
   </g>
@@ -207,7 +207,7 @@
   <text x="492" y="527.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="533.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,536.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="502" y="547.545" font-size="10.5" font-weight="bold">outcome 1: Backrooms</text>
+  <text x="502" y="547.545" font-size="10.5" font-weight="bold">outcome 1: The Quiet Floor</text>
   <line x1="482" y1="554.37" x2="624" y2="554.37" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="565.37" font-size="9.5">total_amount: 200</text>
   </g>
