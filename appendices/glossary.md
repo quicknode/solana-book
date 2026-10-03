@@ -282,7 +282,7 @@ Rounding to the nearest whole unit with exact halves going up, which is what Rus
 
 ### halt
 
-A stop in block production. Under Alpenglow, missing votes only slow the network down, so a halt comes from a fault waiting cannot fix, such as a bug in the validator software, and ends when the validators restart the chain together. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the *Time* chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
+A stop in block production. A halt comes from a fault such as a bug in the validator software, and ends when the validators restart the chain together. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the *Time* chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
 
 ### health / health factor
 
