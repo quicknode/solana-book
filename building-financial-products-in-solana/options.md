@@ -38,7 +38,7 @@ A call and a put are the same contract pointed in opposite directions. Every row
 
 > **A "contract" here is an option, not a Solana program.** Other chains call a program a "smart contract". In this chapter the word always means the option, which the program records as an `OptionContract` account.
 >
-> On an exchange, "contract" also means a unit of size: a US stock option contract covers 100 shares, and a trade is for some number of identical contracts, which the buyer can later sell or exercise one at a time. This program's options are closer to a private agreement between two parties: one option, of any size, bought and exercised whole.
+> On an exchange, "contract" also means a unit of size: a US stock option contract covers 100 shares, and a trade is for some number of identical contracts, which the buyer can later sell or exercise one at a time. In this program, each option covers any amount of the underlying, and is bought and exercised whole.
 
 | | Call Option | Put Option |
 | --- | --- | --- |
