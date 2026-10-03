@@ -81,7 +81,7 @@ The table lists the extensions that matter for financial products:
 | **scaled UI amount** | A multiplier stored in the mint, which the issuer updates for stock splits and dividends | The displayed balance changes while the raw amount stays fixed: calculate in raw amounts |
 | **metadata** | The name, symbol, and a link to more details, stored in the mint | Display only: the mint address still identifies the asset |
 
-Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds scaled UI amount.[^mosaic] Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page, and the table's last column says what each one means for your program.
+Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds scaled UI amount.[^mosaic] Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page,[^solana-explorer] and the table's last column says what each one means for your program.
 
 ![](figures/transfer-using-transfer-fee-extension.svg)
 
@@ -98,4 +98,5 @@ Stablecoin and tokenized-security issuers use most of these together: the Solana
 [^nvdax-address]: xStocks, the NVDAx issuer, lists its tokenized equities at [xstocks.fi/us/products](https://xstocks.fi/us/products).
 [^tokenized-equity-volume]: Tokens tracking Tesla and Nvidia traded $631M and $380M on Solana in the twelve months to August 18, 2026, among the eight most traded tokenized equities on the chain, behind the S&P 500 token's $2.0B. Source: Allium, [allium.so/solana](https://allium.so/solana).
 [^mosaic]: The templates and the extensions each one enables are listed at [github.com/solana-foundation/mosaic](https://github.com/solana-foundation/mosaic).
+[^solana-explorer]: Solana Explorer is at [explorer.solana.com](https://explorer.solana.com). Search for a mint's address to open its page.
 [^tokens-xyz]: [tokens.xyz](https://tokens.xyz) lists which assets are available as Solana tokens.
