@@ -6,7 +6,7 @@ This isn't a book about how Solana is built. It's about **building on it**. This
 
 ## Why Build Financial Programs on Solana?
 
-Financial products built on Solana have properties no traditional payment system offers:
+Financial products built on Solana have properties no traditional financial system offers:
 
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.[^after-hours]
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed.
