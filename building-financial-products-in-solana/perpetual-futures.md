@@ -37,7 +37,7 @@ The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and a s
 
 This one transaction created the three accounts the market needs.
 
-The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`initial_margin_bps`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `max_price_deviation_bps`, `insurance_fee_bps`, `profit_warmup_slots`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
+The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, and the price feed, so one market exists per collateral-and-price-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`initial_margin_bps`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `max_price_deviation_bps`, `insurance_fee_bps`, `profit_warmup_slots`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
 
 - `liquidity`: what the LPs own. It grows with deposits, trader losses, and funding; it shrinks with withdrawals and trader profits.
 - `total_collateral`: traders' collateral held for open positions. It is tracked separately from `liquidity` because it belongs to the traders, not the LPs.
@@ -57,19 +57,19 @@ Carol is a liquidity provider. She gains what losing traders lose and pays what 
 
 ## The Price Comes From Outside, So Every Handler Checks It Before Using It
 
-Every trading and liquidity handler begins the same way: read the oracle, validate it, accrue funding, and update the pool's average of the price. The pool records one **oracle feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. In the companion repository the feed is `mock-price-feed`, a program labeled not-for-production whose authority sets the price with `set_price()`, so the tests can move it; the production path is a real feed network's account, decoded and verified with that network's own crate. Either way the program runs five checks on what it reads, in order:
+Every trading and liquidity handler begins the same way: read the oracle, validate it, accrue funding, and update the pool's average of the price. The pool records one **price feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. In the companion repository the price feed is `mock-price-feed`, a program labeled not-for-production whose authority sets the price with `set_price()`, so the tests can move it; the production path is a real price feed network's account, decoded and verified with that network's own crate. Either way the program runs five checks on what it reads, in order:
 
 - the account is long enough to contain a price (`OracleDataTooShort`),
 - the price is positive (`NonPositivePrice`),
-- the feed's decimal scale equals the one the pool recorded at creation (`OracleScaleMismatch`), so a feed migration cannot silently shift every price by powers of ten,
+- the price feed's decimal scale equals the one the pool recorded at creation (`OracleScaleMismatch`), so a price feed migration cannot silently shift every price by powers of ten,
 - the price is fresh: no older than `MAX_PRICE_STALENESS_SLOTS`, 150 slots (`StalePrice`),
-- and the feed's own uncertainty band, divided by the price, is within `max_confidence_bps` (`OracleConfidenceTooWide`). A leveraged venue trading on a price the oracle itself is unsure of is how liquidation cascades start.
+- and the price feed's own uncertainty band, divided by the price, is within `max_confidence_bps` (`OracleConfidenceTooWide`). A leveraged venue trading on a price the oracle itself is unsure of is how liquidation cascades start.
 
 A stale price here invites arbitrage. Anyone who can trade a leveraged market at a stale price against a live market elsewhere drains the pool with no risk. The tests `test_stale_price_rejected` and `test_wide_oracle_confidence_rejected` check both refusals.
 
 ## The Pool Averages the Price Itself, and Trades Only Near the Average
 
-The five checks refuse a price that is malformed, stale, or uncertain. A feed can also publish a confident, fresh price that is wrong, because the markets it reads from were pushed for a few minutes: the *Adversary* chapter's Mango Markets story is that attack. So the pool keeps its own **time-weighted average** of the oracle's price, in `average_price`, and refuses to trade at a price too far from it.
+The five checks refuse a price that is malformed, stale, or uncertain. A price feed can also publish a confident, fresh price that is wrong, because the markets it reads from were pushed for a few minutes: the *Adversary* chapter's Mango Markets story is that attack. So the pool keeps its own **time-weighted average** of the oracle's price, in `average_price`, and refuses to trade at a price too far from it.
 
 The average updates every time a handler reads the oracle. `last_oracle_price` holds the price seen at the previous read, and the program assumes that price held until now:
 
@@ -181,7 +181,7 @@ The book's standing invariants hold here too. The vault balance always equals `l
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
-- **A stale or manipulated price** is the catastrophic one: with 10x leverage, a 1% price error is a 10% equity error, market-wide, simultaneously. That explains the five checks, the confidence cap, and the band around the pool's own average price. One trust decision stays visible: the pool creator chooses the feed, and the feed account's owner is deliberately unchecked. Whoever controls that feed sets the prices the pool settles at, held within the band and moving only as fast as the average follows.
+- **A stale or manipulated price** is the catastrophic one: with 10x leverage, a 1% price error is a 10% equity error, market-wide, simultaneously. That explains the five checks, the confidence cap, and the band around the pool's own average price. One trust decision stays visible: the pool creator chooses the price feed, and the price feed account's owner is deliberately unchecked. Whoever controls that price feed sets the prices the pool settles at, held within the band and moving only as fast as the average follows.
 - **A position gapped through zero**: its deficit is paid from `insurance_fund` before it reaches the LPs, and anyone may liquidate it although the fee is forgiven (checked by `test_liquidation_of_bankrupt_position_charges_insurance_before_liquidity`).
 - **First-depositor share inflation**: a donation to the vault moves nothing, because AUM reads `liquidity`, not the vault balance. But `liquidity` grows with every funding payment and trader loss, and a liquidity provider can also be the pool's only trader. An attacker holding a single share can pay funding into the pool from their own position to make that share expensive, then wait for a deposit to round down. The withheld `MINIMUM_LIQUIDITY` makes this cost them, because it counts as 1,000 shares in both divisors: the attacker's share is 1 of 1,001, and almost everything they pay in stays with the locked shares. A deposit mints deposit × (shares outstanding + 1,000) ÷ AUM. In the test the attacker holds a long for ten simulated years at the highest funding rate a pool may have, pumping AUM to about 88,000 minor units. The victim deposits just under twice that, which mints the victim 2,001 shares against the attacker's 1. Dividing by the bare supply of 1 would have minted the victim a single share. `test_inflating_liquidity_through_own_trades_does_not_pay` runs the attack: the attacker pays about 87,000 minor units of funding and gets back 88. Divided by the bare supply instead, the same attack returns them about 132,500, about 44,000 of it from the victim's deposit. `test_first_deposit_below_minimum_fails` checks that a first deposit smaller than `MINIMUM_LIQUIDITY` is refused with `DepositTooSmall`.
 - **Winning more than the pool holds**: every winner who closes is paid the same fraction of their profit rather than the first closers being paid in full and the rest nothing (checked by `test_haircut_scales_profit_when_pool_stressed`).

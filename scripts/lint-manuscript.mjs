@@ -267,6 +267,12 @@ const rules = [
   // Literal purchases and costs stay.
   [/\bbuys? nothing here\b|\bcosts? a guess\b|\bso this costs nothing\b|\bcosts availability\b|\bthat guess is wrong\b/i,
     'a money word used figuratively reads as a claim about money: say what you mean, "has no advantage", "is inaccurate"'],
+  // A feed of what? "Their feeds stamp each update" made the reader work out
+  // that a feed meant a price feed. Every feed in this book carries prices,
+  // so say "price feed". Code identifiers like `mock-price-feed` and
+  // `InvalidPriceFeed` are untouched, because the check skips code spans.
+  [/(?<![Pp]rice[ -])\bfeeds?\b/i,
+    'say what the feed carries: "price feed", not "feed"'],
   // An address is only set as an address in the PDF if the build can find it,
   // and the build finds links. A host written as loose prose prints as prose.
   [/(?<![([\/`\w.])[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|org|io|dev|net|xyz)\b(?!\w)/,
