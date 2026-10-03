@@ -438,7 +438,7 @@ Maximal extractable value: profit taken by controlling transaction ordering, mos
 
 ### minor unit
 
-The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC. This book says "minor unit," not "base unit."
+The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC.
 
 ### mint (account)
 
