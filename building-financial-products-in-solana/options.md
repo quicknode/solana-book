@@ -36,6 +36,8 @@ Every option has exactly two endings, and the price at expiry decides which: the
 A call and a put are the same contract pointed in opposite directions. Every row below swaps between the two columns, and the rest of this chapter follows one of each: Alice's call and Carol's put.
 
 > **A "contract" here is an option, not a Solana program.** Other chains call a program a "smart contract". In this chapter the word always means the option, which the program records as an `OptionContract` account.
+>
+> On an exchange, "contract" also means a unit of size: a US stock option contract covers 100 shares, and a trade is for some number of identical contracts, which the buyer can later sell or exercise one at a time. This program's options are closer to a private agreement between two parties: one option, of any size, bought and exercised whole.
 
 | | Call Option | Put Option |
 | --- | --- | --- |
