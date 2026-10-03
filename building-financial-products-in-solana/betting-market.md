@@ -1,12 +1,15 @@
 # Chapter 13: The Betting Market
 
-What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, also called pool betting or the tote. Markets that take bets on real-world events are also called prediction markets, though the best-known prediction markets trade outcome shares on an order book rather than pooling stakes. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
+What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. There are two ways to let everyone put money on it:
 
-The program lives at `finance/betting-market` in the companion repository. Structurally it is the *Escrow* chapter with many parties and one new, serious question: who decides what happened in the real world?
+- **With a bookmaker.** The house quotes odds, locks them in when each bet is placed, and takes the other side of every bet, so it carries the risk of paying winners more than the losers staked. This is fixed-odds betting, the model of a high-street betting shop or a sportsbook.
+- **Without a bookmaker.** Bettors are matched against each other, and the house takes a fee instead of a position. **Parimutuel** betting, also called pool betting or the tote, was invented by Joseph Oller in Paris in 1867. France banned bookmakers in 1891 and made it the only legal way to bet on horses, and it spread from France to racetracks around the world. Prediction markets such as Polymarket and Kalshi need no bookmaker either, though they trade outcome shares on an order book rather than pooling stakes.
+
+This chapter builds a parimutuel market. The program lives at `finance/betting-market` in the companion repository. Structurally it is the *Escrow* chapter with many parties and one new, serious question: who decides what happened in the real world?
 
 ## Nobody Sets the Odds: The Pool Is the Odds
 
-In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, nobody sets odds and the program carries no risk: all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
+In a parimutuel market, all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
 **Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
@@ -68,7 +71,7 @@ payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
 For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 100 + 49 = **149 USDC**. Alice staked three times what Bob staked and won exactly three times the winnings. Carol staked 200 and receives nothing; had Backrooms won, she alone would have taken the entire 400-dollar losing side, minus the fee.
 
-None of these payouts depended on when anyone bet. Had Alice bet first, when Toy Story 5 held only her stake, or last, after Bob, she would still receive 447 USDC, because the payout reads the pools at the close. A racetrack's tote board works the same way: the odds it shows keep moving until the race starts, and every winning ticket is paid at the final odds. Odds locked in at the moment of the bet are fixed-odds betting, which needs a bookmaker to carry the risk of paying winners more than the losers staked.
+None of these payouts depended on when anyone bet. Had Alice bet first, when Toy Story 5 held only her stake, or last, after Bob, she would still receive 447 USDC, because the payout reads the pools at the close. A racetrack's tote board works the same way: the odds it shows keep moving until the race starts, and every winning ticket is paid at the final odds.
 
 The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last.
 
@@ -125,7 +128,7 @@ The suite builds all state through the program's own handlers, and its centerpie
 
 ## What You Learnt from Building the Betting Market
 
-A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window; a betting site adds a bookmaker carrying risk on every line. Here a vault and four expressions of arithmetic do those jobs: the pool is the odds, the program carries no risk, and the house takes a fee only from the losers.
+A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window. Here a vault and four expressions of arithmetic do those jobs: the pool is the odds, the program carries no risk, and the house takes a fee only from the losers.
 
 This chapter added five concepts:
 
