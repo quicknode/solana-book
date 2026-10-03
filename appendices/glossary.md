@@ -462,7 +462,7 @@ The iterative algorithm programs use to take a square root using only integers, 
 
 ### NFT (non-fungible token)
 
-A token that stands for one unique thing, such as a ticket to a particular seat or a property deed: its mint has 0 decimals and a supply of one, and nobody can mint another. See the *Tokens* chapter.
+A token that stands for one unique thing, such as a ticket to a particular seat, a deed to a property, or a work of art: its mint has 0 decimals (so it cannot be fractionalized) and a supply of one (making it unique), and nobody can mint another. See the *Tokens* chapter.
 
 ### notional
 
