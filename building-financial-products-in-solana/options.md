@@ -20,6 +20,7 @@ Options have some unique terminology:
 - The **writer** creates the option, which is called **writing** it, and posts what the holder would receive on exercise: the underlying for a call, the strike for a put.
 - Its **premium** is what the buyer pays for the right, once, up front.
 - The **holder** buys the option and may use the right it carries. Using the right is **exercising** the option.
+- An option the holder may exercise at any moment before expiry is **American**, and one that can be exercised only at expiry is **European**; the names are historical, not geographic. This program's options are American.
 - An option worth exercising is **in the money**, and one that is not is **out of the money**.
 
 The two sides have different payoffs:
