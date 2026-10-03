@@ -49,7 +49,7 @@ Her LP tokens come from the formula the *Arithmetic of Money* chapter described:
 
 ## Adding Liquidity in Ratio Does Not Move the Price
 
-Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted pro rata, the minimum of her share against each side, floored, and checked against her `minimum_lp_tokens_out`. Her share is measured against the LP supply plus `MINIMUM_LIQUIDITY`, because the floor is part of the supply the reserves are divided among.
+Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, and becomes the second liquidity provider: she wants to earn fees on her ACME grant. Liquidity providers are not allowed to change the pool's ratio, so her 100 ACME must arrive with a matching 225 USDC (100 × $2.25). The handler enforces this by clamping: it computes how much of token B her token A implies at the current effective reserves, uses whichever pairing fits inside what she offered, and rejects with `DepositAmountTooSmall` if the clamp rounds her out entirely. Her LP tokens are minted in proportion to her deposit, the minimum of her share against each side, floored, and checked against her `minimum_lp_tokens_out`. Her share is measured against the LP supply plus `MINIMUM_LIQUIDITY`, because the floor is part of the supply the reserves are divided among.
 
 X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Deposits grow K without touching the price**; that is the first of K's two ways of growing.
 
@@ -81,7 +81,7 @@ Whenever she likes, Maria runs `claim_admin_fees()`. It zeroes both owed counter
 
 ## Withdrawing Realizes Impermanent Loss
 
-Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a pro-rata slice of both effective reserves, dividing by the LP supply *plus* `MINIMUM_LIQUIDITY`, the same divisor her deposit was minted against. The locked floor is backed by reserves but absent from the supply counter. Leaving it out here would overpay every withdrawer, and leaving it out of the deposit would underpay every depositor.
+Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a proportional slice of both effective reserves, dividing by the LP supply *plus* `MINIMUM_LIQUIDITY`, the same divisor her deposit was minted against. The locked floor is backed by reserves but absent from the supply counter. Leaving it out here would overpay every withdrawer, and leaving it out of the deposit would underpay every depositor.
 
 Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had simply held her original tokens in her wallet: a small number at launch scale, and the same number becomes a serious loss once the pool is a million times larger.
 
@@ -110,7 +110,7 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 
 - After every swap, effective X times effective Y is at least what it was before, enforced onchain, after the transfers, not assumed from the algebra.
 - The admin's owed fees never participate in pricing, LP minting, or withdrawal: all LP-facing math uses effective reserves.
-- LP tokens are a fixed-share claim: mint pro rata on the way in and burn pro rata on the way out, dividing by the supply plus the locked floor both ways.
+- LP tokens are a fixed-share claim: minted in proportion to the deposit and burned in proportion to the withdrawal, dividing by the supply plus the locked floor both ways.
 - The pool never prices against an empty side (see below).
 
 ## The Failure Modes: Empty Pools, First Deposits, and the Vacuous Invariant

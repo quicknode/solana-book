@@ -9,7 +9,7 @@ This chapter builds a parimutuel market. The program lives at `finance/betting-m
 
 ## Nobody Sets the Odds: The Pool Is the Odds
 
-In a parimutuel market, all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
+In a parimutuel market, all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, based on the size of each winner's stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
 **Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
@@ -50,7 +50,7 @@ A bettor's first bet also created two accounts for them. Each **bet** is an acco
 
 ## The Film Grosses: The Operator Settles the Event
 
-The month ends, and betting closes at midnight. In the real world, Toy Story 5 wins. In program terms, the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it by having a designated trusted party sign. Maria calls `settle_event()` with the winning outcome's index, her signature is checked against the config's admin, and her answer is written to the event account as `winning_outcome_index`. The *Offchain Truth* chapter covers the full spectrum, from a single admin signer like this one, through multi-party resolution, to signed price feeds. This program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the pro-rata math, take more than the snapshotted fee, or reach into the vault by any other path.
+The month ends, and betting closes at midnight. In the real world, Toy Story 5 wins. In program terms, the fact that decides where 600 USDC goes exists entirely offchain. This program resolves it by having a designated trusted party sign. Maria calls `settle_event()` with the winning outcome's index, her signature is checked against the config's admin, and her answer is written to the event account as `winning_outcome_index`. The *Offchain Truth* chapter covers the full spectrum, from a single admin signer like this one, through multi-party resolution, to signed price feeds. This program makes the trusted party explicit and limits what their signature can do. Maria can pick which outcome won, but she cannot touch the payout math, take more than the snapshotted fee, or reach into the vault by any other path.
 
 `settle_event()` works only once the clock reaches `betting_closes_at`, and earlier fails with `BettingStillOpen`. The two windows split time exactly: a bet needs the clock before the close, and settlement needs it at or after. So no bet can land once the event can be settled, and Maria cannot end the market early (checked by `test_betting_closes_at_close_time`).
 
@@ -65,7 +65,7 @@ Settlement does four things, none of which involve paying bettors yet:
 
 ## Winners Claim: Winnings Are Proportional to Stake
 
-Winners come and claim their payouts whenever they like; nothing pays out automatically. Alice calls `claim_winnings()`. Her payout is her stake back plus her pro-rata share of the distributable losing pool:
+Winners come and claim their payouts whenever they like; nothing pays out automatically. Alice calls `claim_winnings()`. Her payout is her stake back plus her share of the distributable losing pool, in proportion to her stake:
 
 payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
@@ -110,7 +110,7 @@ Every checked operation maps to `MathOverflow`. There are no rates and no curves
 - A winner's payout is never less than their stake.
 - One bet account per bettor per outcome, and no bet account survives its payout, refund, or close.
 - The outcome list never changes once the event is Open, and no stake enters the pool at or after `betting_closes_at`.
-- Only the admin's signature can settle or cancel, and only the pro-rata formula decides amounts.
+- Only the admin's signature can settle or cancel, and only the payout formula decides amounts.
 
 ## The Failure Modes: The Oracle Is a Person, and Everything Downstream of That
 
@@ -132,7 +132,7 @@ A racetrack's parimutuel pool needs a tote board, a licensed operator, and a pay
 
 This chapter added five concepts:
 
-- **The parimutuel structure.** All stakes pool together; winners split the losing pool pro rata by stake, so a larger stake wins proportionally more and no one sets odds.
+- **The parimutuel structure.** All stakes pool together; winners split the losing pool in proportion to their stakes, so a larger stake wins more and no one sets odds.
 - **A designated signer decides the result.** The operator acts as the oracle, and the program's job is making that trust visible and narrow: they pick the winner, but cannot touch the math, the snapshotted fee, or the vault by any other path.
 - **Terms locked before bettors commit stakes.** An explicit Draft status keeps bets out until the admin opens the market, so the outcome list is fixed before the first stake. The fee and close time are fixed at event creation, so the question bettors staked on cannot be rewritten.
 - **Account closure as the double-claim defense.** A claimed bet's account is gone, so there is no flag to desynchronize.

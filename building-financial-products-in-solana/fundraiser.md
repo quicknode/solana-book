@@ -101,7 +101,7 @@ The program's financial arithmetic is three expressions:
 - **The minimum contribution**: `10^decimals`.
 - **The deadline**: `(now − time_started) / 86,400`, floored.
 
-Every addition and subtraction on `current_amount`, the receipts and `open_contributor_accounts` is checked and maps overflow to `MathOverflow`. No rates, no pro-rata, no prices: refunds pay recorded amounts back verbatim, so, like the escrow, this program never has to *compute* what people are owed.
+Every addition and subtraction on `current_amount`, the receipts and `open_contributor_accounts` is checked and maps overflow to `MathOverflow`. No rates, no proportional shares, no prices: refunds pay recorded amounts back verbatim, so, like the escrow, this program never has to *compute* what people are owed.
 
 ## The Invariants: The Counters Balance Like a Ledger
 

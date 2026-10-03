@@ -29,7 +29,7 @@ A program that skips any of these checks runs every health check, liquidation, a
 
 Who signs the fact is a design decision with a range of answers, and the way to make it is to ask three questions: who publishes, what does it cost them to lie, and what happens when they stop publishing?
 
-At one end is the **single trusted signer**. The betting market's admin settles the event with one signature: `settle_event()` writes their answer to the event account's `winning_outcome_index`, and every payout follows from it. For a small market whose operator's business is its reputation, this can be the right design, and the program's job is to make the trust *visible and narrow*. The admin picks the winning outcome, but they cannot touch the pro-rata math, exceed the snapshotted fee, or reach the vault by any other path. A reader of the code can see what their signature can and cannot do.
+At one end is the **single trusted signer**. The betting market's admin settles the event with one signature: `settle_event()` writes their answer to the event account's `winning_outcome_index`, and every payout follows from it. For a small market whose operator's business is its reputation, this can be the right design, and the program's job is to make the trust *visible and narrow*. The admin picks the winning outcome, but they cannot touch the payout math, exceed the snapshotted fee, or reach the vault by any other path. A reader of the code can see what their signature can and cannot do.
 
 In the middle are **committees and multi-party resolution**: several parties must agree before a fact is recorded, so lying requires collusion and any single defector breaks the lie. The drawback is coordination and latency.
 
