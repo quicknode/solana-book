@@ -23,7 +23,7 @@ Most programs are conceptually simple, with design rules that come straight from
 
 ## Whoever Opens an Account Pays Its Rent, and Gets It Back
 
-We previously mentioned that the handler that pays out the last of the vault's tokens also closes the accounts and returns each account's rent deposit to whoever paid it. That raises two questions for a program that creates accounts on its users' behalf: who pays the deposit, and who gets it back when the account closes?
+We previously mentioned that the handler that pays out the last of the vault's tokens also closes the accounts and returns each account's rent deposit to whoever paid it. That raises a question for a program that creates accounts on its users' behalf: who should pay the deposit in the first place?
 
 - Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds their own token account (if it did not exist already) to receive what the maker offered. Rent burdens follow the party who chose to create the state.
 
