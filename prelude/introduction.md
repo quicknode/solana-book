@@ -30,7 +30,7 @@ Solana changes quickly: network releases, framework versions, chain constants, a
 
 In this book you'll learn how each of the classic financial products works as a Solana program, how to handle assets so that none are lost, and how to test that your program works.
 
-## Why Write a Book When an AI Can Write the Program?
+## Why Read a Book When an AI Can Write the Program?
 
 An LLM can write a Solana program on request, and we expect you to use an AI to do exactly that. This book includes a companion AI plugin, introduced below, to help you do it correctly.
 
