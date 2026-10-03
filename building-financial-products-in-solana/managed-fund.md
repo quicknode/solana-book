@@ -4,7 +4,7 @@ A **managed fund** is the onchain equivalent of a mutual fund. A list of approve
 
 In a traditional fund, "the manager cannot run off with client assets" is enforced by custodians, auditors, and courts. Here it is enforced by the program: **the manager can change the allocation and earn the fee, and can do nothing else.** No instruction in the program moves a vault's tokens to the manager.
 
-> **Also called a "vault".** Solana platforms usually sell this product as a "vault": Drift Vaults and Kamino's Earn vaults both pool deposits under a manager or curator. This book uses the finance name because every chapter already uses "vault" for a token account owned by a program. So **the product is the fund, and the token accounts are its vaults.** Nor is it an index fund, though the two look alike: an index fund's weights follow a published index with no manager choosing them, and here a manager chooses them.
+> **Sometimes called a "vault".** Some Solana platforms sell this product as a "vault": Drift Vaults and Kamino's Earn vaults both pool deposits under a manager or curator. This book uses the finance name because every chapter already uses "vault" for a token account owned by a program. So **the product is the fund, and the token accounts are its vaults.** Nor is it an index fund, though the two look alike: an index fund's weights follow a published index with no manager choosing them, and here a manager chooses them.
 
 ## A Curator Decides What Managers May Touch at All
 

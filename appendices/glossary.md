@@ -406,7 +406,7 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 ### managed fund
 
-The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Solana platforms usually call it a "vault", which in this book is only ever the token account the deposits sit in (see [vault](#vault)). See the *Managed Fund* chapter.
+The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Some Solana platforms call it a "vault", which in this book is only ever the token account the deposits sit in (see [vault](#vault)). See the *Managed Fund* chapter.
 
 ### manager
 

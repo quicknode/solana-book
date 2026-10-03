@@ -34,7 +34,7 @@ Each chapter explains one complete, tested program from the [companion repositor
 - [Chapter 15: The Constant-Product AMM](building-financial-products-in-solana/constant-product-amm.md) - instant swaps priced by a formula
 - [Chapter 16: The Prop AMM](building-financial-products-in-solana/prop-amm.md) - a market maker quoting its own capital at oracle prices
 - [Chapter 17: Lending and Borrowing](building-financial-products-in-solana/lending.md) - deposits, collateral, interest, liquidation, and cranks
-- [Chapter 18: The Managed Fund](building-financial-products-in-solana/managed-fund.md) - an onchain mutual fund, which Solana platforms call a "vault"
+- [Chapter 18: The Managed Fund](building-financial-products-in-solana/managed-fund.md) - an onchain mutual fund, which some Solana platforms call a "vault"
 - [Chapter 19: Options](building-financial-products-in-solana/options.md) - calls and puts, fully collateralized and physically settled
 - [Chapter 20: Perpetual Futures](building-financial-products-in-solana/perpetual-futures.md) - leveraged bets on a price, and the last of the ten programs
 
