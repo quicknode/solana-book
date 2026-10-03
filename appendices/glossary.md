@@ -406,7 +406,7 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 ### managed fund
 
-The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the deposits sit in. See the *Managed Fund* chapter.
+The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Solana platforms usually call it a vault, which in this book is only ever the token account the deposits sit in (see [vault](#vault)). See the *Managed Fund* chapter.
 
 ### manager
 
@@ -723,10 +723,6 @@ A computer running the Solana software: it executes transactions, votes on block
 ### vault
 
 A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a [managed fund](#managed-fund).
-
-### vault strategy
-
-Another name for a [managed fund](#managed-fund), used by several Solana platforms, and the name this book's managed-fund example had before it took the finance term. This book avoids it because a [vault](#vault) here is a token account, not a product. See the *Managed Fund* chapter.
 
 ### wad
 
