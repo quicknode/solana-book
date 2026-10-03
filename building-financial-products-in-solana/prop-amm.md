@@ -21,7 +21,7 @@ Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap 
 
 ![](figures/prop-amm-open-market.svg)
 
-Financial state on Solana is accounts, and this one transaction created the three the venue needs.
+This one transaction created the three accounts the venue needs.
 
 The **market** account lives at a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's public key, the oracle feed and its scale, both fixed at creation, the two token decimals (recorded at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. The market PDA is the authority of the **base vault** and **quote vault**, and the program signs for them with the market's seeds.
 

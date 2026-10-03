@@ -26,7 +26,7 @@ She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. 
 
 ![](figures/fund-create.svg)
 
-Financial state on Solana is accounts, and Maria's three transactions created the seven the fund needs.
+Maria's three transactions created the seven accounts the fund needs.
 
 The **fund** account (PDA seeds: `"fund"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps`, `max_slippage_bps` and `rebalance_threshold_bps`, and the `swap_router` it is allowed to trade through. It keeps its running `total_shares` and `total_weight_bps`, the `usdc_decimals` of its USDC mint, and `last_fee_accrual_timestamp` for the fee clock. It also records `usdc_holdings` and `asset_holdings`, the amounts the program has counted into its vaults. The **share mint** lives at a PDA (seeds: `"share_mint"`, the fund) with the fund PDA as mint authority: shares only come into existence when the program's own math says so. The fund PDA is also the authority of a **USDC vault**, which every deposit passes through on its way into the basket.
 

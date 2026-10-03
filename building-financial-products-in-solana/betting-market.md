@@ -18,7 +18,7 @@ Maria is the admin. Her public key is recorded in the program's config, and only
 
 ![](figures/betting-maria-setup.svg)
 
-Financial state on Solana is accounts, and those five transactions created the five accounts the market needs.
+Those five transactions created the five accounts the market needs.
 
 The **config** is a single account at a PDA (seed `"config"`), created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `default_fee_bps` each new event copies at creation, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 

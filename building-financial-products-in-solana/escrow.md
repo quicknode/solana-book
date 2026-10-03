@@ -49,7 +49,7 @@ Alice calls `make_offer()` with three arguments: her chosen `id`, `token_a_offer
 
 ![](figures/escrow-make-offer.svg)
 
-Financial state on Solana is accounts, and this one transaction created the two the deal needs.
+This one transaction created the two accounts the deal needs.
 
 The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
 

@@ -16,7 +16,7 @@ Maria runs the market, and her revenue is a cut of the interest, the reserve fac
 
 ![](figures/lending-open-market.svg)
 
-Financial state on Solana is accounts, and opening the market created thirteen of them: the market, and for each asset a price feed, a reserve, and the two accounts the reserve owns. The feeds came first, because a reserve is created against its feed.
+Opening the market created thirteen accounts: the market, and for each asset a price feed, a reserve, and the two accounts the reserve owns. The feeds came first, because a reserve is created against its feed.
 
 The **lending market** account (PDA seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 

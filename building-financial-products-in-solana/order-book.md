@@ -38,7 +38,7 @@ Both are set per market, at creation, and cannot change afterward. A tick right 
 
 ![](figures/order-book-initialize-market.svg)
 
-Financial state on Solana is accounts, and opening the market created five of them: one by Maria's client, and four by the handler.
+Opening the market created five accounts: one by Maria's client, and four by the handler.
 
 The **market** account holds one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). It lives at a PDA whose seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 

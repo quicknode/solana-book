@@ -35,7 +35,7 @@ The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and a s
 
 ![](figures/perps-create-pool.svg)
 
-Financial state on Solana is accounts, and this one transaction created the three the market needs.
+This one transaction created the three accounts the market needs.
 
 The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`initial_margin_bps`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `max_price_deviation_bps`, `insurance_fee_bps`, `profit_warmup_slots`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
 

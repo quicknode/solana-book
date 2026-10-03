@@ -31,7 +31,7 @@ Maria operates the AMM and is launching ACME today. She earns twice: an admin sh
 
 Maria runs `initialize_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, about one sixth of each fee, the classic Uniswap-style split. Then `initialize_pool()` for ACME/USDC, which creates the pool config, the LP mint, and the two empty vaults.
 
-Financial state on Solana is accounts, and those two transactions created the venue's five.
+Those two transactions created the venue's five accounts.
 
 The **config** is a singleton account at a PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 
