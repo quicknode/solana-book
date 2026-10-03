@@ -282,7 +282,7 @@ Rounding to the nearest whole unit with exact halves going up, which is what Rus
 
 ### halt
 
-A stop in block production, which Solana prefers to running two conflicting histories. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the *Time* chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
+A stop in block production. A halt comes from a fault such as a bug in the validator software, and ends when the validators restart the chain together. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the *Time* chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
 
 ### health / health factor
 
@@ -730,7 +730,7 @@ In a lending reserve, borrowed divided by total liquidity. The input to the inte
 
 ### validator
 
-A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. Enough validators building on a block is what gives it [finality](#finality).
+A computer running the Solana software: it executes transactions, votes on blocks, and takes its turn as leader producing them. Enough stake voting for a block is what gives it [finality](#finality).
 
 ### vault
 
@@ -756,4 +756,4 @@ The party who creates an [option](#option) and sells the right it carries. In fi
 
 Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs use large accounts like a 180 KB order book.
 
-[^confirmed]: A third state, `confirmed`, was available under the older Tower BFT mechanism that was replaced with Alpenglow: a block a supermajority of stake had voted for, which the network still permitted to lose. Alpenglow's first round of votes finalizes the block, so `confirmed` now means the same as `finalized`.
+[^confirmed]: A third state, `confirmed`, was available on older Solana networks. `confirmed` now means the same as `finalized`.

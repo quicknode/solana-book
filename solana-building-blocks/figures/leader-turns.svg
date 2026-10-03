@@ -48,7 +48,7 @@
   <rect x="542" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="583" y="110" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <text x="16" y="219" font-size="10.5" font-weight="bold">leader B packs</text>
-  <text x="16" y="233" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 107</text>
+  <text x="16" y="233" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 105</text>
   <rect x="116" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
   <line x1="122" y1="209" x2="148" y2="209" stroke="#888" stroke-width="2"/>
   <line x1="122" y1="217" x2="148" y2="217" stroke="#888" stroke-width="2"/>
@@ -64,32 +64,24 @@
   <line x1="204" y1="217" x2="230" y2="217" stroke="#888" stroke-width="2"/>
   <line x1="204" y1="225" x2="230" y2="225" stroke="#888" stroke-width="2"/>
   <rect x="199" y="235" width="36" height="8" fill="#111"/>
-  <rect x="239" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
-  <line x1="245" y1="209" x2="271" y2="209" stroke="#888" stroke-width="2"/>
-  <line x1="245" y1="217" x2="271" y2="217" stroke="#888" stroke-width="2"/>
-  <line x1="245" y1="225" x2="271" y2="225" stroke="#888" stroke-width="2"/>
-  <rect x="240" y="235" width="36" height="8" fill="#111"/>
-  <rect x="288" y="200" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
-  <line x1="294" y1="209" x2="320" y2="209" stroke="#888" stroke-width="2"/>
-  <line x1="294" y1="217" x2="320" y2="217" stroke="#888" stroke-width="2"/>
-  <line x1="294" y1="225" x2="320" y2="225" stroke="#888" stroke-width="2"/>
-  <rect x="289" y="235" width="36" height="8" fill="#111"/>
-  <rect x="329" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 3"/>
-  <text x="348.0" y="225" font-size="8" fill="#555" font-style="italic" text-anchor="middle">skipped</text>
-  <rect x="370" y="200" width="38" height="44" fill="#fff" stroke="#1e7a3c" stroke-width="2.2"/>
-  <line x1="376" y1="235" x2="402" y2="235" stroke="#1e7a3c" stroke-width="2"/>
-  <line x1="376" y1="227" x2="402" y2="227" stroke="#1e7a3c" stroke-width="2"/>
-  <rect x="377.0" y="179" width="6" height="6" fill="#1e7a3c"/>
-  <rect x="386.0" y="179" width="6" height="6" fill="#1e7a3c"/>
-  <rect x="395.0" y="179" width="6" height="6" fill="#1e7a3c"/>
-  <path d="M 389.0,188 L 389.0,208" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
+  <rect x="239" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="258.0" y="225" font-size="8" fill="#555" font-style="italic" text-anchor="middle">skipped</text>
+  <rect x="288" y="200" width="38" height="44" fill="#fff" stroke="#1e7a3c" stroke-width="2.2"/>
+  <line x1="294" y1="235" x2="320" y2="235" stroke="#1e7a3c" stroke-width="2"/>
+  <line x1="294" y1="227" x2="320" y2="227" stroke="#1e7a3c" stroke-width="2"/>
+  <rect x="295.0" y="179" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="304.0" y="179" width="6" height="6" fill="#1e7a3c"/>
+  <rect x="313.0" y="179" width="6" height="6" fill="#1e7a3c"/>
+  <path d="M 307.0,188 L 307.0,208" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
+  <rect x="329" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="370" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="411" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="460" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="501" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="542" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="583" y="200" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
-  <path d="M 389.0,246 C 389.0,276 307.0,278 307.0,264 L 307.0,250" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
-  <text x="348.0" y="283" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
+  <path d="M 307.0,246 C 307.0,276 217.0,278 217.0,264 L 217.0,250" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="262.0" y="283" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
   <text x="16" y="309" font-size="10.5" font-weight="bold">leader C packs</text>
   <text x="16" y="323" font-size="10.5" font-family="'DejaVu Sans Mono', Menlo, monospace">slot 111</text>
   <rect x="116" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
@@ -107,18 +99,18 @@
   <line x1="204" y1="307" x2="230" y2="307" stroke="#888" stroke-width="2"/>
   <line x1="204" y1="315" x2="230" y2="315" stroke="#888" stroke-width="2"/>
   <rect x="199" y="325" width="36" height="8" fill="#111"/>
-  <rect x="239" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
-  <line x1="245" y1="299" x2="271" y2="299" stroke="#888" stroke-width="2"/>
-  <line x1="245" y1="307" x2="271" y2="307" stroke="#888" stroke-width="2"/>
-  <line x1="245" y1="315" x2="271" y2="315" stroke="#888" stroke-width="2"/>
-  <rect x="240" y="325" width="36" height="8" fill="#111"/>
+  <rect x="239" y="290" width="38" height="44" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="258.0" y="315" font-size="8" fill="#555" font-style="italic" text-anchor="middle">skipped</text>
   <rect x="288" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
   <line x1="294" y1="299" x2="320" y2="299" stroke="#888" stroke-width="2"/>
   <line x1="294" y1="307" x2="320" y2="307" stroke="#888" stroke-width="2"/>
   <line x1="294" y1="315" x2="320" y2="315" stroke="#888" stroke-width="2"/>
   <rect x="289" y="325" width="36" height="8" fill="#111"/>
-  <rect x="329" y="290" width="38" height="44" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 3"/>
-  <text x="348.0" y="315" font-size="8" fill="#555" font-style="italic" text-anchor="middle">skipped</text>
+  <rect x="329" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
+  <line x1="335" y1="299" x2="361" y2="299" stroke="#888" stroke-width="2"/>
+  <line x1="335" y1="307" x2="361" y2="307" stroke="#888" stroke-width="2"/>
+  <line x1="335" y1="315" x2="361" y2="315" stroke="#888" stroke-width="2"/>
+  <rect x="330" y="325" width="36" height="8" fill="#111"/>
   <rect x="370" y="290" width="38" height="44" fill="#f4f4f2" stroke="#111" stroke-width="1.2"/>
   <line x1="376" y1="299" x2="402" y2="299" stroke="#888" stroke-width="2"/>
   <line x1="376" y1="307" x2="402" y2="307" stroke="#888" stroke-width="2"/>
@@ -147,8 +139,8 @@
   <rect x="567.0" y="269" width="6" height="6" fill="#1e7a3c"/>
   <path d="M 561.0,278 L 561.0,298" stroke="#1e7a3c" stroke-width="1.6" fill="none" marker-end="url(#turns-acc)"/>
   <rect x="583" y="290" width="38" height="44" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="2 3"/>
-  <path d="M 389.0,336 C 389.0,366 307.0,368 307.0,354 L 307.0,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
-  <text x="348.0" y="373" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
+  <path d="M 307.0,336 C 307.0,366 217.0,368 217.0,354 L 217.0,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
+  <text x="262.0" y="373" font-size="9" fill="#555" font-style="italic" text-anchor="middle">parent</text>
   <path d="M 441,336 C 441,360 468,364 468,354 L 468,340" stroke="#111" stroke-width="1.3" fill="none" marker-end="url(#turns-arr)"/>
   <text x="454.5" y="373" font-size="9" fill="#555" font-style="italic" text-anchor="middle">block 109 reads the time block 108 wrote</text>
   <path d="M 94,171 L 120,157" stroke="#111" stroke-width="1.1" fill="none" marker-end="url(#turns-arr)"/>

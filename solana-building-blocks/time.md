@@ -14,7 +14,7 @@ Which one to use depends on the job. A week promised to a contributor runs on th
 
 A Solana cluster runs on **validators**: physical computers that each hold a copy of every account and run every transaction. Time on the network is divided into short windows called **slots**, and for each slot one validator is the **leader**. Leaders take **turns** of four slots in a row, assigned in advance in proportion to each validator's stake. The leader gathers transactions into a **block** and sends that block to the other validators, and each block builds on the one before it, its **parent**.
 
-When a leader's block does not arrive in time, the others vote to skip that slot, and the slot passes with no block. The next block names the last block that did arrive as its parent.
+When a leader's block does not arrive in time, the others vote to skip that slot and the rest of that leader's turn, and those slots pass with no block.[^skip-turn] The next block names the last block that did arrive as its parent.
 
 ![](figures/leader-turns.svg)
 
@@ -34,7 +34,7 @@ The slot count is how many slots have gone by. Programs read it from the same Cl
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow or its block was skipped. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for, and a week of them runs about 16 hours over. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because in normal running slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for, and a week of them runs about 16 hours over. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while real time moves on. The section on halts below covers what that does.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and about two hours longer if slots actually average 219 milliseconds. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
@@ -134,7 +134,7 @@ Say which edge you mean when you write the terms down. A contributor reads "seve
 
 Both clocks arrive in the same sysvar, so it is easy to assume they always move together. They come apart when the chain stops.
 
-When validators cannot agree which block is real, block production halts instead of continuing down two conflicting histories, and the network sits still until enough of the stake agrees where to resume. A chain that kept producing blocks through a disagreement could settle the same balance twice.
+When votes stop arriving, the network slows down rather than stopping. If no block has been finalized for about ten seconds, every validator waits a little longer for each leader's block, around 5% more with each turn, until a block is finalized again.[^standstill] A real halt comes from something waiting cannot fix, such as a bug in the validator software, and ends when the validators restart the chain together.
 
 A halt is rare: at the time of writing, block production has not stopped for years. A program should still handle one.
 
@@ -180,7 +180,7 @@ The table lists every program in Part II that touches time, and the clock each o
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - The network occasionally shortens its slot time, as it did when slots went from 400 milliseconds to 200, in stages. Each change takes effect everywhere at the start of an epoch, with no transition. Every slot-counted window then covers less time, so store windows in an account a transaction can update. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
 - A deadline counted in whole days floors, so compute both sides of it from the same expression. The window closes exactly that many 24-hour periods after it opened, at the same time of day, so say so when you write the terms down.
-- Solana halts rather than run two conflicting histories. During a halt slots pause and wall-clock time keeps running, but the timestamp cannot jump, so it trails after a restart and takes about as long as the halt to catch up. Accrual by timestamp charges the halt during the catch-up, deadlines expire with nobody able to act on them, and a price that is hours old still looks fresh.
+- When votes stop arriving, Solana slows down rather than stopping, and it halts only on a fault waiting cannot fix, such as a software bug. During a halt slots pause and wall-clock time keeps running, but the timestamp cannot jump, so it trails after a restart and takes about as long as the halt to catch up. Accrual by timestamp charges the halt during the catch-up, deadlines expire with nobody able to act on them, and a price that is hours old still looks fresh.
 - Pair every freshness window, in slots or in seconds, with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
 [^forks]: Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks and will only see the slot go up.
@@ -188,6 +188,10 @@ The table lists every program in Part II that touches time, and the clock each o
 [^alpenglow-clock]: The leader's time is carried in a footer at the end of its block. Source: Brennan Watt of Anza, in a message to the author in September 2026, and [github.com/anza-xyz/agave/issues/15441](https://github.com/anza-xyz/agave/issues/15441). Validators enforce the range in `nanosecond_time_bounds`, at [github.com/anza-xyz/agave/blob/master/runtime/src/block_component_processor.rs](https://github.com/anza-xyz/agave/blob/master/runtime/src/block_component_processor.rs).
 
 [^clock-catch-up]: A leader writes its own clock's time, moved into the permitted range if it falls outside, in `skew_block_producer_time_nanos` at [github.com/anza-xyz/agave/blob/master/core/src/block_creation_loop.rs](https://github.com/anza-xyz/agave/blob/master/core/src/block_creation_loop.rs). While the timestamp trails, every leader writes the top of the range, which advances it two slot lengths for each slot that passes.
+
+[^skip-turn]: Roger Wattenhofer, head of research at Anza, in an interview with Jacob Creech of the Solana Foundation on Alpenglow, at [youtube.com/watch?v=2RlNav7GiUY](https://www.youtube.com/watch?v=2RlNav7GiUY). The next leader can start as soon as the skips are certified, without waiting out the skipped slots.
+
+[^standstill]: Wattenhofer, in the same interview, calls this standstill, and gives the 5% as approximate. The waits grow with each turn, so the chain keeps slowing until even a degraded network can deliver a block in time.
 
 [^spl-slots-per-year]: The constant is `SLOTS_PER_YEAR` in the program's state module, at [github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/state/mod.rs](https://github.com/solana-labs/solana-program-library/blob/master/token-lending/program/src/state/mod.rs), and Save's copy is at [github.com/solendprotocol/solana-program-library/blob/master/token-lending/program/src/state/mod.rs](https://github.com/solendprotocol/solana-program-library/blob/master/token-lending/program/src/state/mod.rs).
 
