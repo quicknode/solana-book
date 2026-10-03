@@ -59,20 +59,40 @@ Every market in this book has an operator with real power: withdrawing fees, set
 - **Let a pause stop deposits and trades, never withdrawals.** A pause that refuses new deposits and new positions during an incident protects users; one that refuses withdrawals traps their deposits. The prop AMM's `paused` flag, set through `set_quote`, makes `swap` refuse and is read by no other handler. Whatever a pause stops, every participant must still be able to get their assets out of every state, paused included.
 - **Plan for the admin going silent.** Let nothing a user does wait on the operator: a deposit, a withdrawal, or canceling your own offer runs without an admin signature. The order book's `withdraw_fees` returns success with nothing to move when the fee vault is empty, so a scheduled job can call it every hour without failing. And plan for what happens if the price feed stops publishing. A lending market that can no longer value collateral needs a wind-down path that closes positions and lets deposits leave, rather than blocking every user's withdrawals until a price arrives.
 - **Make upgrade authority trustworthy.** Ship fixes through a multisig with named holders rather than a single private key on one person's laptop, and say so where users can read it. A user who reads that knows a change to the code takes several named people to sign, and that one stolen laptop cannot ship one.
+- **Keep each private key where losing it is survivable.** The private key that signs routine operations, like the order book's `withdraw_fees`, lives in a hot wallet holding only what those operations need, and the treasury stays in cold storage. Back up every production private key, because a lost one takes its powers with it permanently, and generate new ones for mainnet rather than reusing the ones you tested with on devnet.
 
 ## Ship To Mainnet With a Second (or Third) Opinion
 
 Before a program that holds other people's assets touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. Every check in the program chapters' failure-modes sections exists because someone's first opinion missed it. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
+
+An audit reviews one commit of your source code, but users run whatever bytecode is deployed. A **verified build** connects the two. The program is built in a container that produces the same bytes from the same source every time, so anyone can rebuild that commit and check that the result matches the program onchain. The `solana-verify` tool does the build and the comparison,[^solana-verify] and records the repository and commit onchain, so explorers can show the program as verified. Publish the audit report with the commit it covered, and the verified build shows users that commit is the code they are running. Verify again after every upgrade, because each one replaces the bytes.
+
+## Monitoring Tells You What the Program Is Doing After Launch
+
+Tests and audits check a program before it holds anything. Once it is live, the questions change: is someone using the admin's private key, are funds leaving faster than usual, and has something offchain stopped? A **monitor** reads every transaction that touches your program, decodes it, and sends an alert when one matches a rule you wrote. Write rules for three things:
+
+- **Every admin action.** The specification above lists what the admin's private key can sign for, and a monitor tells you each time it does: the order book's `withdraw_fees`, the prop AMM's `set_quote`, the betting market's `settle_event`. Whether its holder signed or someone who stole the private key did, the team hears about it within seconds rather than from users.
+- **Unusual movements out of the vaults.** A withdrawal far larger than usual, or a burst of `liquidate_obligation` calls in the lending market, is either a market moving fast or an attack in progress, and both need a person looking.
+- **Refusals, counted by reason.** A program's errors record what it refused and why. A run of `StalePriceFeed` refusals from the lending program usually means the price feed has stopped updating, and without an alert nobody notices until a user complains.
+
+A monitor can check invariants against the live chain, too. The fundraiser's vault must never hold less than its `current_amount` until the maker claims, and a monitor that reads both values checks that on every transaction, long after the test suite last ran.
+
+Solana Microscope, which the Solana Foundation publishes as open source, is one such monitor.[^microscope] It reads the transactions for one program, decodes each instruction using the program's IDL, and sends alerts to Slack, Telegram, or PagerDuty. A rule names an instruction and sets conditions on its fields, so "alert whenever `withdraw_fees` succeeds" is a single rule. It can also follow a Squads multisig, such as the one holding your upgrade authority.
 
 ## What You Learnt
 
 - Bugs live at numerical boundaries, so push your test suite to every one: the mirror image of every flow, both sides of every limit, every attack by name, and invariants as well as account values.
 - Model checking goes further than testing: invariant tests over generated values, then a model checker over every value the arithmetic core can take, and how far to go is set by how much the program's vaults will hold.
 - A program cannot see whether its own block is final, so whatever reads the chain chooses a commitment level. A bot deciding which transaction to send next reads at `processed`, and a backend that pays out fiat or tells a customer their payment arrived waits for `finalized`.
-- Write admin power down as a specification: bounded config, snapshotted terms, and no path to principal. Let a pause stop deposits and trades but never withdrawals, make sure nothing a user does waits on the operator, and give upgrade authority to a named multisig.
-- Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program.
+- Write admin power down as a specification: bounded config, snapshotted terms, and no path to principal. Let a pause stop deposits and trades but never withdrawals, make sure nothing a user does waits on the operator, and give upgrade authority to a named multisig. Keep routine private keys in hot wallets holding only what they need, the treasury in cold storage, and a backup of every production private key.
+- Ship with a second-opinion audit: an auditor hunts for the same holes an attacker would and hands you the list instead of draining the program. A verified build shows users that the deployed program is the commit the auditor read.
+- Monitor the program once it is live: alert on every admin action, on unusual movements out of the vaults, and on refusals counted by reason, and check invariants against the live chain.
 
 [^kani]: Kani is a Rust model checker, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
+
+[^solana-verify]: `solana-verify` is at [github.com/solana-foundation/solana-verifiable-build](https://github.com/solana-foundation/solana-verifiable-build).
+
+[^microscope]: Solana Microscope is at [github.com/solana-foundation/solana-microscope](https://github.com/solana-foundation/solana-microscope).
 
 [^commitment-levels]: The commitment levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
 
