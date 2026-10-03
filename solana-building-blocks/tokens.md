@@ -28,7 +28,7 @@ As well as the current total supply, the mint account also stores the token's de
 
 The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
-A token can also stand for one unique thing. Give the mint 0 decimals, mint a single unit, and make sure nobody can mint another: the result is a **non-fungible token**, or NFT, and the one token account holding it records who owns that thing. It could be a ticket to a particular seat, a property deed, or a bond certificate with its own serial number.
+A token can also stand for one unique thing. Give the mint 0 decimals, mint a single unit, and make sure nobody can mint another: the result is a **non-fungible token**, or NFT, and the one token account holding it records who owns that thing. So each NFT has a mint of its own: a collection of 10,000 NFTs made this way is 10,000 mints, not one mint that issued 10,000 tokens. It could be a ticket to a particular seat, a property deed, or a bond certificate with its own serial number.
 
 ![ACME is the stock of a fictional company.](figures/mint-factory.svg)
 
