@@ -95,7 +95,7 @@
   <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">check_contributions()</text>
   <text x="472" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refund()</text>
   <text x="472" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">close_fundraiser()</text>
-  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_contributor()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_contribution()</text>
   </g>
   <!-- the fundraiser PDA: the whole terms sheet -->
   <g>
@@ -113,7 +113,7 @@
   <text x="472" y="315.37" font-size="9.5">time_started: day 0</text>
   <text x="472" y="327.37" font-size="9.5">duration: 7 days</text>
   <text x="472" y="339.37" font-size="9.5">claimed: true</text>
-  <text x="472" y="351.37" font-size="9.5">open_contributor_accounts: 0</text>
+  <text x="472" y="351.37" font-size="9.5">open_contributions: 0</text>
   <line x1="464" y1="235.37" x2="632" y2="359.37" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="235.37" x2="464" y2="359.37" stroke="#999" stroke-width="1.6"/>
   </g>

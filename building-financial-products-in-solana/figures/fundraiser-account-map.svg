@@ -36,7 +36,7 @@
   </g>
   <g>
   <circle cx="16" cy="179.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="26" y="173.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
+  <text x="26" y="173.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="26" y="182.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="26" y="191.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
   <rect x="8" y="197.917" width="105" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -67,7 +67,7 @@
   </g>
   <g>
   <circle cx="128" cy="185.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="138" y="179.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
+  <text x="138" y="179.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="138" y="188.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="138" y="197.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS</text>
   <rect x="120" y="203.644" width="99" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -98,7 +98,7 @@
   </g>
   <g>
   <circle cx="234" cy="195.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="244" y="190.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTOR" +</text>
+  <text x="244" y="190.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="244" y="199.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="244" y="208.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
   <rect x="226" y="214.062" width="108" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
@@ -139,7 +139,7 @@
   <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">check_contributions()</text>
   <text x="472" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">refund()</text>
   <text x="472" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">close_fundraiser()</text>
-  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">close_contributor()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">close_contribution()</text>
   </g>
   <!-- the fundraiser PDA: the whole terms sheet -->
   <g>
@@ -157,7 +157,7 @@
   <text x="472" y="315.37" font-size="9.5">time_started: day 0</text>
   <text x="472" y="327.37" font-size="9.5">duration: 7 days</text>
   <text x="472" y="339.37" font-size="9.5">claimed: false</text>
-  <text x="472" y="351.37" font-size="9.5">open_contributor_accounts: 11</text>
+  <text x="472" y="351.37" font-size="9.5">open_contributions: 11</text>
   </g>
   <!-- the vault: holds the tokens; the claim checks current_amount, not this balance -->
   <g>
