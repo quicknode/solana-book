@@ -1,6 +1,6 @@
 # Chapter 13: The Betting Market
 
-What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. There are two ways to let everyone put money on it:
+What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. There are two main ways to let everyone put money on it:
 
 - **With a bookmaker.** The house quotes odds, locks them in when each bet is placed, and takes the other side of every bet, so it carries the risk of paying winners more than the losers staked. This is fixed-odds betting, the model of a high-street betting shop or a sportsbook.
 - **Without a bookmaker.** Bettors are matched against each other, and the house takes a fee instead of a position. **Parimutuel** betting, also called pool betting or the tote, was invented in 1867 by Joseph Oller, who took bets on horse races in Paris. France banned bookmakers in 1891 and made it the only legal way to bet on horses, and it spread from France to racetracks around the world. Prediction markets such as Polymarket and Kalshi use a similar model to this, though they trade outcome shares on an order book rather than pooling stakes.
