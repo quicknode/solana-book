@@ -82,14 +82,13 @@ The market PDA is the authority of the **underlying vault** and the **quote vaul
 
 ## A Writer Posts the Whole Obligation and Names a Price
 
-Alice, carrying the standard wallet of one SOL and 1,000 USDC plus her five NVDAx, calls `write_option()`. She passes an `id` of 1 and an `OptionTerms` struct: kind `Call`, 5 contracts, 1 NVDAx per contract, a strike of 180 USDC per contract, a premium of 25 USDC for the whole option, and an expiry one week out.
+Alice, carrying the standard wallet of one SOL and 1,000 USDC plus her five NVDAx, calls `write_option()`. She passes an `id` of 1 and an `OptionTerms` struct: kind `Call`, an underlying amount of 5 NVDAx, a strike amount of 900 USDC (180 USDC a share), a premium of 25 USDC, and an expiry one week out.
 
 The handler checks the terms before it touches a token:
 
-- **A zero quantity** in `contracts`, `underlying_per_contract`, or `strike_per_contract` is refused (`InvalidParameter`). Every quantity is a multiplier in the settlement math, so a zero is an option that delivers nothing or costs nothing to exercise.
+- **A zero amount** in `underlying_amount` or `strike_amount` is refused (`InvalidParameter`). It would be an option that delivers nothing or costs nothing to exercise.
 - **A zero premium** is refused the same way. It would make the option a gift rather than a sale.
 - **An expiry at or before now** is refused (`ExpiryInPast`). The holder may exercise while `now < expiry`, so such an option could never be exercised.
-- **An option whose settlement overflows** is refused (`MathOverflow`). Both settlement products are computed now, at write time, so the overflow is found before anyone pays for it, and `test_write_option_rejects_a_lot_whose_collateral_overflows` checks it.
 
 Then the effects come before the transfer, in this order:
 
@@ -106,16 +105,13 @@ The transaction also created the option itself. Each option is an `OptionContrac
 
 - `kind`, `Call` or `Put`, and `status`, which is `Listed` (written and collateralized, unsold), `Held` (sold), or `Exercised`.
 - `writer` and `holder`. The holder is empty until someone buys.
-- `contracts`, `underlying_per_contract`, and `strike_per_contract`. Alice's option is 5 contracts, each on 1 NVDAx, each with a strike of 180 USDC.
+- `underlying_amount` and `strike_amount`, the two amounts that change hands on exercise. Alice's option covers 5 NVDAx for a strike amount of 900 USDC.
 - `premium`, in the quote token, for the whole option.
 - `expiry`, a Unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots.
 
-The three quantities are the account's most deliberate decision. **Every amount the option ever moves is a product of two of them.**
+Those two amounts are the account's most deliberate decision. **Every amount the option ever moves is one the account stores.** A call writer posts `underlying_amount` and a call holder pays `strike_amount`; a put swaps the roles, so the writer posts the strike amount and the holder delivers the underlying amount.
 
-- A call writer posts `contracts` times `underlying_per_contract`, and a call holder pays `contracts` times `strike_per_contract`.
-- A put is the same two products with the roles swapped: the writer posts the strike total, and the holder delivers the underlying total.
-
-There is no strike *price* to multiply by a quantity and divide by a decimals factor, so there is no division anywhere in settlement, and no rounding direction to get wrong. The strike is stored as an amount per contract rather than as a price, and the chapter's "180 USDC strike" is what that amount reads as when a contract is one whole NVDAx.
+There is no strike *price* to multiply by a quantity and divide by a decimals factor, so settlement does no arithmetic at all, and has no rounding direction to get wrong. The chapter's "180 USDC strike" is the 900 USDC strike amount spread over the five shares it buys.
 
 ![](figures/options-state-machine.svg)
 
@@ -155,7 +151,7 @@ Bob now holds 5 NVDAx worth $1,000 and has spent 925 USDC to get them, 25 of pre
 
 The strike payment stays in the vault, owed to Alice, rather than being sent to her directly. Paying the writer inside the exercise would mean requiring the writer's token account to exist at that moment, and a writer who closed it could then block the holder from ever exercising. The vault holds it instead, and the writer withdraws it later with `collect_proceeds()`.
 
-A put exercises the same way with the two tokens swapped. `test_put_lifecycle_delivers_the_underlying_for_the_strike` runs that path with five puts at a 150 strike, whose writer collects five NVDAx at the end.
+A put exercises the same way with the two tokens swapped. `test_put_lifecycle_delivers_the_underlying_for_the_strike` runs that path with a put on five NVDAx at a 150 strike, whose writer collects the five NVDAx at the end.
 
 ## The Writer Collects the Strike, and the Account Closes
 
@@ -167,7 +163,7 @@ Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for 
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
-The put is the mirror image, and it also shows how an option ends when nobody exercises it. Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, 5 contracts, 1 NVDAx per contract, a strike of 150 USDC per contract, a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike, so 5 times 150 USDC, 750 USDC, leaves Carol's account for the quote vault, and `quote_owed` rises to match. Her 1,000 USDC is 250.
+The put is the mirror image, and it also shows how an option ends when nobody exercises it. Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, an underlying amount of 5 NVDAx, a strike amount of 750 USDC (150 USDC a share), a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike amount, so 750 USDC leaves Carol's account for the quote vault, and `quote_owed` rises to match. Her 1,000 USDC is 250.
 
 ![](figures/options-write-put.svg)
 
@@ -203,15 +199,15 @@ Here is where everyone ends up:
 - Dave bought insurance he did not need.
 - Maria earned 1% of every premium.
 
-## The Math: Two Products, One Floor, One Comparison
+## The Math: One Floor and One Comparison
 
 The arithmetic lives in `contract_math.rs` and is the smallest in this book:
 
-- **The underlying total**, `contracts` times `underlying_per_contract`, and **the strike total**, `contracts` times `strike_per_contract`. Each is one checked multiplication. `collateral_amount()` picks the first for a call and the second for a put; `exercise_payment()` picks the other. There is no division, so there is no rounding.
+- **Settlement.** `collateral_amount()` returns the underlying amount for a call and the strike amount for a put, and `exercise_payment()` returns the other. Neither computes anything, so neither can overflow or round.
 - **The premium split.** `split_premium()` floors the fee, `premium` times `fee_bps` over 10,000, and gives the writer the rest. The writer keeps the rounding minor unit; the venue gives up at most one minor unit per sale, and a sale needs a real premium, so nobody can profit by repeating tiny sales.
 - **The expiry.** `may_exercise()` is `now < expiry` and `may_reclaim()` is `now >= expiry`. They are exact complements.
 
-Every checked operation maps to `MathOverflow`. There is no rounding rule to choose anywhere in settlement, which is the result of storing the strike as an amount per contract rather than as a price.
+Every checked operation maps to `MathOverflow`. There is no rounding rule to choose anywhere in settlement, because the option stores the amounts that change hands rather than a price.
 
 ## The Invariants: The Vaults Cover the Ledger, and Expiry Separates Exercise From Reclaim
 
@@ -240,7 +236,7 @@ The suite (`tests/test_options.rs`) follows the call from write to collected str
 - Cancel after a sale, and buy after a sale or after expiry.
 - Exercise by anyone but the holder, and collection by anyone but the writer or before an exercise.
 - Reclaim after an exercise, and fee collection by anyone but the admin.
-- The four zero terms, and the overflowing option at write time.
+- The three zero terms.
 
 When you build your own, copy the shape of the two boundary tests: a deadline needs one test that stays inside it and one that steps past it, and `expiry: 0` would have let both directions pass.
 
@@ -253,7 +249,7 @@ The options venue added six concepts:
 - **The option's terms.** A call or a put, a strike, an expiry, and a premium; a writer who keeps the premium and takes on an obligation, and a holder whose loss is capped at the premium.
 - **Full collateralization removes whole categories.** A covered call and a cash-secured put cannot default, so the program needs no margin, no liquidator, and no oracle; everything the *Perpetual Futures* chapter adds is needed only because it lets traders post less than they owe.
 - **Physical settlement needs no price.** The holder's decision replaces the feed, and the program's job is to enforce the terms, not to value them.
-- **Amounts as products, not prices.** Storing the strike as an amount per contract makes every settlement a checked multiplication, with no division and no rounding direction to defend.
+- **Store the amounts that change hands, not a price.** An option that records its underlying and strike amounts settles by moving them, with no arithmetic and no rounding direction to defend.
 - **A ledger for mixed custody.** When one vault holds several parties' tokens, the state account counts what each is owed and every handler asserts the vault still covers it, after the math.
 - **One deadline, compared both ways.** Exercise requires `now < expiry` and reclaim requires `now >= expiry`, so at every moment exactly one of them works, which the tests check from both sides and the Kani model checks cover every timestamp.
 

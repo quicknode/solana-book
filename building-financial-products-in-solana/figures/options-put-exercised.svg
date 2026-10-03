@@ -56,7 +56,7 @@
   <circle cx="160" cy="188.03" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="170" y="187.03" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OPTION" + MARKET'S ADDRESS +</text>
   <text x="170" y="196.03" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS + ID</text>
-  <rect x="152" y="202.03" width="164" height="160" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="152" y="202.03" width="164" height="148" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(160,205.53)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="180" y="216.205" font-size="10.5" font-weight="bold">option</text>
   <line x1="160" y1="223.03" x2="308" y2="223.03" stroke="#888" stroke-width="0.8"/>
@@ -66,11 +66,10 @@
   <text x="160" y="270.03" font-size="9.5">holder: Dave</text>
   <text x="160" y="282.03" font-size="9.5">kind: Put</text>
   <text x="160" y="294.03" font-size="9.5">status: Exercised</text>
-  <text x="160" y="306.03" font-size="9.5">contracts: 5</text>
-  <text x="160" y="318.03" font-size="8.5">underlying_per_contract: 1 NVDAx</text>
-  <text x="160" y="330.03" font-size="8.5">strike_per_contract: 150 USDC</text>
-  <text x="160" y="342.03" font-size="9.5">premium: 20 USDC</text>
-  <text x="160" y="354.03" font-size="9.5">expiry: one week out</text>
+  <text x="160" y="306.03" font-size="9.5">underlying_amount: 5 NVDAx</text>
+  <text x="160" y="318.03" font-size="9.5">strike_amount: 750 USDC</text>
+  <text x="160" y="330.03" font-size="9.5">premium: 20 USDC</text>
+  <text x="160" y="342.03" font-size="9.5">expiry: one week out</text>
   </g>
   <g>
   <circle cx="440" cy="64.67" r="6" fill="#fff" stroke="#111" stroke-width="2"/>

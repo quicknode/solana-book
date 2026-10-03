@@ -68,7 +68,7 @@
   <circle cx="160" cy="265.03" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="170" y="264.03" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OPTION" + MARKET'S ADDRESS +</text>
   <text x="170" y="273.03" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS + ID</text>
-  <rect x="152" y="279.03" width="164" height="160" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="152" y="279.03" width="164" height="148" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(160,282.53)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="180" y="293.205" font-size="10.5" font-weight="bold">option</text>
   <line x1="160" y1="300.03" x2="308" y2="300.03" stroke="#888" stroke-width="0.8"/>
@@ -78,11 +78,10 @@
   <text x="160" y="347.03" font-size="9.5">holder: Bob</text>
   <text x="160" y="359.03" font-size="9.5">kind: Call</text>
   <text x="160" y="371.03" font-size="9.5">status: Held</text>
-  <text x="160" y="383.03" font-size="9.5">contracts: 5</text>
-  <text x="160" y="395.03" font-size="8.5">underlying_per_contract: 1 NVDAx</text>
-  <text x="160" y="407.03" font-size="8.5">strike_per_contract: 180 USDC</text>
-  <text x="160" y="419.03" font-size="9.5">premium: 25 USDC</text>
-  <text x="160" y="431.03" font-size="9.5">expiry: one week out</text>
+  <text x="160" y="383.03" font-size="9.5">underlying_amount: 5 NVDAx</text>
+  <text x="160" y="395.03" font-size="9.5">strike_amount: 900 USDC</text>
+  <text x="160" y="407.03" font-size="9.5">premium: 25 USDC</text>
+  <text x="160" y="419.03" font-size="9.5">expiry: one week out</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="308" y="291.93" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
   <line x1="152" y1="279.03" x2="316" y2="439.03" stroke="#999" stroke-width="1.6"/>
   <line x1="316" y1="279.03" x2="152" y2="439.03" stroke="#999" stroke-width="1.6"/>
