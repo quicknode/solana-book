@@ -278,9 +278,9 @@ const exceptions = [
   /^\[\^stored-address-per-framework\]:/, // the Adversary chapter's one footnote giving each framework's implementation of the check
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
-  /says minor unit, not "base unit\."/, // the glossary teaching the rule itself
-  /call this property-based testing/, // the one pointer to the testing libraries' own term
-  /^Though Kani calls its checks proofs, a model check is not a formal proof\./, // the one sentence that distinguishes the two
+  /says "minor unit," not "base unit\."/, // the glossary teaching the rule itself
+  /call this "property-based testing"/, // the one pointer to the testing libraries' own term
+  /^Though Kani calls its checks "proofs", a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
 

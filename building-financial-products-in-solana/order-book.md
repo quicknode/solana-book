@@ -12,7 +12,7 @@ A **limit order** is an order with a price limit attached. A **bid** says "I wil
 
 The other model for an exchange is the automated market maker, where there are no limit orders and every trade fills immediately against a pooled formula; that is the next chapter. An order book is better at price discovery, because every price on it is a real commitment someone funded. An AMM is better for new assets without much liquidity around them.
 
-One naming note: this design is traditionally called a *central limit* order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network.
+One naming note: this design is traditionally called a "central limit" order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network.
 
 ## Why the Book Is a Tree, Not a List
 
@@ -169,4 +169,4 @@ In the *Constant-Product AMM* chapter we will build a market with no order book.
 
 [^order-book-venues]: [blockworks.com/analytics/solana/solana-spot-dexs](https://blockworks.com/analytics/solana/solana-spot-dexs) ranks Solana's spot venues by volume, order books and AMMs together. In June 2026 Manifest held about a tenth of weekly spot volume, second only to the prop AMM BisonFi and ahead of every other order book. The share moves week to week.
 
-[^manifest-tickless]: [github.com/Bonasa-Tech/manifest](https://github.com/Bonasa-Tech/manifest) is Manifest's source. Its README describes the atomic lot sizes, and asks in its own words whether tickless is a good idea.
+[^manifest-tickless]: [github.com/Bonasa-Tech/manifest](https://github.com/Bonasa-Tech/manifest) is Manifest's source. Its README describes the atomic lot sizes, and asks in its own words whether "tickless" is a good idea.
