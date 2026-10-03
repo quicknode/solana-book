@@ -20,10 +20,10 @@ Every test in this list is quick to write and fast to run. The test runs the com
 A test checks the values you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
-- **Invariant tests** assert a condition that must hold for every value (a round trip creates no value, an index never decreases) against generated values, so the values are no longer only the ones you imagined. The testing libraries call this property-based testing.
+- **Invariant tests** assert a condition that must hold for every value (a round trip creates no value, an index never decreases) against generated values, so the values are no longer only the ones you imagined. The testing libraries call this "property-based testing".
 - **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact values that break it.
 
-Though Kani calls its checks proofs, a model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
+Though Kani calls its checks "proofs", a model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
 
 The escrow program in the companion repository ships Kani harnesses for the parts of it a model checker can reach. Kani marks a harness with `#[kani::proof]`, which is why the crate is called `kani-proofs` and the harnesses are named `proof_*`; each one is a model check:
 

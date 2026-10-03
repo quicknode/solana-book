@@ -12,11 +12,11 @@ Every valuation in this chapter multiplies an amount by a price, and the prices 
 
 ## The Market Owner Opens the Market
 
-Maria runs the market, and her revenue is a cut of the interest, the reserve factor set on every reserve below. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `borrow_accumulation_factor` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single second's interest does not truncate to zero while staying far below u128's maximum. All the math in this program is integer-only: no floats, no fixed-point crates, just u128, a scale constant, and two rounding helpers.
+Maria runs the market, and her revenue is a cut of the interest, the reserve factor set on every reserve below. She runs `initialize_lending_market()` with USDC as the quote currency, then `initialize_reserve()` three times, for USDC, NVDAx, and SPCXx, each with its config and price feed. Each reserve's `borrow_accumulation_factor` starts at exactly 1.0, represented as 10^18 in the program's fixed-point scale, chosen so a single second's interest does not truncate to zero while staying far below u128's maximum. The math needs no fixed-point crates: just u128, a scale constant, and two rounding helpers.
 
 ![](figures/lending-open-market.svg)
 
-Financial state on Solana is accounts, and opening the market created thirteen of them: the market, and for each asset a price feed, a reserve, and the two accounts the reserve owns. The feeds came first, because a reserve is created against its feed.
+Opening the market created thirteen accounts: the market, and for each asset a price feed, a reserve, and the two accounts the reserve owns. The feeds came first, because a reserve is created against its feed.
 
 The **lending market** account (PDA seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
@@ -70,11 +70,11 @@ Carol thinks SpaceX is overvalued and wants to profit if it falls. Her trade is 
 
 Weeks pass, and the loans accrue interest without a single token moving. The mechanism is the **borrow accumulation factor**.
 
-Each reserve stores one number that starts at 1.0 and only grows. On every `refresh_reserve()`, the program computes the current borrow rate, multiplies it by the seconds elapsed, and grows the factor: new factor = old factor × (1 + rate per second × elapsed seconds). Rather than updating every loan, the reserve stores each borrower's `borrowed_principal` and grows the one shared `borrow_accumulation_factor`. A live debt is that principal times the current factor, rounded *up*, because debt rounds against the debtor. No loan is ever visited individually. Tokens move only when people repay or redeem, like the order book's unsettled balances but across time instead of across fills.
+Each reserve stores one number that starts at 1.0 and only grows. On every `refresh_reserve()`, the program computes the current borrow rate, multiplies it by the seconds elapsed, and grows the factor: new factor = old factor × (1 + rate per second × elapsed seconds). The reserve stores each borrower's `borrowed_principal`, and a live debt is that principal times the current factor, rounded *up*, because debt rounds against the debtor. No loan is ever visited individually. Tokens move only when people repay or redeem, like the order book's unsettled balances but across time instead of across fills.
 
 The rate itself comes from a **kinked utilization curve**. Utilization is borrowed ÷ (available + borrowed). Below the kink at 80% utilization, the rate climbs gently from 2% toward 20% APR; above it, steeply toward 150%. Above the kink, when nearly everything is lent out, the rate spikes, which pushes borrowers to repay and pulls new suppliers in with yield.
 
-Those percentages are annual, and the accrual is per second, so the conversion divides by the seconds in a year. The seconds elapsed are the Clock's timestamp minus the one the reserve stored at its last accrual, `last_accrual_timestamp`. Counting seconds rather than slots keeps a borrower's cost to the quoted rate whatever the network's slot length, and the *Time* chapter covers why. Changing the curve with `update_reserve_config()` accrues at the old rates first, so the seconds already elapsed are charged at the rates that applied to them.
+Those percentages are annual, and the accrual is per second, so the conversion divides by the seconds in a year. The seconds elapsed are the Clock's timestamp minus the one the reserve stored at its last accrual, `last_accrual_timestamp`. Changing the curve with `update_reserve_config()` accrues at the old rates first, so the seconds already elapsed are charged at the rates that applied to them.
 
 Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_program_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
 

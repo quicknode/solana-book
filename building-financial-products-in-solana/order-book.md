@@ -12,7 +12,7 @@ A **limit order** is an order with a price limit attached. A **bid** says "I wil
 
 The other model for an exchange is the automated market maker, where there are no limit orders and every trade fills immediately against a pooled formula; that is the next chapter. An order book is better at price discovery, because every price on it is a real commitment someone funded. An AMM is better for new assets without much liquidity around them.
 
-One naming note: this design is traditionally called a *central limit* order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network.
+One naming note: this design is traditionally called a "central limit" order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network.
 
 ## Why the Book Is a Tree, Not a List
 
@@ -38,7 +38,7 @@ Both are set per market, at creation, and cannot change afterward. A tick right 
 
 ![](figures/order-book-initialize-market.svg)
 
-Financial state on Solana is accounts, and opening the market created five of them: one by Maria's client, and four by the handler.
+Opening the market created five accounts: one by Maria's client, and four by the handler.
 
 The **market** account holds one trading pair's configuration: the two mint addresses, the fee in basis points, the tick size, the lot sizes, the minimum order size, an `is_active` flag, and the authority (Maria). It lives at a PDA whose seeds are the string `"market"` plus the two mints, so one base/quote pair maps to one market. The market PDA is also the authority of all three vaults, so tokens leave them only through the program's own instruction handlers.
 
@@ -80,7 +80,7 @@ The planning function, `plan_fills()`, walks the opposite side of the book in pr
 
 The fill executes at **the resting order's posted price**: 250, not Carol's 245. This is the standard order book rule. The maker's posted price is the deal on offer; the taker chose to hit it. Any difference always favors the taker: a taker bid pays less than its limit allowed, and a taker ask, like Carol's, receives more.
 
-One Solana-specific mechanic makes this work: the program cannot load arbitrary accounts mid-instruction, so Carol's transaction must carry the accounts of the makers she will match with, passed as pairs of (order account, market user account) in the order the book would walk them. The program does not trust that list. It plans fills from its own tree, then verifies each supplied pair against the plan: the order IDs must match, the accounts must belong to this market, and each maker order's owner must match its market user. A wrong or missing account fails the transaction with `MakerAccountMismatch`, `MakerOwnerMismatch`, or `MissingMakerAccounts`.
+Carol's transaction must carry the accounts of the makers she will match with, passed as pairs of (order account, market user account) in the order the book would walk them. The program does not trust that list. It plans fills from its own tree, then verifies each supplied pair against the plan: the order IDs must match, the accounts must belong to this market, and each maker order's owner must match its market user. A wrong or missing account fails the transaction with `MakerAccountMismatch`, `MakerOwnerMismatch`, or `MissingMakerAccounts`.
 
 Now the balances change, in the unsettled-balance style. Gross proceeds are 3 × 250 = 750 USDC. Maria's fee is 25 basis points of that: 1.875 USDC, computed with ceiling division so any rounding goes to the market rather than leaking value one minor unit per fill (the fee section below returns to this). Carol's `unsettled_quote` is credited with the net 748.125 USDC. Bob's `unsettled_base` is credited with three shares. The fee moves from the quote vault to the fee vault in a single program-signed transfer at the end, aggregated across all fills in the order. Bob's order account is stamped PartiallyFilled with three of four filled, and the leaf in the bid tree has its remaining quantity reduced to one in place. Carol's order account is stamped Filled; nothing of hers rests.
 
@@ -169,4 +169,4 @@ In the *Constant-Product AMM* chapter we will build a market with no order book.
 
 [^order-book-venues]: [blockworks.com/analytics/solana/solana-spot-dexs](https://blockworks.com/analytics/solana/solana-spot-dexs) ranks Solana's spot venues by volume, order books and AMMs together. In June 2026 Manifest held about a tenth of weekly spot volume, second only to the prop AMM BisonFi and ahead of every other order book. The share moves week to week.
 
-[^manifest-tickless]: [github.com/Bonasa-Tech/manifest](https://github.com/Bonasa-Tech/manifest) is Manifest's source. Its README describes the atomic lot sizes, and asks in its own words whether tickless is a good idea.
+[^manifest-tickless]: [github.com/Bonasa-Tech/manifest](https://github.com/Bonasa-Tech/manifest) is Manifest's source. Its README describes the atomic lot sizes, and asks in its own words whether "tickless" is a good idea.

@@ -31,7 +31,7 @@ Maria operates the AMM and is launching ACME today. She earns twice: an admin sh
 
 Maria runs `initialize_config()` with a fee of 30 basis points and an admin share of 1,667 basis points, about one sixth of each fee, the classic Uniswap-style split. Then `initialize_pool()` for ACME/USDC, which creates the pool config, the LP mint, and the two empty vaults.
 
-Financial state on Solana is accounts, and those two transactions created the venue's five.
+Those two transactions created the venue's five accounts.
 
 The **config** is a singleton account at a PDA (seed `"config"`) holding the `admin`, the trading `fee` in basis points, and the `admin_share_bps`, the slice of each fee that belongs to the admin rather than the LPs. One config per deployed program mirrors how real venues ship.
 
@@ -46,8 +46,6 @@ Empty pools cannot price anything, so Maria seeds it. She believes a fair launch
 Her LP tokens come from the formula the *Arithmetic of Money* chapter described: the **integer square root of X times Y**, computed by `integer_sqrt()`, the program's own Newton's method loop on u128, floored. The square root of 360,000 is exactly 600, so that is her LP position, minus one thing: `MINIMUM_LIQUIDITY`. That is a floor of 100 **minor units** of LP supply (the LP mint has six decimals, so a ten-thousandth of one LP token) that is **never minted to anyone**. It is not sent to a burn address, as Uniswap V2 does; it never exists as supply, while the reserves it represents stay in the pool. Its value is a fraction of a cent. What makes it work is that it is always part of the share supply the pool divides by. Why that floor exists is the inflation-attack defense, covered in the failure modes below.
 
 ![](figures/amm-first-deposit.svg)
-
-> **A square root with no floats.** `integer_sqrt()` is **Newton's method** running on integers: start with a guess, then repeatedly replace it with the average of the guess and the target divided by the guess. The sequence converges on the square root in a few dozen iterations, and the result is floored. Any real-valued function a program needs onchain (roots, exponentials, logs) can be computed the same way, as an integer iteration with a known, bounded error, because floats can never touch funds.
 
 ## Adding Liquidity in Ratio Does Not Move the Price
 
@@ -87,7 +85,7 @@ Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pay
 
 Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had simply held her original tokens in her wallet: a small number at launch scale, and the same number becomes a serious loss once the pool is a million times larger.
 
-That gap is **impermanent loss**, and every LP is exposed to it. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP position profits from trading volume, not from price direction**: if accumulated fees outrun the divergence, LPing wins; if the price moves far in one direction on low volume, holding wins. It is called *impermanent* because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, there would have been no loss.
+That gap is **impermanent loss**, and every LP is exposed to it. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP position profits from trading volume, not from price direction**: if accumulated fees outrun the divergence, LPing wins; if the price moves far in one direction on low volume, holding wins. It is called "impermanent" because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, there would have been no loss.
 
 ![](figures/amm-impermanent-loss.svg)
 

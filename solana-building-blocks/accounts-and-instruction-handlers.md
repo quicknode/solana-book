@@ -10,7 +10,7 @@ Meet Alice. Alice has a **key pair**: two mathematically linked keys. Her **priv
 
 On Solana, as with most blockchains, the public key is also Alice's **address**, the identifier anyone can use to find her and transact with her. Solana public keys are points on a cryptographic curve, so this book draws them as addresses positioned on a curve.
 
-At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called rent) and the fees on her future transactions. Anyone who knows Alice's address can look up her account, see that balance, and send her more SOL. However, nobody can spend Alice's SOL without her private key.
+At Alice's address lives Alice's **account**: some data with an address. Her account holds a small balance of **SOL**, the network's native token, which pays the deposit on the space her account occupies (a mechanism called "rent") and the fees on her future transactions. Anyone who knows Alice's address can look up her account, see that balance, and send her more SOL. However, nobody can spend Alice's SOL without her private key.
 
 ![](figures/alice-on-the-curve.svg)
 

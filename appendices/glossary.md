@@ -202,7 +202,7 @@ The 8 bytes Anchor writes at the start of an account's data identifying its type
 
 ### drain
 
-To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. The word belongs to the attacker. A handler that legitimately moves a vault's whole balance out on its way to closing it empties the vault or pays it out. See the *Adversary* chapter.
+To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. The word belongs to the attacker. A handler that legitimately moves a vault's whole balance out on its way to closing it "empties" the vault or "pays it out". See the *Adversary* chapter.
 
 ### dust
 
@@ -406,7 +406,7 @@ The maker posted the resting order; the taker crossed the spread to hit it. Fill
 
 ### managed fund
 
-The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Several Solana platforms call it a [vault strategy](#vault-strategy). Distinct from a [vault](#vault), which in this book is only ever the token account the deposits sit in. See the *Managed Fund* chapter.
+The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which assets may be held, a [manager](#manager) who sets the allocation, and shares priced against [NAV](#nav-net-asset-value). Some Solana platforms call it a "vault", which in this book is only ever the token account the deposits sit in (see [vault](#vault)). See the *Managed Fund* chapter.
 
 ### manager
 
@@ -438,7 +438,7 @@ Maximal extractable value: profit taken by controlling transaction ordering, mos
 
 ### minor unit
 
-The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC. This book says minor unit, not "base unit."
+The smallest denomination of an asset, and the raw integer programs actually calculate in: the cent, the lamport, the 10^-6 USDC.
 
 ### mint (account)
 
@@ -506,7 +506,7 @@ An overflow in the middle of a calculation whose final answer would have fit: `p
 
 ### physical settlement
 
-Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The name predates blockchains, and nothing about it happens offchain: onchain, physical means the underlying token itself changes hands, where cash settlement moves only a price difference in the quote token. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
+Settling a derivative by moving the asset itself: an exercised call hands the holder the underlying for the strike, and an exercised put hands the writer the underlying for the strike. No price is computed, so no oracle is read. The name predates blockchains, and nothing about it happens offchain: onchain, "physical" means the underlying token itself changes hands, where cash settlement moves only a price difference in the quote token. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
 
 ### PnL (profit and loss)
 
@@ -706,7 +706,7 @@ A time-weighted average price: the average of a market's price over a window, us
 
 ### underlying
 
-The asset an [option](#option) or other derivative is about: what a [call](#call) buys and a [put](#put) sells at the [strike](#strike). It is short for the underlying asset, and every options market uses it as a noun on its own. In the *Options* chapter the underlying is NVDAx and the quote token is USDC.
+The asset an [option](#option) or other derivative is about: what a [call](#call) buys and a [put](#put) sells at the [strike](#strike). It is short for "underlying asset", and every options market uses it as a noun on its own. In the *Options* chapter the underlying is NVDAx and the quote token is USDC.
 
 ### Unix timestamp
 
@@ -724,10 +724,6 @@ A computer running the Solana software: it executes transactions, votes on block
 
 A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a [managed fund](#managed-fund).
 
-### vault strategy
-
-Another name for a [managed fund](#managed-fund), used by several Solana platforms, and the name this book's managed-fund example had before it took the finance term. This book avoids it because a [vault](#vault) here is a token account, not a product. See the *Managed Fund* chapter.
-
 ### wad
 
 A fixed-point convention: values scaled by 10^18, so 1.0 is stored as a 1 followed by eighteen zeros. A common scale for accumulation factors and rate math, though not the only one: Solana programs also use other decimal scales and binary fixed point, so check the format of any number another program produced. The name comes from DappHub's ds-math library, written for MakerDAO in 2017, and is now the usual word for 18-decimal fixed point on every chain, Solana included.
@@ -742,7 +738,7 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 
 ### writer
 
-The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called writing it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
+The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called "writing" it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
 
 ### zero-copy
 
