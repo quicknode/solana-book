@@ -4,9 +4,9 @@ Start with a commercial bank. Savers make deposits and earn interest. Borrowers 
 
 One word is overloaded. This chapter's market trades stocks like NVDAx and SPCXx, which people colloquially call "shares." **In this chapter, a share is a share of a reserve**: a token minted by the program representing your claim on a pool of deposited assets, including the interest it earns. The stocks are just tokens.
 
-## Prices Come In by Signature: The Feed, Freshness, and Slots
+## Prices Come In by Signature: The Price Feed, Freshness, and Slots
 
-Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors the account a price feed network publishes: a signed mantissa, an exponent, and the slot the value was written. In production the account would *be* the network's feed, decoded and verified by the program with the network's own crate, and a production read should also reject prices whose confidence interval is too wide. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` checks that), which keeps the tests deterministic and makes the trust arrangement unusually visible: the program accepts a price because the market owner's private key signed it recently.
+Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors the account a price feed network publishes: a signed mantissa, an exponent, and the slot the value was written. In production the account would *be* the network's price feed, decoded and verified by the program with the network's own crate, and a production read should also reject prices whose confidence interval is too wide. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` checks that), which keeps the tests deterministic and makes the trust arrangement unusually visible: the program accepts a price because the market owner's private key signed it recently.
 
 "Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots makes the reading handler fail with `StalePriceFeed`, slots being the clock the *Time* chapter recommends whenever an adversary running a leader could profit by shifting the time a few seconds. Every handler that values anything requires `refresh_reserve()` and `refresh_obligation()` to have run earlier in the same transaction. A transaction that leaves out the reserve refresh fails with `ReserveStale`, and one that leaves out the obligation refresh fails with `ObligationStale`.
 
@@ -16,7 +16,7 @@ Maria runs the market, and her revenue is a cut of the interest, the reserve fac
 
 ![](figures/lending-open-market.svg)
 
-Opening the market created thirteen accounts: the market, and for each asset a price feed, a reserve, and the two accounts the reserve owns. The feeds came first, because a reserve is created against its feed.
+Opening the market created thirteen accounts: the market, and for each asset a price feed, a reserve, and the two accounts the reserve owns. The price feeds came first, because a reserve is created against its price feed.
 
 The **lending market** account (PDA seeds: `"lending_market"`, a market ID) stores the `owner` (Maria, used only for authorization, never in the address) and the `quote_currency_mint`, the stable asset all values are measured in: USDC. Distinct market IDs give independent, risk-isolated pools.
 
@@ -82,7 +82,7 @@ Of the interest that accrues, the reserve factor (10%) is set aside in `accumula
 
 ## The Shorted Asset Rallies and the Position Becomes Liquidatable
 
-The other thing that moves over time is prices. SPCXx rallies from $250 to $300, and the feed says so. Carol's debt is now 3 × $300 = $900 against $1,000 of collateral, and her liquidation threshold is 80%: $800. Her `borrowed_value` exceeds her `unhealthy_borrow_value`, and the market will now pay anyone to fix that.
+The other thing that moves over time is prices. SPCXx rallies from $250 to $300, and the price feed says so. Carol's debt is now 3 × $300 = $900 against $1,000 of collateral, and her liquidation threshold is 80%: $800. Her `borrowed_value` exceeds her `unhealthy_borrow_value`, and the market will now pay anyone to fix that.
 
 ## A Liquidator Closes the Gap, Twice
 
@@ -149,7 +149,7 @@ The payoff is an invariant the tests can check: the market never loses a minor u
 
 ## The Failure Modes: The Liquidation Engine Is Only as Good as Its Prices
 
-- **A wrong price makes every number wrong.** Every health check multiplies by the feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and lets only the market owner write them (`non_owner_cannot_write_market_price_feed`), but the lesson stands: the liquidation engine can only be as good as its prices. Manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of the *Adversary* chapter dissects Mango Markets).
+- **A wrong price makes every number wrong.** Every health check multiplies by the price feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and lets only the market owner write them (`non_owner_cannot_write_market_price_feed`), but the lesson stands: the liquidation engine can only be as good as its prices. Manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of the *Adversary* chapter dissects Mango Markets).
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
 - **Dangerous configurations are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).

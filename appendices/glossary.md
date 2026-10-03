@@ -194,7 +194,7 @@ The number of minor units in one major unit of a token, declared on the mint. US
 
 ### degenerate value
 
-A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. A constant-product pool multiplies its two reserves to get [K](#k) and refuses any trade that makes K fall. If either reserve is empty, K is zero and that check passes whatever the trade pays out. A price of zero or a negative [mantissa](#mantissa) means a broken feed. An offer with nothing in it passes the usual checks but is worthless. See [invariant](#invariant).
+A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. A constant-product pool multiplies its two reserves to get [K](#k) and refuses any trade that makes K fall. If either reserve is empty, K is zero and that check passes whatever the trade pays out. A price of zero or a negative [mantissa](#mantissa) means a broken price feed. An offer with nothing in it passes the usual checks but is worthless. See [invariant](#invariant).
 
 ### discretization
 
