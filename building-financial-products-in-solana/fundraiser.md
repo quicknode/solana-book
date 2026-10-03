@@ -37,7 +37,7 @@ The handler stamps `time_started` from the cluster clock and stores the duration
 
 Eleven backers fund this raise, each starting with the standard wallet of one SOL and 1,000 USDC, and each with their own reason. Alice runs three cafes and wants Maria's machine on her counters. Bob distributes restaurant equipment and wants a new product line to carry. Carol is an espresso enthusiast who wants one at home badly enough to help it exist. None of them will trust Maria, or each other, with a refund promise. They will trust a program that gives Maria no way to redirect the vault to herself, and whose deployed code is verified to match its published source.
 
-Alice contributes her whole 1,000 USDC. `contribute()` moves the tokens from Alice's own token account into the vault and adds 1,000 to `current_amount`. The program can deduct from Alice's token account because she signed the transaction.
+Alice contributes her whole 1,000 USDC. `contribute()` moves the tokens from Alice's own token account into the vault and adds 1,000 to `current_amount`.
 
 ![](figures/fundraiser-contribute.svg)
 

@@ -4,7 +4,7 @@ A **managed fund** is the onchain equivalent of a mutual fund. A list of approve
 
 In a traditional fund, "the manager cannot run off with client assets" is enforced by custodians, auditors, and courts. Here it is enforced by the program: **the manager can change the allocation and earn the fee, and can do nothing else.** No instruction in the program moves a vault's tokens to the manager.
 
-> **Also called a vault strategy.** Solana platforms often sell this product as a *vault* or a *vault strategy*, and the companion repository called its example `vault-strategy` before it took the finance name. This book uses the finance name because "vault" already means something here. On Solana, a **vault** is a token account owned by a program, and that is how every chapter uses the word. So **the product is the fund, and the token accounts are its vaults.** Nor is it an index fund, though the two look alike: an index fund's weights follow a published index with no manager choosing them, and here a manager chooses them.
+> **Sometimes called a "vault".** Some Solana platforms sell this product as a "vault": Drift Vaults and Kamino's Earn vaults both pool deposits under a manager or curator. This book uses the finance name because every chapter already uses "vault" for a token account owned by a program. So **the product is the fund, and the token accounts are its vaults.** Nor is it an index fund, though the two look alike: an index fund's weights follow a published index with no manager choosing them, and here a manager chooses them.
 
 ## A Curator Decides What Managers May Touch at All
 
@@ -26,7 +26,7 @@ She then runs `add_asset()` twice: TSLAx at 4,000 basis points, NVDAx at 6,000. 
 
 ![](figures/fund-create.svg)
 
-Financial state on Solana is accounts, and Maria's three transactions created the seven the fund needs.
+Maria's three transactions created the seven accounts the fund needs.
 
 The **fund** account (PDA seeds: `"fund"`, an index) records the `manager`, the `registry` it is bound to, its `fee_bps`, `max_slippage_bps` and `rebalance_threshold_bps`, and the `swap_router` it is allowed to trade through. It keeps its running `total_shares` and `total_weight_bps`, the `usdc_decimals` of its USDC mint, and `last_fee_accrual_timestamp` for the fee clock. It also records `usdc_holdings` and `asset_holdings`, the amounts the program has counted into its vaults. The **share mint** lives at a PDA (seeds: `"share_mint"`, the fund) with the fund PDA as mint authority: shares only come into existence when the program's own math says so. The fund PDA is also the authority of a **USDC vault**, which every deposit passes through on its way into the basket.
 

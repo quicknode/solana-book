@@ -35,7 +35,7 @@ The handler validates each parameter against `BASIS_POINTS_DENOMINATOR`, and a s
 
 ![](figures/perps-create-pool.svg)
 
-Financial state on Solana is accounts, and this one transaction created the three the market needs.
+This one transaction created the three accounts the market needs.
 
 The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, and the oracle feed, so one market exists per collateral-and-feed pair. Its struct, `Pool`, carries the risk parameters set at creation (`initial_margin_bps`, `maintenance_margin_bps`, `open_fee_bps`, `close_fee_bps`, `liquidation_fee_bps`, `max_confidence_bps`, `max_price_deviation_bps`, `insurance_fee_bps`, `profit_warmup_slots`, `funding_rate_per_second`) and the live accounting this chapter keeps returning to:
 
@@ -57,7 +57,7 @@ Carol is a liquidity provider. She gains what losing traders lose and pays what 
 
 ## The Price Comes From Outside, So Every Handler Checks It Before Using It
 
-Every trading and liquidity handler begins the same way: read the oracle, validate it, accrue funding, and update the pool's average of the price. The pool records one **oracle feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. The feed carries a price written onchain and signed by the feed network that published it, read with the same five checks the *Prop AMM* chapter ran. In the companion repository the feed is `mock-price-feed`, a program labeled not-for-production whose authority sets the price with `set_price()`, so the tests can move it; the production path is a real feed network's account, decoded and verified with that network's own crate. Either way the program runs five checks on what it reads, in order:
+Every trading and liquidity handler begins the same way: read the oracle, validate it, accrue funding, and update the pool's average of the price. The pool records one **oracle feed** account at creation, the mechanism from the *Offchain Truth* chapter, at production scale. In the companion repository the feed is `mock-price-feed`, a program labeled not-for-production whose authority sets the price with `set_price()`, so the tests can move it; the production path is a real feed network's account, decoded and verified with that network's own crate. Either way the program runs five checks on what it reads, in order:
 
 - the account is long enough to contain a price (`OracleDataTooShort`),
 - the price is positive (`NonPositivePrice`),
@@ -110,7 +110,7 @@ The example documents two simplifications:
 
 Production venues scale the rate with the imbalance and pass each payment from one side straight to the other. They keep this program's bookkeeping: a pool-wide index, and the index value each position recorded when it opened. The test `test_funding_charged_to_long` opens a lone long, lets two thousand seconds pass, and asserts the pool collected exactly the funding the index accrued. To keep every other number in this chapter clean, the walkthrough pool sets the funding rate to zero, as the test suite's default market does.
 
-The rate is quoted per second of wall-clock time, and the index stores the Clock's timestamp at its last advance, so what a position costs per hour is the rate alone, whatever the network's slot length. The rate is fixed when the pool is created: `initialize_pool()` refuses one above `MAX_FUNDING_RATE_PER_SECOND`, 277, just under 0.1% of a position's size per hour, and no handler changes it afterwards. If Maria could change it, she could open a small position on the lighter side from any wallet, raise the rate, and close the position a few seconds later. The pool would pay her that funding out of the liquidity Carol and the other providers deposited. Everyone who opens a position or deposits liquidity has seen the rate, and `test_operator_on_the_lighter_side_earns_only_the_fixed_rate` checks that a wallet on the lighter side earns exactly that rate and no more. The *Time* chapter covers why funding counts seconds and freshness counts slots.
+The rate is quoted per second of wall-clock time, and the index stores the Clock's timestamp at its last advance, so what a position costs per hour is the rate alone, whatever the network's slot length. The rate is fixed when the pool is created: `initialize_pool()` refuses one above `MAX_FUNDING_RATE_PER_SECOND`, 277, just under 0.1% of a position's size per hour, and no handler changes it afterwards. If Maria could change it, she could open a small position on the lighter side from any wallet, raise the rate, and close the position a few seconds later. The pool would pay her that funding out of the liquidity Carol and the other providers deposited. Everyone who opens a position or deposits liquidity has seen the rate, and `test_operator_on_the_lighter_side_earns_only_the_fixed_rate` checks that a wallet on the lighter side earns exactly that rate and no more.
 
 ![](figures/perps-funding-index.svg)
 
@@ -125,7 +125,7 @@ At $115, Bob's equity is 995 − 750 = 245, under the 250 maintenance line. He s
 - Bob is refunded the rest: 195 USDC, plus the rent from his position account, which closes.
 - The LPs absorb the difference between Bob's collateral and what was paid out: 995 − 245 = 750 USDC to `liquidity`.
 
-The pool cannot sell Bob's position; a program never acts on its own, somebody has to call it, so the design pays outsiders to call it at the right moment. Dave is the crank pattern from the *Lending and Borrowing* chapter with a profit motive.
+The pool cannot sell Bob's position itself, so the design pays outsiders to call it at the right moment. Dave is the crank pattern from the *Lending and Borrowing* chapter with a profit motive.
 
 If the price had jumped far enough to take Bob's equity below zero before anyone acted, there would be no equity to pay Dave from. The program follows Percolator here: the part of the fee the equity cannot cover is forgiven, and neither the insurance fund nor the LPs pay it. Anyone may still liquidate the position, and the people losing while it stays open have their own reason to: the loss beyond Bob's collateral, called the **deficit**, is paid from `insurance_fund` first and from the LPs' `liquidity` only after the fund is empty. `test_liquidation_of_bankrupt_position_charges_insurance_before_liquidity` liquidates such a position: Dave receives nothing, the position closes, the insurance fund pays 25 of a 40 USDC deficit, and the LPs bear the other 15.
 

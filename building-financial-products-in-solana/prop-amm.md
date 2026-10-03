@@ -1,6 +1,6 @@
 # Chapter 16: The Prop AMM
 
-The *Constant-Product AMM* chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: *proprietary* trading is trading the firm's own capital.
+The *Constant-Product AMM* chapter ended with the formula as the maker: one multiplication replacing the order book, at the cost of price impact and impermanent loss. This chapter builds the **proprietary AMM**, or prop AMM. A market-making firm funds a pool with its own capital and quotes both sides of it: anyone may buy the base token at the oracle price plus a spread, or sell it at the oracle price minus the spread. There is no curve, there are no liquidity providers, and there are no LP shares. The operator is the only capital in the market, which is the property the name comes from: "proprietary" trading is trading the firm's own capital.
 
 Lifinity pioneered the model on Solana and wound down in December 2025, by which time the firms that followed it had taken most of its flow.[^lifinity-wind-down] By mid-2026 the venues doing that volume were BisonFi, HumidiFi, SolFi, ZeroFi, Tessera, and Obric, trading among the highest volumes on the network.[^prop-amm-share] You have probably never visited any of them, because they have no user interfaces. Their flow arrives through Jupiter, the aggregator that routes each swap to whichever venue quotes best, and a firm quoting live oracle prices with its own inventory usually quotes best. The program lives at `finance/prop-amm` in the companion repository.
 
@@ -21,7 +21,7 @@ Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap 
 
 ![](figures/prop-amm-open-market.svg)
 
-Financial state on Solana is accounts, and this one transaction created the three the venue needs.
+This one transaction created the three accounts the venue needs.
 
 The **market** account lives at a PDA seeded by the two mints: one market per pair, because the deployment *is* the firm; real prop AMMs are closed programs deployed by the firms themselves. The struct holds the operator's public key, the oracle feed and its scale, both fixed at creation, the two token decimals (recorded at creation so the math never trusts a passed-in mint), `spread_bps`, a confidence limit, and a `paused` flag. The market PDA is the authority of the **base vault** and **quote vault**, and the program signs for them with the market's seeds.
 

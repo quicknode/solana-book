@@ -93,7 +93,7 @@ The book keeps changing after you close it. New chapters, corrections, and editi
 
 One project separates reading this book from shipping, and it takes less time than you expect. Pick the smallest product you actually want to exist, for a person you can name. Draw its state machine before you write a handler. Make sure every participant can get their assets out of every state the program can stop in. Write the tests that drive the machine down every path, especially the ones that pay tokens out, and the invariant tests that assert what must never change.
 
-Then get a second (and third) opinion from an expert who did not work on it. Every check in this book's failure-mode sections exists because someone's first opinion missed something, and an auditor hunts the same holes an attacker would, then hands you the list instead of draining the program.
+Then get a second (and third) opinion from an expert who did not work on it.
 
 Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
