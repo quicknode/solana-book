@@ -12,7 +12,7 @@
 
 - [Chapter 2: The Core Building Blocks of Solana](solana-building-blocks/accounts-and-instruction-handlers.md) - keys, accounts, rent, programs, instruction handlers, and atomic transactions
 - [Chapter 3: Tokens](solana-building-blocks/tokens.md)
-- [Chapter 4: PDAs: Where Solana Programs Store Data](solana-building-blocks/pdas.md) - derived addresses, key/value storage, and program custody
+- [Chapter 4: PDAs: How Solana Programs Find Their Data](solana-building-blocks/pdas.md) - derived addresses, key/value storage, and program custody
 - [Chapter 5: Time](solana-building-blocks/time.md)
 
 ### Financial Programming Concepts in Solana

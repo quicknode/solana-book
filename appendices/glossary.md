@@ -460,6 +460,10 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the *Constant-Product AMM* chapter.
 
+### NFT (non-fungible token)
+
+A token that stands for one unique thing, such as a ticket to a particular seat or a property deed: its mint has 0 decimals and a supply of one, and nobody can mint another. See the *Tokens* chapter.
+
 ### notional
 
 The face value of a position, as opposed to the margin posted against it. Five NVDAx at $200 is $1,000 notional whatever the collateral behind it.
