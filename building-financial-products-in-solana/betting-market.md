@@ -1,12 +1,12 @@
 # Chapter 13: The Betting Market
 
-What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, the kind with no bookmaker. Nobody sets odds. The odds *are* the pool: everyone's stakes go into one vault, and when the event resolves, the winners split the losers' stakes in proportion to how much they staked. Payouts are fixed by the pools as they stand when betting closes, not by the odds showing when each bet was placed. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
+What is going to be the top-grossing film this month? You have an opinion, and so does everyone else. This chapter builds the program that lets everyone put money on it: a **parimutuel** betting market, also called pool betting or the tote. Markets that take bets on real-world events are also called prediction markets, though the best-known prediction markets trade outcome shares on an order book rather than pooling stakes. Racetracks have run on this model since the 1870s, because the house never takes a position; it just takes a fee.
 
 The program lives at `finance/betting-market` in the companion repository. Structurally it is the *Escrow* chapter with many parties and one new, serious question: who decides what happened in the real world?
 
 ## Nobody Sets the Odds: The Pool Is the Odds
 
-In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk. All stakes on all outcomes pool together. When the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
+In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, nobody sets odds and the program carries no risk: all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
 **Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
