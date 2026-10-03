@@ -2,7 +2,7 @@
 
 Cory Abdalla is the founder of LivingIP, which tokenizes intellectual property.
 
-Chase Barker runs founder ecosystem growth at the Solana Foundation, and was Solana's first developer advocate.
+Chase Barker runs founder ecosystem growth at the Solana Foundation, and previously led developer relations there.
 
 Francis Endrinal writes Solana Technical Weekly, a newsletter on the engineering work behind Solana.
 
