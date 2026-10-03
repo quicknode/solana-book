@@ -1,8 +1,6 @@
 # Chapter 21: Where to Go From Here
 
-You have built ten programs: an escrow, a fundraiser, a betting market, an order book, two automated market makers, a lending market, a managed fund, an options venue, and a perpetual futures venue. Between them they cover the parts most financial products are built from.
-
-The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those are no longer sales points for a platform. They are materials you can build with.
+The Introduction promised markets that never close, settlement that is atomic and global, one set of accounts that every party reads, rules that run as instruction handlers, fees that ignore the size of the transfer, and distribution that arrives the moment a program is deployed. Those are no longer advocacy points for building on a platform. They are tools you can build with. 
 
 What is left is deciding what to build with them.
 
@@ -12,7 +10,7 @@ You can take a financial product you understand in the real world and lay it out
 
 You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and whether every participant can get their assets out of every state. That is the same checklist an auditor opens with.
 
-You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's tokens.
+You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's assets.
 
 You can reason about who earns what, and why anyone takes part. Every chapter named the operator's incentive and the user's, because a mechanism nobody is paid to run does not run.
 
