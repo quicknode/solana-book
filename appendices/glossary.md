@@ -56,6 +56,10 @@ The address whose signature a particular action requires. A program records the 
 
 A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The *Perpetual Futures* chapter's program uses a [haircut](#haircut) instead.
 
+### base
+
+The first token of a [pair](#pair) written base/quote: NVDAx in NVDAx/USDC. It is the thing bought and sold, and a price on the pair is how many units of the [quote](#quote) buy one unit of the base. Also called the [base token](#base-token).
+
 ### base token
 
 The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. The base pairs against the [quote token](#quote-token), and the naming comes from FX, where a pair is written base/quote (EUR/USD) and the price is how many units of quote buy one unit of base. The word "base" is easy to misread: in that base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base."
@@ -488,6 +492,10 @@ The resting [bids](#bid) and [asks](#ask) for one market, best prices first, plu
 
 A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is [informed](#informed-flow). The *Prop AMM* chapter covers it as a defense against adverse selection.
 
+### pair
+
+Two tokens a market trades against each other, written base/quote with the [base](#base) first and the [quote](#quote) second: NVDAx/USDC. The notation comes from FX, where EUR/USD is the price of one euro in dollars, and it reads the same way here: the price of NVDAx/USDC is how many USDC one NVDAx costs.
+
 ### parimutuel
 
 A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. See the *Betting Market* chapter.
@@ -559,6 +567,10 @@ A [put](#put) bought by someone who already holds the underlying, as insurance a
 ### put
 
 An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer supplies the program with enough of the quote token to buy every share at the strike price, which makes the put a [cash-secured put](#cash-secured-put).
+
+### quote
+
+The second token of a [pair](#pair) written base/quote: USDC in NVDAx/USDC. Prices, payments and fees on the pair are stated in it. Also called the [quote token](#quote-token).
 
 ### quote token
 
