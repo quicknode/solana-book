@@ -189,7 +189,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^clock-catch-up]: A leader writes its own clock's time, moved into the permitted range if it falls outside, in `skew_block_producer_time_nanos` at [github.com/anza-xyz/agave/blob/master/core/src/block_creation_loop.rs](https://github.com/anza-xyz/agave/blob/master/core/src/block_creation_loop.rs). While the timestamp trails, every leader writes the top of the range, which advances it two slot lengths for each slot that passes.
 
-[^skip-turn]: Roger Wattenhofer, head of research at Anza, in an interview with Jacob Creech of the Solana Foundation on Alpenglow, at [youtube.com/watch?v=2RlNav7GiUY](https://www.youtube.com/watch?v=2RlNav7GiUY). The next leader can start as soon as the skips are certified, without waiting out the skipped slots.
+[^skip-turn]: Interview with Roger Wattenhofer, head of research at Anza, on Alpenglow, at [youtube.com/watch?v=2RlNav7GiUY](https://www.youtube.com/watch?v=2RlNav7GiUY). The next leader can start as soon as the skips are certified, without waiting out the skipped slots.
 
 [^standstill]: Wattenhofer, in the same interview, calls this standstill, and gives the 5% as approximate. The waits grow with each turn, so the chain keeps slowing until even a degraded network can deliver a block in time.
 
