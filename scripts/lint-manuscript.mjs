@@ -190,7 +190,7 @@ const rules = [
   // A label that sounds like a term of art and names nothing: say which program,
   // handler, instructions or software is meant.
   [/\bmachinery\b/i, 'name the program, handler or software instead of "the machinery"'],
-  [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction and the glossary)'],
+  [/\bsmart contracts?\b/i, 'say "program" (the only allowed uses are the contrastive mentions in the Introduction, the glossary, and the contract boxout in the Options chapter)'],
   // "protocol" names the network and the programs on it, so it tells a reader
   // neither. That goes for identifiers too: the companion programs name their
   // fees `program_fees`, so a backticked `protocol_...` is a stale name. Only
@@ -278,6 +278,7 @@ const exceptions = [
   /^\[\^stored-address-per-framework\]:/, // the Adversary chapter's one footnote giving each framework's implementation of the check
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
+  /Other chains call a program a "smart contract"/, // the Options chapter's boxout separating an option contract from a program
   /call this "property-based testing"/, // the one pointer to the testing libraries' own term
   /^Though Kani calls its checks "proofs", a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
