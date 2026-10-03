@@ -96,7 +96,7 @@
   <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">check_contributions()</text>
   <text x="472" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refund()</text>
   <text x="472" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_fundraiser()</text>
-  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_contributor()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_contribution()</text>
   </g>
   <!-- the fundraiser PDA: the whole terms sheet -->
   <g>
@@ -114,7 +114,7 @@
   <text x="472" y="315.37" font-size="9.5">time_started: day 0</text>
   <text x="472" y="327.37" font-size="9.5">duration: 7 days</text>
   <text x="472" y="339.37" font-size="9.5">claimed: false</text>
-  <text x="472" y="351.37" font-size="9.5">open_contributor_accounts: 0</text>
+  <text x="472" y="351.37" font-size="9.5">open_contributions: 0</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="267.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <!-- the vault: holds the tokens; the claim checks current_amount, not this balance -->

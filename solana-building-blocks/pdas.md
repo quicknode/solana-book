@@ -17,7 +17,7 @@ These three properties hold for any **program derived address**, or PDA. A PDA i
 **PDAs are how Solana programs find their data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs and gets the same three properties. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
 
 - The escrow stores each offer at an address made from `"offer"` + the maker's address + an ID.
-- The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contributor"` + the fundraiser + the backer's address.
+- The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contribution"` + the fundraiser + the backer's address.
 - The order book stores each market at an address made from `"market"` + the two mints.
 - The lending market stores each borrower's loan file at an address made from `"obligation"` + the market + the borrower's address.
 - The perpetual futures venue stores each position at an address made from `"position"` + the pool + the owner + the side.
