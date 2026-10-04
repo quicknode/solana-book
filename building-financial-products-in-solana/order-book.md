@@ -102,7 +102,7 @@ Traditional exchanges also let a trader shrink a resting order in place and keep
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
-The handler snapshots the unsettled amounts, **zeroes the counters**, and transfers the snapshot, so a second `settle_funds()` finds nothing to pay. If either transfer fails, the whole transaction is undone and the counters keep their values.
+The handler snapshots the unsettled amounts, **zeroes the counters**, and transfers the snapshot, so a user who calls `settle_funds()` again is paid nothing. If either transfer fails, the whole transaction is undone and the counters keep their values.
 
 ![](figures/order-book-settle.svg)
 
