@@ -70,7 +70,7 @@ Traditional funds sell assets to pay the management fee. This program does what 
 
 ## Withdrawing In Kind
 
-Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it transfers to her **her proportional slice of every vault, in kind**. That is her share of the recorded holdings in the USDC vault, the TSLAx vault (about 1.5), and the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count is reduced before any token moves (checks-effects-interactions, as in every chapter), and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
+Alice takes profit with `withdraw()`, burning her 900 shares. The program does not sell anything to pay her: it transfers to her **her proportional slice of every vault, in kind**. That is her share of the recorded holdings in the USDC vault, the TSLAx vault (about 1.5), and the NVDAx vault (about 2.8), each amount floored, each destination account verified to be hers and of the right mint (`InvalidRecipient`). The share count drops by her 900 shares, and her `min_usdc_out` floor protects the USDC leg (`test_withdraw_rejects_slippage`).
 
 She entered with $900, held through NVIDIA's rise, paid Maria 1% by dilution, and left with about $950 of assets. Bob still holds 450 shares, unrealized. Maria holds 13.5 shares, about $14, for managing the fund. Victor took no fee on any of it. What he gained is what his platform depends on: a track record of funds whose managers cannot take the assets.
 

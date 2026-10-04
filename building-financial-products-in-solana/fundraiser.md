@@ -85,7 +85,7 @@ The test `test_stale_contribution_cannot_refund_from_next_raise` runs the attack
 
 Now the other ending: the deadline passes with only 3,600 USDC in the counter, from Alice, Bob, Carol, and Dave, who contributed 800. No handler marks the raise as failed; `refund()` simply starts accepting calls. Alice calls it. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
-The order inside that handler is checks-effects-interactions: the receipt is zeroed and the counter decremented *before* the token transfer. A second refund fails because the receipt it would read has been closed. The escrow closed its offer accounts for the same reason.
+A second refund fails because the receipt it would read has been closed. The escrow closed its offer accounts for the same reason.
 
 ![](figures/fundraiser-refunds.svg)
 

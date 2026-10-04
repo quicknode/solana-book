@@ -93,7 +93,7 @@ The handler checks the terms before it touches a token:
 - **A zero premium** is refused the same way. It would make the option a gift rather than a sale.
 - **An expiry at or before now** is refused (`ExpiryInPast`). The holder may exercise while `now < expiry`, so such an option could never be exercised.
 
-Then the effects come before the transfer, in this order:
+Then, before the transfer, the handler makes these changes in order:
 
 1. The `OptionContract` is written with status `Listed` and an empty holder.
 2. The market's `underlying_owed` rises by 5 NVDAx.

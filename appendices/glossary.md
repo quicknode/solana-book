@@ -112,10 +112,6 @@ Rounding up to the next whole [minor unit](#minor-unit). The direction used for 
 
 Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping).
 
-### checks-effects-interactions
-
-The ordering rule for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the program's state already updated. See the *Adversary* chapter.
-
 ### close factor
 
 In a lending market, the fraction of a debt one liquidation may repay (typically 50%). See the *Lending and Borrowing* chapter.
