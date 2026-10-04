@@ -149,6 +149,11 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="528.37" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="515" y="539.87" font-size="8" font-style="italic" fill="#444">mint authority: the pool</text>
   </g>
+  <!-- the continued area: a second piece of curve, so this public key can sit on it beside its box -->
+  <rect x="2" y="455.000" width="206" height="93.000" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="200" y="469.000" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 10,485.000 Q 116.6,485.000 202,491.750" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="192" cy="491.000" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="8" y="500" width="192" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(16,503.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
