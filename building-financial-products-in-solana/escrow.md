@@ -77,14 +77,15 @@ With the structure verified, the handler code is three small steps:
 
 ### The Taker Takes the Offer
 
-Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: the offer Bob wishes to take is specified by the offer account he provides. Every other account is checked against the offer's stored data; the failure modes below show what each check stops.
+Bob calls `take_offer()`. The offer Bob wishes to take is specified by the offer account he provides, and every other account is checked against the offer's stored data; the failure modes below show what each check stops. Bob also passes the terms he saw when he chose the offer: `minimum_token_a_out`, the least USDC he will accept (250,000,000 minor units), and `maximum_token_b_in`, the most TSLAx he will pay (100,000,000 minor units).
 
 ![](figures/escrow-take-offer.svg)
 
 Alice takes no part in this transaction. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
-The handler code runs two steps:
+The handler code runs three steps:
 
+- **`handle_check_offer_terms()`** refuses the take with `OfferTermsChanged` unless the vault holds at least `minimum_token_a_out` and the offer wants no more than `maximum_token_b_in`. It runs before any token moves.
 - **`handle_send_wanted_tokens_to_maker()`** moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it.
 - **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer PDA, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
 
@@ -111,14 +112,15 @@ The lamport math that remains is rent, under the *State Machines* chapter's rule
 Five things must hold before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account.
-- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until `take_offer()` or `cancel_offer()` runs, and both handlers empty the vault completely before closing it. A direct donation could push the balance above that amount; no check reads the balance, and whatever is in the vault goes to the taker on a take or back to the maker on a cancel.
+- The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until `take_offer()` or `cancel_offer()` runs, and both handlers empty the vault completely before closing it. A direct donation could push the balance above that amount. The only check that reads the balance compares it with the taker's `minimum_token_a_out`, and whatever is in the vault goes to the taker on a take or back to the maker on a cancel.
 - The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
 - Rent returns to whoever paid it, on every path.
 
 ## The Failure Modes: Every Substitution Is Checked
 
-- **Reused offer ID.** The offer account is created at an address derived from the maker and the ID, so a second `make_offer()` with the same ID fails at account creation.
+- **Reused offer ID.** The offer account is created at an address derived from the maker and the ID, so a second `make_offer()` with the same ID fails at account creation while the first offer is open.
+- **A switched offer.** Once an offer closes, its ID is free again, so a maker could change the terms under a taker. Bob sends `take_offer()` for 250 USDC; before it lands, Alice cancels and makes a new offer with the same ID, 1 USDC for the same 1 TSLAx, at the same address. Bob's take then finds the new offer, and fails with `OfferTermsChanged`, because the vault holds less than his `minimum_token_a_out`. `test_take_offer_rejects_switched_offer` runs this attack, and `test_take_offer_rejects_switched_offer_wanting_more_token_b` runs it with a new offer that wants more TSLAx instead.
 - **Account substitution.** The classic escrow attack is a taker who passes the wrong account somewhere and hopes the program does not look. Three versions, and what stops each:
   - **The taker's own account as the maker's payment account.** Bob passes his own TSLAx account as `maker_token_account_b`, so the 1 TSLAx he pays would land back in his own wallet. That account must be Alice's associated token account for token mint B, an address derived from Alice's address and the mint, so Bob's account fails the check and the transaction is rejected before any token moves.
   - **A foreign vault.** Alice has a second offer open, with 500 USDC in its vault. Bob passes the first offer, which asks 1 TSLAx for 250 USDC, together with the second offer's vault, hoping to be paid 500 USDC for his 1 TSLAx. The vault must be the first offer's associated token account for token mint A, derived from that offer's address, so the second vault is rejected. Even without that check the token program would refuse the transfer, because the PDA signing for it is not that vault's authority.
@@ -134,10 +136,11 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 
 - `test_make_offer` calls `make_offer()` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (ID, maker) match what Alice sent.
 - `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Assert both directions of every symmetric flow, as the testing section of the *Operating Financial Software* chapter says; a bug that favors one side is invisible if you assert only the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so checks that no rent ended up with the wrong party.
+- `test_take_offer_rejects_switched_offer` and `test_take_offer_rejects_switched_offer_wanting_more_token_b` cancel and remake the offer between Bob building his take and sending it. Each asserts the take fails with `OfferTermsChanged`, Bob's TSLAx balance is unchanged, and Alice received no TSLAx.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
 
-The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository model-checks the conservation invariants over every possible value, with harnesses like `proof_take_offer_conserves_value` and `proof_cancel_offer_returns_all_to_maker`. The crate models the native version's transfer-and-close arithmetic as pure functions, for the reason the model-checking section of the *Operating Financial Software* chapter gives.
+The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository model-checks the conservation invariants over every possible value, with harnesses like `proof_take_offer_conserves_value`, `proof_take_offer_honors_taker_terms`, and `proof_cancel_offer_returns_all_to_maker`. The crate models the native version's transfer-and-close arithmetic as pure functions, for the reason the model-checking section of the *Operating Financial Software* chapter gives.
 
 ## What You Learnt from Building the Escrow
 
@@ -146,7 +149,7 @@ In traditional finance, an escrow means a trusted third party: a company that ho
 The escrow gave you four concepts:
 
 - **Program custody.** The vault is the offer account's associated token account, and its authority is the offer PDA, so only this program's handlers move what it holds.
-- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler checks its accounts against that stored data.
+- **Terms in a data account.** The offer account records the deal (maker, mints, wanted amount), and every later handler checks its accounts against that stored data. The taker also passes the terms they saw, so a maker who replaces the offer at the same address cannot change the terms under them.
 - **State transitions checked against signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
 - **Every state has a handler that empties the vault.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 

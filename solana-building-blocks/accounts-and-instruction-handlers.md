@@ -75,13 +75,13 @@ The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **la
 
 ## A Transaction's Instructions Succeed or Fail Together
 
-Alice's transaction executes **atomically**: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed."
+Alice's transaction executes **atomically**: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed." One change survives a failure: the transaction fee. The network charges it for processing the transaction, so a transaction that fails still lowers the fee payer's lamport balance.
 
 For financial software, atomicity is a primitive you design with. Inside a transaction there is no settlement risk between steps: 
 
 - the escrow program you're about to build moves Alice's payment and Bob's stock in one atomic unit, and no combination of failures leaves one side paid and the other empty-handed. 
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state
-- A **flash loan**, a crypto-specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
+- A **flash loan**, a crypto-specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. The loan needs no collateral because the transaction is atomic: if the repayment fails, the borrow is unwound with it, so the borrowed tokens are back in the lender's vault at the end of every transaction.
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
@@ -95,11 +95,11 @@ One thing made Alice's transaction valid: before sending it, she signed it with 
 
  You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that private key produces a fresh signature that the card is genuine and issued by your bank.
 
-The signature is also a grant of authority. By signing, Alice authorizes what the transaction does in her name:
+The signature is also a grant of authority, but programs decide what it authorizes. Every account has an **owner program**, the only program that may change it, and the owner program decides whose signature each change needs. By signing, Alice supplies her signature to every one of those checks in the transaction:
 
-- **Debit her accounts.** The `transfer()` handler may move her lamports because the account losing them belongs to a signer.
-- **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
-- **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
+- **Moving her lamports.** The System Program owns the account at Alice's address, and its `transfer()` handler moves lamports out of an account only when the transaction carries that address's signature.
+- **Paying the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
+- **Any change a program lets her signature authorize.** A program that records Alice's address as the authority over one of its accounts, such as a token account holding her tokens, accepts her signature to move or close it. Her signature changes nothing a program does not record her authority over.
 
 Solana calls the address whose signature a particular action requires that action's **authority**. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
@@ -116,7 +116,7 @@ Different authorities in the same program can be given to different addresses.
 
 Alice's account holds a balance and nothing else, and so does Bob's. Her account is the smallest an account gets, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and program data.[^state-compression]
 
-Besides its address, every account records three things a program reads: a lamport balance, some data, and an **owner program**. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program is the one program allowed to change the account, and the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
+Besides its address, every account records three things a program reads: a lamport balance, some data, and its owner program. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program, the only program allowed to change the account, is also the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
 ![](figures/account-dissected.svg)
 
