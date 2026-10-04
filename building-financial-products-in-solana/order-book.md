@@ -72,6 +72,8 @@ Bob wants in, but he is not prepared to pay more than 250. He calls `place_order
 
 ![](figures/order-book-resting-spread.svg)
 
+A trader who wants NVDAx right now pays Alice's 265, and one who wants to sell right now gets Bob's 250, so buying a share and selling it straight back loses 15, the whole spread. None of that goes to Maria. A market maker charges a spread by quoting its own prices, as the *Prop AMM* chapter's does; this exchange quotes nothing, and its only revenue is the fee.
+
 ## A Crossing Ask Fills Against the Resting Bid
 
 Carol also owns NVDAx and also wants out, and she is less patient than Alice: she asks three shares at 245. Her limit is at or below the best bid, so this order crosses.
