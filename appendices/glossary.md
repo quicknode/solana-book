@@ -670,7 +670,7 @@ What a pool quotes for a trade small enough to move nothing: the ratio of its tw
 
 ### spread
 
-The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
+The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee. A trader who buys or sells immediately pays half of it, relative to the midpoint, to the trader whose order was resting.
 
 ### stablecoin
 

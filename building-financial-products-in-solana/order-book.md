@@ -72,6 +72,8 @@ Bob wants in, but he is not prepared to pay more than 250. He calls `place_order
 
 ![](figures/order-book-resting-spread.svg)
 
+The spread is also a price. A trader who wants NVDAx right now pays 265, Alice's ask; one who wants to sell right now gets 250, Bob's bid. Against the **midpoint** of 257.50, buying immediately costs 7.50 more per share and selling immediately returns 7.50 less. None of that goes to Maria. It goes to whoever was resting, as payment for waiting, and her only revenue is the fee.
+
 ## A Crossing Ask Fills Against the Resting Bid
 
 Carol also owns NVDAx and also wants out, and she is less patient than Alice: she asks three shares at 245. Her limit is at or below the best bid, so this order crosses.
