@@ -62,6 +62,8 @@ Every rebalance pays slippage, so a threshold near zero would let anyone trade t
 
 Bob, the second investor, deposits 480 USDC of his standard wallet. He is not early, and the share math prices that in: shares = deposit × total shares ÷ NAV, floored, with the NAV valued from the recorded holdings. With 900 shares outstanding against a $960 NAV, his 480 buys 450 shares, not 480. Alice's early position is not diluted by his arrival, and the test suite checks the fairness directly (`test_deposit_fair_pricing`). His USDC deploys 40/60 at current prices, same as hers, same slippage floor.
 
+![](figures/fund-deposit-bob.svg)
+
 ## The Manager's Fee Arrives by Dilution
 
 Traditional funds sell assets to pay the management fee. This program **mints new shares to the manager** instead, so the fee is paid by diluting every holder proportionally, with no asset ever sold. `collect_fees()` computes shares owed as total shares × fee rate × elapsed time over a year, from the fund's fee clock: at 1% with 1,350 shares outstanding and a year elapsed, 13.5 new shares to Maria. The instruction is deliberately callable by anyone (the fee accrues by time, not by the manager's diligence in claiming it), and the fee rate itself has no setter: it is fixed at fund creation, so the deal investors joined under cannot be worsened. The *Betting Market* chapter stored each event's fee when the event was created, for the same reason.

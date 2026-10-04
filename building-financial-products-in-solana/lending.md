@@ -64,7 +64,11 @@ The second step created Bob's **obligation**, one account per borrower per marke
 
 Carol thinks SpaceX is overvalued and wants to profit if it falls. Her trade is the classic short, and a lending market is where shorts are built: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
+![](figures/lending-short-collateral.svg)
+
 **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
+
+![](figures/lending-short-borrow.svg)
 
 ## Interest: One Index, No Transfers
 
@@ -113,11 +117,25 @@ Some work in a financial product has no natural caller: interest must accrue, ca
 
 ## Repayment, Fees, and Yield: Everyone Settles Up
 
-Five weeks in, Bob no longer needs the cash. His $750 debt has become about $757.50 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about seven and a half dollars, and he never sold his NVIDIA.
+Five weeks in, Bob no longer needs the cash. His $750 debt has become about $757.50 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding).
+
+![](figures/lending-repay.svg)
+
+Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit).
+
+![](figures/lending-withdraw-collateral.svg)
+
+`redeem_reserve_collateral()` then turns the shares back into his five NVDAx. Total cost of five weeks' liquidity: about seven and a half dollars, and he never sold his NVIDIA.
+
+![](figures/lending-redeem-collateral.svg)
 
 Maria runs `collect_program_fees()` whenever she likes and receives the accumulated 10% of interest, about 75 cents (`NothingToCollect` refuses a collection when nothing is owed, and `program_fees_accrue_and_owner_can_collect` covers the flow). Of every dollar of interest Bob paid, ninety cents went to the suppliers, ten to the house.
 
+![](figures/lending-collect-fees.svg)
+
 Alice leaves her SPCXx position in place and takes her USDC yield: `redeem_reserve_collateral()` burns her 1,000 shares for about $1,003.38, her half of the supplier interest, since she supplied half the USDC reserve alongside Carol's collateral deposit.
+
+![](figures/lending-redeem-yield.svg)
 
 The final balances are:
 

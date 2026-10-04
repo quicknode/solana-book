@@ -51,6 +51,8 @@ The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"` and t
 
 Carol is a liquidity provider. She gains what losing traders lose and pays what winning traders win, so she holds whichever side of NVDAx the traders are net against. Funding adds to her return only by the difference between what the heavier side pays the pool and what the pool pays the lighter side. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`: a withheld 1,000 minor units, a tenth of a cent, that no one will ever own. That is the same first-depositor defense the *Constant-Product AMM* chapter built. Both `add_liquidity()` and `remove_liquidity()` count the withheld shares in the supply they divide by, so their slice of the pool stays locked for good, and the failure modes below show the share-inflation attack those withheld shares stop. The *Managed Fund* chapter ignores donations instead.
 
+![](figures/perps-add-liquidity.svg)
+
 Later deposits mint shares priced against **assets under management marked to market**, rather than against the vault balance or `liquidity` alone: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a depositor could buy in cheap the moment traders were winning and dilute Carol at her worst moment. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly.
 
 Eleven more providers follow Carol in over the morning, and the pool opens for trading with 12,000 USDC of liquidity.
@@ -101,6 +103,8 @@ Her transaction ends with the only token movement: 1,000 USDC from Alice's token
 ![](figures/perps-open-position.svg)
 
 Each open creates a **position** account at a PDA with seeds `"position"`, the pool, the owner, and the side (`"long"` or `"short"`), so a trader can hold at most one long and one short per market. The `Position` struct is a snapshot taken at open: `collateral` (net of the open fee), `size` (the notional exposure), `entry_price`, `size_scaled` (size divided by entry price, kept at `SIZE_PRECISION` fixed point), and `entry_funding` (the funding index at entry). Everything the program ever needs to settle the position is derivable from these fields plus the current price, which is what makes settlement **account-local**: closing or liquidating one position touches one position.
+
+![](figures/perps-open-short.svg)
 
 ## Funding Is a Fee the Crowded Side Pays
 
@@ -161,6 +165,8 @@ A profit can only be taken once the position has been open for `profit_warmup_sl
 
 At $120 Alice takes her win. Her position has been open far longer than ten slots. `close_position()` marks it one last time: profit 5,000 × 20 ÷ 100 = 1,000 USDC. Bob's position has been liquidated, so hers is the only one open, and the pool's 12,755 USDC of backing covers her 1,000 profit: `h` is 1. The close fee is 10 basis points of size, 5; her payout is 995 + 1,000 − 5 = **1,990 USDC**. That nearly doubles her stake on a 20% move, which is what 5x leverage means. The LPs' `liquidity` drops by her 1,000 profit, the fee splits between `program_fees` and `insurance_fund`, her position account closes, and the vault pays her out under the pool's signature. A close whose equity cannot cover its own fee fails with `PositionNotHealthy`.
 
+![](figures/perps-close-position.svg)
+
 Here is where everyone ends up:
 
 - **Alice** turned 1,000 into 1,990 by being right with leverage.
@@ -168,6 +174,8 @@ Here is where everyone ends up:
 - **Dave** collected 50 USDC for one well-timed transaction.
 - **Maria**'s `program_fees` holds 7.50, half of the 15 USDC charged on two opens and one close (Bob's liquidation charges no close fee); the other 7.50 is in `insurance_fund`, where it stays. She sweeps it with `collect_fees()`, which pays out what the fee ledger holds and sets it to zero. It is the only handler that needs her signature once the pool exists, and it refuses anyone else (`test_collect_fees_requires_authority`).
 - **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers. From here her return is a twelfth of what the traders who follow leave in the pool: their losses, less their profits, plus the net funding.
+
+![](figures/perps-collect-fees.svg)
 
 ## The Math: One Formula per Concept, Floored or Truncated Toward Zero
 

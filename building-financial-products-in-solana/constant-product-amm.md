@@ -53,6 +53,8 @@ Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, an
 
 X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Deposits grow K without touching the price**; that is the first of K's two ways of growing.
 
+![](figures/amm-alice-deposit.svg)
+
 ## A Buy Moves the Price Along the Curve
 
 Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage check. Three things happen in strict order.
@@ -71,19 +73,27 @@ K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is
 
 Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78.
 
+![](figures/amm-carol-buy.svg)
+
 ## Selling Back Pays the Fee in the Input Token
 
 Bob sells 20 of his 40.7 ACME. A sell is the same instruction with `input_is_token_a` flipped. Now the fee comes off his ACME input (0.06 ACME, of which 0.01 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 55.11 USDC to Bob, an average near $2.76 against the $2.46 he paid. The spot price falls back to about $2.64. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
 
+![](figures/amm-bob-sell.svg)
+
 ## The Admin Sweeps Its Share of the Fees
 
 Whenever she likes, Maria runs `claim_admin_fees()`. It zeroes both owed counters and transfers exactly those amounts from the vaults to her token accounts, signed by the pool config; anyone else is rejected (`test_claim_admin_fees_rejects_non_admin`), and claiming when nothing is owed fails with `NothingToClaim`. One transfer per token, however many swaps accrued it: the same consolidation logic as the order book's unsettled balances.
+
+![](figures/amm-maria-claims.svg)
 
 ## Withdrawing Realizes Impermanent Loss
 
 Alice wants her capital back. `withdraw_liquidity()` pays her a proportional slice of both effective reserves and burns her LP tokens, dividing by the LP supply *plus* `MINIMUM_LIQUIDITY`, the same divisor her deposit was minted against. The locked floor is backed by reserves but absent from the supply counter. Leaving it out here would overpay every withdrawer, and leaving it out of the deposit would underpay every depositor.
 
 Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had held her original tokens in her wallet: a small number at launch scale, and the same number becomes a serious loss once the pool is a million times larger.
+
+![](figures/amm-alice-withdraw.svg)
 
 That gap is **impermanent loss**, and every LP is exposed to it. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP position profits from trading volume, not from price direction**: if accumulated fees outrun the divergence, LPing wins; if the price moves far in one direction on low volume, holding wins. It is called "impermanent" because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, there would have been no loss.
 

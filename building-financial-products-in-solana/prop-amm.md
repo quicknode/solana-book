@@ -27,6 +27,8 @@ The **market** account lives at a PDA with seeds `"market"` and the two mints: o
 
 The market has no LP mint, because there are no depositors to issue receipts to. It has no fee ledger: the spread is the fee, and it stays in the vaults as inventory. And it has no virtual reserves, because pricing never reads the reserves. The *Fundraiser* chapter's program counts contributions in its own `current_amount` field rather than reading the vault balance, because *other people* have claims against the vault that the balance alone cannot express. Here nobody but Maria has a claim on anything, so the vault balances are all the accounting the market needs.
 
+![](figures/prop-amm-deposit-inventory.svg)
+
 Then `deposit_inventory()` moves the 1,000 NVDAx and 200,000 USDC from the operator's token accounts into the vaults. No shares are minted, no deposit is recorded, and no `MINIMUM_LIQUIDITY` is withheld. Every deposit-side defense the *Constant-Product AMM* chapter needed exists to protect depositors from each other, and this market has one depositor.
 
 ## A Buyer Trades at the Ask
@@ -41,6 +43,8 @@ Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the 
 
 The fill is checked against her `minimum_amount_out`, and `InsufficientInventory` would reject the whole trade if the base vault could not cover it: a prop AMM never partially fills and never prices what it cannot deliver.
 
+![](figures/prop-amm-alice-buy.svg)
+
 Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 per token all the same. The *Constant-Product AMM* chapter's Bob paid an average of $2.46 on a $2.25 quote for moving the pool; Alice pays the quote.
 
 ![](figures/prop-amm-curve-vs-quote.svg)
@@ -48,6 +52,8 @@ Had a fund bought 500 NVDAx instead of Alice's 5, it would have paid $165.165 pe
 ## A Seller Trades at the Bid, and the Round Trip Is the Fee
 
 Bob holds 5 NVDAx alongside his standard wallet, and sells them: same instruction, direction `SellBase`. The bid is $165 minus 10 basis points, $164.835, **floored**, the mirror image of the ask's ceiling, and he receives exactly 824.175 USDC.
+
+![](figures/prop-amm-bob-sell.svg)
 
 A round trip costs 1.65 USDC: buying 5 NVDAx cost 825.825 and selling them back returned 824.175. That difference is the round-trip spread, and it is all of the venue's revenue, held in the quote vault rather than in any fee account. The constant-product pool charged 30 basis points and *also* charged price impact; Maria charges 10 each way and nothing else, which is why the aggregator keeps routing to her.
 
@@ -69,6 +75,8 @@ Reading the price has its own cost, though. Between oracle updates, even fresh o
 
 She handles adverse selection with `set_quote()`. When volatility rises, she widens the spread to 50 basis points (the next buyer pays $165.825 per NVDAx). When her own view of the market diverges from the price feed entirely, she sets `paused` and the market rejects every swap with `MarketPaused` until she returns. Watch the real venues during a fast market and you will see this: their quotes vanish from the aggregator and reappear minutes later, wider.
 
+![](figures/prop-amm-set-quote.svg)
+
 The oracle checks in `swap()` pull the quote automatically, for the same reasons Maria pulls it by hand: a price older than 150 slots is refused (`StalePrice`), and one whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`). For every other program in this book the staleness check protects users; for a market maker it protects the firm's own capital.
 
 ## The Firm Chooses Whom It Fills
@@ -80,6 +88,8 @@ Some venues go further and keep a deny list of addresses they will not fill at a
 ## The Market Maker Leaves, Whole
 
 When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no proportional slice, no locked floor, no waterfall. The market account survives, empty, refusing swaps with `InsufficientInventory`, and it holds nobody's tokens, so nothing is stuck in it.
+
+![](figures/prop-amm-withdraw-inventory.svg)
 
 ## The Math: Every Rounding Favors the Market
 

@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 740" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Alice withdraws, and realizes the loss</text>
+  <defs><marker id="amm-alice-withdraw-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
+  <!-- the curve on top: every on-curve address dot sits on it -->
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- untouched by withdraw_liquidity() -->
+  <circle cx="110" cy="34.602" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="110" cy="34.602" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="43.7873" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,47.7873)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="44" y="58.1873" font-size="9.5" font-weight="bold">Maria</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="114.287" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="108.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="34" y="117.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="126.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME MINT</text>
+  <rect x="16" y="132.787" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,136.787)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="147.187" font-size="9.5" font-weight="bold">Maria's ACME</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="191.287" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="185.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="34" y="194.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="203.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="16" y="209.787" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,213.787)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="224.187" font-size="9.5" font-weight="bold">Maria's USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="268.287" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="262.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="34" y="271.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="280.787" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">LP MINT</text>
+  <rect x="16" y="286.787" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,290.787)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="301.187" font-size="9.5" font-weight="bold">Maria's LP</text>
+  </g>
+  <!-- Alice signs the withdrawal -->
+  <g>
+  <circle cx="227" cy="40.296" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="135" y="49.7146" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,53.2146)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="163" y="63.5396" font-size="9.5">Alice (LP)</text>
+  <line x1="143" y1="70.71459999999999" x2="227" y2="70.71459999999999" stroke="#888" stroke-width="0.8"/>
+  <text x="143" y="81.71459999999999" font-size="8.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+  <circle cx="143" cy="108.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="153" y="102.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="153" y="111.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="153" y="120.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME MINT</text>
+  <rect x="135" y="126.715" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,130.215)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="163" y="140.54" font-size="9.5">Alice's ACME</text>
+  <line x1="143" y1="147.715" x2="227" y2="147.715" stroke="#888" stroke-width="0.8"/>
+  <text x="143" y="158.715" font-size="8.5">&#8776; 92.27 ACME</text>
+  </g>
+  <g>
+  <circle cx="143" cy="185.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="153" y="179.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="153" y="188.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="153" y="197.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="135" y="203.715" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,207.215)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="163" y="217.54" font-size="9.5">Alice's USDC</text>
+  <line x1="143" y1="224.715" x2="227" y2="224.715" stroke="#888" stroke-width="0.8"/>
+  <text x="143" y="235.715" font-size="8.5">&#8776; 1,018.96 USDC</text>
+  </g>
+  <g>
+  <circle cx="143" cy="262.215" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="153" y="256.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="153" y="265.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="153" y="274.715" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">LP MINT</text>
+  <rect x="135" y="280.715" width="100" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(143,284.215)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="163" y="294.54" font-size="9.5">Alice's LP</text>
+  <line x1="143" y1="301.715" x2="227" y2="301.715" stroke="#888" stroke-width="0.8"/>
+  <text x="143" y="312.715" font-size="8.5">0 LP</text>
+  </g>
+  <circle cx="342" cy="50.828" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="342" cy="50.828" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="252" y="60.7742" width="98" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(260,64.7742)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="280" y="75.1742" font-size="9.5" font-weight="bold">Bob</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="260" cy="119.274" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="270" y="113.774" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="270" y="122.774" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="270" y="131.774" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="252" y="137.774" width="98" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(260,141.774)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="280" y="152.174" font-size="9.5" font-weight="bold">Bob's USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="260" cy="196.274" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="270" y="190.774" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="270" y="199.774" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="270" y="208.774" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME MINT</text>
+  <rect x="252" y="214.774" width="98" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(260,218.774)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="280" y="229.174" font-size="9.5" font-weight="bold">Bob's ACME</text>
+  </g>
+  <circle cx="459" cy="67.973" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="459" cy="67.973" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="367" y="78.4315" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(375,82.4315)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="395" y="92.8315" font-size="9.5" font-weight="bold">Carol</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="375" cy="136.932" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="385" y="131.432" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
+  <text x="385" y="140.432" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="385" y="149.432" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="367" y="155.432" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(375,159.432)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="395" y="169.832" font-size="9.5" font-weight="bold">Carol's USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="375" cy="213.932" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="385" y="208.432" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
+  <text x="385" y="217.432" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="385" y="226.432" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME MINT</text>
+  <rect x="367" y="232.432" width="100" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(375,236.432)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="395" y="246.832" font-size="9.5" font-weight="bold">Carol's ACME</text>
+  </g>
+  <!-- the program column: withdraw_liquidity() is the step -->
+  <g>
+  <circle cx="624" cy="107.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="480" y="119.37" width="152" height="88" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="508" y="133.195" font-size="9.5">AMM program</text>
+  <line x1="488" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="151.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_config()</text>
+  <text x="488" y="161.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_pool()</text>
+  <text x="488" y="171.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_liquidity()</text>
+  <text x="488" y="181.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">withdraw_liquidity()</text>
+  <text x="488" y="191.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">swap_tokens()</text>
+  <text x="488" y="201.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">claim_admin_fees()</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="488" cy="216.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="220.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONFIG"</text>
+  <rect x="480" y="226.37" width="152" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(488,230.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="508" y="240.77" font-size="9.5" font-weight="bold">config</text>
+  </g>
+  <g>
+  <circle cx="488" cy="304.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="303.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CONFIG'S ADDRESS +</text>
+  <text x="498" y="312.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME &amp; USDC MINTS</text>
+  <rect x="480" y="318.37" width="152" height="71.5" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(488,321.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="508" y="332.195" font-size="9.5">pool config</text>
+  <line x1="488" y1="339.37" x2="624" y2="339.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="350.37" font-size="8.5">mint_a: ACME</text>
+  <text x="488" y="360.87" font-size="8.5">mint_b: USDC</text>
+  <text x="488" y="371.37" font-size="8.5">admin_fees_owed_a: 0</text>
+  <text x="488" y="381.87" font-size="8.5">admin_fees_owed_b: 0</text>
+  </g>
+  <g>
+  <circle cx="488" cy="432.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="431.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">POOL CONFIG +</text>
+  <text x="498" y="440.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + ACME MINT</text>
+  <rect x="480" y="446.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,449.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="508" y="460.195" font-size="9.5">pool_a: the pool's ACME</text>
+  <line x1="488" y1="467.37" x2="624" y2="467.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="478.37" font-size="8.5">&#8776; 369.1 ACME</text>
+  <text x="488" y="490.37" font-size="8" font-style="italic" fill="#444">authority: the pool config</text>
+  </g>
+  <g>
+  <circle cx="488" cy="512.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="511.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">POOL CONFIG +</text>
+  <text x="498" y="520.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
+  <rect x="480" y="526.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,529.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="508" y="540.195" font-size="9.5">pool_b: the pool's USDC</text>
+  <line x1="488" y1="547.37" x2="624" y2="547.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="558.37" font-size="8.5">&#8776; 975.85 USDC</text>
+  <text x="488" y="570.37" font-size="8" font-style="italic" fill="#444">authority: the pool config</text>
+  </g>
+  <g>
+  <circle cx="488" cy="592.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="591.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CONFIG'S ADDRESS + ACME &amp;</text>
+  <text x="498" y="600.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINTS + "LIQUIDITY"</text>
+  <rect x="480" y="606.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,609.87)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="508" y="620.195" font-size="9.5">LP mint</text>
+  <line x1="488" y1="627.37" x2="624" y2="627.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="638.37" font-size="8.5">supply: 599.9999 LP</text>
+  <text x="488" y="650.37" font-size="8" font-style="italic" fill="#444">authority: the pool config</text>
+  </g>
+  <!-- her share of the ACME, vault to account, signed by the pool config -->
+  <path d="M 480,472.37 C 400,472 306,330 267,282 C 257,270 248,258 248,240 L 248,176.715 C 248,158.715 241.5,152.715 235,146.715" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-alice-withdraw-arr)"/>
+  <!-- her share of the USDC -->
+  <path d="M 480,552.37 C 400,560 300.2,464.4 263,426 C 232,394 240,324 240,262 C 240,250 244.5,237.2 243.6,236 L 235,223.715" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-alice-withdraw-arr)"/>
+  <!-- the burn comes last -->
+  <path d="M 222,320.715 C 222,480 223,600 236,620 C 262,660 440,650 474,632.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-alice-withdraw-arr)"/>
+  <rect class="marker" x="328" y="387" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="336" y="398.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <g class="coin" transform="translate(358,395)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="313" y="490" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="321" y="501.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <g class="coin" transform="translate(343,498)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect class="marker" x="192" y="472" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="200" y="483.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <g class="coin" transform="translate(222,480)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="16" y="350" width="200" height="70" fill="#fff" stroke="#888" class="key"/>
+  <rect class="marker" x="24" y="360.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="32" y="372.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+  <text x="50" y="372" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay out 92.27 ACME, a fifth of X</text>
+  <rect class="marker" x="24" y="378.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="32" y="390.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+  <text x="50" y="390" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay out 243.96 USDC, a fifth of Y</text>
+  <rect class="marker" x="24" y="396.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="32" y="408.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
+  <text x="50" y="408" font-size="10.5" font-weight="bold" fill="#1e7a3c">Burn her 150 LP</text>
+  <!-- the divisor counts the floor, and the slice is worth less than holding -->
+  <text x="320" y="686" font-size="9" fill="#444" font-style="italic" text-anchor="middle">150 LP over a divisor of 749.9999 + 0.0001 = 750: a fifth of each effective reserve</text>
+  <text x="320" y="700" font-size="9" fill="#444" font-style="italic" text-anchor="middle">150 &#215; 461.33 &#247; 750 &#8776; 92.27 ACME and 150 &#215; 1,219.81 &#247; 750 &#8776; 243.96 USDC</text>
+  <text x="320" y="714" font-size="9" fill="#444" font-style="italic" text-anchor="middle">at $2.64 that is &#8776; $487.93; the 100 ACME and 225 USDC she deposited would be &#8776; $489.41</text>
+  <text x="16" y="732" font-size="7.5" fill="#444" font-style="italic">not drawn: the ACME and USDC mints; every account that names them does so as a seed</text>
+</svg>
