@@ -69,7 +69,7 @@ Maria runs the venue. Her incentive is a fee of 1% on every premium paid, and he
 - A venue whose underlying and quote are the same token.
 - A fee of 100% or more, which would leave a writer nothing from a sale.
 
-A fee of zero is allowed: a venue run at cost is a valid choice, and `test_zero_fee_venue_pays_the_writer_the_whole_premium` checks that the writer receives all 25 USDC; `buy_option()` skips the fee transfer rather than sending one for zero. Her public key is stored as the market's `admin`, and the only handler that reads it is `collect_fees()`.
+A fee of zero is allowed: a venue run at cost is a valid choice. `test_zero_fee_venue_pays_the_writer_the_whole_premium` checks that the writer receives all 25 USDC and, counting the transaction's inner instructions, that the purchase made one token transfer: `buy_option()` skips the fee transfer rather than sending one for zero. Her public key is stored as the market's `admin`, and the only handler that reads it is `collect_fees()`.
 
 ![](figures/options-open-venue.svg)
 
@@ -135,7 +135,7 @@ Bob calls `buy_option()`. The handler does four things:
 
 The premium is the only payment in the purchase, and it is Alice's from this moment whatever Bob does later. The 5 NVDAx do not move. Bob's downside is fixed at the 25 USDC he just paid, and Alice's upside on the shares is capped at $180 until the week is out.
 
-A writer cannot buy their own option (`test_writer_cannot_buy_their_own_option`): in the Anchor build, the premium's source and destination would be the same associated token account in two mutable slots, which the runtime rejects before the handler runs. A second buyer is refused because the option is no longer `Listed` (`test_buy_is_refused_once_sold`).
+A writer cannot buy their own option. In the Anchor build, the premium's source and destination are each derived as their party's associated token account, so with the writer on both sides the same account would fill two mutable slots. Anchor refuses the instruction with `ConstraintDuplicateMutableAccount` before the handler runs. `test_writer_cannot_buy_their_own_option` asserts that error and that the option is still `Listed`. A second buyer is refused because the option is no longer `Listed` (`test_buy_is_refused_once_sold`).
 
 ## The Holder Exercises Before Expiry, and the Tokens Change Hands
 
@@ -182,7 +182,7 @@ The week passes with NVDAx above $150, and Dave does nothing: selling at 150 whe
 
 ![](figures/options-reclaim.svg)
 
-Carol's return is the 19.80 USDC premium on a purchase that never happened. Dave's insurance cost him 20 USDC and paid nothing.
+Carol's return is the 19.80 USDC premium on a purchase that never happened. Dave's insurance cost him 20 USDC and paid nothing. `test_reclaim_collateral_after_expiry_returns_the_strike_to_the_put_writer` follows this path, from Dave's purchase to the reclaim, and checks that the 750 USDC and the option's rent come back to Carol.
 
 Had NVDAx fallen below $150, Dave would have exercised instead: his 5 NVDAx into the underlying vault, the 750 USDC out to him, and the shares owed to Carol, who would have bought at $150 what the market then sold for less.
 
@@ -220,7 +220,7 @@ Every checked operation on a counter maps to `MathOverflow`; a vault balance tha
 - **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else; no handler moves collateral or a strike payment to the admin under any parameters.
 - **Physical settlement moves exactly the posted terms.** What the writer collects is what the holder paid, and what the holder receives is what the writer posted, to the minor unit, for every option the program would accept.
 
-The companion repository's `kani-proofs` crate model-checks the first, the second, and the last. `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, ends each with a cancel, a reclaim, or an exercise and collection, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` checks the second invariant for every pair of timestamps, and `proof_exercise_moves_exactly_the_posted_terms` checks the last for every option the program would accept.
+The companion repository's `kani-proofs` crate model-checks the first, the second, the fourth, and the last. `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, ends each with a cancel, a reclaim, or an exercise and collection, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` checks the second invariant for every pair of timestamps. `proof_collect_fees_pays_only_the_fees_owed` checks the fourth for every ledger the program could hold: whatever is owed to writers and holders, and whatever surplus sits in the vault beside it, the sweep pays the admin exactly `fees_owed` and leaves nothing for a second sweep to pay. `proof_exercise_moves_exactly_the_posted_terms` checks the last for every option the program would accept.
 
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
@@ -232,13 +232,13 @@ The companion repository's `kani-proofs` crate model-checks the first, the secon
 
 ## Testing Considerations
 
-The suite (`tests/test_options.rs`) follows the put from write to exercise, and the call from purchase to expiry and reclaim, asserting every balance to the minor unit, and the lifecycle tests call the custody check's equality form after every step. Around the happy paths there is one test per refusal:
+The suite (`tests/test_options.rs`) follows the call from write to collected strike and from purchase to expiry and reclaim. It follows the put from write to exercise (`test_put_lifecycle_delivers_the_underlying_for_the_strike`) and from purchase to expiry and reclaim (`test_reclaim_collateral_after_expiry_returns_the_strike_to_the_put_writer`). Every balance is asserted to the minor unit, and the lifecycle tests call the custody check's equality form after every step. The purchase tests also read the transaction's inner instructions back and count the token transfers a buy makes: two with a fee, one without. Around the happy paths there is one test per refusal, and each asserts the error code the refusal fails with, the program's own or Anchor's, rather than only that the transaction failed:
 
 - The expiry boundary, from both sides.
 - Cancel after a sale, and buy after a sale or after expiry.
 - Exercise by anyone but the holder, and collection by anyone but the writer or before an exercise.
-- Reclaim after an exercise, and fee collection by anyone but the admin.
-- The three zero terms.
+- Reclaim after an exercise, fee collection by anyone but the admin, and a second sweep with nothing owed.
+- The three zero terms, and a writer buying their own option.
 
 When you build your own, copy the shape of the two boundary tests: a deadline needs one test one second inside it and one at it. A test that set the deadline to zero would be at the one value where `now < expiry` and `now >= expiry` cannot be told apart.
 
@@ -257,6 +257,6 @@ The options venue added six concepts:
 
 In the *Perpetual Futures* chapter we will relax the collateral rule. Traders post a fraction of their exposure, an oracle values the rest continuously, a haircut pays each winner only as far as the pool can back it, and a liquidator is paid to close what the fraction no longer covers.
 
-[^psyoptions]: PsyOptions ran physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. PsyOptions represented each option series as fungible SPL tokens, one mint per series; this program keeps one account per option instead, for a simpler custody ledger.
+[^psyoptions]: PsyOptions ran physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. It launched on mainnet on 22 August 2021 and was, by its own account, the first options program live there; see [x.com/PsyOptions/status/1436041089518030849](https://x.com/PsyOptions/status/1436041089518030849). PsyOptions represented each option series as fungible SPL tokens, one mint per series; this program keeps one account per option instead, for a simpler custody ledger.
 
-[^zeta]: Zeta Markets ran a margined, cash-settled options venue on Solana until it wound down in May 2025 and became Bullet, a perpetuals exchange. The comparison is between two settlement designs, not two products: a cash-settled venue can offer leverage and needs a price feed to do it, and a physically settled one offers neither.
+[^zeta]: Zeta Markets ran a margined, cash-settled options venue on Solana, later a perpetual futures one, and wound down on 1 May 2025 as its team moved to Bullet, a trading network of its own; see [x.com/ZetaMarkets/status/1908072806765735956](https://x.com/ZetaMarkets/status/1908072806765735956) and [docs.zeta.markets](https://docs.zeta.markets). The comparison is between two settlement designs, not two products: a cash-settled venue can offer leverage and needs a price feed to do it, and a physically settled one offers neither.

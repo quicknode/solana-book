@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 572" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 582" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria opens the market</text>
 <g transform="translate(0,25)">
   <!-- the curve on top: every on-curve address dot sits on it -->
@@ -96,45 +96,47 @@
   <circle cx="488" cy="211.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="498" y="210.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"MARKET" + NVDAX &amp;</text>
   <text x="498" y="219.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT ADDRESSES</text>
-  <rect x="480" y="225.37" width="152" height="148" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="480" y="225.37" width="152" height="172" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(488,228.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="508" y="239.545" font-size="10.5" font-weight="bold">market</text>
   <line x1="488" y1="246.37" x2="624" y2="246.37" stroke="#888" stroke-width="0.8"/>
   <text x="488" y="257.37" font-size="9.5">operator: Maria</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="257.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="488" y="269.37" font-size="9.5">oracle_feed: the NVDAx feed</text>
-  <text x="488" y="281.37" font-size="9.5">oracle_scale: 8 (10^8)</text>
-  <text x="488" y="293.37" font-size="9.5">base_vault: the NVDAx vault</text>
-  <text x="488" y="305.37" font-size="9.5">quote_vault: the USDC vault</text>
-  <text x="488" y="317.37" font-size="9.5">base_decimals: 6</text>
-  <text x="488" y="329.37" font-size="9.5">quote_decimals: 6</text>
-  <text x="488" y="341.37" font-size="9.5">spread_bps: 10</text>
-  <text x="488" y="353.37" font-size="9.5">max_confidence_bps: 100</text>
-  <text x="488" y="365.37" font-size="9.5">paused: false</text>
+  <text x="488" y="281.37" font-size="9.5">price_feed_program:</text>
+  <text x="500" y="293.37" font-size="9.5">mock-price-feed</text>
+  <text x="488" y="305.37" font-size="9.5">oracle_scale: 8 (10^8)</text>
+  <text x="488" y="317.37" font-size="9.5">base_vault: the NVDAx vault</text>
+  <text x="488" y="329.37" font-size="9.5">quote_vault: the USDC vault</text>
+  <text x="488" y="341.37" font-size="9.5">base_decimals: 6</text>
+  <text x="488" y="353.37" font-size="9.5">quote_decimals: 6</text>
+  <text x="488" y="365.37" font-size="9.5">spread_bps: 10</text>
+  <text x="488" y="377.37" font-size="9.5">max_confidence_bps: 100</text>
+  <text x="488" y="389.37" font-size="9.5">paused: false</text>
   </g>
     <g>
-  <circle cx="488" cy="387.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="498" y="386.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BASE_VAULT" +</text>
-  <text x="498" y="395.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET'S ADDRESS</text>
-  <rect x="480" y="401.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(488,404.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="508" y="415.545" font-size="10.5" font-weight="bold">base vault</text>
-  <line x1="488" y1="422.37" x2="624" y2="422.37" stroke="#888" stroke-width="0.8"/>
-  <text x="488" y="433.37" font-size="9.5" fill="#444">0 NVDAx</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="433.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
-  <text x="488" y="445.37" font-size="9" font-style="italic" fill="#444">authority: the market</text>
+  <circle cx="488" cy="411.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="410.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BASE_VAULT" +</text>
+  <text x="498" y="419.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET'S ADDRESS</text>
+  <rect x="480" y="425.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,428.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="508" y="439.545" font-size="10.5" font-weight="bold">base vault</text>
+  <line x1="488" y1="446.37" x2="624" y2="446.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="457.37" font-size="9.5" fill="#444">0 NVDAx</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="457.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="488" y="469.37" font-size="9" font-style="italic" fill="#444">authority: the market</text>
   </g>
   <g>
-  <circle cx="488" cy="467.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="498" y="466.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"QUOTE_VAULT" +</text>
-  <text x="498" y="475.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET'S ADDRESS</text>
-  <rect x="480" y="481.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(488,484.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="508" y="495.545" font-size="10.5" font-weight="bold">quote vault</text>
-  <line x1="488" y1="502.37" x2="624" y2="502.37" stroke="#888" stroke-width="0.8"/>
-  <text x="488" y="513.37" font-size="9.5" fill="#444">0 USDC</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="513.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
-  <text x="488" y="525.37" font-size="9" font-style="italic" fill="#444">authority: the market</text>
+  <circle cx="488" cy="491.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="490.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"QUOTE_VAULT" +</text>
+  <text x="498" y="499.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET'S ADDRESS</text>
+  <rect x="480" y="505.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,508.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="508" y="519.545" font-size="10.5" font-weight="bold">quote vault</text>
+  <line x1="488" y1="526.37" x2="624" y2="526.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="537.37" font-size="9.5" fill="#444">0 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="537.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="488" y="549.37" font-size="9" font-style="italic" fill="#444">authority: the market</text>
   </g>
   <!-- the oracle feed: an account this program only reads -->
   <g>

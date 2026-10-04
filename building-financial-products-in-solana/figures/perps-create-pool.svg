@@ -109,7 +109,7 @@
   <circle cx="515" cy="233.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="525" y="232.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"POOL" + COLLATERAL MINT +</text>
   <text x="525" y="241.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ORACLE FEED ADDRESS</text>
-  <rect x="507" y="247.37" width="125" height="113.5" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="507" y="247.37" width="125" height="134.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(515,250.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="535" y="261.545" font-size="10.5" font-weight="bold">Pool</text>
   <line x1="515" y1="268.37" x2="624" y2="268.37" stroke="#888" stroke-width="0.8"/>
@@ -122,6 +122,8 @@
   <text x="515" y="331.87" font-size="8.5">short_size: 0</text>
   <text x="515" y="342.37" font-size="8.5">cumulative_funding: 0</text>
   <text x="515" y="352.87" font-size="8.5">average_price: $100</text>
+  <text x="515" y="363.37" font-size="8.5">price_feed_program:</text>
+  <text x="527" y="373.87" font-size="8.5">mock-price-feed</text>
   </g>
     <g>
   <circle cx="515" cy="403.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
