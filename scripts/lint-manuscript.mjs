@@ -217,7 +217,7 @@ const rules = [
   // handler's one gate" is "the claim handler compares", "the two exits" is
   // "the claim or a refund", "state is truth" is the field the handler reads.
   // Solana's feature gates are the real term and stay.
-  [/(?<!feature )\bgat(?:e|es|ed|ing)\b/i, 'name the check, the handler, and the error it fails with, not a "gate" (companion AI plugin)'],
+  [/(?<!feature[ -])\bgat(?:e|es|ed|ing)\b/i, 'name the check, the handler, and the error it fails with, not a "gate" (companion AI plugin)'],
   [/\bexits?\b/i, 'name the handler, or say who gets what money out, not an "exit" (companion AI plugin)'],
   [/(?<!offchain[ -])\btruth\b/i, 'name the field the program reads, not "the truth" ("Offchain Truth" is a chapter title) (companion AI plugin)'],
   [/\bby construction\b/i, 'say which code makes it so (companion AI plugin)'],
