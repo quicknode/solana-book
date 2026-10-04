@@ -34,13 +34,14 @@
   <text x="26" y="173.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="26" y="182.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="26" y="191.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
-  <rect x="8" y="197.917" width="105" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="8" y="197.917" width="105" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(16,201.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="36" y="211.742" font-size="9.5">Alice's receipt</text>
   <line x1="16" y1="218.917" x2="105" y2="218.917" stroke="#888" stroke-width="0.8"/>
   <text x="16" y="229.917" font-size="9.5">amount: 0 USDC</text>
-  <line x1="8" y1="197.917" x2="113" y2="237.917" stroke="#999" stroke-width="1.6"/>
-  <line x1="113" y1="197.917" x2="8" y2="237.917" stroke="#999" stroke-width="1.6"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="105" y="241.917" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
+  <line x1="8" y1="197.917" x2="113" y2="249.917" stroke="#999" stroke-width="1.6"/>
+  <line x1="113" y1="197.917" x2="8" y2="249.917" stroke="#999" stroke-width="1.6"/>
   </g>
   <!-- Bob -->
   <g>
@@ -67,13 +68,14 @@
   <text x="138" y="179.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="138" y="188.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="138" y="197.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS</text>
-  <rect x="120" y="203.644" width="99" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="120" y="203.644" width="99" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(128,207.144)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="148" y="217.469" font-size="9.5">Bob's receipt</text>
   <line x1="128" y1="224.644" x2="211" y2="224.644" stroke="#888" stroke-width="0.8"/>
   <text x="128" y="235.644" font-size="9.5">amount: 0 USDC</text>
-  <line x1="120" y1="203.644" x2="219" y2="243.644" stroke="#999" stroke-width="1.6"/>
-  <line x1="219" y1="203.644" x2="120" y2="243.644" stroke="#999" stroke-width="1.6"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="211" y="247.644" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
+  <line x1="120" y1="203.644" x2="219" y2="255.644" stroke="#999" stroke-width="1.6"/>
+  <line x1="219" y1="203.644" x2="120" y2="255.644" stroke="#999" stroke-width="1.6"/>
   </g>
   <!-- Carol -->
   <g>
@@ -100,13 +102,14 @@
   <text x="244" y="190.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="244" y="199.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="244" y="208.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
-  <rect x="226" y="214.062" width="108" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="226" y="214.062" width="108" height="52" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(234,217.562)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="254" y="227.887" font-size="9.5">Carol's receipt</text>
   <line x1="234" y1="235.062" x2="326" y2="235.062" stroke="#888" stroke-width="0.8"/>
   <text x="234" y="246.062" font-size="9.5">amount: 0 USDC</text>
-  <line x1="226" y1="214.062" x2="334" y2="254.062" stroke="#999" stroke-width="1.6"/>
-  <line x1="334" y1="214.062" x2="226" y2="254.062" stroke="#999" stroke-width="1.6"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="326" y="258.062" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
+  <line x1="226" y1="214.062" x2="334" y2="266.062" stroke="#999" stroke-width="1.6"/>
+  <line x1="334" y1="214.062" x2="226" y2="266.062" stroke="#999" stroke-width="1.6"/>
   </g>
   <!-- Maria, the maker -->
   <circle cx="449" cy="66.2063" r="7" fill="#fff"/>
@@ -143,7 +146,7 @@
   <g>
   <circle cx="472" cy="221.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="220.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>
-  <text x="482" y="229.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MAKER'S ADDRESS</text>
+  <text x="482" y="229.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS</text>
   <rect x="464" y="235.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,238.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="249.545" font-size="10.5" font-weight="bold">fundraiser</text>
@@ -184,7 +187,8 @@
   <g class="coin" transform="translate(222,281.39)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <g class="coin" transform="translate(337,281.16)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <text x="16" y="456" font-size="9.5" fill="#444" font-style="italic">day 7 has passed and the target was missed: 3,600 was raised, less refunds</text>
-  <text x="16" y="470" font-size="9.5" fill="#444" font-style="italic">of 1,000, 800 and 1,000; Dave's 800 receipt is still open</text>
+  <text x="16" y="470" font-size="9.5" fill="#444" font-style="italic">of 1,000, 800 and 1,000. Not drawn: Dave's wallet, USDC account</text>
+  <text x="16" y="484" font-size="9.5" fill="#444" font-style="italic">and receipt, which still holds 800 USDC</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="344" y="456" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="460.0" y="470" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>

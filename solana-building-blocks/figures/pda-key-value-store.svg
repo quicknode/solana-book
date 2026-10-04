@@ -41,7 +41,7 @@
 
   <circle cx="342" cy="120" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="352" y="119" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>
-  <text x="352" y="128" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">DAVE'S ADDRESS</text>
+  <text x="352" y="128" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">VICTOR'S ADDRESS</text>
   <rect x="334" y="134" width="290" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(342,137.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="148.175" font-size="10.5" font-weight="bold">fundraiser</text>
@@ -57,7 +57,7 @@
   <g transform="translate(24,229.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="44" y="240.175" font-size="10.5" font-weight="bold">contribution</text>
   <line x1="24" y1="247" x2="298" y2="247" stroke="#888" stroke-width="0.8"/>
-  <text x="24" y="258" font-size="9.5">amount: 900</text>
+  <text x="24" y="258" font-size="9.5">amount: 1,000</text>
 
   <circle cx="342" cy="207.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="352" y="202" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
@@ -67,7 +67,7 @@
   <g transform="translate(342,229.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="362" y="240.175" font-size="10.5" font-weight="bold">contribution</text>
   <line x1="342" y1="247" x2="616" y2="247" stroke="#888" stroke-width="0.8"/>
-  <text x="342" y="258" font-size="9.5">amount: 900</text>
+  <text x="342" y="258" font-size="9.5">amount: 1,000</text>
 
   <circle cx="24" cy="287.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="282" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"MARKET" +</text>
@@ -121,7 +121,7 @@
   <text x="44" y="504.175" font-size="10.5" font-weight="bold">position</text>
   <line x1="24" y1="511" x2="298" y2="511" stroke="#888" stroke-width="0.8"/>
   <text x="24" y="522" font-size="9.5">side: Long</text>
-  <text x="24" y="534" font-size="9.5">collateral: 1,000</text>
+  <text x="24" y="534" font-size="9.5">collateral: 995</text>
 
   <circle cx="342" cy="463" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="352" y="457" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"POSITION" +</text>
@@ -133,7 +133,7 @@
   <text x="362" y="504.175" font-size="10.5" font-weight="bold">position</text>
   <line x1="342" y1="511" x2="616" y2="511" stroke="#888" stroke-width="0.8"/>
   <text x="342" y="522" font-size="9.5">side: Short</text>
-  <text x="342" y="534" font-size="9.5">collateral: 1,000</text>
+  <text x="342" y="534" font-size="9.5">collateral: 995</text>
 
   </g>
 </g>

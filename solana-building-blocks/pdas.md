@@ -1,20 +1,10 @@
 # Chapter 4: PDAs: How Solana Programs Find Their Data
 
-You have been using PDAs since the *Tokens* chapter. Every wallet's token balance in this book lives in an associated token account, and nobody chose that account's address or generated a key pair for it. The address is derived from three seeds, which the wallet computes to put the account in the instruction, and the Associated Token Program recomputes to verify it:
+You have been using PDAs since the *Tokens* chapter: every associated token account in this book is a PDA of the Associated Token Program, derived from three seeds, the owner's address, the token program that manages the mint, and the mint.
 
-- the owner's address
-- the mint
-- the token program that manages the mint
+A **program derived address**, or PDA, is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA, and what "sign" really means gets its own boxout below.
 
-Three things follow from that derivation:
-
-- Anyone can recompute this address, so an app needs only Alice's address and the USDC mint to find her USDC account and pass it to a program.
-- A token account address either derives from Alice's address and the USDC mint or it does not, so a program handed the wrong address can reject it.
-- No private key exists for the result, so nobody can sign as the address itself. Only the program that derived it could, and the Associated Token Program never moves tokens: Alice's USDC leaves only when Alice, the token account's owner, signs.
-
-These three properties hold for any **program derived address**, or PDA. A PDA is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation deliberately produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA, and what "sign" really means gets its own boxout below.
-
-**PDAs are how Solana programs find their data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs and gets the same three properties. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
+**PDAs are how Solana programs find their data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs and gets the same guarantees. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
 
 - The escrow stores each offer at an address made from `"offer"` + the maker's address + an ID.
 - The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contribution"` + the fundraiser + the backer's address.
@@ -25,8 +15,6 @@ These three properties hold for any **program derived address**, or PDA. A PDA i
 ![](figures/pda-key-value-store.svg)
 
 > **"Key" here is the database word.** A key/value store's key is an identifier: the thing a value is looked up by. It has nothing to do with the public and private keys of the last three chapters. A PDA has neither of those, and its seeds are what it is looked up by.
-
-Each of those three properties again, in the general form every chapter of this book uses:
 
 ## Seeds Make Data Findable
 

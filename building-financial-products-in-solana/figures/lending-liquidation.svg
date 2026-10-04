@@ -40,10 +40,11 @@
   <text x="326" y="119.683" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">DAVE'S ADDRESS +</text>
   <text x="326" y="128.683" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
   <text x="326" y="137.683" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SPCXX MINT</text>
-  <rect x="308" y="143.683" width="93" height="24" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="308" y="143.683" width="93" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(316,147.183)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="336" y="157.158" font-size="8.5">Dave's SPCXx</text>
   <line x1="316" y1="164.683" x2="393" y2="164.683" stroke="#888" stroke-width="0.8"/>
+  <text x="316" y="175.683" font-size="8.5" fill="#444">0 SPCXx</text>
   </g>
   <g>
   <circle cx="316" cy="202.183" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -316,7 +317,7 @@
   <text x="388" y="498" font-size="10.5" font-weight="bold" fill="#1e7a3c">Seize 472.50 USDC shares, 5% bonus</text>
   <rect class="marker" x="362" y="504.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="370" y="516.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">4</text>
   <text x="388" y="516" font-size="10.5" font-weight="bold" fill="#1e7a3c">Debt and collateral both fall</text>
-  <text x="16" y="742" font-size="7.5" font-style="italic" fill="#444">not drawn: Maria's USDC, NVDAx and SPCXx accounts and her three share accounts, which this step does not touch</text>
-  <text x="16" y="753" font-size="7.5" font-style="italic" fill="#444">balances and supplies leave out Maria's opening deposit into each reserve,</text>
+  <text x="16" y="742" font-size="7.5" font-style="italic" fill="#444">not drawn: the price feeds and share mints this step reads but does not change, and Maria's USDC, NVDAx and SPCXx accounts</text>
+  <text x="16" y="753" font-size="7.5" font-style="italic" fill="#444">and her three share accounts, which it does not touch; balances and supplies leave out Maria's opening deposit into each reserve,</text>
   <text x="16" y="764" font-size="7.5" font-style="italic" fill="#444">1,001 minor units in and one minor unit of shares out</text>
 </svg>

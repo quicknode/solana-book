@@ -2,7 +2,7 @@
 
 Maria has designed a compact commercial espresso machine, and the factory quoted 9,000 USDC for the first production run. The cost is indivisible: the injection-mold tooling has to be cut whole, so 6,000 USDC buys not two-thirds of a run but nothing at all. She could collect preorder promises by hand and hope enough of them are real, or she could put one rule onchain: **everyone's contribution comes back unless the full target amount is raised**. This chapter's program enforces that rule. It is an all-or-nothing fundraiser, the same promise Kickstarter makes, enforced by code instead of by a company.
 
-The program lives at `finance/fundraiser` in the companion repository. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow locks two strangers' assets until both sides of one deal are ready; a fundraiser locks many strangers' contributions until one shared condition is met. The vault and the PDA that signs for it work the same way, with one addition: a **deadline**.
+The program lives at `finance/fundraiser` in the companion repository, with Anchor 1, Anchor 2, and Quasar versions; this chapter covers the Anchor 1 version, in `anchor-v1`. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow holds two strangers' assets in a vault until both sides of one deal are ready; a fundraiser holds many strangers' contributions in one vault until one shared condition is met. The vault and the PDA that signs for it work the same way, with one addition: a **deadline**.
 
 The program calls the fundraiser's creator the **maker**, Maria here. She wants all-or-nothing because a partial raise is useless to her: 3,600 USDC cannot buy part of a mold. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are rent deposits on the accounts.
 
@@ -10,7 +10,7 @@ The program calls the fundraiser's creator the **maker**, Maria here. She wants 
 
 Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with USDC she is not yet entitled to: until the target is hit, her claim handler refuses to run.
 
-A fundraiser can only end one way. The claim requires the total to have reached the target and a refund requires it not to have, so whichever one the total allows, it rules out the other.
+A fundraiser can only end one way.
 
 ## The Maker Starts the Fundraiser
 
@@ -24,14 +24,14 @@ The **fundraiser** account lives at a PDA with seeds `"fundraiser"` and the make
 
 - `maker` and `mint_to_raise`: who is raising, and in what token, USDC here.[^any-mint]
 - `amount_to_raise`: the target, 9,000 USDC in minor units. `initialize_fundraiser()` rejects a target below three major units with `InvalidAmount`, so a dust-sized raise cannot exist.
-- `current_amount`: the running total the program itself has counted, which is deliberately not the same number as the vault's balance.
+- `current_amount`: the running total the program itself has counted.
 - `time_started` and `duration`: the clock's Unix timestamp at creation, and the window length in days. The program does not store a deadline; it computes one from these two fields.
 - `claimed`: set when Maria claims a successful raise, after which the program accepts no more contributions and no second claim.
 - `open_contributions`: how many backers' receipts, described below, are still open. The fundraiser account cannot close until this is zero.
 
 The **vault** is an associated token account whose authority is the fundraiser PDA, the arrangement the escrow used: tokens sit in an account only the program can sign for.
 
-The handler stamps `time_started` from the cluster clock and stores the duration. Both later handlers reconstruct the deadline the same way: elapsed days are `(now − time_started) / 86,400`, integer division, floored, using the constant `SECONDS_TO_DAYS`. `contribute()` requires the floored day count to be *less than* the duration; `refund()` requires it to be *at least* the duration, so every moment falls in exactly one of the two windows. The switch happens exactly 604,800 seconds (7 × 86,400) after `time_started`: from that second on, `contribute()` fails and `refund()` works.
+The handler stamps `time_started` from the cluster clock and stores the duration. `contribute()`, `refund()` and `close_fundraiser()` each recompute elapsed days from those two fields and compare the count with the duration, as the *Time* chapter explains, so the window closes exactly 604,800 seconds after `time_started`.
 
 ## Every Backer Gets a Receipt
 
@@ -45,7 +45,7 @@ The transaction also created an account for her. Each backer gets a **contributi
 
 So the contributions arrive like this: Alice 1,000, Bob 800, Carol 500 and 500, and eight more backers giving 6,200 between them. Total: exactly 9,000 USDC, from eleven receipts.
 
-The program sets no limit on what one backer may give, and does not stop Maria contributing to her own raise. A per-backer limit would count wallets, and a wallet costs nothing to create, so it would not stop one person funding most of a raise. What the program guarantees is narrower: Maria receives the vault only when the counter shows the full 9,000 USDC, so she never receives the partial raise that cannot buy a mold. Whether she then builds the machine is outside the program, as it is on Kickstarter.
+The program sets no limit on what one backer may give, and does not stop Maria contributing to her own raise (see the boxout *One person, many wallets* below). What the program guarantees is narrower: Maria receives the vault only when the counter shows the full 9,000 USDC, so she never receives the partial raise that cannot buy a mold. Whether she then builds the machine is outside the program, as it is on Kickstarter.
 
 > **One person, many wallets.** A wallet costs nothing to create, so a count of wallets or receipts says nothing about how many people backed a raise: eleven receipts can be eleven people or one. One person posing as many participants is a **Sybil attack**, and a raise that needs distinct backers has to get proof from outside the program that each contributor is a distinct person. Proof-of-personhood services supply it: a person proves once, to the service, that they are a unique human, and a program can then require that proof before it accepts a contribution. VeryAI and World ID are two such services.[^personhood-services] Each delivers its proof to a Solana program differently, and this program checks none of them.
 
@@ -56,8 +56,6 @@ The claim handler compares the target against `current_amount`, the program's ow
 `refund()` decides that a raise failed by reading `current_amount`, so the claim has to read the same number. If the claim read the balance instead, a transfer into the vault could make both handlers accept at once. Suppose 3,600 USDC had come in through `contribute()` and someone transferred 5,400 more straight into the vault. The balance would read 9,000, so the claim would pay all of it to Maria. The counter would still read 3,600, so `refund()` would promise each backer their contribution back, out of a vault that was now empty.
 
 Reading the counter keeps the two endings exclusive: the claim needs the counter at or above the target and a refund needs it below. The test `test_check_contributions_ignores_direct_vault_donations` transfers the full target straight into the vault and asserts that the claim still fails with `TargetNotMet`. Apply the same check to any handler that releases tokens from a vault: compare a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
-
-The counter cannot tell Maria's own contributions from a stranger's. If she contributes through wallets she controls, each contribution is a real one, so the counter moves and the claim can succeed. The boxout *One person, many wallets*, earlier in this chapter, covers that.
 
 ## The Target Is Met: The Maker Claims
 
@@ -71,11 +69,11 @@ The fundraiser account and the empty vault stay open after the claim, because th
 
 Suppose that second raise fails. Alice's receipt from the first raise still reads 1,000 USDC, so `refund()` would pay her 1,000 USDC from the second raise's vault: tokens that the second raise's backers contributed, for a contribution Maria had already been paid. The program prevents this by keeping the fundraiser until `open_contributions` reaches zero, so no receipt can outlive the raise it was written for.
 
-`close_contribution()` closes one receipt after a claim and returns its rent, about a thousandth of a SOL, to the backer it belongs to. It makes one check, that the fundraiser is `claimed`, else `FundraiserNotClaimed`: before the claim a receipt is still a live claim on the vault, and only `refund()` may close it. The backer does not have to sign, because the rent can only go to them, so Maria does not have to wait for eleven backers to come back. She sends a `close_contribution()` for each receipt, and each call subtracts one from `open_contributions`. The tests `test_close_contribution_after_claim_returns_rent` and `test_anyone_can_close_contribution_accounts_after_claim` check that the rent reaches the backer either way.
+`close_contribution()` closes one receipt after a claim and returns its rent, about a thousandth of a SOL, to the backer it belongs to. It makes one check, that the fundraiser is `claimed`, else `FundraiserNotClaimed`: before the claim the vault still owes the backer their receipt's amount, and only `refund()` may close it. The backer does not have to sign, because the rent can only go to them, so Maria does not have to wait for eleven backers to come back. She sends a `close_contribution()` for each receipt, and each call subtracts one from `open_contributions`. The tests `test_close_contribution_after_claim_returns_rent` and `test_anyone_can_close_contribution_accounts_after_claim` check that the rent reaches the backer either way.
 
 ![](figures/fundraiser-close-receipts.svg)
 
-With the counter at zero, Maria calls `close_fundraiser()`. It sends her any tokens transferred into the vault without going through `contribute()`, then closes the vault and the fundraiser and returns both rent deposits to her. While any receipt is open it fails with `ContributionsOpen`, and while the fundraiser account exists a second `initialize_fundraiser()` fails because the account is already there.
+With the counter at zero, Maria calls `close_fundraiser()`. It sends her any tokens transferred into the vault without going through `contribute()`, then closes the vault and the fundraiser and returns both rent deposits to her. While any receipt is open it fails with `ContributionsOpen`.
 
 ![](figures/fundraiser-close.svg)
 
@@ -83,7 +81,7 @@ The test `test_stale_contribution_cannot_refund_from_next_raise` runs the attack
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Now the other ending: the deadline passes with only 3,600 USDC in the counter, from Alice, Bob, Carol, and Dave, who contributed 800. No handler marks the raise as failed; `refund()` simply starts accepting calls. Alice calls it. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Now the other ending: the deadline passes with only 3,600 USDC in the counter, from Alice, Bob, Carol, and Dave, who contributed 800. No handler marks the raise as failed; `refund()` simply starts accepting calls. Alice calls it. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, subtracts one from `open_contributions`, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 A second refund fails because the receipt it would read has been closed. The escrow closed its offer accounts for the same reason.
 
@@ -91,7 +89,7 @@ A second refund fails because the receipt it would read has been closed. The esc
 
 Refunds have no deadline. A backer usually sends their own, but `refund()` does not need their signature: the tokens can only go to the backer's token account and the rent to the backer, whoever sends the transaction. `test_anyone_can_refund_a_contributor` checks that a refund Maria sends still pays the backer.
 
-The fundraiser account and the vault are still open. The fundraiser PDA is derived from `"fundraiser"` and Maria's address alone, so Maria cannot open a second raise while the first one still exists. Once every contribution has been refunded, she calls `close_fundraiser()`. On an unclaimed fundraiser it checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so she cannot close the vault while any backer is still owed). Dave has not come back for his 800 USDC, so Maria sends his refund herself, and then the fundraiser closes. It sends her any tokens that were transferred into the vault without going through `contribute()`, and closes both the vault and the fundraiser, returning her rent. Nothing of the failed raise remains onchain, and Maria can try again next quarter with a smaller target. Every account this program creates is closed on both paths: the receipts close through `refund()` here and through `close_contribution()` after a claim.
+Once every contribution has been refunded, she calls `close_fundraiser()`. On an unclaimed fundraiser it checks the deadline has passed, the target was missed, and the counter is back to zero (`RefundsOutstanding` otherwise, so she cannot close the vault while any backer is still owed). Dave has not come back for his 800 USDC, so Maria sends his refund herself, and then `close_fundraiser()` closes the vault and the fundraiser as it did after the claim. Nothing of the failed raise remains onchain, and Maria can try again next quarter with a smaller target. Every account this program creates is closed on both paths: the receipts close through `refund()` here and through `close_contribution()` after a claim.
 
 ## The Math: Two Minimums and a Floor
 
@@ -118,12 +116,12 @@ Every addition and subtraction on `current_amount`, the receipts and `open_contr
 - **Claiming twice, or contributing after the claim,** fails with `FundraiserClaimed` (checked by `test_second_claim_fails` and `test_contribute_after_claim_fails`).
 - **Refunding early or after a win** fails on the deadline or the counter: `FundraiserNotEnded`, `TargetMet` (checked by `test_refund_before_deadline_fails` and `test_refund_when_target_met_fails`).
 - **Contributing after the deadline** fails with `FundraiserEnded` (checked by `test_contribute_after_deadline_fails`).
-- **Transferring tokens straight into the vault** moves the balance but never the counter, so the claim still fails with `TargetNotMet` (checked by `test_check_contributions_ignores_direct_vault_donations`).
-- **Reusing a receipt in the next raise at the same address** fails because the fundraiser cannot close while a receipt is open: `ContributionsOpen` (checked by `test_stale_contribution_cannot_refund_from_next_raise` and `test_close_fundraiser_with_open_contributions_fails`).
+- **Transferring tokens straight into the vault** leaves the claim failing with `TargetNotMet` (checked by `test_check_contributions_ignores_direct_vault_donations`).
+- **Reusing a receipt in the next raise at the same address** fails because the fundraiser cannot close while a receipt is open: `ContributionsOpen` (checked by `test_close_fundraiser_with_open_contributions_fails`; `test_stale_contribution_cannot_refund_from_next_raise` runs the attack end to end and checks the stale refund fails).
 - **Double refunds** fail because the receipt account is gone.
 - **Dust contributions** fail on the one-major-unit minimum: `ContributionTooSmall`.
 - **Closing the fundraiser early or with contributions inside** fails with `FundraiserNotEnded` before the deadline, `TargetMet` on a raise that met its target but is unclaimed, and `RefundsOutstanding` while any contribution remains unrefunded.
-- **Closing a receipt before the claim** fails because it is still a claim on the vault: `FundraiserNotClaimed` (checked by `test_close_contribution_before_claim_fails`).
+- **Closing a receipt before the claim** fails because the vault still owes it: `FundraiserNotClaimed` (checked by `test_close_contribution_before_claim_fails`).
 
 ## Testing Considerations
 
@@ -140,10 +138,9 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 
 Kickstarter's all-or-nothing promise is a company policy: the platform holds the pledges, takes its cut, and can change campaign rules mid-campaign. This chapter's program enforces the same all-or-nothing outcome in code: no platform, no fee, and terms that cannot change because no handler exists to change them.
 
-The fundraiser added five concepts on top of the escrow's:
+The fundraiser added four concepts on top of the escrow's:
 
-- **A deadline that decides which handlers work.** One floored day-count expression, compared both ways, so contributions and refunds can never both be legal at once.
-- **Checks read the program's counter, not the vault balance.** Make every handler that releases tokens read the same number the program itself wrote, so two handlers can never disagree about which ending happened.
+- **Checks read the program's counter, not the vault balance.** Make every handler that releases tokens read the same number the program itself wrote.
 - **A receipt account per participant**, at a PDA, created on first use, added to on later contributions, and closed on refund, so a second refund finds nothing to read.
 - **An account outlives every account derived from its address.** Count the derived accounts, and refuse to close the parent until the count is zero, so a new account at the same address never inherits the old one's receipts.
 - **Every account has a handler that closes it.** A successful raise leaves the receipts open, so a handler exists to close each one, and anyone may send it because the rent can only go to its backer.

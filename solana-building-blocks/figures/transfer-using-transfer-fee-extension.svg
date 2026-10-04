@@ -11,30 +11,30 @@
   <text x="248" y="102.423" font-size="9" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">transfer_checked()</text>
   <circle cx="24" cy="123.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="118" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
-  <text x="34" y="127" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="34" y="136" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="34" y="127" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN EXTENSIONS PROGRAM +</text>
+  <text x="34" y="136" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME MINT</text>
   <g>
   <rect x="16" y="142" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,145.5)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="44" y="156.175" font-size="10.5" font-weight="bold">Alice's USDC</text>
+  <text x="44" y="156.175" font-size="10.5" font-weight="bold">Alice's ACME</text>
   <line x1="24" y1="163" x2="132" y2="163" stroke="#888" stroke-width="0.8"/>
-  <text x="24" y="174" font-size="9.5">1,000 &#8594; 900 USDC</text>
+  <text x="24" y="174" font-size="9.5">550 &#8594; 450 ACME</text>
   </g>
   <circle cx="508" cy="123.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="518" y="118" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
-  <text x="518" y="127" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="518" y="136" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="518" y="127" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN EXTENSIONS PROGRAM +</text>
+  <text x="518" y="136" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ACME MINT</text>
   <g>
   <rect x="500" y="142" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(508,145.5)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="528" y="156.175" font-size="10.5" font-weight="bold">Bob's USDC</text>
+  <text x="528" y="156.175" font-size="10.5" font-weight="bold">Bob's ACME</text>
   <line x1="508" y1="163" x2="616" y2="163" stroke="#888" stroke-width="0.8"/>
-  <text x="508" y="174" font-size="9.5">300 &#8594; 399 USDC</text>
+  <text x="508" y="174" font-size="9.5">0 &#8594; 99 ACME</text>
   </g>
   <path d="M 144,162 L 496,162" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#transfer-ext-a)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="295.42" y="148.87" font-size="11" fill="#1e7a3c" font-weight="bold">100 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="295.42" y="148.87" font-size="11" fill="#1e7a3c" font-weight="bold">100 ACME</text>
   <path d="M 400,114.423 L 400,156" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-g)"/>
-  <text x="320" y="196" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint's transfer fee withholds 1 USDC for the issuer</text>
-  <text x="320" y="222" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">100 USDC was sent and 99 USDC arrived</text>
+  <text x="320" y="196" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint's transfer fee withholds 1 ACME for the issuer</text>
+  <text x="320" y="222" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">100 ACME was sent and 99 ACME arrived</text>
   <g class="coin" transform="translate(320,162)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

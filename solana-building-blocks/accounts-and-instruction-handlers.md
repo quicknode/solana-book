@@ -16,7 +16,7 @@ At Alice's address lives Alice's **account**: some data with an address. Her acc
 
 This figure is the first example of how this book shows people, programs and data on Solana. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. The figures never label those dots, because the dot's place on the curve already says it. Later you will see addresses drawn *off* the curve, listed instead with the **seeds** (the inputs) they were derived from; those have no private key.
 
-> **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be billions of times the age of the universe. When this book says an address "belongs" to Alice, it means Alice has generated a key pair that nobody else will ever generate, and that only Alice has the private key.
+> **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number on the order of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be about a hundred times the age of the universe. When this book says an address "belongs" to Alice, it means Alice has generated a key pair that nobody else will ever generate, and that only Alice has the private key.
 
 A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Without its apps and branding, a saved wallet is small: a keypair file on disk, like the `id.json` file the Solana CLI creates, is an array of 64 numbers, the bytes of the two keys. Whoever has those bytes *is* that wallet.
 
@@ -34,11 +34,11 @@ The curve in the figure is labeled **Solana devnet**, because there is more than
 
 There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a particular proposed network feature. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
 
-Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which Solana cluster software the Solana SDK uses to read, write, and deploy to.
+Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which cluster the Solana SDK reads from, writes to, and deploys to.
 
-The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several. We, and most benchmarks, would also say it's the best! 
+The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
-Alice's SOL is devnet SOL: think of it as the paper banknotes from a board game: they feel real inside the game but buy nothing outside it. Devnet tokens cost nothing: devnet SOL, devnet USDC and other devnet tokens are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs mainnet tokens to work through.
+Alice's SOL is devnet SOL: think of it as the paper banknotes from a board game: they feel real inside the game but buy nothing outside it. Devnet SOL and devnet USDC are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs mainnet tokens to work through.
 
 ## Receiving Doesn't Need A Signature, Spending Does
 
@@ -57,8 +57,6 @@ A transaction carries one or more **instructions**, and each instruction is inpu
 - The programs in this book are deployed the same way, so each gets a public key of its own the day you deploy it.
 
 ![](figures/programs-on-the-curve.svg)
-
-Every instruction names which of the program's **instruction handlers** to run, the accounts the handler may touch, and the arguments. 
 
 > **An instruction and an instruction handler are two different things.** They are the two halves of every call, and each has its own name:
 >
@@ -89,11 +87,11 @@ Whole categories of arbitrage and liquidation strategies exist only because tran
 
 ![](figures/atomic-transaction.svg)
 
-The budget for work done by instructions is metered in **compute units** per transaction, and you pay for CUs directly. It is why the order book exchange later in this book credits balances instead of making one transfer per fill, so all those funds can be collected later in a single step, and why the programs in this book consolidate work wherever they can.
+The budget for work done by instructions is metered in **compute units** per transaction, and a transaction that asks for more of them pays a higher priority fee. It is why the order book in the *Order Book Exchange* chapter credits each fill to a balance instead of making one transfer per fill, so a trader collects every fill's tokens in a single transfer. The programs in this book consolidate work wherever they can for the same reason.
 
 ## Every Transaction Is Signed
 
-One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature is cryptographic proof that the holder of whatever private key matches this public key authorized this exact transaction, not a similar one and not an edited one. Anyone can use Alice's public key to verify a signature that claims to be from Alice.
+One thing made Alice's transaction valid: before sending it, she signed it with her private key. The signature covers this exact transaction, not a similar one and not an edited one, and anyone can use Alice's public key to verify it.
 
  You already use digital signatures daily: your bank card has a private key on its chip, and every time you tap, that private key produces a fresh signature that the card is genuine and issued by your bank.
 
@@ -103,9 +101,7 @@ The signature is also a grant of authority. By signing, Alice authorizes what th
 - **Pay the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
 - **Let the programs it invokes change her accounts** in whatever way the instructions specify: create them, write to them, or close them.
 
-The transfer could debit Alice's account because she signed the transaction that carried it. It is also why Bob's balance rose without Bob doing anything, because receiving requires no signature from the recipient, while nothing will ever leave his account until a transaction *he* signs asks for it.
-
-Solana uses the word **authority** for a particular action granted to whoever can sign for an address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
+Solana calls the address whose signature a particular action requires that action's **authority**. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
 - A token's **mint authority** is the only address that may create new supply of it.
 - That token's **freeze authority** is the only address that may freeze a holder's account.
@@ -118,9 +114,7 @@ Different authorities in the same program can be given to different accounts.
 
 ## Accounts Store Data, Not Just SOL
 
-Alice's account holds a balance and nothing else, and so does Bob's. That is the smallest an account gets. An account is just some data with an address, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and program data.[^state-compression] 
-
-> Solana accounts can store any data, not just balances like accounts in traditional finance.
+Alice's account holds a balance and nothing else, and so does Bob's. Her account is the smallest an account gets, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and program data.[^state-compression]
 
 Besides its address, every account records three things: a lamport balance, some data, and an **owner program**. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program is the one program allowed to change the account, and the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
@@ -138,7 +132,7 @@ Every account sits at a 32-byte **address**, usually shown base58-encoded. Addre
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
 - **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds. You'll learn more about these in the *PDAs* chapter. Since PDA addresses aren't public keys, they don't have private keys. 
-- **Built-in addresses.** The System Program, the sysvars, and the few other programs built into the validator itself sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `11111111111111111111111111111111` is the System Program, `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads. Other programs, the token programs among them, are deployed from key pairs like the programs in this book, so their addresses are public keys even when they start with a memorable prefix. Some of these byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them.
+- **Built-in addresses.** The System Program, the sysvars, and the few other programs built into the validator itself sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `11111111111111111111111111111111` is the System Program, `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads. Some of the built-in byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them. Other programs, the token programs among them, are deployed from key pairs like the programs in this book, so their addresses are public keys even when they start with a memorable prefix.
 
 ![](figures/address-types.svg)
 
@@ -148,15 +142,15 @@ A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dol
 
 SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the *Tokens* chapter covers mints properly.
 
-Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own. The one holding a given wallet's balance of a given token sits at an address anyone can derive from the two. Bob does not need to ask Alice where her USDC lives. Bob's wallet computes where Alice's USDC account must be, and sends the tokens there. The *Tokens* chapter covers token accounts properly.
+Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own, at an address Bob's wallet can compute from Alice's address and the mint; the *Tokens* chapter covers token accounts.
 
-So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, and like a lamport amount it is an integer of minor units. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 975 to 1,000 with no signature from her.
+So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer_checked()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, and like a lamport amount it is an integer of minor units. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 1,000 to 1,025 with no signature from her.
 
 ![](figures/bobs-usdc-transaction.svg)
 
 ## Instructions Supply the Accounts, Instruction Handlers Check Them
 
-Bob's transfer instruction names every account it touches: Bob's USDC account, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence applies to every program in this book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify. The Token Program did exactly that when it checked that the debited account was Bob's. The validation section of the *Adversary* chapter covers this in more detail.
+Bob's transfer instruction names every account it touches: Bob's USDC account, the USDC mint, Alice's USDC account, and Bob as the signing owner. Every instruction declares its accounts like this, which is what lets the runtime execute non-overlapping transactions in parallel. One consequence applies to every program in this book: programs do not look accounts up. Instructions supply the accounts as arguments, and instruction handlers check them, because every account specified in an instruction is a claim to verify, as the Token Program did with Bob's account above. The validation section of the *Adversary* chapter covers this in more detail.
 
 ## What You Learnt
 
@@ -167,7 +161,7 @@ Two payments introduced every building block the rest of the book uses:
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
 - Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
-- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no private key, where the deriving program "signs" by presenting the seeds; and **built-in addresses**, chosen rather than computed, with neither a private key nor seeds.
+- Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no private key; and **built-in addresses**, chosen rather than computed, with neither a private key nor seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
 
 [^faucets]: The `solana airdrop` command sends devnet SOL, as does the faucet at [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana). Circle's faucet at [faucet.circle.com](https://faucet.circle.com) does the same for devnet USDC.

@@ -1,6 +1,6 @@
 # Chapter 3: Tokens
 
-Assets on Solana are **tokens**, and every token is defined by a mint account and held in token accounts (accounts formatted in a particular way to hold token balances), both managed by a token program. Every asset in this book is a token: 
+Assets on Solana are **tokens**, held in token accounts (accounts formatted in a particular way to hold token balances) that a token program manages. Every asset in this book is a token: 
 
 - stablecoins like USDC and USDT
 - equities like NVDAx, SPCXx, and TSLAx[^tokenized-equity-volume]
@@ -18,15 +18,15 @@ Each kind of token is defined by its own **mint account**.
 
 A mint is not itself a token: it is the account a token comes from, and no amount of anything is held in the mint.
 
-Two tokens are the same asset if they come from the same mint address, and different assets if they do not. Anyone can create a mint whose name and symbol say "USDC", so the mint address identifies the asset and the name and symbol do not. When this book says "USDC" or "NVDAx", the thing that identifies that asset onchain is a mint account. Instruction handlers are given account addresses as arguments, and must check that any mint account address matches the expected value, so that the asset is the one it claims to be. 
+Two tokens are the same asset if they come from the same mint address, and different assets if they do not. Anyone can create a mint whose name and symbol say "USDC", so the mint address identifies the asset and the name and symbol do not. Instruction handlers are given account addresses as arguments, and must check that any mint account address matches the expected value, so that the asset is the one it claims to be. 
 
 ## A Mint Is a Factory, and the Mint Authority Is Its Boss
 
-A mint does not just describe a type of token; it manufactures it. New tokens come into existence when, and only when, the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler, the supply counter rises and the new tokens land in a token account. Burning does the reverse. Nothing else in the system can create or destroy a single unit.
+A mint does not just describe a type of token; it manufactures it. New tokens come into existence only when the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler. The supply counter rises and the new tokens land in a token account. A holder burns their own tokens with `burn()`, and the supply falls. Nothing else in the system can create or destroy a single unit.
 
-As well as the current total supply, the mint account also stores the token's decimals (how many minor units are in a major unit), and its authorities. 
+As well as the current total supply, the mint account also stores the token's decimals (the number of decimal places in a major unit: 6 for USDC, so a dollar is 1,000,000 minor units), and its authorities. 
 
-The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
+The **mint authority** is the boss of that factory. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which caps the supply forever: no more can ever be minted. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
 A token can also stand for one unique thing. Give the mint 0 decimals, mint a single unit, and make sure nobody can mint another: the result is a **non-fungible token**, or NFT, and the one token account holding it records who owns that thing. It could be a ticket to a particular seat, a property deed, or a bond certificate with its own serial number. So each NFT has a mint of its own: a collection of 10,000 NFTs made this way is 10,000 mints, not one mint that issued 10,000 tokens.
 
@@ -40,23 +40,21 @@ A **token account** holds one owner's balance of a particular type of token, and
 - the account owner
 - how much of the token that owner has
 
-> **A token account's "owner" is not its owner program.** Every account has an owner program, and for a token account that is always the token program: the only program that can change its bytes. The **owner** recorded in a token account's data is something else: the address that can move its tokens. Alice is the owner of her USDC account, and the Token Program moves USDC out of it only when Alice signs (or a **delegate** she has approved, up to the amount she approved). Solana's own tools use "owner" for both. In this book, when an address "owns" a token account or "holds" its tokens, it means the second: that address is the token account's owner, and its signature is what moves the tokens.
+> **A token account's "owner" is not its owner program.** Every account has an owner program, and for a token account that is always the token program: the only program that can change its bytes. The **owner** recorded in a token account's data is something else: the address that can move its tokens. Alice is the owner of her USDC account, and the Token Program moves USDC out of it only when Alice signs (or a **delegate** she has approved, up to the amount she approved). Solana's own tools use "owner" for both. In this book, when an address "owns" a token account or "holds" its tokens, it means the second: that address is the token account's owner, and its signature is what moves the tokens. The figures label this field `authority`, because a program's vault is owned by a PDA and the book calls that PDA the vault's authority.
 
-The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the mint, and token program used for that token mint. Put in Alice's address and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a wallet finds Alice's USDC account from nothing but her address, and how account constraints can verify that a token account an instruction supplies really is hers.
+The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the token program that manages the mint, and the mint. Put in Alice's address and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a wallet finds Alice's USDC account from nothing but her address, and how account constraints can verify that a token account an instruction supplies really is hers.
 
 An ATA lives at a **PDA**: a derived address that sits off the curve, with no private key, so no signature for the address itself can ever exist. That does not stop Alice spending her USDC: she is the token account's owner, and her signature is what moves it. The *PDAs* chapter explains the mechanism.
 
-![](figures/token-accounts-and-atas.svg)
+![](figures/token-accounts-off-the-curve.svg)
 
 Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are token accounts at PDAs of the program itself (the order book's three vaults are derived from the market). The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
 
-![](figures/token-accounts-off-the-curve.svg)
-
-In this book, an address drawn **off** the curve is shown with the seeds its address was derived from (for an ATA: the owner's address, the token program, and the mint). 
+![](figures/token-accounts-and-atas.svg)
 
 ## Decimals Define the Minor Unit
 
-The mint's **decimals** set the **minor unit**, the raw integers that programs use to calculate and transfer assets: USDC has 6 decimals, so $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
+The mint's **decimals** set the **minor unit**, the raw integers that programs use to calculate and transfer assets: with USDC's 6 decimals, $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
 
 ## The Freeze Authority Can Freeze Any Holder's Account
 
@@ -64,14 +62,14 @@ The mint's other authority is the **freeze authority**, which can freeze and tha
 
 ## Two Token Programs: Classic and Token Extensions
 
-Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core instructions and accounts, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every account in one transaction uses the same token program. Every program in this book works that way.
+Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core instructions and accounts, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every token account in one instruction uses the same token program. Every program in this book works that way.
 
 The table lists the extensions that matter for financial products:
 
 | Extension | What it does | What it means for your program |
 | --- | --- | --- |
 | **transfer fees** | A cut is withheld on every transfer, for the issuer to collect | Send 100 and 99 arrives: "I transferred X" no longer delivers X |
-| **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (the ordering section of the *Adversary* chapter takes this seriously) |
+| **transfer hooks** | A program of the issuer's choosing runs on every transfer | Enables allowlists, and means a transfer can execute foreign code (a hook cannot call back into your program; the *Adversary* chapter's ordering section says why) |
 | **confidential transfers** | Amounts are hidden onchain | Balances are visible only to the parties and whoever holds the auditor's private key |
 | **permanent delegate** | An authority can move any holder's tokens | A seizure power some regulated assets require |
 | **interest-bearing** | A rate is stored in the mint | Balances display accrual without the supply changing |

@@ -95,7 +95,7 @@
   <g>
   <circle cx="472" cy="221.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="220.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>
-  <text x="482" y="229.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MAKER'S ADDRESS</text>
+  <text x="482" y="229.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS</text>
   <rect x="464" y="235.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,238.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="249.545" font-size="10.5" font-weight="bold">fundraiser</text>
@@ -108,6 +108,7 @@
   <text x="472" y="327.37" font-size="9.5">duration: 7 days</text>
   <text x="472" y="339.37" font-size="9.5">claimed: true</text>
   <text x="472" y="351.37" font-size="9.5">open_contributions: 0</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="271.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
   <line x1="464" y1="235.37" x2="632" y2="359.37" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="235.37" x2="464" y2="359.37" stroke="#999" stroke-width="1.6"/>
   </g>
@@ -123,6 +124,7 @@
   <line x1="472" y1="417.37" x2="624" y2="417.37" stroke="#888" stroke-width="0.8"/>
   <text x="472" y="428.37" font-size="9.5">0 USDC</text>
   <text x="472" y="440.37" font-size="9" font-style="italic" fill="#444">authority: the fundraiser PDA</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="429.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
   <line x1="464" y1="396.37" x2="632" y2="448.37" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="396.37" x2="464" y2="448.37" stroke="#999" stroke-width="1.6"/>
   </g>
