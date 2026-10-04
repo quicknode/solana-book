@@ -91,11 +91,11 @@
   <g transform="translate(424,208.9)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="444" y="219.575" font-size="10.5" font-weight="bold">offer account</text>
   <line x1="424" y1="226.4" x2="624" y2="226.4" stroke="#888" stroke-width="0.8"/>
-  <text x="424" y="237.4" font-size="9.5">maker: Alice</text>
-  <text x="424" y="249.4" font-size="9.5">token_mint_a: USDC</text>
-  <text x="424" y="261.4" font-size="9.5">token_mint_b: TSLAx</text>
-  <text x="424" y="273.4" font-size="9.5">token_b_wanted_amount: 100,000,000</text>
-  <text x="424" y="285.4" font-size="9.5">bump: 254</text>
+  <text x="424" y="237.4" font-size="9.5">id: 1</text>
+  <text x="424" y="249.4" font-size="9.5">maker: Alice</text>
+  <text x="424" y="261.4" font-size="9.5">token_mint_a: USDC</text>
+  <text x="424" y="273.4" font-size="9.5">token_mint_b: TSLAx</text>
+  <text x="424" y="285.4" font-size="9.5">token_b_wanted_amount: 100,000,000</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="241.9" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
   <line x1="416" y1="205.4" x2="632" y2="293.4" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="205.4" x2="416" y2="293.4" stroke="#999" stroke-width="1.6"/>

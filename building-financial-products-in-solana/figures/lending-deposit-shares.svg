@@ -55,8 +55,8 @@
   <text x="32" y="210.635" font-size="8.5">USDC shares</text>
   <line x1="12" y1="218.16" x2="89" y2="218.16" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="229.16" font-size="8.5" fill="#444">1,000 shares</text>
+  <text x="89" y="229.16" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
-  <text x="8" y="262" font-size="8" fill="#444" font-style="italic">her USDC share account is new</text>
   <circle cx="190" cy="38" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="190" cy="38" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
