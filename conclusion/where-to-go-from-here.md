@@ -8,7 +8,16 @@ What is left is deciding what to build with them.
 
 You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it ten times.
 
-You can read somebody else's program and ask the right questions: which accounts are validated and which are trusted, who holds the authorities, what freezes at entry, and whether every participant can get their assets out of every state. An auditor starts with the same questions and goes much further.
+You can read somebody else's program and ask the right questions:
+
+- Which accounts does it check, and which does it trust?
+- Who holds each authority, and what can they move?
+- Which terms are fixed when someone joins, and which can change under them?
+- What happens at the edges: an empty pool, a zero amount, the last second before a deadline?
+- Which way does each division round, and can any multiplication overflow?
+- Can every participant get their assets out of every state?
+
+An auditor starts with the same questions and goes much further.
 
 You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's assets.
 
