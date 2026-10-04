@@ -167,7 +167,7 @@ The order book added six concepts on top of the escrow's:
 - **Vault separation plus stored-address checks.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep users' balances and the market's fees apart.
 - **A full book evicts its worst order.** Account space is finite, so a side that refused every order once full would let anyone with the capital to fill it keep every new order off it. Eviction replaces the order least likely to fill with a better one, refunding it as a cancel would.
 
-In the *Constant-Product AMM* chapter we will build a market with no order book. Two vaults hold the pair of tokens, and a formula sets the price from their balances, so anyone can trade at any time without waiting for a counterparty to post an order. You will see what the people who fill the vaults earn for it, and what it costs them.
+In the *Constant-Product AMM* chapter we will build a market with no order book. Two vaults hold the pair of tokens, and a formula sets the price from their balances, so anyone can trade at any time without waiting for a counterparty to post an order. The people who fill the vaults earn a fee on every trade, and that chapter calculates impermanent loss, the cost the fee compensates them for.
 
 [^order-book-venues]: [blockworks.com/analytics/solana/solana-spot-dexs](https://blockworks.com/analytics/solana/solana-spot-dexs) ranks Solana's spot venues by volume, order books and AMMs together. In June 2026 Manifest held about a tenth of weekly spot volume, second only to the prop AMM BisonFi and ahead of every other order book. The share moves week to week.
 

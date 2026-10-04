@@ -11,7 +11,7 @@ This chapter builds a parimutuel market. The program lives at `finance/betting-m
 
 In a parimutuel market, all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, based on the size of each winner's stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
-**Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
+**Parimutuel winnings are proportional to stake.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
 ![](figures/betting-parimutuel-pools.svg)
 

@@ -1,6 +1,6 @@
 # Chapter 15: The Constant-Product AMM
 
-The *Order Book Exchange* chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee is compensation for a loss, and the chapter puts a number on it.
+The *Order Book Exchange* chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee compensates them for impermanent loss, the amount by which providing liquidity falls behind simply holding the same tokens when the price moves, and this chapter calculates it.
 
 AMMs work where order books do not: tokens without much trading volume, where a taker might wait forever for a matching maker. So they are the standard venue for new token launches, and this chapter follows one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 

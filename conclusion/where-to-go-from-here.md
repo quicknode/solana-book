@@ -56,7 +56,7 @@ Products of this kind have been shipped already, several of them with real users
 
 **Spending against your shares instead of selling them.** Someone holding NVDAx who needs two thousand dollars can sell, ending a position they wanted to keep and in many countries creating a tax bill, or borrow against it and keep it. The second option is the *Lending and Borrowing* chapter in full: shares as collateral, a price from a price feed as covered in the *Offchain Truth* chapter, and a liquidation path when the collateral falls. Around it sits a card, a spending limit, and a warning that arrives long before a liquidator does.
 
-**A pot your friends collect when you skip a week.** Five friends stake fifty USDC each at the start of the month, and whoever misses their target forfeits a share to the ones who did not. That is the parimutuel pool of the *Betting Market* chapter: stakes in a vault, one settlement, winners split the pot, with the fact of who actually ran arriving the way every offchain fact does. Money in the pot is the oldest motivation device there is, and people go for a run when it is their own fifty at stake.
+**A pot your friends collect when you skip a week.** Five friends stake fifty USDC each at the start of the month, and whoever misses their target forfeits a share to the ones who did not. That is the parimutuel pool of the *Betting Market* chapter: stakes in a vault, one settlement, winners split the pot. Who actually ran is an offchain fact, signed by someone the program trusts, as the *Offchain Truth* chapter covers. Money in the pot is the oldest motivation device there is, and people go for a run when it is their own fifty at stake.
 
 **A savings club with no bookkeeper.** Everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, under a different name in each country.[^rosca-scope] It is a tanda in Mexico, a susu in West Africa and the Caribbean, a hui in China and Vietnam, and a chit fund in India. Economists call all of them a rotating savings and credit association, or ROSCA. The failure a program removes is the organizer holding the pot between rounds. Contributions to a vault, the rotation as a state machine, the schedule against the clock as covered in the *Time* chapter, and the *Escrow* chapter's custody pattern underneath.
 
@@ -86,13 +86,15 @@ The better ideas are in the places where the programs exist and no product has s
 
 Some things were left out on purpose.
 
-**Reward distribution** got no chapter of its own, though you have already met the whole of it. The accumulation factor in the lending market and the proportional payout of the parimutuel pool are the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up.
+**The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and this book has built ten of them.
+
+**Ecosystem projects** already do several jobs a financial product needs that this book did not build. There are projects for proof of personhood, multisig wallets to hold upgrade and admin authority, services that convert between bank deposits and stablecoins, and crank turners that call your maintenance handlers on a schedule. Each has its own coding conventions and technology, so learn each one from its own documentation. The *Fundraiser* chapter covers why a product would check personhood, the *Operating Financial Software* chapter why upgrade authority belongs to a multisig, and the *Lending and Borrowing* chapter what a crank does.
+
+**Reward distribution** got no chapter of its own, because the book already builds it twice. The accumulation factor in the *Lending and Borrowing* chapter and the proportional payout in the *Betting Market* chapter are the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up.
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
 **Governance** is deliberately absent. Most programs here have an operator with a private key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that private key with a voting process is a separate design problem.
-
-**The interface** is the easiest thing this book left out. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that is ordinary application development, with libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it real care. The hard part of this work is the program, and you have already built it.
 
 The book keeps changing after you close it. New chapters, corrections, and editions are announced at @QuicknodeSolana on X, which is also the fastest way to ask a question or suggest what the next edition should cover.[^follow-quicknode-solana]
 
@@ -102,9 +104,9 @@ One project separates reading this book from shipping, and it takes less time th
 
 Then get a second (and third) opinion from an expert who did not work on it.
 
-Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
+Find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
-Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the financial app they would use without ever wondering what it runs on.
 
 
 [^remittance-corridors]: The Introduction's note on remittance costs gives the corridors where a rate this high applies, and the World Bank source for them.

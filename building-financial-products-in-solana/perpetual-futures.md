@@ -164,7 +164,8 @@ Here is where everyone ends up:
 - **Bob** turned 1,000 into 195 by being wrong and slow.
 - **Dave** collected 50 USDC for one well-timed transaction.
 - **Maria**'s `program_fees` holds 7.50, half of the 15 USDC charged on two opens and one close (Bob's liquidation charges no close fee); the other 7.50 is in `insurance_fund`, where it stays. She sweeps it with `collect_fees()`, which pays out what the fee ledger holds and sets it to zero. It is the only handler that needs her signature once the pool exists, and it refuses anyone else (`test_collect_fees_requires_authority`).
-- **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers. Her next twelfth comes from the traders who follow: their losses, less their profits, plus the net funding.
+- **Carol** owns a twelfth of the pool, which absorbed Bob's 750 loss and paid Alice's 1,000 profit: down 250 on the trading, about 21 dollars of it hers. From here her return is a twelfth of what the traders who follow leave in the pool: their losses, less their profits, plus the net funding.
+
 ## The Math: One Formula per Concept, All Floored in the Pool's Favor
 
 Every calculation is checked u128 integer arithmetic, multiply before divide, and every division rounds in the pool's favor: `basis_points_of()` floors fees and margin thresholds, share minting and withdrawal amounts floor against AUM, and PnL truncates toward zero. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the compute per transaction constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price, so AUM, and with it LP share pricing and solvency, computes in constant time forever.

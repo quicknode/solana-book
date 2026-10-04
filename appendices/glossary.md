@@ -122,7 +122,7 @@ In a lending market, the fraction of a debt one liquidation may repay (typically
 
 ### cluster
 
-One running instance of Solana: the same software, a separate world.
+One running instance of Solana: the same software, with its own separate set of accounts.
 
 - **Mainnet** holds real value.
 - **Devnet** runs the same software as mainnet, with free, valueless tokens, for building and testing.
@@ -206,7 +206,7 @@ The 8 bytes Anchor writes at the start of an account's data identifying its type
 
 ### drain
 
-To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. The word belongs to the attacker. A handler that legitimately moves a vault's whole balance out on its way to closing it "empties" the vault or "pays it out". See the *Adversary* chapter.
+To empty an account by an attack: a vault, a pool, or a user's balance taken through a hole in the program rather than along a path its code intended. This book uses the word only for an attack. A handler that legitimately moves a vault's whole balance out on its way to closing it "empties" the vault or "pays it out". See the *Adversary* chapter.
 
 ### dust
 
@@ -471,6 +471,14 @@ The face value of a position, as opposed to the margin posted against it. Five N
 ### obligation
 
 A borrower's loan file in a lending market: their collateral deposits, their borrows, and the cached valuations health checks run against.
+
+### offchain
+
+Outside the blockchain: a bank balance, a match result, a price on an exchange. An offchain fact reaches a program signed by someone the program trusts. The opposite is [onchain](#onchain). See the *Offchain Truth* chapter.
+
+### onchain
+
+Stored or executed on the blockchain itself: an account's data, a program's code, a transaction's effects. The opposite is [offchain](#offchain). Spelled as one word, like "online"; "on‑chain" will look as dated as "on‑line" does now.
 
 ### open interest
 
@@ -758,7 +766,7 @@ What a plain `+` or `*` does in a Rust release build when the result is too big 
 
 ### writer
 
-The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called "writing" it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer supplies the whole of that obligation to the program before the option can be sold. Compare [holder](#holder).
+The party who creates an [option](#option) and sells the right it carries. In finance terminology, creating an option is called "writing" it. The writer receives the [premium](#premium) and takes on the obligation to sell (a [call](#call)) or buy (a [put](#put)) at the strike if the holder exercises. In the *Options* chapter a writer deposits everything they may have to deliver with the program before the option can be sold. Compare [holder](#holder).
 
 ### zero-copy
 
