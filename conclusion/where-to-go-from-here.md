@@ -95,9 +95,9 @@ One project separates reading this book from shipping, and it takes less time th
 
 Then get a second (and third) opinion from an expert who did not work on it.
 
-Deploy to localnet, find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
+Find out how it holds up on devnet, and when you and your third-party auditors are satisfied, deploy to mainnet.
 
-Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the thing they would use without ever wondering what it runs on.
+Ten programs in, choosing what problem to solve is the hard part. Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the financial app they would use without ever wondering what it runs on.
 
 
 [^remittance-corridors]: The Introduction's note on remittance costs gives the corridors where a rate this high applies, and the World Bank source for them.
