@@ -500,6 +500,10 @@ const wordinessRules = [
   [/\bapproximately\b/i, 'say "about"'],
   [/\bnumerous\b/i, 'say "many"'],
   [/\bsufficient(?:ly)?\b/i, 'say "enough"'],
+  // Latin where English of the same length exists. "Pro rata by stake" was
+  // "based on the size of each winner's stake"; "e.g." was "for example".
+  [/\bpro[ -]rata\b|\bper se\b|\bde facto\b|\bad hoc\b|\bvice versa\b|\ba priori\b|\binter alia\b|\bceteris paribus\b|\bmutatis mutandis\b|\bper (?:annum|diem)\b|(?:^|[\s(])(?:e\.g|i\.e|etc|viz|cf)\./i,
+    'no Latin: say "in proportion to", "based on the size of", "for example", "that is", "and so on", or name the thing'],
   // "confirmed" is one of Solana's three commitment levels, alongside
   // processed and finalized. Using "confirm" loosely for "check" puts a
   // reserved word on an unrelated idea, in a book that teaches the levels.

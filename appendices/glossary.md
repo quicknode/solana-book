@@ -286,7 +286,7 @@ A stop in block production. A halt comes from a fault such as a bug in the valid
 
 ### health / health factor
 
-A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. At or below the boundary, the position may be liquidated. See the *Lending and Borrowing* chapter.
+A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. Past the boundary, the position may be liquidated. See the *Lending and Borrowing* chapter.
 
 ### holder
 
@@ -330,7 +330,7 @@ Capital a venue sets aside, usually from a share of its fees, to absorb losses l
 
 ### invariant
 
-A condition that must hold before and after every state change: a pool's [K](#k) must not decrease, the vault equals what the book owes, total in equals total out. An **invariant test** asserts one against generated values, and a model checker checks one against every possible value. See the *Operating Financial Software* chapter.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease across a swap, the vault equals what the book owes, total in equals total out. An **invariant test** asserts one against generated values, and a model checker checks one against every possible value. See the *Operating Financial Software* chapter.
 
 ### inventory
 
@@ -338,7 +338,7 @@ The tokens a [market maker](#market-maker) holds and quotes against. A prop AMM 
 
 ### K
 
-The product of an AMM pool's two reserves. Constant within a trade, growing across deposits and fees.
+The product of an AMM pool's two reserves. Constant while a trade is priced, growing with deposits and fees, shrinking with withdrawals.
 
 ### key pair
 
@@ -374,7 +374,7 @@ Forcibly repaying an unhealthy loan out of its collateral, at a bonus, to keep t
 
 ### liquidation threshold
 
-The debt-to-collateral ratio at which a position becomes liquidatable. Always above the loan-to-value ratio.
+The debt-to-collateral ratio at which a position becomes liquidatable. Never below the loan-to-value ratio.
 
 ### liquidity provider (LP)
 
@@ -382,7 +382,7 @@ Someone who deposits assets into a pool for traders to trade against, earning fe
 
 ### loan-to-value (LTV)
 
-The fraction of collateral value that may be borrowed against it, e.g. 75%.
+The fraction of collateral value that may be borrowed against it, for example 75%.
 
 ### long / short
 
@@ -502,7 +502,7 @@ Two tokens a market trades against each other, written base/quote with the [base
 
 ### parimutuel
 
-A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. See the *Betting Market* chapter.
+A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool in proportion to their stakes. See the *Betting Market* chapter.
 
 ### PDA (program derived address)
 
@@ -538,11 +538,7 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 ### principal
 
-The amount lent or borrowed, before any interest. A lending program stores each loan's principal and computes the live debt from it with the [borrow accumulation factor](#borrow-accumulation-factor).
-
-### pro rata
-
-In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join.
+The amount lent or borrowed, before any interest. A lending program stores each loan's principal divided by the [borrow accumulation factor](#borrow-accumulation-factor) at the time of borrowing, and computes the live debt by multiplying it by the current factor.
 
 ### profit warm-up
 

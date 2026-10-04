@@ -79,7 +79,7 @@ Some venues go further and keep a deny list of addresses they will not fill at a
 
 ## The Market Maker Leaves, Whole
 
-When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no pro-rata slice, no locked floor, no waterfall. The withdrawal code of earlier chapters exists to divide pooled deposits fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them, and it holds nobody's tokens, so nothing is stuck in it.
+When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission. There is no share burn, no proportional slice, no locked floor, no waterfall. The withdrawal code of earlier chapters exists to divide pooled deposits fairly among claimants, and this pool has one claimant. The market account survives, empty, refusing swaps with `InsufficientInventory` rather than mispricing them, and it holds nobody's tokens, so nothing is stuck in it.
 
 ## The Math: Every Rounding Favors the Market
 
