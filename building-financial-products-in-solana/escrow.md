@@ -80,7 +80,7 @@ Bob calls `take_offer()`. It takes no arguments beyond the accounts themselves: 
 
 ![](figures/escrow-take-offer.svg)
 
-That is all Alice does. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
+Alice takes no part in this transaction. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
 
 The handler code runs two steps:
 

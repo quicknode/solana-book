@@ -8,7 +8,7 @@ The program lives at `finance/betting-market` in the companion repository. Struc
 
 In a bookmaker market, the house quotes odds and carries risk on every bet. In a parimutuel market, the program carries no risk. All stakes on all outcomes pool together. When the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, pro rata by stake. Your payout odds are the ratio between the pools at settlement time, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
-**Parimutuel markets reward conviction.** Bet three times as much as the next winner and you win three times as much of the losing pool.
+**Parimutuel winnings are proportional to stake.** Bet three times as much as the next winner and you win three times as much of the losing pool.
 
 ![](figures/betting-parimutuel-pools.svg)
 

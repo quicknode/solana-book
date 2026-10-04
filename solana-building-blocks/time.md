@@ -43,7 +43,7 @@ Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 20
 
 ![](figures/clock-decision-tree.svg)
 
-The 20 seconds in the last question is where the two clocks' errors meet:
+The decision tree's last question draws its line at 20 seconds because that is where a slot count's error grows as large as the timestamp's error:
 
 - **The timestamp's error stays under a second or two, however long the span.** One leader can move it up to 800 milliseconds in its turn, and it counts only whole seconds. Outside a halt, nothing makes that error grow.
 - **A slot count's error grows with the span.** With slots running about 10% long, a count sized at 200 milliseconds runs about 2 seconds over across 20 seconds, and about 16 hours over across a week.
