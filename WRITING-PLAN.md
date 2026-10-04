@@ -70,13 +70,6 @@ What is specific to the book: the conventions are fixed during the single visual
 
 - **Every walkthrough step ("Alice does X", "Bob does Y") includes a diagram** showing the token movements, account creations and closures, and value changes that step caused. The diagram goes where the reader needs it, not at the step's end by habit: before the mechanics when the picture is what the mechanics explain, after them when it is their result.
 
-Steps currently missing their per-step diagram, to be drawn in the visual pass:
-
-- Lending and Borrowing: Carol's short; Bob's repayment and collateral withdrawal.
-- Perpetual Futures: Alice's `close_position` payout.
-- The Prop AMM: Maria's `deposit_inventory` and `withdraw_inventory`.
-- The Managed Fund: Bob's deposit at the new share price.
-
 ## Reviewers, Feedback, and Editions
 
 - **Named technical reviewers**: recruit respected Solana engineers early, so review happens per part rather than as one giant pass at the end. Their names fill the About the Technical Reviewers section. Visible peer review is part of how fundamentals titles earn their standing.

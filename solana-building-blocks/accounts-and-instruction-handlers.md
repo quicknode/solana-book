@@ -2,7 +2,7 @@
 
 Nearly every generic introduction describes blockchain as a "shared ledger". This is vague: shared how, and with whom? Additionally, most of a program's data is not a balance, and would not appear in a traditional accounting ledger.
 
-Solana (or more specifically, Solana mainnet and devnet) is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter is a tour of that computer, taken the way every user takes it: as two people, Alice and Bob, paying each other.
+Solana (or more specifically, Solana mainnet and devnet) is better understood as **one giant computer that spans the world**. It stores data, it runs programs, and anyone on earth can use it. This chapter follows two people, Alice and Bob, paying each other on that computer.
 
 ## A User's Public Key Is Their Address
 
@@ -24,7 +24,7 @@ A **wallet** is a key pair being used to sign transactions, with the private key
 
 ## There Is More Than One Solana Computer
 
-The curve in the figure is labeled **Solana devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
+The curve in the figure is labeled **Solana Devnet**, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
 
 | Cluster      | Purpose                                                             | Assets have value?  | Where it runs                |
 | ------------ | ------------------------------------------------------------------- | ------------------- | ---------------------------- |
@@ -32,7 +32,7 @@ The curve in the figure is labeled **Solana devnet**, because there is more than
 | **devnet**   | A global network where developers deploy their in-progress software | No: tokens are free | Globally                     |
 | **localnet** | Development and fast test loops                                     | No                  | Locally, on your own machine |
 
-There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a particular proposed network feature. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it goes live there.
+There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a particular proposed network feature. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it is deployed there.
 
 Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which cluster the Solana SDK reads from, writes to, and deploys to.
 
@@ -81,7 +81,7 @@ For financial software, atomicity is a primitive you design with. Inside a trans
 
 - the escrow program you're about to build moves Alice's payment and Bob's stock in one atomic unit, and no combination of failures leaves one side paid and the other empty-handed. 
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state
-- A **flash loan**, a crypto specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
+- A **flash loan**, a crypto-specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. If the repayment fails, the borrow itself is unwound: the lender risked nothing, so the loan needs no collateral. 
 
 Whole categories of arbitrage and liquidation strategies exist only because transactions are all-or-nothing.
 
@@ -108,7 +108,7 @@ Solana calls the address whose signature a particular action requires that actio
 - A program's **upgrade authority** is the only address that may replace the program's code.
 - An exchange's **market authority** sets the market's parameters and collects its fee.
 
-Different authorities in the same program can be given to different accounts. 
+Different authorities in the same program can be given to different addresses. 
 
 > **What if funds need more than one person's approval?** A transaction can carry several signatures, but for standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Any authority can be a multisig address rather than one person's wallet. 
 
@@ -116,13 +116,13 @@ Different authorities in the same program can be given to different accounts.
 
 Alice's account holds a balance and nothing else, and so does Bob's. Her account is the smallest an account gets, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and program data.[^state-compression]
 
-Besides its address, every account records three things: a lamport balance, some data, and an **owner program**. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program is the one program allowed to change the account, and the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
+Besides its address, every account records three things a program reads: a lamport balance, some data, and an **owner program**. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program is the one program allowed to change the account, and the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
 ![](figures/account-dissected.svg)
 
-Every account holds a lamport deposit proportional to its size, called **rent**; an account funded to the **rent-exempt** minimum stays until it is closed, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is held by the space her account occupies, which is why a large account costs more to keep than a small one.
+Every account holds a lamport deposit that grows with its size, called **rent**; an account funded to the **rent-exempt** minimum stays until it is closed, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is held by the space her account occupies, which is why a large account costs more to keep than a small one.
 
-The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts [^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. 
+The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts[^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in its own account elsewhere again. 
 
 Like the programs on your regular computer and the files they work with, Solana programs use their instruction handlers to read the accounts they are handed, and write new values back. This split, logic in program accounts and state in data accounts, is what makes financial state easy to read. To know a market's condition you read its accounts, and the only way to change those accounts is through the owning program's instruction handlers.
 
@@ -131,14 +131,14 @@ Like the programs on your regular computer and the files they work with, Solana 
 Every account sits at a 32-byte **address**, usually shown base58-encoded. Addresses come in three kinds:
 
 - **Public keys.** Alice's and Bob's wallet addresses are public keys: points on the curve, each with a private key that can sign for it.
-- **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds. You'll learn more about these in the *PDAs* chapter. Since PDA addresses aren't public keys, they don't have private keys. 
+- **Program Derived Addresses**. A PDA is computed from a program's address (its **program ID**) and some developer-chosen inputs called seeds. You'll learn more about these in the *PDAs* chapter. A PDA is not a public key, so no private key exists for it. 
 - **Built-in addresses.** The System Program, the sysvars, and the few other programs built into the validator itself sit at constant addresses that were *chosen* rather than computed: the Solana core developers picked a memorable byte string. `11111111111111111111111111111111` is the System Program, `SysvarC1ock11111111111111111111111111111111` is the Clock the *Time* chapter reads. Some of the built-in byte strings happen to decode to points on the curve and some do not, but no private key is known for any of them. Other programs, the token programs among them, are deployed from key pairs like the programs in this book, so their addresses are public keys even when they start with a memorable prefix.
 
 ![](figures/address-types.svg)
 
 ## Users Use the Token Program to Send Tokens to Each Other
 
-A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean a **stablecoin**, a token that tracks the dollar one for one, like **USDC**, typically backed by treasury bills or other assets tied to the currency.
+A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean a **stablecoin**, a token that tracks the dollar one for one, like **USDC**, backed by treasury bills or other assets tied to the currency.
 
 SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the *Tokens* chapter covers mints properly.
 
@@ -154,13 +154,13 @@ Bob's transfer instruction names every account it touches: Bob's USDC account, t
 
 ## What You Learnt
 
-Two payments introduced every building block the rest of the book uses:
+Two payments introduced the building blocks the rest of this part builds on:
 
 - A **key pair**'s public key is an address, and at an address lives an **account**: a user's holds their balance of **SOL**, stored as an integer of **lamports**, its minor unit.
 - **Every transaction is signed.** The signature proves the holder of the private key authorized the transaction, and it is what allows the transaction to debit the signer's accounts and pay its fee.
 - A transaction bundles **instructions**, each addressed to a program's **instruction handler**, and they succeed or fail together: atomicity is a primitive financial software designs with.
 - Accounts store data as well as balances: bytes at an address, with a lamport balance and an owner program that users invoke to change them. A deployed program takes accounts of its own, and the state it manages lives in accounts separate again.
-- Space is paid for with a **rent** deposit proportional to the account's size, and it is a deposit rather than a fee: closing the account returns it.
+- Space is paid for with a **rent** deposit that grows with the account's size, and it is a deposit rather than a fee: closing the account returns it.
 - Addresses come in three kinds: **public keys**, which private keys sign for; **PDAs**, which have no private key; and **built-in addresses**, chosen rather than computed, with neither a private key nor seeds.
 - Instructions supply the accounts as arguments; instruction handlers check them.
 

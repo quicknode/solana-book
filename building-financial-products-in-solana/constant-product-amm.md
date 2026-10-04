@@ -1,6 +1,6 @@
 # Chapter 15: The Constant-Product AMM
 
-The *Order Book Exchange* chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee compensates them for impermanent loss, the amount by which providing liquidity falls behind simply holding the same tokens when the price moves, and this chapter calculates it.
+The *Order Book Exchange* chapter built an exchange where every price is a commitment someone posted. This chapter builds the other kind: an **automated market maker**, where nobody posts prices at all. Every incoming order fills instantly, at a price determined by a formula, against tokens supplied by **liquidity providers** who earn a fee on every trade. That fee compensates them for impermanent loss, the amount by which providing liquidity falls behind holding the same tokens when the price moves, and this chapter calculates it.
 
 AMMs work where order books do not: tokens without much trading volume, where a taker might wait forever for a matching maker. So they are the standard venue for new token launches, and this chapter follows one. Orca, Raydium, and Pump.fun are popular AMMs on Solana. The program lives at `finance/token-swap` in the companion repository.
 
@@ -53,6 +53,8 @@ Alice works at ACME, holds a grant of 100 ACME alongside her standard wallet, an
 
 X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Deposits grow K without touching the price**; that is the first of K's two ways of growing.
 
+![](figures/amm-alice-deposit.svg)
+
 ## A Buy Moves the Price Along the Curve
 
 Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage check. Three things happen in strict order.
@@ -69,27 +71,35 @@ K is now about 562,615. It grew mid-trade, from the 25 cents of LP fees. That is
 
 ## The Next Trader Pays the Price the Last One Made
 
-Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78. The second trader's numbers follow from what the first trader's swap did to the pool.
+Carol has watched the launch all morning and wants in even though the price has already moved. She arrives late and buys $50 of ACME: 15 cents of fees (about 2.5 cents admin, about 12.5 cents LPs), 49.85 taxed input, and the same arithmetic hands her about 18 ACME at an average near $2.78.
+
+![](figures/amm-carol-buy.svg)
 
 ## Selling Back Pays the Fee in the Input Token
 
 Bob sells 20 of his 40.7 ACME. A sell is the same instruction with `input_is_token_a` flipped. Now the fee comes off his ACME input (0.06 ACME, of which 0.01 accrues to `admin_fees_owed_a`), X grows by the taxed amount, and Y falls to keep the product: about 55.11 USDC to Bob, an average near $2.76 against the $2.46 he paid. The spot price falls back to about $2.64. The admin's fee ledger now holds claims in *both* tokens, which is why the claim instruction sweeps two sides.
 
+![](figures/amm-bob-sell.svg)
+
 ## The Admin Sweeps Its Share of the Fees
 
 Whenever she likes, Maria runs `claim_admin_fees()`. It zeroes both owed counters and transfers exactly those amounts from the vaults to her token accounts, signed by the pool config; anyone else is rejected (`test_claim_admin_fees_rejects_non_admin`), and claiming when nothing is owed fails with `NothingToClaim`. One transfer per token, however many swaps accrued it: the same consolidation logic as the order book's unsettled balances.
 
+![](figures/amm-maria-claims.svg)
+
 ## Withdrawing Realizes Impermanent Loss
 
-Alice wants her capital back. `withdraw_liquidity()` burns her LP tokens and pays her a proportional slice of both effective reserves, dividing by the LP supply *plus* `MINIMUM_LIQUIDITY`, the same divisor her deposit was minted against. The locked floor is backed by reserves but absent from the supply counter. Leaving it out here would overpay every withdrawer, and leaving it out of the deposit would underpay every depositor.
+Alice wants her capital back. `withdraw_liquidity()` pays her a proportional slice of both effective reserves and burns her LP tokens, dividing by the LP supply *plus* `MINIMUM_LIQUIDITY`, the same divisor her deposit was minted against. The locked floor is backed by reserves but absent from the supply counter. Leaving it out here would overpay every withdrawer, and leaving it out of the deposit would underpay every depositor.
 
-Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had simply held her original tokens in her wallet: a small number at launch scale, and the same number becomes a serious loss once the pool is a million times larger.
+Alice does not get back what she deposited. She deposited 100 ACME and 225 USDC; the pool's mix has shifted since, so her slice is about 92.3 ACME and 244 USDC. Valued at the current price, that is roughly $1.50 *less* than if she had held her original tokens in her wallet: a small number at launch scale, and the same number becomes a serious loss once the pool is a million times larger.
+
+![](figures/amm-alice-withdraw.svg)
 
 That gap is **impermanent loss**, and every LP is exposed to it. A constant-product pool mechanically sells the token that is rising and accumulates the token that is falling, so an LP always slightly underperforms just holding, whenever the price moves in either direction. Fees are the compensation. **An LP position profits from trading volume, not from price direction**: if accumulated fees outrun the divergence, LPing wins; if the price moves far in one direction on low volume, holding wins. It is called "impermanent" because it only crystallizes at withdrawal; had Alice stayed in and ACME returned to $2.25, there would have been no loss.
 
 ![](figures/amm-impermanent-loss.svg)
 
-Fee income is what an LP is paid for carrying that gap, and the gap is small for ordinary moves. It grows with the square of the price change, so a move of a quarter costs Alice about $3 and a doubling about $39. The LPs keep 25 of every 30 basis points of fee and Alice holds a fifth of the pool, so she earns about five basis points of everything traded: $10 for every $20,000. The table sets the two against each other for her $450 position, counting fee income at face value. Each cell is what she has at withdrawal minus what she would have had by holding, and the fee columns are $20,000, $100,000, and $400,000 of trading, the last roughly a year of trading half the pool's value every day.
+Fee income is what an LP is paid for carrying that gap, and the gap is small for ordinary moves. It grows with the square of the price change, so a move of a quarter costs Alice $3 or $4 depending on the direction, and a doubling about $39. The LPs keep 25 of every 30 basis points of fee and Alice holds a fifth of the pool, so she earns about five basis points of everything traded: $10 for every $20,000. The table sets the two against each other for her $450 position, counting fee income at face value. Each cell is what she has at withdrawal minus what she would have had by holding, and the fee columns are $20,000, $100,000, and $400,000 of trading, the last roughly a year of trading half the pool's value every day.
 
 | ACME at withdrawal | Just holding | LP, no fees | LP, $10 of fees | LP, $50 of fees | LP, $200 of fees |
 |---|---|---|---|---|---|
@@ -100,11 +110,11 @@ Fee income is what an LP is paid for carrying that gap, and the gap is small for
 | $4.50 (doubles) | $675 | −$39 | −$29 | +$11 | +$161 |
 | $9.00 (quadruples) | $1,125 | −$225 | −$215 | −$175 | −$25 |
 
-Across any row, LPing wins once fee income outruns the gap, and for ordinary moves it does not take much: $10 of fees covers a move of a quarter in either direction. Down the "LP, no fees" column, with nobody paying fees, the LP is behind in every row but one; that is the solid curve in the figure, and a pool that pays nothing for the risk it asks LPs to carry. Down the last column the LP is still behind when the price quadruples: a fourfold move opens a $225 gap, wider than a year of $200 in fees can cover. An LP is paid in proportion to the trading and loses in proportion to the square of the price move.
+Across any row, LPing wins once fee income outruns the gap, and for ordinary moves it does not take much: $10 of fees covers a move of a quarter in either direction. Down the "LP, no fees" column, with nobody paying fees, the LP is behind in every row but one; that is the solid curve in the figure, and a pool that pays nothing for the risk it asks LPs to carry. Down the last column the LP is still behind when the price quadruples: a fourfold move opens a $225 gap, wider than a year of $200 in fees can cover.
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 
-Every division in this program floors. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor** (the only floor that favors the trader is the fee itself, clipped by at most one minor unit). The dust stays in the reserves and accrues to all LPs, the direction the *Arithmetic of Money* chapter sets. Every multiplication runs in u128 before its division (multiply before divide), and every step that can overflow is `checked_*` with `MathOverflow` on failure. The only unusual operation, the initial deposit's square root, is a short loop of Newton's method on integers, floored like everything else. Every rule in the *Arithmetic of Money* chapter appears in this one program.
+Every division in this program floors. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor** (the only floor that favors the trader is the fee itself, clipped by at most one minor unit). The dust stays in the reserves and accrues to all LPs, the direction the *Arithmetic of Money* chapter sets. Every multiplication runs in u128 before its division (multiply before divide), and every step that can overflow is `checked_*` with `MathOverflow` on failure. The only unusual operation, the initial deposit's square root, is a short loop of Newton's method on integers, floored like everything else.
 
 ## The Invariants: K Must Not Decrease
 
@@ -116,7 +126,7 @@ Every division in this program floors. Swap output, LP minting, and withdrawal a
 ## The Failure Modes: Empty Pools, First Deposits, and the Vacuous Invariant
 
 - **The empty-reserve drain.** If one reserve were zero, the swap formula outputs the *entire* other reserve (output = input × other ÷ (0 + input) = other). The invariant check would not catch it either, because the pre-trade K would be 0 × other = 0, and "new K ≥ 0" holds vacuously. A check requires both effective reserves positive (`EmptyPoolReserve`) before any pricing runs.
-- **The inflation attack.** The `MINIMUM_LIQUIDITY` floor makes the inflation attack from the *Adversary* chapter uneconomic. The smallest pool an attacker can open leaves them 1 minor unit of LP out of 101 units of supply. Rounding a deposit down to zero then takes a donation of about 101 times that deposit, and 100/101 of the donation belongs to units nobody can redeem. The floor has to be in both divisors: a deposit divided by the bare supply of 1 rounds down against a donation merely as large as itself. `test_donation_cannot_round_a_later_deposit_to_zero` runs the attack with a donation of 1,000,000 minor units to each vault: the victim's equal deposit is minted 100 minor units of LP, and the attacker's single unit redeems 9,950 minor units of each token.
+- **The inflation attack.** The `MINIMUM_LIQUIDITY` floor makes the inflation attack from the *Adversary* chapter uneconomic. The smallest pool an attacker can open leaves them 1 minor unit of LP out of 101 units of supply. Rounding a deposit down to zero then takes a donation of about 101 times that deposit, and 100/101 of the donation belongs to units nobody can redeem. The floor has to be in both divisors: a deposit divided by the bare supply of 1 rounds down against a donation merely as large as itself. `test_donation_cannot_round_a_later_deposit_to_zero` runs the attack with a donation of 1,000,000 minor units to each vault: the victim's equal deposit is minted 100 minor units of LP, and the attacker's single unit redeems 9,950 minor units of token A.
 - **The first deposit sets the price, and anyone can be first.** The floor bounds the share-math games a first depositor can play, and arbitrage moves whatever price they set to the market's.
 - **Slippage and sandwiches.** Every trade and deposit carries a caller-supplied minimum (`min_output_amount`, `minimum_lp_tokens_out`, the withdrawal minimums), and the tests check that each one rejects (`SlippageExceeded`, `DepositBelowMinimum`, `WithdrawalBelowMinimum`). What the program cannot do is choose the number for you; a zero minimum is legal and is what a sandwich attacker hopes you send.
 - **Liquidity fragmentation.** Because `initialize_pool()` fails with `InvalidMintOrder` unless `mint_a` sorts below `mint_b`, each pair of tokens can have only one pool, so its liquidity is never split between two.
@@ -136,6 +146,6 @@ Six concepts came with the curve:
 - **Assert after the math.** The post-trade product re-check catches every "computed the output wrong and overpaid" bug, including the ones not written yet.
 - **Effective reserves.** The admin's virtual fee claim is excluded from every piece of LP-facing math, and kept in two counters on the pool config rather than in a separate fee vault.
 - **The inflation-attack defense.** A locked minimum of LP supply, never minted to anyone, keeps the share divisor from ever being dust-sized.
-- **Impermanent loss.** An LP position profits from trading volume, not from price direction: the further the price moves in either direction, the more the LP loses against simply holding the two tokens, and only fees make up for it.
+- **Impermanent loss.** An LP position profits from trading volume, not from price direction: the further the price moves in either direction, the more the LP loses against holding the two tokens, and only fees make up for it.
 
 In the *Prop AMM* chapter we will build a market maker that quotes its own capital at prices taken from an oracle. There is no curve, so a trade does not move the price and there is no impermanent loss, but the firm carries a different risk: the traders who arrive while its quote is stale know something it does not. The *Managed Fund* chapter, later in the book, uses venues like these to trade investors' deposits, and the question there is what the manager is allowed to do with them.

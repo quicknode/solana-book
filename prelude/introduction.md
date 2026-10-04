@@ -10,13 +10,12 @@ Financial products built on Solana have properties no traditional financial syst
 
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed. There is no interval between one side paying and the other receiving, so nobody can step in during it.
 - **Everyone reads the same accounts.** A traditional trade is recorded in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
-- **Transactions cost a fraction of a penny**, regardless of the size of the transfer. Moving dollars the traditional way costs a percentage of the amount. Think back to the last time you bought a coffee: the café that sold it paid roughly 1.5% to 3.5% of the price in card fees, plus a fixed 10 to 30 cents. Sending $200 across a border costs about $13 on average, and more than $40 at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A flat fee makes it worth sending payments that were too small to bother with.
+- **Transactions cost a fraction of a cent**, regardless of the size of the transfer. Moving dollars the traditional way costs a percentage of the amount. Think back to the last time you bought a coffee: the café that sold it paid roughly 1.5% to 3.5% of the price in card fees, plus a fixed 10 to 30 cents. Sending $200 across a border costs about $13 on average, and more than $40 at a Western Union or MoneyGram cash counter in some parts of the world.[^remittance-scope] A flat fee makes it worth sending payments that were too small to bother with.
 - **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.[^after-hours]
 - **Assets are programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
 - **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real-world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] Solana is also one of the most active chains for trading crypto-native assets such as BTC.[^btc-scope]
 - **A deployed program reaches every user at once.** A traditional fund spends months working through intermediaries before it reaches investors: an exchange listing, market makers, brokerage approvals. Each gatekeeper adds cost and delay. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
 
-Other blockchains offer some of these properties. Only Solana offers all of them.
 
 Open networks use these properties for permissionless markets anyone can join. Traditional institutions increasingly run on them too: tokenized funds, stablecoin settlement, and internal ledgers built on the same primitives, operated inside the permissions and accountability their regulators require.[^tokenized-funds] Whichever market you build for, the accounts, tokens, math, and checks in this book are the layer both share.
 
@@ -26,7 +25,7 @@ Some technical books are out of date as soon as the release they document is. A 
 
 Solana changes quickly: network releases, framework versions, chain constants, and tools change often. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
-*Building Financial Software on Solana* teaches the part that doesn't change: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will not change. Nor will the desire of adversaries to take your assets.
+*Building Financial Software on Solana* teaches the part that doesn't change: **how financial ideas become Solana programs, implemented as accounts, instruction handlers, signatures, oracles, checks and math.** The account model has been stable since Solana launched. The math will not change.
 
 In this book you'll learn how each of the classic financial products works as a Solana program, how to handle assets so that none are lost, and how to test that your program works.
 
@@ -75,7 +74,7 @@ To keep the balances easy to track, every character starts every chapter with th
 
 ## How This Book Was Produced
 
-The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos Mike produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
+The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos the author produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written and edited by hand.
 
 AI tools did the mechanical work: checking spelling and grammar, keeping terminology and structure consistent across chapters, ensuring naming is consistent across the text, the figures, and the companion repository, and keeping the diagrams in step with actual program state.
 

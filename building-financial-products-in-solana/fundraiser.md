@@ -4,7 +4,7 @@ Maria has designed a compact commercial espresso machine, and the factory quoted
 
 The program lives at `finance/fundraiser` in the companion repository, with Anchor 1, Anchor 2, and Quasar versions; this chapter covers the Anchor 1 version, in `anchor-v1`. It is one of the smallest programs in this part of the book: six instruction handlers, two account types, and one vault. Read it as the *Escrow* chapter with the parties rearranged. An escrow holds two strangers' assets in a vault until both sides of one deal are ready; a fundraiser holds many strangers' contributions in one vault until one shared condition is met. The vault and the PDA that signs for it work the same way, with one addition: a **deadline**.
 
-The program calls the fundraiser's creator the **maker**, Maria here. She wants all-or-nothing because a partial raise is useless to her: 3,600 USDC cannot buy part of a mold. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are rent deposits on the accounts.
+The program calls the fundraiser's creator the **maker**, Maria here. She wants all-or-nothing because a partial raise is useless to her: 3,600 USDC cannot buy part of a mold. There is no platform operator and no fee in this program; the maker runs their own raise, and the only costs anyone pays are transaction fees, plus rent deposits that come back when the accounts close.
 
 ## Success and Failure Are Both Written Down in Advance
 
@@ -14,7 +14,7 @@ A fundraiser can only end one way.
 
 ## The Maker Starts the Fundraiser
 
-Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met. A crowdfunding platform can, and occasionally does, change campaign rules mid-campaign. Here the terms cannot change, because no handler exists to change them.
+Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met.
 
 ![](figures/fundraiser-initialize.svg)
 
@@ -55,11 +55,11 @@ The claim handler compares the target against `current_amount`, the program's ow
 
 `refund()` decides that a raise failed by reading `current_amount`, so the claim has to read the same number. If the claim read the balance instead, a transfer into the vault could make both handlers accept at once. Suppose 3,600 USDC had come in through `contribute()` and someone transferred 5,400 more straight into the vault. The balance would read 9,000, so the claim would pay all of it to Maria. The counter would still read 3,600, so `refund()` would promise each backer their contribution back, out of a vault that was now empty.
 
-Reading the counter keeps the two endings exclusive: the claim needs the counter at or above the target and a refund needs it below. The test `test_check_contributions_ignores_direct_vault_donations` transfers the full target straight into the vault and asserts that the claim still fails with `TargetNotMet`. Apply the same check to any handler that releases tokens from a vault: compare a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
+Reading the counter keeps the two endings exclusive: the claim needs the counter at or above the target and a refund needs it below. The test `test_check_contributions_ignores_direct_vault_donations` mints the full target straight into the vault and asserts that the claim still fails with `TargetNotMet`. Apply the same check to any handler that releases tokens from a vault: compare a number the program itself wrote, never a token balance anyone can raise by transferring tokens in.
 
 ## The Target Is Met: The Maker Claims
 
-`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and `current_amount` has reached the target, so the handler does not fail with `TargetNotMet`. It transfers the vault's entire balance to Maria's token account, signed by the fundraiser PDA, and sets `claimed`. A second claim fails with `FundraiserClaimed`, and so does a contribution sent after the claim, even with days left before the deadline. The test `test_check_contributions_success_pays_maker_and_marks_claimed` asserts the payment and the flag.
+`check_contributions()` is the maker's claim. Maria signs, the PDA seeds re-derive her fundraiser, and `current_amount` has reached the target, so the handler does not fail with `TargetNotMet`. It sets `claimed` and transfers the vault's entire balance to Maria's token account, signed by the fundraiser PDA. A second claim fails with `FundraiserClaimed`, and so does a contribution sent after the claim, even with days left before the deadline. The test `test_check_contributions_success_pays_maker_and_marks_claimed` asserts the payment and the flag.
 
 ![](figures/fundraiser-success.svg)
 
@@ -81,7 +81,7 @@ The test `test_stale_contribution_cannot_refund_from_next_raise` runs the attack
 
 ## The Target Is Missed: Everyone Leaves With Exactly What They Brought
 
-Now the other ending: the deadline passes with only 3,600 USDC in the counter, from Alice, Bob, Carol, and Dave, who contributed 800. No handler marks the raise as failed; `refund()` simply starts accepting calls. Alice calls it. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, subtracts one from `open_contributions`, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
+Now the other ending: the deadline passes with only 3,600 USDC in the counter, from Alice, Bob, Carol, and Dave, who contributed 800. No handler marks the raise as failed; `refund()` starts accepting calls. Alice calls it. The handler checks the deadline has passed (`FundraiserNotEnded` otherwise) and the target was missed (`TargetMet` otherwise). It then reads her receipt's `amount`, subtracts it from `current_amount`, zeroes the receipt, subtracts one from `open_contributions`, transfers exactly that amount from the vault back to her token account with the PDA's signature, and closes the receipt to return her rent.
 
 A second refund fails because the receipt it would read has been closed. The escrow closed its offer accounts for the same reason.
 
@@ -95,13 +95,13 @@ Once every contribution has been refunded, she calls `close_fundraiser()`. On an
 
 The program's financial arithmetic is three expressions:
 
-- **The minimum target**: `3 × 10^decimals` (`MIN_AMOUNT_TO_RAISE`).
+- **The minimum target**: `MIN_AMOUNT_TO_RAISE` (3) × 10^decimals.
 - **The minimum contribution**: `10^decimals`.
-- **The deadline**: `(now − time_started) / 86,400`, floored.
+- **Elapsed days**: `(now − time_started) / 86,400`, floored, compared with `duration`.
 
 Every addition and subtraction on `current_amount`, the receipts and `open_contributions` is checked and maps overflow to `MathOverflow`. No rates, no proportional shares, no prices: refunds pay recorded amounts back verbatim, so, like the escrow, this program never has to *compute* what people are owed.
 
-## The Invariants: The Counters Balance Like a Ledger
+## The Invariants: The Counter Equals the Sum of the Receipts
 
 - Until the claim, `current_amount` equals the sum of all live receipts: contributions add to both together, and refunds subtract from both together.
 - `open_contributions` equals the number of receipts that exist for the fundraiser. The companion repository's Kani harness `proof_open_contributions_counts_open_accounts` model-checks this over every order of contributions, refunds and closes up to its bound.
@@ -132,7 +132,7 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 - `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund.
 - `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again.
 
-`test_stale_contribution_cannot_refund_from_next_raise` runs two raises at the same address, one after the other. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that nothing unlocks (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
+`test_stale_contribution_cannot_refund_from_next_raise` runs two raises at the same address, one after the other. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that no handler pays out (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
 
 ## What You Learnt from Building the Fundraiser
 

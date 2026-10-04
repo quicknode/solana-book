@@ -20,7 +20,7 @@ The first instinct is to store the bids and asks as sorted arrays. Arrays get sl
 
 So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which puts the tree in exchange order: walking it visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
 
-A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8, and so on to deepen the tree. That only adds a little compute: 64 levels at most, and under 15,000 extra compute units per instruction, out of a default budget of 200,000.
+A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8, and so on to deepen the tree. That only adds a little compute: 64 levels at most, and under 15,000 extra compute units per instruction, out of the 200,000 an instruction is granted by default at the time of writing (the suite's `DEFAULT_INSTRUCTION_COMPUTE_UNITS`).
 
 ![](figures/order-book-critbit.svg)
 
@@ -28,11 +28,11 @@ A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-Maria runs the exchange. She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 **basis points**, a quarter of one percent, carved out of each fill's quote proceeds when orders match. So the side of the fill that receives the quote token bears it: the maker when the taker is a bid, the taker when the taker is an ask.
+Maria runs the exchange. She is the market authority: she creates the market and she alone can withdraw its fees. Her revenue is a fee of 25 basis points, a quarter of one percent, deducted from each fill's quote proceeds when orders match. So the side of the fill that receives the quote token bears it: the maker when the taker is a bid, the taker when the taker is an ask.
 
 Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, as the betting market's is. It creates the market account and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
 
-The tick size and minimum order size keep the book usable, and they do different jobs. Orders below `min_order_size` are rejected outright with `BelowMinOrderSize`, and this is what protects the book: every slot in the tree holds at least that much of its occupant's tokens in a vault, so filling the tree locks up real capital. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. The tick also sets what it takes to jump the queue: a maker who wants to stand in front of the queue must improve the price by a whole tick, which is an improvement the taker actually receives.
+The tick size and minimum order size keep the book usable, and they do different jobs. Orders below `min_order_size` are rejected outright with `BelowMinOrderSize`, and this is what protects the book: every slot in the tree holds at least that much of its occupant's tokens in a vault, so filling the tree locks up real capital. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. The tick also sets what it takes to stand in front of the queue: a maker who wants to must improve the price by a whole tick, which is an improvement the taker actually receives.
 
 Both are set per market, at creation, and cannot change afterward. A tick right for a $250 stock is far too coarse for a token priced at a fraction of a cent, so somebody has to choose one for each market, and the choice is final. Manifest removed the tick entirely and lets an order name any price in minor units. Its own README states the tradeoff: without a tick, the newest order can stand in front of the queue by improving the price by a negligible amount, which inverts time priority.[^manifest-tickless]
 
@@ -161,7 +161,7 @@ NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a se
 The order book added six concepts on top of the escrow's:
 
 - **Every resting order is a funded commitment.** `place_order()` moves the tokens into a vault before the order rests, so no matched order can turn out to be backed by nothing.
-- **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority, on a chain where compute is metered.
+- **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority.
 - **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them as they are paid out means each balance is paid once.
 - **A fee whose rounding direction is a security decision.** The fee ceils, so no fill leaks a minor unit to the user.
 - **Vault separation plus stored-address checks.** The fee vault and the quote vault stay apart only because every instruction checks their addresses against the market.

@@ -6,9 +6,9 @@ One word is overloaded. This chapter's market trades stocks like NVDAx and SPCXx
 
 ## Prices Come In by Signature: The Price Feed, Freshness, and Slots
 
-Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors the account a price feed network publishes: a signed mantissa, an exponent, and the slot the value was written. In production the account would *be* the network's price feed, decoded and verified by the program with the network's own crate. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` checks that), which keeps the tests deterministic and makes the trust arrangement unusually visible: the program accepts a price because the market owner's private key signed it recently.
+Every valuation in this chapter multiplies an amount by a price, and the prices come from **price feed** accounts (seeds: `"price_feed"`, the market, the mint) storing a mantissa and exponent. The layout mirrors the account a price feed network publishes: a signed mantissa, an exponent, and the slot the value was written. In production the account would *be* the network's price feed, decoded and verified by the program with the network's own crate. In this example, `set_price()` writes it directly (only the market owner may sign, and the test `non_owner_cannot_write_market_price_feed` checks that), which keeps the tests deterministic and shows the trust arrangement: the program accepts a price because the market owner's private key signed it recently.
 
-"Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots makes the reading handler fail with `StalePriceFeed`, slots being the clock the *Time* chapter recommends whenever an adversary running a leader could profit by shifting the time a few seconds. Every handler that reads a reserve requires `refresh_reserve()` to have run in the same slot, and every handler that judges an obligation's health also requires `refresh_obligation()`; in practice both run earlier in the same transaction. A transaction that leaves out the reserve refresh fails with `ReserveStale`, and one that leaves out the obligation refresh fails with `ObligationStale`.
+"Recently" is enforced, and it is enforced in **slots**: any price older than 25 slots makes the reading handler fail with `StalePriceFeed`, slots being the clock the *Time* chapter recommends whenever an adversary running a leader could profit by shifting the time a few seconds. Every handler that values a reserve requires `refresh_reserve()` to have run in the same slot, and every handler that judges an obligation's health also requires `refresh_obligation()`; in practice both run earlier in the same transaction. A transaction that leaves out the reserve refresh fails with `ReserveStale`, and one that leaves out the obligation refresh fails with `ObligationStale`.
 
 ## The Market Owner Opens the Market
 
@@ -64,7 +64,11 @@ The second step created Bob's **obligation**, one account per borrower per marke
 
 Carol thinks SpaceX is overvalued and wants to profit if it falls. Her trade is the classic short, and a lending market is where shorts are built: borrow the asset, sell it immediately, and owe *the asset* rather than dollars. She deposits 1,000 USDC as collateral (via shares and an obligation, like Bob) and borrows three SPCXx at $250 each, $750, the maximum her collateral allows. She sells them elsewhere for $750 cash.
 
+![](figures/lending-short-collateral.svg)
+
 **Carol's debt is three SPCXx, not $750.** If SpaceX falls, she buys the three tokens back cheaper and keeps the difference. If SpaceX rises, her debt rises with it, against collateral that does not. She has borrowed at the edge of her allowance with a debt that moves.
+
+![](figures/lending-short-borrow.svg)
 
 ## Interest: One Index, No Transfers
 
@@ -113,11 +117,25 @@ Some work in a financial product has no natural caller: interest must accrue, ca
 
 ## Repayment, Fees, and Yield: Everyone Settles Up
 
-Five weeks in, Bob no longer needs the cash. His $750 debt has become about $757.50 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding). Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit), and `redeem_reserve_collateral()` turns shares back into his five NVDAx. Total cost of five weeks' liquidity: about seven and a half dollars, and he never sold his NVIDIA.
+Five weeks in, Bob no longer needs the cash. His $750 debt has become about $757.50 through the factor. He runs `repay_obligation_liquidity()` (anyone may repay any obligation, so there is no owner check; over-repayment clamps to the debt, and any sub-unit of principal stays with the borrower rather than being forgiven by rounding).
+
+![](figures/lending-repay.svg)
+
+Then `withdraw_obligation_collateral()` releases his NVDAx shares (the withdraw math rounds *up* the borrow power being removed, so a withdrawal can never slip past the health check by a rounding sub-unit).
+
+![](figures/lending-withdraw-collateral.svg)
+
+`redeem_reserve_collateral()` then turns the shares back into his five NVDAx. Total cost of five weeks' liquidity: about seven and a half dollars, and he never sold his NVIDIA.
+
+![](figures/lending-redeem-collateral.svg)
 
 Maria runs `collect_program_fees()` whenever she likes and receives the accumulated 10% of interest, about 75 cents (`NothingToCollect` refuses a collection when nothing is owed, and `program_fees_accrue_and_owner_can_collect` covers the flow). Of every dollar of interest Bob paid, ninety cents went to the suppliers, ten to the house.
 
+![](figures/lending-collect-fees.svg)
+
 Alice leaves her SPCXx position in place and takes her USDC yield: `redeem_reserve_collateral()` burns her 1,000 shares for about $1,003.38, her half of the supplier interest, since she supplied half the USDC reserve alongside Carol's collateral deposit.
+
+![](figures/lending-redeem-yield.svg)
 
 The final balances are:
 
@@ -149,16 +167,16 @@ Because every division rounds this way, the market never loses a minor unit to r
 
 ## The Failure Modes: The Liquidation Engine Is Only as Good as Its Prices
 
-- **A wrong price makes every number wrong.** Every health check multiplies by the price feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and lets only the market owner write them (`non_owner_cannot_write_market_price_feed`). Manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of the *Adversary* chapter dissects Mango Markets).
+- **A wrong price makes every number wrong.** Every health check multiplies by the price feed, so a bad price means wrong collateral values, wrong debts, and liquidations that should not happen. This program refuses stale prices (`borrow_with_stale_price_feed_is_rejected`) and lets only the market owner write them (`non_owner_cannot_write_market_price_feed`). Manipulated prices have produced nine-figure losses on real markets (the price-manipulation section of the *Adversary* chapter covers Mango Markets).
 - **Skipping the refresh** would let positions be judged on old values; `ReserveStale`, `ObligationStale`, and `borrow_without_obligation_refresh_is_rejected` close the path.
 - **Cross-market smuggling**: an obligation in one market pledging reserves from another is refused (`MarketMismatch`, `cross_market_reserve_is_rejected`).
 - **Dangerous configurations are rejected at write time**: LTV above threshold, zero close factor, misordered rate curves (`rejects_ltv_above_liquidation_threshold`, `rejects_misordered_interest_rate_curve`).
 - **Share inflation through the reserve's own borrowing.** Donating tokens to the vault moves nothing, because the program prices shares from `available_liquidity`, not the vault balance. But total liquidity also counts interest owed on borrows, and a supplier may borrow from the reserve they supply. The attacker is the only supplier of an empty reserve, holding a single minor unit of its shares, and borrows one minor unit from it against collateral in another reserve. Debt rounds up, so a second of interest makes that debt two minor units, and the attacker's unit of shares is worth two without anything being minted. From there, deposits and redemptions push the share price higher, because both round in the pool's favor and the attacker owns the whole pool. Once that unit is worth about 690 USDC, a 1,000 USDC deposit mints one unit of shares, and the attacker's unit redeems half the pool. `inflating_shares_through_own_borrow_does_not_pay` runs this on the default rate curve, and the attacker repays the loan and leaves no bad debt. Without the withheld shares the attacker turns 4,000 USDC into 4,155.20. With them, the attacker's unit is one of 1,001, and nearly everything the rounding leaves behind goes to shares nobody can redeem. The attacker ends 1,065 minor units down, and the victim gets back the whole deposit. A reserve whose suppliers have all left keeps the 1,000 minor units behind the withheld shares, and the next deposit is priced against them instead of starting the reserve over (`sole_supplier_leaves_the_minimum_behind`).
-- **Self-liquidation** is allowed, deliberately: it is only possible while unhealthy and is economically pointless, matching how Save and Kamino Lend behave. Not every strange-looking path needs a check; this one is harmless because it never pays.
+- **Self-liquidation** is allowed, deliberately: it is only possible while unhealthy and is economically pointless.
 
 ## Testing Considerations
 
-The suite is organized by risk, one file per class. Rounding comes first: the round-trip-creates-no-value invariant, and the withdraw-at-the-boundary-then-one-more-unit test, which tests both sides of the boundary. Then deposits and redemptions, including the share-inflation attack and a first deposit too small to clear the withheld shares. Then interest over time (moving the clock forward to make weeks pass), liquidation (healthy rejected, unhealthy corrected with bonus and close factor, over-seizure refused), and borrowing (the loan-to-value boundary, a skipped obligation refresh, a stale price, and a price from before a restart). The security tests cover cross-market and unauthorized-price attempts. All of it drives the program's own handlers, with each action bundling its refresh instructions into the same transaction as a production client would.
+The suite is organized by risk, one file per class. Rounding comes first: the round-trip-creates-no-value invariant, and the withdraw-at-the-boundary-then-one-more-unit test, which tests both sides of the boundary. Then deposits and redemptions, including the share-inflation attack and a first deposit too small to clear the withheld shares. Then interest over time (moving the clock forward to make weeks pass), liquidation (healthy rejected, unhealthy corrected with bonus and close factor, over-seizure refused), and borrowing (the loan-to-value boundary, a skipped obligation refresh, a stale price, and a price from before a restart). Reserve configuration has its own file, dangerous parameters refused at write time. The security tests cover cross-market and unauthorized-price attempts. All of it drives the program's own handlers, with each action bundling its refresh instructions into the same transaction as a production client would.
 
 ## What You Learnt from Building the Lending Market
 

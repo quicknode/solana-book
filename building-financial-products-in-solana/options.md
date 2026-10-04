@@ -6,7 +6,7 @@ Bob thinks NVIDIA will pass $180 within the week, and he wants that upside for l
 
 An **option** serves them both: Alice sells Bob the right, but not the obligation, to buy her five NVDAx at $180 any time in the next week, and Bob pays her 25 USDC for it now. If NVIDIA rallies, Bob buys the shares below the market. If it does not, he loses the 25 USDC and Alice keeps it as income on shares she still owns.
 
-Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary offer with two additions: it expires, and the taker pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option, which simplifies the custody, and the whole lifecycle is three states: `Listed`, `Held`, and `Exercised`.
+Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary offer with two additions: it expires, and the buyer pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option, which simplifies the custody, and the whole lifecycle is three states: `Listed`, `Held`, and `Exercised`.
 
 ## An Option Is a Right on One Side and an Obligation on the Other
 
@@ -93,7 +93,7 @@ The handler checks the terms before it touches a token:
 - **A zero premium** is refused the same way. It would make the option a gift rather than a sale.
 - **An expiry at or before now** is refused (`ExpiryInPast`). The holder may exercise while `now < expiry`, so such an option could never be exercised.
 
-Then, before the transfer, the handler makes these changes in order:
+Then the handler does four things in order:
 
 1. The `OptionContract` is written with status `Listed` and an empty holder.
 2. The market's `underlying_owed` rises by 5 NVDAx.
@@ -112,11 +112,11 @@ The transaction also created the option itself. Each option is an `OptionContrac
 - `premium`, in the quote token, for the whole option.
 - `expiry`, a Unix timestamp. An option's expiry is a calendar date the two parties agreed on, so it is measured in wall-clock time rather than in slots.
 
+![](figures/options-state-machine.svg)
+
 **Every amount the option ever moves is one the account stores.** A call writer posts `underlying_amount` and a call holder pays `strike_amount`; a put swaps the roles, so the writer posts the strike amount and the holder delivers the underlying amount.
 
 There is no strike *price* to multiply by a quantity and divide by a decimals factor, so settlement does no arithmetic at all, and has no rounding direction to get wrong. The chapter's "180 USDC strike" is the 900 USDC strike amount spread over the five shares it buys.
-
-![](figures/options-state-machine.svg)
 
 One more account is set up here. Alice's USDC account, where her premium will arrive, is created if it does not exist, paid for by Alice, so that `buy_option()` can require it to exist rather than make the buyer pay rent on an account that belongs to the writer.
 
@@ -139,12 +139,12 @@ A writer cannot buy their own option (`test_writer_cannot_buy_their_own_option`)
 
 ## The Holder Exercises Before Expiry, and the Tokens Change Hands
 
-NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` before the week is out. The handler requires the option to be `Held`, the clock to be before `expiry` (`OptionNotHeld`, `OptionExpired`), and the signer to be the holder. Then it moves both legs and updates the ledger:
+NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` before the week is out. The handler requires the option to be `Held`, the clock to be before `expiry` (`OptionNotHeld`, `OptionExpired`), and the signer to be the holder. Then it updates the ledger and moves both legs:
 
-- Bob pays the strike, 5 times 180 USDC, 900 USDC, into the quote vault.
-- The underlying vault pays Bob the 5 NVDAx. Bob's NVDAx account, which he has never needed before, is created in the same transaction at his expense.
 - The market's `underlying_owed` falls by 5 NVDAx, because that collateral is no longer owed to anyone.
 - The market's `quote_owed` rises by 900 USDC, because the strike is now owed to Alice.
+- Bob pays the strike, 5 times 180 USDC, 900 USDC, into the quote vault.
+- The underlying vault pays Bob the 5 NVDAx. Bob's NVDAx account, which he has never needed before, is created in the same transaction at his expense.
 
 ![](figures/options-exercise.svg)
 
@@ -197,14 +197,14 @@ Maria calls `collect_fees()`. The handler pays her `fees_owed`, 0.45 USDC across
 Here is where everyone ends up:
 
 - Alice earned a premium and sold her shares at her price.
-- Bob turned 25 USDC of premium into five NVDAx at a $20 discount to the market.
+- Bob turned 25 USDC of premium into five NVDAx at $180 a share against a $200 market, a $75 gain after the premium.
 - Carol was paid to wait for a purchase that never came.
 - Dave bought insurance he did not need.
 - Maria earned 1% of every premium.
 
 ## The Math: One Floor and One Comparison
 
-The arithmetic lives in `contract_math.rs` and is the smallest in this book:
+The arithmetic lives in `contract_math.rs`:
 
 - **Settlement.** `collateral_amount()` returns the underlying amount for a call and the strike amount for a put, and `exercise_payment()` returns the other.
 - **The premium split.** `split_premium()` floors the fee, `premium` times `fee_bps` over 10,000, and gives the writer the rest. The writer keeps the rounding minor unit; the venue gives up at most one minor unit per sale, and a sale needs a real premium, so nobody can profit by repeating tiny sales.
@@ -257,6 +257,6 @@ The options venue added six concepts:
 
 In the *Perpetual Futures* chapter we will relax the collateral rule. Traders post a fraction of their exposure, an oracle values the rest continuously, a haircut pays each winner only as far as the pool can back it, and a liquidator is paid to close what the fraction no longer covers.
 
-[^psyoptions]: PsyOptions pioneered physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. PsyOptions represented each option series as fungible SPL tokens, one mint per series; this program keeps one account per option instead, for a simpler custody ledger.
+[^psyoptions]: PsyOptions ran physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. PsyOptions represented each option series as fungible SPL tokens, one mint per series; this program keeps one account per option instead, for a simpler custody ledger.
 
 [^zeta]: Zeta Markets ran a margined, cash-settled options venue on Solana until it wound down in May 2025 and became Bullet, a perpetuals exchange. The comparison is between two settlement designs, not two products: a cash-settled venue can offer leverage and needs a price feed to do it, and a physically settled one offers neither.

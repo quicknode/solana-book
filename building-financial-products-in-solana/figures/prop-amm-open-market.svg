@@ -21,10 +21,19 @@
   <circle cx="24" cy="103.138" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="97.6382" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
   <text x="34" y="106.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
-  <text x="34" y="115.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <text x="34" y="115.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT</text>
   <rect x="16" y="121.638" width="126" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(24,125.638)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="44" y="136.138" font-size="10.5" font-weight="bold">Maria's USDC</text>
+  <text x="44" y="136.138" font-size="10.5" font-weight="bold">Maria's NVDAx</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="180.138" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="174.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="34" y="183.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="192.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="16" y="198.638" width="126" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,202.638)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="213.138" font-size="10.5" font-weight="bold">Maria's USDC</text>
   </g>
   <!-- Alice (trader) -->
   <circle cx="294" cy="45.7619" r="7" fill="#fff"/>
@@ -138,8 +147,8 @@
   </g>
   <!-- the market pins this feed: a read-only link, dashed grey, no coins -->
   <line x1="478" y1="332" x2="442" y2="332" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3"/>
-  <text x="242" y="430" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and fronts the rent for the market and both vaults;</text>
-  <text x="242" y="445" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no tokens move until deposit_inventory()</text>
+  <text x="242" y="400" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and fronts the rent for the market and both vaults;</text>
+  <text x="242" y="415" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no tokens move until deposit_inventory()</text>
 </g>
   <!-- the oracle feed: created from a key pair, so its public key sits on a continued piece of the curve -->
   <rect x="244" y="300" width="202" height="91" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
@@ -147,19 +156,19 @@
   <path d="M 250,316 Q 347,316 444,323" fill="none" stroke="#111" stroke-width="3.5"/>
   <circle cx="430" cy="322.03" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
-  <rect x="16" y="204" width="254.0" height="68.361" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="262.0" y="218" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
-  <path d="M 22,228 Q 155.1,228 264.0,234.0" fill="none" stroke="#111" stroke-width="3.5"/>
-  <circle cx="128" cy="229.027" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <circle cx="252" cy="233.361" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <g transform="translate(-146,234.071)">
+  <rect x="16" y="470" width="254.0" height="68.361" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="262.0" y="484" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 22,494 Q 155.1,494 264.0,500.0" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="128" cy="495.027" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="252" cy="499.361" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g transform="translate(-146,500.071)">
   <g>
   <rect x="172" y="3.95664" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(180,7.95664)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="200" y="18.46" font-size="10.5" font-weight="bold">NVDAx mint</text>
   </g>
   </g>
-  <g transform="translate(-332,203.471)">
+  <g transform="translate(-332,469.471)">
   <g>
   <rect x="480" y="38.8897" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(488,42.8897)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>

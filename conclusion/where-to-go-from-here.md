@@ -6,7 +6,7 @@ What is left is deciding what to build with them.
 
 ## What You Can Build Now
 
-You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have already done it ten times.
+You can take a financial product you understand in the real world and lay it out as accounts, handlers, and invariants, because you have watched it done ten times.
 
 You can read somebody else's program and ask the right questions:
 
@@ -19,7 +19,7 @@ You can read somebody else's program and ask the right questions:
 
 An auditor starts with the same questions and goes much further.
 
-You can treat an AI as a peer, not an authority. The companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's assets.
+You can iterate with an AI as a peer: the companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's assets.
 
 You can reason about who earns what, and why anyone takes part. Every chapter named the operator's incentive and the user's, because a crank, a liquidation or a settlement only happens if someone earns something by calling it.
 
@@ -31,7 +31,7 @@ Look away from the chain for a moment, at what the people around you deal with e
 
 A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending money to family abroad pays a rate set by which two countries they happen to be standing in, which in some corridors is more than 20%.[^remittance-corridors] Money in a savings account earns close to nothing while the same money is lent out at several times that, and the bank keeps the difference. None of it moves outside business hours.
 
-Every one of these has the same structure: parties standing between two people who have business with each other, each taking a cut and adding a delay, and a set of hours during which the arrangement operates at all. A program does not remove the need for underwriting, and it does not make a stranger's credit risk disappear. What it removes is the middleman whose job was holding the money and keeping the record, which is the function that a vault and an account already perform, for a fraction of a penny, at three in the morning on a Sunday.
+Every one of these has the same structure: parties standing between two people who have business with each other, each taking a cut and adding a delay, and a set of hours during which the arrangement operates at all. A program does not remove the need for underwriting, and it does not make a stranger's credit risk disappear. What it removes is the middleman whose job was holding the money and keeping the record, which is the function that a vault and an account already perform, for a fraction of a cent, at three in the morning on a Sunday.
 
 ## The Best Products Never Mention the Chain
 
@@ -44,7 +44,7 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 - Put the benefit on the front page in the user's own words: "get paid the day you invoice", "spend without selling your shares", "nobody can walk off with the pot".
 - Say the risk in the same plain words. Liquidation is not a footnote for somebody spending against their shares, and a rate that comes from borrowers can fall when borrowing does.
 
-## What Products Worth Building Have in Common
+## What Shipped Products Have in Common
 
 Products of this kind have been shipped already, several of them with real users and real money behind them. Study what they have in common rather than copying them line for line: each one names somebody specific, removes a cost or a delay that person never agreed to, and runs on a program like one this book builds.
 
@@ -105,7 +105,7 @@ Find out how it holds up on devnet, and when you and your third-party auditors a
 Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the financial app they would use without ever wondering what it runs on.
 
 
-[^remittance-corridors]: The Introduction's note on remittance costs gives the corridors where a rate this high applies, and the World Bank source for them.
+[^remittance-corridors]: The Introduction's note on remittance costs gives how many corridors charge this much, and the World Bank source for them.
 
 [^rosca-scope]: The World Bank's Global Findex measures informal saving-club membership country by country, at [globalfindex.worldbank.org](https://globalfindex.worldbank.org). The practice is commonest where formal bank accounts are least available.
 

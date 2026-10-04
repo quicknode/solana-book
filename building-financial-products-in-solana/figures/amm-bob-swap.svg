@@ -195,7 +195,7 @@
   <path d="M 252,157.774 C 246,165.774 243,171.774 243,187.774 C 243,260 243,320 260,350 C 302,420 400,530 474,552.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-bob-swap-arr)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="258.55" y="371.83" font-size="9.5" font-weight="bold" fill="#1e7a3c">swap_tokens() &#183; 100 USDC</text>
   <text x="252.9" y="387.83" font-size="8" fill="#444" font-style="italic" text-anchor="end">$0.30 of that is the fee (30 bps): $0.05 accrues to</text>
-  <text x="238" y="400" font-size="8" fill="#444" font-style="italic" text-anchor="end">Maria, the LPs' $0.25 simply stays in the vault</text>
+  <text x="238" y="400" font-size="8" fill="#444" font-style="italic" text-anchor="end">Maria, the LPs' $0.25 stays in the vault</text>
   <text x="238" y="412" font-size="8" fill="#444" font-style="italic" text-anchor="end">99.70 is the taxed input the curve prices off</text>
   <!-- the curve prices the trade: ACME out to Bob -->
   <path d="M 474,472.37 C 440,500 412,430 392,370 C 386.09,351.44 381.22,330.94 376.29,310.71 C 373.38,298.76 360.62,280.79 338,256.77" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-bob-swap-arr)"/>
