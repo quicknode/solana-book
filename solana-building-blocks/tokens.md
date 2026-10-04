@@ -22,7 +22,7 @@ Two tokens are the same asset if they come from the same mint address, and diffe
 
 ## A Mint Is a Factory, and the Mint Authority Is Its Boss
 
-A mint does not just describe a type of token; it manufactures it. New tokens come into existence only when the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler. The supply counter rises and the new tokens land in a token account. A holder burns their own tokens with `burn()`, and the supply falls. Nothing else in the system can create or destroy a single unit.
+A mint does not just describe a type of token; it manufactures it. New tokens come into existence only when the mint's **mint authority** signs an instruction to the **Token Program**'s `mint_to()` handler. The supply counter rises and the new tokens land in a token account. Destroying tokens needs no mint authority: any holder can burn their own tokens with `burn()`, signing as the owner of the token account that holds them, and the supply falls. So only the mint authority can raise the supply, and any holder can lower it. No other handler changes the supply.
 
 As well as the current total supply, the mint account also stores the token's decimals (the number of decimal places in a major unit: 6 for USDC, so a dollar is 1,000,000 minor units), and its authorities. 
 
