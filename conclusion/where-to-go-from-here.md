@@ -1,6 +1,6 @@
 # Chapter 21: Where to Go From Here
 
-The Introduction promised settlement that is atomic and global, one set of accounts every party reads, fees that ignore the amount, markets that never close, rules that run as instruction handlers, assets of every kind, and distribution the moment a program is deployed. Those are no longer selling points for a platform. They are tools you can build with.
+The Introduction promised settlement that is atomic and global, one set of accounts every party reads, fees that ignore the amount, markets that never close, rules that run as instruction handlers, assets of every kind, and distribution the moment a program is deployed. Those are no longer promises. They are tools you can build with.
 
 What is left is deciding what to build with them.
 
