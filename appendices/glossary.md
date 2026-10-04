@@ -382,7 +382,7 @@ Someone who deposits assets into a pool for traders to trade against, earning fe
 
 ### loan-to-value (LTV)
 
-The fraction of collateral value that may be borrowed against it, e.g. 75%.
+The fraction of collateral value that may be borrowed against it, for example 75%.
 
 ### long / short
 
@@ -502,7 +502,7 @@ Two tokens a market trades against each other, written base/quote with the [base
 
 ### parimutuel
 
-A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool pro rata by stake. See the *Betting Market* chapter.
+A betting structure with no bookmaker: all stakes pool together, and winners split the losers' pool in proportion to their stakes. See the *Betting Market* chapter.
 
 ### PDA (program derived address)
 
@@ -539,10 +539,6 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 ### principal
 
 The amount lent or borrowed, before any interest. A lending program stores each loan's principal and computes the live debt from it with the [borrow accumulation factor](#borrow-accumulation-factor).
-
-### pro rata
-
-In proportion to stake. Winners split a [parimutuel](#parimutuel) pool pro rata by what they bet, and shares are minted pro rata against the pool they join.
 
 ### profit warm-up
 

@@ -77,7 +77,7 @@ The better ideas are in the places where the programs exist and no product has s
 
 Some things were left out on purpose.
 
-**Reward distribution** got no chapter of its own, though you have already met the whole of it. The accumulation factor in the lending market and the pro-rata payout of the parimutuel pool are the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up.
+**Reward distribution** got no chapter of its own, though you have already met the whole of it. The accumulation factor in the lending market and the proportional payout of the parimutuel pool are the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up.
 
 **Vesting and streaming payments** have no chapter of their own, and the pay-on-approval product above is the argument for making one your first build.
 
