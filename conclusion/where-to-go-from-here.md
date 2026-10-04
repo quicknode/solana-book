@@ -12,7 +12,7 @@ You can read somebody else's program and ask the right questions:
 
 - Which accounts does it check, and which does it trust?
 - Who holds each authority, and what can they move?
-- Which terms are fixed when someone joins, and which can change under them?
+- Once funds go in, can anyone freeze them, and what releases them?
 - What happens at the edges: an empty pool, a zero amount, the last second before a deadline?
 - Which way does each division round, and can any multiplication overflow?
 - Can every participant get their assets out of every state?
