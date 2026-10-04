@@ -37,6 +37,6 @@
   <!-- the withdrawal in the story -->
   <circle cx="342.1" cy="156.2" r="3.5" fill="#111"/>
   <path d="M 344.1,162.2 L 350.1,234.2" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="312.1" y="248.2" font-size="10.5" font-style="italic" fill="#444">withdrawing at $2.64: $1.50 behind, no fees yet</text>
+  <text x="312.1" y="248.2" font-size="10.5" font-style="italic" fill="#444">withdrawing at $2.64: $1.50 behind, fees included</text>
 </g>
 </svg>
