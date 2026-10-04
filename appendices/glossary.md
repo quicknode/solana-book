@@ -472,6 +472,14 @@ The face value of a position, as opposed to the margin posted against it. Five N
 
 A borrower's loan file in a lending market: their collateral deposits, their borrows, and the cached valuations health checks run against.
 
+### offchain
+
+Outside the blockchain: a bank balance, a match result, a price on an exchange. An offchain fact reaches a program signed by someone the program trusts. The opposite is [onchain](#onchain). See the *Offchain Truth* chapter.
+
+### onchain
+
+Stored or executed on the blockchain itself: an account's data, a program's code, a transaction's effects. The opposite is [offchain](#offchain). Spelled as one word, like "online"; "on‑chain" will look as dated as "on‑line" does now.
+
 ### open interest
 
 The total notional of positions currently open on a market, usually tracked per side.

@@ -293,6 +293,7 @@ const exceptions = [
   /Called a "smart contract" on other chains/, // the glossary's contrastive definition
   /other blockchains call the same thing a "smart contract"/, // the Introduction's contrastive mention, which also names "protocol"
   /Other chains call a program a "smart contract"/, // the Options chapter's boxout separating an option contract from a program
+  /"on‑chain" will look as dated as "on‑line" does now/, // the glossary's onchain entry, which names the spelling it replaces
   /call this "property-based testing"/, // the one pointer to the testing libraries' own term
   /^Though Kani calls its checks "proofs", a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
