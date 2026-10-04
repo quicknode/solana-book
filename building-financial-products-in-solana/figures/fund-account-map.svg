@@ -231,9 +231,11 @@
   <text x="472" y="813.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
   </g>
   </g>
-  <g transform="translate(0,-260)">
+  <g transform="translate(0,-240)">
+  <!-- the continued area: the second piece of curve and the accounts that hang from it -->
+  <rect x="6" y="598" width="238" height="170" rx="4" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <!-- the curve again, so the swap router's address, a public key, can sit on it beside its box -->
-  <path d="M 0,622 Q 140,622 238,630" fill="none" stroke="#111" stroke-width="3.5"/>
+  <path d="M 12,622 Q 140,622 238,630" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="236" y="612" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
   <circle cx="222.000" cy="628.767" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
