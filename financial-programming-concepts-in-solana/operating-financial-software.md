@@ -17,7 +17,7 @@ Every test in this list is quick to write and fast to run. The companion suites 
 
 ## Model Checking Goes Further Than Testing
 
-A test checks the values you thought of. A model checker checks all of them. Three levels of assurance run from one to the other, and how far up to go is set by how much the program's vaults will hold:
+A test checks the values you thought of. A model checker checks all of them. There are three levels of assurance, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
 - **Invariant tests** assert a condition that must hold for every value (the invariants listed above) at whatever values the test chooses, so a change that breaks the condition fails the test at any of them. Testing libraries that generate the values call this "property-based testing".
@@ -63,7 +63,7 @@ Every market in this book has an operator with real power: withdrawing fees, set
 
 ## Ship To Mainnet With a Second (or Third) Opinion
 
-Before a program that holds other people's assets touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. Every check in the program chapters' failure-modes sections exists because someone's first opinion missed it. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
+Before a program that holds other people's assets touches mainnet, get a **second-opinion audit**: an independent reviewer, unattached to the team, walking the *Adversary* chapter's exploit classes against your code. An auditor hunts for the same holes an attacker would, and hands you the list instead of draining the program.
 
 An audit reviews one commit of your source code, but users run whatever bytecode is deployed. A **verified build** connects the two. The program is built in a container that produces the same bytes from the same source every time, so anyone can rebuild that commit and check that the result matches the program onchain. The `solana-verify` tool does the build and the comparison,[^solana-verify] and records the repository and commit onchain, so explorers can show the program as verified. Publish the audit report with the commit it covered, and the verified build shows users that commit is the code they are running. Verify again after every upgrade, because each one replaces the bytes.
 

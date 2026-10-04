@@ -51,7 +51,7 @@ Integer division nearly always leaves a remainder, and that remainder is **dust*
 | What the program pays out | Down (floor) | Withdrawals, winnings, swap outputs, shares minted |
 | What the user owes | Up (ceil) | Debt, fees |
 
-Keeping the dust in the pool is the only policy nobody can exploit: the pool belongs to its depositors, so the remainder stays with everyone rather than leaking to whoever transacts most often. One minor unit of rounding in the user's favor is invisible in a test, and an attacker who can loop a transaction thousands of times turns it into a drain; the precision-exploit section of the *Adversary* chapter shows that attack succeeding in production.
+Keeping the dust in the pool is the only policy nobody can exploit: the pool belongs to its depositors, so the remainder stays with everyone rather than leaking to whoever transacts most often. One minor unit of rounding in the user's favor is invisible in a test, and an attacker who can loop a transaction thousands of times turns it into a drain; the rounding-error section of the *Adversary* chapter shows that attack succeeding in production.
 
 > **War Story: the SPL token-lending rounding bug.** In 2021, security researchers at Neodyme found that the widely-forked SPL token-lending program rounded a conversion with `round`, to the nearest integer, instead of flooring it. Rounding half-up means rounding in the user's favor half the time, and a carefully-sized deposit-withdraw loop could keep a lending pool's rounding on the favorable side, extracting value on every pass. Roughly $2.6B across Solana lending markets was exposed.[^spl-lending] The fix that shipped was one word: `round` became `floor`.
 

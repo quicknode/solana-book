@@ -17,7 +17,7 @@ In a parimutuel market, all stakes on all outcomes go into one vault, and when t
 
 ## The Operator Creates the Market
 
-Maria is the admin. Her public key is recorded in the program's config, and only she can create events, add outcomes, open betting, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 basis points (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month") and a `betting_closes_at` of midnight on the last day of the month. A close time already in the past fails with `CloseTimeInPast`. The event starts as a Draft, and Maria calls `add_outcome()` twice: "Glowbugs 3" and "The Quiet Floor". Then she calls `open_betting()`, which moves the event to Open. The first signer of `initialize_config()` becomes the admin. Every handler after it checks the signer against that address and rejects anyone else with `Unauthorized`; `test_only_admin_can_initialize_event` and the last step of `test_open_betting_needs_two_outcomes` check it.
+Maria is the admin. Her public key is recorded in the program's config, and only she can create events, add outcomes, open betting, settle, and cancel; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 **basis points** (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month") and a `betting_closes_at` of midnight on the last day of the month. A close time already in the past fails with `CloseTimeInPast`. The event starts as a Draft, and Maria calls `add_outcome()` twice: "Glowbugs 3" and "The Quiet Floor". Then she calls `open_betting()`, which moves the event to Open. The first signer of `initialize_config()` becomes the admin. Every handler after it checks the signer against that address and rejects anyone else with `Unauthorized`; `test_only_admin_can_initialize_event` and the last step of `test_open_betting_needs_two_outcomes` check it.
 
 ![](figures/betting-maria-setup.svg)
 
@@ -81,7 +81,7 @@ The claim closes the bet account, refunding its rent to the bettor. **A closed a
 
 ## Closing Out, and Getting Assets Out of Every State
 
-Carol's losing bet pays nothing, but its account still holds her rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this path for losing bets rejects with `BetWon` and must use `claim_winnings()`), then closes the account and returns the rent to her. Both rules are checked by `test_close_losing_bet_only_after_settle_and_only_for_losers`.
+Carol's losing bet pays nothing, but its account still holds her rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this path for losing bets rejects with `BetWon` and must use `claim_winnings()`), then closes the account and returns the rent to her. `test_close_losing_bet_only_after_settle_and_only_for_losers` checks that both attempts fail.
 
 An Open event can also be voided: if the studio pulls both films from release, there is no result to settle. `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (checked by `test_cancel_and_refund`). `cancel_event()` works on a Draft too, which is how Maria abandons a market she set up wrong before anyone has staked on it. Settled and Cancelled are the two ways an Open event ends, and in both every bet account has a handler that pays it out or closes it.
 
@@ -100,14 +100,14 @@ Every checked operation maps to `MathOverflow`. There are no rates and no curves
 
 ## The Invariants: The Vault Covers Every Claim
 
-- At every moment, the vault balance equals stakes not yet claimed: before settlement, the total pool; after settlement, winning stakes plus unclaimed winnings plus dust.
+- At every moment, the vault balance equals stakes not yet claimed: before settlement, the total pool; after settlement, winning stakes plus unclaimed winnings plus dust; after cancellation, the stakes not yet refunded.
 - The winning pool, the distributable losing pool, and the fee always sum exactly to the pre-settlement total pool: 400 + 196 + 4 = 600.
 - A winner's payout is never less than their stake.
 - One bet account per bettor per outcome, and no bet account survives its payout, refund, or close.
 - The outcome list never changes once the event is Open, and no stake enters the pool at or after `betting_closes_at`.
 - Only the admin's signature can settle or cancel, and only the payout formula decides amounts.
 
-## The Failure Modes: The Oracle Is a Person, and Everything Downstream of That
+## The Failure Modes: One Person Decides the Result
 
 - **The resolution itself.** Maria could settle the wrong outcome, maliciously or by mistake, and the decision is hers alone. This program is deliberately the simplest case; the *Offchain Truth* chapter covers what it costs a trusted party to lie, and how to replace a single signer with several.
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.

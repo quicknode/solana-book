@@ -15,7 +15,7 @@
   <!-- Exercised -->
   <rect x="434" y="125" width="118" height="50" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="493" y="147" font-size="13" font-weight="bold" text-anchor="middle">Exercised</text>
-  <text x="493" y="165" font-size="10" fill="#444" text-anchor="middle">strike in, collateral out</text>
+  <text x="493" y="165" font-size="10" fill="#444" text-anchor="middle">payment in, collateral out</text>
   <!-- transitions along the top row -->
   <path d="M 178,150 L 232,150" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
   <text x="205" y="116" font-size="10.5" text-anchor="middle">buy_option()</text>

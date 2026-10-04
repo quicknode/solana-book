@@ -14,7 +14,7 @@ The program for this chapter lives at `finance/escrow` in the companion reposito
 
 ## Escrow Lets Two Strangers Swap Without Trusting Each Other
 
-Alice starts, like every character in this book, with one SOL and 1,000 USDC; she wants a share of Tesla stock and is prepared to spend 250 USDC on it. Bob holds TSLAx and likes that price. They want to trade.
+Alice starts, like every character in this book, with one SOL and 1,000 USDC; she wants a share of Tesla stock and is prepared to spend 250 USDC on it (an illustrative price). Bob holds TSLAx and likes that price. They want to trade.
 
 ![](figures/escrow-swap-intent.svg)
 
@@ -57,7 +57,7 @@ The **offer account** stores what Alice wants in return. It is the program's cus
 - `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
 - `token_mint_a` and `token_mint_b`, identifying the two tokens in the deal
 - `token_b_wanted_amount`, how much of token B the maker wants, in minor units
-- `bump`, saved once at creation so later instruction handlers can rebuild the account's address without searching for the bump again
+- `bump`, the stored bump the *PDAs* chapter describes
 
 The offer account lives at a PDA derived from the seeds `"offer"`, the maker's address, and the ID. Because the maker's address is part of the seeds, two different makers can never collide.
 
@@ -88,9 +88,9 @@ The handler code runs two steps:
 - **`handle_send_wanted_tokens_to_maker()`** moves the 100,000,000 minor units of TSLAx straight from `taker_token_account_b` to `maker_token_account_b`, with Bob signing. Bob's payment goes directly to Alice's token account; there is no intermediate stop for token B, because the program never needs custody of it.
 - **`handle_withdraw_and_close_vault()`** moves the USDC out of the vault to `taker_token_account_a`, which was created in this same transaction if Bob had never held USDC before (Bob pays for his own account). The vault's authority is the offer PDA, so for this transfer the program signs with the offer's seeds: `"offer"`, the maker's address, the ID, and the saved bump.
 
-Then the same helper pair closes the vault with `close_token_account()`, sending its rent deposit back to Alice, and the offer account itself is closed, refunding that rent to Alice too.
+Then `close_token_account()`, the other shared helper, closes the vault, sending its rent deposit back to Alice, and the offer account itself is closed, refunding that rent to Alice too.
 
-Both sides now hold exactly what the other offered. No percentage went to anyone.
+Both sides now hold exactly what the other offered.
 
 ### The Maker Cancels the Offer
 
@@ -112,7 +112,7 @@ Five things must hold before and after every handler:
 
 - Alice's offered tokens are in exactly one place at any instant: her token account, the vault, or (after the take) Bob's token account.
 - The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until `take_offer()` or `cancel_offer()` runs, and both handlers empty the vault completely before closing it. A direct donation could push the balance above that amount; no check reads the balance, and whatever is in the vault goes to the taker on a take or back to the maker on a cancel.
-- The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler, so there is nothing to get wrong.
+- The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
 - Rent returns to whoever paid it, on every path.
 
@@ -124,7 +124,7 @@ Five things must hold before and after every handler:
   - **A foreign vault.** Alice has a second offer open, with 500 USDC in its vault. Bob passes the first offer, which asks 1 TSLAx for 250 USDC, together with the second offer's vault, hoping to be paid 500 USDC for his 1 TSLAx. The vault must be the first offer's associated token account for token mint A, derived from that offer's address, so the second vault is rejected. Even without that check the token program would refuse the transfer, because the PDA signing for it is not that vault's authority.
   - **A mismatched mint.** Bob creates a token of his own, mints himself 100,000,000 minor units of it, and passes its mint as `token_mint_b` and his account of it as `taker_token_account_b`, hoping to pay Alice in a token worth nothing. The stored-address check compares the mint passed in against the `token_mint_b` recorded in the offer, and rejects it.
 
-  Each is closed by the constraint structure: associated token account derivation binds each token account to its owner and mint, stored-address checks bind the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter shows what happens to programs that skip these checks.
+  Each is blocked by a constraint: associated token account derivation binds each token account to its owner and mint, stored-address checks bind the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter shows what happens to programs that skip these checks.
 - **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
 - **Degenerate offers.** An offer with zero tokens on one side, or of a token for a different amount of itself, means someone is about to be cheated. `make_offer()` refuses an offer of zero tokens on either side with `ZeroAmount` (`test_make_offer_rejects_zero_offered_amount` and `test_make_offer_rejects_zero_wanted_amount`). An offer of a token for itself never reaches the handler: with one mint, the maker's token A and token B accounts are the same account, and Anchor refuses the same writable account twice with `ConstraintDuplicateMutableAccount`, which `test_make_offer_rejects_same_mint` checks.
 
@@ -133,7 +133,7 @@ Five things must hold before and after every handler:
 The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token accounts each scenario needs. Every piece of program state in the tests is created through the program's own instruction handlers, never injected, so a missing constraint or an unusable handler cannot hide behind a hand-built fixture.
 
 - `test_make_offer` calls `make_offer()` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (ID, maker) match what Alice sent.
-- `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Assert both directions of every symmetric flow, as the testing section of the *Operating Financial Software* chapter says; a bug that favors one side is invisible if you assert only the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so asserts the rent economics.
+- `test_take_offer` runs the full happy path and asserts both directions of the swap: Bob's token A balance and Alice's token B balance. Assert both directions of every symmetric flow, as the testing section of the *Operating Financial Software* chapter says; a bug that favors one side is invisible if you assert only the other. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so checks that no rent ended up with the wrong party.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
 

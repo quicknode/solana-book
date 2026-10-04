@@ -6,7 +6,7 @@ Chase Barker runs founder ecosystem growth at the Solana Foundation, and previou
 
 Francis Endrinal writes Solana Technical Weekly, a newsletter on the engineering work behind Solana.
 
-Mitch Gildenberg is the founder of Escalate Labs, and was previously CTO and co-founder of Switchboard, an oracle network on Solana.
+Mitch Gildenberg is the founder of Escalate Labs, and was previously CTO and co-founder of Switchboard, which ran an oracle network on Solana.
 
 Marius Gugat is a security researcher at Neodyme, a security firm that audits Solana programs.
 

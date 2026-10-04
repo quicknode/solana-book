@@ -75,7 +75,7 @@ The network's target slot length is 200 milliseconds at the time of writing.[^sl
 A program can get that length three ways:
 
 - **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on, which the section on a shortened slot covers.
-- **From the feature gates.** Changes to the network ship as **features**, built into the validator software switched off and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its feature gate activates, not from the moment it does, so check the epoch as well as the feature gate.
+- **From the feature gates.** Changes to the network ship as **features**, built into the validator software, switched off, and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its feature gate activates, not from the moment it does, so check the epoch as well as the feature gate.
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case such an account now exists.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
@@ -94,7 +94,7 @@ A program reading a price has two questions to answer:
 - Whether the source can be trusted.
 - Whether the price is recent enough.
 
-A **price feed** is an account that some publisher keeps updated with a price and the time they published it. The *Offchain Truth* chapter answers the first question, along with everything else a program checks about a price before acting on it. This chapter answers the second. Four of this book's programs answer it differently:
+A **price feed** is an account that some publisher keeps updated with a price and the time they published it. The *Offchain Truth* chapter answers the first question, along with everything else a program checks about a price before acting on it. This chapter answers the second. Four of this book's programs answer it:
 
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |

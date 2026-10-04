@@ -18,7 +18,7 @@ The 32-byte identifier of an account, usually shown base58-encoded. An address i
 
 ### adverse selection
 
-A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. See [informed flow](#informed-flow) and the *Prop AMM* chapter.
+The loss a market maker takes when a trader who knows the price has moved fills the quote before it is updated. See [informed flow](#informed-flow) and the *Prop AMM* chapter.
 
 ### aggregator
 
@@ -78,7 +78,7 @@ An order to buy at or below a stated price. The buyer's side of an order book.
 
 ### block
 
-A batch of transactions one [leader](#leader) produces for its [slot](#slot), built on the block before it, its parent. A slot whose block does not arrive in time is skipped and has no block.
+A batch of transactions one [leader](#leader) produces for its [slot](#slot), built on the block before it, its parent.
 
 ### borrow accumulation factor
 
@@ -234,15 +234,15 @@ The moment an [option](#option)'s right lapses: the holder may exercise before i
 
 ### exponentiation by squaring
 
-Computing (1 + r)ⁿ for large n in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed seconds in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
+Computing (1 + r)ⁿ, a per-second rate r compounded over n seconds, in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed seconds in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
 
 ### faucet
 
-A service that gives away free test tokens on devnet: SOL from the `solana airdrop` command or [faucet.quicknode.com/solana](https://faucet.quicknode.com/solana), USDC from Circle's faucet at [faucet.circle.com](https://faucet.circle.com).
+A service that gives away free devnet tokens; the *Core Building Blocks of Solana* chapter names two.
 
 ### feature
 
-A change to the network, built into the validator software switched off and turned on across the network at the start of an [epoch](#epoch). Each shortening of the [slot](#slot) has shipped as one, and the *Time* chapter covers reading them from a program.
+A change to the network, built into the validator software, switched off, and turned on across the network at the start of an [epoch](#epoch). Each shortening of the [slot](#slot) has shipped as one, and the *Time* chapter covers reading them from a program.
 
 ### finality
 
@@ -290,7 +290,7 @@ The party who owns an [option](#option) and may [exercise](#exercise) it. A hold
 
 ### impermanent loss
 
-The gap between an LP position's value and what simply holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
+The gap between an LP position's value and what holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
 
 ### index
 
@@ -446,7 +446,7 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 ### Newton's method (integer square root)
 
-The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the *Constant-Product AMM* chapter.
+The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as the square root of the two reserves' product. See the *Constant-Product AMM* chapter.
 
 ### NFT (non-fungible token)
 
@@ -598,7 +598,7 @@ The URL a program or wallet sends its transactions to: a server holding a [clust
 
 ### RWA (real-world asset)
 
-A traditional [asset](#asset) represented as a [token](#token) onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. "RWA" lumps very different things together, so it is usually clearer to name the asset class instead: tokenized stocks, tokenized Treasury bills, gold.
+A traditional [asset](#asset) represented as a [token](#token) onchain: commodities, equities, real estate, and exotics. The stocks this book's markets trade (NVDAx, TSLAx, SPCXx) are RWAs. "RWA" lumps very different things together, so it is usually clearer to name the asset class instead: stocks, Treasury bills, gold.
 
 ### sandwich
 
@@ -718,7 +718,7 @@ The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previo
 
 ### utilization
 
-In a lending reserve, borrowed divided by total liquidity. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
+In a lending reserve, borrowed divided by available plus borrowed. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
 
 ### validator
 
@@ -738,7 +738,7 @@ A key pair used as an identity for holding and moving assets, with the private k
 
 ### wrapping
 
-What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes almost nothing. Compare [checked arithmetic](#checked-arithmetic).
+What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes zero. Compare [checked arithmetic](#checked-arithmetic).
 
 ### writer
 

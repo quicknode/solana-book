@@ -12,8 +12,8 @@ So is every other asset on Solana.[^tokens-xyz]
 
 Each kind of token is defined by its own **mint account**. 
 
-- `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` defines USDC on mainnet [^usdc-address]
-- `Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh` defines NVDAx on mainnet [^nvdax-address]
+- `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` defines USDC on mainnet[^usdc-address]
+- `Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh` defines NVDAx on mainnet[^nvdax-address]
 - An address you will create in the *Managed Fund* chapter defines the shares that fund issues (on devnet, and on mainnet too if you choose to deploy it for real).
 
 A mint is not itself a token: it is the account a token comes from, and no amount of anything is held in the mint.
@@ -42,13 +42,13 @@ A **token account** holds one owner's balance of a particular type of token, and
 
 > **A token account's "owner" is not its owner program.** Every account has an owner program, and for a token account that is always the token program: the only program that can change its bytes. The **owner** recorded in a token account's data is something else: the address that can move its tokens. Alice is the owner of her USDC account, and the Token Program moves USDC out of it only when Alice signs (or a **delegate** she has approved, up to the amount she approved). Solana's own tools use "owner" for both. In this book, when an address "owns" a token account or "holds" its tokens, it means the second: that address is the token account's owner, and its signature is what moves the tokens. The figures label this field `authority`, because a program's vault is owned by a PDA and the book calls that PDA the vault's authority.
 
-The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the token program that manages the mint, and the mint. Put in Alice's address and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a wallet finds Alice's USDC account from nothing but her address, and how account constraints can verify that a token account an instruction supplies really is hers.
+The **associated token account** (ATA) is the canonical token account for a given wallet and mint, at an address anyone can derive from three seeds: the owner's address, the token program that manages the mint, and the mint. Put in Alice's address, the token program, and the USDC mint, and out comes the address of Alice's USDC account; put in Bob's, and out comes his. This is how a wallet finds Alice's USDC account from nothing but her address, and how a program can check that a token account an instruction supplies really is hers.
 
 An ATA lives at a **PDA**: a derived address that sits off the curve, with no private key, so no signature for the address itself can ever exist. That does not stop Alice spending her USDC: she is the token account's owner, and her signature is what moves it. The *PDAs* chapter explains the mechanism.
 
 ![](figures/token-accounts-off-the-curve.svg)
 
-Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the offer account's ATA), and others are token accounts at PDAs of the program itself (the order book's three vaults are derived from the market). The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
+Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the ATA of the offer PDA), and others are token accounts at PDAs of the program itself (the order book's three vaults are derived from the market). The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
 
 ![](figures/token-accounts-and-atas.svg)
 
@@ -62,9 +62,7 @@ The mint's other authority is the **freeze authority**, which can freeze and tha
 
 ## Two Token Programs: Classic and Token Extensions
 
-Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core instructions and accounts, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every token account in one instruction uses the same token program. Every program in this book works that way.
-
-The table lists the extensions that matter for financial products:
+Solana has two token programs. The **Classic Token Program** is the original, and most tokens in circulation use it. The **Token Extensions Program** is its successor: the same core instructions and accounts, plus opt-in, per-mint features. Well-written programs support both through a common interface (like Anchor's `token_interface`), and only require that every token account in one instruction uses the same token program. Every program in this book works that way. The Token Program the last chapter named is the Classic one; this book's programs accept either.
 
 | Extension | What it does | What it means for your program |
 | --- | --- | --- |
