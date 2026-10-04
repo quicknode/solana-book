@@ -670,7 +670,7 @@ What a pool quotes for a trade small enough to move nothing: the ratio of its tw
 
 ### spread
 
-The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee. A trader who buys immediately pays the best ask and one who sells immediately receives the best bid, so buying and selling straight back loses the whole spread.
+The gap between the best bid and the best ask. On an order book it emerges from the orders traders leave resting, and the exchange takes none of it. A trader who buys immediately pays the best ask and one who sells immediately receives the best bid, so buying and selling straight back loses the whole spread. A market maker **charges a spread** when it quotes its own prices, selling above the price it takes as fair and buying below it, and keeps the difference. A prop AMM charges a spread around its oracle price, and that spread is the venue's entire fee.
 
 ### stablecoin
 
