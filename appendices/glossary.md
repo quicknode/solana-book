@@ -242,7 +242,7 @@ A service that gives away free devnet tokens; the *Core Building Blocks of Solan
 
 ### feature
 
-A change to the network, built into the validator software, switched off, and turned on across the network at the start of an [epoch](#epoch). Each shortening of the [slot](#slot) has shipped as one, and the *Time* chapter covers reading them from a program.
+A change to the network, built into the validator software, switched off, and turned on across the network at the start of an [epoch](#epoch).
 
 ### finality
 
