@@ -2,10 +2,13 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Derived token accounts sit off the curve</text>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
-  <circle cx="508" cy="77.5729" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <!-- the USDC mint: a public key, hung beneath the curve in the free stretch right of the program -->
+  <circle cx="580" cy="94.926" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g transform="translate(-16,61.033)">
   <rect x="500" y="42.8932" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(508,46.8932)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
   <text x="528" y="57.39" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
   <circle cx="132" cy="35.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="16" y="44.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

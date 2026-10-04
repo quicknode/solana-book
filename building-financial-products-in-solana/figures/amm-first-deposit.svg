@@ -5,20 +5,8 @@
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <!-- untouched by deposit_liquidity() -->
-  <circle cx="285" cy="44.923" r="7" fill="#fff"/>
-  <g opacity="0.3">
-  <circle cx="285" cy="44.923" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="277" y="11.0307" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(285,15.0307)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="303" y="25.4307" font-size="9.5" font-weight="bold">ACME mint</text>
-  </g>
-  <circle cx="488" cy="73.4582" r="7" fill="#fff"/>
-  <g opacity="0.3">
-  <circle cx="488" cy="73.4582" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <rect x="480" y="38.8897" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(488,42.8897)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
-  <text x="508" y="53.2897" font-size="9.5" font-weight="bold">USDC mint</text>
-  </g>
+
+
   <!-- Maria signs the first deposit -->
   <g>
   <circle cx="110" cy="34.602" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -220,4 +208,30 @@
   <text x="268" y="392" font-size="10.5" font-weight="bold" fill="#1e7a3c">Deposit 900 USDC alongside it</text>
   <rect class="marker" x="242" y="398.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="250" y="410.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
   <text x="268" y="410" font-size="10.5" font-weight="bold" fill="#1e7a3c">Mint 599.9999 LP to Maria</text>
+  <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
+  <rect x="84" y="554" width="254.0" height="68.361" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="330.0" y="568" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 90,578 Q 223.1,578 332.0,584.0" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="196" cy="579.027" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="196" cy="579.027" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  </g>
+  <circle cx="320" cy="583.361" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="320" cy="583.361" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  </g>
+  <g transform="translate(-183,576.996)">
+  <g opacity="0.3">
+  <rect x="277" y="11.0307" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(285,15.0307)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="303" y="25.4307" font-size="9.5" font-weight="bold">ACME mint</text>
+  </g>
+  </g>
+  <g transform="translate(-264,553.471)">
+  <g opacity="0.3">
+  <rect x="480" y="38.8897" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,42.8897)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="508" y="53.2897" font-size="9.5" font-weight="bold">USDC mint</text>
+  </g>
+  </g>
 </svg>
