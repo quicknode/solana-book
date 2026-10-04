@@ -22,6 +22,8 @@ Aaron Milano is a Developer Relations Engineer at the Solana Foundation, and was
 
 Noah Prince is an engineer at Velocity, and previously led engineering at the Helium Foundation.
 
+Robert Reith is the CEO of Accretion, a security firm that audits Solana programs.
+
 Angus Scott is the founder of the Solana Research Institute, and was previously Head of Innovation at Euroclear and Head of Product at CLS.
 
 Brennan Watt is the CEO of Anza, the team behind the Agave validator client.
