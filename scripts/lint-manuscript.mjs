@@ -46,11 +46,14 @@ const rules = [
   // machine-written before they have finished the sentence. Each one also
   // stands in for a mechanism rather than stating it, so the fix is the same
   // fix every time: name the thing and say what it does.
-  // "The defense is a margin" names a category where the sentence should
-  // name the action. Say what to do: "Handle this with a margin", "Fix this
-  // by storing the window".
-  [/\b(the|her|his|their|its|\w+'s)( \w+)? defen[cs]es? (is|are)\b|\bthe defen[cs]es (below|above|make)\b/i,
-    'say what to do ("handle this with...", "fix this by..."), not "the defense is..."'],
+  // "The defense is a margin", "The rule is checks-effects-interactions",
+  // "The failure is unbounded power": each refers back to a defense, rule,
+  // or failure the reader was never told about. The sentence invents the
+  // category and then fills it. Say the thing directly: "Handle this with a
+  // margin", "Follow a rule called checks-effects-interactions", "Unbounded
+  // power, however, is a problem".
+  [/(^|[.;:!?]\s+)(so |but )?(the|her|his|their|its|one|another|\w+'s)( \w+)? (defen[cs]es?|rules?|fix|fixes|failure|mechanism|mitigations?|remed(y|ies)|solutions?|cure|trick|catch|takeaway|lesson|pattern)( \w+)? (is|are)\b|\bthe defen[cs]es (below|above|make)\b/i,
+    'state the thing directly ("handle this with...", "fix this by...", "follow a rule called..."), not "the defense/rule/fix is..." about a category the reader was never told about'],
   [/\bload.bearing\b/i, 'say what depends on the thing and what breaks without it'],
   // A key pair is two keys. Its public key is an address; the pair is not an
   // address or an account, the private key is never shown, and an address
