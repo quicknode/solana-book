@@ -75,10 +75,7 @@ None of these payouts depended on when anyone bet. Had Alice bet first, when Glo
 
 The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means at most a few minor units of dust can remain in the vault, and dust belongs to the house, not to whichever claimant happened to arrive last.
 
-Two orderings in this handler close attacks:
-
-- **The bet is removed from the user's index before the token transfer.** Effects before interactions, so no re-entry path can see stale state.
-- **The bet account itself closes at the end of the claim**, rent refunded to the bettor, and **a closed account is the double-claim defense**: Alice claiming twice fails because the bet account the second claim needs is already gone (checked by `test_double_claim_fails`).
+The claim removes the bet from the user's index and closes the bet account, refunding its rent to the bettor. **A closed account stops a double claim**: Alice claiming twice fails because the bet account the second claim needs is already gone (checked by `test_double_claim_fails`).
 
 There is no `claimed` boolean to forget to check.
 

@@ -6,7 +6,7 @@ The program lives at `finance/order-book` in the companion repository. It assume
 
 ## A Limit Order Is a Price You Refuse to Cross
 
-A **limit order** is an order with a price limit attached. A **bid** says "I will buy, but only at or below this price." An **ask** says "I will sell, but only at or above this price." The **order book** is the two lists where those orders wait: bids on one side, asks on the other, best prices at the front. The gap between the best bid and the best ask is the spread, and when a new order's limit reaches across that gap, a trade happens.
+A **limit order** is an order with a price limit attached. A **bid** says "I will buy, but only at or below this price." An **ask** says "I will sell, but only at or above this price." The **order book** is the two lists where those orders wait: bids on one side, asks on the other, best prices at the front. The gap between the best bid and the best ask is the **spread**, and when a new order's limit reaches across that gap, a trade happens.
 
 ![](figures/order-book-bids-asks-spread.svg)
 
@@ -72,6 +72,8 @@ Bob wants in, but he is not prepared to pay more than 250. He calls `place_order
 
 ![](figures/order-book-resting-spread.svg)
 
+A trader who wants NVDAx right now pays Alice's 265, and one who wants to sell right now gets Bob's 250, so buying a share and selling it straight back loses 15, the whole spread. None of that goes to Maria. A market maker charges a spread by quoting its own prices, as the *Prop AMM* chapter's does; this exchange quotes nothing, and its only revenue is the fee.
+
 ## A Crossing Ask Fills Against the Resting Bid
 
 Carol also owns NVDAx and also wants out, and she is less patient than Alice: she asks three shares at 245. Her limit is at or below the best bid, so this order crosses.
@@ -102,7 +104,7 @@ Traditional exchanges also let a trader shrink a resting order in place and keep
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
-One line in the handler belongs in everything you build: it snapshots the unsettled amounts and **zeroes the counters before making the transfers**. If a token transfer could ever call back into this program (token extensions can attach hooks to transfers), a caller re-entering mid-transfer would find balances already zeroed instead of still-credited, so double-withdrawal is impossible. The pattern is called checks-effects-interactions, and the *Adversary* chapter explains it fully.
+The handler snapshots the unsettled amounts, **zeroes the counters**, and transfers the snapshot, so a user who calls `settle_funds()` again is paid nothing. If either transfer fails, the whole transaction is undone and the counters keep their values.
 
 ![](figures/order-book-settle.svg)
 
@@ -132,7 +134,7 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 
 ## The Failure Modes: Vault Swaps, Fake Makers, and Book Spam
 
-- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The defense is a stored-address check on every instruction, binding every vault and mint to the addresses recorded on the market at creation, and `settle_funds_rejects_fee_vault_substituted_for_quote_vault` checks that the attack fails. This is the same account-substitution attack the *Escrow* chapter described, against a bigger program.
+- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The program stops this with a stored-address check on every instruction, binding every vault and mint to the addresses recorded on the market at creation, and `settle_funds_rejects_fee_vault_substituted_for_quote_vault` checks that the attack fails. This is the same account-substitution attack the *Escrow* chapter described, against a bigger program.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program re-derives the fills from its own book and verifies every supplied account against that plan: order ID, market, and owner all have to line up, or the transaction fails.
 - **The rounding drain.** Floor the fee instead of ceiling it and every fill leaks a minor unit, which an attacker turns into a drain with thousands of tiny fills. The math section covered it, and a test below checks it.
 - **Book spam.** Each side holds 512 orders, so a trader willing to pay the minimum order size into the vault and pay rent 512 times can fill a side with orders far from the spread. If a full side refused every new order, that trader could keep every new order off the side for as long as they liked. Maria could not move the pair either, because the market PDA's seeds are the two mints. The program stops this with **eviction**. When an order would rest on a full side, `place_order()` compares its price with that side's worst order, the lowest bid or the highest ask. A better price removes the worst order and takes its slot, and the evicted owner is refunded through their unsettled balance, exactly as `cancel_order()` refunds them. An order at the same price or worse is rejected with `OrderBookFull`, because the resting order was there first. Eviction only removes the order furthest from the market price, the one least likely to fill, so a spammer's far-off orders cannot keep new orders off the book. The placer passes the worst order and its owner's market user account after the maker pairs, and the program checks them against the book the way it checks maker accounts, rejecting anything else with `EvictedAccountMismatch`. Tick alignment, the minimum order size, and the 20-open-orders-per-user cap still apply, so every slot ties up its occupant's tokens in a vault.
@@ -160,7 +162,7 @@ The order book added six concepts on top of the escrow's:
 
 - **Every resting order is a funded commitment.** `place_order()` moves the tokens into a vault before the order rests, so no matched order can turn out to be backed by nothing.
 - **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority, on a chain where compute is metered.
-- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them before the transfer (checks-effects-interactions) makes double-withdrawal impossible.
+- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them as they are paid out means each balance is paid once.
 - **A fee whose rounding direction is a security decision.** Ceiling division on the fee closes a leak an attacker could exploit at scale through thousands of tiny fills.
 - **Vault separation plus stored-address checks.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep users' balances and the market's fees apart.
 - **A full book evicts its worst order.** Account space is finite, so a side that refused every order once full would let anyone with the capital to fill it keep every new order off it. Eviction replaces the order least likely to fill with a better one, refunding it as a cancel would.

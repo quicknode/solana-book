@@ -28,6 +28,8 @@ As well as the current total supply, the mint account also stores the token's de
 
 The **mint authority** is the boss of that factory, and who holds the role is the first question to ask about any token. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced entirely by setting it to none, which fixes the supply forever. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
 
+A token can also stand for one unique thing. Give the mint 0 decimals, mint a single unit, and make sure nobody can mint another: the result is a **non-fungible token**, or NFT, and the one token account holding it records who owns that thing. It could be a ticket to a particular seat, a property deed, or a bond certificate with its own serial number. So each NFT has a mint of its own: a collection of 10,000 NFTs made this way is 10,000 mints, not one mint that issued 10,000 tokens.
+
 ![ACME is the stock of a fictional company.](figures/mint-factory.svg)
 
 ## Token Accounts Hold Tokens
@@ -74,8 +76,12 @@ The table lists the extensions that matter for financial products:
 | **permanent delegate** | An authority can move any holder's tokens | A seizure power some regulated assets require |
 | **interest-bearing** | A rate is stored in the mint | Balances display accrual without the supply changing |
 | **non-transferable** | Tokens are bound to their holder | For credentials and vesting, not payments |
+| **default account state** | New token accounts start frozen until the freeze authority thaws them | Enables allowlists: a vault your program creates cannot send or receive until the issuer approves it |
+| **pausable** | An authority can stop every transfer, mint, and burn of the token at once | While paused, every handler that moves the token fails, withdrawals included |
+| **scaled UI amount** | A multiplier stored in the mint, which the issuer updates for stock splits and dividends | The displayed balance changes while the raw amount stays fixed: calculate in raw amounts |
+| **metadata** | The name, symbol, and a link to more details, stored in the mint | Display only: the mint address still identifies the asset |
 
-Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page, and the table's last column says what each one does to a transfer your program makes.
+Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds scaled UI amount.[^mosaic] Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page,[^solana-explorer] and the table's last column says what each one means for your program.
 
 ![](figures/transfer-using-transfer-fee-extension.svg)
 
@@ -85,10 +91,12 @@ Before building on a token you did not issue, check which extensions it uses: So
 - Ask about the **mint authority** and **freeze authority** of any token first: who can mint, and who can freeze.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
-- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, or let the issuer move any holder's tokens: before building on a token, check in Solana Explorer which extensions it uses.
+- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, let the issuer move any holder's tokens, or let it pause the whole token: before building on a token, check in Solana Explorer which extensions it uses.
 
 
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).
 [^nvdax-address]: xStocks, the NVDAx issuer, lists its tokenized equities at [xstocks.fi/us/products](https://xstocks.fi/us/products).
 [^tokenized-equity-volume]: Tokens tracking Tesla and Nvidia traded $631M and $380M on Solana in the twelve months to August 18, 2026, among the eight most traded tokenized equities on the chain, behind the S&P 500 token's $2.0B. Source: Allium, [allium.so/solana](https://allium.so/solana).
+[^mosaic]: The templates and the extensions each one enables are listed at [github.com/solana-foundation/mosaic](https://github.com/solana-foundation/mosaic).
+[^solana-explorer]: Solana Explorer is at [explorer.solana.com](https://explorer.solana.com). Search for a mint's address to open its page.
 [^tokens-xyz]: [tokens.xyz](https://tokens.xyz) lists which assets are available as Solana tokens.

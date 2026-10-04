@@ -20,6 +20,10 @@ The 32-byte identifier of an account, usually shown base58-encoded. An address i
 
 A market maker's structural loss: the trades that find you when your quote is wrong are the trades you did not want. See [informed flow](#informed-flow) and the *Prop AMM* chapter.
 
+### aggregator
+
+See [swap router](#swap-router).
+
 ### all-or-nothing
 
 A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Fundraiser* chapter builds it onchain.
@@ -111,10 +115,6 @@ Rounding up to the next whole [minor unit](#minor-unit). The direction used for 
 ### checked arithmetic
 
 Arithmetic that reports failure instead of producing a wrong answer: Rust's `checked_add`, `checked_sub`, `checked_mul` return nothing when the result will not fit, so the handler can fail with a named error. The alternative is [wrapping](#wrapping).
-
-### checks-effects-interactions
-
-The ordering rule for instruction handlers: validate everything, then update your own state, and only then transfer tokens or call other programs, so re-entry or hostile sequencing finds the program's state already updated. See the *Adversary* chapter.
 
 ### close factor
 
@@ -460,6 +460,10 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as sqrt(x·y). See the *Constant-Product AMM* chapter.
 
+### NFT (non-fungible token)
+
+A token that stands for one unique thing, such as a ticket to a particular seat, a deed to a property, or a work of art. Its mint has 0 decimals (so it cannot be fractionalized) and a supply of one (making it unique), and nobody can mint another. Each NFT has its own mint, so a collection of 10,000 NFTs is 10,000 mints. See the *Tokens* chapter.
+
 ### notional
 
 The face value of a position, as opposed to the margin posted against it. Five NVDAx at $200 is $1,000 notional whatever the collateral behind it.
@@ -531,6 +535,10 @@ How far your own trade moves the price it is executing against. A trade on a con
 ### price-time priority
 
 The order-matching fairness rule: better-priced orders fill first, and among equal prices, earlier orders fill first.
+
+### principal
+
+The amount lent or borrowed, before any interest. A lending program stores each loan's principal and computes the live debt from it with the [borrow accumulation factor](#borrow-accumulation-factor).
 
 ### profit warm-up
 
@@ -658,7 +666,7 @@ What a pool quotes for a trade small enough to move nothing: the ratio of its tw
 
 ### spread
 
-The gap between the best bid and the best ask. On an order book it emerges from resting orders; in a prop AMM the operator sets it directly, and it is the venue's entire fee.
+The gap between the best bid and the best ask. On an order book it emerges from the orders traders leave resting, and the exchange takes none of it. A trader who buys immediately pays the best ask and one who sells immediately receives the best bid, so buying and selling straight back loses the whole spread. A market maker **charges a spread** when it quotes its own prices, selling above the price it takes as fair and buying below it, and keeps the difference. A prop AMM charges a spread around its oracle price, and that spread is the venue's entire fee.
 
 ### stablecoin
 
@@ -671,6 +679,10 @@ A technique for storing bulk data offchain with onchain proofs, used for things 
 ### strike
 
 The price at which an [option](#option) trades if its holder exercises.
+
+### swap router
+
+A program that takes a swap and fills it across one or more trading venues (AMMs, order books, prop AMMs), choosing the route that returns the most. Also called an aggregator. Jupiter and Titan are swap routers on Solana. A program that trades on its users' behalf calls a router rather than a single venue; the *Managed Fund* chapter's fund does, and the companion repository ships a mock router in Jupiter's place.
 
 ### Sybil attack
 
