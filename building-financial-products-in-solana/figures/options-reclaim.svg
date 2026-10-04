@@ -173,4 +173,5 @@
   <text x="528" y="57.4" font-size="10.5" font-weight="bold">USDC mint</text>
   </g>
   </g>
+  <text x="270" y="612" font-size="7.5" fill="#444" font-style="italic">not drawn: Alice's and Bob's accounts, which the put does not touch</text>
 </svg>
