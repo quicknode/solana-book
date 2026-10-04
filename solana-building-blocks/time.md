@@ -24,7 +24,7 @@ Programs read the **Unix timestamp** from the **Clock sysvar**, a system account
 
 ![](figures/unix-timestamp.svg)
 
-At 200-millisecond slots, a block one slot after its parent can carry a time up to 400 milliseconds past the parent's. Real time moves about 200 milliseconds a slot, so a leader can push the timestamp ahead of real time, or hold it behind, by up to about 200 milliseconds for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. For a boundary days away the timestamp is still the right clock, because a slot count would miss it by hours: a contributor told they have a week to fund is owed seven days, and a week of slots runs about 16 hours over. The defense is a margin: close betting well before the result can be known, exercise an option before its last seconds, and set any deadline so a few seconds cannot change who gets paid.
+At 200-millisecond slots, a block one slot after its parent can carry a time up to 400 milliseconds past the parent's. Real time moves about 200 milliseconds a slot, so a leader can push the timestamp ahead of real time, or hold it behind, by up to about 200 milliseconds for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. The defense is a margin: close betting well before the result can be known, exercise an option before its last seconds, and set any deadline so a few seconds cannot change who gets paid.
 
 ## The Slot Counter
 
@@ -34,7 +34,7 @@ The slot count is how many slots have gone by. Programs read it from the same Cl
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because in normal running slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for, and a week of them runs about 16 hours over. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, currently 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because in normal running slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while real time moves on. The section on halts below covers what that does.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and about two hours longer if slots actually average 219 milliseconds. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
@@ -46,7 +46,9 @@ Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 20
 The 20 seconds in the last question is where the two clocks' errors meet:
 
 - **The timestamp's error stays under a second or two, however long the span.** One leader can move it up to 800 milliseconds in its turn, and it counts only whole seconds. Outside a halt, nothing makes that error grow.
-- **A slot count's error grows with the span.** Converted at 200 milliseconds, it falls about 9% short of the time that passed: about 2 seconds across 20 seconds, and about 16 hours across a week.
+- **A slot count's error grows with the span.** With slots running about 10% long, a count sized at 200 milliseconds runs about 2 seconds over across 20 seconds, and about 16 hours over across a week.
+
+So for a boundary days away, such as a fundraiser's deadline, the timestamp is the right clock, and a margin covers its few seconds.
 
 The table at the end of this chapter shows where each program in this book lands.
 
@@ -65,7 +67,7 @@ Two programs in this book accrue value over time, and both count it in seconds:
 
 Both accumulate, both advance by elapsed time, and both decide what somebody owes, which decides whether a position can be liquidated. A leader can move the timestamp by up to 800 milliseconds in its turn, and at a 20% annual rate even two seconds of interest is about one hundred-millionth of the debt. A position that close to the liquidation line crosses it anyway if the leader waits two seconds, so moving the clock gains the leader nothing.
 
-Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. If slots average 219 milliseconds, a market that assumes 200 collects about 9% less than it quotes, so a borrower quoted 20% a year pays about 18.3%. That is nearly a tenth of all the interest, against the hundred-millionth a leader can move by shifting the timestamp.
+Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. If slots run about 10% long, a year holds that many fewer of them, so a market that assumes 200 milliseconds charges a borrower quoted 20% a year about 18.3%. That is nearly a tenth of all the interest, against the hundred-millionth a leader can move by shifting the timestamp.
 
 Both programs treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. The network already rejects a block whose time goes backwards, so no second is ever charged twice. The managed fund's annual management fee accrues by timestamp in the same way.
 
@@ -77,7 +79,7 @@ The network's target slot length is 200 milliseconds at the time of writing.[^sl
 
 A program can get that length three ways:
 
-- **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on. Keep any window that depends on the slot length in config, where a transaction can change it, which the section on a shortened slot covers.
+- **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on, which the section on a shortened slot covers.
 - **From the feature gates.** Changes to the network ship as **features**, built into the validator software switched off and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its feature gate activates, not from the moment it does, so check the epoch as well as the feature gate.
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case such an account now exists.
 
@@ -85,7 +87,6 @@ Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT` - this value is set when the SDK is
 
 To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Check the divisor before that division: it is zero on an epoch's first slot. That measurement comes from the leader-written timestamp, so it belongs in offchain tooling, not in a handler. A handler that needs wall-clock time should read the timestamp itself, as the lending market's interest does. Multiplying a slot count by a measured slot length carries the timestamp's error and adds the slot count's.
 
-> **Converting a slot count across a slot time change.** This is the target slot length the whole network runs to, not the delay a slow leader adds to one slot. The network changes it rarely, through a feature gate that takes effect at the start of an epoch, and it has done so before: during 2026 the target went from 400 milliseconds to 200, in stages.[^slot-times] A slot count that spans one of these changes cannot be converted at today's figure, because the slots before the change were longer, and multiplying by the current target would understate the time that passed. Split the count at each change, which always falls on an epoch boundary, and convert each piece at the target in force then. A count that starts after the reduction to 200 milliseconds needs no split. At the time of writing, no reduction below 200 milliseconds is planned.
 
 ## Who Fills First Is a Counter, Not a Clock
 
@@ -128,7 +129,7 @@ The trap is what "seven days" means to the people using it. The program closes t
 
 ![](figures/day-boundary.svg)
 
-Say which edge you mean when you write the terms down. A contributor reads "seven days to fund" as a window closing at the end of the seventh day, and this one closes at its start, a full day earlier than they think. Either edge works, as long as it is the one your users were told.
+Say which edge you mean when you write the terms down. A contributor reads "seven days to fund" as a window closing at midnight at the end of the seventh day, and this one closes at whatever time of day it opened: a fundraiser opened at noon closes twelve hours after that midnight. Either edge works, as long as it is the one your users were told.
 
 ## Slots Stop When the Chain Stops, and the Wall Clock Does Not
 
@@ -150,9 +151,13 @@ The order book comes through a halt untouched, because it reads neither clock: q
 
 ## A Shorter Slot Tightens Every Window Counted in Slots
 
+The network changes its target slot length rarely, through a feature gate that takes effect at the start of an epoch. It has done so before: during 2026 the target went from 400 milliseconds to 200, in stages.[^slot-times] At the time of writing, no reduction below 200 milliseconds is planned.
+
 When the network shortens the slot, a freshness window sized in slots gets stricter. A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That can make the program refuse a price it should accept, but never accept one it should refuse, and the first refusal shows the window needs retuning. The defense is to store the window in an account a transaction can update, so the change needs a configuration transaction rather than a redeploy.
 
 A rate counted in seconds is untouched. The lending market's interest and the perpetual futures venue's funding charge the same per hour at any slot length, with nothing to retune. A rate counted in slots gives no such warning when the slot shortens. An annual rate divided by a fixed slots-per-year number assumes a slot length, so halving the slot doubles what a borrower pays in a day while every line of the program stays as it was.
+
+A slot count that spans one of these changes cannot be converted at today's figure, because the slots before the change were longer, and multiplying by the current target would understate the time that passed. Split the count at each change, which always falls on an epoch boundary, and convert each piece at the target in force then. A count that starts after the reduction to 200 milliseconds needs no split.
 
 > **War Story: the SPL token-lending slot constant.** The SPL token-lending program, the ancestor of several Solana lending markets, turned annual rates into per-slot rates with a constant built from the SDK's tick rate: ticks per second, divided by ticks per slot, times the seconds in a year.[^spl-slots-per-year] The SDK then ran 160 ticks a second and 64 to a slot, 2.5 slots a second, but integer division threw the half away and compiled the constant for 2. At the 400-millisecond target every borrower paid a quarter more than the annual rate they were quoted. Save's fork wrote the result in as a number, with a comment calling it the slot rate. At 200 milliseconds the same constant charges two and a half times the quoted rate.
 
@@ -175,12 +180,12 @@ The table lists every program in Part II that touches time, and the clock each o
 
 - A program has three ways to observe the passage of time. The Unix timestamp is wall-clock time written by a leader, usually out by a few seconds somebody chose. The slot count only goes up and nobody can move it, but each slot starts when the last one ends, so it typically runs about 10% long and stops in a halt. A program's own counter records order and nothing else.
 - Count slots for price freshness and for any span shorter than about 20 seconds, where nobody can move the count and its drift stays under a second or two. Use the wall clock for any longer span, including a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival.
-- To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed seconds. A current balance is the principal multiplied by the factor. Counting slots instead collects about 9% less than the quoted rate when slots average 219 milliseconds.
+- To accrue interest or funding without touching every account, store each account's principal and one shared accumulation factor that advances by elapsed seconds. A current balance is the principal multiplied by the factor. Counting slots instead undercharges when slots run long: at about 10% long, a rate quoted at 20% a year collects about 18.3%.
 - Give every price a freshness window, set by each consumer, in the unit the source uses: slots where the program chooses, seconds where the price feed published seconds.
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch. Anza's documentation carries the current figure, and the companion repository the current way to get it.
 - The network occasionally shortens its slot time, as it did when slots went from 400 milliseconds to 200, in stages. Each change takes effect everywhere at the start of an epoch, with no transition. Every slot-counted window then covers less time, so store windows in an account a transaction can update. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
 - A deadline counted in whole days floors, so compute both sides of it from the same expression. The window closes exactly that many 24-hour periods after it opened, at the same time of day, so say so when you write the terms down.
-- When votes stop arriving, Solana slows down rather than stopping, and it halts only on a fault waiting cannot fix, such as a software bug. During a halt slots pause and wall-clock time keeps running, but the timestamp cannot jump, so it trails after a restart and takes about as long as the halt to catch up. Accrual by timestamp charges the halt during the catch-up, deadlines expire with nobody able to act on them, and a price that is hours old still looks fresh.
+- When votes stop arriving, Solana slows down rather than stopping, and it halts only on a fault such as a software bug. During a halt slots pause and wall-clock time keeps running, but the timestamp cannot jump, so it trails after a restart and takes about as long as the halt to catch up. Accrual by timestamp charges the halt during the catch-up, deadlines expire with nobody able to act on them, and a price that is hours old still looks fresh.
 - Pair every freshness window, in slots or in seconds, with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
 [^forks]: Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks and will only see the slot go up.
