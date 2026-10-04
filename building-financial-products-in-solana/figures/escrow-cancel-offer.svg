@@ -80,7 +80,7 @@
   </g>
   <g>
   <circle cx="424" cy="191.4" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="434" y="190.4" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OFFER" + MAKER'S</text>
+  <text x="434" y="190.4" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OFFER" + ALICE'S</text>
   <text x="434" y="199.4" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + ID</text>
   <rect x="416" y="205.4" width="216" height="88" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(424,208.9)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
@@ -104,7 +104,7 @@
   <text x="444" y="335.575" font-size="10.5" font-weight="bold">vault: the offer's USDC</text>
   <line x1="424" y1="342.4" x2="624" y2="342.4" stroke="#888" stroke-width="0.8"/>
   <text x="424" y="353.4" font-size="9.5">0 USDC</text>
-  <text x="424" y="365.4" font-size="9" font-style="italic" fill="#444">authority: the offer account</text>
+  <text x="424" y="365.4" font-size="9" font-style="italic" fill="#444">authority: the offer PDA</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="354.9" font-size="9" font-weight="bold" letter-spacing="1" fill="#111" text-anchor="end">CLOSED</text>
   <line x1="416" y1="321.4" x2="632" y2="373.4" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="321.4" x2="416" y2="373.4" stroke="#999" stroke-width="1.6"/>

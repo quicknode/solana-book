@@ -26,9 +26,6 @@
   <text x="64" y="257" font-size="10" text-anchor="end">2%</text>
   <text x="64" y="240" font-size="10" text-anchor="end">20%</text>
   <text x="64" y="76" font-size="10" text-anchor="end">150%</text>
-  <text x="252" y="140" font-size="10.5" font-style="italic" fill="#444" text-anchor="end">past the kink the rate spikes,</text>
-  <text x="252" y="154" font-size="10.5" font-style="italic" fill="#444" text-anchor="end">pushing borrowers to repay</text>
-  <text x="252" y="168" font-size="10.5" font-style="italic" fill="#444" text-anchor="end">and pulling depositors in</text>
   <!-- right panel: the factor -->
   <text x="360" y="24" font-size="12" font-weight="bold">the factor compounds at each refresh</text>
   <line x1="360" y1="262" x2="620" y2="262" stroke="#111" stroke-width="1.5" marker-end="url(#lending-rate-curve-arr)"/>
@@ -43,10 +40,10 @@
     <line x1="486" y1="259" x2="486" y2="265"/><line x1="524" y1="259" x2="524" y2="265"/>
     <line x1="562" y1="259" x2="562" y2="265"/>
   </g>
-  <text x="486" y="278" font-size="10" font-style="italic" fill="#444" text-anchor="middle">refreshes, over five weeks</text>
+  <text x="486" y="278" font-size="10" font-style="italic" fill="#444" text-anchor="middle">refreshes, over the weeks</text>
   <text x="368" y="236" font-size="10.5" text-anchor="end">1.0</text>
-  <text x="600" y="126" font-size="10.5" font-weight="bold" text-anchor="end">&#8776; 1.0100</text>
-  <text x="490" y="298" font-size="10.5" text-anchor="middle">Bob's debt = principal &#215; factor: $750 &#8594; &#8776; $757.50</text>
+  <text x="600" y="126" font-size="10.5" font-weight="bold" text-anchor="end">and only grows</text>
+  <text x="490" y="298" font-size="10.5" text-anchor="middle">every debt = its principal &#215; the current factor</text>
   <text x="490" y="313" font-size="10.5" font-style="italic" fill="#444" text-anchor="middle">one number reprices every loan in the reserve</text>
 </g>
 </svg>

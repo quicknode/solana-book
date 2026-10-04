@@ -96,7 +96,7 @@
   <g>
   <circle cx="472" cy="221.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="482" y="220.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>
-  <text x="482" y="229.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MAKER'S ADDRESS</text>
+  <text x="482" y="229.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS</text>
   <rect x="464" y="235.37" width="168" height="124" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(472,238.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="492" y="249.545" font-size="10.5" font-weight="bold">fundraiser</text>

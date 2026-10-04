@@ -130,13 +130,14 @@
   <g transform="translate(515,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
   <text x="535" y="133.545" font-size="10.5" font-weight="bold">perps program</text>
   <line x1="515" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
-  <text x="515" y="151.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_pool()</text>
-  <text x="515" y="161.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">add_liquidity()</text>
-  <text x="515" y="171.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">remove_liquidity()</text>
-  <text x="515" y="181.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">open_position()</text>
-  <text x="515" y="191.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">close_position()</text>
-  <text x="515" y="201.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">liquidate_position()</text>
-  <text x="515" y="211.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">collect_fees()</text>
+  <text x="515" y="150.00" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">initialize_pool()</text>
+  <text x="515" y="159.40" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">add_liquidity()</text>
+  <text x="515" y="168.80" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">remove_liquidity()</text>
+  <text x="515" y="178.20" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">open_position()</text>
+  <text x="515" y="187.60" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">close_position()</text>
+  <text x="515" y="197.00" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">liquidate_position()</text>
+  <text x="515" y="206.40" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">update_price_average()</text>
+  <text x="515" y="215.80" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace">collect_fees()</text>
   </g>
   <g>
   <circle cx="515" cy="233.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -178,18 +179,19 @@
   <path d="M 10,485.000 Q 116.6,485.000 202,491.750" fill="none" stroke="#111" stroke-width="3.5"/>
   <circle cx="192" cy="491.000" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
-  <rect x="8" y="500" width="192" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <rect x="8" y="500" width="192" height="50" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
   <g transform="translate(16,503.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="36" y="514.175" font-size="10.5" font-weight="bold">oracle feed</text>
   <line x1="16" y1="521" x2="192" y2="521" stroke="#888" stroke-width="0.8"/>
-  <text x="16" y="532" font-size="8.5">NVDAx: $115</text>
+  <text x="16" y="531" font-size="8.5">price: $115</text>
+  <text x="16" y="542" font-size="8.5">owner: mock-price-feed</text>
   </g>
   </g>
   <path d="M 504,432.37 C 395,470 104,460 104,420 C 104,349.14 104,278.28 104,207.42 C 104,190 83,170 95,168 L 107,166" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
   <path d="M 504,416.37 C 445,440 306,420 306,360 C 306,325.18 306,290.36 306,255.54 C 306,244.35 318.39,225.7 343.17,199.59" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#perps-liq-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="321" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. Bob is refunded 195 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="321" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. Bob is refunded 195 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="116" y="337" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">his equity, less the liquidator's fee</text>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="284" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. Dave takes 50 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="284" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. Dave takes 50 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="320" y="300" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">1% of the 5,000 notional, capped at equity</text>
   <path d="M 202,273.56 C 206,267.56 204,270.06 204,262.06 L 204,88.06 C 204,80.06 201.26,75.02 201,74.06" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#perps-liq-arr-grey)"/>
   <text x="212" y="276.056" font-size="8" fill="#444" font-style="italic" text-anchor="start">rent refund</text>

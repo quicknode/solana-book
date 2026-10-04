@@ -117,7 +117,7 @@
   <text x="504" y="133.545" font-size="10.5" font-weight="bold">order book program</text>
   <line x1="484" y1="140.37" x2="628" y2="140.37" stroke="#888" stroke-width="0.8"/>
   <text x="484" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_market()</text>
-  <text x="484" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">create_market_user()</text>
+  <text x="484" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_market_user()</text>
   <text x="484" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">place_order()</text>
   <text x="484" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">cancel_order()</text>
   <text x="484" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">settle_funds()</text>

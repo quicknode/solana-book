@@ -2,7 +2,7 @@
 
 *Building Financial Software on Solana*
 
-© Quiknode Inc. Written by Mike MacCana. Published by Quicknode.
+© 2026 Quiknode Inc. Written by Mike MacCana. Published by Quicknode.
 
 The text and figures of this book are licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). You may copy, share, translate, and adapt them with attribution, for noncommercial purposes, under the same license. The Quicknode name, logo, and cover artwork are trademarks of Quiknode Inc. and are not covered by these licenses. Full terms: [solanabook.org](https://solanabook.org) and the LICENSE file in the book's repository.
 

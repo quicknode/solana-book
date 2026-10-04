@@ -12,7 +12,7 @@
   <text x="64" y="141" font-size="10" fill="#444">the escrow program</text>
   <rect x="56" y="156" width="208" height="38" fill="#f4f4f2" stroke="#888"/>
   <text x="64" y="172" font-size="11" font-weight="bold">lamport balance</text>
-  <text x="64" y="185" font-size="10" fill="#444">2,039,280 (the rent deposit)</text>
+  <text x="64" y="185" font-size="10" fill="#444">1,733,040 (the rent deposit)</text>
   <rect x="56" y="200" width="208" height="42" fill="#fff" stroke="#111" stroke-width="1.5"/>
   <text x="64" y="218" font-size="11" font-weight="bold">data bytes</text>
   <text x="64" y="232" font-size="10" fill="#444" font-family="'DejaVu Sans Mono', Menlo, monospace">01 5f 3a 9c 44 07 e2 &#8230;</text>

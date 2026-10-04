@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 695" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria opens the market</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">The market after Maria's five calls</text>
   <!-- Maria's setup: initialize_config(), initialize_event(), add_outcome() &#215;2, open_betting() -->
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" fill="#111" text-anchor="end">Solana Devnet</text>
@@ -146,7 +146,7 @@
   <text x="482" y="645.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="634.87" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
-  <text x="228" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every call checks Maria's signature against config.admin;</text>
+  <text x="228" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every later call checks Maria's signature against config.admin;</text>
   <text x="228" y="316" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">anyone else gets Unauthorized</text>
   <text x="228" y="346" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">open_betting() fixes the list: add_outcome() now fails with EventNotDraft</text>
   <text x="228" y="376" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">no bet accounts exist yet</text>
