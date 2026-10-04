@@ -6,7 +6,7 @@ The program lives at `finance/order-book` in the companion repository. It assume
 
 ## A Limit Order Is a Price You Refuse to Cross
 
-A **limit order** is an order with a price limit attached. A **bid** says "I will buy, but only at or below this price." An **ask** says "I will sell, but only at or above this price." The **order book** is the two lists where those orders wait: bids on one side, asks on the other, best prices at the front. The gap between the best bid and the best ask is the spread, and when a new order's limit reaches across that gap, a trade happens.
+A **limit order** is an order with a price limit attached. A **bid** says "I will buy, but only at or below this price." An **ask** says "I will sell, but only at or above this price." The **order book** is the two lists where those orders wait: bids on one side, asks on the other, best prices at the front. The gap between the best bid and the best ask is the **spread**, and when a new order's limit reaches across that gap, a trade happens.
 
 ![](figures/order-book-bids-asks-spread.svg)
 
