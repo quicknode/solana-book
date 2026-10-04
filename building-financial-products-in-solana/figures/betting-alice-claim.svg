@@ -24,16 +24,7 @@
   <line x1="16" y1="141.917" x2="110" y2="141.917" stroke="#888" stroke-width="0.8"/>
   <text x="16" y="152.917" font-size="9.5">1,147 USDC</text>
   </g>
-  <g>
-  <circle cx="16" cy="174.917" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="26" y="173.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"USER" +</text>
-  <text x="26" y="182.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
-  <rect x="8" y="188.917" width="110" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(16,192.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="36" y="202.392" font-size="8.5">Alice's user index</text>
-  <line x1="16" y1="209.917" x2="110" y2="209.917" stroke="#888" stroke-width="0.8"/>
-  <text x="16" y="220.917" font-size="8.5">bets: [ ]</text>
-  </g>
+  <g transform="translate(0,-72.5)">
   <g>
   <circle cx="16" cy="247.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="26" y="241.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
@@ -47,6 +38,7 @@
   <text x="16" y="308.417" font-size="9" fill="#444">amount: 300</text>
   <line x1="8" y1="265.917" x2="118" y2="317.917" stroke="#999" stroke-width="1.6"/>
   <line x1="118" y1="265.917" x2="8" y2="317.917" stroke="#999" stroke-width="1.6"/>
+  </g>
   </g>
   <circle cx="222" cy="39.684" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -64,14 +56,7 @@
   <g transform="translate(133,130.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="153" y="141.14" font-size="10.5" font-weight="bold">Bob's USDC</text>
   </g>
-  <g opacity="0.3">
-  <circle cx="133" cy="180.644" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="143" y="179.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"USER" +</text>
-  <text x="143" y="188.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
-  <rect x="125" y="194.644" width="105" height="22" rx="6" fill="#fff" stroke="#888"/>
-  <g transform="translate(133,198.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="153" y="209.044" font-size="8.5" font-weight="bold">Bob's user index</text>
-  </g>
+  <g transform="translate(0,-72.5)">
   <g opacity="0.3">
   <circle cx="133" cy="253.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="143" y="247.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
@@ -80,6 +65,7 @@
   <rect x="125" y="271.644" width="105" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(133,275.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="153" y="286.14" font-size="10.5" font-weight="bold">Bob's bet</text>
+  </g>
   </g>
   <circle cx="334" cy="49.454" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -97,14 +83,7 @@
   <g transform="translate(245,141.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
   <text x="265" y="151.56" font-size="10.5" font-weight="bold">Carol's USDC</text>
   </g>
-  <g opacity="0.3">
-  <circle cx="245" cy="191.062" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="255" y="190.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"USER" +</text>
-  <text x="255" y="199.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
-  <rect x="237" y="205.062" width="111" height="22" rx="6" fill="#fff" stroke="#888"/>
-  <g transform="translate(245,209.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="265" y="219.462" font-size="8.5" font-weight="bold">Carol's user index</text>
-  </g>
+  <g transform="translate(0,-72.5)">
   <g opacity="0.3">
   <circle cx="245" cy="263.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="255" y="258.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
@@ -113,6 +92,7 @@
   <rect x="237" y="282.062" width="111" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(245,286.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="265" y="296.56" font-size="10.5" font-weight="bold">Carol's bet</text>
+  </g>
   </g>
   <circle cx="459" cy="66.212" r="7" fill="#fff"/>
   <g opacity="0.3">
@@ -172,7 +152,7 @@
   <text x="492" y="459.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="465.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,468.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="502" y="479.545" font-size="10.5" font-weight="bold">outcome 0: Toy Story 5</text>
+  <text x="502" y="479.545" font-size="10.5" font-weight="bold">outcome 0: Glowbugs 3</text>
   <line x1="482" y1="486.37" x2="624" y2="486.37" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="497.37" font-size="9.5">total_amount: 400</text>
   </g>
@@ -182,7 +162,7 @@
   <text x="492" y="527.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
   <rect x="474" y="533.37" width="158" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,537.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="502" y="547.87" font-size="10.5" font-weight="bold">outcome 1: Backrooms</text>
+  <text x="502" y="547.87" font-size="10.5" font-weight="bold">outcome 1: The Quiet Floor</text>
   </g>
   <g>
   <circle cx="482" cy="587.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -196,12 +176,11 @@
   <text x="482" y="645.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   </g>
   <path d="M 474,623.37 C 411,629.37 328,624 265,578 C 198,528 149,452 127,392 C 121,374 121,340 121,300 C 121,240 121,180 121,146.917 C 121,142.917 118,142.846 118,140.917" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="199.47" y="500.13" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. claim_winnings() &#183; 447 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="199.47" y="500.13" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. claim_winnings() &#183; 447 USDC</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="270.06" y="516.13" font-size="9" font-style="italic" fill="#444" text-anchor="middle">signed by the event PDA</text>
-  <path d="M 62,317.917 C 62,339.917 22,347.917 8,331.917 C 2,260 2,140 8,65.917" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr-g)"/>
-  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="106" y="335.917" font-size="8.5" font-style="italic" fill="#444" text-anchor="end">rent refund</text>
-  <text x="8" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. index entry removed</text>
-  <text x="8" y="486" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. bet account closed</text>
+  <path d="M 62,245.417 C 62,267.417 22,275.417 8,259.417 C 2,192 2,130 8,65.917" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr-g)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="106" y="263.417" font-size="8.5" font-style="italic" fill="#444" text-anchor="end">rent refund</text>
+  <text x="8" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. bet account closed</text>
   <text x="228" y="659" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147 = 447; the 149 left is Bob's exact claim</text>
   <text x="228" y="677" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account prevents a double claim: no account, no second claim</text>
   <g class="coin" transform="translate(184.96,495.93)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
