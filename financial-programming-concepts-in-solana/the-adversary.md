@@ -85,15 +85,13 @@ Fix this by following the rounding rules in the *Arithmetic of Money* chapter ev
 
 A transaction can call your program, which calls another, which calls another. The flash loan in the *Core Building Blocks of Solana* chapter is built from programs calling programs. Each call is also a point where code you did not write runs: between your instructions in the same transaction, or inside a CPI your program makes.
 
-Follow a rule called **checks-effects-interactions**: validate everything, then update your own state, and only then call other programs or move tokens. The order book's settlement zeroes a user's claimed balance *before* the transfer. If the token transfer could call back into the program (token extensions can attach hooks to transfers), the second call would find the balance already spent. Solana's runtime forbids a program from being re-entered through another program. Only a program calling itself directly is allowed, and its depth is capped. Keep the order anyway, because it also protects against changes you cannot see yet: a callee upgraded tomorrow, a hook added to a mint next year, an instruction placed after yours in the same transaction.
-
-Three more rules for these boundaries:
+Code inside a CPI cannot call back into your program. Solana's runtime refuses to invoke a program that is already on the call stack, unless the program is calling itself directly: if your program calls the token program, and a transfer hook on the mint tries to call your program, the transaction fails with `ReentrancyNotAllowed`. A callee upgraded tomorrow or a hook added to a mint next year meets the same refusal. And if any call fails, the whole transaction is undone, including every change your handler made before it. So the order in which a handler updates its own state and calls other programs does not open an attack. Three things at these boundaries do need care:
 
 - **Validate what a CPI returns and what it was given.** Calling a program does not make the accounts it touched trustworthy. The managed fund computes each swap's minimum output from the oracle, because the router it calls is outside its control.
 - **Read again what a CPI changed.** A framework that copies an account into memory when the handler starts keeps that copy through the CPI. After a transfer out of a vault, the copy still shows the old balance, and a check against it passes on a number that is no longer true. The AMM re-reads both vaults after its transfers, before it re-checks K.[^reload-per-framework]
 - **Assume the instructions after yours are hostile.** Any invariant your program needs must hold at the end of *your* instruction, not at the end of the transaction, because the instructions after yours belong to someone else.
 
-The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K after the transfers land, follow the same rule: check your own state before anyone else's code runs.
+The *Arithmetic of Money* chapter's postcondition checks, such as re-checking K after the transfers land, do this: they check the program's own state before anyone else's code runs.
 
 ## Every Role Holder Is Also a User
 
@@ -113,7 +111,7 @@ Where the role is the one reporting a result, like the betting market's admin se
 - Build a defense against the inflation attack into any pool that issues shares: locked shares, virtual shares, a pool size kept in program state, or a large minimum first deposit.
 - A true price can still be a manipulated price: time-weight it, act on the confidence interval, cap how much can move per window, and never lend more against a token than it would cost to move its market.
 - A rounding error in the user's favor gets repeated until the pool is empty, so write a round-trip invariant test to catch it.
-- Apply checks-effects-interactions at every boundary: your invariants must hold at the end of your own instruction, because the instructions after yours belong to someone else.
+- Make every invariant hold at the end of your own instruction, because the instructions after yours belong to someone else.
 - Treat everyone with a role as a user too: for each role, ask what its handlers can change, and what that change is worth to someone who also trades, deposits, or bets in the same program.
 
 [^confused-deputy]: Norm Hardy named it in "The Confused Deputy (or why capabilities might have been invented)", ACM SIGOPS Operating Systems Review 22(4), October 1988, at [dl.acm.org/doi/10.1145/54289.871709](https://dl.acm.org/doi/10.1145/54289.871709).

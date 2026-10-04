@@ -102,7 +102,7 @@ Traditional exchanges also let a trader shrink a resting order in place and keep
 
 Unsettled balances are claims, not tokens. When Bob and Carol want their assets in hand, each calls `settle_funds()`, and the market PDA signs the transfers out of the vaults: Bob receives three NVDAx shares and his 250 USDC refund; Carol receives her 748.125 USDC.
 
-One line in the handler belongs in everything you build: it snapshots the unsettled amounts and **zeroes the counters before making the transfers**. If a token transfer could ever call back into this program (token extensions can attach hooks to transfers), a caller re-entering mid-transfer would find balances already zeroed instead of still-credited, so double-withdrawal is impossible. Zeroing state before the transfer follows checks-effects-interactions, a rule the *Adversary* chapter explains fully.
+The handler snapshots the unsettled amounts, **zeroes the counters**, and transfers the snapshot, so a user who calls `settle_funds()` again is paid nothing. If either transfer fails, the whole transaction is undone and the counters keep their values.
 
 ![](figures/order-book-settle.svg)
 
@@ -160,7 +160,7 @@ The order book added six concepts on top of the escrow's:
 
 - **Every resting order is a funded commitment.** `place_order()` moves the tokens into a vault before the order rests, so no matched order can turn out to be backed by nothing.
 - **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority, on a chain where compute is metered.
-- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them before the transfer (checks-effects-interactions) makes double-withdrawal impossible.
+- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them as they are paid out means each balance is paid once.
 - **A fee whose rounding direction is a security decision.** Ceiling division on the fee closes a leak an attacker could exploit at scale through thousands of tiny fills.
 - **Vault separation plus stored-address checks.** Two vaults holding the same token are indistinguishable to the token program; only stored-address checks keep users' balances and the market's fees apart.
 - **A full book evicts its worst order.** Account space is finite, so a side that refused every order once full would let anyone with the capital to fill it keep every new order off it. Eviction replaces the order least likely to fill with a better one, refunding it as a cancel would.

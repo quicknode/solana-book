@@ -206,9 +206,8 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="270.06" y="516.13" font-size="9" font-style="italic" fill="#444" text-anchor="middle">signed by the event PDA</text>
   <path d="M 62,317.917 C 62,339.917 22,347.917 8,331.917 C 2,260 2,140 8,65.917" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr-g)"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="106" y="335.917" font-size="8.5" font-style="italic" fill="#444" text-anchor="end">rent refund</text>
-  <text x="8" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. index entry removed first</text>
-  <text x="8" y="482" font-size="8" fill="#444" font-style="italic">effects before interactions</text>
-  <text x="8" y="498" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. bet account closed</text>
+  <text x="8" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. index entry removed</text>
+  <text x="8" y="486" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. bet account closed</text>
   <text x="228" y="659" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147 = 447; the 149 left is Bob's exact claim</text>
   <text x="228" y="677" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account prevents a double claim: no account, no second claim</text>
   <g class="coin" transform="translate(184.96,495.93)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
