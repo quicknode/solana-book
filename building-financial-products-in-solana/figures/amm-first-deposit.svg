@@ -186,7 +186,6 @@
   <!-- the LP receipt, minted to Maria -->
   <path d="M 474,632.37 C 380,708.37 134.145,721.287 82,648.37 C 51.088,605.144 68,480 68,330.787" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-first-deposit-arr)"/>
   <!-- the first deposit sets the price -->
-  <text x="330" y="240" font-size="9" fill="#444" font-style="italic" text-anchor="middle">the first deposit sets the price:</text>
   <text x="330" y="254" font-size="9" fill="#444" font-style="italic" text-anchor="middle">the ratio she deposits <tspan font-style="normal">is</tspan> the ratio, 900 &#247; 400 = $2.25</text>
   <text x="330" y="268" font-size="9" fill="#444" font-style="italic" text-anchor="middle">K = 360,000, and &#8730;K = 600 LP</text>
   <!-- MINIMUM_LIQUIDITY: a constant, not account state -->

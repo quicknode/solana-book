@@ -170,6 +170,7 @@
   <text x="174" y="300" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">anyone may send close_contribution(): the rent can</text>
   <text x="174" y="314" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">only go to the backer, so Maria closes all eleven</text>
   <text x="174" y="328" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">without waiting on them</text>
+  <text x="174" y="342" font-size="7.5" fill="#444" font-style="italic" text-anchor="middle">Not drawn: the eight other backers' wallets, USDC accounts and receipts</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="344" y="456" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="460.0" y="470" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>

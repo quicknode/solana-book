@@ -166,8 +166,7 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="438" y="251" font-size="10.5" fill="#1e7a3c" text-anchor="end" font-weight="bold">collect_fees()</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="438" y="271" font-size="10.5" fill="#1e7a3c" text-anchor="end" font-weight="bold">7.50 USDC</text>
   <g class="coin" transform="translate(450.3,267)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <text x="438" y="291" font-size="8.5" fill="#444" font-style="italic" text-anchor="end">half of the 15 USDC charged on two opens and one close;</text>
-  <text x="438" y="305" font-size="8.5" fill="#444" font-style="italic" text-anchor="end">the other 7.50 stays in insurance_fund; the oracle is not read</text>
+  <text x="438" y="305" font-size="8.5" fill="#444" font-style="italic" text-anchor="end">the oracle is not read</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="216" y="468" width="129.0" height="67.725" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="337.0" y="482" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>

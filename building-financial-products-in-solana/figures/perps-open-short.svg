@@ -193,8 +193,7 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="218" y="316" font-size="9" fill="#444" text-anchor="start" font-style="italic">collateral in</text>
   <g class="coin" transform="translate(203.5,295.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="300" y="336" font-size="10.5" fill="#1e7a3c" text-anchor="start" font-weight="bold">open_position() &#183; side Short, 5,000 size</text>
-  <text x="300" y="362" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">another 5 USDC open fee, split the same way,</text>
-  <text x="300" y="378" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">so program_fees and insurance_fund hold 5 each;</text>
+  <text x="300" y="362" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">another 5 USDC open fee, split the same way;</text>
   <text x="300" y="394" font-size="8.5" fill="#444" font-style="italic" text-anchor="start">the pool sets nothing aside: liquidity stays 12,000</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="216" y="468" width="129.0" height="67.725" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>

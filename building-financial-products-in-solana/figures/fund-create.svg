@@ -249,5 +249,5 @@
   <text x="237" y="314" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">the fund, its share mint, two asset configs</text>
   <text x="237" y="328" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">and three vaults; no tokens move</text>
   <text x="237" y="342" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">until an investor deposits</text>
-  <text x="16" y="666" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
+  <text x="16" y="666" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds; the fund's rebalance_threshold_bps (200) and its recorded holdings, which equal the drawn vault balances.</text>
 </svg>

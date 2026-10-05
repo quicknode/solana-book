@@ -56,5 +56,6 @@
   <text x="394" y="250" font-size="10.5" font-weight="bold">Instruction 1 &#8594; Token Program</text>
   <text x="394" y="263" font-size="10" font-family="'DejaVu Sans Mono', Menlo, monospace">transfer_checked()</text>
   <text x="394" y="275" font-size="10">25,000,000 to Alice's USDC, 6 decimals</text>
+  <text x="16" y="300" font-size="7.5" fill="#444" font-style="italic">not drawn: the USDC mint, named only as a seed and as the transfer_checked() mint argument</text>
   <g class="coin" transform="translate(191,152)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

@@ -7,7 +7,7 @@ What is going to be the top-grossing film this month? You have an opinion, and s
 
 This chapter builds a parimutuel market. The program lives at `finance/betting-market` in the companion repository. Structurally it is the *Escrow* chapter with many parties and one new, serious question: who decides what happened in the real world?
 
-## Nobody Sets the Odds: The Pool Is the Odds
+## Payouts Come From the Ratio of the Pools at the Close
 
 In a parimutuel market, all stakes on all outcomes go into one vault, and when the event settles, the losing side's stakes (minus the house fee) are distributed to the winning side, based on the size of each winner's stake. Your payout odds are the ratio between the pools when betting closes, not the odds showing when you placed your bet, which means the odds float as people bet, and betting heavily on a favorite compresses everyone's payout.
 
@@ -17,11 +17,11 @@ In a parimutuel market, all stakes on all outcomes go into one vault, and when t
 
 ## The Operator Creates the Market
 
-Maria is the admin. Her public key is recorded in the program's config, and only she can create events, add outcomes, open betting, settle, cancel, and close a finished event's accounts; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 **basis points** (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month") and a `betting_closes_at` of midnight on the last day of the month. A close time already in the past fails with `CloseTimeInPast`. The event starts as a Draft, and Maria calls `add_outcome()` twice: "Glowbugs 3" and "The Quiet Floor". Then she calls `open_betting()`, which moves the event to Open. Every handler on that list checks its signer against the admin address the config stores and rejects anyone else with `Unauthorized`; `test_only_admin_can_initialize_event`, the last step of `test_open_betting_needs_two_outcomes`, `test_only_admin_can_settle_or_cancel_event` and `test_only_admin_can_close_outcomes_and_event` check it.
+Maria is the admin. Her public key is recorded in the program's config, and only she can create events, add outcomes, open betting, settle, cancel, and close a finished event's accounts; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 **basis points** (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month") and a `betting_closes_at` of midnight on the last day of the month. A close time already in the past fails with `CloseTimeInPast`. The event starts as a Draft, and Maria calls `add_outcome()` twice: "Glowbugs 3" and "The Quiet Floor". Then she calls `open_betting()`, which moves the event to Open. Every handler on that list checks its signer against the admin address the config stores and rejects anyone else with `Unauthorized`. `test_only_admin_can_initialize_event` and the last step of `test_open_betting_needs_two_outcomes` check it for creating an event, adding an outcome, and opening betting; `test_only_admin_can_settle_or_cancel_event` and `test_only_admin_can_close_outcomes_and_event` check the rest.
 
 ![](figures/betting-maria-setup.svg)
 
-Those five transactions created the five accounts the market needs.
+Those five calls created the five accounts the market needs.
 
 The **config** is a single account at a PDA (seed `"config"`), created once by `initialize_config()`, holding the `admin`, the `token_mint` bets are denominated in, the `fee_recipient`, the `default_fee_bps` each new event copies at creation, and a running `event_count`. The fee is capped at 10,000 basis points, because a fee above 100% is nonsense.
 
@@ -40,7 +40,7 @@ A simpler but naive design would lock the list at the first bet, by refusing `ad
 
 Three bettors take a view, each from the standard wallet of one SOL and 1,000 USDC, and all in USDC, the token the config designates. Alice is confident about school holidays and puts $300 on Glowbugs 3. Bob agrees but has less to spend: $100 on Glowbugs 3. Carol believes in word of mouth and puts $200 on The Quiet Floor.
 
-Each bettor calls `place_bet()` with an amount, any time before the close. Zero-amount bets reject with `ZeroAmount`, and a bet once the clock reaches `betting_closes_at` rejects with `BettingClosed`. A first bet on an outcome creates the bet account before the handler code runs; a later bet on the same outcome finds it already there. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA signature is needed on the way in). It then fills in a fresh account's fields and increases the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is how the handler tells a first bet from a top-up: only a first bet adds one to the outcome's `bet_count`.
+Each bettor calls `place_bet()` with an amount, any time before the close. Zero-amount bets reject with `ZeroAmount`, and a bet once the clock reaches `betting_closes_at` rejects with `BettingClosed`. A first bet on an outcome creates the bet account before the handler code runs. The handler moves the stake immediately from the bettor's token account into the event's vault (the bettor signs this transfer directly; no PDA signature is needed on the way in). It then fills in a fresh account's fields and increases the outcome's `total_amount` and the event's `total_pool`. A fresh bet account has amount zero, which is how the handler tells a first bet from a top-up: only a first bet adds one to the outcome's `bet_count`.
 
 After all three bets, the vault holds 600 USDC: 400 staked on Glowbugs 3, 200 on The Quiet Floor.
 
@@ -69,13 +69,13 @@ Winners come and claim their payouts whenever they like; nothing pays out automa
 
 payout = stake + floor(stake × distributable_losing_pool ÷ winning_pool)
 
-For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 100 + 49 = **149 USDC**. Alice staked three times what Bob staked and won exactly three times the winnings. Carol staked 200 and receives nothing; had The Quiet Floor won, she alone would have taken the entire 400-dollar losing side, minus the fee.
+For Alice: 300 + floor(300 × 196 ÷ 400) = 300 + 147 = **447 USDC**. For Bob: 100 + 49 = **149 USDC**. Alice staked three times what Bob staked and won three times the winnings. Carol staked 200 and receives nothing; had The Quiet Floor won, she alone would have taken the entire 400-dollar losing side, minus the fee.
 
 None of these payouts depended on when anyone bet. Had Alice bet first, when Glowbugs 3 held only her stake, or last, after Bob, she would still receive 447 USDC, because the payout reads the pools at the close. A racetrack's tote board works the same way: the odds it shows keep moving until the race starts, and every winning ticket is paid at the final odds.
 
-The multiply runs in u128 and divides exactly once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means the payouts can fall a few minor units short of the distributable pool; that dust stays in the vault, where no claimant can reach it, until the event closes and `close_event()` pays it to the fee recipient.
+The multiply runs in u128 and divides once, after the multiplication, so the result is floored a single time; dividing first would throw away precision on every claim. The floor means the payouts can fall a few minor units short of the distributable pool; that dust stays in the vault, where no claimant can reach it, until the event closes and `close_event()` pays it to the fee recipient.
 
-The claim closes the bet account, refunding its rent to the bettor. **A closed account stops a double claim**: Alice claiming twice fails because the bet account the second claim needs is already gone (checked by `test_double_claim_fails`), and there is no `claimed` flag to forget to check.
+The claim closes the bet account, refunding its rent to the bettor. **A closed account stops a double claim**: Alice claiming twice fails because the bet account the second claim needs is already gone (`test_double_claim_fails` asserts the second claim fails with Anchor's `AccountNotInitialized`), and there is no `claimed` flag to forget to check.
 
 ![](figures/betting-alice-claim.svg)
 
@@ -83,11 +83,11 @@ The claim closes the bet account, refunding its rent to the bettor. **A closed a
 
 Carol's losing bet pays nothing, but its account still holds her rent. She calls `close_losing_bet()`, which checks the event is settled and her outcome is not the winner (a winner trying to use this path for losing bets rejects with `BetWon` and must use `claim_winnings()`), then closes the account and returns the rent to her. `test_close_losing_bet_only_after_settle_and_only_for_losers` checks that a close before settlement and a winner's close both fail.
 
-Bob claims his 149 USDC the same way, and once Carol's account closes no bet of the event is open. Maria then closes what the event created, children first, because each account's address derives from its parent's: a bet's from its outcome's, an outcome's from the event's. She calls `close_outcome()` once per outcome. It refuses while the event is still a Draft or Open (`EventNotFinished`) and while any bet is open (`BetsStillOpen`), because a bet's claim or refund needs its outcome account to check against; otherwise it closes the outcome account and returns its rent to her. Then she calls `close_event()`, which makes the same two checks and also refuses while any outcome is open (`OutcomesStillOpen`): an outcome account left behind would be found again, with its old `total_amount`, by a later event created with the same event ID. It pays whatever the vault still holds to the fee recipient's token account, closes the vault, and closes the event account, returning both rents to her. The event knows whether it may close from two counters: `open_outcomes`, which `add_outcome()` raises and `close_outcome()` lowers, and `open_bets`, which `place_bet()` raises for each bet account it creates (a top-up reuses the account) and `claim_winnings()`, `claim_refund()`, and `close_losing_bet()` each lower. In this market the vault is already empty: 147 and 49 divided exactly. Where the floors leave dust, `close_event()` pays it to the fee recipient, so it ends up where the fee did. `test_close_event_pays_dust_to_fee_recipient_and_returns_rent` runs a market whose shares do not divide exactly, and checks that the one minor unit left reaches the fee recipient, that every closed account is gone, and that each rent returns to the admin.
+Bob claims his 149 USDC the same way, and once Carol's account closes no bet of the event is open. Maria then closes what the event created, children first, because each account's address derives from its parent's: a bet's from its outcome's, an outcome's from the event's. She calls `close_outcome()` once per outcome. It refuses while the event is still a Draft or Open (`EventNotFinished`) and while any bet is open (`BetsStillOpen`), because a bet's claim or refund needs its outcome account to check against; otherwise it closes the outcome account and returns its rent to her. Then she calls `close_event()`, which makes the same two checks and also refuses while any outcome is open (`OutcomesStillOpen`): an outcome account left behind would be found again, with its old `total_amount`, by a later event created with the same event ID. It pays whatever the vault still holds to the fee recipient's token account, closes the vault, and closes the event account, returning both rents to her. The event knows whether it may close from two counters: `open_outcomes`, which `add_outcome()` raises and `close_outcome()` lowers, and `open_bets`, which `place_bet()` raises for each bet account it creates and `claim_winnings()`, `claim_refund()`, and `close_losing_bet()` each lower. In this market the vault is already empty: 147 and 49 divided exactly. Where the floors leave dust, `close_event()` pays it to the fee recipient, so it ends up where the fee did. `test_close_event_pays_dust_to_fee_recipient_and_returns_rent` runs a market whose shares do not divide exactly, and checks that the one minor unit left reaches the fee recipient, that every closed account is gone, and that each rent returns to the admin.
 
 ![](figures/betting-maria-close.svg)
 
-An Open event can also be voided: if the studio pulls both films from release, there is no result to settle. `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, using the same close-the-account-to-prevent-double-claims mechanic (checked by `test_cancel_and_refund`, which then closes the canceled event's accounts, with nothing left in the vault to pay). `cancel_event()` works on a Draft too, which is how Maria abandons a market she set up wrong before anyone has staked on it. Settled and Cancelled are the two ways an Open event ends, and in both every bet account has a handler that pays it out or closes it. The config is Maria's state for the whole deployment, and no handler closes it.
+An Open event can also be voided: if the studio pulls both films from release, there is no result to settle. `cancel_event()`, admin-only, flips the status to Cancelled, and every bettor reclaims their exact stake through `claim_refund()`, no fee taken, which closes the bet account as `claim_winnings()` does (checked by `test_cancel_and_refund`, which then closes the canceled event's accounts, with nothing left in the vault to pay). `cancel_event()` works on a Draft too, which is how Maria abandons a market she set up wrong before anyone has staked on it. Settled and Cancelled are the two ways an Open event ends, and in both every bet account has a handler that pays it out or closes it. The config is Maria's state for the whole deployment, and no handler closes it.
 
 ![](figures/betting-state-machine.svg)
 
@@ -110,11 +110,11 @@ Every checked operation maps to `MathOverflow`. There are no rates and no curves
 - One bet account per bettor per outcome, and no bet account survives its payout, refund, or close.
 - `open_bets` counts the event's bet accounts and `open_outcomes` its outcome accounts; no outcome closes while a bet is open, and the event does not close while an outcome is.
 - The outcome list never changes once the event is Open, and no stake enters the pool at or after `betting_closes_at`.
-- Only the admin's signature can settle or cancel, and only the payout formula decides amounts.
+- Only the admin's signature can settle or cancel an event.
 
 ## The Failure Modes: One Person Decides the Result
 
-- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by mistake, and the decision is hers alone. This program is deliberately the simplest case; the *Offchain Truth* chapter covers what it costs a trusted party to lie, and how to replace a single signer with several.
+- **The resolution itself.** Maria could settle the wrong outcome, maliciously or by mistake. This program is the simplest case; the *Offchain Truth* chapter covers what a trusted party forfeits by lying, and how to replace a single signer with several.
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.
 - **Double claims** fail because the bet account is gone, as the claim step showed.
 - **Closing an account a claim still needs** fails with the three checks the close step showed, `EventNotFinished`, `BetsStillOpen` and `OutcomesStillOpen` (`test_close_event_refused_while_event_is_open` checks the first, `test_close_event_refused_while_a_bet_is_open` the second, and `test_close_event_pays_dust_to_fee_recipient_and_returns_rent` the third). Only Maria's signature closes anything (`test_only_admin_can_close_outcomes_and_event`).
@@ -128,12 +128,12 @@ The suite builds all state through the program's own handlers, and its centerpie
 
 ## What You Learnt from Building the Betting Market
 
-A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window. Here a vault and four expressions of arithmetic do those jobs: the pool is the odds, the program carries no risk, and the house takes a fee only from the losers.
+A racetrack's parimutuel pool needs a tote board, a licensed operator, and a payout window. Here the vault holds every stake, the payout formula sets each winner's share from the pools at the close, and the fee is 2% of the losing pool.
 
 This chapter added six concepts:
 
 - **The parimutuel structure.** All stakes pool together; winners split the losing pool in proportion to their stakes, so a larger stake wins more and no one sets odds.
-- **A designated signer decides the result.** The operator acts as the oracle, and the program's job is making that trust visible and narrow: their signature picks the winner, and the payout formula, not the signature, decides every amount.
+- **A designated signer decides the result.** The operator acts as the oracle, and the program lets the signature choose the winner and nothing else.
 - **Terms locked before bettors commit stakes.** The outcome list, the fee, and the close time are all fixed before the first stake lands, so the question bettors staked on cannot be rewritten.
 - **Account closure as the double-claim defense.** A paid-out bet has no account left to claim with.
 - **Cancellation refunds every stake.** Draft and Open events can be canceled, and stakes in a canceled event are refunded in full, so a voided event strands nobody's stake.

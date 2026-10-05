@@ -255,6 +255,6 @@
   <rect class="marker" x="197" y="484.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="205" y="496.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
   <text x="223" y="496" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Bob 250 USDC from the quote vault</text>
   <rect class="marker" x="197" y="502.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="205" y="514.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <text x="223" y="514" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Carol 748.125 USDC in quote</text>
+  <text x="223" y="514" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Carol 748.125 USDC from the quote vault</text>
   <text x="16" y="694" font-size="9.5" font-style="italic" fill="#444">not drawn: the NVDAx and USDC mints, which these accounts name only as seeds and fields</text>
 </svg>

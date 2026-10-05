@@ -13,21 +13,17 @@ Every financial product in this book is a state machine.
 
 Before writing any handler, draw this machine: name the states, name every legal transition, and check that nothing is missing.
 
-Most programs are conceptually simple, with design rules that come straight from the state drawing:
+The state drawing gives the design rules:
 
 - **Give each transition its own instruction handler.** `take_offer()` moves an offer from open to taken and does nothing else. Handlers that perform two transitions, or half of one, create bugs.
-- **Make the state explicit.** A `status` enum on the account, or, often better, the account's own existence: the betting market's `Bet` account closes when the position ends, so "already claimed" means the account is gone. Existence is better where the state is terminal, because a closed account cannot be claimed twice and holds no rent. A state inferred from other fields is worse than either. The betting market could treat an empty pool as "still being set up", but then anyone's first bet would end the setup, so it records a Draft status that only the admin can change.
+- **Make the state explicit.** A `status` enum on the account, or, often better, the account's own existence: the betting market's `Bet` account closes when the position ends, so "already claimed" means the account is gone. Existence is better where the state is terminal, because a closed account cannot be claimed twice and holds no rent. A state inferred from other fields is worse than either; the *Betting Market* chapter shows why its event records a Draft status instead of reading one off an empty pool.
 - **Check state, not just signers.** Betting on a settled event, canceling a filled order, and liquidating a healthy loan must fail because the *state* forbids them, with an error that names the rule.
 - **Every participant must be able to get their assets out of every state.** If an escrow had no cancel handler, it would strand the maker's tokens if nobody took the offer. If a betting market had no cancel-and-refund path, it would strand every stake if the event was called off. Walk each state and ask: how do each party's assets leave from here? If any state has no answer, the program strands funds, and correct arithmetic will not fix that.
 - **Ensure the handler that pays out the last of the vault's tokens also closes everything.** It should empty the vault, close the vault and the state accounts, and return each account's rent deposit to whoever paid it.
 
 ## Whoever Opens an Account Pays Its Rent, and Gets It Back
 
-A program that creates accounts on its users' behalf has a question to answer: who should pay the deposit in the first place?
-
-- Whoever wants the account pays for it. The maker funds their own offer account and the vault to store the offered tokens; the taker funds their own token account (if it did not exist already) to receive what the maker offered.
-
-- Closing the account refunds the deposit, as the *Core Building Blocks of Solana* chapter explains, so a program that leaves accounts unclosed when no longer needed leaves other people's lamports locked in them. For every account your program creates, name the handler that eventually closes it. The escrow program you will build in this book has tests asserting that the maker gets back exactly the lamports they paid, and yours should too.
+Whoever wants the account pays its deposit: the maker funds the offer account and the vault, and the taker funds their own token account if it does not exist yet. Closing the account refunds the deposit, as the *Core Building Blocks of Solana* chapter explains, and an account left open keeps someone else's lamports locked, so for every account your program creates, name the handler that closes it. The escrow program you will build in this book has tests asserting that the maker gets back exactly the lamports they paid, and yours should too.
 
 ![](figures/rent-lifecycle.svg)
 
@@ -35,3 +31,4 @@ A program that creates accounts on its users' behalf has a question to answer: w
 
 - Every financial product is a small state machine: draw it before writing any handler, name every state and transition, and make sure every participant is able to get their assets out of every state.
 - Give each transition its own handler, and check the account's state, not only who signed. Ensure the handler that pays out the last of the vault's tokens also closes the vault and the state accounts.
+- Whoever opens an account pays its rent deposit and gets it back when the account closes; name the handler that closes every account your program creates.

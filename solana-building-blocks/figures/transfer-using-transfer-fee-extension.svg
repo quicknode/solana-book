@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 238" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">A token transfer using the "transfer fee" extension</text>
   <defs><marker id="transfer-ext-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker><marker id="transfer-ext-a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker></defs>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
@@ -36,5 +36,6 @@
   <path d="M 400,114.423 L 400,156" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#transfer-ext-g)"/>
   <text x="320" y="196" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the mint's transfer fee withholds 1 ACME for the issuer</text>
   <text x="320" y="222" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">100 ACME was sent and 99 ACME arrived</text>
+  <text x="16" y="242" font-size="7.5" fill="#444" font-style="italic">not drawn: the ACME mint, whose transfer-fee extension withholds the 1 ACME; the accounts name it only as a seed</text>
   <g class="coin" transform="translate(320,162)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
 </svg>

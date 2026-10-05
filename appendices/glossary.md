@@ -82,7 +82,7 @@ A batch of transactions one [leader](#leader) produces for its [slot](#slot), bu
 
 ### borrow accumulation factor
 
-A single number per reserve that starts at 1.0 and only grows, compounding the borrow rate over elapsed seconds. A borrower's live debt is their stored principal multiplied by it, so interest accrues for everyone without any loan being touched. The lending example calls the field `borrow_accumulation_factor`; see the *Lending and Borrowing* chapter.
+A single number per reserve that starts at 1.0 and only grows, by the borrow rate over elapsed seconds, which approximates compounding. A borrower's live debt is their stored principal multiplied by it, so interest accrues for everyone without any loan being touched. The lending example calls the field `borrow_accumulation_factor`; see the *Lending and Borrowing* chapter.
 
 ### built-in address
 
@@ -94,7 +94,7 @@ The extra byte found while deriving a PDA that pushes the result off the ed25519
 
 ### call
 
-An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell, and the *Options* chapter's writer supplies the underlying asset to the program as collateral, which makes the call a [covered call](#covered-call).
+An [option](#option) giving its holder the right to buy the underlying at the [strike](#strike). Its writer's obligation is to sell; see [covered call](#covered-call).
 
 ### cash settlement
 
@@ -226,7 +226,7 @@ What an order book does when a side is full and a better order arrives: the wors
 
 ### exercise
 
-To use the right an [option](#option) grants: buy the underlying at the strike (a [call](#call)) or sell it there (a [put](#put)). In the *Options* chapter the holder may exercise while the clock is before `expiry`, and not after.
+To use the right an [option](#option) grants: buy the underlying at the strike (a [call](#call)) or sell it there (a [put](#put)). In the *Options* chapter the holder may exercise while the clock is before `expiry`, and not at or after it.
 
 ### expiry
 
@@ -266,7 +266,7 @@ One of two competing chains, formed when validators briefly build on different b
 
 ### funding rate
 
-The periodic payment on a perpetual futures venue: the heavier side pays it and the lighter side receives it. On most venues the two sides pay each other and the payment keeps the perpetual's price close to the asset it tracks; in the *Perpetual Futures* chapter's program the pool stands between them, and the payment pays the pool for carrying the net exposure.
+The periodic payment on a perpetual futures venue: the heavier side pays it and the lighter side receives it. On most venues the two sides pay each other and the payment keeps the perpetual's price close to the asset it tracks. In the *Perpetual Futures* chapter's program the pool stands between them: the heavier side pays the pool, the pool pays the lighter side at the same rate, and the difference pays the pool for carrying the net exposure.
 
 ### haircut
 
@@ -287,6 +287,10 @@ A borrower's distance from liquidation: the value of their collateral, scaled by
 ### holder
 
 The party who owns an [option](#option) and may [exercise](#exercise) it. A holder's loss is capped at the [premium](#premium) they paid. Compare [writer](#writer).
+
+### IDL
+
+A program's interface definition: the file Anchor generates listing every [instruction handler](#instruction-handler) and the accounts each one takes. Clients build instructions from it and monitors decode them with it; see the *Operating Financial Software* chapter.
 
 ### impermanent loss
 
@@ -362,7 +366,7 @@ An order with a price it refuses to cross: buy at or below, sell at or above.
 
 ### liquidation
 
-Forcibly repaying an unhealthy loan out of its collateral, at a bonus, to keep the market solvent. Bounded by the close factor and priced by the liquidation bonus.
+Forcibly repaying part of an unhealthy loan out of its collateral, at a bonus to the liquidator, to keep the market solvent. The close factor caps how much one call repays.
 
 ### liquidation threshold
 
@@ -450,7 +454,7 @@ The iterative algorithm programs use to take a square root using only integers, 
 
 ### NFT (non-fungible token)
 
-A token that stands for one unique thing, such as a ticket to a particular seat, a deed to a property, or a work of art. Its mint has 0 decimals (so it cannot be fractionalized) and a supply of one (making it unique), and nobody can mint another. Each NFT has its own mint, so a collection of 10,000 NFTs is 10,000 mints. See the *Tokens* chapter.
+A token that stands for one unique thing, such as a ticket to a particular seat, a deed to a property, or a work of art. Its mint has 0 decimals (so it cannot be fractionalized) and a supply of one (making it unique), and nobody can mint another. Each NFT has its own mint. See the *Tokens* chapter.
 
 ### notional
 
@@ -558,7 +562,7 @@ A [put](#put) bought by someone who already holds the underlying, as insurance a
 
 ### put
 
-An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy, and the *Options* chapter's writer supplies the program with enough of the quote token to buy every share at the strike price, which makes the put a [cash-secured put](#cash-secured-put).
+An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy; see [cash-secured put](#cash-secured-put).
 
 ### quote
 
@@ -642,7 +646,7 @@ Solana's **native token**: the asset the network understands without any token p
 
 ### Solana
 
-A public blockchain: a network of validators that run programs and keep a shared record of every account. Programs on it hold and move [tokens](#token), and transactions settle in under a second for a fraction of a cent. Solana is not an asset: its native token, [SOL](#sol), is the asset. Nor is Solana an organization. Many organizations work on Solana.
+A public blockchain: a network of validators that run programs and keep a shared record of every account. Programs on it hold and move [tokens](#token), and a transaction costs a fraction of a cent whatever it moves. Solana is not an asset: its native token, [SOL](#sol), is the asset. Nor is Solana an organization. Many organizations work on Solana.
 
 ### SPL token
 
@@ -714,7 +718,7 @@ The asset an [option](#option) or other derivative is about: what a [call](#call
 
 ### Unix timestamp
 
-The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is usually within a second or two of real time, and somebody chose where. See the *Time* chapter.
+The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is usually within a second or two of real time, at a value one leader chose. See the *Time* chapter.
 
 ### utilization
 
@@ -738,7 +742,7 @@ A key pair used as an identity for holding and moving assets, with the private k
 
 ### wrapping
 
-What a plain `+` or `*` does in a Rust release build when the result is too big for the type: it starts again from zero, so a `u64` one past the maximum becomes zero. Compare [checked arithmetic](#checked-arithmetic).
+What a plain `+` or `*` does when the result is too big for the type, in a Rust release build that has not set `overflow-checks`: it starts again from zero, so a `u64` one past the maximum becomes zero. The companion programs do set it, so there a plain `+` fails the transaction instead. Compare [checked arithmetic](#checked-arithmetic).
 
 ### writer
 

@@ -32,7 +32,7 @@
   <text x="82" y="231" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(collateral back)</text>
   <path d="M 320,177 L 320,224" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
   <text x="326" y="197" font-size="10.5">reclaim_collateral()</text>
-  <text x="326" y="210" font-size="9" font-style="italic" fill="#444">(after expiry: collateral back)</text>
+  <text x="326" y="210" font-size="9" font-style="italic" fill="#444">(at or after expiry: collateral back)</text>
   <path d="M 493,177 C 493,215 460,250 398,254" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#options-states-arr)"/>
   <text x="530" y="218" font-size="10.5" text-anchor="middle">collect_proceeds()</text>
   <text x="530" y="231" font-size="9" font-style="italic" fill="#444" text-anchor="middle">(the strike, or the delivery)</text>
