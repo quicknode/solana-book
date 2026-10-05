@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Manuscript and build tooling for Building Financial Software on Solana",
   "scripts": {
-    "build-pdf": "node scripts/build-pdf.mjs",
+    "build-pdf-digital": "FINAL=1 node scripts/build-pdf.mjs",
+    "build-pdf-draft": "node scripts/build-pdf.mjs",
+    "build-pdf-paperback": "FINAL=1 NO_COVER=1 NO_LINKS=1 node scripts/build-pdf.mjs && node scripts/resize-cover.mjs",
     "lint": "node scripts/lint-manuscript.mjs",
     "measure-slot-drift": "node scripts/measure-slot-drift.mjs",
     "preview": "node scripts/preview-page.mjs",

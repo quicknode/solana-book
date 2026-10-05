@@ -66,7 +66,7 @@ Figure captions and table cells are ragged right for the same reason: they are s
 
 ## Running Heads and Folios
 
-The header carries two items: the book's title on the left, the current chapter's title on the right, both 8pt Gelasio italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A build carrying `REVIEWER_NAME` fills the third footer box, bottom right, with that name and the short hash of the commit it was built from, so a single leaf out of an advance copy still says whose it is and which revision of the text it shows. The hash carries a `-dirty` suffix when the working tree had uncommitted changes, because that text matches no commit exactly. Unstamped builds leave that box empty.
+The header carries two items: the book's title on the left, the current chapter's title on the right, both 8pt Gelasio italic in grey. That is the conventional pair, and it is all that fits. At this measure a third box wraps both of them onto two lines, which is why the prerelease marker sits in the footer at bottom left instead, with the folio centered. A draft, which always carries `--reviewer`, fills the third footer box, bottom right, with that name and the short hash of the commit it was built from, so a single leaf out of an advance copy still says whose it is and which revision of the text it shows. The hash carries a `-dirty` suffix when the working tree had uncommitted changes, because that text matches no commit exactly. Final builds leave that box empty.
 
 Headers and folios are suppressed on the cover, the title page, chapter openers (headers only), part titles, and the blank versos paged.js inserts. The reviewer stamp follows the folio: present wherever the folio is, absent from the cover and the blanks.
 
@@ -92,11 +92,11 @@ The drawing is vector throughout and its type is outlined, so the file embeds no
 
 **The press cover is a separate export, sized by `npm run resize-cover`.** A file going to KDP wraps the whole book: 0.125in bleed + 7.44in back cover + spine + 7.44in front cover + 0.125in bleed wide, and 9.69 + 0.25in tall. The spine is the interior page count times KDP's per-page thickness (0.002252in for white paper, 0.0025in for cream), so at 308 interior pages on white (309 with the cover) the target is 15.824 x 9.94in with a 0.694in spine. None of that belongs in `assets/cover.pdf`, which is the front cover at trim and nothing else.
 
-`npm run resize-cover` rescales the Figma export of the full wrap, kept at `assets/cover-wrap.pdf` (another path can be passed as an argument, `--pages N` and `--paper white|cream` as options), to that exact size, filling the target and cropping overflow symmetrically into the bleed. Page count is read from the built book unless `--pages` is passed; pass the count of the file actually uploaded as the interior (a `NO_COVER=1` interior is one page shorter than the built book). The script also measures the spine the art was drawn for, by aligning trim heights and taking the width left over after two covers and two bleeds, and warns when that disagrees with the real spine: the art then bleeds onto or short of the true spine edges by half the difference per side, and spine text rides off-center by the same amount. A warning means the rescale is good enough for a proof and the production cover should be re-exported from a Figma frame drawn for the frozen page count (1 px = 1 pt: 15.824 x 9.94in is a 1139 x 716 px frame).
+`npm run resize-cover` rescales the Figma export of the full wrap, kept at `assets/cover-wrap.pdf` (another path can be passed as an argument, `--pages N` and `--paper white|cream` as options), to that exact size, filling the target and cropping overflow symmetrically into the bleed. Page count is read from the paperback interior, the file actually uploaded, unless `--pages` is passed. `npm run build-pdf-paperback` runs it straight after building that interior, so the two always agree; run it alone to pass `--paper cream` or `--pages`. The script also measures the spine the art was drawn for, by aligning trim heights and taking the width left over after two covers and two bleeds, and warns when that disagrees with the real spine: the art then bleeds onto or short of the true spine edges by half the difference per side, and spine text rides off-center by the same amount. A warning means the rescale is good enough for a proof and the production cover should be re-exported from a Figma frame drawn for the frozen page count (1 px = 1 pt: 15.824 x 9.94in is a 1139 x 716 px frame).
 
 ## US Letter
 
-`--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite the print build. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
+`--size letter` builds the same manuscript at 8.5 x 11in with 1.1in side margins, and writes it to a filename carrying the size so it cannot overwrite a build at the trim. It is for reading on screen and for running a draft off an office printer, where Letter is the paper in the tray.
 
 It is not a book size and is not what gets printed. Letter's margins leave a 6.3in measure, about 100 characters of 10pt type, which is longer than a reader tracks comfortably, and print on demand costs more per unit at that trim. The page count differs too: 267 pages against 309, because the larger page carries more.
 
@@ -104,20 +104,18 @@ It is not a book size and is not what gets printed. Letter's margins leave a 6.3
 
 ```
 npm install
-npm run build-pdf                          # print size, into build/
-npm run build-pdf -- --size letter         # US Letter
-NO_COVER=1 npm run build-pdf               # interior only
-FINAL=1 NO_COVER=1 NO_LINKS=1 npm run build-pdf    # the interior uploaded to KDP
-FINAL=1 npm run build-pdf                  # no "prerelease draft" note on the title page or in the footers
-REVIEWER_NAME="..." npm run build-pdf      # advance copy: name and commit hash on the title page and every folio
-npm run build-pdf -- out.pdf               # explicit output path
-npm run build-pdf -- --help                # the switches, from the script itself
-npm run preview -- <name> "<phrase>"       # rasterize one page to check it
+npm run build-pdf-digital                  # the finished book for screens: cover and links, no draft markings
+npm run build-pdf-paperback                # the KDP upload: the interior (no cover, no links, no draft markings), then the cover sized to it
+npm run build-pdf-draft -- --reviewer "..."   # advance copy: name and commit hash on the title page and every folio
+npm run build-pdf-draft -- --reviewer "..." --size letter   # the same at US Letter
+npm run build-pdf-digital -- out.pdf       # explicit output path
+npm run build-pdf-digital -- --help        # the switches, from the script itself
+npm run preview -- <name> "<phrase>"       # rasterize one page of the digital edition to check it
 ```
 
-An unrecognized switch, a `--size` with no value or an unknown one, and more than one output path all print the usage and exit nonzero, rather than taking the stray argument for a filename.
+An unrecognized switch, a `--size` or `--reviewer` with no value or an unknown size, and more than one output path all print the usage and exit nonzero, rather than taking the stray argument for a filename. So does a draft with no `--reviewer`, since a review copy nobody can trace is the one the stamp exists to prevent, and a final build with one, since a review copy is not final.
 
-The switches compose: `NO_COVER=1 npm run build-pdf -- --size letter` is the cover-less Letter build.
+Each build writes its own file in `build/`: the digital edition is `Building Financial Software on Solana.pdf`, and every other build adds a label, `(paperback interior)`, `(draft, <reviewer>)` or `(letter)`, so one build never overwrites another. The three scripts set `FINAL=1`, `NO_COVER=1` and `NO_LINKS=1` for `scripts/build-pdf.mjs`, and those still compose by hand for an unusual combination: `FINAL=1 NO_COVER=1 node scripts/build-pdf.mjs --size letter` is a cover-less final Letter build.
 
 **The interior uploaded to KDP carries no links.** A link in a PDF is an annotation laid over the page rather than ink on it, and KDP removes every one it finds, then reports each page it removed one from as "non-printable markup" to be checked: every table of contents page, and every page with a cross-reference or an address. Nothing printed changes when they go, because every address is printed in full after its link text, but the report cannot say so. `NO_LINKS=1` builds the file without them, and without the named destinations the internal links pointed at, so KDP has nothing to remove. Every other build keeps them, for reading on screen.
 

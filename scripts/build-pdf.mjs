@@ -2,12 +2,14 @@
 // Build a technical-book style PDF of the manuscript.
 //
 // Reads TABLE-OF-CONTENTS.md to get the chapters in order, converts each
-// markdown file to HTML, lays the result out as 6x9in book pages (serif
+// markdown file to HTML, lays the result out as book pages at the print trim (serif
 // type, running headers, page numbers, chapters on fresh pages, a table of
 // contents with page numbers) using Paged.js, and prints to PDF with the
 // system Chromium via playwright-core.
 //
-// Usage: node scripts/build-pdf.mjs [output.pdf]
+// Usage: npm run build-pdf-draft -- --reviewer "<name>"
+//        npm run build-pdf-paperback
+//        npm run build-pdf-digital
 
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -23,7 +25,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
-// Page sizes, in inches. "print" is what the book is printed at: 7.44 x 9.69
+// Page sizes, in inches. "trim" is what the book is printed at: 7.44 x 9.69
 // is the KDP standard trim closest in proportion to the 7 x 9.19 technical
 // books are usually printed at, which KDP does not offer. The margins follow
 // O'Reilly's: a 1in side margin clears KDP's 0.75in gutter minimum for books
@@ -35,25 +37,36 @@ const AUTHOR = "Mike MacCana";
 // measure down to 6.3in, about 100 characters, which is longer than a reader
 // tracks comfortably. Every page dimension is derived from the chosen size.
 const PAGE_SIZES = {
-  print: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 1, topMarginIn: 0.8, bottomMarginIn: 1 },
+  trim: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 1, topMarginIn: 0.8, bottomMarginIn: 1 },
   letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
 };
 
-const USAGE = `Usage: npm run build-pdf -- [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
+const USAGE = `Usage: npm run build-pdf-draft -- --reviewer "<name>" [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
+       npm run build-pdf-paperback
+       npm run build-pdf-digital   [-- output.pdf]
 
-  --size <name>   Page size; defaults to "print". See PRINT-SPECIFICATION.md.
-  --help          Print this and exit.
+  build-pdf-draft      An advance review copy, with the prerelease markings.
+  build-pdf-paperback  The interior uploaded to KDP: final, no cover, no links.
+                       Then sizes the cover wrap to it (npm run resize-cover).
+                       Takes no arguments: the cover reads the interior from
+                       its default path.
+  build-pdf-digital    The finished book for reading on screen: final, with the
+                       cover and links.
 
-Environment:
-  NO_COVER=1      Build the interior without the cover page.
-  NO_LINKS=1      Leave out the clickable links, which paper cannot carry and
-                  KDP strips from an interior as non-printable markup.
-  FINAL=1         Leave out the prerelease markings: the draft note on the
-                  title page and the marker in every page's footer.
-  REVIEWER_NAME   Stamp as an advance copy for that reviewer: named on the
-                  title page, and in the footer of every page carrying a folio.
-                  The commit the copy was built from is stamped beside the
-                  name, so feedback can be matched to the text it was about.`;
+  --reviewer <name>  Stamp as an advance copy for that reviewer: named on the
+                     title page, and in the footer of every page carrying a
+                     folio. The commit the copy was built from is stamped
+                     beside the name, so feedback can be matched to the text it
+                     was about. Every draft needs one; a final build refuses it.
+  --size <name>      Page size; defaults to "trim". See PRINT-SPECIFICATION.md.
+  --help             Print this and exit.
+
+Environment, set by the scripts above:
+  NO_COVER=1         Build the interior without the cover page.
+  NO_LINKS=1         Leave out the clickable links, which paper cannot carry
+                     and KDP strips from an interior as non-printable markup.
+  FINAL=1            Leave out the prerelease markings: the draft note on the
+                     title page and the marker in every page's footer.`;
 
 const die = (message) => {
   console.error(`${message}\n\n${USAGE}`);
@@ -64,7 +77,8 @@ const die = (message) => {
 // forward the separator itself has changed over the years, so a bare "--" is
 // dropped rather than taken for an output path.
 const argv = process.argv.slice(2).filter((arg) => arg !== "--");
-let sizeName = "print";
+let sizeName = "trim";
+let reviewerName = "";
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
   const arg = argv[i];
@@ -76,6 +90,11 @@ for (let i = 0; i < argv.length; i++) {
   } else if (arg === "--size") {
     if (i + 1 >= argv.length) die("--size needs a value.");
     sizeName = argv[++i];
+  } else if (arg.startsWith("--reviewer=")) {
+    reviewerName = arg.slice("--reviewer=".length).trim();
+  } else if (arg === "--reviewer") {
+    if (i + 1 >= argv.length || argv[i + 1].startsWith("-")) die("--reviewer needs a name.");
+    reviewerName = argv[++i].trim();
   } else if (arg.startsWith("-")) {
     // Without this an unrecognized flag becomes the output path, and the build
     // succeeds having written a file named "--size".
@@ -95,9 +114,33 @@ const TOP_MARGIN_IN = PAGE_SIZES[sizeName].topMarginIn;
 const BOTTOM_MARGIN_IN = PAGE_SIZES[sizeName].bottomMarginIn;
 const TEXT_WIDTH_IN = +(PAGE_WIDTH_IN - 2 * SIDE_MARGIN_IN).toFixed(2);
 
-// A size the book is not printed at is labelled in the filename, so two builds
-// can sit in build/ without one quietly overwriting the other.
-const defaultName = sizeName === "print" ? `${TITLE}.pdf` : `${TITLE} (${sizeName}).pdf`;
+const isFinal = process.env.FINAL === "1";
+// A reviewer's copy exists to be traced back to its reviewer, so a final build
+// carrying one is a contradiction rather than a combination, and a draft
+// without one is a copy nobody can trace.
+if (isFinal && reviewerName) die("A final build cannot carry --reviewer: a review copy is not final.");
+if (!isFinal && !reviewerName) die("A draft is an advance review copy and needs --reviewer \"<name>\".");
+
+// Reading and review copies leave the cover off: the art is not what is being
+// read, and the interior's page count is what a printer quotes against.
+const includeCover = process.env.NO_COVER !== "1";
+// Read here rather than where the links are removed, because it names the file.
+const stripLinks = process.env.NO_LINKS === "1";
+
+// Every build other than the digital edition at the print trim is labelled in
+// its filename, so the paperback interior, the digital edition and each
+// reviewer's copy can sit in build/ without one quietly overwriting another.
+// scripts/preview-page.mjs reads the digital edition and
+// scripts/resize-cover.mjs the paperback interior, by these names.
+const labels = [];
+if (!isFinal) labels.push(`draft, ${reviewerName.replace(/[\\/:*?"<>|]/g, "-")}`);
+if (!includeCover && stripLinks) labels.push("paperback interior");
+else {
+  if (!includeCover) labels.push("no cover");
+  if (stripLinks) labels.push("no links");
+}
+if (sizeName !== "trim") labels.push(sizeName);
+const defaultName = labels.length ? `${TITLE} (${labels.join(", ")}).pdf` : `${TITLE}.pdf`;
 const outputPath = resolve(positional[0] ?? join(repoRoot, "build", defaultName));
 mkdirSync(dirname(outputPath), { recursive: true });
 
@@ -110,12 +153,6 @@ const escapeHtml = (text) =>
 const escapeCssString = (text) =>
   text.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/[\r\n]+/g, " ");
 
-// Advance review copies are stamped per reviewer: REVIEWER_NAME=... npm run build-pdf
-const reviewerName = (process.env.REVIEWER_NAME ?? "").trim();
-const isFinal = process.env.FINAL === "1";
-// A reviewer's copy exists to be traced back to its reviewer, so a final build
-// carrying one is a contradiction rather than a combination.
-if (isFinal && reviewerName) die("FINAL=1 and REVIEWER_NAME cannot be combined: a review copy is not final.");
 const buildDate = new Date().toISOString().slice(0, 10);
 
 // A reviewer's copy also carries the commit it was built from. The manuscript
@@ -140,9 +177,7 @@ const commit = reviewerName ? describeCommit() : "";
 
 const advanceNote = reviewerName
   ? `Advance review copy for ${escapeHtml(reviewerName)}. Please don't redistribute. Built ${buildDate}${commit ? ` from commit ${escapeHtml(commit)}` : ""}.`
-  : isFinal
-    ? ""
-    : `Prerelease draft, built ${buildDate}.`;
+  : "";
 const draftFooter = isFinal
   ? ""
   : `@bottom-left { content: "PRERELEASE DRAFT (${buildDate})\\A NOT FOR DISTRIBUTION"; white-space: pre; font-family: Gelasio, Georgia, serif; font-size: 8pt; letter-spacing: 0.02em; color: #999; }`;
@@ -538,10 +573,6 @@ async function rasterizeCover(coverPdfPath) {
   return dataUrl;
 }
 
-// Reading and review copies leave the cover off: the art is not what is being
-// read, and the interior's page count is what a printer quotes against.
-// NO_COVER=1 npm run build-pdf
-const includeCover = process.env.NO_COVER !== "1";
 const coverPdfPath = join(repoRoot, "assets", "cover.pdf");
 let coverContent = "&nbsp;";
 if (!includeCover) {
@@ -1072,7 +1103,6 @@ for (const pdfPage of pdf.getPages()) {
 // them out, and the named destinations the internal links pointed at with
 // them, so there is nothing for KDP to remove. The printed text is the same
 // either way: an address is printed in full after its link text.
-const stripLinks = process.env.NO_LINKS === "1";
 if (stripLinks) {
   for (const pdfPage of pdf.getPages()) pdfPage.node.delete(PDFName.of("Annots"));
   pdf.catalog.delete(PDFName.of("Dests"));

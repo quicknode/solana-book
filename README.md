@@ -22,24 +22,20 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Building the PDF
 
-`npm install` then `npm run build-pdf` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at; `npm run build-pdf -- --size letter` builds the same manuscript at US Letter for screen reading and office printers. `npm run resize-cover` sizes the full-wrap cover export (`assets/cover-wrap.pdf`) to KDP's exact requirement, spine width included. [PRINT-SPECIFICATION.md](PRINT-SPECIFICATION.md) records the trim, margins, type, cover math, and the rest of the physical book. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
+`npm install` then `npm run build-pdf-digital` renders the whole manuscript, in table-of-contents order, as a single-column textbook PDF (serif type, running headers, page numbers, a contents page with page numbers) into `build/`. The page is 7.44 x 9.69in, the KDP standard trim closest in proportion to the 7 x 9.19in size technical books are usually printed at. Three builds share it: `build-pdf-digital` is the finished book for reading on screen, `build-pdf-paperback` the interior uploaded to KDP, and `build-pdf-draft -- --reviewer "<name>"` an advance copy stamped for one reviewer, which takes `--size letter` for a reviewer printing on an office printer. `npm run resize-cover` sizes the full-wrap cover export (`assets/cover-wrap.pdf`) to KDP's exact requirement, spine width included. [PRINT-SPECIFICATION.md](PRINT-SPECIFICATION.md) records the trim, margins, type, cover math, and the rest of the physical book. Requires a Chromium binary; the script uses `/opt/pw-browsers/chromium` or the `CHROMIUM_PATH` environment variable.
 
 ## Preparing for press
 
-1. Build the interior without the cover page, without the clickable links that KDP would otherwise strip as non-printable markup, and without the prerelease draft markings:
+1. Export the full-wrap cover (back, spine and front, with bleed) from Figma as a PDF to `assets/cover-wrap.pdf`.
+2. Build the interior without the cover page, without the clickable links that KDP would otherwise strip as non-printable markup, and without the prerelease draft markings, then resize the cover to KDP's exact size, spine width taken from the interior's page count:
 
    ```
-   FINAL=1 NO_COVER=1 NO_LINKS=1 npm run build-pdf
+   npm run build-pdf-paperback
    ```
 
-2. Export the full-wrap cover (back, spine and front, with bleed) from Figma as a PDF to `assets/cover-wrap.pdf`.
-3. Resize the cover to KDP's exact size. Run this after step 1, because the spine width comes from the page count of the book in `build/`:
+   `npm run resize-cover` runs the second half alone, for cream paper (`-- --paper cream`) or a different page count (`-- --pages N`).
 
-   ```
-   npm run resize-cover
-   ```
-
-4. Upload both to Amazon KDP: `build/Building Financial Software on Solana.pdf` as the manuscript, and `build/cover-kdp-<pages>pp-white.pdf` as the cover.
+3. Upload both to Amazon KDP: `build/Building Financial Software on Solana (paperback interior).pdf` as the manuscript, and `build/cover-kdp-<pages>pp-white.pdf` as the cover.
 
 ## Status
 
