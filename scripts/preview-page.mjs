@@ -1,4 +1,4 @@
-// Rasterize a page of the built PDF to PNG, for eyeballing typography and
+// Rasterize a page of the digital edition (npm run build-pdf-digital) to PNG, for eyeballing typography and
 // figure placement. Finds the page by a phrase on it, so page-number drift
 // between builds never previews the wrong page.
 // Usage: npm run preview -- <name> "<phrase on the page>"

@@ -7,7 +7,7 @@ Three commands, all of which must pass:
 ```
 npm run lint                        # banned phrases, heading rules, figure and chapter-reference rules
 node scripts/check-figure-geometry.mjs   # renders every SVG in Chromium: text overlap, arrowheads, coin marks
-npm run build-pdf                   # the whole book; prints only the output path on success
+npm run build-pdf-digital           # the whole book; prints only the output path on success
 ```
 
 The first two also run in GitHub Actions on every pull request and every push to `main`
@@ -16,8 +16,8 @@ does not run there, so run it yourself. The build reads the finished PDF back an
 quote printed outside the code face, which is the one check on the typographic quotes that does not
 trust the build's own conversion.
 
-`npm run preview -- <chapter> "<phrase>"` renders a single chapter around a phrase, which is faster than
-building the book when checking one edit.
+`npm run preview -- <chapter> "<phrase>"` renders the page of the digital edition carrying a phrase,
+which is faster than paging through the book when checking one edit.
 
 `node scripts/check-figure-bands.mjs` reports horizontal dead space in the figures — the hole a
 deletion leaves when the columns around it stay put. It is advisory, not a gate: it over-reports on
