@@ -5,7 +5,7 @@
   "scripts": {
     "build-pdf-digital": "FINAL=1 node scripts/build-pdf.mjs",
     "build-pdf-draft": "node scripts/build-pdf.mjs",
-    "build-pdf-print": "FINAL=1 NO_COVER=1 NO_LINKS=1 node scripts/build-pdf.mjs",
+    "build-pdf-paperback": "FINAL=1 NO_COVER=1 NO_LINKS=1 node scripts/build-pdf.mjs",
     "lint": "node scripts/lint-manuscript.mjs",
     "measure-slot-drift": "node scripts/measure-slot-drift.mjs",
     "preview": "node scripts/preview-page.mjs",

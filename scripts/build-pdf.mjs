@@ -8,7 +8,7 @@
 // system Chromium via playwright-core.
 //
 // Usage: npm run build-pdf-draft -- --reviewer "<name>"
-//        npm run build-pdf-print
+//        npm run build-pdf-paperback
 //        npm run build-pdf-digital
 
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, existsSync } from "node:fs";
@@ -25,7 +25,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
-// Page sizes, in inches. "print" is what the book is printed at: 7.44 x 9.69
+// Page sizes, in inches. "trim" is what the book is printed at: 7.44 x 9.69
 // is the KDP standard trim closest in proportion to the 7 x 9.19 technical
 // books are usually printed at, which KDP does not offer. The margins follow
 // O'Reilly's: a 1in side margin clears KDP's 0.75in gutter minimum for books
@@ -37,25 +37,25 @@ const AUTHOR = "Mike MacCana";
 // measure down to 6.3in, about 100 characters, which is longer than a reader
 // tracks comfortably. Every page dimension is derived from the chosen size.
 const PAGE_SIZES = {
-  print: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 1, topMarginIn: 0.8, bottomMarginIn: 1 },
+  trim: { widthIn: 7.44, heightIn: 9.69, sideMarginIn: 1, topMarginIn: 0.8, bottomMarginIn: 1 },
   letter: { widthIn: 8.5, heightIn: 11, sideMarginIn: 1.1, topMarginIn: 0.9, bottomMarginIn: 0.95 },
 };
 
 const USAGE = `Usage: npm run build-pdf-draft -- --reviewer "<name>" [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
-       npm run build-pdf-print   [-- output.pdf]
-       npm run build-pdf-digital [-- output.pdf]
+       npm run build-pdf-paperback [-- output.pdf]
+       npm run build-pdf-digital   [-- output.pdf]
 
-  build-pdf-draft    An advance review copy, with the prerelease markings.
-  build-pdf-print    The interior uploaded to KDP: final, no cover, no links.
-  build-pdf-digital  The finished book for reading on screen: final, with the
-                     cover and links.
+  build-pdf-draft      An advance review copy, with the prerelease markings.
+  build-pdf-paperback  The interior uploaded to KDP: final, no cover, no links.
+  build-pdf-digital    The finished book for reading on screen: final, with the
+                       cover and links.
 
   --reviewer <name>  Stamp as an advance copy for that reviewer: named on the
                      title page, and in the footer of every page carrying a
                      folio. The commit the copy was built from is stamped
                      beside the name, so feedback can be matched to the text it
                      was about. Every draft needs one; a final build refuses it.
-  --size <name>      Page size; defaults to "print". See PRINT-SPECIFICATION.md.
+  --size <name>      Page size; defaults to "trim". See PRINT-SPECIFICATION.md.
   --help             Print this and exit.
 
 Environment, set by the scripts above:
@@ -74,7 +74,7 @@ const die = (message) => {
 // forward the separator itself has changed over the years, so a bare "--" is
 // dropped rather than taken for an output path.
 const argv = process.argv.slice(2).filter((arg) => arg !== "--");
-let sizeName = "print";
+let sizeName = "trim";
 let reviewerName = "";
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
@@ -125,18 +125,18 @@ const includeCover = process.env.NO_COVER !== "1";
 const stripLinks = process.env.NO_LINKS === "1";
 
 // Every build other than the digital edition at the print trim is labelled in
-// its filename, so the print interior, the digital edition and each
+// its filename, so the paperback interior, the digital edition and each
 // reviewer's copy can sit in build/ without one quietly overwriting another.
 // scripts/preview-page.mjs reads the digital edition and
-// scripts/resize-cover.mjs the print interior, by these names.
+// scripts/resize-cover.mjs the paperback interior, by these names.
 const labels = [];
 if (!isFinal) labels.push(`draft, ${reviewerName.replace(/[\\/:*?"<>|]/g, "-")}`);
-if (!includeCover && stripLinks) labels.push("print interior");
+if (!includeCover && stripLinks) labels.push("paperback interior");
 else {
   if (!includeCover) labels.push("no cover");
   if (stripLinks) labels.push("no links");
 }
-if (sizeName !== "print") labels.push(sizeName);
+if (sizeName !== "trim") labels.push(sizeName);
 const defaultName = labels.length ? `${TITLE} (${labels.join(", ")}).pdf` : `${TITLE}.pdf`;
 const outputPath = resolve(positional[0] ?? join(repoRoot, "build", defaultName));
 mkdirSync(dirname(outputPath), { recursive: true });

@@ -7,7 +7,7 @@
 // page count carries a spine of the wrong width even after a perfect rescale.
 //
 // Usage:
-//   npm run resize-cover                       # assets/cover-wrap.pdf, count from the print interior
+//   npm run resize-cover                       # assets/cover-wrap.pdf, count from the paperback interior
 //   npm run resize-cover -- path/to/export.pdf [--pages 257] [--paper white|cream]
 //
 // The input is the full wraparound export (back cover, spine, front cover,
@@ -54,13 +54,13 @@ if (!existsSync(input)) {
 if (!pages) {
   // The interior uploaded to KDP is what the spine wraps, so the count comes
   // from the print build rather than the digital one, which carries the cover.
-  const bookPath = join(repoRoot, "build", "Building Financial Software on Solana (print interior).pdf");
+  const bookPath = join(repoRoot, "build", "Building Financial Software on Solana (paperback interior).pdf");
   if (!existsSync(bookPath)) {
-    console.error("Pass --pages N, or run npm run build-pdf-print first so the count can be read from it.");
+    console.error("Pass --pages N, or run npm run build-pdf-paperback first so the count can be read from it.");
     process.exit(1);
   }
   pages = (await PDFDocument.load(readFileSync(bookPath))).getPageCount();
-  console.log(`Page count ${pages}, read from the print interior. Pass --pages to override.`);
+  console.log(`Page count ${pages}, read from the paperback interior. Pass --pages to override.`);
 }
 
 const spine = pages * PAGE_THICKNESS[paper];
