@@ -739,6 +739,11 @@ section.chapter h1 {
 h2 { font-size: 14pt; margin: 1.1em 0 0.45em 0; }
 h3 { font-size: 11pt; margin: 0.9em 0 0.3em 0; font-style: italic; }
 h1, h2, h3 { break-after: avoid; text-align: left; hyphens: none; font-family: "Denim INK", Helvetica, Arial, sans-serif; font-weight: normal; }
+/* The copyright page is set smaller than the body, as books conventionally set
+   it, so legal's full text fits on the one page. These rules come after the
+   general heading sizes so they win at equal specificity. */
+section#ch-prelude-copyright p { font-size: 8.5pt; line-height: 1.4; margin-bottom: 0.5em; }
+section#ch-prelude-copyright h2 { font-size: 9.5pt; margin: 1em 0 0.3em 0; }
 
 code { font-family: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.85em; }
 /* An address sets in italic, which is what technical publishing does with one:
