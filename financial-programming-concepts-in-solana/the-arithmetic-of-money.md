@@ -75,7 +75,7 @@ An **invariant** is a condition that must hold before and after every state chan
 - **The pool product must not decrease.** The AMM's x·y ≥ K check.
 - **The vaults equal what the books owe.** Vault balances always cover the sum of every recorded obligation.
 
-Check them **after the math, not just before.** The AMM re-checks its product after the transfers complete, and that check catches every bug above it that would overpay a user, including bugs in code that has not been written yet. The check is two reloads and a multiplication; without it, nothing bounds what a bug above it can pay out.
+Check them **after the math, not just before.** The AMM re-checks its product after the transfers complete, and that check catches any bug above it that overpays a user by more than the fee the swap leaves in the pool, including bugs in code that has not been written yet. The check is two reloads and a multiplication; without it, nothing bounds what a bug above it can pay out.
 
 A degenerate value like zero can make an invariant hold vacuously: with one reserve at zero, the AMM's pre-trade product is zero, and a check that the new product is at least zero passes whatever the swap pays out. So the AMM requires both reserves positive (`EmptyPoolReserve`) before it prices anything; the *Constant-Product AMM* chapter shows the empty-reserve case.
 

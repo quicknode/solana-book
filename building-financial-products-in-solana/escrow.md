@@ -1,6 +1,6 @@
 # Chapter 11: Escrow
 
-Escrow lets two people swap tokens without trusting each other or paying a middleman, with three instruction handlers. It also teaches program custody, terms stored in an account, a closing handler for every state, and amounts counted in minor units, which every later program reuses.
+Escrow lets two people swap tokens without trusting each other or paying a middleman, with three instruction handlers. It also teaches what later programs reuse: a vault only the program can sign for, terms stored in an account, a closing handler for every state, and amounts counted in minor units.
 
 The chapters that follow add what escrow does not have: a formula that sets a price, an outcome that decides a payout, time and interest, and an operator who must be constrained.
 

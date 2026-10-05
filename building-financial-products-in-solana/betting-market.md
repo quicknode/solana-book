@@ -141,7 +141,7 @@ This chapter added six concepts:
 - **Terms locked before bettors commit stakes.** The outcome list, the fee, and the close time are all fixed before the first stake lands, so the question bettors staked on cannot be rewritten.
 - **Account closure as the double-claim defense.** A paid-out bet has no account left to claim with.
 - **Cancellation refunds every stake.** Draft and Open events can be canceled, and stakes in a canceled event are refunded in full, so a voided event strands nobody's stake.
-- **Children close before parents.** Each close refuses while an account that names it is still open, so bets close before their outcomes and outcomes before their event, and counters on the event track what is still open.
+- **Children close before parents.** `close_outcome()` refuses while any bet of the event is open, and `close_event()` refuses while any bet or outcome is, so bets close before outcomes and outcomes before their event; counters on the event track what is still open.
 
 In the *Order Book Exchange* chapter we will build an exchange. Instead of paying into one pool, traders post orders at the prices they want, backed by tokens moved into a vault when the order is placed, and the program matches each new order against the best resting one. You will see how orders are stored, matched, and paid out onchain, where every step costs compute. The pooled payout formula and the trusted signer both return later, in the *Lending and Borrowing* and *Perpetual Futures* chapters, where the trusted signature is a price feed and settlement runs continuously instead of once.
 

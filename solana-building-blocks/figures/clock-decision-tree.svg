@@ -21,7 +21,7 @@
   <text x="323" y="135" font-size="9.5" fill="#555" font-style="italic" text-anchor="middle">yes</text>
   <rect x="372" y="118" width="236" height="46" fill="#f4f4f2" stroke="#888"/>
   <text x="382" y="136" font-size="10.5" font-weight="bold">whichever unit they stamped</text>
-  <text x="382" y="150" font-size="9.5" fill="#444" font-style="italic">and reject a price stamped before the last restart</text>
+  <text x="382" y="150" font-size="9.5" fill="#444" font-style="italic">reject any price stamped at or before a restart</text>
 
   <path d="M 153,164 L 153,208" stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#clocktree-arr)"/>
   <text x="161" y="189" font-size="9.5" fill="#555" font-style="italic">no</text>

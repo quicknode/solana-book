@@ -30,7 +30,7 @@ A fundraising rule under which contributions bind only if the full target is rea
 
 ### Alpenglow
 
-Solana's consensus mechanism, which replaced Tower BFT. Under it the [commitment levels](#commitment-level) a client asks for are `processed` and `finalized`, and `confirmed` means the same as `finalized`. See the *Operating Financial Software* chapter.
+Solana's consensus mechanism, which replaced Tower BFT. Under it the [commitment levels](#commitment-level) a client asks for are `processed` and `finalized`. See the *Operating Financial Software* chapter.
 
 ### American option / European option
 
@@ -38,7 +38,7 @@ An American option may be exercised at any time up to its expiry; a European opt
 
 ### Anchor
 
-A framework for writing Solana programs in Rust. A program declares the checks each account must pass as constraints, and Anchor generates the code that performs them, the [discriminator](#discriminator), and the [IDL](#idl). The companion repository ships every program in Anchor 1, Anchor 2, and Quasar versions; see the *Adversary* chapter for the checks.
+A framework for writing Solana programs in Rust. A program declares the checks each account must pass as constraints, and Anchor generates the code that performs them, the [discriminator](#discriminator), and the [IDL](#idl). The companion repository ships the program behind each program chapter in Anchor 1, Anchor 2, and Quasar versions; see the *Adversary* chapter for the checks.
 
 ### arbitrage
 
@@ -74,7 +74,7 @@ See [base token](#base-token).
 
 ### base token
 
-The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. It is the first token of a [pair](#pair) written base/quote, and a price on the pair is how many units of the [quote token](#quote-token) buy one unit of the base. In the written pair NVDAx/USDC the base comes first, but the price is quoted in USDC per one NVDAx, so the base is the unit being priced, not the unit of the price.
+The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. It is the first token of a [pair](#pair) written base/quote, and it is the unit being priced, not the unit of the price: a price on NVDAx/USDC is how many USDC, the [quote token](#quote-token), buy one NVDAx.
 
 ### basis point (bps)
 
@@ -203,10 +203,6 @@ The number of decimal places in one major unit of a token, declared on the mint:
 ### degenerate value
 
 A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An AMM reserve of zero lets the [K](#k) check pass vacuously (the *Constant-Product AMM* chapter); a price of zero or below means a broken price feed (the *Offchain Truth* chapter); an escrow offer with nothing on one side is refused by `make_offer()` with `ZeroAmount`. See [invariant](#invariant).
-
-### discretization
-
-Representing a continuous quantity as discrete integer steps. Onchain amounts are integers in [minor units](#minor-unit), so there is no such thing as half a lamport, and every division must decide what happens to the fraction the result cannot represent. See [dust](#dust) and the *Arithmetic of Money* chapter.
 
 ### discriminator
 
@@ -382,11 +378,11 @@ An order with a price it refuses to cross: buy at or below, sell at or above.
 
 ### liquidation
 
-Forcibly repaying part of an unhealthy loan out of its collateral, at a bonus to the liquidator, to keep the market solvent. The close factor caps how much one call repays.
+Forcibly repaying part of an unhealthy loan in return for some of its collateral at a bonus to the liquidator, to keep the market solvent. The close factor caps how much one call repays.
 
 ### liquidation bonus
 
-The discount a liquidator receives on the collateral it seizes, which pays for the service of repaying an unhealthy loan. The *Lending and Borrowing* chapter's market sets it at 5% per reserve.
+The discount a liquidator receives on the collateral they seize, which pays them for repaying an unhealthy loan. The *Lending and Borrowing* chapter's market sets it at 5% per reserve.
 
 ### liquidation threshold
 
@@ -474,7 +470,7 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 ### Newton's method (integer square root)
 
-The iterative algorithm programs use to take a square root using only integers, converging in about seventy loop iterations at most for a 128-bit input. AMMs use it to mint initial LP tokens as the square root of the two reserves' product. See the *Arithmetic of Money* chapter.
+The iterative algorithm programs use to take a square root using only integers, converging within seventy loop iterations for any product of two u64s. AMMs use it to mint initial LP tokens as the square root of the two reserves' product. See the *Arithmetic of Money* chapter.
 
 ### NFT (non-fungible token)
 
@@ -646,7 +642,7 @@ What `saturating_sub` (and its `_add` and `_mul` siblings) does when a result wi
 
 ### seed
 
-One of the inputs a program combines with its program ID to derive a [PDA](#pda-program-derived-address). The seeds are the key of a key/value store and the PDA is the address that key leads to. See the *PDAs* chapter.
+One of the inputs a program combines with its program ID to derive a [PDA](#pda-program-derived-address). The seeds work like the lookup key of a database's key/value store, a different word from a private or public key, and the PDA is the address that lookup leads to. See the *PDAs* chapter.
 
 ### segmenting flow
 
@@ -766,7 +762,7 @@ The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previo
 
 ### unsettled balance
 
-An amount an exchange owes a trader, recorded as a counter on the trader's account rather than paid out at each fill, and claimed with one transfer later. See the *Order Book Exchange* chapter.
+An amount an exchange owes a trader, recorded as a counter on the trader's account rather than paid out at each fill. The trader claims it later with `settle_funds()`, which pays out each token's balance in one transfer however many fills built it up. See the *Order Book Exchange* chapter.
 
 ### utilization
 

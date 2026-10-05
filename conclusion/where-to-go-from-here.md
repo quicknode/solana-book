@@ -19,9 +19,9 @@ An auditor starts with the same questions and goes much further.
 
 You can iterate with an AI as a peer: the companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's assets.
 
-You can reason about who earns what, and why anyone takes part. Every program chapter after *Escrow* named the operator's incentive and the user's, because a crank, a liquidation or a settlement only happens if someone earns something by calling it.
+You can reason about who earns what, and why anyone takes part. Every program chapter said what its operator and its users each get from it, and said plainly when a program has no operator at all, because a crank, a liquidation or a settlement only happens if someone earns something by calling it.
 
-And you can carry the responsibility that comes with all of it.
+You can take responsibility for a program once it holds other people's assets: the *Operating Financial Software* chapter covers testing its edges, waiting for finality, limiting what its admin can do, auditing it with a verified build, and monitoring it after launch.
 
 ## The World Still Runs on Business Hours
 
@@ -52,7 +52,7 @@ So aim at consumers and businesses rather than at a crypto audience. In practice
 
 **A pot your friends collect when you skip a week.** Five friends stake fifty USDC each at the start of the month, and whoever misses their target forfeits a share to the ones who did not. That is the parimutuel pool of the *Betting Market* chapter: stakes in a vault, one settlement, winners split the pot. Who ran is an offchain fact, signed by someone the program trusts, as the *Offchain Truth* chapter covers. People go for a run when their own fifty USDC is at stake.
 
-**A savings club with no bookkeeper.** Everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, under a different name in each country.[^rosca-scope] It is a tanda in Mexico, a susu in West Africa and the Caribbean, a hui in China and Vietnam, and a chit fund in India. Economists call all of them a rotating savings and credit association, or ROSCA. A program removes the organizer, who held the pot between rounds. Build it from contributions paid into a vault, the rotation as a state machine, deadlines against the clock as the *Time* chapter describes, and the *Escrow* chapter's vault with a PDA as its authority.
+**A savings club with no bookkeeper.** Everyone pays a fixed amount in each month, one member takes the whole pot each round, and each member's turn comes once. Hundreds of millions of people run one, under a different name in each country. It is a tanda in Mexico, a susu in West Africa and the Caribbean, a hui in China and Vietnam, and a chit fund in India. Economists call all of them a rotating savings and credit association, or ROSCA.[^rosca-scope] A program removes the organizer, who held the pot between rounds. Build it from contributions paid into a vault, the rotation as a state machine, deadlines against the clock as the *Time* chapter describes, and the *Escrow* chapter's vault with a PDA as its authority.
 
 **A rental deposit that pays its interest to the tenant.** In most places, a month or two of rent sits for a year in the landlord's account or an agency's, earning for whoever holds it. In a vault neither party controls it can pay the tenant instead, and still be released to either side when the lease ends. The design work is the state where the two sides disagree about damage, and making sure the deposit cannot be stuck there.
 

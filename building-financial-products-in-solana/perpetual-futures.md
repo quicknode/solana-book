@@ -43,7 +43,7 @@ The **pool** account lives at a PDA with seeds `"pool"`, the collateral mint, an
 - `total_collateral`: traders' collateral held for open positions. It is tracked separately from `liquidity` because it belongs to the traders, not the LPs.
 - `program_fees`: Maria's accrued fees, separate again.
 - `insurance_fund`: the share of every fee set aside to pay losses larger than a position's collateral, and profits larger than `liquidity`.
-- `long_size`, `short_size`, `long_size_scaled`, `short_size_scaled`: per-side open-interest accumulators, the total size of the open positions on each side.
+- `long_size` and `short_size`: the total size of the open positions on each side. `long_size_scaled` and `short_size_scaled`: the same totals with each position's size divided by its entry price, which lets the pool mark every open position at once.
 - `cumulative_funding` and `last_funding_timestamp`: the funding index.
 - `average_price`, `last_oracle_price` and `average_price_timestamp`: the pool's own running average of the oracle's price, described below.
 
@@ -51,7 +51,7 @@ The pool is the mint authority of the **LP share mint** (seeds `"lp_mint"` and t
 
 ## Liquidity Providers Fund the Pool and Get Shares Priced at Mark
 
-Carol is a liquidity provider. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`: a withheld 1,000 minor units, a tenth of a cent, that no one will ever own. That is the first-depositor defense the *Constant-Product AMM* chapter built, with a floor ten times its 100: `add_liquidity()` and `remove_liquidity()` both count the withheld shares in the supply they divide by, so their slice of the pool never leaves. The *Managed Fund* chapter ignores donations; this pool does both, because its own traders can raise `liquidity` without a donation, as the failure modes below show.
+Carol is a liquidity provider. She calls `add_liquidity()` with her whole 1,000 USDC. She is the first depositor, so her shares are her deposit minus `MINIMUM_LIQUIDITY`: a withheld 1,000 minor units, a tenth of a cent, that no one will ever own. That is the first-depositor defense the *Constant-Product AMM* chapter built, with a floor ten times its 100: `add_liquidity()` and `remove_liquidity()` both count the withheld shares in the supply they divide by, so their slice of the pool never leaves. The *Managed Fund* chapter defends against donations by ignoring them. This pool does that too, pricing shares from tracked state rather than the vault balance, and withholds the minimum as well, because its own traders can raise `liquidity` without a donation, as the failure modes below show.
 
 ![](figures/perps-add-liquidity.svg)
 
@@ -139,7 +139,7 @@ A program runs only when someone sends it a transaction, so the design pays outs
 
 ![](figures/perps-liquidation.svg)
 
-If the price had jumped far enough to take Bob's equity below zero before anyone acted, there would be no equity to pay Dave from. The program follows Percolator here: the part of the fee the equity cannot cover is forgiven, and neither the insurance fund nor the LPs pay it. Anyone may still liquidate the position, and the people losing while it stays open have their own reason to: the loss beyond Bob's collateral, called the **deficit**, is paid down the waterfall in the box below. `test_liquidation_of_bankrupt_position_charges_insurance_before_liquidity` liquidates such a position: the liquidator receives nothing, the position closes, the insurance fund pays 25 of a 40 USDC deficit, and the LPs bear the other 15.
+If the price had jumped far enough to take Bob's equity below zero before anyone acted, there would be no equity to pay Dave from. The program follows Percolator here: the part of the fee the equity cannot cover is forgiven, and neither the insurance fund nor the LPs pay it. Anyone may still liquidate the position, and the people losing while it stays open have their own reason to: the loss beyond Bob's collateral, called the **deficit**, is paid from `insurance_fund` first and from the LPs' `liquidity` only after the fund is empty. `test_liquidation_of_bankrupt_position_charges_insurance_before_liquidity` liquidates such a position: the liquidator receives nothing, the position closes, the insurance fund pays 25 of a 40 USDC deficit, and the LPs bear the other 15.
 
 > **Where a loss too big to pay goes.** A leveraged position can lose more than the collateral standing behind it, and somebody still has to pay the winner on the other side. Venues answer with a waterfall, deciding in advance who pays, in this order:
 >

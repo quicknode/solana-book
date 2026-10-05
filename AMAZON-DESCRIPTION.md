@@ -14,7 +14,7 @@ Written for engineers shipping software that holds other people's assets, and fo
 
 In the tradition of *TCP/IP Illustrated*, the book teaches the layer that does not change. Frameworks churn, but the account model has been stable since Solana launched, the arithmetic of money will not change, and neither will the desire of adversaries to take your assets.
 
-The book assumes no Solana experience, no finance background, and no programming. Solana and finance are built from first principles, with the people and the dollar amounts on the page, and every program is explained in prose and figures, with its Rust in the companion repository.
+The book assumes no Solana experience, no finance background, and no programming. Solana and finance are both taught from first principles, with the people and the dollar amounts on the page, and every program is explained in prose and figures, with its Rust in the companion repository.
 
 The tested programs live in a companion repository, where continuous integration keeps them current in a way paper cannot, and a companion AI plugin applies the book's rules inside AI coding tools. An AI can write a Solana program on request. No AI can understand one on your behalf.
 
