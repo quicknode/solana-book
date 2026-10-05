@@ -184,7 +184,6 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="106" y="263.417" font-size="8.5" font-style="italic" fill="#444" text-anchor="end">rent refund</text>
   <text x="8" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. bet account closed</text>
   <text x="228" y="659" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">300 stake + floor(300 &#215; 196 &#247; 400) = 300 + 147 = 447; the 149 left is Bob's exact claim</text>
-  <text x="228" y="677" font-size="10" fill="#444" font-style="italic" text-anchor="middle">closing the bet account prevents a double claim: no account, no second claim</text>
   <g class="coin" transform="translate(184.96,495.93)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="514" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>

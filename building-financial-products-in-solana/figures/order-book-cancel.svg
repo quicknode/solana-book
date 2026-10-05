@@ -228,8 +228,7 @@
   <text x="505" y="655.87" font-size="10.5" font-weight="bold">fee vault</text>
   </g>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="524" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">no tokens move: the one remaining share &#215; 250 stays in the quote</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="540" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">vault, and only the claim to it moves onto Bob's ledger line,</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="540" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">vault, and only the claim to it moves onto Bob's unsettled_quote,</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="556" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">by the same price-times-remaining formula that locked it</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="592" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">a Filled or already-Cancelled order rejects with OrderNotCancellable</text>
   <text x="16" y="694" font-size="9.5" font-style="italic" fill="#444">not drawn: the NVDAx and USDC mints, which these accounts name only as seeds and fields</text>
 </svg>

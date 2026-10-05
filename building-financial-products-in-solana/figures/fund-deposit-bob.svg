@@ -248,7 +248,8 @@
   <text x="24" y="672" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">swap_usdc_for_asset()</text>
   <text x="24" y="682" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace">swap_asset_for_usdc()</text>
   </g>
-  <text x="16" y="728" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds.</text>
+  <text x="16" y="728" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds; the fund's rebalance_threshold_bps (200)</text>
+  <text x="16" y="739" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">and its recorded holdings, which equal the drawn vault balances.</text>
   <path d="M 242,176 C 236,182 237,200 237,245 C 237,290 212,300 205,335 C 198,370 206,410 241,414" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <path d="M 461,569.37 C 456,569.37 460,557.37 460,533.37 L 460,330 C 460,290 440,262 345,255" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>
   <path d="M 239,424 C 172,440 100,520 62,637" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-dep-arr)"/>

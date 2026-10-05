@@ -43,5 +43,4 @@
   <path d="M 472,275 C 530,272 556,240 566,208" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#betting-states-arr)"/>
   <text x="530" y="316" font-size="10.5" text-anchor="middle">claim_refund() (exact stake back)</text>
   <!-- annotation -->
-  <text x="320" y="346" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every path ends with the bet account deleted; deletion is the double-claim defense</text>
 </svg>

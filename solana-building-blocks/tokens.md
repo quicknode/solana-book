@@ -14,7 +14,7 @@ Each kind of token is defined by its own **mint account**.
 
 - `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` defines USDC on mainnet[^usdc-address]
 - `Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh` defines NVDAx on mainnet[^nvdax-address]
-- An address you will create in the *Managed Fund* chapter defines the shares that fund issues (on devnet, and on mainnet too if you choose to deploy it for real).
+- The share mint the *Managed Fund* chapter's `initialize_fund()` creates defines that fund's shares
 
 A mint is not itself a token: it is the account a token comes from, and no amount of anything is held in the mint.
 
@@ -26,11 +26,11 @@ A mint does not just describe a type of token; it manufactures it. New tokens co
 
 As well as the current total supply, the mint account also stores the token's decimals (how many decimal places a major unit has) and its authorities. 
 
-The **mint authority** is the boss of that factory. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced by setting it to none, after which nothing more can be minted. Many tokens explicitly advertise a fixed supply, and disabling the `mint_authority` is how it is enforced.
+The **mint authority** is the boss of that factory. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: the lending market's share mint and the fund's share mint are run by addresses the program derives, so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced by setting it to none, after which nothing more can be minted. Many tokens explicitly advertise a fixed supply, and disabling the mint authority is how it is enforced.
 
 A token can also stand for one unique thing. Give the mint 0 decimals, mint a single unit, and make sure nobody can mint another: the result is a **non-fungible token**, or NFT, and the one token account holding it records who owns that thing. It could be a ticket to a particular seat, a property deed, or a bond certificate with its own serial number. So each NFT has a mint of its own: a collection of 10,000 NFTs made this way is 10,000 mints, not one mint that issued 10,000 tokens.
 
-![ACME is the stock of a fictional company.](figures/mint-factory.svg)
+![ACME is the stock of a fictional company, issued on the Token Extensions Program, the successor to the Token Program named above; both are covered below.](figures/mint-factory.svg)
 
 ## Token Accounts Hold Tokens
 
@@ -48,13 +48,13 @@ An ATA lives at a **PDA**: a derived address that sits off the curve, with no pr
 
 ![](figures/token-accounts-off-the-curve.svg)
 
-Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the ATA of the offer PDA), and others are token accounts at PDAs of the program itself (the order book's three vaults are derived from the market). The ATA is the canonical, derivable place for *an address's* balance of a given token; program-held tokens live wherever the program put them.
+Not every token account is an ATA. **A token account can live at any address**, and the vaults this book's programs hold funds in are token accounts controlled by the programs themselves. Some are ATAs of a program-derived address (the escrow's vault is the ATA of the offer PDA), and others are token accounts at PDAs of the program itself (the order book's three vaults are derived from the market).
 
 ![](figures/token-accounts-and-atas.svg)
 
 ## Decimals Define the Minor Unit
 
-The mint's **decimals** set the **minor unit**, the raw integers that programs use to calculate and transfer assets: with USDC's 6 decimals, $10 moves as 10,000,000. Programs read decimals from the mint and never assume them, and transfers use `transfer_checked()`, which fails unless the caller states the decimals the mint really has.
+The mint's **decimals** set the **minor unit**, the raw integers that programs use to calculate and transfer assets: with USDC's 6 decimals, $10 moves as 10,000,000. Read decimals from the mint and never assume them, and transfer with `transfer_checked()`, which fails unless the caller states the decimals the mint really has. Every program in the companion repository does both.
 
 ## The Freeze Authority Can Freeze Any Holder's Account
 
@@ -77,17 +77,17 @@ Solana has two token programs. The **Classic Token Program** is the original, an
 | **scaled UI amount** | A multiplier stored in the mint, which the issuer updates for stock splits and dividends | The displayed balance changes while the raw amount stays fixed: calculate in raw amounts |
 | **metadata** | The name, symbol, and a link to more details, stored in the mint | Display only: the mint address still identifies the asset |
 
-Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds scaled UI amount.[^mosaic] Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page,[^solana-explorer] and the table's last column says what each one means for your program.
+Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds permissioned burn and scaled UI amount.[^mosaic] Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page,[^solana-explorer] and the table's last column says what each one means for your program.
 
 ![](figures/transfer-using-transfer-fee-extension.svg)
 
 ## What You Learnt
 
-- Every distinct token has its own **mint account**, and that account's address identifies the token, whatever name and symbol it shows. A mint defines a token; it is not one.
-- Ask about the **mint authority** and **freeze authority** of any token first: who can mint, and who can freeze.
+- Every distinct token has its own **mint account**, and that account's address identifies the token, whatever name and symbol it shows.
+- A token's **mint authority** and **freeze authority** say who can create supply and who can freeze a holder's account.
 - **Token accounts hold tokens**: ATAs are the derivable canonical ones for an address, and program vaults can live anywhere the program chose.
 - **Decimals** define the minor unit: read them from the mint, never assume them, and transfer with `transfer_checked()`.
-- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. Some extensions take a fee from every transfer, run the issuer's program on every transfer, let the issuer move any holder's tokens, or let it pause the whole token: before building on a token, check in Solana Explorer which extensions it uses.
+- Solana has two token programs, the **Classic Token Program** and the **Token Extensions Program**. The extensions a mint uses change what a transfer of it does (a fee taken, the issuer's program run, any holder's tokens moved, the whole token paused), and Solana Explorer lists them.
 
 
 [^usdc-address]: Circle, the USDC issuer, lists its mint addresses at [developers.circle.com/stablecoins/usdc-contract-addresses](https://developers.circle.com/stablecoins/usdc-contract-addresses).

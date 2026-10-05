@@ -148,7 +148,7 @@
   <g class="coin" transform="translate(446,430.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <text x="388" y="494" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Bob's 25 USDC bought</text>
   <text x="388" y="509" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">a right he never used;</text>
-  <text x="388" y="524" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Alice keeps it and her shares</text>
+  <text x="388" y="524" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Alice keeps 24.75 of it and her shares</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="554" width="240.0" height="68.323" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="248.0" y="568" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>

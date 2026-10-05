@@ -148,9 +148,6 @@
   <text x="482" y="665.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="654.87" font-size="8.5" font-weight="bold" letter-spacing="0.5" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
-  <text x="228" y="300" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">every later call checks Maria's signature against config.admin;</text>
-  <text x="228" y="316" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">anyone else gets Unauthorized</text>
-  <text x="228" y="346" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">open_betting() fixes the list: add_outcome() now fails with EventNotDraft</text>
   <text x="228" y="376" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">no bet accounts exist yet</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="514" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>

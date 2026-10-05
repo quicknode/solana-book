@@ -256,6 +256,7 @@
   <g class="coin" transform="translate(227.41,333.87)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <text x="250" y="364" font-size="7.5" font-style="italic" fill="#444">not drawn: Maria's USDC, NVDAx and SPCXx accounts and her three share accounts,</text>
   <text x="250" y="375" font-size="7.5" font-style="italic" fill="#444">which this step does not touch; balances and supplies leave out Maria's opening deposit</text>
-  <text x="250" y="386" font-size="7.5" font-style="italic" fill="#444">into each reserve, 1,001 minor units in and one minor unit of shares out</text>
+  <text x="250" y="386" font-size="7.5" font-style="italic" fill="#444">into each reserve, 1,001 minor units in and one minor unit of shares out;</text>
+  <text x="250" y="397" font-size="7.5" font-style="italic" fill="#444">Alice's second deposit, four SPCXx into the SPCXx reserve, is not drawn</text>
 </g>
 </svg>

@@ -179,7 +179,5 @@
   </g>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="300" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">Maria's client creates the order book account first:</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="316" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">180 KB is more than a program is allowed to allocate</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="350" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">the handler validates the sizes and the fee, records every</text>
-  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="231" y="366" font-size="9.5" font-style="italic" fill="#444" text-anchor="middle">address on the market, and stamps two empty trees on the book</text>
   <text x="16" y="716" font-size="9.5" font-style="italic" fill="#444">not drawn: the NVDAx and USDC mints, which these accounts name only as seeds and fields</text>
 </svg>
