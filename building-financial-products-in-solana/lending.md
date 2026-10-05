@@ -34,11 +34,11 @@ Each reserve carries a `ReserveConfig`, all in basis points, and its validation 
 | `close_factor_bps` | 50% | How much of a debt one liquidation may repay. Zero is rejected, because it would make every liquidation a no-op. |
 | `reserve_factor_bps` | 10% | The house's cut of interest. |
 | `min/optimal/max_borrow_rate_bps` | 2% / 20% / 150% | The interest curve, kinked at `optimal_utilization_bps` (80%), which must sit strictly inside (0%, 100%). |
-| `max_confidence_bps` | 1% | The widest confidence band the reserve will still value against, as a fraction of the price. Zero is rejected, because no live price feed reports a band of zero, so the reserve could never be valued and every obligation holding the asset would be frozen. Above 100% is rejected, as every basis-point parameter is. |
+| `max_confidence_bps` | 1% | The widest confidence band the reserve will still value against, as a fraction of the price. Zero is rejected, because no live price feed reports a band of zero, so the reserve could never be valued and every obligation holding the asset would be frozen. Above 100% is rejected, as every ratio of the collateral or the price is; the three borrow rates may exceed it, and this market's maximum does. |
 
 ## Supplying: Tokens In, Shares Out
 
-Before anyone supplies, Maria makes the first deposit into each reserve herself, running `deposit_reserve_liquidity()` three times with 1,001 minor units of USDC, NVDAx and SPCXx. A reserve's share token has as many decimals as its asset, and the first deposit mints one minor unit of shares per minor unit deposited, less 1,000 that are withheld and never minted: the program's `MINIMUM_SHARES`. So Maria holds one minor unit of each reserve's shares, and the 1,000 withheld units belong to nobody.
+Before anyone supplies, Maria makes the first deposit into each reserve herself, running `deposit_reserve_liquidity()` three times with 1,001 minor units of USDC, NVDAx and SPCXx (she bought that much of each stock beforehand for the purpose). A reserve's share token has as many decimals as its asset, and the first deposit mints one minor unit of shares per minor unit deposited, less 1,000 that are withheld and never minted: the program's `MINIMUM_SHARES`. So Maria holds one minor unit of each reserve's shares, and the 1,000 withheld units belong to nobody.
 
 ![](figures/lending-open-reserves.svg)
 
@@ -83,7 +83,7 @@ The rate itself comes from a **kinked utilization curve**. Utilization is borrow
 
 Those percentages are annual, and the accrual is per second, so the conversion divides by the seconds in a year. The seconds elapsed are the Clock's timestamp minus the one the reserve stored at its last accrual, `last_accrual_timestamp`. Changing the curve with `update_reserve_config()` accrues at the old rates first, so the seconds already elapsed are charged at the rates that applied to them.
 
-Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_program_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
+Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_program_fees`, rounded up, against the suppliers; the rest belongs to the suppliers through the rising share price.
 
 ![](figures/lending-rate-curve.svg)
 

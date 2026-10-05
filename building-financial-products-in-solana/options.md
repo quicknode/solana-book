@@ -25,8 +25,8 @@ Options have some unique terminology:
 
 The two sides have different payoffs:
 
-- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation to trade the underlying at the strike whenever the holder exercises. The writer's gain is capped at the premium, and the writer's obligation is not.
-- **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
+- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation to trade the underlying at the strike whenever the holder exercises. The writer's gain is capped at the premium. A call writer's loss against the market is not, since the shares can rise without limit; a put writer's is capped at the strike less the premium, since the price cannot fall below zero.
+- **The holder's** loss is capped at the premium whatever happens. A call holder's gain is open-ended, and a put holder's is capped at the strike less the premium.
 
 A sold option has exactly two endings: the holder exercises before expiry, or the option expires and the writer takes the collateral back. Where the price lands inside each ending decides how much each side made.
 
@@ -162,7 +162,7 @@ Alice calls `collect_proceeds()`. The handler requires the option to be `Exercis
 
 ![](figures/options-collect-proceeds.svg)
 
-Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the $200 column in the payoff figure at the start of the chapter, less Maria's 0.25: the premium was all she could make.
+Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the $200 column in the payoff figure at the start of the chapter, 75 USDC, plus Maria's 0.25 fee: the premium was all she could make.
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
@@ -207,7 +207,7 @@ Here is where everyone ends up:
 The arithmetic lives in `contract_math.rs`:
 
 - **Settlement.** `collateral_amount()` returns the underlying amount for a call and the strike amount for a put, and `exercise_payment()` returns the other.
-- **The premium split.** `split_premium()` floors the fee, `premium` times `fee_bps` over 10,000, and gives the writer the rest. The writer keeps the rounding minor unit; the venue gives up at most one minor unit per sale, and a sale needs a real premium, so nobody can profit by repeating tiny sales.
+- **The premium split.** `split_premium()` rounds the fee up, `premium` times `fee_bps` over 10,000, and gives the writer the rest. The venue keeps the rounding minor unit, so a writer gives up at most one minor unit per sale and a premium of one minor unit goes entirely to the venue.
 - **The expiry.** `may_exercise()` is `now < expiry` and `may_reclaim()` is `now >= expiry`.
 
 Every checked operation on a counter maps to `MathOverflow`; a vault balance that would go below zero maps to `CustodyInvariantViolated`.
@@ -228,7 +228,7 @@ The companion repository's `kani-proofs` crate model-checks the first, the secon
 - **The clock.** Expiry is a Unix timestamp, and the network's clock can drift from wall-clock time by seconds. A holder who waits until the final second to exercise risks that drift putting the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** The strike goes into the vault, as the exercise section explains, so no account of the writer's is on the exercise path.
 - **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account, as the purchase step above shows; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
-- **What is absent.** Most of the usual attacks on a financial program do not apply here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain: settlement does no division, and the one floor, in the fee split, gives up at most one minor unit per sale to the writer. What is left is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
+- **What is absent.** Most of the usual attacks on a financial program do not apply here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain: settlement does no division, and the one rounding, in the fee split, goes the venue's way by at most one minor unit per sale. What is left is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
 
 ## Testing Considerations
 

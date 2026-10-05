@@ -46,7 +46,7 @@ The **order book** is the largest account: about 180 KB holding two trees of res
 
 > **Why the order book is not at a PDA.** Solana caps account allocations made from inside a program at 10 KB, so `initialize_market()` cannot create a 180 KB account. Instead, the client creates the account directly with the System Program before calling `initialize_market()`, sized to `ORDER_BOOK_ACCOUNT_SIZE` and owned by the program. And its address cannot be a PDA at all, because creating an account that way requires the new account's own signature, which a PDA cannot give. The program instead ties the book to its market with a stored-address check: the market records the book's address, and every instruction that touches the book checks it against that record. So the book's address is a public key, and the figures draw its dot on the curve, with the book's box above it at the top right. Its private key signs once, at creation; after that the program owns the account and the private key can do nothing to it.
 
-Three **vaults** hold the tokens: a base vault for NVDAx, a quote vault for USDC, and a separate **fee vault** for Maria's earnings. Unlike the book, all three live at PDAs derived from the market (seeds: `"base_vault"`, `"quote_vault"` or `"fee_vault"`, then the market), and `initialize_market()` creates them with the market PDA as their authority. The fee vault holds the same token as the quote vault, and keeping them separate is what stops a caller from being paid out of Maria's fees; the failure modes section shows the attack it blocks.
+Three **vaults** hold the tokens: a base vault for NVDAx, a quote vault for USDC, and a separate **fee vault** for Maria's earnings. Unlike the book, all three live at PDAs derived from the market (seeds: `"base_vault"`, `"quote_vault"` or `"fee_vault"`, then the market), and `initialize_market()` creates them with the market PDA as their authority. The fee vault holds the same token as the quote vault. Keeping them separate means user-owed balances and the market's fees never share one balance, so `withdraw_fees()` can pay out the whole fee vault. The failure modes section shows the attack two same-token vaults invite, and the check that blocks it.
 
 ## Every Trader Gets a Ledger Line
 
@@ -66,7 +66,7 @@ The book's ask side is empty and no bid reaches 265, so there is nothing to matc
 
 ![](figures/order-book-alice-ask.svg)
 
-Every order placed becomes an **order** account of its own (seeds: `"order"`, the market, the order ID): side, price, original quantity, filled quantity, a status that walks Open, PartiallyFilled, Filled, or Cancelled, and a timestamp.
+Every order placed becomes an **order** account of its own (seeds: `"order"`, the market, the order ID): side, price, original quantity, filled quantity, a status, and a timestamp. The status starts as Open, PartiallyFilled or Filled, depending on how much of the order crossed on arrival, and ends as Filled or Cancelled.
 
 ## A Bid Below the Best Ask Rests Too
 
@@ -151,7 +151,7 @@ The suite in `tests/test_order_book.rs` builds all state through the program's o
 - Matching, both directions and both partial-fill shapes: `taker_bid_fully_crosses_best_ask`, `taker_ask_fully_crosses_best_bid`, `taker_partially_fills_resting_order_rest_stays_on_book`, `taker_partially_filled_remainder_rests_on_book`, and `taker_crosses_multiple_resting_orders_best_price_first`.
 - Price-time priority and price improvement: `resting_orders_at_same_price_fill_by_time_priority` and `taker_bid_gets_price_improvement_from_resting_ask`.
 - Fees and payouts: `fee_vault_receives_exactly_bps_of_taker_gross`, `fee_rounds_up_when_gross_is_not_a_bps_multiple`, `cancel_and_settle_bid_refunds_full_quote`, and `settle_funds_after_match_pays_out_both_unsettled_balances`.
-- The adversarial cases: `settle_funds_rejects_fee_vault_substituted_for_quote_vault`, `cancel_order_rejects_non_owner`, and `authority_can_withdraw_fees_after_match`.
+- The adversarial cases: `settle_funds_rejects_fee_vault_substituted_for_quote_vault`, `cancel_order_rejects_non_owner`, and `withdraw_fees_rejects_a_non_authority_signer`.
 - The tree's worst case: `doubling_prices_build_the_deepest_path_prices_allow` and `deepest_path_adds_little_compute_to_insert_fill_and_cancel`.
 - The pause: `pause_market_refuses_new_orders_with_market_paused`, `paused_market_still_cancels_and_settles_a_resting_order`, `paused_market_still_pays_out_fills_and_withdraws_fees`, `resume_market_accepts_orders_again`, and `only_the_market_authority_can_pause_or_resume`.
 - Eviction, each test starting from a bid side filled with 512 orders: `full_side_refuses_an_order_no_better_than_its_worst`, `better_order_evicts_the_worst_and_rests`, `evicted_maker_settles_their_refund`, `eviction_rejects_missing_or_wrong_evicted_accounts`, and `trader_can_evict_their_own_worst_order`.

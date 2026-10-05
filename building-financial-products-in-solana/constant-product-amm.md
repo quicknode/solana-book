@@ -59,7 +59,7 @@ X is now 500, Y is 1,125, K is 562,500. The price is still exactly $2.25. **Depo
 
 Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a tenth of everything he has, with a `min_output_amount` as his slippage check. Three things happen in strict order.
 
-**The fee is deducted first.** 30 basis points of 100 is 30 cents. The admin share, about 5 cents (1,667 basis points of it, floored in minor units), accrues to `admin_fees_owed_b` as Maria's virtual claim; the remaining 25 cents stays in the pool, where it adds to the reserves that back every LP token. Bob's taxed input is 99.70.
+**The fee is deducted first.** 30 basis points of 100 is 30 cents. The admin share, about 5 cents (1,667 basis points of it, rounded up in minor units), accrues to `admin_fees_owed_b` as Maria's virtual claim; the remaining 25 cents stays in the pool, where it adds to the reserves that back every LP token. Bob's taxed input is 99.70.
 
 **The curve prices the trade.** Y rises to 1,224.70, and X must fall to K ÷ Y ≈ 459.3. Bob receives about 40.7 ACME. He paid an *average* of about $2.46 per token while the quoted price before his trade was $2.25 and the spot price after it is about $2.67: his own trade moved along the curve as it executed.
 
@@ -114,7 +114,7 @@ Across any row, LPing wins once fee income outruns the gap, and for ordinary mov
 
 ## The Math: Floors Everywhere, and a Square Root by Newton
 
-Every division in this program floors. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor** (the only floor that favors the trader is the fee itself, clipped by at most one minor unit). The dust stays in the reserves and accrues to all LPs, the direction the *Arithmetic of Money* chapter sets. Every multiplication runs in u128 before its division (multiply before divide), and every step that can overflow is `checked_*` with `MathOverflow` on failure. The only unusual operation, the first deposit's square root in `initialize_pool()`, is a short loop of Newton's method on integers, floored like everything else.
+Every division in this program rounds against the trader. Swap output, LP minting, and withdrawal amounts floor **in the pool's favor**, and the fee and the admin's share of it round up, so a trader never pays a minor unit less than the rate (`test_swap_fee_rounds_up`). The dust stays in the reserves and accrues to all LPs, the direction the *Arithmetic of Money* chapter sets. Every multiplication runs in u128 before its division (multiply before divide), and every step that can overflow is `checked_*` with `MathOverflow` on failure. The only unusual operation, the first deposit's square root in `initialize_pool()`, is a short loop of Newton's method on integers, floored like everything else.
 
 `swap_tokens()` takes an exact input and a minimum output, so each trade can be written only one way. Many AMMs also accept the reverse, an exact output and a maximum input, and then one trade, such as 100 USDC for about 40.7 ACME, can be sent either way. Both handlers must charge the same fee and round in the pool's favor by the same rule, or traders route every trade through whichever costs less. If your AMM has both, test it by pricing one trade both ways and asserting that the trader pays the same input for the same output.
 

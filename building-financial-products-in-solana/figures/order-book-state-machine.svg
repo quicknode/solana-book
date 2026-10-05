@@ -20,9 +20,11 @@
   <path d="M 164,105 L 246,105" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
   <text x="205" y="97" font-size="10" fill="#444" text-anchor="middle">a fill lands</text>
   <path d="M 394,100 C 430,84 450,68 476,58" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
-  <text x="424" y="58" font-size="10" fill="#444" text-anchor="middle">last lot fills</text>
-  <path d="M 120,86 C 200,26 380,22 476,44" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
-  <text x="290" y="28" font-size="10" fill="#444" text-anchor="middle">one taker crosses the whole order</text>
+  <text x="438" y="100" font-size="10" fill="#444" text-anchor="middle">last lot fills</text>
+  <path d="M 120,86 C 200,10 380,6 476,44" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="290" y="14" font-size="10" fill="#444" text-anchor="middle">one taker crosses the whole order</text>
+  <path d="M 320,70 L 320,86" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
+  <text x="320" y="64" font-size="10" fill="#444" text-anchor="middle">a taker's order that crosses part of itself</text>
   <path d="M 130,134 C 220,200 380,196 476,180" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>
   <text x="280" y="212" font-size="10" fill="#444" text-anchor="middle">cancel_order() or eviction, held tokens credited back</text>
   <path d="M 370,134 C 410,158 440,168 476,172" fill="none" stroke="#111" stroke-width="1.6" marker-end="url(#ob-sm-arr)"/>

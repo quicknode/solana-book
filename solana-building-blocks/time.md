@@ -205,6 +205,6 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md) cut the slot time to 200 milliseconds in stages. Anza's [feature tracker](https://github.com/anza-xyz/agave/wiki/Feature-Gate-Tracker-Schedule) lists the feature that completes it (address `iBRLjhJnkmDZgNoZRDMW11d8ZV7HvsL3vAyRjZB5npW`).
 
-[^slot-time-live]: On testnet, the only network running Alpenglow at the time of writing, slots averaged 219 milliseconds over an hour, so a time counted in slots ran about 10% long. The reading is from Solana Explorer's live cluster statistics for testnet, at [explorer.solana.com/?cluster=testnet](https://explorer.solana.com/?cluster=testnet), on 24 September 2026, which showed 215 milliseconds over the last minute. Mainnet was not yet running Alpenglow then. Solana's slot time tracker for mainnet is at [solana.com/200ms](https://solana.com/200ms).
+[^slot-time-live]: Solana Explorer's live cluster statistics, at [explorer.solana.com](https://explorer.solana.com/), showed slots averaging 219 milliseconds over an hour on 24 September 2026, and 215 milliseconds over the last minute, so a time counted in slots ran about 10% long.
 
 [^last-restart-slot]: One of the sysvars listed in Anza's runtime documentation, at [docs.anza.xyz/runtime/sysvars](https://docs.anza.xyz/runtime/sysvars).

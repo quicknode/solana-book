@@ -75,7 +75,7 @@ The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **la
 
 ## A Transaction's Instructions Succeed or Fail Together
 
-Alice's transaction executes **atomically**: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed." One change survives a failure: the transaction fee. The network charges it for processing the transaction, so a transaction that fails still lowers the fee payer's lamport balance.
+Alice's transaction executes **atomically**: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed." One change survives a failure: the transaction fee. The network charges it for processing the transaction, so a transaction that fails still lowers the fee payer's lamport balance. The base fee is 5,000 lamports per signature at the time of writing, which is why Alice ends this transaction at 0.949995 SOL rather than 0.95.
 
 For financial software, atomicity is a primitive you design with. Inside a transaction there is no settlement risk between steps: 
 
@@ -106,7 +106,7 @@ An action's **authority** is the address whose signature that action requires; S
 - A token's **mint authority** is the only address that may create new supply of it.
 - That token's **freeze authority** is the only address that may freeze a holder's account.
 - A program's **upgrade authority** is the only address that may replace the program's code.
-- An exchange's **market authority** sets the market's parameters and collects its fee.
+- An exchange's **market authority** can pause and resume the market and withdraw its fees.
 
 Different authorities in the same program can be given to different addresses. 
 
@@ -142,7 +142,7 @@ A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dol
 
 SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people simply call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the *Tokens* chapter covers mints properly.
 
-Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own, at an address Bob's wallet can compute from Alice's address and the mint; the *Tokens* chapter covers token accounts.
+Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own, at an address anyone can compute from the holder's address, the token program, and the mint. So Bob's wallet finds Alice's USDC account from her address alone; the *Tokens* chapter covers token accounts.
 
 So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer_checked()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, and like a lamport amount it is an integer of minor units. Bob's signature is what authorizes the debit, exactly as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 1,000 to 1,025 with no signature from her.
 

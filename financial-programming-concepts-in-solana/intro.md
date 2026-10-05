@@ -1,6 +1,6 @@
 # Chapter 6: State Machines
 
-This chapter covers the shape every financial program shares: a state machine, in which every participant must be able to get their assets out of every state, and every account the program creates is eventually closed, returning its rent deposit.
+Every financial program shares one shape: a state machine in which every participant must be able to get their assets out of every state. Every account the program creates for a participant (an offer, a receipt, a bet, a position) is eventually closed, returning its rent deposit.
 
 ## Financial Software Is a State Machine
 

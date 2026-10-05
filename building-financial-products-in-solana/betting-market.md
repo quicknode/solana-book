@@ -17,7 +17,7 @@ In a parimutuel market, all stakes on all outcomes go into one vault, and when t
 
 ## The Operator Creates the Market
 
-Maria is the admin. Her public key is recorded in the program's config, and only she can create events, add outcomes, open betting, settle, cancel, and close a finished event's accounts; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 **basis points** (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month") and a `betting_closes_at` of midnight on the last day of the month. A close time already in the past fails with `CloseTimeInPast`. The event starts as a Draft, and Maria calls `add_outcome()` twice: "Glowbugs 3" and "The Quiet Floor". Then she calls `open_betting()`, which moves the event to Open. Every handler on that list checks its signer against the admin address the config stores and rejects anyone else with `Unauthorized`; `test_only_admin_can_initialize_event` and the last step of `test_open_betting_needs_two_outcomes` check it.
+Maria is the admin. Her public key is recorded in the program's config, and only she can create events, add outcomes, open betting, settle, cancel, and close a finished event's accounts; her revenue is a 2% fee, charged only on the losing pool. She runs `initialize_config()` once, naming herself admin, USDC as the token, herself as fee recipient, and 200 **basis points** (2%) as the fee. For this month's market she runs `initialize_event()` with a description ("top-grossing film this month") and a `betting_closes_at` of midnight on the last day of the month. A close time already in the past fails with `CloseTimeInPast`. The event starts as a Draft, and Maria calls `add_outcome()` twice: "Glowbugs 3" and "The Quiet Floor". Then she calls `open_betting()`, which moves the event to Open. Every handler on that list checks its signer against the admin address the config stores and rejects anyone else with `Unauthorized`; `test_only_admin_can_initialize_event`, the last step of `test_open_betting_needs_two_outcomes`, `test_only_admin_can_settle_or_cancel_event` and `test_only_admin_can_close_outcomes_and_event` check it.
 
 ![](figures/betting-maria-setup.svg)
 
@@ -58,7 +58,7 @@ Settlement does four things, none of which involve paying bettors yet:
 
 - Marks the event Settled, so `place_bet()` now rejects with `EventNotOpen` (checked by `test_cannot_bet_after_settle`).
 - Validates the winner structurally: the winning outcome account is re-derived from the index via its PDA seeds, and an outcome nobody bet on rejects with `OutcomeHasNoBets`, because a winning pool of zero would put a divide-by-zero in every claim (checked by `test_settle_outcome_without_bets_fails`).
-- Does the fee math. The losing pool is `total_pool` minus the winning outcome's total: 600 − 400 = 200 USDC. The fee is 2% of the *losing pool only*: 4 USDC, computed in u128 and floored. The remaining 196 becomes the `distributable_losing_pool`, stored on the event. Charging the fee only on the losing side gives one guarantee: **a winner can never receive less than they staked**.
+- Does the fee math. The losing pool is `total_pool` minus the winning outcome's total: 600 − 400 = 200 USDC. The fee is 2% of the *losing pool only*: 4 USDC, computed in u128 and rounded up. The remaining 196 becomes the `distributable_losing_pool`, stored on the event. Charging the fee only on the losing side gives one guarantee: **a winner can never receive less than they staked**.
 - Transfers the 4 USDC fee out of the vault to the fee recipient's token account, signed by the event PDA.
 
 ![](figures/betting-settlement.svg)
@@ -96,7 +96,7 @@ An Open event can also be voided: if the studio pulls both films from release, t
 The financial arithmetic of this program is four expressions:
 
 - **The losing pool**: a subtraction.
-- **The fee**: a u128 multiply, floor-divided by 10,000 basis points.
+- **The fee**: a u128 multiply, divided by 10,000 basis points and rounded up.
 - **Each winner's share**: a u128 multiply of stake by distributable pool, then one floor division by the winning pool.
 - **The payout**: stake plus share, checked.
 
@@ -117,7 +117,7 @@ Every checked operation maps to `MathOverflow`. There are no rates and no curves
 - **The resolution itself.** Maria could settle the wrong outcome, maliciously or by mistake, and the decision is hers alone. This program is deliberately the simplest case; the *Offchain Truth* chapter covers what it costs a trusted party to lie, and how to replace a single signer with several.
 - **Settling an empty outcome** would divide by zero in every claim; rejected at the source with `OutcomeHasNoBets`.
 - **Double claims** fail because the bet account is gone, as the claim step showed.
-- **Closing an account a claim still needs** fails with the three checks the close step showed, `EventNotFinished`, `BetsStillOpen` and `OutcomesStillOpen` (checked by `test_close_event_refused_while_a_bet_is_open` and `test_close_event_refused_while_event_is_open`). Only Maria's signature closes anything (`test_only_admin_can_close_outcomes_and_event`).
+- **Closing an account a claim still needs** fails with the three checks the close step showed, `EventNotFinished`, `BetsStillOpen` and `OutcomesStillOpen` (`test_close_event_refused_while_event_is_open` checks the first, `test_close_event_refused_while_a_bet_is_open` the second, and `test_close_event_pays_dust_to_fee_recipient_and_returns_rent` the third). Only Maria's signature closes anything (`test_only_admin_can_close_outcomes_and_event`).
 - **Changing the terms after betting opens** fails: `add_outcome()` on an Open event fails with `EventNotDraft`, and `fee_bps` and `betting_closes_at` have no handler that writes them after `initialize_event()`.
 - **Betting on a known result**: a bettor who learns the result before Maria settles cannot stake on it, because `place_bet()` stops at `betting_closes_at` with `BettingClosed`. The program cannot tell when the result becomes public, so choosing a close time before that moment is Maria's job.
 - **Betting after settlement or cancellation** rejects with `EventNotOpen`, whether the event was settled or canceled.
