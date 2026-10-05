@@ -10,8 +10,6 @@ The program calls the fundraiser's creator the **maker**, Maria here. She wants 
 
 Two numbers are recorded the moment the fundraiser opens: the **target** and the **duration**. Together they define exactly two endings. If contributions reach the target, Maria takes everything. If the deadline passes first, every contributor takes back exactly what they put in. There is no third outcome, no partial award, and no moment where anyone has to trust Maria with USDC she is not yet entitled to: until the target is hit, her claim handler refuses to run.
 
-A fundraiser can only end one way.
-
 ## The Maker Starts the Fundraiser
 
 Maria calls `initialize_fundraiser()` with a target of 9,000 USDC and a duration of 7 days, and this is the last decision she gets to make. Nothing in the program lets her extend the deadline, raise or lower the target, or touch the vault before the target is met.
@@ -132,7 +130,7 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 - `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund.
 - `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again.
 
-`test_stale_contribution_cannot_refund_from_next_raise` runs two raises at the same address, one after the other. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that no handler pays out (`test_check_contributions_ignores_direct_vault_donations` on the claim; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
+`test_stale_contribution_cannot_refund_from_next_raise` runs two raises at the same address, one after the other. The rest each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. Every vault program needs a donation test: mint tokens straight into your vault outside your own handlers, then assert that the donation changes nothing the handlers read (`test_check_contributions_ignores_direct_vault_donations` asserts the claim still fails with `TargetNotMet`; `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays such tokens to the maker).
 
 ## What You Learnt from Building the Fundraiser
 

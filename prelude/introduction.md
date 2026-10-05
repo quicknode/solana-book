@@ -64,7 +64,7 @@ All technical and financial vocabulary this book uses is defined in the Glossary
 
 ## The Book Has Two Parts: The Fundamentals, Then Ten Programs
 
-The book has two parts. **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to financial software (state machines, the arithmetic, offchain truth, the adversary, testing, and admin power).
+**The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to financial software (state machines, the arithmetic, offchain truth, the adversary, testing, and admin power).
 
 **Building Financial Products** is ten chapters, and each one builds a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a managed fund, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its tokens, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
 
@@ -92,7 +92,7 @@ Part I opens with the computer itself: one giant machine that spans the world, a
 
 [^most-active]: Artemis counted 4.1 million daily active addresses and 146 million transactions on Solana on August 31, 2026, against 1.7 million addresses on BNB Chain and under half a million on Ethereum. See [classic.artemis.ai/asset/solana](https://classic.artemis.ai/asset/solana).
 
-[^card-fees]: A United States café's all-in acceptance cost in 2026: the processor's margin on top of interchange. Visa's published US interchange alone, effective 18 April 2026, runs from 1.19% plus 10 cents for a debit card at a restaurant to about 2.7% for a credit card, and the Federal Reserve's Regulation II caps regulated debit at 0.05% plus 21 cents. Source: Visa, [usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf](https://usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf).
+[^card-fees]: The 1.5% to 3.5% is a United States café's all-in acceptance cost in 2026, which is the processor's margin on top of interchange. Visa's published US interchange alone, effective 18 April 2026, runs from 1.19% plus 10 cents for a debit card at a restaurant to about 2.7% for a credit card, and the Federal Reserve's Regulation II caps regulated debit at 0.05% plus 21 cents. Source: Visa, [usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf](https://usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf).
 
 [^remittance-scope]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average of 6.36%. Source: The World Bank, Remittance Prices Worldwide issue 54, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 

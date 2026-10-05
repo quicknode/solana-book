@@ -3,7 +3,7 @@
 A Solana program has three ways to observe the passage of time:
 
 - **The Unix timestamp** is wall-clock time, usually within a second or two of the real time.
-- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 milliseconds, and never goes down.[^forks]
+- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 to 250 milliseconds at the time of writing, and never goes down.[^forks]
 - **A counter** is something a program can implement: a number stored in one of its own accounts that goes up by one each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
 
 The runtime supplies the first two. A program implements the third itself.
@@ -70,7 +70,7 @@ The lending market and the perpetual futures venue treat a timestamp at or befor
 
 A freshness window is agreed in seconds, and it has to become a slot count before a program can use it. Divide the time by the length of a slot in milliseconds. Multiplying runs the same arithmetic backwards, for telling a person what a slot count comes to in their own units.
 
-The network's target slot length is 200 milliseconds at the time of writing.[^slot-simd]
+The target slot length is 200 milliseconds on testnet at the time of writing, and mainnet is being cut toward it in stages.[^slot-simd]
 
 A program can get that length three ways:
 
@@ -138,7 +138,7 @@ No block is produced during a halt, so the slot count does not move. Wall-clock 
 
 - **Accrual by timestamp charges the halt, late.** The lending market's interest, the perpetual futures venue's funding, and the managed fund's fee all count seconds, so a nine-hour halt accrues nine hours. It arrives over the nine hours of catch-up rather than in the first block. The loans were outstanding and the suppliers' deposits were locked for those nine hours, so charging for them is accurate.
 - **Neither kind of freshness window refuses the old price on its own.** The lending market's 25-slot window sees a price stamped one slot ago and would accept a number nine hours old. The managed fund's sixty-second window does no better, because the timestamp it reads is trailing, so a price published just before the halt looks seconds old. The damage is largest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
-- **A deadline arrives early after a restart.** The fundraiser's day count pauses during the halt and then runs at twice real speed. A contributor with an hour left before the halt gets about half an hour after it, because the timestamp runs at twice real speed while it catches up. The fundraiser survives it because `refund()` has no closing deadline, so contributors can still get their money back after the halt. A design that allowed refunds only during a narrow window would have left them unable to.
+- **A deadline passes at twice real speed after a restart.** The fundraiser's day count stands still during the halt, then runs at twice real speed until the timestamp catches up, so a contributor with an hour left before the halt gets about half an hour after it. The fundraiser survives it because `refund()` has no closing deadline, so contributors can still get their money back after the halt. A design that allowed refunds only during a narrow window would have left them unable to.
 
 Every freshness window needs one more check. The `LastRestartSlot` sysvar[^last-restart-slot] carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, the perpetual futures venue, and the managed fund all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program that checks a price's age, in slots or in seconds.
 
@@ -173,7 +173,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 ## What You Learnt
 
-- A program has three ways to observe the passage of time. The Unix timestamp is wall-clock time written by a leader, usually within a second or two of real time, and somebody chose where. The slot count only goes up and nobody can move it, but each slot starts when the last one ends, so it typically runs about 10% long and stops in a halt. A program's own counter records order and nothing else.
+- A program has three ways to observe the passage of time. The Unix timestamp is wall-clock time written by a leader, usually within a second or two of real time, and the leader chooses where in that range it falls. The slot count only goes up and nobody can move it, but each slot starts when the last one ends, so it typically runs about 10% long and stops in a halt. A program's own counter records order and nothing else.
 - Count slots for any span shorter than about 20 seconds that your own program stamps, where nobody can move the count and its drift stays under a second or two. Use the wall clock for any longer span, including a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival.
 - Accrual by timestamp charges per second whatever the slot length: advance a stored factor by the seconds since the last stored timestamp. Counting slots instead undercharges when slots run long: at about 10% long, a rate quoted at 20% a year collects about 18.3%.
 - Give every price a freshness window, set by each consumer, in the unit the source uses: slots where the program chooses, seconds where the price feed published seconds.

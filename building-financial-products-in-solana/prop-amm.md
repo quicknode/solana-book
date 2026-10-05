@@ -17,7 +17,7 @@ Two things are absent as a result:
 
 Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. She signs as the firm's operator, with a private key separate from the standard personal wallet every character carries, and the operator wallet's token accounts hold the firm's inventory: 1,000 NVDAx and 200,000 USDC. The market trades NVDAx, the NVIDIA stock the *Order Book Exchange* chapter traded, against USDC, and the oracle quotes NVDAx at $165.
 
-Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread (a zero spread pays adverse selection on every fill and earns nothing, so it is rejected as a mistake) and a spread at or above 100%, where the bid stops meaning anything (`InvalidParameter` both ways).
+Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread and a spread at or above 100% (`InvalidParameter` both ways). A zero spread earns nothing while every fill taken by a trader who knows where the price is going still loses, so it is refused as a mistake; at or above 100% the bid stops meaning anything.
 
 ![](figures/prop-amm-open-market.svg)
 
@@ -37,7 +37,7 @@ Then `deposit_inventory()` moves the 1,000 NVDAx and 200,000 USDC from the opera
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps:
 
-- **The oracle read**, with the checks from the *Offchain Truth* chapter. First, before a byte of it is decoded, the price feed account must be owned by the program the market recorded at creation (`PriceFeedNotFromOracle`), so an account laid out like a price feed but written by another program is never a price. Then the price feed's layout, a positive price, the scale fixed at creation, freshness within 150 slots, and a confidence band inside the market's limit. It also refuses a price stamped at or before the last cluster restart (`PricePredatesRestart`), for the reason the *Time* chapter gives.
+- **The oracle read**, with the checks from the *Offchain Truth* chapter. First, before a byte of it is decoded, the price feed account must be owned by the program the market recorded at creation (`PriceFeedNotFromOracle`), so an account laid out like a price feed but written by another program is never a price. Then the price feed's layout, a positive price, the scale fixed at creation, freshness within 150 slots (`StalePrice`), and a confidence band inside the market's limit (`OracleConfidenceTooWide`). It also refuses a price stamped at or before the last cluster restart (`PricePredatesRestart`), for the reason the *Time* chapter gives.
 - **The ask**: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer.
 - **Her output**, floored: 825.825 USDC of her 1,000 buys exactly 5 NVDAx.
 
@@ -77,7 +77,7 @@ She handles adverse selection with `set_quote()`. When volatility rises, she wid
 
 ![](figures/prop-amm-set-quote.svg)
 
-The oracle checks in `swap()` pull the quote automatically, for the same reasons Maria pulls it by hand: a price older than 150 slots is refused (`StalePrice`), and one whose confidence band exceeds the market's limit is refused (`OracleConfidenceTooWide`). For every other program in this book the staleness check protects users; for a market maker it protects the firm's own capital.
+The oracle checks in `swap()` pull the quote automatically, for the same reasons Maria pulls it by hand. For every other program in this book the staleness check protects users; for a market maker it protects the firm's own capital.
 
 ## The Firm Chooses Whom It Fills
 
@@ -108,7 +108,7 @@ The unit conversion is the only complicated part. Prices arrive at the oracle's 
 
 - **The stale quote.** The catastrophic one, and it needs no exploit, just an oracle that lags a moving market. Every fill against a wrong quote is pure profit for the counterparty and pure loss for Maria, risk-free; `StalePrice` and `OracleConfidenceTooWide` close the path (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter meets the same failure with leverage multiplying it.
 - **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something", so Maria handles it commercially: a spread wide enough to pay for it, a ladder that charges for size, quotes pulled when prices are moving fast, and flow segmented by where it came from. The `paused` flag is a risk control Maria expects to use.
-- **The operator chooses which oracle to trust.** The operator picks the price feed at creation; the market records the program that owns it and refuses a price feed account from any other program (`PriceFeedNotFromOracle`, checked by `test_swap_rejects_price_feed_from_another_program`). Whether that program publishes good prices is Maria's decision, the same visible trust decision the *Perpetual Futures* chapter's pool creator makes, with one difference: a bad oracle here loses *Maria's* capital, not her users'.
+- **The operator chooses which oracle to trust.** The operator picks the price feed at creation, and `PriceFeedNotFromOracle` holds the market to the program that owned it then (`test_swap_rejects_price_feed_from_another_program`). Whether that program publishes good prices is Maria's decision, the same visible trust decision the *Perpetual Futures* chapter's pool creator makes, with one difference: a bad oracle here loses *Maria's* capital, not her users'.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and whole categories return "not applicable". No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects with `InsufficientInventory`. Each of those attacks needs a mechanism this program does not have.
 
 ## Testing Considerations

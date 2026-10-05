@@ -29,7 +29,7 @@ And you can carry the responsibility that comes with all of it. Test an idea on 
 
 Look away from the chain for a moment, at what the people around you deal with every week.
 
-A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending money to family abroad pays a rate set by which two countries they happen to be standing in, which in some corridors is more than 20%.[^remittance-corridors] Money in a savings account earns close to nothing while the same money is lent out at several times that, and the bank keeps the difference. None of it moves outside business hours.
+A café hands a percentage of every sale to the card networks and processors, and on a four dollar coffee the fixed part of that fee often costs more than the percentage does. Someone sending money to family abroad pays a rate set by which two countries they happen to be standing in, which in some corridors is more than 20%.[^remittance-corridors] Money in a savings account earns close to nothing while the same money is lent out at several times that, and the bank keeps the difference. And the payment behind each of them settles only on a banking day: a transfer sent on Friday evening arrives on Monday, or on Tuesday after a public holiday.
 
 Every one of these has the same structure: parties standing between two people who have business with each other, each taking a cut and adding a delay, and a set of hours during which the arrangement operates at all. A program does not remove the need for underwriting, and it does not make a stranger's credit risk disappear. What it removes is the middleman whose job was holding the money and keeping the record, which is the function that a vault and an account already perform, for a fraction of a cent, at three in the morning on a Sunday.
 
@@ -66,9 +66,9 @@ Products of this kind have been shipped already, several of them with real users
 
 **Pay that arrives the day the work is signed off.** A contractor in another country is usually paid when the next batch runs, and the cross-border transfer can take a large percentage of their pay before it arrives. Paid on approval, for a flat fee of a fraction of a cent, they receive their pay sooner and keep nearly all of it. Streaming payments are a small build: the state machine has few states and the amount released grows in proportion to the seconds elapsed.
 
-**Payouts with no claim to file.** A flight lands three hours late; a region gets no rain for a month. Where the fact is measurable and comes from a source both sides agreed on in advance, the payout is a rule instead of a claims department: a pool that pays a fixed amount when the measurement crosses a line. Pool accounting from the *Betting Market* chapter, measurement from the *Offchain Truth* chapter. This is insurance in all but name, and insurance is licensed nearly everywhere. Regulators classify a product by what it does for people, not by what it is built on, so a pool that pays out on a late flight is regulated as insurance.
+**Payouts with no claim to file.** A flight lands three hours late; a region gets no rain for a month. Where the fact is measurable and comes from a source both sides agreed on in advance, the payout is a rule instead of a claims department: a pool that pays a fixed amount when the measurement crosses a line. Pool accounting from the *Betting Market* chapter, measurement from the *Offchain Truth* chapter. This is insurance in all but name, and regulators classify a product by what it does for people rather than by what it is built on, so it needs an insurance license nearly everywhere.
 
-**Company cash that can move over the weekend.** Treasury cash that cannot be moved or redeemed from Friday evening to Monday morning can be held in a managed fund instead, redeemable at a share price at any hour. The *Managed Fund* chapter builds that program, who may change the mandate is the *Managed Fund* chapter's curator, and the limits on an operator's power are the *Operating Financial Software* chapter's subject.
+**Company cash that can move over the weekend.** Treasury cash that cannot be moved or redeemed from Friday evening to Monday morning can be held in a managed fund instead, redeemable at a share price at any hour. The *Managed Fund* chapter builds that program, with a curator who may change the mandate, and the *Operating Financial Software* chapter sets the limits on an operator's power.
 
 ## The Problems Nobody Has Solved Yet
 
@@ -82,13 +82,13 @@ The better ideas are in the places where the programs exist and no product has s
 
 Some things were left out on purpose.
 
-**The interface** was left out because it is ordinary application development. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that has libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it as much care as the program. The hard part of this work is the program, and this book has built ten of them; what remains is choosing the product to put one in.
+**The interface** was left out because it is ordinary application development. Nothing in these pages covers the screen someone actually taps, or the wallet connection, signing, and transaction building behind it, and all of that has libraries, examples, and plenty of people who already do it well. A good interface is what makes people adopt a financial product and keep using it, so give it as much care as the program. The hard part of this work is the program, and this book has built ten of them.
 
 **Ecosystem projects** already do several jobs a financial product needs that this book did not build. There are projects for proof of personhood, multisig wallets to hold upgrade and admin authority, services that convert between bank deposits and stablecoins, and crank turners that call your maintenance handlers on a schedule. Each has its own coding conventions and technology, so learn each one from its own documentation. The *Fundraiser* chapter covers why a product would check personhood, the *Operating Financial Software* chapter why upgrade authority belongs to a multisig, and the *Lending and Borrowing* chapter what a crank does.
 
 **Reward distribution** got no chapter of its own, because the book already builds it twice. The accumulation factor in the *Lending and Borrowing* chapter and the proportional payout in the *Betting Market* chapter are the same accounting that pays liquidity incentives, revenue share to token holders, or a return for locking a token up.
 
-**Vesting and streaming payments** have no chapter of their own, though the pay-on-approval product above is one.
+**Vesting and streaming payments** have no chapter of their own, though the pay-on-approval product above is a streaming payment, and the smallest build on this page.
 
 **Governance** is deliberately absent. Most programs here have an operator with a private key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that private key with a voting process is a separate design problem.
 
