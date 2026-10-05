@@ -2,10 +2,12 @@
 // Build a technical-book style PDF of the manuscript.
 //
 // Reads TABLE-OF-CONTENTS.md to get the chapters in order, converts each
-// markdown file to HTML, lays the result out as book pages at the print trim (serif
-// type, running headers, page numbers, chapters on fresh pages, a table of
-// contents with page numbers) using Paged.js, and prints to PDF with the
-// system Chromium via playwright-core.
+// markdown file to HTML, lays the result out as book pages at the trim, or at
+// --size letter (serif type, running headers, page numbers, chapters on fresh
+// pages, a table of contents with page numbers) using Paged.js, and prints to
+// PDF with the system Chromium via playwright-core. Beside the PDF it writes a
+// page map, <name>.pages.json, giving each chapter's first and last page, which
+// npm run preview -- --chapter reads.
 //
 // Usage: npm run build-pdf-draft -- --reviewer "<name>"
 //        npm run build-pdf-paperback
@@ -964,6 +966,22 @@ const openingPages = await page.evaluate(() => {
   return [...opening.values()].sort((a, b) => a.number - b.number);
 });
 
+// The pages each chapter spans, written beside the PDF so npm run preview can
+// render a whole chapter by name. Read from the laid-out book rather than
+// rebuilt per chapter, so the preview breaks pages exactly where the book does.
+const chapterSpans = await page.evaluate(() => {
+  // Paged.js gives every fragment of a split section the same data-ref, but
+  // only one of them keeps the section's id, which is what names the chapter.
+  const spans = new Map();
+  for (const section of document.querySelectorAll("section.chapter")) {
+    const number = Number(section.closest(".pagedjs_page")?.getAttribute("data-page-number"));
+    const key = section.dataset.ref ?? section.id;
+    const span = spans.get(key) ?? { id: "", first: number, last: number };
+    spans.set(key, { id: span.id || section.id, first: Math.min(span.first, number), last: Math.max(span.last, number) });
+  }
+  return Object.fromEntries([...spans.values()].filter(({ id }) => id).map(({ id, first, last }) => [id, { first, last }]));
+});
+
 // Nothing printed may fall outside its boundary. Paged.js clips every page to
 // its content area, and a figure is clipped to its own box, so a line that
 // lands past either edge is not a line in the margin but a line cut off: the
@@ -1108,6 +1126,10 @@ if (stripLinks) {
   pdf.catalog.delete(PDFName.of("Dests"));
 }
 writeFileSync(outputPath, await pdf.save());
+const pageMap = sections
+  .filter((section) => chapterSpans[section.id])
+  .map((section) => ({ path: section.path, title: section.title, ...chapterSpans[section.id] }));
+writeFileSync(outputPath.replace(/\.pdf$/i, "") + ".pages.json", JSON.stringify(pageMap, null, 2) + "\n");
 
 console.log(`Wrote "${outputPath}"`);
 if (croppedPages > 0) console.log(`Cropped ${croppedPages} page(s) to the ${PAGE_WIDTH_IN} x ${PAGE_HEIGHT_IN}in trim.`);
