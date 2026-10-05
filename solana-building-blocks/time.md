@@ -3,7 +3,7 @@
 A Solana program has three ways to observe the passage of time:
 
 - **The Unix timestamp** is wall-clock time, usually within a second or two of the real time.
-- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 to 250 milliseconds at the time of writing, and never goes down.[^forks]
+- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 milliseconds, and never goes down.[^forks]
 - **A counter** is something a program can implement: a number stored in one of its own accounts that goes up by one each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
 
 The runtime supplies the first two. A program implements the third itself.
@@ -34,7 +34,7 @@ The slot count is how many slots have gone by. Programs read it from the same Cl
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, 200 milliseconds on testnet and on its way there on mainnet at the time of writing, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because in normal running slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because in normal running slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while real time moves on. The section on halts below covers what that does.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and about two hours longer if slots actually average 219 milliseconds. Some changes to the network, a new slot length among them, take effect only when a new epoch begins.
@@ -70,7 +70,7 @@ The lending market and the perpetual futures venue treat a timestamp at or befor
 
 A freshness window is agreed in seconds, and it has to become a slot count before a program can use it. Divide the time by the length of a slot in milliseconds. Multiplying runs the same arithmetic backwards, for telling a person what a slot count comes to in their own units.
 
-The target slot length is 200 milliseconds on testnet at the time of writing, and mainnet is being cut toward it in stages.[^slot-simd]
+The network's target slot length is 200 milliseconds.[^slot-simd]
 
 A program can get that length three ways:
 
@@ -146,7 +146,7 @@ The order book comes through a halt untouched, because it acts on neither clock:
 
 ## A Shorter Slot Tightens Every Window Counted in Slots
 
-The network changes its target slot length rarely, through a feature gate that takes effect at the start of an epoch. It has done so before: during 2026 the target was cut from 400 milliseconds toward 200 in stages, and mainnet had reached 250 by September.[^slot-times] At the time of writing, no reduction below 200 milliseconds is planned.
+The network changes its target slot length rarely, through a feature gate that takes effect at the start of an epoch. It has done so before: during 2026 the target was cut from 400 milliseconds to 200 in stages.[^slot-times] At the time of writing, no reduction below 200 milliseconds is planned.
 
 When the network shortens the slot, a freshness window sized in slots gets stricter. A 150-slot window covers less wall-clock time than it did, so it refuses prices it used to accept. That can make the program refuse a price it should accept, but never accept one it should refuse, and the first refusal shows the window needs retuning. The programs in this book compile the window in as a constant, so a shorter slot means a redeploy.
 
@@ -178,7 +178,7 @@ The table lists every program in Part II that touches time, and the clock each o
 - Accrual by timestamp charges per second whatever the slot length: advance a stored factor by the seconds since the last stored timestamp. Counting slots instead undercharges when slots run long: at about 10% long, a rate quoted at 20% a year collects about 18.3%.
 - Give every price a freshness window, set by each consumer, in the unit the source uses: slots where the program chooses, seconds where the price feed published seconds.
 - A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch. Anza's documentation carries the current figure, and the companion repository the current way to get it.
-- The network occasionally shortens its slot time, as it did during 2026, from 400 milliseconds toward 200 in stages. Each change takes effect everywhere at the start of an epoch, with no transition. Every slot-counted window then covers less time, and a window compiled in as a constant, as this book's programs do, takes a redeploy to retune. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
+- The network occasionally shortens its slot time, as it did during 2026, from 400 milliseconds to 200 in stages. Each change takes effect everywhere at the start of an epoch, with no transition. Every slot-counted window then covers less time, and a window compiled in as a constant, as this book's programs do, takes a redeploy to retune. A rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
 - A deadline counted in whole days floors, so compute both sides of it from the same expression. The window closes exactly that many 24-hour periods after it opened, at the same time of day, so say so when you write the terms down.
 - When votes stop arriving, Solana slows down rather than stopping, and it halts only on a fault such as a software bug. During a halt slots pause and wall-clock time keeps running, but the timestamp cannot jump, so it trails after a restart and takes about as long as the halt to catch up. Accrual by timestamp charges the halt during the catch-up, a deadline arrives at twice real speed while the timestamp catches up, and a price that is hours old still looks fresh.
 - Pair every freshness window, in slots or in seconds, with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
@@ -203,7 +203,7 @@ The table lists every program in Part II that touches time, and the clock each o
 
 [^check-slot-time]: Dean Little's `check_slot_time.rs`, at [gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825](https://gist.github.com/deanmlittle/90901c2fdc9f73fe0fcefb0959109825).
 
-[^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md) cuts the slot time in stages. Anza's [feature tracker](https://github.com/anza-xyz/agave/wiki/Feature-Gate-Tracker-Schedule) lists the 200 millisecond feature (address `iBRLjhJnkmDZgNoZRDMW11d8ZV7HvsL3vAyRjZB5npW`) as active on testnet from epoch 1006 and pending on mainnet in October 2026.
+[^slot-simd]: [SIMD-0525](https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0525-reduce-slot-times.md) cut the slot time to 200 milliseconds in stages. Anza's [feature tracker](https://github.com/anza-xyz/agave/wiki/Feature-Gate-Tracker-Schedule) lists the feature that completes it (address `iBRLjhJnkmDZgNoZRDMW11d8ZV7HvsL3vAyRjZB5npW`).
 
 [^slot-time-live]: On testnet, the only network running Alpenglow at the time of writing, slots averaged 219 milliseconds over an hour, so a time counted in slots ran about 10% long. The reading is from Solana Explorer's live cluster statistics for testnet, at [explorer.solana.com/?cluster=testnet](https://explorer.solana.com/?cluster=testnet), on 24 September 2026, which showed 215 milliseconds over the last minute. Mainnet was not yet running Alpenglow then. Solana's slot time tracker for mainnet is at [solana.com/200ms](https://solana.com/200ms).
 
