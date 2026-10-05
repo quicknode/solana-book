@@ -86,7 +86,7 @@ The fill executes at **the resting order's posted price**: 250, not Carol's 245.
 
 Carol's transaction must carry the accounts of the makers she will match with, passed as pairs of (order account, market user account) in the order the book would walk them. The program does not trust that list. It plans fills from its own tree, then verifies each supplied pair against the plan: the order IDs must match, the accounts must belong to this market, and each maker order's owner must match its market user. A wrong or missing account fails the transaction with `MakerAccountMismatch`, `MakerOwnerMismatch`, or `MissingMakerAccounts`.
 
-Now the balances change, in the unsettled-balance style. Gross proceeds are 3 × 250 = 750 USDC. Maria's fee is 25 basis points of that: 1.875 USDC, rounded up (the fee section below says why). Carol's `unsettled_quote` is credited with the net 748.125 USDC. Bob's `unsettled_base` is credited with three shares. The fee moves from the quote vault to the fee vault in a single program-signed transfer at the end, aggregated across all fills in the order. Bob's order account is stamped PartiallyFilled with three of four filled, and the leaf in the bid tree has its remaining quantity reduced to one in place. Carol's order account is stamped Filled; nothing of hers rests.
+Now the balances change, in the unsettled-balance style. Gross proceeds are 3 × 250 = 750 USDC. Maria's fee is 25 basis points of that: 1.875 USDC, an exact multiple, so the ceiling division the fee section below describes has nothing to round here. Carol's `unsettled_quote` is credited with the net 748.125 USDC. Bob's `unsettled_base` is credited with three shares. The fee moves from the quote vault to the fee vault in a single program-signed transfer at the end, aggregated across all fills in the order. Bob's order account is stamped PartiallyFilled with three of four filled, and the leaf in the bid tree has its remaining quantity reduced to one in place. Carol's order account is stamped Filled; nothing of hers rests.
 
 ![](figures/order-book-match.svg)
 
@@ -156,11 +156,11 @@ The suite in `tests/test_order_book.rs` builds all state through the program's o
 - The pause: `pause_market_refuses_new_orders_with_market_paused`, `paused_market_still_cancels_and_settles_a_resting_order`, `paused_market_still_pays_out_fills_and_withdraws_fees`, `resume_market_accepts_orders_again`, and `only_the_market_authority_can_pause_or_resume`.
 - Eviction, each test starting from a bid side filled with 512 orders: `full_side_refuses_an_order_no_better_than_its_worst`, `better_order_evicts_the_worst_and_rests`, `evicted_maker_settles_their_refund`, `eviction_rejects_missing_or_wrong_evicted_accounts`, and `trader_can_evict_their_own_worst_order`.
 
-If you write one test after reading this chapter, write the vault-swap one for your own program. Two accounts the token program cannot tell apart, but your accounting must, are where this bug appears; test that your program tells them apart.
+If you write one test after reading this chapter, write the vault-swap one for your own program. This bug appears wherever two accounts hold the same token under the same authority and your accounting has to keep them apart; test that your program does.
 
 ## What You Learnt from Building the Order Book Exchange
 
-NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This program's matching engine is two critbit trees holding the book in price-time order, its clearing house's internal ledger is the unsettled balances, and its settlement is `settle_funds()`, which any user runs for their own balances, with no operator involved. The one operator who remains sets the market's parameters, collects its fee, and can stop new orders arriving; she can do nothing else, and no handler of hers keeps a trader's tokens in a vault.
+NYSE, NASDAQ, and the CME each run a matching engine, a clearing house, and a settlement system, staffed and audited. This program's matching engine is two critbit trees holding the book in price-time order, its clearing house's internal ledger is the unsettled balances, and its settlement is `settle_funds()`, which any user runs for their own balances, with no operator involved. The one operator who remains sets the market's parameters, collects its fee, and can stop new orders arriving, and she can do nothing else.
 
 The order book added six concepts on top of the escrow's:
 

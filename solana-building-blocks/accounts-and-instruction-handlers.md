@@ -99,9 +99,9 @@ The signature is also a grant of authority, but programs decide what it authoriz
 
 - **Moving her lamports.** The System Program owns the account at Alice's address, and its `transfer()` handler moves lamports out of an account only when the transaction carries that address's signature.
 - **Paying the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
-- **Any change a program lets her signature authorize.** A program that records Alice's address as the authority over one of its accounts, such as a token account holding her tokens, accepts her signature to move or close it. Her signature changes nothing a program does not record her authority over.
+- **Any change a program has recorded her address as allowed to make**, such as moving tokens out of a token account that holds hers, or closing it.
 
-Solana calls the address whose signature a particular action requires that action's **authority**. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
+An action's **authority** is the address whose signature that action requires; Solana uses the word for every such address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
 - A token's **mint authority** is the only address that may create new supply of it.
 - That token's **freeze authority** is the only address that may freeze a holder's account.
@@ -116,7 +116,7 @@ Different authorities in the same program can be given to different addresses.
 
 Alice's account holds a balance and nothing else, and so does Bob's. Her account is the smallest an account gets, and nearly all data on Solana lives in accounts: wallets, token holdings, program code, and program data.[^state-compression]
 
-Besides its address, every account records three things a program reads: a lamport balance, some data, and its owner program. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program, the only program allowed to change the account, is also the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
+Besides its address, every account records three things a program reads: a lamport balance, some data, and its owner program. To the chain, the data is just bytes, the way a file on disk is just bytes to the operating system. The owner program is also the one that knows what the bytes mean: it reads them as a struct, works on the struct, and writes the bytes back. Users (or other programs) invoke the owner program to modify the account. Alice's account is the simplest case: just a lamport balance (that is, some SOL), no data, and the System Program as its owner. That is why it was the System Program's `transfer()` handler that moved her lamports to Bob.
 
 ![](figures/account-dissected.svg)
 

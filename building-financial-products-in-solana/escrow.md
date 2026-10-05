@@ -24,7 +24,7 @@ Traditional finance solves this with a trusted third party. Alice sends her fund
 
 ![](figures/escrow-traditional-escrow.svg)
 
-A Solana program replaces the third party. The program holds Alice's tokens in a vault that only its own code can move them out of. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no private key that can sign for the vault. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
+A Solana program replaces the third party. The program holds Alice's tokens in a vault, and only the program's own code can move them out of it. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no private key that can sign for the vault. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
 
 ![](figures/escrow-program-swap.svg)
 
@@ -140,7 +140,7 @@ The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
 - `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
 
-The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository model-checks the conservation invariants over every possible value, with harnesses like `proof_take_offer_conserves_value`, `proof_take_offer_honors_taker_terms`, and `proof_cancel_offer_returns_all_to_maker`. The crate models the native version's transfer-and-close arithmetic as pure functions, for the reason the model-checking section of the *Operating Financial Software* chapter gives.
+The testing section of the *Operating Financial Software* chapter builds the general method; this suite is the method at its smallest useful size. And escrow goes one step further: the `kani-proofs` crate in the companion repository model-checks the conservation invariants over every possible value, with harnesses like `proof_take_offer_conserves_value`, `proof_take_offer_honors_taker_terms`, and `proof_cancel_offer_returns_all_to_maker`. The crate models the native version's transfer-and-close arithmetic as pure functions, because a cross-program invocation into the token program is a syscall Kani cannot step into; the model-checking section of the *Operating Financial Software* chapter covers the technique.
 
 ## What You Learnt from Building the Escrow
 

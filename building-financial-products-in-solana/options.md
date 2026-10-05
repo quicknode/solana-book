@@ -227,7 +227,7 @@ The companion repository's `kani-proofs` crate model-checks the first, the secon
 - **The writer defaults.** This cannot happen. `write_option()` takes the entire obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder's window has closed. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` check the two refusals that must hold while a holder could still exercise.
 - **The clock.** Expiry is a Unix timestamp, and the network's clock can drift from wall-clock time by seconds. A holder who waits until the final second to exercise risks that drift putting the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** The strike goes into the vault, as the exercise section explains, so no account of the writer's is on the exercise path.
-- **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
+- **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account, as the purchase step above shows; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
 - **What is absent.** Most of the usual attacks on a financial program do not apply here. No oracle to lag or manipulate, because no price is read. No liquidation to front-run, because no position can be under water. No inflation attack, because there are no shares. No rounding to drain: settlement does no division, and the one floor, in the fee split, gives up at most one minor unit per sale to the writer. What is left is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
 
 ## Testing Considerations
@@ -240,7 +240,7 @@ The suite (`tests/test_options.rs`) follows the call from write to collected str
 - Reclaim after an exercise, fee collection by anyone but the admin, and a second sweep with nothing owed.
 - The three zero terms, and a writer buying their own option.
 
-When you build your own, copy the shape of the two boundary tests: a deadline needs one test one second inside it and one at it. A test that set the deadline to zero would be at the one value where `now < expiry` and `now >= expiry` cannot be told apart.
+When you build your own, copy the shape of the two boundary tests: a deadline needs one test one second inside it and one at it. A test that set the deadline to zero would have no second inside it to test from, so the suite could pass without ever showing that exercise works before expiry.
 
 ## What You Learnt from Building the Options Venue
 

@@ -20,7 +20,7 @@ Every test in this list is quick to write and fast to run. The companion suites 
 A test checks the values you thought of. A model checker checks all of them. There are three levels of assurance, and how far up to go is set by how much the program's vaults will hold:
 
 - **Tests** drive every code path with values you chose, at the edges listed above.
-- **Invariant tests** assert a condition that must hold for every value (the invariants listed above) at whatever values the test chooses, so a change that breaks the condition fails the test at any of them. Testing libraries that generate the values call this "property-based testing".
+- **Invariant tests** assert one of the invariants listed above (a round trip creates no value, an index never decreases) instead of one account's value, so one test covers a bug class rather than one instance of it. Testing libraries that generate the values call this "property-based testing".
 - **Model checking** hands a function to a model checker like Kani,[^kani] which tries *every* possible value of the function's inputs, bit by bit, and either reports that the invariant holds for all of them or hands you the exact values that break it.
 
 Though Kani calls its checks "proofs", a model check is not a formal proof. A formal proof is a mathematical argument a person writes in a proof assistant such as Lean, which the tool then checks step by step, and it can cover code a model checker cannot explore. The companion repository has model checks and tests, and no formal proofs.
@@ -97,4 +97,4 @@ Solana Microscope, which the Solana Foundation publishes as open source, is one 
 
 [^commitment-levels]: The commitment levels, and what each one guarantees, are documented in Anza's commitment reference at [docs.anza.xyz/consensus/commitments](https://docs.anza.xyz/consensus/commitments).
 
-[^confirmed]: A third level, `confirmed`, exists under Solana's older Tower BFT consensus mechanism, which mainnet still ran in September 2026. On a network running Alpenglow, testnet at the time of writing, `confirmed` means the same as `finalized`. Source: Brennan Watt of Anza, in a message to the author on August 28, 2026.
+[^confirmed]: A third level, `confirmed`, exists under Solana's older Tower BFT consensus mechanism, which mainnet still ran at the time of writing. On a network running Alpenglow, testnet at the time of writing, `confirmed` means the same as `finalized`: Brennan Watt of Anza, in a message to the author on August 28, 2026.

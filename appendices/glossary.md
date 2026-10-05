@@ -106,7 +106,7 @@ A [put](#put) whose writer has supplied enough of the quote token, USDC here, to
 
 ### ceil (ceiling)
 
-Rounding up to the next whole [minor unit](#minor-unit). The direction used for a debt, and for a fee the payer owes on top of the trade (the order book's taker fee), so neither rounds down into a shortfall the program absorbs. A fee carved out of a pool already in the vault (the betting market's, the options venue's) floors, and the remainder stays with the pool. The opposite of [floor](#floor). See [rounding](#rounding).
+Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, a debt or a fee, so it never rounds down into a shortfall the program absorbs: the order book's fill fee ceils. A fee the program takes out of a pool it already holds may floor instead and leave the remainder with the pool, which is what the betting market and the options venue do. The opposite of [floor](#floor). See [rounding](#rounding).
 
 ### checked arithmetic
 
@@ -234,7 +234,7 @@ The moment an [option](#option)'s right lapses: the holder may exercise before i
 
 ### exponentiation by squaring
 
-Computing (1 + r)ⁿ, a per-second rate r compounded over n seconds, in log₂(n) multiplications instead of n of them, each one checked and floored the same way. How to compound a rate over many elapsed seconds in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
+Computing (1 + r)ⁿ, a per-second rate r compounded over n seconds, in log₂(n) multiplications instead of n of them, each one checked and floored the same way, so a rate can be compounded over any number of elapsed seconds in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
 
 ### faucet
 
@@ -510,7 +510,7 @@ An overflow in the middle of a calculation whose final answer would have fit: `p
 
 ### physical settlement
 
-Settling a derivative by moving the asset itself, so no price is computed and no oracle is read. The *Options* chapter's venue settles physically, and its "Physical here means" boxout says what the word means onchain. Compare [cash settlement](#cash-settlement).
+Settling a derivative by moving the asset itself, so no price is computed and no oracle is read. The name predates blockchains, and nothing about it happens offchain: the underlying token itself changes hands at the strike. The *Options* chapter's venue settles physically. Compare [cash settlement](#cash-settlement).
 
 ### PnL (profit and loss)
 
@@ -550,7 +550,7 @@ Evidence, issued by a service outside the program, that a participant is a uniqu
 
 ### proprietary AMM (prop AMM)
 
-An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. Among the highest-volume venue types on Solana; the *Prop AMM* chapter gives the figures and builds one.
+An automated market maker funded entirely by its operator's own capital and priced from an oracle plus a spread, with no liquidity providers, no pool shares, and no pricing curve. Among the highest-volume venue types on Solana; the *Prop AMM* chapter names the firms and builds one.
 
 ### protective put
 
