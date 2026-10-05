@@ -2,7 +2,7 @@
 
 ## Prelude
 
-[Copyright and license](prelude/copyright.md), [dedication](prelude/dedication.md), [about the author](prelude/about-the-author.md), [about the technical reviewers](prelude/about-the-technical-reviewers.md), and the [epigraph](prelude/epigraph.md).
+[Copyright](prelude/copyright.md), [dedication](prelude/dedication.md), [about the author](prelude/about-the-author.md), [about the technical reviewers](prelude/about-the-technical-reviewers.md), and the [epigraph](prelude/epigraph.md).
 
 ## [Chapter 1: Introduction](prelude/introduction.md)
 

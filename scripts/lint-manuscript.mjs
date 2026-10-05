@@ -206,7 +206,7 @@ const rules = [
   [/protocol/i,
     'say "network" for Solana and the rules it enforces, "program" for onchain code; "protocol" names both, in prose and in identifiers',
     /github\.com\/solendprotocol\//],
-  [/Quicknode Press|QuickNode|QuikNode|Quiknode(?! Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode Inc."; there is no Quicknode Press'],
+  [/Quicknode Press|QuickNode|QuikNode|Quiknode(?!, Inc\.)/, 'the company is "Quicknode"; the legal entity, used only on the copyright and licence lines, is "Quiknode, Inc."; there is no Quicknode Press'],
   [/\bgas fees?\b|\bgas costs?\b/i, 'say "transaction fees"'],
   [/\bmempool/i, "Solana has no mempool"],
   [/\bToken 2022\b/i, 'say "Token Extensions Program"'],
@@ -295,6 +295,7 @@ const exceptions = [
   /Other chains call a program a "smart contract"/, // the Options chapter's boxout separating an option contract from a program
   /"on‑chain" will look as dated as "on‑line" does now/, // the glossary's onchain entry, which names the spelling it replaces
   /call this "property-based testing"/, // the one pointer to the testing libraries' own term
+  /^This book is intended for educational purposes only/, // the legal disclaimer on the copyright page, worded by Quicknode legal
   /^Though Kani calls its checks "proofs", a model check is not a formal proof\./, // the one sentence that distinguishes the two
   /stamped Cancelled|already-Cancelled|Cancelled order|out to Cancelled|to Filled, or Cancelled|Open, Settled, Cancelled|Settled or Cancelled|status.*Cancelled/, // enum variant names from the programs
 ];
