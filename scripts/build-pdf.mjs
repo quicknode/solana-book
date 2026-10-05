@@ -42,11 +42,14 @@ const PAGE_SIZES = {
 };
 
 const USAGE = `Usage: npm run build-pdf-draft -- --reviewer "<name>" [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
-       npm run build-pdf-paperback [-- output.pdf]
+       npm run build-pdf-paperback
        npm run build-pdf-digital   [-- output.pdf]
 
   build-pdf-draft      An advance review copy, with the prerelease markings.
   build-pdf-paperback  The interior uploaded to KDP: final, no cover, no links.
+                       Then sizes the cover wrap to it (npm run resize-cover).
+                       Takes no arguments: the cover reads the interior from
+                       its default path.
   build-pdf-digital    The finished book for reading on screen: final, with the
                        cover and links.
 

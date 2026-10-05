@@ -92,7 +92,7 @@ The drawing is vector throughout and its type is outlined, so the file embeds no
 
 **The press cover is a separate export, sized by `npm run resize-cover`.** A file going to KDP wraps the whole book: 0.125in bleed + 7.44in back cover + spine + 7.44in front cover + 0.125in bleed wide, and 9.69 + 0.25in tall. The spine is the interior page count times KDP's per-page thickness (0.002252in for white paper, 0.0025in for cream), so at 308 interior pages on white (309 with the cover) the target is 15.824 x 9.94in with a 0.694in spine. None of that belongs in `assets/cover.pdf`, which is the front cover at trim and nothing else.
 
-`npm run resize-cover` rescales the Figma export of the full wrap, kept at `assets/cover-wrap.pdf` (another path can be passed as an argument, `--pages N` and `--paper white|cream` as options), to that exact size, filling the target and cropping overflow symmetrically into the bleed. Page count is read from the paperback interior (`npm run build-pdf-paperback`), the file actually uploaded, unless `--pages` is passed. The script also measures the spine the art was drawn for, by aligning trim heights and taking the width left over after two covers and two bleeds, and warns when that disagrees with the real spine: the art then bleeds onto or short of the true spine edges by half the difference per side, and spine text rides off-center by the same amount. A warning means the rescale is good enough for a proof and the production cover should be re-exported from a Figma frame drawn for the frozen page count (1 px = 1 pt: 15.824 x 9.94in is a 1139 x 716 px frame).
+`npm run resize-cover` rescales the Figma export of the full wrap, kept at `assets/cover-wrap.pdf` (another path can be passed as an argument, `--pages N` and `--paper white|cream` as options), to that exact size, filling the target and cropping overflow symmetrically into the bleed. Page count is read from the paperback interior, the file actually uploaded, unless `--pages` is passed. `npm run build-pdf-paperback` runs it straight after building that interior, so the two always agree; run it alone to pass `--paper cream` or `--pages`. The script also measures the spine the art was drawn for, by aligning trim heights and taking the width left over after two covers and two bleeds, and warns when that disagrees with the real spine: the art then bleeds onto or short of the true spine edges by half the difference per side, and spine text rides off-center by the same amount. A warning means the rescale is good enough for a proof and the production cover should be re-exported from a Figma frame drawn for the frozen page count (1 px = 1 pt: 15.824 x 9.94in is a 1139 x 716 px frame).
 
 ## US Letter
 
@@ -105,7 +105,7 @@ It is not a book size and is not what gets printed. Letter's margins leave a 6.3
 ```
 npm install
 npm run build-pdf-digital                  # the finished book for screens: cover and links, no draft markings
-npm run build-pdf-paperback                # the interior uploaded to KDP: no cover, no links, no draft markings
+npm run build-pdf-paperback                # the KDP upload: the interior (no cover, no links, no draft markings), then the cover sized to it
 npm run build-pdf-draft -- --reviewer "..."   # advance copy: name and commit hash on the title page and every folio
 npm run build-pdf-draft -- --reviewer "..." --size letter   # the same at US Letter
 npm run build-pdf-digital -- out.pdf       # explicit output path

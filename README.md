@@ -26,20 +26,16 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Preparing for press
 
-1. Build the interior without the cover page, without the clickable links that KDP would otherwise strip as non-printable markup, and without the prerelease draft markings:
+1. Export the full-wrap cover (back, spine and front, with bleed) from Figma as a PDF to `assets/cover-wrap.pdf`.
+2. Build the interior without the cover page, without the clickable links that KDP would otherwise strip as non-printable markup, and without the prerelease draft markings, then resize the cover to KDP's exact size, spine width taken from the interior's page count:
 
    ```
    npm run build-pdf-paperback
    ```
 
-2. Export the full-wrap cover (back, spine and front, with bleed) from Figma as a PDF to `assets/cover-wrap.pdf`.
-3. Resize the cover to KDP's exact size. Run this after step 1, because the spine width comes from the page count of the paperback interior in `build/`:
+   `npm run resize-cover` runs the second half alone, for cream paper (`-- --paper cream`) or a different page count (`-- --pages N`).
 
-   ```
-   npm run resize-cover
-   ```
-
-4. Upload both to Amazon KDP: `build/Building Financial Software on Solana (paperback interior).pdf` as the manuscript, and `build/cover-kdp-<pages>pp-white.pdf` as the cover.
+3. Upload both to Amazon KDP: `build/Building Financial Software on Solana (paperback interior).pdf` as the manuscript, and `build/cover-kdp-<pages>pp-white.pdf` as the cover.
 
 ## Status
 
