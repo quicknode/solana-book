@@ -108,7 +108,7 @@
   <text x="488" y="305.37" font-size="9.5">oracle_scale: 8 (10^8)</text>
   <text x="488" y="317.37" font-size="9.5">base_vault: the NVDAx vault</text>
   <text x="488" y="329.37" font-size="9.5">quote_vault: the USDC vault</text>
-  <text x="488" y="341.37" font-size="9.5">base_decimals: 6</text>
+  <text x="488" y="341.37" font-size="9.5">base_decimals: 8</text>
   <text x="488" y="353.37" font-size="9.5">quote_decimals: 6</text>
   <text x="488" y="365.37" font-size="9.5">spread_bps: 10</text>
   <text x="488" y="377.37" font-size="9.5">max_confidence_bps: 100</text>

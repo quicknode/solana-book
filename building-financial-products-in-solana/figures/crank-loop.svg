@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 256" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Who calls the crank</text>
   <defs><marker id="arr7" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
   <!-- bot -->
@@ -27,5 +27,4 @@
   <rect x="490" y="190" width="130" height="48" fill="#f4f4f2" stroke="#888"/>
   <text x="555" y="209" font-size="10.5" font-weight="bold" text-anchor="middle">invalid state</text>
   <text x="555" y="225" font-size="10" fill="#444" text-anchor="middle">refused: state forbids it</text>
-  <text x="303" y="260" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the handler checks state, not identity: any signature will do</text>
 </svg>

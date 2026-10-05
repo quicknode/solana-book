@@ -215,19 +215,20 @@
   <text x="502" y="134.501" font-size="9.5">lending program</text>
   <line x1="482" y1="141.676" x2="628" y2="141.676" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="152.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_lending_market()</text>
-  <text x="482" y="162.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_reserve()</text>
-  <text x="482" y="172.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">update_reserve_config()</text>
-  <text x="482" y="182.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_price()</text>
-  <text x="482" y="192.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
-  <text x="482" y="202.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
-  <text x="482" y="212.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_reserve_liquidity()</text>
-  <text x="482" y="222.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">redeem_reserve_collateral()</text>
-  <text x="482" y="232.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_obligation()</text>
-  <text x="482" y="242.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_obligation_collateral()</text>
-  <text x="482" y="252.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
-  <text x="482" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
-  <text x="482" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
-  <text x="482" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">liquidate_obligation()</text>
+  <text x="482" y="162.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_reserve()</text>
+  <text x="482" y="171.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">update_reserve_config()</text>
+  <text x="482" y="180.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_price()</text>
+  <text x="482" y="190.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
+  <text x="482" y="199.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
+  <text x="482" y="208.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_reserve_liquidity()</text>
+  <text x="482" y="218.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">redeem_reserve_collateral()</text>
+  <text x="482" y="227.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_obligation()</text>
+  <text x="482" y="236.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_obligation_collateral()</text>
+  <text x="482" y="246.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
+  <text x="482" y="255.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
+  <text x="482" y="264.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
+  <text x="482" y="274.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">liquidate_obligation()</text>
+  <text x="482" y="283.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_obligation()</text>
   <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_program_fees()</text>
   </g>
   <g opacity="0.3">
@@ -319,5 +320,5 @@
   <text x="388" y="516" font-size="10.5" font-weight="bold" fill="#1e7a3c">Seize 236.25 USDC shares, 5% bonus</text>
   <text x="16" y="742" font-size="7.5" font-style="italic" fill="#444">not drawn: the price feeds and share mints this step reads but does not change, and Maria's USDC, NVDAx and SPCXx accounts</text>
   <text x="16" y="753" font-size="7.5" font-style="italic" fill="#444">and her three share accounts, which it does not touch; balances and supplies leave out Maria's opening deposit into each reserve,</text>
-  <text x="16" y="764" font-size="7.5" font-style="italic" fill="#444">1,001 minor units in and one minor unit of shares out</text>
+  <text x="16" y="764" font-size="7.5" font-style="italic" fill="#444">1,001 minor units in and one minor unit of shares out; the USDC reserve leaves out the interest on Bob's loan, as the walkthrough does</text>
 </svg>

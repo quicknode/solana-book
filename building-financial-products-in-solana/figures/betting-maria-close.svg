@@ -145,10 +145,8 @@
   <line x1="474" y1="621.37" x2="632" y2="673.37" stroke="#999" stroke-width="1.6"/>
   <line x1="632" y1="621.37" x2="474" y2="673.37" stroke="#999" stroke-width="1.6"/>
   </g>
-  <text x="16" y="330" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. close_outcome() &#215;2: both outcome accounts closed</text>
-  <text x="16" y="356" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. close_event(): vault and event account closed</text>
-  <text x="16" y="382" font-size="10.5" font-weight="bold" fill="#1e7a3c">3. each rent returns to Maria, who paid it</text>
-  <text x="228" y="430" font-size="10" fill="#444" font-style="italic" text-anchor="middle">no USDC moves: 147 and 49 divided exactly, so no dust was left</text>
+  <text x="16" y="330" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. close_outcome() &#215;2: outcomes closed, rent to Maria</text>
+  <text x="16" y="356" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. close_event(): vault and event closed, rent to Maria</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="514" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="132.0" y="528" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>

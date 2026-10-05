@@ -65,6 +65,6 @@
   <path d="M 250,285 C 282.03,297.81 314.06,300.36 344.52,298.7 C 362.49,297.72 380.31,294.16 398,288" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#pda-derivation-a)"/>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="318" y="303" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">250 USDC</text>
   <g class="coin" transform="translate(336,299)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <text x="320" y="330" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the escrow program can move tokens from accounts its PDAs own by specifying the seeds that derived the address</text>
+  <text x="320" y="330" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">the escrow program moves tokens from a token account whose authority is its PDA, by presenting the PDA's seeds</text>
   <text x="16" y="348" font-size="7.5" fill="#444" font-style="italic">not drawn: Bob's 1 TSLAx to Alice's TSLAx account, the TSLAx and USDC mints, and the closing of the offer and vault; only the PDA-signed leg is shown</text>
 </svg>

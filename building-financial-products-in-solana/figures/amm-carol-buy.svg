@@ -202,14 +202,11 @@
   <path d="M 367,175.432 C 361,181.432 358,187.432 358,205.432 C 358,400 358,470 390,510 C 420,547.5 450,552 474,552.37" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-carol-buy-arr)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="346" y="320" font-size="9.5" font-weight="bold" fill="#1e7a3c">swap_tokens() &#183; 50 USDC</text>
   <g class="coin" transform="translate(358,317)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <text x="346" y="336" font-size="8" fill="#444" font-style="italic" text-anchor="end">$0.15 of that is the fee (30 bps): $0.025 accrues to</text>
-  <text x="346" y="348" font-size="8" fill="#444" font-style="italic" text-anchor="end">Maria, the LPs' $0.125 stays in the vault</text>
-  <text x="346" y="360" font-size="8" fill="#444" font-style="italic" text-anchor="end">49.85 is the taxed input the curve prices off</text>
   <!-- the curve prices the trade: ACME out to Carol, signed by the pool config -->
   <path d="M 480,472.37 C 466,472.37 452,450 452,420 C 452,380 450,320 450,278.432" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#amm-carol-buy-arr)"/>
   <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="438" y="353" font-size="9.5" font-weight="bold" fill="#1e7a3c">&#8776; 17.96 ACME</text>
   <g class="coin" transform="translate(450,350)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <text x="438" y="374" font-size="8" fill="#444" font-style="italic" text-anchor="end">the spot price: $2.67 before, &#8776; $2.89 after</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="438" y="374" font-size="8" fill="#444" font-style="italic" text-anchor="end">the spot price: $2.67 before, &#8776; $2.89 after</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="420" width="254.0" height="68.361" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="262" y="434" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>

@@ -42,8 +42,6 @@ Each chapter explains one complete, tested program from the [companion repositor
 
 ## [Glossary](appendices/glossary.md)
 
-## Index (print edition)
-
 ## Postlude
 
 [Acknowledgements and credits](postlude/acknowledgements.md).

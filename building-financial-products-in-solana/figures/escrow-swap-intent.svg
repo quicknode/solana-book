@@ -7,7 +7,7 @@
   <text x="76" y="86.175" font-size="10.5" font-weight="bold">Alice</text>
   <line x1="56" y1="93" x2="152" y2="93" stroke="#888" stroke-width="0.8"/>
   <text x="56" y="104" font-size="9.5" fill="#444">1 SOL</text>
-  <text x="104" y="136" font-size="11" text-anchor="middle">holds 250 USDC</text>
+  <text x="104" y="136" font-size="11" text-anchor="middle">offers 250 USDC</text>
   <text x="104" y="152" font-size="11" font-style="italic" fill="#444" text-anchor="middle">wants 1 TSLAx</text>
   <!-- Bob: wallet account -->
   <rect x="480" y="72" width="112" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
@@ -15,7 +15,7 @@
   <text x="508" y="86.175" font-size="10.5" font-weight="bold">Bob</text>
   <line x1="488" y1="93" x2="584" y2="93" stroke="#888" stroke-width="0.8"/>
   <text x="488" y="104" font-size="9.5" fill="#444">1 SOL</text>
-  <text x="536" y="136" font-size="11" text-anchor="middle">holds 1 TSLAx</text>
+  <text x="536" y="136" font-size="11" text-anchor="middle">offers 1 TSLAx</text>
   <text x="536" y="152" font-size="11" font-style="italic" fill="#444" text-anchor="middle">wants 250 USDC</text>
   <!-- intended swap -->
   <path d="M 164,82 L 476,82" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#escrow-swap-intent-arr)"/>

@@ -3,12 +3,12 @@
 A Solana program has three ways to observe the passage of time:
 
 - **The Unix timestamp** is wall-clock time as a leader reports it.
-- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 milliseconds, and never goes down.[^forks]
+- **The slot** is a count that goes up by one for each slot the network runs, roughly every 200 milliseconds.[^forks]
 - **A counter** is something a program can implement: a number stored in one of its own accounts that goes up by one each time something happens, such as an order arriving. It says which of two events came first, but not how far apart they were.
 
-The runtime supplies the first two. A program implements the third itself.
+The runtime supplies the first two.
 
-Which one to use depends on the job. A week promised to a contributor runs on the wall clock. A price freshness window counts whatever unit the price feed stamped, slots for three of this book's price feeds. Which order came first uses a counter.
+Which one to use depends on the job. A week promised to a contributor runs on the wall clock. A price freshness window counts whatever unit the price feed stamped. Which order came first uses a counter.
 
 ## Leaders Take Turns Producing Blocks
 
@@ -24,11 +24,11 @@ Programs read the **Unix timestamp** from the **Clock sysvar**, a system account
 
 ![](figures/unix-timestamp.svg)
 
-Real time moves about 200 milliseconds a slot, so a leader can push the timestamp ahead of real time, or hold it behind, by up to about 200 milliseconds for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. Put a boundary on a timestamp and somebody can profit by moving it. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. Handle this with a margin: close betting well before the result can be known, exercise an option before its last seconds, and set any deadline so a few seconds cannot change who gets paid.
+Real time moves about 200 milliseconds a slot, so a leader can push the timestamp ahead of real time, or hold it behind, by up to about 200 milliseconds for each slot it leads. The next leader that writes its own clock's time brings the timestamp back toward real time, so the error does not build up over a long span. If an auction close, an option expiry, or the start of a penalty sits on a timestamp, the leader of the slots around that boundary decides which side of it a transaction lands on. The leader writes the time its own next block reads, and chooses which transactions go in each block, so for most of its turn it controls both. Only the first block of a turn reads a time written by the previous leader. Handle this with a margin: close betting well before the result can be known, exercise an option before its last seconds, and set any deadline so a few seconds cannot change who gets paid.
 
 ## The Slot Counter
 
-The slot count is how many slots have gone by. Programs read it from the same Clock sysvar as the timestamp. Slots only go up, and nobody can rewind the count or jump it forward.
+The slot count is how many slots have gone by. Programs read it from the same Clock sysvar as the timestamp. Slots only go up, and nobody can rewind the count.
 
 ![](figures/slot-counter.svg)
 
@@ -56,7 +56,7 @@ Every program in this book that times something chose by that rule; the table at
 
 Three programs in this book accrue value over time, and all count it in seconds:
 
-- **The lending market accrues interest on debt.** It carries one number per reserve, a **borrow accumulation factor**, and advances it by the seconds elapsed since `last_accrual_timestamp`; the *Lending and Borrowing* chapter builds the factor.
+- **The lending market accrues interest on debt.** It carries one number per reserve, a borrow accumulation factor, and advances it by the seconds elapsed since `last_accrual_timestamp`; the *Lending and Borrowing* chapter builds the factor.
 - **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_timestamp`, at a rate per second fixed when the pool is created.
 - **The managed fund accrues its annual management fee.** It counts the seconds since `last_fee_accrual_timestamp` in the same way, and its `collect_fees()` refuses a timestamp at or before the stored one with `NoTimeElapsed`.
 
@@ -64,7 +64,7 @@ All three advance by elapsed time, and interest and funding decide what somebody
 
 Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. If slots run about 10% long, a year holds that many fewer of them, so a market that assumes 200 milliseconds charges a borrower quoted 20% a year about 18.2%. That is nearly a tenth of all the interest, against the hundred-millionth a leader can move by shifting the timestamp.
 
-The lending market and the perpetual futures venue treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. The network already rejects a block whose time goes backwards, so no second is ever charged twice.
+The lending market and the perpetual futures venue treat a timestamp at or before the stored one as no time passed, and leave the stored one where it is. A block's timestamp cannot go backwards, so no second is ever charged twice.
 
 ## How to Turn Time Into Slots
 
@@ -76,7 +76,7 @@ A program can get that length three ways:
 
 - **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on, which the section on a shortened slot covers.
 - **From the feature gates.** Changes to the network ship as **features**, built into the validator software, switched off, and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its feature gate activates, not from the moment it does, so check the epoch as well as the feature gate.
-- **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation and the companion repository before writing either technique above, in case such an account now exists.
+- **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation before writing either technique above, in case such an account now exists.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT`: it is fixed when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
@@ -173,12 +173,12 @@ A slot count that spans one of these changes cannot be converted at today's figu
 
 - A program has three clocks: the timestamp (a leader's choice within a bound), the slot count (nobody's choice, runs long, stops in a halt), and a counter of its own (order only).
 - Count slots for any span shorter than about 20 seconds that your own program stamps, where nobody can move the count and its drift stays under a second or two. Use the wall clock for any longer span, including a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival.
-- Accrual by timestamp charges per second whatever the slot length: advance a stored factor by the seconds since the last stored timestamp. Counting slots instead undercharges when slots run long: at about 10% long, a rate quoted at 20% a year collects about 18.2%.
+- Accrual by timestamp charges per second whatever the slot length: advance a stored factor by the seconds since the last stored timestamp. Counting slots instead undercharges when slots run long, in proportion to how long they run.
 - Give every price a freshness window, set by each consumer, in the unit the source uses: slots where the program chooses, seconds where the price feed published seconds.
-- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch. Anza's documentation carries the current figure, and the companion repository the current way to get it.
+- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch. Anza's documentation carries the current figure.
 - A shorter slot tightens every slot-counted window, and a window compiled in as a constant takes a redeploy to retune; a rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
 - A deadline counted in whole days floors, so compute both sides of it from the same expression. The window closes exactly that many 24-hour periods after it opened, at the same time of day, so say so when you write the terms down.
-- After a halt the slot count resumes where it stopped and the timestamp trails real time, so accrual, deadlines, and freshness windows all read the gap wrong until it catches up.
+- After a halt the slot count resumes where it stopped and the timestamp trails real time, so accrual charges the halt late, and deadlines and freshness windows read the gap wrong until it catches up.
 - Pair every freshness window, in slots or in seconds, with a `LastRestartSlot` check, which rejects any price stamped at or before the last restart.
 
 [^forks]: Two validators can briefly build on different parents, splitting the chain into **forks**, until the network settles on one. A block for a lower slot on one fork can even be produced after a block for a higher slot on another, but a program only ever sees one of the forks and will only see the slot go up.

@@ -106,15 +106,6 @@
   <g transform="translate(110,359.282)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="130" y="369.032" font-size="8.5" font-weight="bold">obligation</text>
   </g>
-  <g opacity="0.3">
-  <circle cx="110" cy="437.782" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="120" y="432.282" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OBLIGATION_SHARE_</text>
-  <text x="120" y="441.282" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">VAULT" + RESERVE +</text>
-  <text x="120" y="450.282" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OBLIGATION</text>
-  <rect x="102" y="456.282" width="114" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
-  <g transform="translate(110,460.282)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
-  <text x="130" y="470.032" font-size="8.5" font-weight="bold">collateral vault</text>
-  </g>
   <circle cx="295" cy="45.857" r="7" fill="#fff"/>
   <g opacity="0.3">
   <circle cx="295" cy="45.857" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -216,7 +207,7 @@
   <text x="368" y="313.825" font-size="9.5">USDC share mint</text>
   <line x1="348" y1="321" x2="442" y2="321" stroke="#888" stroke-width="0.8"/>
   <text x="348" y="332" font-size="8.5">supply: 1,000</text>
-  <text x="348" y="344" font-size="8" font-style="italic">authority: the reserve</text>
+  <text x="348" y="344" font-size="8" font-style="italic">mint authority: the reserve</text>
   </g>
   <g>
   <circle cx="12" cy="530.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -281,19 +272,20 @@
   <text x="502" y="134.501" font-size="9.5">lending program</text>
   <line x1="482" y1="141.676" x2="628" y2="141.676" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="152.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_lending_market()</text>
-  <text x="482" y="162.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_reserve()</text>
-  <text x="482" y="172.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">update_reserve_config()</text>
-  <text x="482" y="182.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_price()</text>
-  <text x="482" y="192.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
-  <text x="482" y="202.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
-  <text x="482" y="212.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_reserve_liquidity()</text>
-  <text x="482" y="222.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">redeem_reserve_collateral()</text>
-  <text x="482" y="232.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_obligation()</text>
-  <text x="482" y="242.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_obligation_collateral()</text>
-  <text x="482" y="252.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
-  <text x="482" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
-  <text x="482" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
-  <text x="482" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">liquidate_obligation()</text>
+  <text x="482" y="162.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_reserve()</text>
+  <text x="482" y="171.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">update_reserve_config()</text>
+  <text x="482" y="180.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_price()</text>
+  <text x="482" y="190.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
+  <text x="482" y="199.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
+  <text x="482" y="208.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_reserve_liquidity()</text>
+  <text x="482" y="218.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">redeem_reserve_collateral()</text>
+  <text x="482" y="227.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_obligation()</text>
+  <text x="482" y="236.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_obligation_collateral()</text>
+  <text x="482" y="246.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
+  <text x="482" y="255.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
+  <text x="482" y="264.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
+  <text x="482" y="274.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">liquidate_obligation()</text>
+  <text x="482" y="283.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_obligation()</text>
   <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_program_fees()</text>
   </g>
   <path d="M 97,227 C 105,231 153,238.9 183,240.6 L 330,248.7 C 360,250.4 436,262 436,286 L 436,299.5" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#lend-red-arr)"/>
