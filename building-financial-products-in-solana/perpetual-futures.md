@@ -180,7 +180,7 @@ Here is where everyone ends up:
 
 ## The Math: One Formula per Concept, Floored or Truncated Toward Zero
 
-Every calculation is checked u128 integer arithmetic, multiply before divide. `basis_points_of()` floors fees and margin thresholds, share minting and withdrawal amounts floor against AUM, and the haircut rounds down; PnL and funding truncate toward zero, which favors the trader on a loss and the pool on a profit. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the compute per transaction constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price.
+Every calculation is checked u128 integer arithmetic, multiply before divide. `basis_points_of()` rounds fees and the maintenance requirement up, against the trader; only the insurance fund's cut of a collected fee rounds down (`basis_points_of_rounded_down()`). Share minting and withdrawal amounts floor against AUM, and the haircut rounds down; PnL and funding truncate toward zero, which favors the trader on a loss and the pool on a profit. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the compute per transaction constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price.
 
 ## The Invariants: Percolator's Guarantees, Simplified
 

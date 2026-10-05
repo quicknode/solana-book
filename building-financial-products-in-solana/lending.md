@@ -83,7 +83,7 @@ The rate itself comes from a **kinked utilization curve**. Utilization is borrow
 
 Those percentages are annual, and the accrual is per second, so the conversion divides by the seconds in a year. The seconds elapsed are the Clock's timestamp minus the one the reserve stored at its last accrual, `last_accrual_timestamp`. Changing the curve with `update_reserve_config()` accrues at the old rates first, so the seconds already elapsed are charged at the rates that applied to them.
 
-Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_program_fees`, floored, in the suppliers' favor; the rest belongs to the suppliers through the rising share price.
+Of the interest that accrues, the reserve factor (10%) is set aside in `accumulated_program_fees`, rounded up, against the suppliers; the rest belongs to the suppliers through the rising share price.
 
 ![](figures/lending-rate-curve.svg)
 
