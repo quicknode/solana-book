@@ -31,7 +31,7 @@ The escrow program in the companion repository ships Kani harnesses for the part
 - `proof_cancel_offer_returns_all_to_maker` checks that the refund path returns every vault token to the maker.
 - `proof_offer_id_seed_injective` checks that two different offer IDs can never derive the same address.
 
-A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and checks those. Percolator, Anatoly Yakovenko's Kani-checked perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole. Each invariant in a program chapter's invariants section is a claim a harness like these can check.
+A handler that moves tokens through the Token Program cannot be model-checked end to end, because the cross-program invocation is a syscall the checker cannot step into. So the harness mirrors the program's arithmetic and statement order in pure functions and checks those. Percolator, Anatoly Yakovenko's Kani-checked perpetual-futures risk engine, is built the same way: a self-contained core the checker can explore whole.[^percolator] Each invariant in a program chapter's invariants section is a claim a harness like these can check.
 
 ## Wait for Finality Before Doing Anything You Cannot Undo
 
@@ -92,6 +92,8 @@ Solana Microscope, which the Solana Foundation publishes as open source, is one 
 [^kani]: Kani is a Rust model checker, at [github.com/model-checking/kani](https://github.com/model-checking/kani).
 
 [^solana-verify]: `solana-verify` is at [github.com/solana-foundation/solana-verifiable-build](https://github.com/solana-foundation/solana-verifiable-build).
+
+[^percolator]: Percolator's README, at [github.com/aeyakovenko/percolator](https://github.com/aeyakovenko/percolator/blob/master/README.md), lists the four guarantees its proofs cover; the *Perpetual Futures* chapter's invariants use its names.
 
 [^microscope]: Solana Microscope is at [github.com/solana-foundation/solana-microscope](https://github.com/solana-foundation/solana-microscope).
 
