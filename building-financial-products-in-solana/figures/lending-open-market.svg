@@ -105,19 +105,20 @@
   <text x="502" y="134.501" font-size="9.5">lending program</text>
   <line x1="482" y1="141.676" x2="628" y2="141.676" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="152.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_lending_market()</text>
-  <text x="482" y="162.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_reserve() &#215;3</text>
-  <text x="482" y="172.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">update_reserve_config()</text>
-  <text x="482" y="182.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">set_price() &#215;3</text>
-  <text x="482" y="192.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
-  <text x="482" y="202.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
-  <text x="482" y="212.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_reserve_liquidity()</text>
-  <text x="482" y="222.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">redeem_reserve_collateral()</text>
-  <text x="482" y="232.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_obligation()</text>
-  <text x="482" y="242.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_obligation_collateral()</text>
-  <text x="482" y="252.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
-  <text x="482" y="262.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
-  <text x="482" y="272.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
-  <text x="482" y="282.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">liquidate_obligation()</text>
+  <text x="482" y="162.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_reserve() &#215;3</text>
+  <text x="482" y="171.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">update_reserve_config()</text>
+  <text x="482" y="180.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">set_price() &#215;3</text>
+  <text x="482" y="190.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_reserve()</text>
+  <text x="482" y="199.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">refresh_obligation()</text>
+  <text x="482" y="208.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_reserve_liquidity()</text>
+  <text x="482" y="218.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">redeem_reserve_collateral()</text>
+  <text x="482" y="227.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_obligation()</text>
+  <text x="482" y="236.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_obligation_collateral()</text>
+  <text x="482" y="246.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_obligation_collateral()</text>
+  <text x="482" y="255.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">borrow_obligation_liquidity()</text>
+  <text x="482" y="264.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">repay_obligation_liquidity()</text>
+  <text x="482" y="274.009" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">liquidate_obligation()</text>
+  <text x="482" y="283.343" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_obligation()</text>
   <text x="482" y="292.676" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_program_fees()</text>
   </g>
   <g>
@@ -168,7 +169,7 @@
   <line x1="12" y1="713.34" x2="167" y2="713.34" stroke="#888" stroke-width="0.8"/>
   <text x="12" y="724.34" font-size="8.5">supply: 0</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="167" y="724.84" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
-  <text x="12" y="736.34" font-size="8" font-style="italic">authority: the reserve</text>
+  <text x="12" y="736.34" font-size="8" font-style="italic">mint authority: the reserve</text>
   </g>
   <g>
   <circle cx="12" cy="515.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -229,7 +230,7 @@
   <line x1="247" y1="713.34" x2="402" y2="713.34" stroke="#888" stroke-width="0.8"/>
   <text x="247" y="724.34" font-size="8.5">supply: 0</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="402" y="724.84" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
-  <text x="247" y="734.84" font-size="8" font-style="italic">authority: the reserve</text>
+  <text x="247" y="734.84" font-size="8" font-style="italic">mint authority: the reserve</text>
   </g>
   <g>
   <circle cx="482" cy="411.34" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -278,7 +279,7 @@
   <line x1="482" y1="713.34" x2="628" y2="713.34" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="724.34" font-size="8.5">supply: 0</text>
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="628" y="724.84" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
-  <text x="482" y="734.84" font-size="8" font-style="italic">authority: the reserve</text>
+  <text x="482" y="734.84" font-size="8" font-style="italic">mint authority: the reserve</text>
   </g>
   <text x="290" y="300" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and fronts the rent for the market, its price feeds and its reserves;</text>
   <text x="290" y="315" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no tokens move until a supplier deposits</text>

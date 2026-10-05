@@ -6,18 +6,18 @@ Lifinity pioneered the model on Solana and wound down in December 2025, by which
 
 ## The Oracle Is the Price, the Spread Is the Fee
 
-A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts that. The price comes from a price feed account, like the one in the *Offchain Truth* chapter. The operator's only pricing decision is the **spread**: buyers of the base token pay the **ask**, the oracle price plus `spread_bps`; sellers receive the **bid**, the oracle price minus it. The bid and ask from the *Order Book Exchange* chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
+A constant-product pool computes its price from its reserves, which means its price is only right when arbitrageurs have made it right, and every trade pays price impact along the way. A prop AMM inverts that. The price comes from a price feed account, like the one in the *Offchain Truth* chapter. The operator's only pricing decision is the spread: buyers of the base token pay the ask, the oracle price plus `spread_bps`; sellers receive the bid, the oracle price minus it. The bid and ask from the *Order Book Exchange* chapter are back, except no one is resting orders; the firm *is* both sides of the book, permanently, at whatever the oracle says plus its margin.
 
 Two things are absent as a result:
 
 - **No price impact.** A trade's unit price does not depend on its size; only the inventory limits it.
-- **Nothing to sandwich.** The price does not depend on the pool's balances, and the front-run/back-run attack from the *Adversary* chapter needs a price that moves with each trade. This one does not move.
+- **Nothing to sandwich.** The price does not depend on the pool's balances, and the sandwich attack from the *Adversary* chapter needs a price that moves with each trade. This one does not move.
 
 ## The Market Maker Opens the Market and Stocks It
 
-Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. She signs with the standard wallet every character carries, and its token accounts hold the firm's inventory rather than her own cash: 1,000 NVDAx and 200,000 USDC from the firm's treasury. The market trades NVDAx, the NVIDIA stock the *Order Book Exchange* chapter traded, against USDC, and the oracle quotes NVDAx at $165.
+Maria runs the market-making firm that operates the venue: she stocks it, sets the spread, and takes it off the market when she chooses. She signs with the standard wallet every character carries, and its token accounts hold her own 1,000 USDC and, from the firm's treasury, 1,000 NVDAx and 200,000 USDC. The market trades NVDAx, the NVIDIA stock the *Order Book Exchange* chapter traded, against USDC, and the oracle quotes NVDAx at $165.
 
-Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread and a spread at or above 100% (`InvalidParameter` both ways). A zero spread earns nothing while every fill taken by a trader who knows where the price is going still loses, so it is refused as a mistake; at or above 100% the bid stops meaning anything.
+Maria calls `initialize_market()` with a spread of 10 basis points and a 1% cap on oracle confidence. The handler rejects a zero spread and a spread at or above 100% (`InvalidParameter` both ways). A zero spread earns nothing while every fill taken by a trader who knows where the price is going still loses, so it is refused as a mistake; at or above 100% the bid would be zero or below.
 
 ![](figures/prop-amm-open-market.svg)
 
@@ -35,7 +35,7 @@ Then `deposit_inventory()` moves the 1,000 NVDAx and 200,000 USDC from the opera
 
 Alice, carrying the standard wallet, wants 5 NVDAx. She calls `swap()` with the direction `BuyBase`, and the handler prices her in three steps:
 
-- **The oracle read**, with the checks from the *Offchain Truth* chapter. First, before a byte of it is decoded, the price feed account must be owned by the program the market recorded at creation (`PriceFeedNotFromOracle`), so an account laid out like a price feed but written by another program is never a price. Then the price feed's layout, a positive price, the scale fixed at creation, freshness within 150 slots (`StalePrice`), and a confidence band inside the market's limit (`OracleConfidenceTooWide`). It also refuses a price stamped at or before the last cluster restart (`PricePredatesRestart`), for the reason the *Time* chapter gives.
+- **The oracle read**, with the checks from the *Offchain Truth* chapter. First, before a byte of it is decoded, the price feed account must be owned by the program the market recorded at creation (`PriceFeedNotFromOracle`), so an account laid out like a price feed but written by another program is never a price. Then the price feed's layout, a positive price, the scale fixed at creation, freshness within 150 slots (`StalePrice`), a price stamped after the last cluster restart (`PricePredatesRestart`, for the reason the *Time* chapter gives), and a confidence band inside the market's limit (`OracleConfidenceTooWide`).
 - **The ask**: $165 plus 10 basis points is $165.165, **rounded up** in fixed point, because the buyer's price rounds against the buyer.
 - **Her output**, floored: 825.825 USDC of her 1,000 buys exactly 5 NVDAx.
 
@@ -81,11 +81,11 @@ The oracle checks in `swap()` pull the quote automatically, for the same reasons
 
 ## The Firm Chooses Whom It Fills
 
-Maria can also handle it by choosing her counterparties. `swap()` fills any signer at the same quote, and no real venue does that. The teams that run prop AMMs come from sequencing and MEV, and they know that flow is not all alike. A retail swap routed through an aggregator is almost never informed: whoever sent it wants NVDAx, not an edge on the price. An arbitrage bot or a rival market maker hitting the quote the moment the price feed moves is informed by definition, since that is the only reason it trades. Adverse selection comes from the second kind, so the venues segment their flow: a tighter spread for flow they believe is uninformed, and a wider one, or none, for flow they believe is not. Jupiter built the signal for this into its Ultra router in 2025. A swap that came from Jupiter's own users is marked as such when it reaches the venue, and the prop AMMs quote tighter for it.[^ultra-signaling]
+Maria can also handle it by choosing her counterparties. `swap()` fills any signer at the same quote, and no real venue does that. The teams that run prop AMMs come from block building and MEV, and they know that flow is not all alike. A retail swap routed through an aggregator is almost never informed: whoever sent it wants NVDAx, not an edge on the price. An arbitrage bot or a rival market maker hitting the quote the moment the price feed moves is informed by definition, since that is the only reason it trades. Adverse selection comes from the second kind, so the venues segment their flow: a tighter spread for flow they believe is uninformed, and a wider one, or none, for flow they believe is not. Jupiter built the signal for this into its Ultra router in 2025. A swap that came from Jupiter's own users is marked as such when it reaches the venue, and the prop AMMs quote tighter for it.[^ultra-signaling]
 
 Some venues go further and keep a deny list of addresses they will not fill at all. That starts a cycle that does not end, because the refused firm moves to fresh wallets and the venue looks for the pattern behind them.
 
-## The Market Maker Leaves, Whole
+## The Market Maker Withdraws Everything in One Instruction
 
 When Maria wants her capital back, `withdraw_inventory()` hands her both vaults, to the last minor unit, in one instruction, with nobody's permission and none of the share arithmetic the constant-product pool's withdrawal needed. The market account survives, empty, refusing swaps with `InsufficientInventory`, and it holds nobody's tokens, so nothing is stuck in it.
 
@@ -95,7 +95,7 @@ When Maria wants her capital back, `withdraw_inventory()` hands her both vaults,
 
 The quote arithmetic is four small functions in `quote_math.rs`, and the invariant check is three more, all checked u128, multiply before divide, one rounding per quantity. The ask rounds **up**; the bid rounds **down**; both outputs floor. Every rounding direction favors the market, so the composite invariant holds: value out never exceeds value in, measured at the raw oracle price. The handler still asserts it after computing each fill, cross-multiplied so the check itself does no rounding, and fails with `InvariantViolated` if a future refactor breaks a rounding direction. Assert after the math, as the constant-product pool's post-trade K check does, here checking a much simpler formula.
 
-The unit conversion is the only complicated part. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program records both mints' decimals at creation and carries all three exponents through the arithmetic rather than assuming they cancel. With NVDAx at eight decimals and USDC at six they do not cancel. The chapter's numbers are clean for a different reason: the ask and the bid have three decimal places of a dollar, fewer than USDC's six, and five NVDAx is a whole number of tokens at any decimal count.
+The unit conversion carries three exponents. Prices arrive at the oracle's fixed-point scale (10^8 here) while each token brings its own decimals. The program records both mints' decimals at creation and carries all three through the arithmetic rather than assuming they cancel. With NVDAx at eight decimals and USDC at six they do not cancel. The chapter's numbers are clean for a different reason: the ask and the bid have three decimal places of a dollar, fewer than USDC's six, and five NVDAx is a whole number of tokens at any decimal count.
 
 ## The Invariants: What the Market Guarantees
 
@@ -107,8 +107,8 @@ The unit conversion is the only complicated part. Prices arrive at the oracle's 
 ## The Failure Modes: What Attacks a Market Maker
 
 - **The stale quote** is the catastrophic failure, and it needs no exploit: an oracle that lags a moving market is enough. Every fill against a wrong quote is a risk-free profit for the counterparty and a loss for Maria; `StalePrice` and `OracleConfidenceTooWide` close the path (`test_swap_rejects_stale_price`, `test_swap_rejects_wide_confidence`). The *Perpetual Futures* chapter meets the same failure with leverage multiplying it.
-- **Adverse selection.** Slower and subtler: even a fresh oracle trails the true price by seconds, and informed flow captures the difference. No `require!` can refuse "traders who know something", so Maria handles it commercially: a spread wide enough to pay for it, a ladder that charges for size, quotes pulled when prices are moving fast, and flow segmented by where it came from. The `paused` flag is a risk control Maria expects to use.
-- **The operator chooses which oracle to trust.** The operator picks the price feed at creation, and `PriceFeedNotFromOracle` holds the market to the program that owned it then (`test_swap_rejects_price_feed_from_another_program`). Whether that program publishes good prices is Maria's decision, the same visible trust decision the *Perpetual Futures* chapter's pool creator makes, with one difference: a bad oracle here loses *Maria's* capital, not her users'.
+- **Adverse selection** (above). No `require!` can refuse "traders who know something", so Maria handles it commercially: a spread wide enough to pay for it, a ladder that charges for size, quotes pulled when prices are moving fast, and flow segmented by where it came from. The `paused` flag is a risk control Maria expects to use.
+- **The operator chooses which oracle to trust.** The operator picks the price feed at creation, and `PriceFeedNotFromOracle` holds the market to the program that owned it then (`test_swap_rejects_price_feed_from_another_program`). Whether that program publishes good prices is Maria's decision, the same visible trust decision the *Perpetual Futures* chapter's pool creator makes.
 - **What is absent.** Run the *Adversary* chapter's checklist against this program and whole categories do not apply. No inflation attack: there are no shares, so there is no share price for a first depositor to skew. No sandwich: no price impact to squeeze. No vacuous-invariant drain on an empty reserve: an empty vault rejects with `InsufficientInventory`. Each of those attacks needs a mechanism this program does not have.
 
 ## Testing Considerations
@@ -119,13 +119,11 @@ The suite (`tests/test_prop_amm.rs`) checks the quote math to the minor unit in 
 
 A traditional market-making desk quotes two-sided prices on an exchange, hedges its inventory, and pulls its quotes when prices move fast. In this program the desk is the pool: one firm quotes its own capital at oracle prices. The oracle sets the mid-price the desk's trader would, the spread is the firm's margin, `set_quote()` is the risk manager widening quotes when prices move fast, and `paused` is the desk pulling them entirely.
 
-Five concepts came with the prop AMM:
+Three concepts came with the prop AMM:
 
-- **Quoting from a price feed.** The price comes from a price feed, not from reserves, so there is no price impact and nothing to sandwich.
-- **For a market maker the oracle checks protect its own capital**, because the firm is the only capital in the market.
-- **Adverse selection.** Trades from counterparties who know where the price is about to move: the market maker's structural cost, mitigated commercially, never by a `require!`.
+- **Quoting from a price feed.** The price comes from a price feed, not from reserves: no price impact, so no sandwich; no shares, so no inflation attack. When the firm is the only capital in the market, the oracle checks protect its own capital.
+- **Adverse selection**, and the four commercial answers to it: spread, ladder, pause, segmented flow.
 - **When balances legitimately are the accounting.** With one depositor and no other claimant, the vault balances are the ledger.
-- **Attack surface that was never built.** Entire classes from the *Adversary* chapter do not apply, because each of them needs a mechanism this design does not have.
 
 Traders accept the prop AMM's concentrated trust (one firm, one price feed, one pause switch) because they leave nothing in its custody and see their price before they sign. In the *Lending and Borrowing* chapter we will build a program where users do leave their tokens in the program's custody, as supplied loans and as collateral, and the same kind of oracle values that collateral continuously. You will see what a lender has to do to stay solvent when the collateral falls, and who is paid to do it.
 

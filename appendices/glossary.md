@@ -28,9 +28,17 @@ See [swap router](#swap-router).
 
 A fundraising rule under which contributions bind only if the full target is reached by the deadline; otherwise every contributor is refunded in full. The *Fundraiser* chapter builds it onchain.
 
+### Alpenglow
+
+Solana's consensus mechanism, which replaced Tower BFT. Under it the [commitment levels](#commitment-level) a client asks for are `processed` and `finalized`, and `confirmed` means the same as `finalized`. See the *Operating Financial Software* chapter.
+
 ### American option / European option
 
 An American option may be exercised at any time up to its expiry; a European option only at expiry. The *Options* chapter builds the American kind.
+
+### Anchor
+
+A framework for writing Solana programs in Rust. A program declares the checks each account must pass as constraints, and Anchor generates the code that performs them, the [discriminator](#discriminator), and the [IDL](#idl). The companion repository ships every program in Anchor 1, Anchor 2, and Quasar versions; see the *Adversary* chapter for the checks.
 
 ### arbitrage
 
@@ -58,7 +66,7 @@ The address whose signature a particular action requires. A program records the 
 
 ### auto-deleveraging (ADL)
 
-A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the mark, paid out early, and their exposure retired. The *Perpetual Futures* chapter's program uses a [haircut](#haircut) instead.
+A perpetual futures venue's last resort when a loss exceeds the collateral behind it and no insurance fund can cover the rest: the most profitable leveraged positions on the winning side are closed at the current price, paid out early, and their exposure retired. The *Perpetual Futures* chapter's program uses a [haircut](#haircut) instead.
 
 ### base
 
@@ -66,7 +74,7 @@ See [base token](#base-token).
 
 ### base token
 
-The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. It is the first token of a [pair](#pair) written base/quote, and a price on the pair is how many units of the [quote token](#quote-token) buy one unit of the base. The word "base" is easy to misread: in base/quote notation the base is the numerator, the value on top, not the denominator you might expect from "base."
+The thing a market buys and sells (NVDAx), and the unit a **base amount** is denominated in: five NVDAx is a base amount. It is the first token of a [pair](#pair) written base/quote, and a price on the pair is how many units of the [quote token](#quote-token) buy one unit of the base. In the written pair NVDAx/USDC the base comes first, but the price is quoted in USDC per one NVDAx, so the base is the unit being priced, not the unit of the price.
 
 ### basis point (bps)
 
@@ -106,7 +114,7 @@ A [put](#put) whose writer has supplied enough of the quote token, USDC here, to
 
 ### ceil (ceiling)
 
-Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, a debt or a fee, so it never rounds down into a shortfall the program absorbs: every fee in this book's programs ceils, and the user's side takes what is left. The opposite of [floor](#floor). See [rounding](#rounding).
+Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, a debt or a fee, so it never rounds down into a shortfall the program absorbs: every fee a user pays in this book's programs ceils, and the user's side takes what is left. A split of a fee already collected may floor, as the perpetual futures venue's insurance-fund cut does, since either direction keeps the whole fee with the program. The opposite of [floor](#floor). See [rounding](#rounding).
 
 ### checked arithmetic
 
@@ -147,6 +155,10 @@ The metered unit of onchain execution. Every transaction runs against a compute 
 ### confidence interval
 
 An oracle's own statement of its uncertainty: a price of $250 ± $8 is a different fact than $250 ± $0.10.
+
+### confused deputy
+
+A program with authority that an attacker tricks into using it for someone else, usually by passing a different account from the one the program expects. Checking each account's signer, owner, [stored address](#stored-address-check), and PDA derivation stops it. See the *Adversary* chapter.
 
 ### counterparty
 
@@ -264,6 +276,10 @@ Rounding down to the whole [minor unit](#minor-unit) below. The direction used f
 
 One of two competing chains, formed when validators briefly build on different blocks. The network settles on one, and a program only ever runs on one. A transaction in a block on the fork that loses vanishes, which is what the [commitment levels](#commitment-level) describe.
 
+### freshness window
+
+The oldest a price may be before a program refuses it, set by each program that reads the [price feed](#price-feed) and counted in whatever unit the price feed stamped, slots or seconds. A price older than the window is **stale**. See the *Time* chapter.
+
 ### funding rate
 
 The periodic payment on a perpetual futures venue: the heavier side pays it and the lighter side receives it. On most venues the two sides pay each other and the payment keeps the perpetual's price close to the asset it tracks. In the *Perpetual Futures* chapter's program the pool stands between them: the heavier side pays the pool, the pool pays the lighter side at the same rate, and the difference pays the pool for carrying the net exposure.
@@ -304,13 +320,13 @@ The lending field's word for a stored number that grows over time and that every
 
 The empty-pool exploit: a dust-sized first deposit, then a donation straight into the vault, inflates the value behind each early share so later depositors' shares round to nothing. See the *Adversary* chapter.
 
-### initial margin
-
-The minimum collateral a leveraged position needs to open, usually stated in basis points of its notional. It sets the maximum leverage: a 10% initial margin is 10x. It sits above the [maintenance margin](#maintenance-margin), so a new position has room to move before it can be liquidated. See the *Perpetual Futures* chapter.
-
 ### informed flow
 
 Trades from someone who knows where the price is about to move, such as an arbitrage bot that has seen the price change on another venue before a market maker's quote has caught up. "Informed" says nothing about how experienced the trader is. Its opposite is uninformed flow: people who trade because they want the asset. The *Prop AMM* chapter covers it with [adverse selection](#adverse-selection) and [segmenting flow](#segmenting-flow).
+
+### initial margin
+
+The minimum collateral a leveraged position needs to open, usually stated in basis points of its notional. It sets the maximum leverage: a 10% initial margin is 10x. It sits above the [maintenance margin](#maintenance-margin), so a new position has room to move before it can be liquidated. See the *Perpetual Futures* chapter.
 
 ### instruction
 
@@ -318,7 +334,7 @@ The input a transaction carries to a program: which handler to run, which accoun
 
 ### instruction handler
 
-The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input. Most other material does use one word: "this program has five instructions" means five functions, and Anchor's generated interface file lists a program's functions under `instructions`. Read those as instruction handlers.
+The onchain function that processes an instruction. This book always says "instruction handler" for the function and "instruction" for its input. Most other material uses one word for both, and Anchor's generated interface file lists a program's functions under `instructions`. Read those as instruction handlers.
 
 ### insurance fund
 
@@ -368,6 +384,10 @@ An order with a price it refuses to cross: buy at or below, sell at or above.
 
 Forcibly repaying part of an unhealthy loan out of its collateral, at a bonus to the liquidator, to keep the market solvent. The close factor caps how much one call repays.
 
+### liquidation bonus
+
+The discount a liquidator receives on the collateral it seizes, which pays for the service of repaying an unhealthy loan. The *Lending and Borrowing* chapter's market sets it at 5% per reserve.
+
 ### liquidation threshold
 
 The debt-to-collateral ratio at which a position becomes liquidatable. Never below the loan-to-value ratio.
@@ -402,7 +422,7 @@ The human-scale denomination of an asset: the dollar, the SOL, the whole share. 
 
 ### maker / taker
 
-The maker posted the resting order; the taker crossed the spread to hit it. Fills execute at the maker's posted price, and fee schedules usually distinguish the two roles.
+The maker creates an offer, an order, or a raise and sets its terms; the taker accepts those terms as they stand. In the *Escrow* chapter the maker opens an offer and the taker fills it whole; the *Fundraiser* chapter's maker opens a raise and has no taker. On an [order book](#order-book) the maker posted the resting order and the taker crossed the spread to hit it. Fills execute at the maker's posted price, and fee schedules usually distinguish the two roles.
 
 ### managed fund
 
@@ -440,6 +460,10 @@ The smallest denomination of an asset, and the raw integer programs actually cal
 
 The onchain account that defines a type of token: its supply, decimals, and authorities. A mint is a token's factory, not a token itself, and holds no balance of anything; balances live in [token accounts](#token-account). Economic prose names the token ("Alice pays 25 USDC"); "mint" names the account, and is what an instruction is actually passed.
 
+### model checking
+
+Handing a function to a model checker like Kani, which tries every possible value of the function's inputs and either reports that an invariant holds for all of them or returns the values that break it. See the *Operating Financial Software* chapter.
+
 ### multisig
 
 An account that records a set of owners and how many must agree before it acts, used wherever one person holding a private key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority.
@@ -450,7 +474,7 @@ The total current value of everything a fund holds, computed from fresh prices. 
 
 ### Newton's method (integer square root)
 
-The iterative algorithm programs use to take a square root using only integers, converging in a few dozen loop iterations. AMMs use it to mint initial LP tokens as the square root of the two reserves' product. See the *Constant-Product AMM* chapter.
+The iterative algorithm programs use to take a square root using only integers, converging in about seventy loop iterations at most for a 128-bit input. AMMs use it to mint initial LP tokens as the square root of the two reserves' product. See the *Arithmetic of Money* chapter.
 
 ### NFT (non-fungible token)
 
@@ -524,6 +548,10 @@ What a position has gained or lost. While the position is open the figure is **u
 
 What the buyer of an [option](#option) pays its [writer](#writer) for the right, once, up front. The writer keeps it, less the venue's fee, whatever happens afterwards, and it is the most the [holder](#holder) can lose.
 
+### price feed
+
+An account that a publisher keeps updated with a price and the time it published it, read by programs that value assets. See the *Time* chapter for how fresh a price must be, and the *Offchain Truth* chapter for whether its source can be trusted. Contrast [oracle](#oracle), the service that publishes it.
+
 ### price impact
 
 How far your own trade moves the price it is executing against. A trade on a constant-product pool walks along the curve as it fills, so the average price paid is worse than the price quoted before it started, and the pool's [spot price](#spot-price) afterwards is where the next trade begins. Contrast [slippage](#slippage), which also covers the market moving before you land.
@@ -588,6 +616,10 @@ The deposit an account holds to pay for its own storage. Rent-exempt accounts ho
 
 In a lending market, the per-asset pool: its liquidity vault, its share mint, its interest state, and its risk configuration.
 
+### reserve factor
+
+The share of the interest borrowers pay that a lending market keeps for its operator; the rest goes to suppliers. The *Lending and Borrowing* chapter's market sets it at 10% on every reserve.
+
 ### resting order
 
 A limit order that did not match on arrival and now waits on the book, funded and cancelable.
@@ -612,13 +644,17 @@ Wrapping someone's pending trade in two of your own: buy ahead of it to move the
 
 What `saturating_sub` (and its `_add` and `_mul` siblings) does when a result will not fit: clamp to the type's limit and continue. Right for a price feed's age and for interest that cannot be negative; on a balance it records a wrong number and reports nothing, which the *Arithmetic of Money* chapter calls worse than [wrapping](#wrapping). Compare [checked arithmetic](#checked-arithmetic).
 
+### seed
+
+One of the inputs a program combines with its program ID to derive a [PDA](#pda-program-derived-address). The seeds are the key of a key/value store and the PDA is the address that key leads to. See the *PDAs* chapter.
+
 ### segmenting flow
 
 A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is [informed](#informed-flow). The *Prop AMM* chapter covers it as a defense against adverse selection.
 
 ### settlement
 
-Paying out what a contract finally owes, and closing it. A betting market settles when the authority records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances.
+Paying out what a contract finally owes, and closing it. A betting market settles when the admin records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances.
 
 ### share
 
@@ -668,13 +704,21 @@ A token designed to hold a fixed value, usually one dollar. The quote asset of n
 
 A technique for storing bulk data offchain with onchain proofs, used for things like very large NFT collections.
 
+### state machine
+
+A set of states and the handlers that move an account between them, such as an offer that is open and then taken or canceled. Every financial program in this book is one, and every participant must be able to get their assets out of every state. See the *State Machines* chapter.
+
+### stored-address check
+
+Checking that an account a handler receives is the one recorded when the relationship was created, such as the vault recorded on a market or the maker recorded on an offer. See the *Adversary* chapter.
+
 ### strike
 
 The price at which an [option](#option) trades if its holder exercises.
 
 ### swap router
 
-A program that takes a swap and fills it across one or more trading venues (AMMs, order books, prop AMMs), choosing the route that returns the most. Also called an aggregator. Jupiter and Titan are swap routers on Solana. A program that trades on its users' behalf calls a router rather than a single venue; the *Managed Fund* chapter's fund does, and the companion repository ships a mock router in Jupiter's place.
+A program that takes a swap and fills it across one or more trading venues (AMMs, order books, prop AMMs), choosing the route that returns the most. Also called an aggregator. Jupiter is a swap router on Solana. A program that trades on its users' behalf calls a router rather than a single venue; the *Managed Fund* chapter's fund does, and the companion repository ships a mock router in Jupiter's place.
 
 ### Sybil attack
 
@@ -720,6 +764,10 @@ The asset an [option](#option) or other derivative is about: what a [call](#call
 
 The wall-clock time in the Clock [sysvar](#sysvar), in whole seconds. The previous block's [leader](#leader) writes it, within a range the network checks against that block's parent, so it is usually within a second or two of real time, at a value one leader chose. See the *Time* chapter.
 
+### unsettled balance
+
+An amount an exchange owes a trader, recorded as a counter on the trader's account rather than paid out at each fill, and claimed with one transfer later. See the *Order Book Exchange* chapter.
+
 ### utilization
 
 In a lending reserve, borrowed divided by available plus borrowed. The input to the interest rate curve: high utilization means the pool needs deposits, and rates rise.
@@ -731,6 +779,10 @@ A computer running the Solana software: it executes transactions, votes on block
 ### vault
 
 A token account whose authority is a program's PDA, where a program holds funds mid-lifecycle. In this book, always the token account, never the whole product; the fund-shaped product is a [managed fund](#managed-fund).
+
+### verified build
+
+A program built in a container that produces the same bytes from the same source every time, so anyone can rebuild a commit and check that the result matches the program deployed onchain. See the *Operating Financial Software* chapter.
 
 ### wad
 
@@ -752,4 +804,4 @@ The party who creates an [option](#option) and sells the right it carries. In fi
 
 Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs use large accounts like a 180 KB order book.
 
-[^confirmed]: `confirmed` was a third level under Tower BFT, the consensus mechanism Alpenglow replaced; under Alpenglow, `confirmed` means the same as `finalized`.
+[^confirmed]: `confirmed` was a third level under Tower BFT, the consensus mechanism Alpenglow replaced; under Alpenglow, `confirmed` means the same as `finalized`. The *Operating Financial Software* chapter's note gives the source.

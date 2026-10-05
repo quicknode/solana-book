@@ -3,10 +3,10 @@
 <g transform="translate(0,27)">
   <path d="M 0,2 Q 400,2 640,36" fill="none" stroke="#e0e0e0" stroke-width="1.2"/>
   <path d="M 0,10 Q 400,10 640,70" fill="none" stroke="#cccccc" stroke-width="1.2"/>
-  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="47.5" font-size="10" fill="#999" text-anchor="end" font-style="italic">Solana mainnet</text>
+  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="47.5" font-size="10" fill="#999" text-anchor="end" font-style="italic">Solana Mainnet</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
-  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="17" font-size="10" fill="#bbb" text-anchor="end" font-style="italic">Solana localnet</text>
+  <text stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round" x="628" y="17" font-size="10" fill="#bbb" text-anchor="end" font-style="italic">Solana Localnet</text>
   <circle cx="132" cy="35.3348" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
   <g>
   <rect x="16" y="50.6382" width="124" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>

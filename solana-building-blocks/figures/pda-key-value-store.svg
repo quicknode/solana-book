@@ -2,7 +2,7 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">How programs store records</text>
 <g transform="translate(0,26)">
   <text x="16" y="12" font-size="9.5" fill="#555" font-style="italic">the seeds are the key</text>
-  <text x="334" y="12" font-size="9.5" fill="#555" font-style="italic">different key = different record</text>
+  <text x="334" y="12" font-size="9.5" fill="#555" font-style="italic">different key = different record (illustrative)</text>
   <g transform="translate(0,18)">
 
   <circle cx="24" cy="21.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -26,8 +26,8 @@
   <text x="362" y="54.175" font-size="10.5" font-weight="bold">offer</text>
   <line x1="342" y1="61" x2="616" y2="61" stroke="#888" stroke-width="0.8"/>
   <text x="342" y="72" font-size="9.5">maker: Alice</text>
-  <text x="342" y="84" font-size="9.5">token_mint_a: NVDAx</text>
-  <text x="342" y="96" font-size="9.5">token_mint_b: USDC</text>
+  <text x="342" y="84" font-size="9.5">token_mint_a: USDC</text>
+  <text x="342" y="96" font-size="9.5">token_mint_b: TSLAx</text>
 
   <circle cx="24" cy="120" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="34" y="119" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUNDRAISER" +</text>

@@ -1,8 +1,6 @@
 # Chapter 21: Where to Go From Here
 
-The Introduction promised settlement that is atomic and global, one set of accounts every party reads, fees that ignore the amount, markets that never close, rules that run as instruction handlers, assets of every kind, and distribution the moment a program is deployed. Those are no longer promises. They are tools you can build with.
-
-What is left is deciding what to build with them.
+The Introduction promised settlement that is atomic and global, one set of accounts every party reads, fees that ignore the amount, markets that never close, rules that run as instruction handlers, assets of every kind, and distribution the moment a program is deployed. Each of those is now a tool you have built with, and what is left is choosing what to build next.
 
 ## What You Can Build Now
 
@@ -21,9 +19,9 @@ An auditor starts with the same questions and goes much further.
 
 You can iterate with an AI as a peer: the companion AI plugin applies this book's rules to generated code, and you can now see when that output is wrong before it holds anyone's assets.
 
-You can reason about who earns what, and why anyone takes part. Every program chapter named the operator's incentive and the user's, because a crank, a liquidation or a settlement only happens if someone earns something by calling it.
+You can reason about who earns what, and why anyone takes part. Every program chapter after *Escrow* named the operator's incentive and the user's, because a crank, a liquidation or a settlement only happens if someone earns something by calling it.
 
-And you can carry the responsibility that comes with all of it. Test an idea on devnet with your own tokens before a program holding other people's assets runs it.
+And you can carry the responsibility that comes with all of it.
 
 ## The World Still Runs on Business Hours
 
@@ -35,18 +33,16 @@ Every one of these has the same structure: parties standing between two people w
 
 ## The Best Products Never Mention the Chain
 
-Nobody in the paragraphs above wants a blockchain. They want to keep what they send, and a better rate on what they save. The onchain products that have found real users are the ones a user can describe without saying the word: dollars sent abroad that arrive in seconds, dollars held in an account outside the banking system of the country they live in.
+The café owner, the sender, and the saver do not want a blockchain. They want to keep what they send, and a better rate on what they save. The onchain products that have found real users are the ones a user can describe without saying the word: dollars sent abroad that arrive in seconds, dollars held in an account outside the banking system of the country they live in.
 
 So aim at consumers and businesses rather than at a crypto audience. In practice that means:
 
-- Quote everything in dollars and in time, whether it is a rate, a limit, or a settlement time. Never basis points, token symbols, or pool utilization.
+- Quote everything in dollars and in time, whether it is a rate, a limit, or a settlement time, never in basis points, token symbols, or pool utilization.
 - Keep private keys and signing behind the product. Someone should be able to use it having never downloaded wallet software or held a token deliberately, and never learn that they now do.
 - Put the benefit on the front page in the user's own words: "get paid the day you invoice", "spend without selling your shares", "nobody can walk off with the pot".
 - Say the risk in the same plain words. Somebody spending against their shares needs liquidation explained on the first screen, and a rate that comes from borrowers can fall when borrowing does.
 
-## What the Products Below Have in Common
-
-Each of the products below names somebody specific, removes a cost or a delay that person never agreed to, and runs on a program like one this book builds.
+## Products That Remove a Cost or a Delay
 
 **An account that pays like a market and still handles traditional wires.** A business keeping its balances in USDC settles with anyone else inside the system in seconds, at any hour, and earns a rate that comes from what borrowers pay rather than from what a bank has left over. It still needs an IBAN for the supplier who can only receive a bank transfer, SWIFT for the ones abroad, and local rails for payroll. The product moves at the speed of the legacy system where it has to, and settles instantly everywhere else. The rate is the *Lending and Borrowing* chapter and the pooled accounting is the *Managed Fund* chapter. The hard parts are not in the program: banking partners, the licenses that let dollars cross between the two systems, and the checks a bank is required to run on both sides of every transfer.
 
@@ -74,7 +70,7 @@ Each of the products below names somebody specific, removes a cost or a delay th
 
 The better ideas are in the places where the programs exist and no product has shipped.
 
-**Rent that rises without you.** Rent tracks the housing market and a renter's savings do not, so every increase is a loss with no offsetting gain. Put a monthly amount into an asset that moves with the same market, and the asset's gain covers part of the next rise. The *Managed Fund* chapter's program already does this: it takes deposits, issues shares at a share price, and holds a basket against target weights, priced as the *Offchain Truth* chapter describes. The challenge is not the program. One city's rents and any tradable index of housing move together only loosely, and a renter told their rent is covered when it might not be is worse off than one never offered the product. The work is in the disclosure and the product design: saying how much of the next rise the asset is likely to cover, and how much it might not.
+**Rent that rises without you.** Rent tracks the housing market and a renter's savings do not, so every increase is a loss with no offsetting gain. Put a monthly amount into an asset that moves with the same market, and the asset's gain covers part of the next rise. The *Managed Fund* chapter's program already does this: it takes deposits, issues shares at a share price, and holds a basket against target weights, priced as the *Offchain Truth* chapter describes. One city's rents and any tradable index of housing move together only loosely, and a renter told their rent is covered when it might not be is worse off than one never offered the product. The work is in the disclosure and the product design: saying how much of the next rise the asset is likely to cover, and how much it might not.
 
 **Credit for people with no collateral to post.** The one lending program in this book lends only against collateral worth more than the loan, because that is the only kind of credit a program can enforce by itself. The credit most people need is the other kind, and the things that make it work, an income record, a reputation, somewhere to take a defaulter, all live offchain.
 
@@ -90,11 +86,11 @@ Some things were left out on purpose.
 
 **Vesting and streaming payments** have no chapter of their own, though the pay-on-approval product above is a streaming payment.
 
-**Governance** is deliberately absent. Most programs here have an operator with a private key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that private key with a voting process is a separate design problem.
+**Governance** is absent. Most programs here have an operator with a private key, and admin power is explained in the *Operating Financial Software* chapter. Replacing that private key with a voting process is a separate design problem.
 
 The book keeps changing after you close it. New chapters, corrections, and editions are announced at @QuicknodeSolana on X, which is also the fastest way to ask a question or suggest what the next edition should cover.[^follow-quicknode-solana]
 
-## Build One, Then Have It Attacked
+## Build One, Then Have It Audited
 
 One project separates reading this book from shipping, and it takes less time than you expect. Pick the smallest product you want to exist, for a person you can name. Draw its state machine before you write a handler. Make sure every participant can get their assets out of every state the program can stop in. Write the tests that drive the machine down every path, especially the ones that pay tokens out, and the invariant tests that assert what must never change.
 

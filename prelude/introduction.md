@@ -2,7 +2,7 @@
 
 It may seem odd to release a book, let alone a printed one, about building financial software on Solana. Countless videos, online courses, and blog posts cover how Solana is built, including topics like consensus, validators, and the leader schedule. Most go into the basics of minting and moving tokens. Some end by showing you how to build your first onchain program.
 
-This isn't a book about how Solana is built. It's about **building on it**. This is the reference for creating financial products on the world's most active blockchain.[^most-active] It explains ten complete financial Solana programs, from a two-party escrow to a perpetual futures venue.
+This isn't a book about how Solana is built. It's about **building on it**. It is a guide to creating financial products on the world's most active blockchain.[^most-active] It explains ten complete financial Solana programs, from a two-party escrow to a perpetual futures venue.
 
 ## Why Build Financial Programs on Solana?
 
@@ -46,8 +46,6 @@ The book splits the work with two companions. Both are available at [solanabook.
 - The **companion repository** holds the complete, tested programs behind the program chapters, in Anchor 1, Anchor 2, and Quasar versions, with further languages and frameworks added as they arrive. Tests are run continuously, so the code stays correct and current in a way paper cannot.
 - The **companion AI plugin** distills this book's rules into a form AI coding tools apply automatically.
 
-The AI plugin improves the code your tools write. The book improves your own understanding of it.
-
 ## Prerequisites
 
 This book does not assume you have written a Solana program, and it does not assume a background in finance. It covers both in enough detail to work from either side with confidence.
@@ -56,7 +54,7 @@ Every Solana mechanism is introduced before it is used, starting from the basics
 
 It does not assume you are a software engineer, or that you know Rust, the programming language Solana programs are written in. The behavior of every program is explained in detail, and handler and field names appear in the text so that the explanation and the code can be read side by side. Software engineers will find a complete implementation of every program in the companion repository.
 
-The diagrams throughout the book share one set of conventions, and each convention is explained by the first figure that uses it.
+The diagrams throughout the book (account maps, state machines, and value flows) share one set of conventions, and each convention is explained by the first figure that uses it.
 
 ## The Glossary
 
@@ -66,7 +64,7 @@ All technical and financial vocabulary this book uses is defined in the Glossary
 
 **The Fundamentals** is everything you need before writing financial software: the Solana mechanics first (accounts, tokens, PDAs, rent, atomicity, and time), then what is specific to financial software (state machines, the arithmetic, offchain truth, the adversary, testing, and admin power).
 
-**Building Financial Products** is ten chapters, and each one builds a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a managed fund, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its tokens and what each checks before it does, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked. Each chapter is written and drawn in the same visual language: account maps, state machines, and value flows.
+**Building Financial Products in Solana** is ten chapters, and each one builds a complete financial program. A Solana program is code deployed onchain, and other blockchains call the same thing a "smart contract" or a "protocol". Between them the ten cover the financial products commonly built on Solana: escrow, crowdfunding, a betting market, an order book exchange, both kinds of automated market maker, lending and borrowing, a managed fund, options, and perpetual futures. Each chapter gives the accounts the program stores, the instruction handlers that move its tokens and what each checks before it does, the incentives of the people who use it and of whoever administers it, and the ways it can be attacked.
 
 Real incidents appear throughout the book in boxed **War Story** sections. None of them is told to embarrass the teams involved; they are here so you recognize the same mistake in your own code before it costs you.
 

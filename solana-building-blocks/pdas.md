@@ -1,10 +1,10 @@
 # Chapter 4: PDAs: How Solana Programs Find Their Data
 
-You have been using PDAs since the *Tokens* chapter: every associated token account in this book is a PDA of the Associated Token Program, derived from the three seeds that chapter listed.
+You have been using PDAs since the *Tokens* chapter: every associated token account in this book lives at a PDA of the Associated Token Program, derived from the three seeds that chapter listed.
 
 A **program derived address**, or PDA, is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA, and no signature is ever produced; the boxout below says what the word means here.
 
-**PDAs are how Solana programs find their data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
+PDAs are how Solana programs find their data, and the Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
 
 - The escrow stores each offer at an address made from `"offer"` + the maker's address + an ID.
 - The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contribution"` + the fundraiser + the backer's address.
@@ -22,7 +22,7 @@ The market for a token pair, a user's position in it, and the offer with a given
 
 ## Seeds Make Relationships Verifiable
 
-An account that claims to be "the vault for this market" either derives from the market's seeds or it does not. Combined with comparing an account's address against the one a record stored, derivation is how a program checks that the accounts a caller supplied belong together.
+An account that claims to be "the vault for this market" either derives from the market's seeds or it does not. A program checks that the accounts a caller supplied belong together in two ways: it re-derives an address from the seeds, or it compares an address against the one a record stored.
 
 ## Funds Under a PDA's Authority Move Only Through the Program
 
@@ -38,4 +38,4 @@ A vault whose authority is a PDA is a vault whose funds move only along the code
 - The associated token accounts you already use live at PDAs of the Associated Token Program, and a program's own records work the same way with seeds it chooses.
 - A program's accounts form a **key/value store**: the seeds are the identifier, the PDA is where the account lives, and the account's data is the value.
 - Seeds make data findable and relationships verifiable.
-- A PDA can be a token account's authority. That is what "the program holds the funds" means.
+- A PDA can be a token account's authority, so that account's tokens move only through the program's handlers.

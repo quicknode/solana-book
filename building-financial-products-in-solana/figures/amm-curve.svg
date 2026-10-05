@@ -6,7 +6,7 @@
       <path d="M0,0 L9,4 L0,8 z" fill="#111"/>
     </marker>
   </defs>
-  <text x="52" y="13" font-size="10" fill="#444" font-style="italic">USDC runs up each axis, ACME runs right, on X &#215; Y = K = 360,000: Maria's seed pool, before Alice's deposit. Fees are left out.</text>
+  <text x="52" y="13" font-size="10" fill="#444" font-style="italic">USDC runs up each axis, ACME runs right, on X &#215; Y = K = 360,000: a 400 ACME, 900 USDC pool. Fees are left out.</text>
   <g>
   <text x="52" y="26" font-size="12" font-weight="bold">first buy</text>
   <text x="52" y="40" font-size="10" fill="#444">100 USDC in, 40.0 ACME out</text>
