@@ -34,11 +34,12 @@
   <text x="26" y="173.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONTRIBUTION" +</text>
   <text x="26" y="182.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">THE FUNDRAISER +</text>
   <text x="26" y="191.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
-  <rect x="8" y="197.917" width="105" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="8" y="197.917" width="128" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(16,201.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="36" y="211.742" font-size="9.5" font-weight="bold">Alice's receipt</text>
-  <line x1="16" y1="218.917" x2="105" y2="218.917" stroke="#888" stroke-width="0.8"/>
+  <line x1="16" y1="218.917" x2="128" y2="218.917" stroke="#888" stroke-width="0.8"/>
   <text x="16" y="229.917" font-size="9.5">amount: 1,000 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="128" y="211.742" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <!-- Bob -->
   <circle cx="211" cy="39.2433" r="7" fill="#fff"/>

@@ -46,7 +46,7 @@ The **order book** is the largest account: about 180 KB holding two trees of res
 
 > **Why the order book is not at a PDA.** Solana caps account allocations made from inside a program at 10 KB, so `initialize_market()` cannot create a 180 KB account. Instead, the client creates the account directly with the System Program before calling `initialize_market()`, sized to `ORDER_BOOK_ACCOUNT_SIZE` and owned by the program. And its address cannot be a PDA at all, because creating an account that way requires the new account's own signature, which a PDA cannot give. The program instead ties the book to its market with a stored-address check: the market records the book's address, and every instruction that touches the book checks it against that record. So the book's address is a public key, and the figures draw its dot on the curve, with the book's box above it at the top right. Its private key signs once, at creation; after that the program owns the account and the private key can do nothing to it.
 
-Three **vaults** hold the tokens: a base vault for NVDAx, a quote vault for USDC, and a separate **fee vault** for Maria's earnings. Unlike the book, all three live at PDAs derived from the market (seeds: `"base_vault"`, `"quote_vault"` or `"fee_vault"`, then the market), and `initialize_market()` creates them with the market PDA as their authority. The fee vault holds the same token as the quote vault, and keeping them separate is what stops a caller from being paid out of Maria's fees; the failure modes section shows the attack it blocks.
+Three **vaults** hold the tokens: a base vault for NVDAx, a quote vault for USDC, and a separate **fee vault** for Maria's earnings. Unlike the book, all three live at PDAs derived from the market (seeds: `"base_vault"`, `"quote_vault"` or `"fee_vault"`, then the market), and `initialize_market()` creates them with the market PDA as their authority. The fee vault holds the same token as the quote vault. Keeping them separate means user-owed balances and the market's fees never share one balance, so `withdraw_fees()` can pay out the whole fee vault. The failure modes section shows the attack two same-token vaults invite, and the check that blocks it.
 
 ## Every Trader Gets a Ledger Line
 
@@ -66,7 +66,7 @@ The book's ask side is empty and no bid reaches 265, so there is nothing to matc
 
 ![](figures/order-book-alice-ask.svg)
 
-Every order placed becomes an **order** account of its own (seeds: `"order"`, the market, the order ID): side, price, original quantity, filled quantity, a status that walks Open, PartiallyFilled, Filled, or Cancelled, and a timestamp.
+Every order placed becomes an **order** account of its own (seeds: `"order"`, the market, the order ID): side, price, original quantity, filled quantity, a status, and a timestamp. The status starts as Open, PartiallyFilled or Filled, depending on how much of the order crossed on arrival, and ends as Filled or Cancelled.
 
 ## A Bid Below the Best Ask Rests Too
 

@@ -21,11 +21,10 @@
   <path d="M 140,104 C 160,98 177.5,92.5 194.25,88 C 211.38,83.4 229.29,81.73 248,83" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
   <path d="M 140,120 C 159.38,120.97 176.4,122.41 192.68,123.97 C 211.05,125.74 229.49,126.75 248,127" fill="none" stroke="#777" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
   <text x="200" y="160" font-size="10.5" fill="#444" text-anchor="middle" font-style="italic">rent deposits paid at creation</text>
-  <path d="M 378,86 L 466,86" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
-  <text x="474" y="90" font-size="11" font-weight="bold">taken</text>
-  <path d="M 378,130 L 466,130" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
-  <text x="474" y="134" font-size="11" font-weight="bold">canceled</text>
-  <path d="M 506,86 L 530,86 L 530,130 L 520,130" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3"/>
-  <path d="M 530,86 C 534,34 300,30 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
-  <text x="624" y="22" font-size="10.5" fill="#444" text-anchor="end" font-style="italic">a take or a cancel closes both accounts, rent back to the maker</text>
+  <path d="M 378,86 C 420,86 440,100 466,104" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
+  <path d="M 378,130 C 420,130 440,116 466,112" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#rent-i)"/>
+  <text x="474" y="112" font-size="11" font-weight="bold">closed</text>
+  <text x="420" y="148" font-size="9.5" fill="#444" text-anchor="middle" font-style="italic">take_offer() or cancel_offer()</text>
+  <path d="M 520,104 C 534,34 300,30 86,88" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#rent-g)"/>
+  <text x="624" y="22" font-size="10.5" fill="#444" text-anchor="end" font-style="italic">either handler closes both accounts, rent back to the maker</text>
 </svg>

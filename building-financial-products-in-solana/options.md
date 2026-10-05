@@ -25,8 +25,8 @@ Options have some unique terminology:
 
 The two sides have different payoffs:
 
-- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation to trade the underlying at the strike whenever the holder exercises. The writer's gain is capped at the premium, and the writer's obligation is not.
-- **The holder's** loss is capped at the premium whatever happens, and the holder's gain is open-ended.
+- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation to trade the underlying at the strike whenever the holder exercises. The writer's gain is capped at the premium. A call writer's loss against the market is not, since the shares can rise without limit; a put writer's is capped at the strike less the premium, since the price cannot fall below zero.
+- **The holder's** loss is capped at the premium whatever happens. A call holder's gain is open-ended, and a put holder's is capped at the strike less the premium.
 
 A sold option has exactly two endings: the holder exercises before expiry, or the option expires and the writer takes the collateral back. Where the price lands inside each ending decides how much each side made.
 
@@ -162,7 +162,7 @@ Alice calls `collect_proceeds()`. The handler requires the option to be `Exercis
 
 ![](figures/options-collect-proceeds.svg)
 
-Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the $200 column in the payoff figure at the start of the chapter, less Maria's 0.25: the premium was all she could make.
+Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. The $15.05 a share she gave up is the writer's side of the $200 column in the payoff figure at the start of the chapter, 75 USDC, plus Maria's 0.25 fee: the premium was all she could make.
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 

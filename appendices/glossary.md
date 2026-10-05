@@ -106,7 +106,7 @@ A [put](#put) whose writer has supplied enough of the quote token, USDC here, to
 
 ### ceil (ceiling)
 
-Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, a debt or a fee, so it never rounds down into a shortfall the program absorbs: the order book's fill fee ceils. A fee the program takes out of a pool it already holds may floor instead and leave the remainder with the pool, which is what the betting market and the options venue do. The opposite of [floor](#floor). See [rounding](#rounding).
+Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, a debt or a fee, so it never rounds down into a shortfall the program absorbs: every fee in this book's programs ceils, and the user's side takes what is left. The opposite of [floor](#floor). See [rounding](#rounding).
 
 ### checked arithmetic
 
@@ -748,4 +748,4 @@ The party who creates an [option](#option) and sells the right it carries. In fi
 
 Reading and writing an account's bytes in place instead of deserializing the whole account on every instruction. How programs use large accounts like a 180 KB order book.
 
-[^confirmed]: `confirmed` was a third level under Solana's older Tower BFT consensus. On networks running Alpenglow (testnet at the time of writing; mainnet still ran Tower BFT in September 2026), `confirmed` means the same as `finalized`.
+[^confirmed]: `confirmed` was a third level under Tower BFT, the consensus mechanism Alpenglow replaced; under Alpenglow, `confirmed` means the same as `finalized`.

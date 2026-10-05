@@ -53,7 +53,7 @@ Carol is a liquidity provider. She gains what losing traders lose and pays what 
 
 ![](figures/perps-add-liquidity.svg)
 
-Later deposits mint shares priced against **assets under management marked to market**, rather than against the vault balance or `liquidity` alone: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a depositor could buy in cheap the moment traders were winning and dilute Carol at her worst moment. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly.
+Later deposits mint shares priced against **assets under management marked to market**, rather than against the vault balance or `liquidity` alone: `liquidity` minus the traders' current unrealized profit (or plus their unrealized loss). If LP shares were priced while ignoring open positions, a provider could withdraw at full value the moment traders were winning and leave Carol to pay their profit, and a depositor could buy in cheap while traders were losing. Marking AUM makes entering and leaving the pool fair at any instant, and both `add_liquidity()` and `remove_liquidity()` take a minimum-out argument so a price move between signing and execution fails with `SlippageExceeded` instead of filling badly.
 
 Eleven more providers follow Carol in over the morning, and the pool opens for trading with 12,000 USDC of liquidity.
 
@@ -150,7 +150,7 @@ If the price had jumped far enough to take Bob's equity below zero before anyone
 
 ## Profit Is Paid Only as Far as the Pool Can Pay It
 
-A trader's collateral is **senior**: it always comes back, less losses and fees. Their profit is **junior**: it is paid only as far as the pool holds the tokens to pay it. This is the risk model of Percolator, which the *Operating Financial Software* chapter introduced. When `close_position()` settles a winning position, it first computes the **haircut ratio**, `h`:
+A trader's collateral is **senior**: it always comes back, less losses and fees. Their profit is **junior**: it is paid only as far as the pool holds the tokens to pay it. This is the risk model of Percolator, which the *Operating Financial Software* chapter names. When `close_position()` settles a winning position, it first computes the **haircut ratio**, `h`:
 
 - The backing is `liquidity + insurance_fund`.
 - The liability is the traders' unrealized profit across the pool, from the same per-side accumulators that price LP shares, at the current price. If the closing position's own profit is larger, the liability is that profit instead.
@@ -182,15 +182,15 @@ Here is where everyone ends up:
 
 Every calculation is checked u128 integer arithmetic, multiply before divide. `basis_points_of()` floors fees and margin thresholds, share minting and withdrawal amounts floor against AUM, and the haircut rounds down; PnL and funding truncate toward zero, which favors the trader on a loss and the pool on a profit. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units. The per-side scaled accumulator is what keeps the compute per transaction constant: each open adds size ÷ entry price (at `SIZE_PRECISION`) to its side. The pool's whole unrealized PnL is then two multiplications against the current price.
 
-## The Invariants: Percolator's Three, Simplified
+## The Invariants: Percolator's Guarantees, Simplified
 
-This program is a simplified model of Percolator's three invariants:
+This program is a simplified model of three of Percolator's four guarantees, under Percolator's own names:
 
-- **Realizable credit**: a trader's collateral is senior and their profit is junior, paid only as far as it is backed. Here: the haircut, which never pays a winner more profit than `liquidity + insurance_fund`, the profit warm-up, and the cap on `remove_liquidity()` at `liquidity`.
+- **No value creation**: a trader's collateral is senior and their profit is junior, paid only as far as the pool can show the backing to pay it, so no settlement creates value the pool does not hold. Here: the haircut, which never pays a winner more profit than `liquidity + insurance_fund`, the profit warm-up, and the cap on `remove_liquidity()` at `liquidity`.
 - **Account-local safety**: any position can be settled by touching that position and the pool, never a third account. Here: the entry-snapshot fields on `Position`.
 - **Bounded progress**: no operation's compute grows with the number of open positions. Here: the per-side accumulators and one-at-a-time liquidation.
 
-The book's standing invariants hold here too. The vault balance always equals `liquidity + total_collateral + program_fees + insurance_fund`, which the tests' `assert_vault_matches_ledger` checks. Share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances. Every position opened above the initial margin can be closed by `close_position()` once the oracle price is inside the band, or liquidated at any price once its equity is at or below the maintenance margin.
+The book's standing invariants hold here too. The vault balance is never less than `liquidity + total_collateral + program_fees + insurance_fund`, and equals it until someone donates to the vault; the tests' `assert_vault_matches_ledger` checks the equality. Share value cannot be moved by donating tokens to the vault, because AUM reads tracked state, not balances. Every position opened above the initial margin can be closed by `close_position()` once the oracle price is inside the band, or liquidated at any price once its equity is at or below the maintenance margin.
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
@@ -219,7 +219,7 @@ This chapter added seven concepts:
 
 - **Profit is a junior claim.** Pay profit through the haircut ratio, so the pool never pays out more than it holds. Delay profit by a warm-up so a brief false price cannot be cashed out.
 - **An insurance fund before the LPs.** Route part of every fee into a fund that pays a bankrupt position's deficit first, and forgive a liquidation fee the position's equity cannot cover.
-- **Constant-time accounting.** Per-side scaled accumulators and per-position entry snapshots let the program value the pool, price its shares, and settle any position without reading another position: Percolator's realizable credit, account-local safety, and bounded progress, in miniature.
+- **Constant-time accounting.** Per-side scaled accumulators and per-position entry snapshots let the program value the pool, price its shares, and settle any position without reading another position: Percolator's no-value-creation, account-local-safety and bounded-progress guarantees, in miniature.
 - **Two margins.** Require an initial margin to open a position and a lower maintenance margin to keep it, so a new position has room to move before it can be liquidated.
 - **A price band around the program's own average.** Keep a time-weighted average of the oracle's price, credit each interval to the price seen at its start, and refuse trades at prices too far from the average, while letting liquidations through.
 - **Funding.** A pool-wide index plus a per-position entry snapshot charges the crowded side a fee without visiting every position.
