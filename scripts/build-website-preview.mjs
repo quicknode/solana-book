@@ -1,14 +1,15 @@
 #!/usr/bin/env node
-// Cut a free preview from the digital edition: every page before the Part I
-// title page (the cover, the front matter, the contents and the Introduction),
-// followed by one closing page inviting the reader to ask for the whole book.
+// Cut the free preview offered on the book's website from the digital edition:
+// every page before the Part I title page (the cover, the front matter, the
+// contents and the Introduction), followed by one closing page inviting the
+// reader to ask for the whole book.
 //
 // The pages are the digital edition's own, copied rather than rebuilt, so the
 // preview breaks exactly where the book does. The closing page is printed by
 // Chromium in the book's faces at the book's trim and appended.
 //
-// Usage: npm run build-pdf-preview           (builds the digital edition first)
-//        node scripts/build-preview.mjs [--pdf <digital edition>] [output.pdf]
+// Usage: npm run build-pdf-website-preview   (builds the digital edition first)
+//        node scripts/build-website-preview.mjs [--pdf <digital edition>] [output.pdf]
 
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
@@ -20,12 +21,12 @@ import { PDFArray, PDFDict, PDFDocument, PDFName, PDFRef } from "pdf-lib";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TITLE = "Building Financial Software on Solana";
 
-const USAGE = `Usage: npm run build-pdf-preview
-       node scripts/build-preview.mjs [--pdf <digital edition>] [output.pdf]
+const USAGE = `Usage: npm run build-pdf-website-preview
+       node scripts/build-website-preview.mjs [--pdf <digital edition>] [output.pdf]
 
   Reads the digital edition (npm run build-pdf-digital), keeps every page
   before the Part I title page, and appends a closing page. Writes
-  "build/${TITLE} (preview).pdf" unless an output path is given.
+  "build/${TITLE} (website preview).pdf" unless an output path is given.
 
   --pdf <file>   Cut the preview from this build instead of the digital edition.
   --help         Print this and exit.`;
@@ -54,7 +55,7 @@ for (let i = 0; i < argv.length; i++) {
 }
 if (positional.length > 1) die(`Expected one output path, got ${positional.length}: ${positional.join(", ")}`);
 if (!existsSync(sourcePath)) die(`No PDF at ${sourcePath}; run npm run build-pdf-digital first.`);
-const outputPath = resolve(positional[0] ?? join(repoRoot, "build", `${TITLE} (preview).pdf`));
+const outputPath = resolve(positional[0] ?? join(repoRoot, "build", `${TITLE} (website preview).pdf`));
 mkdirSync(dirname(outputPath), { recursive: true });
 
 // The cut falls at the Part I title page. Its page comes from the page map the
@@ -203,6 +204,8 @@ const [closingPage] = await preview.copyPages(closing, [0]);
 closingPage.setMediaBox(0, 0, trimWidth, trimHeight);
 closingPage.setCropBox(0, 0, trimWidth, trimHeight);
 preview.addPage(closingPage);
+// The title a reader's viewer shows: "website" says where the file is offered,
+// which is ours to know rather than theirs.
 preview.setTitle(`${TITLE} (preview)`);
 preview.setAuthor("Mike MacCana");
 // A viewer's title bar shows the document title rather than the file name, as
