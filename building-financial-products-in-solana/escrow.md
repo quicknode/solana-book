@@ -14,7 +14,7 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 The naive version is that Alice sends Bob her USDC and waits, and Bob can take the USDC and leave. An **escrow** lets Alice and Bob swap without having to trust each other.
 
-Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And, as anyone who has sent money overseas knows, the third party takes a percentage of the amount for itself: even a plain transfer through an intermediary costs 6.36% on average worldwide, and more than 20% on the worst corridors.[^remittance-cost]
+Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And the third party charges a fee for the service, taken from the amount it holds.
 
 ![](figures/escrow-traditional-escrow.svg)
 
@@ -148,5 +148,3 @@ The escrow gave you four concepts:
 - **Every state has a handler that empties the vault.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 
 In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault: the maker takes them the moment the target is reached, and if the deadline passes first, every contributor takes theirs back. Most programs in the rest of this part keep this chapter's shape (a vault whose authority is a PDA, and a handler in every state that empties it) and change only what decides who is paid.
-
-[^remittance-cost]: The Introduction's note on remittance costs gives the scope of these figures and the World Bank source for them.
