@@ -39,7 +39,7 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Status
 
-Drafted: the Introduction, Solana Building Blocks, all of Financial Programming Concepts in Solana, every program chapter, and the Glossary. Every figure is drawn as SVG in the chapters' `figures/` directories. The dedication, acknowledgements, and technical reviewers page are drafted.
+Drafted: every chapter from the Introduction to *Where to Go From Here*, the Glossary, and the front and back matter. Every figure is drawn as SVG in the chapters' `figures/` directories.
 
 ## License
 

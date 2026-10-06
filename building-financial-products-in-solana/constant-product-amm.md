@@ -61,7 +61,7 @@ Bob is early and bullish. He runs `swap_tokens()` to spend 100 USDC on ACME, a t
 
 **The curve prices the trade.** It prices against Y plus the taxed input, 1,224.70, so X must fall to K ÷ 1,224.70 ≈ 459.3; the vault itself receives all 100 USDC. Bob receives about 40.7 ACME. He paid an *average* of about $2.46 per token while the quoted price before his trade was $2.25 and the spot price after it is about $2.67: his own trade moved along the curve as it executed.
 
-**The invariant is re-checked.** After the transfers land, the handler reads both vault balances again and requires the new effective product to be at least the old one, failing with `InvariantViolated` otherwise. The program's own comment calls this the most important defensive check in the file: it catches any bug above it that would overpay a trader, the *Arithmetic of Money* chapter's rule to assert after the math. The check tolerates growth, because growth is just LP fees enriching the pool.
+**The invariant is re-checked.** After the transfers land, the handler reads both vault balances again and requires the new effective product to be at least the old one, failing with `InvariantViolated` otherwise. The program's own comment calls this the most important defensive check in the file: a bug above it that overpays a trader by more than the LP fee is worth leaves the effective product below the old one, and the swap fails. That is the *Arithmetic of Money* chapter's rule to assert after the math. The check tolerates growth, because growth is just LP fees enriching the pool.
 
 The curve priced the trade with K held fixed. The 25 cents of LP fees it did not price against raised K once the input landed, so K after Bob's trade is about 562,615.
 
@@ -142,7 +142,7 @@ The order book needed a tree, a matching engine, and maker accounts, because hum
 Seven concepts came with the curve:
 
 - **A formula as the market maker.** Output = taxed input × other reserve ÷ (this reserve + taxed input); the first deposit sets the price, and every trade pays its own price impact.
-- **How K changes.** Held fixed while a trade is priced, raised by the LP fee once the input lands.
+- **How K changes.** Deposits raise it without moving the price and withdrawals lower it; during a swap it is held fixed while the trade is priced, then raised by the LP fee once the input lands.
 - **A product check needs both factors positive.** If either is zero, the product is zero and any trade passes the check.
 - **Assert after the math.** The post-trade K check re-reads both vaults after the transfers; the *Arithmetic of Money* chapter's rule, applied to a swap.
 - **Effective reserves.** The raw vault balance minus the admin's owed slice, which is what every piece of LP-facing math uses.

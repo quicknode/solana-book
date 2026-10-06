@@ -83,7 +83,7 @@ For financial software, atomicity is a primitive you design with. Inside a trans
 - A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state.
 - A **flash loan**, a crypto-specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. The loan needs no collateral because the transaction is atomic: if the repayment fails, the borrow is unwound with it, so the borrowed tokens are back in the lender's vault at the end of every transaction.
 
-Whole categories of arbitrage strategies, and of liquidation (selling a borrower's collateral when their debt outgrows it), exist only because transactions are all-or-nothing.
+Whole categories of arbitrage strategies, and of liquidation (repaying part of a borrower's loan once it passes a safety limit, in return for some of their collateral at a bonus), exist only because transactions are all-or-nothing.
 
 ![](figures/atomic-transaction.svg)
 
@@ -124,7 +124,7 @@ Besides its address, every account records three things a program reads: a lampo
 
 Every account holds a lamport deposit that grows with its size, called **rent**; an account funded to the **rent-exempt** minimum stays until it is closed, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is the deposit on the space her account occupies; a large account holds a larger one.
 
-The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts[^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in its own account. 
+The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts[^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in a separate data account, not in the accounts that hold the program's code. 
 
 Like the programs on your regular computer and the files they work with, Solana programs use their instruction handlers to read the accounts they are handed, and write new values back. This split, logic in program accounts and state in data accounts, is what makes financial state easy to read. To know a market's condition you read its accounts.
 

@@ -28,11 +28,11 @@ A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8
 
 The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **base token**, the thing being bought and sold; USDC is the **quote token**, the thing prices are stated in. You quote in the stable asset so that "250" always means dollars.
 
-Maria runs the exchange. She is the market authority: she creates the market, and she alone can pause it, resume it, and withdraw its fees. Her revenue is a fee of 25 basis points, a quarter of one percent, deducted from each fill's quote proceeds when orders match. In each fill the **maker** is the order that was already resting on the book and the **taker** is the arriving order that crossed it. So the side of the fill that receives the quote token bears it: the maker when the taker is a bid, the taker when the taker is an ask.
+Maria runs the exchange. She is the market authority: she creates the market, and she alone can pause it, resume it, and withdraw its fees. Her revenue is a fee of 25 basis points, a quarter of one percent, deducted from each fill's quote proceeds when orders match. In each fill the **maker** is the order that was already resting on the book and the **taker** is the arriving order that crossed it. The side of the fill that receives the quote token bears the fee: the maker when the taker is a bid, the taker when the taker is an ask.
 
 Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, as the betting market's is. It creates the market account and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
 
-The tick size and minimum order size keep the book usable, and they do different jobs. Orders below `min_order_size` are rejected with `BelowMinOrderSize`, so every order in the tree holds at least that much of its owner's tokens in a vault, and filling the tree locks up capital. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. The tick also sets what it takes to stand in front of the queue: a maker who wants that place must improve the price by a whole tick, and the taker receives that improvement.
+The tick size and minimum order size keep the book usable, and they do different jobs. Orders below `min_order_size` are rejected with `BelowMinOrderSize`, so every order placed is at least that size and pays its owner's tokens into a vault, and filling the tree with new orders ties up capital. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. The tick also sets what it takes to stand in front of the queue: a maker who wants that place must improve the price by a whole tick, and the taker receives that improvement.
 
 Both are set per market, at creation, and cannot change afterward. A tick right for a $250 stock is far too coarse for a token priced at a fraction of a cent, so somebody has to choose one for each market, and the choice is final. Manifest removed the tick entirely and lets an order name any price in minor units. Its own README states the tradeoff: without a tick, the newest order can stand in front of the queue by improving the price by a negligible amount, which inverts time priority.[^manifest-tickless]
 
@@ -110,17 +110,17 @@ The handler snapshots the unsettled amounts, **zeroes the counters**, and transf
 
 ![](figures/order-book-settle.svg)
 
-## Finished Accounts Close and Return Their Rent
-
-A Filled or Cancelled order holds nothing the book still needs: its leaf is out of the tree, its ID is out of the owner's open-order list, and any refund is already in their unsettled balance. Its owner calls `close_order()`, which closes the order account and returns its rent to them. An order still Open or PartiallyFilled is refused with `OrderNotClosable`, so it has to be canceled first. Bob closes his Cancelled order and Carol her Filled one (`close_order_returns_a_cancelled_orders_rent` and `close_order_returns_a_filled_orders_rent`).
-
-With nothing open or owed, each of them can also call `close_market_user()`, which closes their market user account and returns its rent. While the account lists an open order or holds an unsettled balance, the handler refuses with `MarketUserNotClosable`, because a later fill, cancel, or `settle_funds()` would still need it (`close_market_user_refuses_an_open_order` and `close_market_user_refuses_an_unsettled_balance`). Both handlers refuse anyone but the account's owner with `Unauthorized`. Alice's order still rests, so her two accounts stay open.
-
 ## The Market Authority Withdraws the Fees
 
 At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 USDC so far) transfers to her token account. The handler compares the signer against the authority recorded on the market at creation and rejects anyone else with `NotMarketAuthority`. When the fee vault is empty, the handler succeeds as a no-op instead of failing: it is idempotent, so Maria can run it on a schedule unattended.
 
 ![](figures/order-book-withdraw-fees.svg)
+
+## Finished Accounts Close and Return Their Rent
+
+A Filled or Cancelled order holds nothing the book still needs: its leaf is out of the tree, its ID is out of the owner's open-order list, and any refund is already in their unsettled balance. Its owner calls `close_order()`, which closes the order account and returns its rent to them. An order still Open or PartiallyFilled is refused with `OrderNotClosable`, so it has to be canceled first. Bob closes his Cancelled order and Carol her Filled one (`close_order_returns_a_cancelled_orders_rent` and `close_order_returns_a_filled_orders_rent`).
+
+With nothing open or owed, each of them can also call `close_market_user()`, which closes their market user account and returns its rent. While the account lists an open order or holds an unsettled balance, the handler refuses with `MarketUserNotClosable`, because a later fill, cancel, or `settle_funds()` would still need it (`close_market_user_refuses_an_open_order` and `close_market_user_refuses_an_unsettled_balance`). Both handlers refuse anyone but the account's owner with `Unauthorized`. Alice's order still rests, so her two accounts stay open.
 
 ## The Math: Lots, Ticks, and a Fee That Rounds Up
 
@@ -139,15 +139,15 @@ At any time, Maria calls `withdraw_fees()`, and the fee vault's balance (1.875 U
 - `filled_quantity` never exceeds `original_quantity`, and order status only moves forward: Open to PartiallyFilled to Filled, or out to Cancelled.
 - The fee vault only ever receives the computed fee, and only the recorded authority can withdraw from it.
 - Every leaf in a tree corresponds to exactly one Open or PartiallyFilled order account, and to an entry in its owner's open-order list.
-- No order account or market user account closes while the book or an unsettled balance still refers to it.
+- No order account closes while its order rests on the book, and no market user account closes while it lists an open order or holds an unsettled balance.
 
 ## The Failure Modes: Vault Swaps, Fake Makers, and Book Spam
 
 - **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The program stops this with a stored-address check on every instruction, binding every vault and mint to the addresses recorded on the market at creation, and `settle_funds_rejects_fee_vault_substituted_for_quote_vault` checks that the attack fails. This is the same account-substitution attack the *Escrow* chapter described, against a bigger program.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program checks them against its own plan, as the match step showed.
-- **The rounding drain.** The fee ceils, as the math section showed, and `fee_rounds_up_when_gross_is_not_a_bps_multiple` checks it.
+- **The rounding drain.** A fee rounded down would undercharge a fill by up to one minor unit; the fee rounds up, as the math section showed, and `fee_rounds_up_when_gross_is_not_a_bps_multiple` checks it.
 - **Book spam.** Each side holds 512 orders, so anyone willing to fund 512 minimum-size orders across 26 or more wallets can fill a side with orders far from the spread. If a full side refused every new order, that trader could keep every new order off the side for as long as they liked. Maria could not move the pair either, because the market PDA's seeds are the two mints. The program stops this with **eviction**. When an order would rest on a full side, `place_order()` compares its price with that side's worst order, the lowest bid or the highest ask. A better price removes the worst order and takes its place, and the evicted owner is refunded through their unsettled balance, as `cancel_order()` refunds them. An order at the same price or worse is rejected with `OrderBookFull`, because the resting order was there first. Eviction only removes the order furthest from the market price, the one least likely to fill, so a spammer's far-off orders cannot keep new orders off the book. The placer passes the worst order and its owner's market user account after the maker pairs, and the program checks them against the book the way it checks maker accounts: a missing account rejects with `MissingEvictedAccounts` and a wrong one with `EvictedAccountMismatch`. A trader evicting their own worst order passes only that order account. Tick alignment, the minimum order size, and the 20-open-orders-per-user cap still apply.
-- **A pause that traps tokens.** The flag stops only `place_order()`, as the ask step showed; `paused_market_still_cancels_and_settles_a_resting_order` and `paused_market_still_pays_out_fills_and_withdraws_fees` check the other handlers while it is set.
+- **A pause that traps tokens.** The flag stops only `place_order()`, as the ask step showed; `paused_market_still_cancels_and_settles_a_resting_order` and `paused_market_still_pays_out_fills_and_withdraws_fees` check that `cancel_order()`, `settle_funds()` and `withdraw_fees()` still run while it is set.
 - **The unauthorized paths.** Canceling or closing someone else's order, or closing their market user account, rejects with `Unauthorized`; withdrawing fees, pausing, or resuming without being the authority rejects with `NotMarketAuthority`.
 
 ## Testing Considerations
@@ -174,7 +174,7 @@ The order book added six concepts on top of the escrow's:
 
 - **Every resting order is funded before it rests.** The tokens move into a vault when the order is placed, so a fill never finds them missing.
 - **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority.
-- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them as they are paid out means each balance is paid once. A trader's account closes only once nothing is open or owed.
+- **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them as they are paid out means each balance is paid once. A trader's market user account closes only once nothing is open or owed.
 - **A fee whose rounding direction is a security decision.** The fee rounds up, in the market's favor.
 - **Vault separation plus stored-address checks.** The fee vault and the quote vault stay apart only because every instruction checks their addresses against the market.
 - **A full book evicts its worst order** for a better one, and refuses an order no better than it, so filling a side with far-off orders keeps nobody off it.

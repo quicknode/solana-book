@@ -126,7 +126,7 @@ The suite warps the clock with a helper that advances whole days, and asserts ba
 - `test_refund_after_deadline_target_not_met_succeeds` follows the losing timeline to a clean refund.
 - `test_close_fundraiser_after_failed_raise_allows_a_new_raise` closes the failed fundraiser and checks the same wallet can raise again.
 
-The remaining tests each call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. `test_close_fundraiser_sweeps_direct_donations_to_maker` checks that `close_fundraiser()` pays tokens transferred straight into the vault to the maker.
+Most of the remaining tests call a handler in a state where it must refuse, and assert the error, such as `test_refund_before_deadline_fails`. `test_close_fundraiser_sweeps_direct_donations_to_maker` mints tokens straight into the vault and checks that `close_fundraiser()` pays them to the maker.
 
 ## What You Learnt from Building the Fundraiser
 

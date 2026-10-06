@@ -14,7 +14,7 @@ Three consequences follow:
 
 ## Validation: Signers, Owners, and the Confused Deputy
 
-Cashio and Wormhole, the two War Stories below, both came from a program trusting an account it should have checked. The caller chooses which accounts an instruction runs against, so each account is only a claim until the program checks it against something it already trusts: a signature, an owner, a stored address, or a derivation.
+Cashio and Wormhole, the two War Stories in this section, both came from a program trusting an account it should have checked. The caller chooses which accounts an instruction runs against, so each account is only a claim until the program checks it against something it already trusts: a signature, an owner, a stored address, or a derivation.
 
 There are four checks:
 
@@ -83,7 +83,7 @@ Fix this by following those rounding rules everywhere, and by writing one kind o
 
 ## Ordering and Composability: CPI Trust Boundaries
 
-A transaction can call your program, which can make a **cross-program invocation** (CPI), one program calling another, and that program can call a third. The flash loan in the *Core Building Blocks of Solana* chapter is three instructions in one transaction, and each is a point where code you did not write runs: between your instructions in the same transaction, or inside a CPI your program makes.
+A transaction can call your program, which can make a **cross-program invocation** (CPI), one program calling another, and that program can call a third. The flash loan in the *Core Building Blocks of Solana* chapter runs the borrower's instructions between the instruction that lends and the one that repays. Code you did not write can run between your instructions in the same transaction, and inside a CPI your program makes.
 
 Code inside a CPI cannot call back into your program. Solana's runtime refuses to invoke a program that is already on the call stack, unless the program is calling itself directly: if your program calls the token program, and a transfer hook on the mint tries to call your program, the transaction fails with `ReentrancyNotAllowed`. A callee upgraded tomorrow or a hook added to a mint next year meets the same refusal. And if any call fails, the whole transaction is undone, including every change your handler made before it. So the order in which a handler updates its own state and calls other programs does not open an attack. Three things at these boundaries do need care:
 

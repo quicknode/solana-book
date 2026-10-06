@@ -121,8 +121,8 @@ A traditional market-making desk quotes two-sided prices on an exchange, hedges 
 
 Three concepts came with the prop AMM:
 
-- **Quoting from a price feed.** The price comes from a price feed, not from reserves: no price impact, so no sandwich; no shares, so no inflation attack. When the firm is the only capital in the market, the oracle checks protect its own capital.
-- **Adverse selection**, and the four commercial answers to it: spread, ladder, pause, segmented flow.
+- **Quoting from a price feed.** The price comes from a price feed, not from reserves, so there is no price impact and nothing to sandwich. When the firm is the only capital in the market, the oracle checks protect its own capital, and with no shares there is no inflation attack.
+- **Adverse selection**, the loss a market maker takes to traders who know the price has moved, and the four commercial answers to it: spread, ladder, pause, segmented flow.
 - **When balances legitimately are the accounting.** With one depositor and no other claimant, the vault balances are the ledger.
 
 Traders accept the prop AMM's concentrated trust (one firm, one price feed, one pause switch) because they leave nothing in its custody and see their price before they sign. In the *Lending and Borrowing* chapter we will build a program where users do leave their tokens in the program's custody, as supplied loans and as collateral, and the same kind of oracle values that collateral continuously. You will see what a lender has to do to stay solvent when the collateral falls, and who is paid to do it.

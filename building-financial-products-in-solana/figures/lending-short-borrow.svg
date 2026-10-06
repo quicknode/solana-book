@@ -156,8 +156,8 @@
   <g transform="translate(229,366.84)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="249" y="376.815" font-size="8.5">obligation</text>
   <line x1="229" y1="384.34" x2="331" y2="384.34" stroke="#888" stroke-width="0.8"/>
-  <text x="229" y="395.34" font-size="8">deposited_value: $1,000</text>
-  <text x="229" y="407.34" font-size="8">borrowed_value: $750</text>
+  <text x="229" y="395.34" font-size="8">borrows: 3 SPCXx</text>
+  <text x="229" y="407.34" font-size="8">stale: true</text>
   </g>
   <g opacity="0.3">
   <circle cx="229" cy="445.84" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

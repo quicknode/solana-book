@@ -34,7 +34,7 @@ A sold option has exactly two endings: the holder exercises before expiry, or th
 
 ## A Call Pays Off When the Price Rises, and a Put When It Falls
 
-A put is a call with the two sides swapped: the writer posts the strike instead of the shares, and the holder sells instead of buys. Each row of the table gives the call's version and the put's, and the rest of this chapter follows one of each: Alice's call and Carol's put.
+A put is a call with the two tokens swapped: the writer posts the strike instead of the shares, and the holder sells the underlying instead of buying it. Each row of the table gives the call's version and the put's, and the rest of this chapter follows one of each: Alice's call and Carol's put.
 
 > **A "contract" here is an option, not a Solana program.** Other chains call a program a "smart contract". In this chapter the word always means the option, which the program records as an `OptionContract` account.
 >
@@ -81,7 +81,7 @@ The **market** account lives at a PDA with seeds `"market"`, the underlying mint
 - `quote_owed`: how much of the quote vault the market owes, as put writers' collateral and as call holders' strike payments waiting to be collected.
 - `fees_owed`: how much of the quote vault belongs to the admin.
 
-The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's tokens, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. The three counters record how much of each vault is owed. Every handler updates them first, and before every transfer `check_custody()` checks that each vault will still hold at least that much once the transfer lands.
+The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's tokens, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. The three counters record how much of each vault is owed. Every handler that moves tokens updates them before its transfers, and `check_custody()` then checks that each vault will still hold at least that much once the transfers land.
 
 ## A Writer Posts the Whole Obligation and Names a Price
 
@@ -229,7 +229,7 @@ The companion repository's `kani-proofs` crate model-checks the custody ledger, 
 - **The clock.** Expiry is a Unix timestamp, and the network's clock can drift from wall-clock time by seconds. A holder who waits until the final second to exercise risks that drift putting the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
 - **A writer blocks the exercise.** The strike goes into the vault, as the exercise section explains, so no token account of the writer's is on the exercise path.
 - **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account, as the purchase step above shows; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
-- **What is absent.** Most of the usual attacks on a financial program do not apply here. There is no margin, so there is no oracle to value it and no liquidator to close it. There are no shares to inflate, and there is no rounding in settlement to drain, since the option stores the two amounts it moves. What is left is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
+- **What is absent.** Most of the usual attacks on a financial program do not apply here. There is no margin, so there is no oracle to value a position against it and no liquidator to close a position it no longer covers. There are no shares to inflate, and there is no rounding in settlement to drain, since the option stores the two amounts it moves. What is left is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
 
 ## Testing Considerations
 

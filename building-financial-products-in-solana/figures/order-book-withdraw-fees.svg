@@ -169,15 +169,15 @@
   <text x="505" y="133.545" font-size="10.5" font-weight="bold">order book program</text>
   <line x1="485" y1="140.37" x2="628" y2="140.37" stroke="#888" stroke-width="0.8"/>
   <text x="485" y="149.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_market()</text>
-  <text x="485" y="157.759" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_market_user()</text>
-  <text x="485" y="166.148" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">place_order()</text>
-  <text x="485" y="174.537" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">cancel_order()</text>
-  <text x="485" y="182.926" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">settle_funds()</text>
-  <text x="485" y="191.314" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_order()</text>
-  <text x="485" y="199.703" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_market_user()</text>
-  <text x="485" y="208.092" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">withdraw_fees()</text>
-  <text x="485" y="216.481" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">pause_market()</text>
-  <text x="485" y="224.870" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">resume_market()</text>
+  <text x="485" y="157.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_market_user()</text>
+  <text x="485" y="165.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">place_order()</text>
+  <text x="485" y="173.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">cancel_order()</text>
+  <text x="485" y="181.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">settle_funds()</text>
+  <text x="485" y="189.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_order()</text>
+  <text x="485" y="197.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_market_user()</text>
+  <text x="485" y="205.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">withdraw_fees()</text>
+  <text x="485" y="213.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">pause_market()</text>
+  <text x="485" y="221.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">resume_market()</text>
   </g>
   <g>
   <circle cx="485" cy="243.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

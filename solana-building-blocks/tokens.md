@@ -1,12 +1,10 @@
 # Chapter 3: Tokens
 
-Every asset on Solana except SOL is a **token**, held in a token account (an account formatted in a particular way to hold a token balance) that a token program manages. Every other asset in this book is a token: 
+Every asset on Solana except SOL is a **token**, held in a token account (an account formatted in a particular way to hold a token balance) that a token program manages.[^tokens-xyz] The tokens in this book include: 
 
 - stablecoins like USDC and USDT
 - equities like NVDAx, SPCXx, and TSLAx[^tokenized-equity-volume]
 - the share tokens the book's own programs mint
-
-So is every other asset on Solana apart from SOL itself.[^tokens-xyz]
 
 ## Every Distinct Token Has Its Own Mint
 
@@ -26,7 +24,7 @@ A mint does not just describe a type of token; it manufactures it. New tokens co
 
 As well as the current total supply, the mint account also stores the token's decimals (how many decimal places a major unit has) and its authorities. 
 
-The mint authority is the boss of that factory. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: each lending reserve's share mint and the fund's share mint are run by PDAs the program derives (the reserve and the fund), so new shares are minted only by the program's handlers, never by a person. The authority can also be handed over, or renounced by setting it to none, after which nothing more can be minted. Many tokens explicitly advertise a fixed supply, and disabling the mint authority is how it is enforced.
+The mint authority is the boss of that factory. It can be a person's wallet (they can mint at will: fine for a test token, alarming for a token people rely on), a multisig (minting takes a quorum), or a PDA. This book's programs use a PDA: each lending reserve's share mint and the fund's share mint are run by PDAs their programs derive (the reserve PDA and the fund PDA), so new shares are minted only by those programs' handlers, never by a person. The authority can also be handed over, or renounced by setting it to none, after which nothing more can be minted. Many tokens explicitly advertise a fixed supply, and disabling the mint authority is how it is enforced.
 
 A token can also stand for one unique thing. Give the mint 0 decimals, mint a single unit, and make sure nobody can mint another: the result is a **non-fungible token**, or NFT, and the one token account holding it records who owns that thing. It could be a ticket to a particular seat, a property deed, or a bond certificate with its own serial number. So each NFT has a mint of its own: a collection of 10,000 NFTs made this way is 10,000 mints, not one mint that issued 10,000 tokens.
 
