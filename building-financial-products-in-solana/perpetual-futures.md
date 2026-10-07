@@ -180,9 +180,9 @@ Here is where everyone ends up:
 
 ![](figures/perps-collect-fees.svg)
 
-## The Math: Fees and the Maintenance Requirement Round Up, the Rest Floors or Truncates Toward Zero
+## The Math: Fees, PnL, Funding and Pool Shares Round Against the User
 
-Every calculation is checked integer arithmetic: u64 amounts widened to u128 for products, and i128 where a sign is needed (PnL, funding, equity), multiply before divide. `basis_points_of()` rounds fees and the maintenance requirement up, against the trader; only the insurance fund's cut of a collected fee rounds down (`basis_points_of_rounded_down()`). Share minting and withdrawal amounts floor against AUM, and the haircut rounds down; PnL truncates toward zero, which favors the trader on a loss and the pool on a profit; funding truncates toward zero too, which favors whichever side is paying. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units.
+Every calculation is checked integer arithmetic: u64 amounts widened to u128 for products, and i128 where a sign is needed (PnL, funding, equity), multiply before divide. `basis_points_of()` rounds fees and the maintenance requirement up, against the trader; only the insurance fund's cut of a collected fee rounds down (`basis_points_of_rounded_down()`). PnL floors, so a loss that is not a whole minor unit rounds up and a profit rounds down (`test_position_pnl_rounds_against_the_trader`). Funding rounds toward the pool: what a trader owes rounds up and what a trader receives rounds down (`test_position_funding_rounds_against_the_trader`). `add_liquidity()` values the pool rounding up and `remove_liquidity()` rounding down, and both then floor, so neither mints nor pays more than exact arithmetic would (`test_add_liquidity_values_the_pool_rounding_up`, `test_remove_liquidity_values_the_pool_rounding_down`). The haircut counts what traders are owed rounded up, then rounds the ratio and the payout down. Prices arrive at the oracle's fixed-point scale (10^8 here) and cancel out of the PnL formula, so positions settle in collateral minor units.
 
 ## The Invariants: Percolator's Guarantees, Simplified
 
@@ -196,7 +196,7 @@ The book's standing invariants hold here too. The vault balance is never less th
 
 ## The Failure Modes: Leverage Amplifies Whatever You Got Wrong
 
-- **A stale or manipulated price**: with 10x leverage, a 1% price error is a 10% equity error in every open position at once. The seven price feed checks and the band around the pool's average refuse it. The pool creator chooses the price feed, and whoever controls it sets the prices the pool settles at, held within the band for opens, closes and liquidity moves, and unbounded for liquidations.
+- **A stale or manipulated price**: with 10x leverage, a 1% price error is a 10% equity error in every open position at once. The seven price feed checks refuse a stale, malformed or uncertain price, and the band around the pool's average refuses a sudden jump. The pool creator chooses the price feed, and whoever controls it sets the prices the pool settles at, held within the band for opens, closes and liquidity moves, and unbounded for liquidations.
 - **A position gapped through zero**: the insurance fund pays the deficit before the LPs do (checked by `test_liquidation_of_bankrupt_position_charges_insurance_before_liquidity`).
 - **First-depositor share inflation**: `liquidity` grows with every funding payment and trader loss, and a liquidity provider can also be the pool's only trader. An attacker holding a single share can pay funding into the pool from their own position to make that share expensive, then wait for a deposit to round down. The withheld `MINIMUM_LIQUIDITY` makes this cost them: the attacker's share is 1 of 1,001, and almost everything they pay in stays with the locked shares. In the test the attacker holds a long for ten simulated years at the highest funding rate a pool may have, raising `liquidity` to about 88,000 minor units. The victim deposits just under twice that, which mints the victim 2,001 shares against the attacker's 1. Dividing by the bare supply of 1 would have minted the victim a single share. `test_inflating_liquidity_through_own_trades_does_not_pay` runs the attack: the attacker pays about 87,000 minor units of funding and gets back 88. Divided by the bare supply instead, the same attack returns them about 132,500, about 44,000 of it from the victim's deposit. `test_first_deposit_below_minimum_fails` checks that a first deposit of 999 minor units, one under `MINIMUM_LIQUIDITY`, fails with `DepositTooSmall`, and that 1,001 mints a single share.
 - **Winning more than the pool holds**: the haircut (checked by `test_haircut_scales_profit_when_pool_stressed`).
@@ -207,7 +207,7 @@ The book's standing invariants hold here too. The vault balance is never less th
 
 ## Testing Considerations
 
-The suite's fifty tests share a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. Write one test per invariant and name it as the sentence it checks: `test_haircut_scales_profit_when_pool_stressed`, `test_remove_liquidity_capped_at_liquidity`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`.
+The suite's fifty-four tests share a mock oracle the tests set prices on, and a `Market` helper that builds the pool, warps slots, and re-derives position PDAs. Write one test per invariant and name it as the sentence it checks: `test_haircut_scales_profit_when_pool_stressed`, `test_remove_liquidity_capped_at_liquidity`, `test_healthy_position_cannot_be_liquidated`, `test_stale_price_rejected`, `test_collect_fees_requires_authority`.
 
 The band tests set a price, move the clock, and assert the average to the minor unit: `test_single_update_moves_average_by_elapsed_fraction` checks that one read moves nothing and the next moves the average by exactly the elapsed share of the window.
 
@@ -215,7 +215,7 @@ The band tests set a price, move the clock, and assert the average to the minor 
 
 ## What You Learnt from Building the Perpetual Futures Venue
 
-A traditional futures exchange is a matching engine, and a clearing house with a margin department and a default-management process. The pool is the clearing house and the counterparty, the two margins are its margin department, the insurance fund and the haircut are its default fund, and a liquidator's bot closes out a defaulted position, paid per liquidation. Funding has no traditional counterpart: it does the job that expiry does for a dated future.
+A traditional futures exchange is a matching engine plus a clearing house with a margin department and a default-management process. The pool is the clearing house and the counterparty, the two margins are its margin department, the insurance fund and the haircut are its default fund, and a liquidator's bot closes out a defaulted position, paid per liquidation. Funding has no traditional counterpart: it does the job that expiry does for a dated future.
 
 This chapter added seven concepts:
 

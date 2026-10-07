@@ -75,7 +75,7 @@ Solana has two token programs. The **Classic Token Program** is the original, an
 | **scaled UI amount** | A multiplier stored in the mint, which the issuer updates for stock splits and dividends | The displayed balance changes while the raw amount stays fixed: calculate in raw amounts |
 | **metadata** | The name, symbol, and a link to more details, stored in the mint | Display only: the mint address still identifies the asset |
 
-Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds permissioned burn (burning needs a designated authority's approval) and scaled UI amount.[^mosaic] Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page,[^solana-explorer] and the table's last column says what each one means for your program.
+Stablecoin and tokenized-security issuers use most of these together: the Solana Foundation's Mosaic templates[^mosaic] for both turn on default account state, pausable, permanent delegate, confidential transfers, and metadata, and the tokenized-security template adds permissioned burn (burning needs a designated authority's approval) and scaled UI amount. Before building on a token you did not issue, check which extensions it uses: Solana Explorer lists them on the mint's page,[^solana-explorer] and the table's last column says what each one means for your program.
 
 ![](figures/transfer-using-transfer-fee-extension.svg)
 

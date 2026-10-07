@@ -78,17 +78,19 @@ She entered with $900, held through NVIDIA's rise, paid Maria 1% by dilution, an
 
 ![No price account appears here: every leg is a proportion of a recorded holding, not a quote.](figures/fund-withdraw-in-kind.svg)
 
-## The Math: One Valuation Loop, Four Floors Toward the Fund, One Ceiling Toward the Manager
+## The Math: Six Roundings Toward the Fund, One Toward the Manager
 
-Every formula except the valuation is a proportion. Four round toward the fund and one, the fee, rounds toward the manager:
+In the seven formulas below, the fee rounds toward the manager and the other six toward the fund:
 
+- **A deposit's valuation:** each asset's value is rounded up before the shares are priced, so a deposit is minted no more shares than its USDC buys (`test_deposit_values_assets_rounding_up`).
 - **Shares minted:** deposit × supply ÷ NAV, floored.
 - **Withdrawal legs:** recorded holding × shares ÷ supply, floored per asset, with each payout subtracted from the record.
 - **Fee shares:** supply × rate × time over a year, rounded up.
 - **Deployment per leg:** deposit × weight ÷ 10,000, floored.
 - **Rebalance trade:** the smaller of the sell asset's excess over its target and the buy asset's shortfall below its own, converted to the sell asset at the oracle price, floored.
+- **Rebalance sell floor:** the oracle value of what is sold × (10,000 − slippage tolerance) ÷ 10,000, rounded up, so the floor never sits below the exact figure (`test_rebalance_sell_floor_rounds_up`).
 
-All of them use u128 intermediates and multiply before dividing. The four floored formulas leave their remainders with the fund rather than the transactor; the fee's remainder is minted to the manager. The one multiplication that is not a proportion is the valuation itself: amount × price, scaled by the asset's decimals and the price feed's exponent.
+All of them use u128 intermediates and multiply before dividing. The floored formulas leave their remainders with the fund rather than the transactor; the fee's remainder is minted to the manager. The one multiplication that is not a proportion is the valuation itself: amount × price, scaled by the asset's decimals and the price feed's exponent. A deposit rounds it up and a rebalance floors it.
 
 ## The Invariants: Assets Stay in the Fund's Vaults
 

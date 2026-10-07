@@ -118,7 +118,7 @@ A [put](#put) whose writer has supplied enough of the quote token, USDC here, to
 
 ### ceil (ceiling)
 
-Rounding up to the next whole [minor unit](#minor-unit). The lending market ceils a borrower's debt, and every fee a user pays in this book's programs ceils, so neither rounds down into a shortfall the program absorbs. A split of a fee already collected may floor, as the perpetual futures venue's insurance-fund cut does, since either direction keeps the whole fee with the program. The perpetual futures venue truncates a trader's loss and funding toward zero instead; see the *Perpetual Futures* chapter. The opposite of [floor](#floor). See [rounding](#rounding).
+Rounding up to the next whole [minor unit](#minor-unit). The lending market ceils a borrower's debt, and every fee a user pays in this book's programs ceils, so neither rounds down into a shortfall the program absorbs. A split of a fee already collected may floor, as the perpetual futures venue's insurance-fund cut does, since either direction keeps the whole fee with the program. The opposite of [floor](#floor). See [rounding](#rounding).
 
 ### checked arithmetic
 
@@ -670,7 +670,7 @@ A limit order that did not match on arrival and now waits on the book, funded an
 
 ### rounding
 
-The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder stays with the program. The perpetual futures venue is the exception: it truncates a trader's loss and funding toward zero. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
+The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder stays with the program. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
 
 ### RPC endpoint
 
