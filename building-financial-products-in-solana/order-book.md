@@ -2,7 +2,7 @@
 
 NYSE, NASDAQ, and the CME are order book exchanges. On Solana, Manifest, OpenBook, and Phoenix are order book exchanges, and by mid-2026 Manifest was carrying more spot volume than any other order book on the network.[^order-book-venues] All of them work the same way: orders arrive carrying a price their owner refuses to cross, wait in two sorted lists, and trade when one order reaches across the gap. The three on Solana settle out of vaults the venue's operator cannot withdraw from.
 
-The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the *Escrow* chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement allowed only when the right account signs. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
+The program lives at `finance/order-book` in the companion repository. It assumes you know the escrow pattern from the *Escrow* chapter: tokens held in program-owned vaults, terms recorded in data accounts, and every movement allowed only with the right signature. An exchange is that pattern scaled up from one deal to thousands of simultaneous ones.
 
 ## A Limit Order Is a Price You Refuse to Cross
 
@@ -10,7 +10,7 @@ A **limit order** is an order with a price limit attached. A **bid** says "I wil
 
 ![](figures/order-book-bids-asks-spread.svg)
 
-The other model for an exchange is the automated market maker, where there are no limit orders and every trade fills immediately against a pooled formula; that is the next chapter. An order book is better at price discovery, because every price on it is a commitment someone funded. An AMM is better for new assets without much liquidity around them.
+The other model for an exchange is the automated market maker, where there are no limit orders and every trade fills immediately against a pooled formula, the design the *Constant-Product AMM* chapter builds. An order book is better at price discovery, because every price on it is a commitment someone funded. An AMM is better for new assets without much liquidity around them.
 
 One naming note: this design is traditionally called a "central limit" order book, because the book lives in one central place. Here that place is a Solana account, so the "central" book is stored on a decentralized network.
 
@@ -18,7 +18,7 @@ One naming note: this design is traditionally called a "central limit" order boo
 
 The first instinct is to store the bids and asks as sorted arrays. Arrays get slow when an exchange gets busy: inserting into the middle of a sorted list means shifting everything after it, and on a chain where compute is metered, your users pay that cost.
 
-So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding one node there; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which puts the tree in exchange order: walking it visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
+So the book's two sides are **critbit trees**. Each resting order gets a fixed-size binary key, and the tree branches at the first bit where keys differ (the "critical bit"). Inserting an order means walking to where its key diverges and adding a branch there with the new leaf beneath it; nothing shifts. The key is built from the price in the high bits and a sequence number in the low bits, which puts the tree in exchange order: walking it visits orders best price first, and within a single price, earliest order first. That ordering has a name, **price-time priority**, and it is the fairness rule the major exchanges use.
 
 A critbit tree does not balance itself, so an attacker can place asks at 2, 4, 8, and so on to deepen the tree. That only adds a little compute. The deepest path doubling prices can build is 64 levels: 63 from the prices and one more from the sequence number that separates two orders at the same price. That path adds under 15,000 extra compute units per instruction, out of the 200,000 an instruction is granted by default at the time of writing (the suite's `DEFAULT_INSTRUCTION_COMPUTE_UNITS`).
 
@@ -30,11 +30,11 @@ The market this chapter builds trades NVDAx over USDC: NVDAx, a stock, is the **
 
 Maria runs the exchange. She is the market authority: she creates the market, and she alone can pause it, resume it, and withdraw its fees. Her revenue is a fee of 25 basis points, a quarter of one percent, deducted from each fill's quote proceeds when orders match. In each fill the **maker** is the order that was already resting on the book and the **taker** is the arriving order that crossed it. The side of the fill that receives the quote token bears the fee: the maker when the taker is a bid, the taker when the taker is an ask.
 
-Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, as the betting market's is. It creates the market account and the three vaults with the market as authority, records every address on the market account, and stamps the order book's first bytes so each tree knows which side it is.
+Maria's client first creates the empty order book account, then calls `initialize_market()` with her chosen parameters: `fee_basis_points` (25), `tick_size`, `base_lot_size`, `quote_lot_size`, and `min_order_size`. The handler validates all of them: every size must be nonzero, and the fee is capped at 10,000 basis points, as the betting market's is. It creates the market account and the three vaults with the market as authority, records every address on the market account, and writes the order book's header (its market, and the first order ID) and a side tag on each tree.
 
 The tick size and minimum order size keep the book usable, and they do different jobs. Orders below `min_order_size` are rejected with `BelowMinOrderSize`, so every order placed is at least that size and pays its owner's tokens into a vault, and filling the tree with new orders ties up capital. Prices must be a multiple of `tick_size` or the order is rejected, which keeps the book from fragmenting into thousands of dust price levels. The tick also sets what it takes to stand in front of the queue: a maker who wants that place must improve the price by a whole tick, and the taker receives that improvement.
 
-Both are set per market, at creation, and cannot change afterward. A tick right for a $250 stock is far too coarse for a token priced at a fraction of a cent, so somebody has to choose one for each market, and the choice is final. Manifest removed the tick entirely and lets an order name any price in minor units. Its own README states the tradeoff: without a tick, the newest order can stand in front of the queue by improving the price by a negligible amount, which inverts time priority.[^manifest-tickless]
+Both are set per market, at creation, and cannot change afterward. A tick right for a $250 stock is far too coarse for a token priced at a fraction of a cent, so somebody has to choose one for each market. Manifest removed the tick entirely and lets an order name any price in minor units. Its own README states the tradeoff: without a tick, the newest order can stand in front of the queue by improving the price by a negligible amount, which inverts time priority.[^manifest-tickless]
 
 ![](figures/order-book-initialize-market.svg)
 
@@ -46,11 +46,11 @@ The **order book** is the largest account: about 180 KB holding two trees of res
 
 > **Why the order book is not at a PDA.** Solana caps account allocations made from inside a program at 10 KB, so `initialize_market()` cannot create a 180 KB account. Instead, the client creates the account directly with the System Program before calling `initialize_market()`, sized to `ORDER_BOOK_ACCOUNT_SIZE` and owned by the program. And its address cannot be a PDA at all, because creating an account that way requires the new account's own signature, which a PDA cannot give. The program instead ties the book to its market with a stored-address check: the market records the book's address, and every instruction that touches the book checks it against that record. So the book's address is a public key, and the figures draw its dot on the curve, with the book's box above it at the top right. Its private key signs once, at creation; after that the program owns the account and the private key can do nothing to it.
 
-Three **vaults** hold the tokens: a base vault for NVDAx, a quote vault for USDC, and a separate **fee vault** for Maria's earnings. Unlike the book, all three live at PDAs derived from the market (seeds: `"base_vault"`, `"quote_vault"` or `"fee_vault"`, then the market), and `initialize_market()` creates them with the market PDA as their authority. The fee vault holds the same token as the quote vault. Keeping them separate means user-owed balances and the market's fees never share one balance, so `withdraw_fees()` can pay out the whole fee vault. The failure modes section shows the attack two same-token vaults invite, and the check that blocks it.
+Three **vaults** hold the tokens: a base vault for NVDAx, a quote vault for USDC, and a separate **fee vault** for Maria's earnings. Unlike the book, all three live at PDAs derived from the market (seeds: `"base_vault"`, `"quote_vault"` or `"fee_vault"`, then the market), and `initialize_market()` creates them with the market PDA as their authority. The fee vault holds the same token as the quote vault. Keeping them separate means user-owed balances and the market's fees never share one balance, so `withdraw_fees()` can pay out the whole fee vault. Because the two hold the same token under the same authority, every handler that moves tokens through a vault checks its address against the one the market recorded, so the fee vault cannot be passed where the quote vault belongs.
 
 ## The Exchange Records What It Owes Each Trader
 
-Three traders use the market in this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus the NVDAx the two sellers hold: ten shares for Alice, three for Carol. Before trading, each of them calls `initialize_market_user()` once. It creates their market user account with zeroed unsettled balances and an empty open-order list. It is where the program records what it owes them: the NVDAx and USDC the exchange will pay them on request.
+Three traders use the market in this chapter: Alice, Bob, and Carol, each starting with the standard wallet of one SOL and 1,000 USDC, plus the NVDAx the two sellers hold: ten shares for Alice, three for Carol. Before trading, each of them calls `initialize_market_user()` once. It creates their market user account with zeroed unsettled balances and an empty open-order list.
 
 That **market user** account (seeds: `"market_user"`, the market, the owner) tracks their `open_orders` (capped at 20) and two numbers that keep each fill's compute low: `unsettled_base` and `unsettled_quote`, the amounts the program owes them. When the program takes tokens from a user it transfers them immediately into a vault; when it owes tokens to a user it just increments these counters. Users claim what they are owed whenever they like, and many small payouts consolidate into one transfer, saving compute units on the path every fill takes.
 
@@ -90,7 +90,7 @@ Now the program credits the unsettled balances. Gross proceeds are 3 × 250 = 75
 
 ![](figures/order-book-match.svg)
 
-Bob did nothing at all. Like Alice in the *Escrow* chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
+Bob signed nothing for this fill: like Alice in the *Escrow* chapter, a maker signs once when placing and the program handles their side of every subsequent fill.
 
 ## Canceling Returns the Unfilled Order's Tokens
 
@@ -98,7 +98,7 @@ Bob decides three shares is enough. He calls `cancel_order()` on his order accou
 
 ![](figures/order-book-cancel.svg)
 
-To change a resting order's size or price, Bob cancels it and places a new one, in one transaction so either both happen or neither does; the new order goes to the back of the queue at its price.
+To change a resting order's size or price, a trader cancels it and places a new one, in one transaction so either both happen or neither does; the new order goes to the back of the queue at its price.
 
 ![](figures/order-book-state-machine.svg)
 
@@ -137,13 +137,13 @@ With nothing open or owed, each of them can also call `close_market_user()`, whi
 - For every order still on the book, the vaults hold everything that order would pay if the rest of it filled: the USDC for a bid (price × remaining quantity × quote lot size) and the NVDAx for an ask. The vaults always hold at least those amounts for every resting order, plus all unsettled balances.
 - Every minor unit an order paid into a vault is accounted for when it leaves: a fill splits what was held for it into maker proceeds, taker rebate, and fee, and those three always sum exactly to what was held for that fill. Cancellation and eviction each return exactly what was held for the unfilled remainder.
 - `filled_quantity` never exceeds `original_quantity`, and order status only moves forward: Open to PartiallyFilled to Filled, or out to Cancelled.
-- The fee vault only ever receives the computed fee, and only the recorded authority can withdraw from it.
+- The program moves nothing into the fee vault except the computed fee, and only the recorded authority can withdraw from it.
 - Every leaf in a tree corresponds to exactly one Open or PartiallyFilled order account, and to an entry in its owner's open-order list.
 - No order account closes while its order rests on the book, and no market user account closes while it lists an open order or holds an unsettled balance.
 
 ## The Failure Modes: Vault Swaps, Fake Makers, and Book Spam
 
-- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The program stops this with a stored-address check on every instruction, binding every vault and mint to the addresses recorded on the market at creation, and `settle_funds_rejects_fee_vault_substituted_for_quote_vault` checks that the attack fails. This is the same account-substitution attack the *Escrow* chapter described, against a bigger program.
+- **The vault swap.** The fee vault and the quote vault hold the same token and have the same authority, so a token-program transfer cannot tell them apart. Without further checks, a caller invoking `settle_funds()` could pass the fee vault where the quote vault belongs and be paid out of Maria's fees. The program stops this with a stored-address check on every handler that moves tokens through a vault, binding each vault it takes to the address recorded on the market at creation, and `settle_funds_rejects_fee_vault_substituted_for_quote_vault` checks that the attack fails. This is the account substitution the *Adversary* chapter covers, against a bigger program.
 - **The fake maker list.** Takers supply the maker accounts they match against, so a hostile taker will supply the wrong ones. The program checks them against its own plan, as the match step showed.
 - **The rounding drain.** A fee rounded down would undercharge a fill by up to one minor unit; the fee rounds up, as the math section showed, and `fee_rounds_up_when_gross_is_not_a_bps_multiple` checks it.
 - **Book spam.** Each side holds 512 orders, so anyone willing to fund 512 minimum-size orders across 26 or more wallets can fill a side with orders far from the spread. If a full side refused every new order, that trader could keep every new order off the side for as long as they liked. Maria could not move the pair either, because the market PDA's seeds are the two mints. The program stops this with **eviction**. When an order would rest on a full side, `place_order()` compares its price with that side's worst order, the lowest bid or the highest ask. A better price removes the worst order and takes its place, and the evicted owner is refunded through their unsettled balance, as `cancel_order()` refunds them. An order at the same price or worse is rejected with `OrderBookFull`, because the resting order was there first. Eviction only removes the order furthest from the market price, the one least likely to fill, so a spammer's far-off orders cannot keep new orders off the book. The placer passes the worst order and its owner's market user account after the maker pairs, and the program checks them against the book the way it checks maker accounts: a missing account rejects with `MissingEvictedAccounts` and a wrong one with `EvictedAccountMismatch`. A trader evicting their own worst order passes only that order account. Tick alignment, the minimum order size, and the 20-open-orders-per-user cap still apply.
@@ -164,7 +164,7 @@ The suite in `tests/test_order_book.rs` builds all state through the program's o
 - Closing accounts: `close_order_returns_a_cancelled_orders_rent`, `close_order_returns_a_filled_orders_rent`, `close_order_refuses_a_resting_order`, `close_order_refuses_a_partially_filled_order`, `close_order_refuses_a_non_owner`, `close_market_user_returns_rent_when_nothing_is_open_or_owed`, `close_market_user_refuses_an_open_order`, `close_market_user_refuses_an_unsettled_balance`, and `close_market_user_refuses_a_non_owner`.
 - Eviction, each test starting from a bid side filled with 512 orders: `full_side_refuses_an_order_no_better_than_its_worst`, `better_order_evicts_the_worst_and_rests`, `evicted_maker_settles_their_refund`, `eviction_rejects_missing_or_wrong_evicted_accounts`, and `trader_can_evict_their_own_worst_order`.
 
-If you write one test after reading this chapter, write the vault-swap one for your own program. This bug appears wherever two accounts hold the same token under the same authority and your accounting has to keep them apart; test that your program does.
+If you write one test after reading this chapter, write the vault-swap one for your own program. Any program with two accounts holding the same token under the same authority is open to it; write a test that passes one in place of the other and asserts the transaction fails.
 
 ## What You Learnt from Building the Order Book Exchange
 
@@ -176,7 +176,7 @@ The order book added six concepts on top of the escrow's:
 - **A data structure chosen for onchain cost.** The critbit tree inserts without shifting other entries, and walking it visits orders in price-time priority.
 - **An internal ledger that consolidates payouts.** Unsettled balances turn many small payouts into one claimed transfer, and zeroing them as they are paid out means each balance is paid once. A trader's market user account closes only once nothing is open or owed.
 - **A fee whose rounding direction is a security decision.** The fee rounds up, in the market's favor.
-- **Vault separation plus stored-address checks.** The fee vault and the quote vault stay apart only because every instruction checks their addresses against the market.
+- **Vault separation plus stored-address checks.** The fee vault and the quote vault stay apart only because every handler that moves tokens through them checks their addresses against the market.
 - **A full book evicts its worst order** for a better one, and refuses an order no better than it, so filling a side with far-off orders keeps nobody off it.
 
 In the *Constant-Product AMM* chapter we will build a market with no order book. Two vaults hold the pair of tokens, and a formula sets the price from their balances, so anyone can trade at any time without waiting for a counterparty to post an order. The people who fill the vaults earn a fee on every trade, and that chapter calculates impermanent loss, the cost the fee compensates them for.

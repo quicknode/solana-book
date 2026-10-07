@@ -34,7 +34,7 @@ The slot count is how many slots have gone by. Programs read it from the same Cl
 
 Two things affect how much wall-clock time a number of slots adds up to, and anyone converting between the two should know both:
 
-- **Each slot usually runs slightly longer than the network intends.** The network sets a target, 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot is a turn, not a tick of a clock: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. That extra time adds up but does not compound, because in normal running slots do not get slower as they go, and each adds only its own delay. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
+- **Each slot usually runs slightly longer than the network intends.** The network sets a target, 200 milliseconds, and real slots mostly run a little over it.[^slot-time-live] A slot runs long when its leader was slow, or when the network waited out a timeout for a block that never came. A slot has no fixed length: the next one starts when the last one ends, so every delay carries forward and nothing pulls the count back to real time. Three slots at 219 milliseconds take 657 milliseconds, 57 more than the 600 they were sized for. So a slot-counted window covers more wall-clock time than it was sized for, which loosens it rather than tightening it.
 - **The count stops when the chain does.** No block is produced during a halt, so the count stands still while real time moves on. The section on halts below covers what that does.
 
 Slots are grouped into **epochs** of 432,000 slots, which is exactly a day at 200 milliseconds a slot, and about two hours longer if slots actually average 219 milliseconds.
@@ -57,10 +57,10 @@ Every program in this book that times something chose by that rule; the table at
 Three programs in this book accrue value over time, and all count it in seconds:
 
 - **The lending market accrues interest on debt.** It carries one number per reserve, a borrow accumulation factor, and advances it by the seconds elapsed since `last_accrual_timestamp`; the *Lending and Borrowing* chapter builds the factor.
-- **The perpetual futures venue accrues funding on open positions.** It does the same, storing `cumulative_funding` alongside `last_funding_timestamp`, at a rate per second fixed when the pool is created.
+- **The perpetual futures venue accrues funding on open positions**, a periodic payment charged to whichever side, long or short, has the larger total position size. It does the same, storing `cumulative_funding` alongside `last_funding_timestamp`, at a rate per second fixed when the pool is created.
 - **The managed fund accrues its annual management fee.** It counts the seconds since `last_fee_accrual_timestamp` in the same way, and its `collect_fees()` refuses a timestamp at or before the stored one with `NoTimeElapsed`.
 
-All three advance by elapsed time, and interest and funding decide what somebody owes, which decides whether a position can be liquidated. A leader can move the timestamp by less than a second in its turn, and at a 20% annual rate even two seconds of interest is about one hundred-millionth of the debt. A position that close to the liquidation line crosses it anyway if the leader waits two seconds, so moving the clock gains the leader nothing.
+All three advance by elapsed time, and interest and funding decide what somebody owes, which decides whether a position can be liquidated. A leader can move the timestamp by less than a second in its turn, and at a 20% annual rate even two seconds of interest is about one hundred-millionth of the debt. A position within a hundred-millionth of its liquidation line crosses it two seconds later anyway, so moving the clock gains a leader nothing.
 
 Counting slots instead would have no advantage here, and would be inaccurate: a rate quoted per year becomes a rate per slot only through the slot length, which the network changes and does not deliver exactly. If slots run about 10% long, a year holds that many fewer of them, so a market that assumes 200 milliseconds charges a borrower quoted 20% a year about 18.2%. That is nearly a tenth of all the interest, against the hundred-millionth a leader can move by shifting the timestamp.
 
@@ -75,12 +75,12 @@ The network's target slot length is 200 milliseconds.[^slot-simd]
 A program can get that length three ways:
 
 - **From Anza's documentation, written into your program.**[^anza-docs] This is correct until the network next shortens the slot, and wrong from then on, which the section on a shortened slot covers.
-- **From the feature gates.** Changes to the network ship as **features**, built into the validator software, switched off, and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A new slot time applies from the start of the epoch after its feature gate activates, not from the moment it does, so check the epoch as well as the feature gate.
+- **From the feature gates.** Changes to the network ship as **features**, built into the validator software, switched off, and turned on across the network at the start of an epoch. Each shortening of the slot ships as one, so a program can check which of them are live and take the shortest, falling back to 400 milliseconds when none are.[^check-slot-time] A slot-time feature that activates at the start of one epoch takes effect at the start of the next, so check the current epoch as well as the feature gate.
 - **From the network itself, in future.** While no account reports the slot time in milliseconds at the time of writing, this is expected to change.[^onchain-params] Check Anza's documentation before writing either technique above, in case such an account now exists.
 
 Avoid the Solana SDK's `DEFAULT_MS_PER_SLOT`: it is fixed when the SDK is compiled, so what was true on build day may not reflect the network a program is running on.
 
-To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Check the divisor before that division: it is zero on an epoch's first slot. That measurement comes from the leader-written timestamp, so it belongs in offchain tooling, not in a handler. A handler that needs wall-clock time should read the timestamp itself, as the lending market's interest does. Multiplying a slot count by a measured slot length carries the timestamp's error and adds the slot count's.
+To measure the average the network is actually delivering, take the seconds since `epoch_start_timestamp` in the Clock sysvar and divide by the slots since this epoch began, which `EpochSchedule` supplies. Check the divisor before that division: it is zero on an epoch's first slot. That measurement comes from the leader-written timestamp, so it belongs in offchain tooling, not in a handler. A handler that needs wall-clock time should read the timestamp itself, as the lending market's interest does. A slot count multiplied by a measured slot length has both errors: the timestamp's and the count's.
 
 
 ## Who Fills First Is a Counter, Not a Clock
@@ -99,7 +99,7 @@ A **price feed** is an account that some publisher keeps updated with a price an
 | Program | Refuses a price older than | Measured in |
 | --- | --- | --- |
 | the lending market | 25 slots | slots |
-| the prop AMM | 150 slots | slots |
+| the proprietary automated market maker (prop AMM) | 150 slots | slots |
 | the perpetual futures venue | 150 slots | slots |
 | the managed fund | 60 seconds | seconds |
 
@@ -137,10 +137,10 @@ A halt is rare: at the time of writing, block production has not stopped for yea
 No block is produced during a halt, so the slot count does not move. Wall-clock time does. The first block after a restart carries a slot roughly where the last one left off. Its timestamp cannot jump the hours the halt took either, because of the 400-millisecond-per-slot bound above. At the time of writing, the timestamp trails real time after a restart and gains on it at about one second per second, so a nine-hour halt leaves it trailing for about nine hours more.[^clock-catch-up] That gap has three consequences:
 
 - **Accrual by timestamp charges the halt, late.** The lending market's interest, the perpetual futures venue's funding, and the managed fund's fee all count seconds, so a nine-hour halt accrues nine hours. It arrives over the nine hours of catch-up rather than in the first block. The loans were outstanding and the suppliers' deposits were locked for those nine hours, so charging for them is accurate.
-- **Neither kind of freshness window refuses the old price on its own.** The lending market's 25-slot window sees a price stamped one slot ago and would accept a number nine hours old. The managed fund's sixty-second window does no better, because the timestamp it reads is trailing, so a price published just before the halt looks seconds old. The damage is largest on the perpetual futures venue, where leverage multiplies a bad price across every open position.
+- **Neither kind of freshness window refuses the old price on its own.** The lending market's 25-slot window sees a price stamped one slot ago and would accept a number nine hours old. The managed fund's sixty-second window does no better, because the timestamp it reads is trailing, so a price published just before the halt looks seconds old. Accepting one would do the most harm on the perpetual futures venue, where leverage (holding a position larger than the collateral behind it) multiplies a bad price across every open position.
 - **A deadline passes at twice real speed after a restart.** The fundraiser's day count stands still during the halt, then runs at twice real speed until the timestamp catches up, so a contributor with an hour left before the halt gets about half an hour after it. The fundraiser survives it because `refund()` has no closing deadline, so contributors can still get their money back after the halt. A design that allowed refunds only during a narrow window would have left them unable to.
 
-Every freshness window needs one more check. The `LastRestartSlot` sysvar[^last-restart-slot] carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, the perpetual futures venue, and the managed fund all make this check in their oracle readers: any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and the market pauses valuation until the publisher posts again. Make it in any program that checks a price's age, in slots or in seconds.
+Every freshness window needs one more check. The `LastRestartSlot` sysvar[^last-restart-slot] carries the slot of the most recent cluster restart, or zero if there has never been one, and a price from before that restart is stale however few slots have passed since. The lending market, the prop AMM, the perpetual futures venue, and the managed fund all make this check when they read a price feed. Any price stamped at or before the restart slot is rejected with `PricePredatesRestart`, and each program refuses that price feed until the publisher posts again. Make it in any program that checks a price's age, in slots or in seconds.
 
 The order book comes through a halt untouched, because it acts on neither clock: the timestamp it records is never compared, and queue positions resume exactly as they were.
 
@@ -161,8 +161,8 @@ A slot count that spans one of these changes cannot be converted at today's figu
 | Program | What it times | Its answer | Why |
 | --- | --- | --- | --- |
 | fundraiser | its funding deadline | whole days from one stored timestamp | a week of slots is about 16 hours out |
-| lending market | interest accrual, and price freshness | timestamps for interest, slots for freshness | seconds against a year are nothing, and a stale price can be exploited |
-| perpetual futures | funding accrual, and price freshness | timestamps for funding, slots for freshness | the same, and leverage multiplies a stale price |
+| lending market | interest accrual, price freshness, and a refresh in the same slot | timestamps for interest, slots for freshness and the refresh | seconds against a year are nothing, and a stale price can be exploited |
+| perpetual futures | funding accrual, its price average, a profit warm-up, and price freshness | timestamps for funding and the average, slots for the 10-slot warm-up and for freshness | the same, and leverage multiplies a stale price; the warm-up is a span of a couple of seconds the program stamps itself |
 | prop AMM | price freshness | slots | a stale price can be exploited |
 | managed fund | an annual fee, and price freshness | timestamps for both | seconds against a year are nothing, and the price feed stamps seconds |
 | options | its expiry | the timestamp | a date the two parties agreed, days away |
@@ -174,8 +174,8 @@ A slot count that spans one of these changes cannot be converted at today's figu
 - A program has three clocks: the timestamp (a leader's choice within a bound), the slot count (nobody's choice, runs long, stops in a halt), and a counter of its own (order only).
 - Count slots for any span shorter than about 20 seconds that your own program stamps, where nobody can move the count and its drift stays under a second or two. Use the wall clock for any longer span, including a rate or a deadline quoted to a person, with a margin at any deadline. Use a counter of your own for order of arrival.
 - Accrual by timestamp charges per second whatever the slot length: advance a stored factor by the seconds since the last stored timestamp. Counting slots instead undercharges when slots run long, in proportion to how long they run.
-- Give every price a freshness window, set by each consumer, in the unit the source uses: slots where the program chooses, seconds where the price feed published seconds.
-- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. Read that length from the slot-time feature gates or measure it against the epoch. Anza's documentation carries the current figure.
+- Give every price a freshness window, set by each consumer, in the unit the price feed stamps: slots where it stamps the slot, seconds where it publishes seconds.
+- A slot count converts to wall-clock time only at the slot length in force, and only across a span where that length held. A program reads that length from the slot-time feature gates; offchain tooling can measure the average against the epoch. Anza's documentation carries the current figure.
 - A shorter slot tightens every slot-counted window, and a window compiled in as a constant takes a redeploy to retune; a rate counted in seconds is untouched, while one counted in slots accrues faster without saying so.
 - A deadline counted in whole days floors, so compute both sides of it from the same expression. The window closes exactly that many 24-hour periods after it opened, at the same time of day, so say so when you write the terms down.
 - After a halt the slot count resumes where it stopped and the timestamp trails real time, so accrual charges the halt late, and deadlines and freshness windows read the gap wrong until it catches up.

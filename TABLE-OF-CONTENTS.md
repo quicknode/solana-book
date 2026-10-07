@@ -20,8 +20,8 @@
 - [Chapter 6: State Machines](financial-programming-concepts-in-solana/intro.md) - financial software is a state machine
 - [Chapter 7: The Arithmetic of Money](financial-programming-concepts-in-solana/the-arithmetic-of-money.md) - integers, scale, rounding, and interest
 - [Chapter 8: Offchain Truth](financial-programming-concepts-in-solana/offchain-truth.md) - how real-world facts (prices, event outcomes, anything the chain cannot see) get onchain, and how a program verifies them
-- [Chapter 9: The Adversary](financial-programming-concepts-in-solana/the-adversary.md) - how onchain money gets stolen, exploit class by exploit class
-- [Chapter 10: Operating Financial Software](financial-programming-concepts-in-solana/operating-financial-software.md) - testing money, wielding admin power safely, and monitoring a live program
+- [Chapter 9: The Adversary](financial-programming-concepts-in-solana/the-adversary.md) - how attackers take assets from onchain programs, exploit class by exploit class
+- [Chapter 10: Operating Financial Software](financial-programming-concepts-in-solana/operating-financial-software.md) - testing, model checking, waiting for finality, verified builds, limiting admin power, and monitoring a live program
 
 ## Part II: Building Financial Products in Solana
 

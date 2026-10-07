@@ -2,15 +2,15 @@
 
 You have been using PDAs since the *Tokens* chapter: every associated token account in this book lives at a PDA of the Associated Token Program, derived from the three seeds that chapter listed.
 
-A **program derived address**, or PDA, is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation produces an address with no private key: PDA generation tries one extra byte after another, called the **bump**, until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA, and no signature is ever produced; the boxout below says what the word means here.
+A **program derived address**, or PDA, is an address computed from a program's ID and some chosen seeds, the inputs to the derivation. The derivation produces an address with no private key: it adds one more seed byte, the **bump**, and tries its values from 255 downward until the result lands off the curve where public keys live. Programs store the bump they found, so later instructions use the stored bump instead of searching for it again. Only the program whose ID derived the address can "sign" as the PDA; the boxout under *Funds Under a PDA's Authority* says what "sign" means here.
 
-**PDAs are how Solana programs find their data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its state this way:
+**PDAs are how Solana programs find their data.** The Associated Token Program chose its seeds to suit its task: find where a wallet's balance of a given token lives. Every other program chooses its own seeds for its own needs. A program's accounts behave like a **key/value store**: the seeds are the key, the PDA they derive is the address that key leads to, and the data in the account at that PDA is the value. The PDA is the address and the account is what sits at it: a program derives the offer PDA, then writes the offer account. Every program in this book keeps its records this way, except the order book's 180 KB book account, which is too large to create from inside a program and sits at a public key the client generated:
 
 - The escrow stores each offer at an address made from `"offer"` + the maker's address + an ID.
 - The fundraiser stores its terms at an address made from `"fundraiser"` + the maker's address, and one receipt per backer at an address made from `"contribution"` + the fundraiser + the backer's address.
 - The order book stores each market at an address made from `"market"` + the two mints.
 - The lending market stores each borrower's loan file at an address made from `"obligation"` + the market + the borrower's address.
-- The perpetual futures venue stores each position at an address made from `"position"` + the pool + the owner + the side.
+- The perpetual futures venue stores each position at an address made from `"position"` + the pool + the trader's address + the side.
 
 ![](figures/pda-key-value-store.svg)
 
@@ -18,7 +18,7 @@ A **program derived address**, or PDA, is an address computed from a program's I
 
 ## Seeds Make Data Findable
 
-The market for a token pair, a user's position in it, and the offer with a given ID all live at addresses anyone can compute from the seeds, so exactly one thing exists per key. A program finds any of them by recomputing its address from the seeds.
+The market for a token pair, a user's position in it, and the offer with a given ID all live at addresses anyone can compute from the seeds. One set of seeds gives one address, so one account exists per key. A program finds any of them by recomputing its address from the seeds.
 
 ## Seeds Make Relationships Verifiable
 

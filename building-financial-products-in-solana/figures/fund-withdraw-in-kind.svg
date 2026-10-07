@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 742" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 753" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Alice withdraws in kind</text>
   <defs><marker id="vault-wd-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="vault-wd-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
   <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
@@ -117,7 +117,6 @@
   <text x="158" y="306.469" font-size="9.5">Alice's TSLAx</text>
   <line x1="138" y1="313.644" x2="226" y2="313.644" stroke="#888" stroke-width="0.8"/>
   <text x="138" y="324.644" font-size="9">&#8776;1.52 TSLAx</text>
-  <text x="226" y="324.644" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <g>
   <circle cx="138" cy="351.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -129,7 +128,6 @@
   <text x="158" y="383.469" font-size="9.5">Alice's NVDAx</text>
   <line x1="138" y1="390.644" x2="226" y2="390.644" stroke="#888" stroke-width="0.8"/>
   <text x="138" y="401.644" font-size="9">&#8776;2.85 NVDAx</text>
-  <text x="226" y="401.644" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
   </g>
   <g>
   <circle cx="624" cy="107.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
@@ -260,6 +258,7 @@
   </g>
   </g>
   <text x="16" y="732" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds; the fund's rebalance_threshold_bps (200) and its recorded holdings, which equal the drawn vault balances.</text>
+  <text x="16" y="743" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">Alice created her TSLAx and NVDAx accounts before the call.</text>
   <path d="M 237,238 C 332,248 400,258 430,300 C 443,318 440,380 440,450 L 440,545 C 440,558 440,569 444,569 L 461,569" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <path d="M 288,400 C 282,370 264,340 240,318" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>
   <path d="M 266,492 L 222,411.64" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#vault-wd-arr)"/>

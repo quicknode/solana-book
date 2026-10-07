@@ -25,8 +25,8 @@
   <g opacity="0.3">
   <circle cx="16" cy="247.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="26" y="241.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
-  <text x="26" y="250.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OUTCOME ADDRESS +</text>
-  <text x="26" y="259.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
+  <text x="26" y="250.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">GLOWBUGS 3 OUTCOME +</text>
+  <text x="26" y="259.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
   <rect x="8" y="265.917" width="110" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(16,269.917)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="36" y="280.42" font-size="10.5" font-weight="bold">Alice's bet</text>
@@ -52,8 +52,8 @@
   <g opacity="0.3">
   <circle cx="133" cy="253.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="143" y="247.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
-  <text x="143" y="256.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OUTCOME ADDRESS +</text>
-  <text x="143" y="265.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
+  <text x="143" y="256.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">GLOWBUGS 3 OUTCOME +</text>
+  <text x="143" y="265.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS</text>
   <rect x="125" y="271.644" width="105" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(133,275.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="153" y="286.14" font-size="10.5" font-weight="bold">Bob's bet</text>
@@ -79,8 +79,8 @@
   <g opacity="0.3">
   <circle cx="245" cy="263.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="255" y="258.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
-  <text x="255" y="267.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OUTCOME ADDRESS +</text>
-  <text x="255" y="276.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
+  <text x="255" y="267.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">QUIET FLOOR OUTCOME +</text>
+  <text x="255" y="276.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
   <rect x="237" y="282.062" width="111" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(245,286.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="265" y="296.56" font-size="10.5" font-weight="bold">Carol's bet</text>
@@ -181,9 +181,6 @@
   <text text-anchor="end" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="398" y="420.72" font-size="10.5" font-weight="bold" fill="#1e7a3c">4 USDC (the fee)</text>
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="389.51" y="436.72" font-size="9" font-style="italic" fill="#444" text-anchor="end">signed by the event PDA</text>
   <text x="194" y="372" font-size="10.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs settle_event(): Glowbugs 3 wins</text>
-  <text x="22" y="470" font-size="9" fill="#444" font-style="italic">losing pool: total_pool 600 &#8722; winning_pool 400 = 200</text>
-  <text x="22" y="484" font-size="9" fill="#444" font-style="italic">fee: 2% of 200 = 4 (u128, rounded up)</text>
-  <text x="22" y="498" font-size="9" fill="#444" font-style="italic">distributable: 200 &#8722; 4 = 196</text>
   <g class="coin" transform="translate(419,416.52)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="514" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>

@@ -9,9 +9,9 @@ This isn't a book about how Solana is built. It's about **building on it**. It i
 Financial products built on Solana have properties no traditional financial system offers:
 
 - **Settlement is atomic, instant, and global.** A trade and its settlement can be the same event, whether the two parties are in the same city or on different continents, and no failure leaves one side paid and the other empty-handed. There is no interval between one side paying and the other receiving, so nobody can step in during it.
-- **Everyone reads the same accounts.** A traditional trade is recorded in two firms' separate books, and departments exist to check the copies against each other. Onchain there are no copies: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
+- **Everyone reads the same accounts.** A traditional trade is recorded in two firms' separate books, and departments exist to check the copies against each other. Onchain there is one set of books: a market's state is its accounts, and every party reads the same ones. There is nothing to reconcile.
 - **Transactions cost a fraction of a cent**, regardless of the size of the transfer. Moving dollars the traditional way costs a percentage of the amount. Think back to the last time you bought a coffee: the café that sold it paid roughly 1.5% to 3.5% of the price in card fees, plus a fixed 10 to 30 cents.[^card-fees] Sending $200 across a border costs about $13 on average, and more than $40 on the worst corridors.[^remittance-scope] A flat fee makes it worth sending payments that were too small to bother with.
-- **Markets are tradable 24 x 7.** No opening bell, no weekend close, no holiday calendar.[^after-hours]
+- **Markets trade around the clock, every day.** No opening bell, no weekend close, no holiday calendar.[^after-hours]
 - **Assets are programmable.** The rules an institution enforces with staff and procedure (release the escrow when both sides have delivered, accrue the interest, liquidate the underwater loan, pay the winners their share) run as instruction handlers: code anyone can invoke and nobody has to remember. Every chapter of this book builds rules like these.
 - **Blockchains can move assets of any kind.** As of mid-2026, Solana is the most popular blockchain for trading real-world assets: equities, bonds, commodities, real estate, and exotics.[^rwa-scope] Solana is also one of the most active chains for trading crypto-native assets such as BTC.[^btc-scope]
 - **A deployed program reaches every user at once.** A traditional fund spends months working through intermediaries before it reaches investors: an exchange listing, market makers, brokerage approvals. Each gatekeeper adds cost and delay. A deployed program is reachable by every wallet on the network, and by every other program, the moment it exists.
@@ -21,7 +21,7 @@ Open networks use these properties for permissionless markets anyone can join. T
 
 ## A Long-Lived Technical Book for Solana
 
-Some technical books are out of date as soon as the release they document is. A smaller number stay useful for decades. *TCP/IP Illustrated* is still the book network engineers hand each other, thirty years on. *The UNIX and Linux System Administration Handbook* has outlasted every operating system release it ever mentioned. *Mastering Bitcoin* remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way *TCP/IP Illustrated* drew them. Processes still fork on Unix and Linux. The mental models survive even as the implementation evolves. This book provides the same long-term knowledge for building financial products on Solana.
+Some technical books are out of date as soon as the release they document is. A smaller number stay useful for decades. *TCP/IP Illustrated* is still the book network engineers hand each other, thirty years on. *The UNIX and Linux System Administration Handbook* has outlasted every operating system release it ever mentioned. *Mastering Bitcoin* remains the standard text on its subject. What these books share is a decision to teach the primitive layer that does not change. Packets still flow the way *TCP/IP Illustrated* drew them. Processes still fork on Unix and Linux. This book provides the same long-term knowledge for building financial products on Solana.
 
 Solana changes quickly: network releases, framework versions, chain constants, and tools change often. A book that prints them is wrong within a year, and financial software is the worst possible place to learn from stale material.
 
@@ -74,7 +74,7 @@ To keep the balances easy to track, every character starts every chapter with th
 
 The order in which this book introduces Solana concepts, and the visual language its figures use for accounts and their changes, were developed for the Solana Foundation's Professional Education Program. Most of the program chapters in Part II began as videos the author produced for Quicknode's YouTube channel, and their first drafts were transcripts of those videos, rewritten for the page. The manuscript was written by hand.
 
-AI tools did the mechanical checking: spelling and grammar, terminology and naming across chapters, figures and the companion repository, and the diagrams' numbers against program state.
+AI tools did the mechanical checking: spelling and grammar, terminology and naming across chapters, every name in the prose and figures against the companion repository, and the diagrams' numbers against program state.
 
 ## Corrections Are Welcome, and Expected
 
@@ -90,7 +90,7 @@ Part I opens with the computer itself: one giant machine that spans the world, a
 
 [^most-active]: Artemis counted 4.1 million daily active addresses and 146 million transactions on Solana on August 31, 2026, against 1.7 million addresses on BNB Chain and under half a million on Ethereum. See [classic.artemis.ai/asset/solana](https://classic.artemis.ai/asset/solana).
 
-[^card-fees]: The 1.5% to 3.5% is a United States café's all-in acceptance cost in 2026, which is the processor's margin on top of interchange. Visa's published US interchange alone, effective April 18, 2026, runs from 1.19% plus 10 cents for a debit card at a restaurant to about 2.7% for a credit card, and the Federal Reserve's Regulation II caps regulated debit at 0.05% plus 21 cents. Source: Visa, [usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf](https://usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf).
+[^card-fees]: The 1.5% to 3.5% is a United States café's all-in acceptance cost in 2026: interchange plus the processor's margin. Visa's published US interchange alone, effective April 18, 2026, runs from 1.19% plus 10 cents for a debit card at a restaurant to about 2.7% for a credit card, and the Federal Reserve's Regulation II caps regulated debit at 0.05% plus 21 cents. Source: Visa, [usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf](https://usa.visa.com/dam/VCOM/download/merchants/visa-usa-interchange-reimbursement-fees.pdf).
 
 [^remittance-scope]: In the third quarter of 2025 thirteen remittance corridors cost more than 20%, nine of them sending out of sub-Saharan Africa, against a global average of 6.36%. Source: The World Bank, Remittance Prices Worldwide issue 54, [remittanceprices.worldbank.org](https://remittanceprices.worldbank.org).
 

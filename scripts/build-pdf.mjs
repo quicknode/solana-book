@@ -1072,8 +1072,9 @@ const headingFigurePairs = await page.evaluate(() => {
 const printed = await page.pdf({ preferCSSPageSize: true });
 await browser.close();
 
-// Chromium's print pipeline rounds the sheet up to the next 1/300in dot, so a
-// 7.44 x 9.69in page comes out 0.24pt wider and taller than asked for, whatever
+// Chromium's print pipeline adds one 1/300in dot to the sheet in each direction,
+// even though the trim is already a whole number of dots, so a 7.44 x 9.69in
+// page comes out 0.24pt wider and taller than asked for, whatever
 // units the size is written in and whether it comes from the CSS or from pdf()'s
 // own width and height. It anchors the content at the top left, so the slack
 // lands on the right and at the bottom, where it shows on the cover as a white

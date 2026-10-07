@@ -1,6 +1,6 @@
 # Chapter 11: Escrow
 
-Escrow lets two people swap tokens without trusting each other or paying a middleman, with three instruction handlers. It also teaches what later programs reuse: a vault only the program can sign for, terms stored in an account, a closing handler for every state, and amounts counted in minor units.
+With three instruction handlers, an escrow program lets two people swap tokens without trusting each other or paying a middleman. It also teaches what later programs reuse: a vault only the program can sign for, terms stored in an account, a closing handler for every state, and amounts counted in minor units.
 
 The chapters that follow add what escrow does not have: a formula that sets a price, an outcome that decides a payout, time and interest, and an operator who must be constrained.
 
@@ -12,13 +12,13 @@ Alice starts, like every character in this book, with one SOL and 1,000 USDC; sh
 
 ![](figures/escrow-swap-intent.svg)
 
-The naive version is that Alice sends Bob her USDC and waits, and Bob can take the USDC and leave. An **escrow** lets Alice and Bob swap without having to trust each other.
+The naive version is that Alice sends Bob her USDC and waits, and Bob can take the USDC and leave. An **escrow** holds one side's tokens until the other side pays.
 
 Traditional finance solves this with a trusted third party. Alice sends her funds to the third party, which holds them in escrow until Bob has done the same, then distributes both sides to their destinations. And the third party charges a fee for the service, taken from the amount it holds.
 
 ![](figures/escrow-traditional-escrow.svg)
 
-A Solana program replaces the third party. The program holds Alice's tokens in a vault, and only the program's own code can move them out of it. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no private key that can sign for the vault. Each side receives one hundred percent of what the other side offered. Solana's transaction fees still apply, but they are a small fraction of a cent regardless of the size of the trade.
+A Solana program replaces the third party. The program holds Alice's tokens in a vault, and only the program's own code can move them out of it. There is no operator in this program at all: whoever deploys it earns nothing from it, takes no fee, and holds no private key that can sign for the vault. Each side receives one hundred percent of what the other side offered. Solana's transaction fee still applies, with a base fee of 5,000 lamports per signature at the time of writing, whatever the size of the trade.
 
 ![](figures/escrow-program-swap.svg)
 
@@ -33,7 +33,7 @@ The deal is priced in minor units. USDC has six decimals, so Alice's 250 USDC is
 
 ## The Instruction Handlers
 
-The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. As the *State Machines* chapter requires, an open offer can be ended by either side.
+The program has three instruction handlers, and together they form the offer's complete state machine: `make_offer()` creates the offer and specifies what is wanted in return, and the offer stays open until someone else runs `take_offer()` or the maker runs `cancel_offer()`. As the *State Machines* chapter requires, the maker can get their tokens out of an open offer even if nobody takes it.
 
 ![](figures/escrow-state-machine.svg)
 
@@ -45,7 +45,7 @@ Alice calls `make_offer()` with three arguments: her chosen `id`, `token_a_offer
 
 This one transaction created the two accounts the deal needs, and a third for Alice, covered below.
 
-The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `state/offer.rs`:
+The **offer account** stores what Alice wants in return. It is the program's custom data, defined in `anchor-v1/programs/escrow/src/state/offer.rs`:
 
 - `id`, the number Alice chose, so one maker can have many offers open at once
 - `maker`, Alice's address, recorded so the program knows who may cancel and who receives payment
@@ -75,7 +75,7 @@ Bob calls `take_offer()`. The offer account Bob passes names the offer he is tak
 
 ![](figures/escrow-take-offer.svg)
 
-Alice takes no part in this transaction. She does not need to be awake, online, or anywhere in particular. She signed her part when she made the offer; the program does the rest.
+Alice takes no part in this transaction. She does not need to be online: her signature on `make_offer()` already moved her USDC into the vault.
 
 The handler code runs three steps:
 
@@ -89,17 +89,17 @@ Both sides now hold what the other offered.
 
 ### The Maker Cancels the Offer
 
-If nobody takes the offer, Alice needs her USDC back. Without a handler that returns them, her tokens would sit in the vault forever. That handler is `cancel_offer()`.
+If nobody takes the offer, Alice needs her USDC back. Without a handler that returns it, her USDC would stay in the vault. That handler is `cancel_offer()`.
 
 ![](figures/escrow-cancel-offer.svg)
 
-The constraints make it maker-only: the signer must match the maker address stored in the offer. Bob cannot cancel Alice's offer, which `test_cancel_offer_rejects_non_maker` checks. `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, and closes both the vault and the offer account, returning both rent deposits to Alice.
+The constraints make it maker-only. The offer's address is re-derived from the signer's address, so when Bob signs, the seeds no longer match and Anchor refuses with `ConstraintSeeds`, which `test_cancel_offer_rejects_non_maker` checks. A stored-address check also compares the signer with the offer's stored maker. `cancel_offer()` mirrors the second half of `take_offer()`: it signs with the offer's seeds to move the full vault balance back to `maker_token_account_a`, and closes both the vault and the offer account, returning both rent deposits to Alice.
 
 ## The Math: No Division, So No Rounding
 
-The offer is all-or-nothing, so there are no partial fills, no division, and no rounding policy to decide. The amounts the maker states are the amounts that move. There is no multiplication either. Every transfer goes through the shared `transfer_tokens()` helper, which uses `transfer_checked()`, the decimals-checking transfer the *Tokens* chapter describes.
+The offer is all-or-nothing, so there are no partial fills, no division, and no rounding policy to decide. Token B moves in the amount the offer stores; token A moves as the vault's whole balance, which is the offered amount unless someone has transferred more in. There is no multiplication either. Every transfer goes through the shared `transfer_tokens()` helper, which uses `transfer_checked()`, the decimals-checking transfer the *Tokens* chapter describes.
 
-The lamport math that remains is rent, under the *State Machines* chapter's rule: whoever opens an account pays its deposit and gets it back. Alice fronts the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). When her token B account already existed, she gets back exactly the lamports she paid in, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
+The lamport math that remains is rent, under the *State Machines* chapter's rule: whoever opens an account pays its deposit and gets it back. Alice pays the rent deposits for the offer account and the vault (and for her own token B account if it did not exist). When her token B account already existed, she gets back exactly the lamports she paid in, and the tests assert that to the lamport. Bob pays rent only for his own token A account if he never held that token, and that account remains his afterward. Nobody's rent ends up with the other party.
 
 ## The Invariants: Tokens Are in Exactly One Place
 
@@ -109,7 +109,7 @@ Five things must hold before and after every handler:
 - The vault holds at least `token_a_offered_amount` from the end of `make_offer()` until `take_offer()` or `cancel_offer()` runs, and both handlers empty the vault completely before closing it. A direct donation could push the balance above that amount. The only check that reads the balance compares it with the taker's `minimum_token_a_out`, and whatever is in the vault goes to the taker on a take or back to the maker on a cancel.
 - The offer account's data never changes after `handle_save_offer()` writes it. There is no update handler.
 - Only the taker's signature moves token B, and only the offer PDA's signature moves the vault.
-- Rent returns to whoever paid it, on every path.
+- The offer's and the vault's rent return to the maker on every path.
 
 ## The Failure Modes: Every Substitution Is Checked
 
@@ -121,20 +121,20 @@ Five things must hold before and after every handler:
   - **A mismatched mint.** Bob creates a token of his own, mints himself 100,000,000 minor units of it, and passes its mint as `token_mint_b` and his account of it as `taker_token_account_b`, hoping to pay Alice in a token worth nothing. The stored-address check compares the mint passed in against the `token_mint_b` recorded in the offer, and rejects it.
 
   Each is blocked by a constraint: associated token account derivation binds each token account to its owner and mint, stored-address checks bind the maker and mints to the offer's stored data, and seeds plus bump bind the offer to the program. The *Adversary* chapter shows what happens to programs that skip these checks.
-- **Unauthorized cancel.** `cancel_offer()` requires the maker's signature and checks it against the offer's stored maker.
-- **Degenerate offers.** An offer with zero tokens on one side, or of a token for a different amount of itself, means someone is about to be cheated. `make_offer()` refuses an offer of zero tokens on either side with `ZeroAmount` (`test_make_offer_rejects_zero_offered_amount` and `test_make_offer_rejects_zero_wanted_amount`). An offer of a token for itself never reaches the handler: with one mint, the maker's token A and token B accounts are the same account, and Anchor refuses the same writable account twice with `ConstraintDuplicateMutableAccount`, which `test_make_offer_rejects_same_mint` checks.
+- **Unauthorized cancel.** `cancel_offer()` re-derives the offer's address from the signer's address, and checks the signer against the offer's stored maker.
+- **Degenerate offers.** An offer with zero tokens on one side gives one party something for nothing, and an offer of a token for itself is not a swap. `make_offer()` refuses an offer of zero tokens on either side with `ZeroAmount` (`test_make_offer_rejects_zero_offered_amount` and `test_make_offer_rejects_zero_wanted_amount`). An offer of a token for itself never reaches the handler: with one mint, the maker's token A and token B accounts are the same account, and Anchor refuses the same writable account twice with `ConstraintDuplicateMutableAccount`, which `test_make_offer_rejects_same_mint` checks.
 
 ## Testing Considerations
 
-The tests live in `tests/test_escrow.rs`, creating the wallets, mints, and token accounts each scenario needs. Every piece of program state in the tests is created through the program's own instruction handlers, never injected, as the testing section of the *Operating Financial Software* chapter requires.
+The tests live in `anchor-v1/programs/escrow/tests/test_escrow.rs`, creating the wallets, mints, and token accounts each scenario needs. Every piece of program state in the tests is created through the program's own instruction handlers, never injected, as the testing section of the *Operating Financial Software* chapter requires.
 
 - `test_make_offer` calls `make_offer()` and then checks both effects: the vault holds the offered amount, and the offer account's stored fields (ID, maker) match what Alice sent.
-- `test_take_offer` runs the full happy path and asserts both directions of the swap in both tokens: Bob gains 250 USDC and pays his 1 TSLAx, and Alice gains 1 TSLAx and is left with 750 USDC. Assert both directions of every symmetric flow, as the testing section of the *Operating Financial Software* chapter says. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so checks that no rent ended up with the wrong party.
+- `test_take_offer` runs the full happy path and asserts both directions of the swap in both tokens: Bob gains 250 USDC and pays his 1 TSLAx, and Alice gains 1 TSLAx and is left with 750 USDC. It then asserts the vault and offer accounts are gone, and that Alice's lamports round-tripped exactly, and so checks that no rent ended up with the wrong party.
 - `test_take_offer_rejects_switched_offer` and `test_take_offer_rejects_switched_offer_wanting_more_token_b` cancel and remake the offer between Bob building his take and sending it. Each asserts the take fails with `OfferTermsChanged`, Bob still holds his 1,000 USDC and 1 TSLAx, Alice received no TSLAx, and the switched offer's USDC is still in the vault.
 - `test_cancel_offer` asserts Alice's token A balance returns to its pre-offer value and her rent comes back in full.
-- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails. Test the code path the bug lives in, and start with the one where tokens go to the wrong person.
+- `test_cancel_offer_rejects_non_maker` is the adversarial case: Bob attempts to cancel Alice's offer and the transaction fails.
 
-The testing section of the *Operating Financial Software* chapter builds the general method. The `kani-proofs` crate in the companion repository also model-checks the conservation invariants over every possible value, with harnesses like `proof_take_offer_conserves_value`, `proof_take_offer_honors_taker_terms`, and `proof_cancel_offer_returns_all_to_maker`. The crate models the native version's transfer-and-close arithmetic as pure functions, as the model-checking section of the *Operating Financial Software* chapter explains.
+The testing section of the *Operating Financial Software* chapter builds the general method. The `kani-proofs` crate in the companion repository also model-checks the escrow's invariants over every possible value, with harnesses like `proof_take_offer_conserves_value`, `proof_take_offer_honors_taker_terms`, and `proof_cancel_offer_returns_all_to_maker`. The crate models the native version's transfer-and-close arithmetic as pure functions, as the model-checking section of the *Operating Financial Software* chapter explains.
 
 ## What You Learnt from Building the Escrow
 
@@ -147,4 +147,4 @@ The escrow gave you four concepts:
 - **State transitions checked against signatures and stored terms.** Who signed, and what the stored data says, decide what may happen next; stored-address checks, seeds, and ATA derivation close every substitution.
 - **Every state has a handler that empties the vault.** `take_offer()` and `cancel_offer()` both empty and close everything, returning the tokens and the account rent deposits to whoever they belong to, so neither is stranded.
 
-In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault: the maker takes them the moment the target is reached, and if the deadline passes first, every contributor takes theirs back. Most programs in the rest of this part keep this chapter's shape (a vault whose authority is a PDA, and a handler in every state that empties it) and change only what decides who is paid.
+In the *Fundraiser* chapter we will build an escrow with many depositors instead of one maker. Contributions collect in one vault: the maker can claim them once the target is reached, and if the deadline passes first, every contributor takes theirs back. Most programs in the rest of this part keep this chapter's shape (a vault whose authority is a PDA, and a handler in every state that empties it) and change only what decides who is paid.

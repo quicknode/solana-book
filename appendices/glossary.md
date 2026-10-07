@@ -34,7 +34,11 @@ Solana's consensus mechanism, which replaced Tower BFT. Under it the [commitment
 
 ### American option / European option
 
-An American option may be exercised at any time up to its expiry; a European option only at expiry. The *Options* chapter builds the American kind.
+An American option may be exercised at any time before its expiry; a European option only at expiry. The *Options* chapter builds the American kind.
+
+### AMM (automated market maker)
+
+A venue where a trade fills at once against tokens the venue holds, at a price a formula or an oracle sets, instead of against resting orders. The *Constant-Product AMM* chapter builds the kind that prices from a formula over its two [reserves](#reserve), and the *Prop AMM* chapter the kind that prices from an oracle; see [constant-product AMM](#constant-product-amm) and [proprietary AMM](#proprietary-amm-prop-amm).
 
 ### Anchor
 
@@ -114,7 +118,7 @@ A [put](#put) whose writer has supplied enough of the quote token, USDC here, to
 
 ### ceil (ceiling)
 
-Rounding up to the next whole [minor unit](#minor-unit). The direction used for anything a user owes, a debt or a fee, so it never rounds down into a shortfall the program absorbs: every fee a user pays in this book's programs ceils, and the user's side takes what is left. A split of a fee already collected may floor, as the perpetual futures venue's insurance-fund cut does, since either direction keeps the whole fee with the program. The opposite of [floor](#floor). See [rounding](#rounding).
+Rounding up to the next whole [minor unit](#minor-unit). The lending market ceils a borrower's debt, and every fee a user pays in this book's programs ceils, so neither rounds down into a shortfall the program absorbs. A split of a fee already collected may floor, as the perpetual futures venue's insurance-fund cut does, since either direction keeps the whole fee with the program. The perpetual futures venue truncates a trader's loss and funding toward zero instead; see the *Perpetual Futures* chapter. The opposite of [floor](#floor). See [rounding](#rounding).
 
 ### checked arithmetic
 
@@ -160,6 +164,10 @@ An oracle's own statement of its uncertainty: a price of $250 ± $8 is a differe
 
 A program with authority that an attacker tricks into using it for someone else, usually by passing a different account from the one the program expects. Checking each account's signer, owner, [stored address](#stored-address-check), and PDA derivation stops it. See the *Adversary* chapter.
 
+### constant-product AMM
+
+An [AMM](#amm-automated-market-maker) that prices each trade so the product of its two [reserves](#reserve), [K](#k), holds steady while the trade is priced: output = taxed_input × other_reserve ÷ (this_reserve + taxed_input). See the *Constant-Product AMM* chapter.
+
 ### counterparty
 
 The party on the other side of your trade, and the one who owes you when you win. On an [order book](#order-book) the counterparty is another trader; in this book's pooled venues the program's pool is the counterparty to everyone at once. See the *Perpetual Futures* chapter.
@@ -178,7 +186,7 @@ One program calling another onchain, such as any program calling the token progr
 
 ### crank
 
-A permissionless instruction handler that performs maintenance work nobody owns (accruing a lending reserve's interest, refreshing a borrower's collateral value), designed so anyone, typically a bot on a schedule, can turn the handle.
+A permissionless instruction handler that performs maintenance work nobody owns (accruing a lending reserve's interest, refreshing a borrower's collateral value), designed so anyone can turn the handle: each client in its own transaction before its own instruction, as the lending market's clients do, or a bot on a schedule. See the *Lending and Borrowing* chapter.
 
 ### critbit tree
 
@@ -200,9 +208,17 @@ Holding assets that belong to someone else. A program takes custody when tokens 
 
 The number of decimal places in one major unit of a token, declared on the mint: USDC has 6, so a dollar is 1,000,000 [minor units](#minor-unit); SOL has 9.
 
+### deficit
+
+On a perpetual futures venue, the loss beyond a liquidated position's collateral. The *Perpetual Futures* chapter's program pays it from the insurance fund first, and from the LPs' liquidity only after the fund is empty.
+
 ### degenerate value
 
 A value at which a formula or a check stops meaning what it usually means, almost always zero or empty. An AMM reserve of zero lets the [K](#k) check pass vacuously (the *Constant-Product AMM* chapter); a price of zero or below means a broken price feed (the *Offchain Truth* chapter); an escrow offer with nothing on one side is refused by `make_offer()` with `ZeroAmount`. See [invariant](#invariant).
+
+### delegate
+
+An address a token account's owner has approved to move that account's tokens, up to the amount approved. See [permanent delegate](#permanent-delegate) and the *Tokens* chapter.
 
 ### discriminator
 
@@ -218,7 +234,7 @@ Sub-unit remainders left over by integer division: a fraction smaller than one [
 
 ### epoch
 
-A period of 432,000 slots: exactly a day at a 200 millisecond slot, and a little longer in practice because real slots run long. The schedule of [leaders](#leader) is drawn for each epoch, and some changes to the network, a new slot length among them, take effect only when a new epoch begins.
+A period of 432,000 slots, a day at the 200-millisecond target. The schedule of [leaders](#leader) is drawn for each epoch, and some changes to the network, a new slot length among them, take effect only when a new epoch begins.
 
 ### equity (position)
 
@@ -242,7 +258,7 @@ The moment an [option](#option)'s right lapses: the holder may exercise before i
 
 ### exponentiation by squaring
 
-Computing (1 + r)ⁿ, a per-second rate r compounded over n seconds, in log₂(n) multiplications instead of n of them, each one checked and floored the same way, so a rate can be compounded over any number of elapsed seconds in a single update. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
+Computing (1 + r)ⁿ, a per-second rate r compounded over n seconds, in log₂(n) multiplications instead of n of them, so a rate can be compounded over any number of elapsed seconds in a single update. Each multiplication is checked and rounded up, so the result is never below the exact power. See [Newton's method (integer square root)](#newtons-method-integer-square-root) for roots, and the *Arithmetic of Money* chapter.
 
 ### faucet
 
@@ -292,7 +308,7 @@ Rounding to the nearest whole unit with exact halves going up, which is what Rus
 
 A stop in block production. A halt comes from a fault such as a bug in the validator software, and ends when the validators restart the chain together. Slots do not advance during a halt and wall-clock time does, so a halt pulls the two clocks apart: the *Time* chapter covers what that does to accrual, freshness windows, and deadlines, and how the `LastRestartSlot` sysvar lets a program detect that one happened.
 
-### health / health factor
+### health
 
 A borrower's distance from liquidation: the value of their collateral, scaled by each asset's liquidation threshold, against the value of their debt. Past the boundary, the position may be liquidated. See the *Lending and Borrowing* chapter.
 
@@ -308,9 +324,13 @@ A program's interface definition: the file Anchor generates listing every [instr
 
 The gap between an LP position's value and what holding the tokens would be worth, caused by the pool mechanically selling the rising token. Realized only at withdrawal. See the *Constant-Product AMM* chapter.
 
+### in the money / out of the money
+
+An option worth exercising is **in the money**: a call whose underlying trades above the [strike](#strike), or a put whose underlying trades below it. One that is not is **out of the money**. See the *Options* chapter.
+
 ### index
 
-The lending field's word for a stored number that grows over time and that every claim on a pool is a multiple of. Aave's borrow index, Compound's borrow index, and Save's cumulative borrow rate are all one. This book calls the lending market's index the [borrow accumulation factor](#borrow-accumulation-factor), and the perpetual futures venue's `cumulative_funding` is another: a position's funding owed is its size times the change in that index since it opened.
+The lending field's word for a stored number that accumulates over time and that every claim on a pool is a multiple of. Save's cumulative borrow rate is one. This book calls the lending market's index the [borrow accumulation factor](#borrow-accumulation-factor), and the perpetual futures venue's `cumulative_funding` is another. That one rises while longs are heavier and falls while shorts are, and a position's funding owed is its size times the change in that index since it opened.
 
 ### inflation attack
 
@@ -338,11 +358,15 @@ Capital a venue sets aside, usually from a share of its fees, to absorb losses l
 
 ### invariant
 
-A condition that must hold before and after every state change: a pool's [K](#k) must not decrease across a swap, the vault equals what the book owes, total in equals total out. An **invariant test** asserts one after every state change, at whatever values the test chooses, and a model checker checks one against every possible value. See the *Operating Financial Software* chapter.
+A condition that must hold before and after every state change: a pool's [K](#k) must not decrease across a swap, the vault covers what the book owes, total in equals total out. An **invariant test** asserts one after every state change, at whatever values the test chooses, and a model checker checks one against every possible value. See the *Arithmetic of Money* chapter, and the *Operating Financial Software* chapter for invariant tests.
 
 ### inventory
 
 The tokens a [market maker](#market-maker) holds and quotes against. A prop AMM prices from an oracle and fills out of inventory rather than off a curve. See the *Prop AMM* chapter.
+
+### junior
+
+See [senior / junior](#senior--junior).
 
 ### K
 
@@ -378,7 +402,7 @@ An order with a price it refuses to cross: buy at or below, sell at or above.
 
 ### liquidation
 
-Forcibly repaying part of an unhealthy loan in return for some of its collateral at a bonus to the liquidator, to keep the market solvent. The close factor caps how much one call repays.
+Forcibly reducing or closing a loan or position whose collateral no longer covers it safely, with whoever does it paid for the work. In the *Lending and Borrowing* chapter the liquidator repays part of an unhealthy loan and takes some of its collateral at a [bonus](#liquidation-bonus), and the [close factor](#close-factor) caps how much one call repays. In the *Perpetual Futures* chapter the liquidator closes the whole position once its equity is at or below the [maintenance margin](#maintenance-margin), and is paid a fee from that equity.
 
 ### liquidation bonus
 
@@ -390,7 +414,11 @@ The debt-to-collateral ratio at which a position becomes liquidatable. Never bel
 
 ### liquidity provider (LP)
 
-Someone who deposits assets into a pool for traders to trade against, earning fees in exchange.
+Someone who deposits assets into a pool for traders to trade against, earning the pool's fees on an AMM, or the traders' net losses and funding on the perpetual futures venue.
+
+### loader
+
+The Solana program that deploying a program invokes: it writes the new program's compiled code into accounts of its own. See the *Core Building Blocks of Solana* chapter.
 
 ### loan-to-value (LTV)
 
@@ -398,7 +426,7 @@ The fraction of collateral value that may be borrowed against it, for example 75
 
 ### long / short
 
-The two directions a position can face: a long profits when the price rises, a short when it falls. On a perpetual futures venue the side is part of the position's identity: the heavier side pays the [funding rate](#funding-rate) and the lighter side receives it.
+The two directions a position can face: a long profits when the price rises, a short when it falls. On a perpetual futures venue the side is one of the position account's PDA seeds, so a trader holds at most one long and one short per market, and the heavier side pays the [funding rate](#funding-rate) and the lighter side receives it.
 
 ### lot
 
@@ -426,11 +454,15 @@ The onchain equivalent of a mutual fund: pooled deposits, a mandate fixing which
 
 ### manager
 
-In a fund, the authority that sets the allocation and earns the management fee, and that can do nothing else: no instruction handler gives them a path to the assets. See [curator](#curator) and the *Managed Fund* chapter.
+In a fund, the authority that sets the allocation and earns the management fee. No instruction handler pays a vault's tokens to the manager, except what their fee shares redeem through `withdraw()`, the same as any holder's. See [curator](#curator) and the *Managed Fund* chapter.
 
 ### mantissa
 
 The digits of a price stated separately from its exponent: a price feed holding mantissa 25,000,000 at exponent −5 means $250. The *Lending and Borrowing* chapter's price feed account stores one as `price_mantissa`.
+
+### margin
+
+Collateral posted against an obligation or a leveraged position. Traditional options venues let a writer post only a fraction of the obligation as margin; the *Options* chapter's writers post all of it. For the perpetual futures sense, see [initial margin](#initial-margin) and [maintenance margin](#maintenance-margin).
 
 ### mark to market
 
@@ -462,7 +494,7 @@ Handing a function to a model checker like Kani, which tries every possible valu
 
 ### multisig
 
-An account that records a set of owners and how many must agree before it acts, used wherever one person holding a private key is too much trust: a mint authority, a market's fee authority, a program's upgrade authority.
+A program that records a set of owners and how many of them must approve, and signs only once enough have, used wherever one person holding a private key is too much trust: a mint authority, a market authority, a program's upgrade authority.
 
 ### NAV (net asset value)
 
@@ -490,7 +522,7 @@ Outside the blockchain: a bank balance, a match result, a price on an exchange. 
 
 ### onchain
 
-Stored or executed on the blockchain itself: an account's data, a program's code, a transaction's effects. The opposite is [offchain](#offchain). Spelled as one word, like "online"; "on‑chain" will look as dated as "on‑line" does now.
+Stored or executed on the blockchain itself: an account's data, a program's code, a transaction's effects. The opposite is [offchain](#offchain). Spelled as one word, like "online".
 
 ### open interest
 
@@ -523,6 +555,10 @@ A betting structure with no bookmaker: all stakes pool together, and winners spl
 ### PDA (program derived address)
 
 An address computed from a program's ID and chosen seeds. A PDA is not a public key, so it has no private key, and no signature for it can ever exist. Only the deriving program can "sign" as it, by presenting the seeds for the runtime to recheck.
+
+### permanent delegate
+
+A Token Extensions mint feature naming an authority that can move any holder's tokens of that mint, a seizure power some regulated assets require. See the *Tokens* chapter.
 
 ### perpetual future
 
@@ -560,6 +596,10 @@ The order-matching fairness rule: better-priced orders fill first, and among equ
 
 The amount lent or borrowed, before any interest. A lending program stores each loan's principal divided by the [borrow accumulation factor](#borrow-accumulation-factor) at the time of borrowing, and computes the live debt by multiplying it by the current factor.
 
+### priority fee
+
+An extra fee per [compute unit](#compute-unit) that a transaction may add to be processed sooner, paid on every unit the transaction requests. See the *Core Building Blocks of Solana* chapter.
+
 ### profit warm-up
 
 On a perpetual futures pool, the number of slots a position must be open before its profit can be taken. A trader who pushes the oracle to a false price cannot open a position and cash out the profit before the price has had that long to correct. Losses are not delayed. See the *Perpetual Futures* chapter.
@@ -588,6 +628,14 @@ A [put](#put) bought by someone who already holds the underlying, as insurance a
 
 An [option](#option) giving its holder the right to sell the underlying at the [strike](#strike). Its writer's obligation is to buy; see [cash-secured put](#cash-secured-put).
 
+### Pyth
+
+A [price feed](#price-feed) network that aggregates many independent publishers into one signed price with a [confidence interval](#confidence-interval). **Pyth Core** updates are signed by a multisig of five private keys Pyth holds, and anyone can post one to Solana for the [Pyth Receiver program](#pyth-receiver-program) to verify. **Pyth Pro**, the paid low-latency product, signs each price with a single private key, and the client carries the signed message into its own transaction. See the *Offchain Truth* chapter.
+
+### Pyth Receiver program
+
+The program that verifies a Pyth Core update's signatures and writes a `PriceUpdateV2` account it owns, which other programs read. See the *Offchain Truth* chapter.
+
 ### quote
 
 See [quote token](#quote-token).
@@ -606,11 +654,11 @@ A per-participant account, usually at a PDA, recording what the program owes one
 
 ### rent
 
-The deposit an account holds to pay for its own storage. Rent-exempt accounts hold enough to stay forever; closing an account reclaims the deposit.
+The deposit an account holds to pay for its own storage. An account funded to the **rent-exempt** minimum stays until it is closed, and an account cannot be created with less today; closing an account reclaims the deposit.
 
 ### reserve
 
-In a lending market, the per-asset pool: its liquidity vault, its share mint, its interest state, and its risk configuration.
+In an AMM, one of the two token balances a pool prices from. In a lending market, the per-asset pool: its liquidity vault, its share mint, its interest state, and its risk configuration.
 
 ### reserve factor
 
@@ -622,11 +670,11 @@ A limit order that did not match on arrival and now waits on the book, funded an
 
 ### rounding
 
-The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder always stays with the program. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
+The decision every integer division makes about the remainder it cannot represent. Onchain this is policy rather than arithmetic: [floor](#floor) what the program pays out and [ceil](#ceil-ceiling) what the user owes, so the remainder stays with the program. The perpetual futures venue is the exception: it truncates a trader's loss and funding toward zero. See [dust](#dust), [half-up](#half-up), and the *Arithmetic of Money* chapter.
 
 ### RPC endpoint
 
-The URL a program or wallet sends its transactions to: a server holding a [cluster](#cluster)'s state and relaying transactions into it. The endpoint is what decides which cluster the code is talking to.
+The URL an app or wallet sends its transactions to: a server holding a [cluster](#cluster)'s state and relaying transactions into it. The endpoint is what decides which cluster the code is talking to.
 
 ### RWA (real-world asset)
 
@@ -648,6 +696,14 @@ One of the inputs a program combines with its program ID to derive a [PDA](#pda-
 
 A market maker quoting different spreads to different flow: tighter for flow it believes is uninformed, wider or none for flow it believes is [informed](#informed-flow). The *Prop AMM* chapter covers it as a defense against adverse selection.
 
+### self-liquidation
+
+A borrower liquidating their own obligation. The *Lending and Borrowing* chapter's market allows it while the obligation is unhealthy (`owner_can_liquidate_their_own_obligation`).
+
+### senior / junior
+
+The order in which claims on a pool are paid. On the *Perpetual Futures* chapter's venue a trader's collateral is **senior**: it comes back, less losses and fees. Their profit is **junior**: it is paid only as far as the pool holds the tokens to pay it. See [haircut](#haircut).
+
 ### settlement
 
 Paying out what a contract finally owes, and closing it. A betting market settles when the admin records the winning outcome and the losing pool is divided among the winners; a position settles when it closes and its [PnL](#pnl-profit-and-loss) becomes real balances.
@@ -658,7 +714,7 @@ A token representing proportional ownership of a pool: of a lending reserve, of 
 
 ### signer
 
-An account whose private key signed the transaction.
+An address that signed the transaction: a public key whose private key produced a signature, or a [PDA](#pda-program-derived-address) its program signed for by presenting the seeds.
 
 ### size ladder
 
@@ -670,7 +726,7 @@ The difference between the price you expected and the price you got, caused by y
 
 ### slot
 
-Solana's basic unit of time: a window in which one [leader](#leader) may produce a [block](#block). The network sets a target length, 200 milliseconds at the time of writing, and has shortened it before, so a slot count converts to seconds only at the slot length in force. A slot whose block does not arrive in time is skipped: the count moves on and that slot has no block.
+Solana's unit of block production: a window in which one [leader](#leader) may produce a [block](#block). The network sets a target length, 200 milliseconds at the time of writing, and has shortened it before, so a slot count converts to seconds only at the slot length in force. A slot whose block does not arrive in time is skipped: the count moves on and that slot has no block.
 
 ### SOL
 
@@ -690,7 +746,7 @@ What a pool quotes for a trade small enough to move nothing: the ratio of its tw
 
 ### spread
 
-The gap between the best bid and the best ask. On an order book it emerges from the resting orders; a market maker **charges a spread** when it quotes its own prices around the one it takes as fair, and a prop AMM's spread is its entire fee. See the *Prop AMM* chapter.
+The gap between the best bid and the best ask. On an order book it emerges from the resting orders; a market maker **charges a spread** when it quotes its own prices around the one it takes as fair, and a prop AMM's spread is its entire fee. The *Prop AMM* chapter's `spread_bps` is a half-spread: the ask is the oracle price plus it, and the bid the oracle price minus it.
 
 ### stablecoin
 
@@ -710,7 +766,7 @@ Checking that an account a handler receives is the one recorded when the relatio
 
 ### strike
 
-The price at which an [option](#option) trades if its holder exercises.
+The price at which the [underlying](#underlying) changes hands if the holder [exercises](#exercise): what a [call](#call)'s holder pays per share, or a [put](#put)'s holder receives.
 
 ### swap router
 
@@ -755,6 +811,10 @@ A time-weighted average price: the average of a market's price over a window, us
 ### underlying
 
 The asset an [option](#option) or other derivative is about: what a [call](#call) buys and a [put](#put) sells at the [strike](#strike). It is short for "underlying asset", and every options market uses it as a noun on its own. In the *Options* chapter the underlying is NVDAx and the quote token is USDC.
+
+### underwater
+
+Said of a loan or leveraged position past its liquidation line: an unhealthy lending obligation, or a perpetual position whose equity is at or below the [maintenance margin](#maintenance-margin). See [liquidation](#liquidation).
 
 ### Unix timestamp
 

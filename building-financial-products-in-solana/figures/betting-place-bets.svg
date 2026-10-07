@@ -28,8 +28,8 @@
   <g>
   <circle cx="16" cy="247.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="26" y="241.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
-  <text x="26" y="250.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OUTCOME ADDRESS +</text>
-  <text x="26" y="259.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
+  <text x="26" y="250.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">GLOWBUGS 3 OUTCOME +</text>
+  <text x="26" y="259.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
   <rect x="8" y="265.917" width="110" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(16,269.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="36" y="280.092" font-size="10.5" font-weight="bold">Alice's bet</text>
@@ -62,8 +62,8 @@
   <g>
   <circle cx="133" cy="253.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="143" y="247.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
-  <text x="143" y="256.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OUTCOME ADDRESS +</text>
-  <text x="143" y="265.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
+  <text x="143" y="256.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">GLOWBUGS 3 OUTCOME +</text>
+  <text x="143" y="265.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS</text>
   <rect x="125" y="271.644" width="105" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(133,275.144)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="153" y="285.819" font-size="10.5" font-weight="bold">Bob's bet</text>
@@ -96,8 +96,8 @@
   <g>
   <circle cx="245" cy="263.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="255" y="258.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
-  <text x="255" y="267.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">OUTCOME ADDRESS +</text>
-  <text x="255" y="276.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BETTOR ADDRESS</text>
+  <text x="255" y="267.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">QUIET FLOOR OUTCOME +</text>
+  <text x="255" y="276.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
   <rect x="237" y="282.062" width="111" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(245,285.562)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="265" y="296.237" font-size="10.5" font-weight="bold">Carol's bet</text>
@@ -152,13 +152,14 @@
   <g>
   <circle cx="482" cy="371.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="492" y="375.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"EVENT" + EVENT ID</text>
-  <rect x="474" y="381.37" width="158" height="64" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <rect x="474" y="381.37" width="158" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,384.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="395.545" font-size="10.5" font-weight="bold">event</text>
   <line x1="482" y1="402.37" x2="624" y2="402.37" stroke="#888" stroke-width="0.8"/>
   <text x="482" y="413.37" font-size="9.5">status: Open</text>
   <text x="482" y="425.37" font-size="9.5">total_pool: 600</text>
   <text x="482" y="437.37" font-size="9.5">fee_bps: 200</text>
+  <text x="482" y="449.37" font-size="9.5">open_bets: 3</text>
   </g>
   <g>
   <circle cx="482" cy="471.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

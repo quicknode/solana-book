@@ -2,7 +2,7 @@
   <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Not every token account is an ATA</text>
   <ellipse cx="320" cy="176" rx="306" ry="120" fill="none" stroke="#111" stroke-width="1.6"/>
   <text x="320" y="90" font-size="12.5" font-weight="bold" text-anchor="middle">token accounts</text>
-  <text x="320" y="104" font-size="10" fill="#444" text-anchor="middle" font-style="italic">each one holds a mint, an owner, and an amount</text>
+  <text x="320" y="104" font-size="10" fill="#444" text-anchor="middle" font-style="italic">each one holds a mint, an authority, and an amount</text>
   <ellipse cx="215" cy="190" rx="175" ry="80" fill="#f4f4f2" stroke="#888" stroke-width="1.2"/>
   <text x="215" y="133" font-size="11.5" font-weight="bold" text-anchor="middle">associated token accounts</text>
   <text x="215" y="146" font-size="9.5" fill="#444" text-anchor="middle" font-style="italic">one per owner and mint, at a derivable address</text>

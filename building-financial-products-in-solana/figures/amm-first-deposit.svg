@@ -122,12 +122,16 @@
   <text x="488" y="191.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">swap_tokens()</text>
   <text x="488" y="201.37" font-size="8" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">claim_admin_fees()</text>
   </g>
-  <g opacity="0.3">
+  <g>
   <circle cx="488" cy="216.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="498" y="220.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONFIG"</text>
-  <rect x="480" y="226.37" width="152" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
-  <g transform="translate(488,230.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
-  <text x="508" y="240.77" font-size="9.5" font-weight="bold">config</text>
+  <rect x="480" y="226.37" width="152" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(488,229.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="508" y="240.195" font-size="9.5">config</text>
+  <line x1="488" y1="247.37" x2="624" y2="247.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="258.37" font-size="8.5">admin: Maria</text>
+  <text x="488" y="268.87" font-size="8.5">fee: 30 bps</text>
+  <text x="488" y="279.37" font-size="8.5">admin_share_bps: 1,667</text>
   </g>
   <g>
   <circle cx="488" cy="304.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>

@@ -124,7 +124,7 @@
   <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="529.21" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
   <text x="472" y="540.71" font-size="9" font-style="italic" fill="#444">authority: the market</text>
   </g>
-  <text x="240" y="500" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and fronts the rent for the market and both vaults;</text>
+  <text x="240" y="500" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and pays the rent for the market and both vaults;</text>
   <text x="240" y="515" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no tokens move until a writer posts collateral</text>
   <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
   <rect x="16" y="554" width="240.0" height="68.323" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>

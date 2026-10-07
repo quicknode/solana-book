@@ -14,17 +14,17 @@ At Alice's address lives Alice's **account**: some data with an address. Her acc
 
 ![](figures/alice-on-the-curve.svg)
 
-This figure is the first example of how this book shows people, programs and data on Solana. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. The figures never label those dots, because the dot's place on the curve already says it. Later you will see addresses drawn *off* the curve, listed instead with the **seeds** (the inputs) they were derived from; those have no private key.
+This figure is the first example of how this book shows people, programs and data on Solana. **A dot sitting on the curve is an address with a private key behind it**, so someone can sign for it. After this first figure, the figures leave those dots unlabeled, because the dot's place on the curve already says it. Later you will see addresses drawn *off* the curve, listed instead with the **seeds** (the inputs) they were derived from; those have no private key.
 
 > **Key pairs are random, and that is safe.** Nobody issues Alice her key pair: her device generates it from random bytes, with no registry to consult and no permission to ask. That only works because collisions are, in practice, impossible. A Solana private key is drawn from a space of 2^256 possibilities, a number about a thousandth of the count of atoms in the observable universe. If every person on earth generated a billion key pairs per second, the expected wait before any two ever matched would still be about a hundred times the age of the universe. When this book says an address "belongs" to Alice, it means Alice has generated a key pair that nobody else will ever generate, and that only Alice has the private key.
 
 A **wallet** is a key pair being used to sign transactions, with the private key stored somewhere safe. Without its apps and branding, a saved wallet is small: a key pair file on disk, like the `id.json` file the Solana CLI creates, holding 64 bytes. Whoever has those bytes *is* that wallet.
 
-> **64 bytes, but only 32 are secret.** An `id.json` key pair file holds the 32-byte private key followed by the 32-byte public key. The second half is a convenience, not a necessity: the public key is mathematically derived from the private key, so software can recompute it from the first 32 bytes at any time. The private key is the only secret, and the only part that needs protecting.
+> **64 bytes, but only 32 are secret.** An `id.json` key pair file holds the 32-byte private key followed by the 32-byte public key. The second half is a convenience, not a necessity: the public key is mathematically derived from the private key, so software can recompute it from the first 32 bytes at any time.
 
 ## There Is More Than One Solana Computer
 
-The bold curve in the figure is labeled **Solana Devnet**, and the faint curves behind it are mainnet and localnet, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different to what appears at the same address in a different cluster.
+The bold curve in the figure is labeled **Solana Devnet**, and the faint curves behind it are mainnet and localnet, because there is more than one Solana computer. Each running instance is a **cluster**: the same software, a separate universe. What appears at an address in one cluster can be (and usually is) completely different from what appears at the same address in a different cluster.
 
 | Cluster      | Purpose                                                             | Assets have value?  | Where it runs                |
 | ------------ | ------------------------------------------------------------------- | ------------------- | ---------------------------- |
@@ -34,15 +34,15 @@ The bold curve in the figure is labeled **Solana Devnet**, and the faint curves 
 
 There is also **testnet**, where future versions of the Solana software itself are tested before a release reaches mainnet. Other clusters are started up now and then to try out a particular proposed network feature. Your own work happens almost entirely on localnet and devnet: localnet for the fast build-and-test loop, then devnet for a rehearsal on the same software real users will meet. Mainnet is where a finished program goes live. Assets there have real value, which is why a program should be thoroughly audited before it is deployed there.
 
-Each cluster is reached at a URL. Programs and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which cluster the Solana SDK reads from, writes to, and deploys to.
+Each cluster is reached at a URL. Apps and wallets never talk to the network directly: they send transactions to an **RPC endpoint**, a server that holds the cluster's state and relays transactions into it. The endpoint URL is the setting that decides which cluster the Solana SDK reads from, writes to, and deploys to.
 
 The Solana Foundation runs a public endpoint for each cluster, rate limited and meant for learning and light development; anything with real users runs against a dedicated endpoint from an RPC provider instead. Quicknode, this book's publisher, is one of several.
 
 Alice's SOL is devnet SOL. Think of it as the paper banknotes from a board game, which feel real inside the game and buy nothing outside it. Devnet SOL and devnet USDC are given away free.[^faucets] Alice's address is the same on every cluster; the *account* at her address exists per cluster, and nothing in this book needs mainnet tokens to work through.
 
-## Receiving Doesn't Need A Signature, Spending Does
+## Receiving Doesn't Need a Signature, Spending Does
 
-Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of SOL from the same faucet. To send something to Bob, Alice needs only his address. To spend whatever arrives there, Bob needs the private key that matches his address.
+Meet Bob. Bob has his own key pair, and his public key is another point on the same curve. At Bob's address lives Bob's account, holding a small balance of devnet SOL, given away free like Alice's. To send something to Bob, Alice needs only his address. To spend whatever arrives there, Bob needs the private key that matches his address.
 
 ![](figures/alice-and-bob-on-the-curve.svg)
 
@@ -75,21 +75,21 @@ The transfer instruction does not actually say 0.05 SOL. It says 50,000,000 **la
 
 ## A Transaction's Instructions Succeed or Fail Together
 
-Alice's transaction executes **atomically**: every instruction succeeds, or the whole transaction never happened. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed." One change survives a failure: the transaction fee. The network charges it for processing the transaction, so a transaction that fails still lowers the fee payer's lamport balance. The base fee is 5,000 lamports per signature at the time of writing, which is why Alice ends this transaction at 0.949995 SOL rather than 0.95.
+Alice's transaction executes **atomically**: every instruction succeeds, or none of their changes take effect. If Alice's balance cannot cover the 50,000,000 lamports she wants to send Bob, the transfer fails, and the memo is never written either, even though the Memo Program itself had no complaint. If both instructions succeed, the state changes: Bob's account balance rises by 50,000,000 lamports, and the log says thanks. **There is no partial state**, no "the payment cleared but the delivery failed." One change survives a failure: the transaction fee. The network charges it for processing the transaction, so a transaction that fails still lowers the fee payer's lamport balance. The base fee is 5,000 lamports per signature at the time of writing, which is why Alice ends this transaction at 0.949995 SOL rather than 0.95.
 
 For financial software, atomicity is a primitive you design with. Inside a transaction there is no settlement risk between steps:
 
 - The escrow program in the *Escrow* chapter moves Alice's payment and Bob's stock in one transaction, so if either transfer fails neither happens.
-- A lending market can have an instruction to refresh its price before another instruction that depends on the price, so it does not act on stale state.
-- A **flash loan**, a crypto-specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. The loan needs no collateral because the transaction is atomic: if the repayment fails, the borrow is unwound with it, so the borrowed tokens are back in the lender's vault at the end of every transaction.
+- The lending market in the *Lending and Borrowing* chapter runs `refresh_reserve()` and `refresh_obligation()` before a borrow, so the borrow reads interest and prices brought up to date in the same transaction.
+- A **flash loan**, a crypto-specific concept, borrows in a transaction's first instruction, uses the borrowed tokens in the middle, and repays in the final instruction. **Collateral** is assets pledged to secure a loan, which the lender may seize if it goes unpaid. A flash loan needs none because the transaction is atomic: if the repayment fails, the borrow is unwound with it, so the borrowed tokens are back in the lender's vault at the end of every transaction.
 
-Whole categories of arbitrage strategies, and of liquidation (repaying part of a borrower's loan once it passes a safety limit, in return for some of their collateral at a bonus), exist only because transactions are all-or-nothing.
+Some arbitrage strategies are possible only because transactions are all-or-nothing. So is a liquidation (repaying part of a borrower's loan once it passes a safety limit, in return for some of their collateral at a bonus) funded by a flash loan instead of the liquidator's own tokens.
 
 ![](figures/atomic-transaction.svg)
 
 ## Less Work Costs Users Less
 
-Work is metered in **compute units** per transaction, and a transaction that sets a priority fee pays it per unit it asks for, so a handler that does less work costs its users less. That is the reason the order book in the *Order Book Exchange* chapter credits each fill to a balance instead of making one transfer per fill: a trader collects every fill's tokens in a single transfer. The programs in this book consolidate work wherever they can for the same reason.
+Work is metered in **compute units** per transaction. A transaction may add a **priority fee**, an extra fee per compute unit that gets it processed sooner, and pays it on every unit it requests, so a handler that does less work costs its users less. That is the reason the order book in the *Order Book Exchange* chapter credits each fill to a balance instead of making one transfer per fill: a trader collects every fill's tokens in a single transfer. The programs in this book consolidate work wherever they can for the same reason.
 
 ## Every Transaction Is Signed
 
@@ -101,7 +101,7 @@ The signature is also a grant of authority, but programs decide what it authoriz
 
 - **Moving her lamports.** The System Program owns the account at Alice's address, and its `transfer()` handler moves lamports out of an account only when the transaction carries that address's signature.
 - **Paying the transaction fee**, the fraction of a cent the transaction costs, which comes out of her balance.
-- **Any change a program has recorded her address as allowed to make**, such as moving tokens out of a token account whose owner is her address, or closing that account.
+- **Any change a program has recorded her address as allowed to make**, such as moving tokens out of a token account that names her as its owner (a second meaning of "owner", which the *Tokens* chapter covers), or closing that account.
 
 An action's **authority** is the address whose signature that action requires; Solana uses the word for every such address. A program records that address in an account, and the handler checks that the transaction carries its signature before doing the work:
 
@@ -112,7 +112,7 @@ An action's **authority** is the address whose signature that action requires; S
 
 Different authorities in the same program can be given to different addresses. 
 
-> **What if funds need more than one person's approval?** A transaction can carry several signatures, but for standing control of funds there is a **multisig**: an account that records a set of owners and how many of them must agree, and acts only once enough have. Any authority can be a multisig address rather than one person's wallet. 
+> **What if funds need more than one person's approval?** A transaction can carry several signatures, but for standing control of funds there is a **multisig**: a program that records a set of owners and how many of them must approve, and signs only once enough have. Any authority can be a multisig address rather than one person's wallet. 
 
 ## Accounts Store Data, Not Just SOL
 
@@ -122,7 +122,7 @@ Besides its address, every account records three things a program reads: a lampo
 
 ![](figures/account-dissected.svg)
 
-Every account holds a lamport deposit that grows with its size, called **rent**; an account funded to the **rent-exempt** minimum stays until it is closed, and today an account cannot be created with less. Close the account and the lamports are refunded. A tiny part of Alice's SOL balance is the deposit on the space her account occupies; a large account holds a larger one.
+Every account holds a lamport deposit that grows with its size, called **rent**; an account funded to the **rent-exempt** minimum stays until it is closed, and today an account cannot be created with less. Close the account and the lamports are refunded.
 
 The programs themselves are stored the same way. Deploying a program invokes Solana's **loader** program which writes the new program's compiled code into one or more accounts[^loader-version] of its own, which is why deploying a program costs rent in proportion to the size of the binary. Every piece of data the program manages (every market, offer, and balance) lives in a separate data account, not in the accounts that hold the program's code. 
 
@@ -142,9 +142,9 @@ Every account sits at a 32-byte **address**, usually shown base58-encoded. Addre
 
 A week later it is Bob's turn to pay. He owes Alice twenty-five dollars, and dollars on Solana typically mean a **stablecoin**, a token that tracks the dollar one for one, like **USDC**, backed by treasury bills or other assets tied to the currency.
 
-SOL is the network's **native token**, the asset it understands without any program's help. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the *Tokens* chapter covers mints.
+SOL is the network's **native token**: its balance is a field of every account, not a token program's record. Every other token is defined by a program instead, and is formally an **SPL token**, after the Solana Program Library the original token program shipped in. Most people call all of them tokens, and so does this book. Each distinct token is identified by its **mint**, the account that is the asset's identity onchain, and the *Tokens* chapter covers mints.
 
-Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own; a wallet's is at an address anyone can compute from the holder's address, the token program, and the mint. Bob's wallet finds Alice's USDC account from her address alone; the *Tokens* chapter covers token accounts.
+Bob's SOL lives in his own account, but his USDC does not: each token balance lives in a **token account** of its own, which the *Tokens* chapter covers.
 
 So Bob signs a transaction carrying one instruction: the **Token Program**'s `transfer_checked()` handler, moving 25 USDC from his USDC account to Alice's. The instruction says 25,000,000, because USDC's minor unit is a millionth, and like a lamport amount it is an integer of minor units. Bob's signature is what authorizes the debit, as Alice's authorized hers: the Token Program checks that the account being debited belongs to Bob, and that Bob signed. Alice's USDC balance rises from 1,000 to 1,025 with no signature from her.
 

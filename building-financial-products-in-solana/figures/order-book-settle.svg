@@ -249,14 +249,13 @@
   <g class="coin" transform="translate(251.5,441.4)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
   <rect class="marker" x="76" y="492" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="84" y="503.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
   <g class="coin" transform="translate(100,500)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect class="marker" x="396" y="376.5" width="25" height="16" rx="3" fill="#1e7a3c"/><text x="404" y="389.6" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <g class="coin" transform="translate(435,386)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
-  <rect x="189" y="456" width="256" height="70" fill="#fff" stroke="#888" class="key"/>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="422" y="430" font-size="9.5" font-style="italic" fill="#444" text-anchor="end">Carol's own settle_funds()</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="422" y="445" font-size="10.5" font-weight="bold" fill="#1e7a3c" text-anchor="end">748.125 USDC</text>
+  <g class="coin" transform="translate(435,440.5)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <rect x="189" y="456" width="256" height="52" fill="#fff" stroke="#888" class="key"/>
   <rect class="marker" x="197" y="466.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="205" y="478.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
   <text x="223" y="478" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Bob 3 NVDAx from the base vault</text>
   <rect class="marker" x="197" y="484.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="205" y="496.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
   <text x="223" y="496" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Bob 250 USDC from the quote vault</text>
-  <rect class="marker" x="197" y="502.5" width="16" height="16" rx="3" fill="#1e7a3c"/><text x="205" y="514.1" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">3</text>
-  <text x="223" y="514" font-size="10.5" font-weight="bold" fill="#1e7a3c">Pay Carol 748.125 USDC from the quote vault</text>
   <text x="16" y="694" font-size="9.5" font-style="italic" fill="#444">not drawn: the NVDAx and USDC mints, which these accounts name only as seeds and fields</text>
 </svg>

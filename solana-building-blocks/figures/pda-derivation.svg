@@ -49,7 +49,7 @@
   <text x="184" y="243.675" font-size="10.5" font-weight="bold">the offer's vault</text>
   <line x1="164" y1="250.5" x2="316" y2="250.5" stroke="#888" stroke-width="0.8"/>
   <text x="164" y="262.5" font-size="9.5">250 &#8594; 0 USDC</text>
-  <text x="164" y="274.5" font-size="9" fill="#444" font-style="italic">authority: Alice's offer</text>
+  <text x="164" y="274.5" font-size="9" fill="#444" font-style="italic">authority: Alice's offer PDA</text>
   </g>
   <circle cx="408" cy="242" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="418" y="236.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
