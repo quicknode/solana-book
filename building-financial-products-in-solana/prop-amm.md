@@ -91,7 +91,7 @@ When Maria wants her capital back, `withdraw_inventory()` hands her both vaults,
 
 ![](figures/prop-amm-withdraw-inventory.svg)
 
-To shut the venue down, Maria then calls `close_market()`. It closes both vaults and the market account and returns to her the rent she paid for all three at `initialize_market()`. It refuses with `InventoryNotEmpty` while either vault holds any tokens, so she withdraws first. Only the operator can call it. `test_close_market_returns_all_three_rents`, `test_close_market_refuses_while_a_vault_holds_tokens` and `test_close_market_rejects_non_operator` check each of these.
+To shut the venue down, Maria then calls `close_market()`. It closes both vaults and the market account and returns to her the rent she paid for all three at `initialize_market()`. It refuses with `InventoryNotEmpty` while either vault holds any tokens, even tokens a stranger sent straight to a vault, so she withdraws first. Only the operator can call it. `test_close_market_returns_all_three_rents`, `test_close_market_refuses_while_a_vault_holds_tokens`, `test_close_market_refuses_tokens_sent_straight_to_a_vault` and `test_close_market_rejects_non_operator` check each of these.
 
 ## The Math: Every Rounding Favors the Market
 
