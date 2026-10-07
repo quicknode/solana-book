@@ -186,7 +186,7 @@ One program calling another onchain, such as any program calling the token progr
 
 ### crank
 
-A permissionless instruction handler that performs maintenance work nobody owns (accruing a lending reserve's interest, refreshing a borrower's collateral value), designed so anyone can turn the handle: each client in its own transaction before its own instruction, as the lending market's clients do, or a bot on a schedule. See the *Lending and Borrowing* chapter.
+A permissionless instruction handler that performs maintenance work nobody owns (accruing a lending reserve's interest, refreshing a borrower's collateral value), designed so anyone can turn the handle. The caller can be each client, running it in its own transaction before its own instruction as the lending market's clients do, or a bot on a schedule. See the *Lending and Borrowing* chapter.
 
 ### critbit tree
 

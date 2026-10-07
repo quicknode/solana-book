@@ -92,7 +92,7 @@ Pick the smallest product you want to exist, for a person you can name. Draw its
 
 Then have it audited by at least one reviewer who did not work on it.
 
-Find out how it holds up on devnet, and when you and your auditors are satisfied, deploy to mainnet.
+Find out how it holds up on devnet, and when you and your reviewers are satisfied, deploy to mainnet.
 
 Find someone whose money is stuck behind a weekend, or losing a percentage to fees nobody asked them to agree to, and build the financial app they would use without ever wondering what it runs on.
 
