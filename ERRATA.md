@@ -1,7 +1,5 @@
 # Errata
 
-Corrections to the published text of *Building Financial Software on Solana*. This file is the source of truth; it is published at [solanabook.org](https://solanabook.org).
+Corrections to the published text of *Building Financial Software on Solana*.
 
-No errata yet.
-
-Each erratum records: the printing it applies to, the page and section, what the text says, what it should say, and who reported it (credited, with thanks, in the Acknowledgements).
+No errata yet - we've just published the book. If you find an issue with *Building Financial Software on Solana*, please file an issue at <https://github.com/quicknode/solana-book/issues>. Issues that result in changes will be acknowledged in the book!
