@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">How an offer ends</text>
+  <defs><marker id="escrow-state-machine-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#111"/></marker></defs>
+  <!-- entry -->
+  <path d="M 34,140 L 114,140" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-state-machine-arr)"/>
+  <text x="74" y="128" font-size="11" font-weight="bold" text-anchor="middle">make_offer()</text>
+  <text x="74" y="158" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(Alice)</text>
+  <!-- Open -->
+  <rect x="118" y="105" width="150" height="70" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="193" y="128" font-size="13" font-weight="bold" text-anchor="middle">Open</text>
+  <text x="193" y="146" font-size="10" font-style="italic" fill="#444" text-anchor="middle">vault holds 250 USDC</text>
+  <text x="193" y="160" font-size="10" font-style="italic" fill="#444" text-anchor="middle">offer stores the terms</text>
+  <!-- Taken -->
+  <rect x="430" y="28" width="185" height="94" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="522" y="50" font-size="12" font-weight="bold" text-anchor="middle">Taken</text>
+  <text x="522" y="68" font-size="10" text-anchor="middle">USDC &#8594; Bob, TSLAx &#8594; Alice</text>
+  <text x="522" y="84" font-size="10" text-anchor="middle">vault emptied &amp; closed</text>
+  <text x="522" y="100" font-size="10" text-anchor="middle">rent &#8594; Alice</text>
+  <!-- Cancelled -->
+  <rect x="430" y="168" width="185" height="94" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="522" y="190" font-size="12" font-weight="bold" text-anchor="middle">Canceled</text>
+  <text x="522" y="208" font-size="10" text-anchor="middle">USDC &#8594; Alice</text>
+  <text x="522" y="224" font-size="10" text-anchor="middle">vault emptied &amp; closed</text>
+  <text x="522" y="240" font-size="10" text-anchor="middle">rent &#8594; Alice</text>
+  <!-- transitions -->
+  <path d="M 270,120 C 340,100 370,85 426,72" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-state-machine-arr)"/>
+  <text x="328" y="70" font-size="11" font-weight="bold" text-anchor="middle">take_offer()</text>
+  <text x="328" y="84" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(Bob accepts)</text>
+  <path d="M 270,160 C 340,180 370,195 426,208" fill="none" stroke="#111" stroke-width="1.8" marker-end="url(#escrow-state-machine-arr)"/>
+  <text x="340" y="224" font-size="11" font-weight="bold" text-anchor="middle">cancel_offer()</text>
+  <text x="340" y="238" font-size="10" font-style="italic" fill="#444" text-anchor="middle">(Alice withdraws)</text>
+</svg>

@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 582" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria opens the market</text>
+<g transform="translate(0,25)">
+  <!-- the curve on top: every on-curve address dot sits on it -->
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="79" font-size="13" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- NVDAx mint, above the curve -->
+
+  <!-- USDC mint, above the curve -->
+
+  <!-- Maria (operator) -->
+  <g>
+  <circle cx="134" cy="35.409" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="44.6382" width="126" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,48.1382)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="44" y="58.8132" font-size="10.5" font-weight="bold">Maria (operator)</text>
+  <line x1="24" y1="65.6382" x2="134" y2="65.6382" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="76.6382" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="103.138" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="97.6382" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="34" y="106.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="115.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT</text>
+  <rect x="16" y="121.638" width="126" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,125.638)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="136.138" font-size="10.5" font-weight="bold">Maria's NVDAx</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="24" cy="180.138" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="174.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="34" y="183.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="34" y="192.638" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="16" y="198.638" width="126" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,202.638)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="44" y="213.138" font-size="10.5" font-weight="bold">Maria's USDC</text>
+  </g>
+  <!-- Alice (trader) -->
+  <circle cx="294" cy="45.7619" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="294" cy="45.7619" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="180" y="55.5361" width="122" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(188,59.5361)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="208" y="70.0361" font-size="10.5" font-weight="bold">Alice (trader)</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="188" cy="114.036" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="198" y="108.536" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="198" y="117.536" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="198" y="126.536" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="180" y="132.536" width="122" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(188,136.536)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="208" y="147.036" font-size="10.5" font-weight="bold">Alice's USDC</text>
+  </g>
+  <!-- Bob (trader) -->
+  <circle cx="456" cy="67.4364" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="456" cy="67.4364" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="340" y="77.8798" width="124" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(348,81.8798)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="368" y="92.3798" font-size="10.5" font-weight="bold">Bob (trader)</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="348" cy="136.38" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="358" y="130.88" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="358" y="139.88" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="358" y="148.88" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="340" y="154.88" width="124" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(348,158.88)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="368" y="169.38" font-size="10.5" font-weight="bold">Bob's USDC</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="348" cy="213.38" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="358" y="207.88" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="358" y="216.88" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="358" y="225.88" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT</text>
+  <rect x="340" y="231.88" width="124" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(348,235.88)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="368" y="246.38" font-size="10.5" font-weight="bold">Bob's NVDAx</text>
+  </g>
+  <!-- the program column -->
+  <g>
+  <circle cx="624" cy="107.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="480" y="119.37" width="152" height="78" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="508" y="133.545" font-size="10.5" font-weight="bold">prop amm program</text>
+  <line x1="488" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="149.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_market()</text>
+  <text x="488" y="157.770" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_quote()</text>
+  <text x="488" y="166.170" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit_inventory()</text>
+  <text x="488" y="174.570" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw_inventory()</text>
+  <text x="488" y="182.970" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_market()</text>
+  <text x="488" y="191.370" font-size="7.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">swap()</text>
+  </g>
+  <!-- market: one PDA per pair, and it pins its own vaults -->
+  <g>
+  <circle cx="488" cy="211.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="210.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"MARKET" + NVDAX &amp;</text>
+  <text x="498" y="219.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT ADDRESSES</text>
+  <rect x="480" y="225.37" width="152" height="172" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(488,228.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="508" y="239.545" font-size="10.5" font-weight="bold">market</text>
+  <line x1="488" y1="246.37" x2="624" y2="246.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="257.37" font-size="9.5">operator: Maria</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="257.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="488" y="269.37" font-size="9.5">oracle_feed: the NVDAx feed</text>
+  <text x="488" y="281.37" font-size="9.5">price_feed_program:</text>
+  <text x="500" y="293.37" font-size="9.5">mock-price-feed</text>
+  <text x="488" y="305.37" font-size="9.5">oracle_scale: 8 (10^8)</text>
+  <text x="488" y="317.37" font-size="9.5">base_vault: the NVDAx vault</text>
+  <text x="488" y="329.37" font-size="9.5">quote_vault: the USDC vault</text>
+  <text x="488" y="341.37" font-size="9.5">base_decimals: 8</text>
+  <text x="488" y="353.37" font-size="9.5">quote_decimals: 6</text>
+  <text x="488" y="365.37" font-size="9.5">spread_bps: 10</text>
+  <text x="488" y="377.37" font-size="9.5">max_confidence_bps: 100</text>
+  <text x="488" y="389.37" font-size="9.5">paused: false</text>
+  </g>
+    <g>
+  <circle cx="488" cy="411.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="410.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BASE_VAULT" +</text>
+  <text x="498" y="419.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET'S ADDRESS</text>
+  <rect x="480" y="425.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,428.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="508" y="439.545" font-size="10.5" font-weight="bold">base vault</text>
+  <line x1="488" y1="446.37" x2="624" y2="446.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="457.37" font-size="9.5" fill="#444">0 NVDAx</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="457.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="488" y="469.37" font-size="9" font-style="italic" fill="#444">authority: the market</text>
+  </g>
+  <g>
+  <circle cx="488" cy="491.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="498" y="490.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"QUOTE_VAULT" +</text>
+  <text x="498" y="499.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET'S ADDRESS</text>
+  <rect x="480" y="505.37" width="152" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,508.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="508" y="519.545" font-size="10.5" font-weight="bold">quote vault</text>
+  <line x1="488" y1="526.37" x2="624" y2="526.37" stroke="#888" stroke-width="0.8"/>
+  <text x="488" y="537.37" font-size="9.5" fill="#444">0 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="537.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="488" y="549.37" font-size="9" font-style="italic" fill="#444">authority: the market</text>
+  </g>
+  <!-- the oracle feed: an account this program only reads -->
+  <g>
+  <rect x="252" y="306" width="186" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <g transform="translate(260,309.5)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="280" y="320.175" font-size="10.5" font-weight="bold">oracle feed</text>
+  <line x1="260" y1="327" x2="430" y2="327" stroke="#888" stroke-width="0.8"/>
+  <text x="260" y="338" font-size="9.5">price: $165.00</text>
+  <text x="260" y="350" font-size="9.5">owner: mock-price-feed</text>
+  </g>
+  <!-- the market pins this feed: a read-only link, dashed grey, no coins -->
+  <line x1="478" y1="332" x2="442" y2="332" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="242" y="400" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and fronts the rent for the market and both vaults;</text>
+  <text x="242" y="415" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">no tokens move until deposit_inventory()</text>
+</g>
+  <!-- the oracle feed: created from a key pair, so its public key sits on a continued piece of the curve -->
+  <rect x="244" y="300" width="202" height="91" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="444" y="311" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 250,316 Q 347,316 444,323" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="430" cy="322.03" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
+  <rect x="16" y="470" width="254.0" height="68.361" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="262.0" y="484" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 22,494 Q 155.1,494 264.0,500.0" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="128" cy="495.027" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="252" cy="499.361" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <g transform="translate(-146,500.071)">
+  <g>
+  <rect x="172" y="3.95664" width="110" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(180,7.95664)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="200" y="18.46" font-size="10.5" font-weight="bold">NVDAx mint</text>
+  </g>
+  </g>
+  <g transform="translate(-332,469.471)">
+  <g>
+  <rect x="480" y="38.8897" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(488,42.8897)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="508" y="53.39" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  </g>
+</svg>

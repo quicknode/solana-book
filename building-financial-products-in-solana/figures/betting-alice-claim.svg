@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 695" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Alice claims her winnings</text>
+  <!-- Alice claims her winnings: 447 USDC, and her bet account closes -->
+  <defs><marker id="betting-claim-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="betting-claim-arr-g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" font-weight="bold" fill="#111" text-anchor="end">Solana Devnet</text>
+
+  <g>
+  <circle cx="106" cy="34.484" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="8" y="43.9168" width="110" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(16,47.4168)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="36" y="58.0918" font-size="10.5" font-weight="bold">Alice</text>
+  <line x1="16" y1="64.9168" x2="110" y2="64.9168" stroke="#888" stroke-width="0.8"/>
+  <text x="16" y="75.9168" font-size="9.5" fill="#444">1 SOL</text>
+  </g>
+  <g>
+  <circle cx="16" cy="102.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="26" y="96.9168" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="26" y="105.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="26" y="114.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="8" y="120.917" width="110" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(16,124.417)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="36" y="135.092" font-size="10.5" font-weight="bold">Alice's USDC</text>
+  <line x1="16" y1="141.917" x2="110" y2="141.917" stroke="#888" stroke-width="0.8"/>
+  <text x="16" y="152.917" font-size="9.5">1,147 USDC</text>
+  </g>
+  <g transform="translate(0,-72.5)">
+  <g>
+  <circle cx="16" cy="247.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="26" y="241.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
+  <text x="26" y="250.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">GLOWBUGS 3 OUTCOME +</text>
+  <text x="26" y="259.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS</text>
+  <rect x="8" y="265.917" width="110" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(16,269.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="36" y="280.092" font-size="10.5" font-weight="bold">Alice's bet</text>
+  <line x1="16" y1="286.917" x2="110" y2="286.917" stroke="#888" stroke-width="0.8"/>
+  <text x="16" y="297.917" font-size="9" fill="#444">outcome_index: 0</text>
+  <text x="16" y="308.417" font-size="9" fill="#444">amount: 300</text>
+  <line x1="8" y1="265.917" x2="118" y2="317.917" stroke="#999" stroke-width="1.6"/>
+  <line x1="118" y1="265.917" x2="8" y2="317.917" stroke="#999" stroke-width="1.6"/>
+  </g>
+  </g>
+  <circle cx="222" cy="39.684" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="222" cy="39.684" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="125" y="49.6439" width="105" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(133,53.6439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="153" y="64.14" font-size="10.5" font-weight="bold">Bob</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="133" cy="108.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="143" y="102.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="143" y="111.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="143" y="120.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="125" y="126.644" width="105" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(133,130.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="153" y="141.14" font-size="10.5" font-weight="bold">Bob's USDC</text>
+  </g>
+  <g transform="translate(0,-72.5)">
+  <g opacity="0.3">
+  <circle cx="133" cy="253.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="143" y="247.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
+  <text x="143" y="256.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">GLOWBUGS 3 OUTCOME +</text>
+  <text x="143" y="265.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS</text>
+  <rect x="125" y="271.644" width="105" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(133,275.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="153" y="286.14" font-size="10.5" font-weight="bold">Bob's bet</text>
+  </g>
+  </g>
+  <circle cx="334" cy="49.454" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="334" cy="49.454" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="237" y="60.0617" width="111" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(245,64.0617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="265" y="74.56" font-size="10.5" font-weight="bold">Carol</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="245" cy="118.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="255" y="113.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS +</text>
+  <text x="255" y="122.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="255" y="131.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="237" y="137.062" width="111" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(245,141.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="265" y="151.56" font-size="10.5" font-weight="bold">Carol's USDC</text>
+  </g>
+  <g transform="translate(0,-72.5)">
+  <g opacity="0.3">
+  <circle cx="245" cy="263.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="255" y="258.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"BET" +</text>
+  <text x="255" y="267.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">QUIET FLOOR OUTCOME +</text>
+  <text x="255" y="276.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">CAROL'S ADDRESS</text>
+  <rect x="237" y="282.062" width="111" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(245,286.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="265" y="296.56" font-size="10.5" font-weight="bold">Carol's bet</text>
+  </g>
+  </g>
+  <circle cx="459" cy="66.212" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="459" cy="66.212" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="355" y="76.4364" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(363,80.4364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="383" y="90.94" font-size="10.5" font-weight="bold">Maria (admin)</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="363" cy="134.936" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="373" y="129.436" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARIA'S ADDRESS +</text>
+  <text x="373" y="138.436" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="373" y="147.436" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="355" y="153.436" width="112" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(363,157.436)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="383" y="167.94" font-size="10.5" font-weight="bold">Maria's USDC</text>
+  </g>
+  <g>
+  <circle cx="624" cy="107.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="474" y="119.37" width="158" height="148" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(482,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="502" y="133.545" font-size="10.5" font-weight="bold">betting program</text>
+  <line x1="482" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="482" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_config()</text>
+  <text x="482" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_event()</text>
+  <text x="482" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">add_outcome()</text>
+  <text x="482" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">open_betting()</text>
+  <text x="482" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">place_bet()</text>
+  <text x="482" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">settle_event()</text>
+  <text x="482" y="211.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">claim_winnings()</text>
+  <text x="482" y="221.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_losing_bet()</text>
+  <text x="482" y="231.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">cancel_event()</text>
+  <text x="482" y="241.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">claim_refund()</text>
+  <text x="482" y="251.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_outcome()</text>
+  <text x="482" y="261.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">close_event()</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="482" cy="276.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="492" y="280.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"CONFIG"</text>
+  <rect x="474" y="286.37" width="158" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(482,290.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="502" y="300.87" font-size="10.5" font-weight="bold">config</text>
+  </g>
+  <g>
+  <circle cx="482" cy="371.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="492" y="375.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"EVENT" + EVENT ID</text>
+  <rect x="474" y="381.37" width="158" height="76" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(482,384.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="502" y="395.545" font-size="10.5" font-weight="bold">event</text>
+  <line x1="482" y1="402.37" x2="624" y2="402.37" stroke="#888" stroke-width="0.8"/>
+  <text x="482" y="413.37" font-size="9.5">winning_outcome_index: 0</text>
+  <text x="482" y="425.37" font-size="9.5">winning_pool: 400</text>
+  <text x="482" y="437.37" font-size="9.5">distributable_losing_pool: 196</text>
+  <text x="482" y="449.37" font-size="9.5">open_bets: 2</text>
+  </g>
+  <g>
+  <circle cx="482" cy="471.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="492" y="470.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
+  <text x="492" y="479.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
+  <rect x="474" y="485.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(482,488.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="502" y="499.545" font-size="10.5" font-weight="bold">outcome 0: Glowbugs 3</text>
+  <line x1="482" y1="506.37" x2="624" y2="506.37" stroke="#888" stroke-width="0.8"/>
+  <text x="482" y="517.37" font-size="9.5">total_amount: 400</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="482" cy="539.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="492" y="538.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
+  <text x="492" y="547.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
+  <rect x="474" y="553.37" width="158" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(482,557.37)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="502" y="567.87" font-size="10.5" font-weight="bold">outcome 1: The Quiet Floor</text>
+  </g>
+  <g>
+  <circle cx="482" cy="607.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="492" y="606.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">EVENT'S ADDRESS +</text>
+  <text x="492" y="615.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
+  <rect x="474" y="621.37" width="158" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(482,624.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="502" y="635.545" font-size="10.5" font-weight="bold">vault: the event's USDC</text>
+  <line x1="482" y1="642.37" x2="624" y2="642.37" stroke="#888" stroke-width="0.8"/>
+  <text x="482" y="653.37" font-size="9.5">149 USDC</text>
+  <text x="482" y="665.37" font-size="9" font-style="italic" fill="#444">authority: the event PDA</text>
+  </g>
+  <path d="M 474,643.37 C 411,649.37 328,624 265,578 C 198,528 149,452 127,392 C 121,374 121,340 121,300 C 121,240 121,180 121,146.917 C 121,142.917 118,142.846 118,140.917" fill="none" stroke="#1e7a3c" stroke-width="1.8" marker-end="url(#betting-claim-arr)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="199.47" y="500.13" font-size="10.5" font-weight="bold" fill="#1e7a3c">1. claim_winnings() &#183; 447 USDC</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="270.06" y="516.13" font-size="9" font-style="italic" fill="#444" text-anchor="middle">signed by the event PDA</text>
+  <path d="M 62,245.417 C 62,267.417 22,275.417 8,259.417 C 2,192 2,130 8,65.917" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#betting-claim-arr-g)"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="106" y="263.417" font-size="8.5" font-style="italic" fill="#444" text-anchor="end">rent refund</text>
+  <text x="8" y="470" font-size="10.5" font-weight="bold" fill="#1e7a3c">2. bet account closed</text>
+  <text x="228" y="659" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">the 149 USDC left is Bob's exact claim</text>
+  <g class="coin" transform="translate(184.96,495.93)" fill="#fff"><g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="#1e7a3c" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>
+  <!-- the mints: public keys, hung beneath a continued piece of the curve, since the main curve has no free stretch for them -->
+  <rect x="16" y="514" width="124.0" height="67.673" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="132.0" y="528" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 22,538 Q 83.6,538 134.0,544.0" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="122" cy="542.673" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="122" cy="542.673" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  </g>
+  <g transform="translate(-484,508.779)">
+  <g opacity="0.3">
+  <rect x="510" y="42.8932" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(518,46.8932)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="538" y="57.39" font-size="10.5" font-weight="bold">USDC mint</text>
+  </g>
+  </g>
+</svg>
