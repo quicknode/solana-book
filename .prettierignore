@@ -1,0 +1,5 @@
+# Prettier rewrites *italics* to _italics_, and the manuscript lint bans
+# underscores: an underscore is a word character, so \b never fires against the
+# start of _Arithmetic of Money_ and the chapter-reference check goes blind.
+# .vscode/settings.json stops the editor doing it; this stops the CLI.
+*.md

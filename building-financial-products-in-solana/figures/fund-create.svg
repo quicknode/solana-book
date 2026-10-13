@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 678" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria creates the fund</text>
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <!-- Victor, the curator -->
+  <circle cx="114" cy="34.724" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="114" cy="34.724" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="43.9168" width="106" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,47.9168)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="44" y="58.4168" font-size="9.5">Victor</text>
+  </g>
+  <g>
+  <circle cx="24" cy="109.917" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="108.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"REGISTRY" +</text>
+  <text x="34" y="117.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">VICTOR'S ADDRESS</text>
+  <rect x="16" y="123.917" width="106" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,127.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="137.742" font-size="9.5">registry</text>
+  <line x1="24" y1="144.917" x2="114" y2="144.917" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="155.917" font-size="9">authority: Victor</text>
+  </g>
+  <g>
+  <circle cx="24" cy="194.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="188.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"APPROVED_ASSET" +</text>
+  <text x="34" y="197.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">REGISTRY +</text>
+  <text x="34" y="206.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TSLAX MINT</text>
+  <rect x="16" y="212.917" width="106" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,216.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="226.742" font-size="9.5">ApprovedAsset</text>
+  <line x1="24" y1="233.917" x2="114" y2="233.917" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="244.917" font-size="9">mint: TSLAx</text>
+  <text x="24" y="255.417" font-size="9">price_feed: Pyth TSLA</text>
+  </g>
+  <g>
+  <circle cx="24" cy="283.417" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="277.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"APPROVED_ASSET" +</text>
+  <text x="34" y="286.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">REGISTRY +</text>
+  <text x="34" y="295.917" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">NVDAX MINT</text>
+  <rect x="16" y="301.917" width="106" height="50.5" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,305.417)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="315.742" font-size="9.5">ApprovedAsset</text>
+  <line x1="24" y1="322.917" x2="114" y2="322.917" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="333.917" font-size="9">mint: NVDAx</text>
+  <text x="24" y="344.417" font-size="9">price_feed: Pyth NVDA</text>
+  </g>
+  <!-- Alice and Bob, the investors -->
+  <circle cx="226" cy="40.227" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="226" cy="40.227" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="130" y="49.6439" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(138,53.6439)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="158" y="64.1439" font-size="9.5">Alice</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="138" cy="120.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="148" y="114.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ALICE'S ADDRESS +</text>
+  <text x="148" y="123.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="148" y="132.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="130" y="138.644" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(138,142.644)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="158" y="153.144" font-size="9.5">Alice's USDC</text>
+  </g>
+  <circle cx="336" cy="50.138" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="336" cy="50.138" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="242" y="60.0617" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(250,64.0617)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="270" y="74.5617" font-size="9.5">Bob</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="250" cy="130.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="260" y="125.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">BOB'S ADDRESS +</text>
+  <text x="260" y="134.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM +</text>
+  <text x="260" y="143.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">USDC MINT</text>
+  <rect x="242" y="149.062" width="102" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(250,153.062)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="270" y="163.562" font-size="9.5">Bob's USDC</text>
+  </g>
+  <!-- Maria, the fund manager -->
+  <g>
+  <circle cx="448" cy="66.033" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="352" y="76.4364" width="104" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,79.9364)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="380" y="90.2614" font-size="9.5">Maria</text>
+  <line x1="360" y1="97.4364" x2="448" y2="97.4364" stroke="#888" stroke-width="0.8"/>
+  <text x="360" y="108.436" font-size="9" fill="#444">1 SOL</text>
+  </g>
+  <!-- the Pyth feeds: sponsored feeds at PDAs of the Pyth Push Oracle, derived from a shard ID and the feed ID -->
+  <!-- Pyth TSLA feed address -->
+  <circle cx="360" cy="130.5" r="6.5" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="360" cy="130.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="370" y="134" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SHARD + TSLA FEED ID</text>
+  </g>
+  <!-- Pyth NVDA feed address -->
+  <circle cx="360" cy="196.5" r="6.5" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="360" cy="196.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="370" y="200" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SHARD + NVDA FEED ID</text>
+  </g>
+  <g opacity="0.3">
+  <rect x="352" y="140" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,144)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="380" y="154.5" font-size="9.5">Pyth TSLA</text>
+  </g>
+  <g opacity="0.3">
+  <rect x="352" y="206" width="104" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(360,210)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="380" y="220.5" font-size="9.5">Pyth NVDA</text>
+  </g>
+  <!-- the program column -->
+  <g>
+  <circle cx="624" cy="107.812" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="464" y="119.37" width="168" height="120" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,122.87)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="492" y="133.545" font-size="10.5" font-weight="bold">managed-fund program</text>
+  <line x1="472" y1="140.37" x2="624" y2="140.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="151.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">initialize_registry()</text>
+  <text x="472" y="161.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">approve_asset()</text>
+  <text x="472" y="171.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">initialize_fund()</text>
+  <text x="472" y="181.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" font-weight="bold" fill="#1e7a3c">add_asset() &#215;2</text>
+  <text x="472" y="191.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">set_weight()</text>
+  <text x="472" y="201.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">deposit()</text>
+  <text x="472" y="211.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">rebalance()</text>
+  <text x="472" y="221.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">collect_fees()</text>
+  <text x="472" y="231.37" font-size="8.5" font-family="'DejaVu Sans Mono', Menlo, monospace" fill="#888">withdraw()</text>
+  </g>
+  <g>
+  <circle cx="472" cy="248.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="252.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"FUND" + INDEX</text>
+  <rect x="464" y="258.37" width="168" height="103" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,261.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="272.545" font-size="10.5" font-weight="bold">fund</text>
+  <line x1="472" y1="279.37" x2="624" y2="279.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="290.37" font-size="9">manager: Maria</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="290.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="300.87" font-size="9">registry: Victor's</text>
+  <text x="472" y="311.37" font-size="9">fee_bps: 100</text>
+  <text x="472" y="321.87" font-size="9">max_slippage_bps: 100</text>
+  <text x="472" y="332.37" font-size="9">total_shares: 0</text>
+  <text x="472" y="342.87" font-size="9">asset_count: 2</text>
+  <text x="472" y="353.37" font-size="9">total_weight_bps: 10,000</text>
+  </g>
+  <g>
+  <circle cx="472" cy="391.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="395.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ASSET" + FUND + INDEX</text>
+  <rect x="464" y="401.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,404.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="415.545" font-size="10.5" font-weight="bold">asset config 0</text>
+  <line x1="472" y1="422.37" x2="624" y2="422.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="433.37" font-size="9">mint: TSLAx</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="433.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="443.87" font-size="9">weight_bps: 4,000</text>
+  <text x="472" y="454.37" font-size="9">vault: the TSLAx vault</text>
+  </g>
+  <g>
+  <circle cx="472" cy="486.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="490.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ASSET" + FUND + INDEX</text>
+  <rect x="464" y="496.37" width="168" height="61" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(472,499.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="492" y="510.545" font-size="10.5" font-weight="bold">asset config 1</text>
+  <line x1="472" y1="517.37" x2="624" y2="517.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="528.37" font-size="9">mint: NVDAx</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="528.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="538.87" font-size="9">weight_bps: 6,000</text>
+  <text x="472" y="549.37" font-size="9">vault: the NVDAx vault</text>
+  </g>
+  <g>
+  <circle cx="472" cy="581.87" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="585.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"SHARE_MINT" + FUND</text>
+  <rect x="464" y="591.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,594.87)"><g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="492" y="605.545" font-size="10.5" font-weight="bold">share mint</text>
+  <line x1="472" y1="612.37" x2="624" y2="612.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="623.37" font-size="9">supply: 0 shares</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="623.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="633.87" font-size="7.5" font-style="italic" fill="#444">mint authority: the fund PDA</text>
+  </g>
+  <g transform="translate(-214,-230.37)">
+  <g>
+  <circle cx="472" cy="597.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="596.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUND'S ADDRESS +</text>
+  <text x="482" y="605.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + USDC MINT</text>
+  <rect x="464" y="611.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,614.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="625.545" font-size="10.5" font-weight="bold">USDC vault</text>
+  <line x1="472" y1="632.37" x2="624" y2="632.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="643.37" font-size="9" fill="#444">0 USDC</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="643.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="653.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
+  </g>
+  <g>
+  <circle cx="472" cy="677.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="676.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUND'S ADDRESS +</text>
+  <text x="482" y="685.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + TSLAX MINT</text>
+  <rect x="464" y="691.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,694.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="705.545" font-size="10.5" font-weight="bold">TSLAx vault</text>
+  <line x1="472" y1="712.37" x2="624" y2="712.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="723.37" font-size="9" fill="#444">0 TSLAx</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="723.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="733.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
+  </g>
+  <g>
+  <circle cx="472" cy="757.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="482" y="756.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">FUND'S ADDRESS +</text>
+  <text x="482" y="765.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">TOKEN PROGRAM + NVDAX MINT</text>
+  <rect x="464" y="771.37" width="168" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(472,774.87)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="492" y="785.545" font-size="10.5" font-weight="bold">NVDAx vault</text>
+  <line x1="472" y1="792.37" x2="624" y2="792.37" stroke="#888" stroke-width="0.8"/>
+  <text x="472" y="803.37" font-size="9" fill="#444">0 NVDAx</text>
+  <text stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round" x="624" y="803.87" font-size="9" font-weight="bold" letter-spacing="1" fill="#1e7a3c" text-anchor="end">NEW</text>
+  <text x="472" y="813.87" font-size="7.5" font-style="italic" fill="#444">authority: the fund PDA</text>
+  </g>
+  </g>
+  <g transform="translate(0,-240)">
+  <!-- the continued area: a second piece of curve, so this public key can sit on it beside its box -->
+  <rect x="6" y="595.000" width="238" height="155.000" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="236" y="609.000" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 14,625.000 Q 138.6,625.000 238,632.100" fill="none" stroke="#111" stroke-width="3.5"/>
+  <circle cx="222" cy="631.000" r="7" fill="#fff"/>
+  <g opacity="0.3">
+  <circle cx="222" cy="631.000" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  </g>
+  <g opacity="0.3">
+  <rect x="16" y="640" width="214" height="22" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,644)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="44" y="654.5" font-size="9.5">swap router program</text>
+  </g>
+  <!-- the router's rate records: the fifth account per asset a deposit pulls -->
+  <g opacity="0.3">
+  <circle cx="24" cy="712" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="34" y="715.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"RATE" + TSLAX MINT</text>
+  <rect x="16" y="721" width="106" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(24,725)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="44" y="735.5" font-size="9.5">AssetRate</text>
+  </g>
+  <g opacity="0.3">
+  <circle cx="146" cy="712" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="156" y="715.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"RATE" + NVDAX MINT</text>
+  <rect x="138" y="721" width="104" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(146,725)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="166" y="735.5" font-size="9.5">AssetRate</text>
+  </g>
+  </g>
+  <text x="237" y="300" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">Maria signs, and pays the rent for</text>
+  <text x="237" y="314" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">the fund, its share mint, two asset configs</text>
+  <text x="237" y="328" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">and three vaults; no tokens move</text>
+  <text x="237" y="342" font-size="9.5" fill="#444" font-style="italic" text-anchor="middle">until an investor deposits</text>
+  <text x="16" y="666" font-size="7.5" fill="#444" font-style="italic" text-anchor="start">not drawn: the TSLAx, NVDAx and USDC mints, named only as seeds; the fund's rebalance_threshold_bps (200) and its recorded holdings, which equal the drawn vault balances.</text>
+</svg>

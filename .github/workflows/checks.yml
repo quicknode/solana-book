@@ -1,0 +1,56 @@
+# The manuscript lint and the figure-geometry check, on every pull request and
+# every push to main. These are two of the three commands CLAUDE.md requires
+# before a push; the PDF build is the third and stays local, because it takes
+# minutes and the lint already covers everything the quote and phrase rules
+# check. Chromium comes from Playwright, at the version playwright-core in the
+# lockfile expects, and the geometry check is pointed at it.
+#
+# Denim INK, the figure face, is licensed and not in this repository. The job
+# fetches it from the private quicknode/solana-book-fonts with a read-only
+# deploy key held in the FONTS_DEPLOY_KEY secret. GitHub gives no secrets to a
+# pull request from a fork, so there the geometry check is skipped with a
+# notice rather than run against a face the book does not print in.
+name: Manuscript checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      HAS_FONTS_KEY: ${{ secrets.FONTS_DEPLOY_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium
+        id: chromium
+        run: |
+          npx --yes "playwright@$(node -p "require('playwright-core/package.json').version")" install --with-deps chromium
+          echo "path=$(node -p "require('playwright-core').chromium.executablePath()")" >> "$GITHUB_OUTPUT"
+      - name: Lint the manuscript and figures
+        run: npm run lint
+      - name: Fetch licensed fonts
+        if: env.HAS_FONTS_KEY == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: quicknode/solana-book-fonts
+          ssh-key: ${{ secrets.FONTS_DEPLOY_KEY }}
+          path: licensed-fonts
+      - name: Install licensed fonts
+        if: env.HAS_FONTS_KEY == 'true'
+        run: cp licensed-fonts/DenimINK-*.ttf assets/fonts/ && rm -rf licensed-fonts
+      - name: Note the skipped geometry check
+        if: env.HAS_FONTS_KEY != 'true'
+        run: echo "::notice::Figure geometry check skipped - the licensed fonts are not available to pull requests from forks. A maintainer's run covers it."
+      - name: Check figure geometry
+        if: env.HAS_FONTS_KEY == 'true'
+        run: node scripts/check-figure-geometry.mjs
+        env:
+          CHROMIUM_PATH: ${{ steps.chromium.outputs.path }}
