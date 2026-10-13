@@ -74,18 +74,7 @@ What is specific to the book: the conventions are fixed during the single visual
 ## Reviewers, Feedback, and Editions
 
 - **Named technical reviewers**: recruit respected Solana engineers early, so review happens per part rather than as one giant pass at the end. Their names fill the About the Technical Reviewers section. Visible peer review is part of how fundamentals titles earn their standing.
-- **Public pre-print feedback loop**: release chapters early, as posts or an early-access build, collect corrections, and credit contributors in Acknowledgements.
 - **Errata and editions**: a public errata page from day one, and a stated edition cadence. The durable layer changes slowly, but "long-lived" is only credible if the maintenance process is visible.
-
-## Milestones
-
-- **Voice samples first** (done): the Introduction, Escrow, and The Order Book Exchange lock voice, depth, and template.
-- The remaining program chapters, one per example, in table-of-contents order (done, all ten drafted: Escrow, The Fundraiser, The Betting Market, The Order Book Exchange, The Constant-Product AMM, The Prop AMM, Lending and Borrowing, The Managed Fund, Options, Perpetual Futures). They run as three groups: custody and pooling, then market making, then credit and derivatives. A chapter's place is set by what it assumes the reader already has, so The Betting Market sits third, where its only prerequisite is Escrow, and Options sits just before Perpetual Futures, because a fully collateralized derivative is the case the leveraged one relaxes.
-- The two Fundamentals sections (Solana Building Blocks; Financial Programming Concepts in Solana) (drafted), with technical reviewers engaged per chapter as each completes.
-- The Glossary, the book's one appendix (drafted).
-- The front-matter pages (drafted).
-- A single visual pass producing all diagrams in one consistent style (done: every figure is drawn).
-- Still to do: public early-access release and errata page live before print.
 
 ## Future Chapters
 

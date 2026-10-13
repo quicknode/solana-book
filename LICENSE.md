@@ -34,7 +34,7 @@ The typefaces the book is set in live in `assets/fonts/` so that a build is iden
 
 - **Gelasio** (body and running heads) — by Eben Sorkin, under the **SIL Open Font License 1.1**: <https://openfontlicense.org/>. Licence text: `assets/fonts/Gelasio-OFL.txt`.
 - **DejaVu Sans Mono** (code, addresses in prose, and handler names, seed lists and addresses in figures) — under the **DejaVu Fonts License**, a permissive Bitstream Vera derivative. Licence text: `assets/fonts/DejaVu-LICENSE.txt`.
-- **Denim INK** (headings and figure text) — a commercial face licensed to Quicknode, Inc. It is **not** covered by the licenses above and is not in this repository: a licensed copy goes in `assets/fonts/` as `DenimINK-Regular.ttf`, `DenimINK-RegularItalic.ttf`, `DenimINK-Bold.ttf` and `DenimINK-BoldItalic.ttf` (ignored by git). A reproduction of the book that is not made by Quicknode should substitute its own heading face.
+- **Denim INK** (headings and figure text) — a commercial face licensed to Quiknode, Inc. It is **not** covered by the licenses above and is not in this repository: a licensed copy goes in `assets/fonts/` as `DenimINK-Regular.ttf`, `DenimINK-RegularItalic.ttf`, `DenimINK-Bold.ttf` and `DenimINK-BoldItalic.ttf` (ignored by git). A reproduction of the book that is not made by Quicknode should substitute its own heading face.
 
 ## Exclusions
 

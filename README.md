@@ -1,6 +1,6 @@
 # Building Financial Software on Solana
 
-The planning and manuscript repo for **Building Financial Software on Solana**, a long-lived fundamentals book in the tradition of *TCP/IP Illustrated*: the mental models, the math, and the adversary, for developers building financial software on Solana.
+The manuscript repo for **Building Financial Software on Solana**, a long-lived fundamentals book in the tradition of *TCP/IP Illustrated*: the mental models, the math, and the adversary, for developers building financial software on Solana.
 
 ## Purpose
 
@@ -11,9 +11,8 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 ## Contents
 
 - [TABLE-OF-CONTENTS.md](TABLE-OF-CONTENTS.md) - the linked table of contents
-- [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, review process, and milestones
-- [REVIEWING.md](REVIEWING.md) - the reviewer-facing guide sent with advance copies
-- One folder per section ([prelude/](prelude/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [conclusion/](conclusion/), [appendices/](appendices/), [postlude/](postlude/)), one file per chapter, all drafted
+- [WRITING-PLAN.md](WRITING-PLAN.md) - the chapter template, generation pipeline, War Story register, and review process
+- One folder per section ([prelude/](prelude/), [solana-building-blocks/](solana-building-blocks/), [financial-programming-concepts-in-solana/](financial-programming-concepts-in-solana/), [building-financial-products-in-solana/](building-financial-products-in-solana/), [conclusion/](conclusion/), [appendices/](appendices/), [postlude/](postlude/)), one file per chapter
 
 ## Companion projects
 
@@ -39,7 +38,7 @@ The book's home is [solanabook.org](https://solanabook.org), which hosts the pub
 
 ## Status
 
-Drafted: every chapter from the Introduction to *Where to Go From Here*, the Glossary, and the front and back matter. Every figure is drawn as SVG in the chapters' `figures/` directories.
+Released. Corrections to the published text are recorded in [ERRATA.md](ERRATA.md), and every figure is drawn as SVG in the chapters' `figures/` directories.
 
 ## License
 
