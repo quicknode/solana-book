@@ -2,13 +2,13 @@
 
 A **permissioned fund** is a fund whose manager approves every deposit and every redemption before it settles. A user asks to deposit, the manager approves the request at the fund's current price per share, and the user then claims the shares. A redemption runs the same way in reverse. The Solana Foundation publishes a program for this, `async_vault` in its Vault Standard Suite, named for the way each deposit and redemption settles in a later transaction than the one that asked for it. This chapter describes that program as it stands at one commit.[^vault-source]
 
-The fund this chapter follows holds US Treasury bills. Any asset can have a token, and issuers already put shares in Treasury bill funds onchain. For a program to hold an asset and price it, as the program in the *Managed Fund* chapter does, it needs more than a token:
+The fund this chapter follows holds US Treasury bills, and three things set it apart from the managed fund in the *Managed Fund* chapter:
 
-- **The fund's own token accounts hold the asset.** The Treasury bill fund's bills are held by its manager's broker.
-- **The program trades the asset inside the deposit's transaction.** The Treasury bill fund buys its bills through the broker at the Treasury's auctions, and each purchase settles on a later business day.
-- **A Pyth price feed values the asset.** The Treasury bill fund's manager values its bills from the broker's records and the interest each bill has earned.
+- **The program does not hold the fund's investments.** It holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed. The manager takes the rest out and buys Treasury bills, which the manager's broker holds.
+- **The manager values the investments.** They work out what the bills are worth from the broker's records and the interest each bill has earned. The program never sees a price for any holding.
+- **The manager sets the fund's price per share.** They publish one number, the fund's value per share, and the program converts every deposit and redemption at it rather than calculating a price of its own.
 
-A fund that lends to businesses, or owns a building, has none of the three either. So in a permissioned fund the manager publishes the fund's price per share, rather than the program calculating it: the manager can see what the fund holds and what each holding is worth, and the program sees only what the manager tells it. That leaves the manager three jobs, and approving a request is where they do them:
+A manager who bought tokens instead of bills would change none of this: the manager would hold the tokens, and the program would still neither hold nor price them. A fund that lends to businesses, or owns a building, can run the same way. Because the price per share comes from the manager, approving a request is where the manager does three jobs:
 
 - **Pricing the request.** A deposit has no price until the manager has published one. The program converts at whatever price is stored when the manager approves, which can be newer than the one the user saw when they asked.
 - **Deciding who may invest.** A regulated fund sells only to investors who pass its identity and eligibility checks. This program keeps no record of who has passed, so the manager runs the checks offchain and rejects a request from anyone who fails them.
