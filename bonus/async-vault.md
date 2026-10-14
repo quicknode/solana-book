@@ -2,7 +2,13 @@
 
 An **async vault** is a fund whose deposits and redemptions settle later, in a separate transaction signed by the fund's manager. A user asks to deposit and the manager approves the request at the fund's current price per share, and only then can the user claim the shares. Redemptions work the same way in reverse. The Solana Foundation publishes one as `async_vault`, the program in its Vault Standard Suite, and this chapter describes that program as it stands at one commit.[^vault-source]
 
-Any asset can have a token: issuers already put US Treasury bills and stocks such as NVDAx onchain. The managed fund in the *Managed Fund* chapter needs more than a token for each asset it holds. Its own token accounts hold the asset, and the program buys or sells it inside the deposit's transaction, at a price it reads from a Pyth price feed. Maria's fund, below, does neither. She buys bills through her broker at the Treasury's auctions, each purchase settles on a later business day, and the bills sit with a custodian. A fund that lends to businesses, or owns a building, is in the same position: nothing onchain can buy or sell its holdings within a transaction, and no price feed values them. The async vault is for funds like these, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
+Any asset can have a token: issuers already put US Treasury bills and stocks such as NVDAx onchain. The managed fund in the *Managed Fund* chapter needs more than a token for each asset it holds:
+
+- **Its own token accounts hold the asset.** Maria's fund, below, keeps its bills with a custodian.
+- **The program trades the asset inside the deposit's transaction.** Maria buys bills through her broker at the Treasury's auctions, and each purchase settles on a later business day.
+- **A Pyth price feed values the asset.** Maria works out her bills' value herself.
+
+A fund that lends to businesses, or owns a building, misses all three in the same way. The async vault is for funds like these, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
 
 > **Called a "vault".** The Solana Foundation calls the product a vault, and its program stores the fund's state in an account of type `Vault`. The rest of this book uses "vault" for a token account owned by a program, so this chapter keeps the program's own names and says which it means each time. **The vault account** is the `Vault` struct. **The reserve** and **the pending vault** are the two token accounts the vault account holds USDC in.
 
