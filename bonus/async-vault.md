@@ -4,11 +4,11 @@ A **permissioned fund** is a fund whose manager approves every deposit and every
 
 The fund this chapter follows holds US Treasury bills, and three things set it apart from the managed fund in the *Managed Fund* chapter:
 
-- **The fund's investments are held offchain.** They are Treasury bills in an account at the manager's broker, not tokens, and the program does not hold them. The program holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed. The manager takes the rest out to buy the bills.
+- **The fund's investments are held offchain.** The fund's Treasury bills are held in an account at the manager's broker, not as tokens, and the program does not hold them. The program holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed. The manager takes the rest out to buy the bills.
 - **The manager values the investments.** They work out what the bills are worth from the broker's records and the interest each bill has earned. The program never sees a price for any holding.
 - **The manager sets the fund's price per share.** They publish one number, the fund's value per share, and the program converts every deposit and redemption at it rather than calculating a price of its own.
 
-A manager who bought tokens instead of bills would change none of this: the manager would hold the tokens, and the program would still neither hold nor price them. A fund that lends to businesses, or owns a building, can run the same way. Because the price per share comes from the manager, approving a request is where the manager does three jobs:
+A manager who held the bills as tokens, rather than at a broker, would change none of this: the program would still neither hold nor price them. A fund that lends to businesses, or owns a building, can run the same way. Because the price per share comes from the manager, approving a request is where the manager does three jobs:
 
 - **Pricing the request.** A deposit has no price until the manager has published one. The program converts at whatever price is stored when the manager approves, which can be newer than the one the user saw when they asked.
 - **Deciding who may invest.** A regulated fund sells only to investors who pass its identity and eligibility checks. This program keeps no record of who has passed, so the manager runs the checks offchain and rejects a request from anyone who fails them.
@@ -162,7 +162,7 @@ The managed fund and the permissioned fund both issue shares against a pool of a
 | The assets sit in | The fund's own token accounts | Wherever the authority sends them |
 | Who may take tokens out of the fund | Each shareholder, their own slice | The authority, any amount; each shareholder, once approved |
 | A shareholder leaves | At any time, in kind | When the authority approves the redemption |
-| Assets it can hold | Tokens with a Pyth price feed | Anything the authority can value |
+| Assets it can hold | Assets held as tokens, with a Pyth price feed | Assets held anywhere, that the authority can value |
 
 The managed fund's design works when every asset has a Solana token and a price feed, and in return the manager cannot take the assets. The permissioned fund's design works for holdings the program cannot trade or value within a transaction, and in return the depositors trust the authority with the reserve, the price, and when each redemption is approved. A fund of Treasury bills already trusts its manager, its broker and its administrator to that extent, so this program records onchain what a traditional Treasury bill fund already does.
 
