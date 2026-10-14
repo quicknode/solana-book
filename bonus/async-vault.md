@@ -4,7 +4,7 @@ A **permissioned fund** is a fund whose manager approves every deposit and every
 
 The fund this chapter follows holds US Treasury bills, and three things set it apart from the managed fund in the *Managed Fund* chapter:
 
-- **The program does not hold the fund's investments.** It holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed. The manager takes the rest out and buys Treasury bills, which the manager's broker holds.
+- **The fund's investments are held offchain.** They are Treasury bills in an account at the manager's broker, not tokens, and the program does not hold them. The program holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed. The manager takes the rest out to buy the bills.
 - **The manager values the investments.** They work out what the bills are worth from the broker's records and the interest each bill has earned. The program never sees a price for any holding.
 - **The manager sets the fund's price per share.** They publish one number, the fund's value per share, and the program converts every deposit and redemption at it rather than calculating a price of its own.
 
