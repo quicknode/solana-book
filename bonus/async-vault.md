@@ -14,7 +14,7 @@ Any asset can have a token: issuers already put US Treasury bills and stocks suc
 - **The program trades the asset inside the deposit's transaction.** Maria buys bills through her broker at the Treasury's auctions, and each purchase settles on a later business day.
 - **A Pyth price feed values the asset.** Maria works out her bills' value herself.
 
-A fund that lends to businesses, or owns a building, misses all three in the same way. The async vault is for funds like these, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
+A fund that lends to businesses, or owns a building, has none of the three either. The async vault is for funds like these, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
 
 > **Called a "vault".** The Solana Foundation calls the product a vault, and its program stores the fund's state in an account of type `Vault`. The rest of this book uses "vault" for a token account owned by a program, so this chapter keeps the program's own names and says which it means each time. **The vault account** is the `Vault` struct. **The reserve** and **the pending vault** are the two token accounts the vault account holds USDC in.
 
