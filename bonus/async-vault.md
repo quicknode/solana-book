@@ -1,28 +1,26 @@
-# Bonus Chapter: The Async Vault
+# Bonus Chapter: The Permissioned Fund
 
-An **async vault** is a fund whose deposits and redemptions settle later, in a separate transaction signed by the fund's manager. A user asks to deposit and the manager approves the request at the fund's current price per share, and only then can the user claim the shares. Redemptions work the same way in reverse. The approval is where the manager does three things the program cannot do for them:
+A **permissioned fund** is a fund whose manager approves every deposit and every redemption before it settles. A user asks to deposit, the manager approves the request at the fund's current price per share, and the user then claims the shares. A redemption runs the same way in reverse. The Solana Foundation publishes a program for this, `async_vault` in its Vault Standard Suite, named for the way each deposit and redemption settles in a later transaction than the one that asked for it. This chapter describes that program as it stands at one commit.[^vault-source]
 
-- **Prices the request.** The manager publishes the fund's price per share, so a deposit has no price until they have valued the fund's holdings. A request is filled at whatever price the manager has published when they approve it, which can be newer than the one the user saw when they asked.
-- **Decides who may invest.** A regulated fund sells only to investors who pass its identity and eligibility checks. The manager runs those offchain, and rejects a request from anyone who fails them.
-- **Waits for the USDC.** A redemption is paid in USDC the manager has already invested. They approve it once they have sold enough of the fund's holdings to pay it.
+The fund this chapter follows holds US Treasury bills. Any asset can have a token, and issuers already put shares in Treasury bill funds onchain. For a program to hold an asset and price it, as the program in the *Managed Fund* chapter does, it needs more than a token:
 
-The Solana Foundation publishes an async vault as `async_vault`, the program in its Vault Standard Suite, and this chapter describes that program as it stands at one commit.[^vault-source]
+- **The fund's own token accounts hold the asset.** The Treasury bill fund's bills are held by its manager's broker.
+- **The program trades the asset inside the deposit's transaction.** The Treasury bill fund buys its bills through the broker at the Treasury's auctions, and each purchase settles on a later business day.
+- **A Pyth price feed values the asset.** The Treasury bill fund's manager values its bills from the broker's records and the interest each bill has earned.
 
-Any asset can have a token: issuers already put US Treasury bills and stocks such as NVDAx onchain. The managed fund in the *Managed Fund* chapter needs more than a token for each asset it holds:
+A fund that lends to businesses, or owns a building, has none of the three either. So in a permissioned fund the manager publishes the fund's price per share, rather than the program calculating it: the manager can see what the fund holds and what each holding is worth, and the program sees only what the manager tells it. That leaves the manager three jobs, and approving a request is where they do them:
 
-- **Its own token accounts hold the asset.** Maria's fund, below, keeps its bills with a custodian.
-- **The program trades the asset inside the deposit's transaction.** Maria buys bills through her broker at the Treasury's auctions, and each purchase settles on a later business day.
-- **A Pyth price feed values the asset.** Maria works out her bills' value herself.
-
-A fund that lends to businesses, or owns a building, has none of the three either. The async vault is for funds like these, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
+- **Pricing the request.** A deposit has no price until the manager has published one. The program converts at whatever price is stored when the manager approves, which can be newer than the one the user saw when they asked.
+- **Deciding who may invest.** A regulated fund sells only to investors who pass its identity and eligibility checks. This program keeps no record of who has passed, so the manager runs the checks offchain and rejects a request from anyone who fails them.
+- **Waiting for the USDC.** A redemption is paid in USDC the manager has invested elsewhere. They approve it once they have sold enough of the fund's holdings to pay it.
 
 > **Called a "vault".** The Solana Foundation calls the product a vault, and its program stores the fund's state in an account of type `Vault`. The rest of this book uses "vault" for a token account owned by a program, so this chapter keeps the program's own names and says which it means each time. **The vault account** is the `Vault` struct. **The reserve** and **the pending vault** are the two token accounts the vault account holds USDC in.
 
-## A Fund the Program Cannot Price Settles Later
+## A Treasury Bill Fund Fills Orders at the Next Price It Publishes
 
 Maria runs a fund of US Treasury bills. A Treasury bill is a short-term loan to the US government: it is sold below its face value and repaid at face value a few weeks or months later, and the difference is the interest. Maria's broker holds the bills, and she earns a management fee, which she takes the way a traditional fund does: it is deducted from the fund's value before she publishes the price per share. Alice wants the interest Treasury bills pay on her USDC without opening a brokerage account, so she buys shares in Maria's fund.
 
-The program is told the fund's value rather than computing it. Only Maria can sign the price per share it uses, so only she can turn a deposit into shares or shares into USDC. A deposit arrives as a request, and Maria settles it once she has a price for it. A traditional fund has the same rhythm: an order placed during the day is filled at the net asset value (NAV) struck after the market closes. Fund administrators call a deposit a **subscription** and a withdrawal a **redemption**. The program uses both pairs of words: a deposit request is checked against the `MinSubscription` extension, and a redeem request against `MinRedemption`.
+Only Maria can sign the price per share the program uses, so only she can turn a deposit into shares or shares into USDC. A traditional fund has the same rhythm: an order placed during the day is filled at the net asset value (NAV) struck after the market closes. Fund administrators call a deposit a **subscription** and a withdrawal a **redemption**. The program uses both pairs of words: a deposit request is checked against the `MinSubscription` extension, and a redeem request against `MinRedemption`.
 
 ## The Manager Creates the Vault Around a Share Mint She Brings
 
@@ -80,7 +78,7 @@ The reserve's 900 USDC earns nothing while it sits there. Maria runs `withdraw_a
 
 Three months pass, and in this example the bills have earned enough that, after Maria's fee, the fund is worth 909 USDC for 900 shares. Maria runs `update_vault_nav()` with 1,010,000, 1.01 USDC per share, and `nav_version` becomes 2. The figures are illustrative.
 
-That NAV is a fact from offchain, like the prices in the *Offchain Truth* chapter, and the program accepts it on one check: the authority signed it. Nothing compares it with the last NAV or limits how old it may be when an approval uses it. Publishing a NAV and then approving the requests waiting on it is Maria's job, and so is getting the number right. A traditional fund has an administrator calculate its NAV and an auditor check it. The vault account stores the authority as a public key, so Maria can make it a multisig, such as a Squads account, that needs signatures from more than one person before a NAV changes.
+That NAV is a fact from offchain, like the prices in the *Offchain Truth* chapter, and the program accepts it on one check: the authority signed it. Nothing compares it with the last NAV or limits how old it may be when an approval uses it. Publishing a NAV and then approving the requests waiting on it is Maria's job, and so is getting the number right. A traditional fund usually has an administrator calculate its NAV and an auditor check it. The vault account stores the authority as a public key, so Maria can make it a multisig, such as a Squads account, that needs signatures from more than one person before a NAV changes.
 
 ## A Later Investor Buys In at the New NAV
 
@@ -98,11 +96,11 @@ Alice decides to take her gain. She runs `create_redeem_request()` for 900 share
 
 To approve, Maria needs the USDC in the reserve, and her bills are at her broker. The reserve already holds Bob's 505 USDC, so she sells 404 USDC of bills and sends 404 USDC into the reserve with an ordinary Token Program transfer. Any wallet can send USDC to the reserve; no vault handler is involved. She then runs `approve_request()`. At 1.01, Alice's 900 shares are worth 900,000,000 × 1,010,000 ÷ 10^6 = 909,000,000 minor units, 909 USDC. The handler moves the 909 USDC from the reserve to the pending vault, and the request becomes Claimable for 909 USDC.
 
-Bob's deposit paid most of Alice's redemption, so the fund sold only 404 USDC of bills instead of 909. A fund that settles its subscriptions and redemptions together does this every day, and here Maria decides it by choosing when to approve.
+Bob's deposit paid most of Alice's redemption, so the fund sold only 404 USDC of bills instead of 909. A traditional fund nets its subscriptions against its redemptions the same way, and here Maria decides when by choosing when to approve.
 
 ![](figures/async-vault-approve-redeem.svg)
 
-Alice runs `claim()`, and 909 USDC moves from the pending vault to her token account. The request account closes and its rent comes back to her. Once Maria approved, the 909 USDC was in an account she cannot withdraw from, and nothing Maria does to the NAV afterwards changes what Alice's request pays.
+Alice runs `claim()`, and 909 USDC moves from the pending vault to her token account. The request account closes and its rent comes back to her. Once Maria approved, the 909 USDC was in an account `withdraw_assets()` cannot reach, and nothing Maria does to the NAV afterwards changes what Alice's request pays.
 
 ![](figures/async-vault-claim-redeem.svg)
 
@@ -110,7 +108,7 @@ Alice put in 900 USDC and took out 909 three months later. Bob holds 500 shares 
 
 ## Extensions Add the Rules Regulated Funds Ask For
 
-Each extension is added by its `initialize_` handler before `initialize_vault()`, and changed afterwards by its `update_` handler, both signed by the authority. Maria used one; the program offers eight:
+Each extension is added by its `initialize_` handler before `initialize_vault()`, signed by the authority. The fee, minimum and pause extensions each have an `update_` handler that changes their setting afterwards; the two queues have none. Maria used one extension; the program offers eight:
 
 | Extension | What it does | Refusal it adds |
 | --- | --- | --- |
@@ -155,9 +153,9 @@ All three use u128 intermediates and checked arithmetic, and multiply before the
 
 ## Choosing Between Settling Now and Settling Later
 
-The managed fund and the async vault both issue shares against a pool of assets, and they draw the line of trust in different places:
+The managed fund and the permissioned fund both issue shares against a pool of assets, and they draw the line of trust in different places:
 
-| | The managed fund | The async vault |
+| | The managed fund | The permissioned fund |
 | --- | --- | --- |
 | A deposit settles | In the transaction that makes it | When the authority approves it, then the user claims |
 | The price per share comes from | The fund's recorded holdings and Pyth prices | The NAV the authority publishes |
@@ -166,22 +164,22 @@ The managed fund and the async vault both issue shares against a pool of assets,
 | A shareholder leaves | At any time, in kind | When the authority approves the redemption |
 | Assets it can hold | Tokens with a Pyth price feed | Anything the authority can value |
 
-The managed fund's design works when every asset has a Solana token and a price feed, and in return the manager cannot take the assets. The async vault's design works for holdings the program cannot trade or value within a transaction, and in return the depositors trust the authority with the reserve, the price, and when each redemption is approved. A fund of Treasury bills already trusts its manager, its broker and its administrator to that extent, so the async vault records onchain what that fund already does.
+The managed fund's design works when every asset has a Solana token and a price feed, and in return the manager cannot take the assets. The permissioned fund's design works for holdings the program cannot trade or value within a transaction, and in return the depositors trust the authority with the reserve, the price, and when each redemption is approved. A fund of Treasury bills already trusts its manager, its broker and its administrator to that extent, so this program records onchain what a traditional Treasury bill fund already does.
 
 ## Testing Considerations
 
 The suite is in `integration-tests` in the vault's repository, and runs each handler against the built program in LiteSVM: a success test, and a test per refusal. The tests named in this chapter cover the cases that matter most for a fund: a recreated request (`test_stale_approval_rejected_on_recreated_request`), a deposit worth less than a share (`test_approve_deposit_rejected_when_shares_round_to_zero`), and a transfer fee switched on between request and approval (`test_approve_rejected_when_transfer_fee_reenabled`). They also cover an authority handover (`test_full_authority_transfer_old_authority_loses_access`), and the queue's ordering and tombstones. Copy the recreated-request test: any handler that takes an approval signed in advance should be tested against an account that changed after it was signed.
 
-## What You Learnt from the Async Vault
+## What You Learnt from the Permissioned Fund
 
 A traditional fund that holds Treasury bills relies on its manager, its custodian, its administrator and its transfer agent, the firm that keeps the register of who owns which shares. This program does the transfer agent's work onchain: it keeps the register of shares and the queue of requests, and holds each investor's USDC while their request waits. The manager, the custodian and the administrator are still offchain.
 
-The async vault added five concepts:
+The permissioned fund added five concepts:
 
-- **A request account for every deposit and redemption.** The user's tokens wait in an account no admin can withdraw from, and the request records what was asked for, until the authority approves, rejects or the user cancels.
+- **A request account for every deposit and redemption.** The user's tokens wait in an account `withdraw_assets()` cannot reach, and the request records what was asked for, until the authority approves, rejects or the user cancels.
 - **A price fixed at approval.** The NAV is applied once, when the authority approves, and stored in the request, so the claim pays what the approval said.
 - **An approval that names what was reviewed.** Repeating the request's fields in the approval's arguments makes an approval signed in advance useless against a request that changed.
 - **A share mint the issuer brings.** The program takes over an existing mint's mint authority instead of creating its own, so the issuer chooses its Token Extensions.
 - **Extensions fixed before launch.** A fund chooses which rules apply before it opens, and can tune their parameters after, but cannot add a new rule to a fund investors have already joined.
 
-[^vault-source]: The program is at [github.com/solana-foundation/vault](https://github.com/solana-foundation/vault), and this chapter describes commit `c359962`, of 1 October 2026. Its README calls it a reference implementation, not audited for use on mainnet, and links a Cantina review of an earlier commit, `ce2b548`. Every handler, field, error and test this chapter names is in that commit.
+[^vault-source]: The program is at [github.com/solana-foundation/vault](https://github.com/solana-foundation/vault), and this chapter describes commit `c359962`, of 1 October 2026. Its README calls it a reference implementation, not audited for use on mainnet, and links a security review of an earlier commit, `ce2b548`, by Cantina, which describes itself as a security services marketplace that connects security researchers with clients. Every handler, field, error and test this chapter names is in that commit.
