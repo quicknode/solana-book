@@ -2,11 +2,11 @@
 
 An **async vault** is a fund whose deposits and redemptions settle later, in a separate transaction signed by the fund's manager. A user asks to deposit and the manager approves the request at the fund's current price per share, and only then can the user claim the shares. Redemptions work the same way in reverse. The Solana Foundation publishes one as `async_vault`, the program in its Vault Standard Suite, and this chapter describes that program as it stands at one commit.[^vault-source]
 
-The program exists for funds whose assets cannot sit in a Solana token account. The managed fund in the *Managed Fund* chapter holds every asset in its own vaults and prices each one from a Pyth price feed, so it settles a deposit in the transaction that makes it. A fund of US Treasury bills cannot do that: the bills are held by a custodian, and their value is worked out offchain. The async vault accepts that, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
+Any asset can have a token: issuers already put US Treasury bills and stocks such as NVDAx onchain. The managed fund in the *Managed Fund* chapter needs more than a token for each asset it holds. Its own token accounts hold the asset, and the program buys or sells it inside the deposit's transaction, at a price it reads from a Pyth price feed. Maria's fund, below, does neither. She buys bills through her broker at the Treasury's auctions, each purchase settles on a later business day, and the bills sit with a custodian. A fund that lends to businesses, or owns a building, is in the same position: nothing onchain can buy or sell its holdings within a transaction, and no price feed values them. The async vault is for funds like these, and gives the manager two jobs the managed fund's program does itself: holding the assets and publishing their value.
 
 > **Called a "vault".** The Solana Foundation calls the product a vault, and its program stores the fund's state in an account of type `Vault`. The rest of this book uses "vault" for a token account owned by a program, so this chapter keeps the program's own names and says which it means each time. **The vault account** is the `Vault` struct. **The reserve** and **the pending vault** are the two token accounts the vault account holds USDC in.
 
-## A Fund Whose Assets Live Offchain Settles Later
+## A Fund the Program Cannot Price Settles Later
 
 Maria runs a fund of US Treasury bills. A Treasury bill is a short-term loan to the US government: it is sold below its face value and repaid at face value a few weeks or months later, and the difference is the interest. Maria's broker holds the bills, and she earns a management fee, which she takes the way a traditional fund does: it is deducted from the fund's value before she publishes the price per share. Alice wants the interest Treasury bills pay on her USDC without opening a brokerage account, so she buys shares in Maria's fund.
 
@@ -154,7 +154,7 @@ The managed fund and the async vault both issue shares against a pool of assets,
 | A shareholder leaves | At any time, in kind | When the authority approves the redemption |
 | Assets it can hold | Tokens with a Pyth price feed | Anything the authority can value |
 
-The managed fund's design works when every asset has a Solana token and a price feed, and in return the manager cannot take the assets. The async vault's design works for assets that live offchain, and in return the depositors trust the authority with the reserve, the price, and when each redemption is approved. A fund of Treasury bills already trusts its manager, its broker and its administrator to that extent, so the async vault records onchain what that fund already does.
+The managed fund's design works when every asset has a Solana token and a price feed, and in return the manager cannot take the assets. The async vault's design works for holdings the program cannot trade or value within a transaction, and in return the depositors trust the authority with the reserve, the price, and when each redemption is approved. A fund of Treasury bills already trusts its manager, its broker and its administrator to that extent, so the async vault records onchain what that fund already does.
 
 ## Testing Considerations
 
