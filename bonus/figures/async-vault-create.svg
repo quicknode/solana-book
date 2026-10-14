@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 613" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111">
+  <defs><marker id="av-create-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#1e7a3c"/></marker><marker id="av-create-arr-grey" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#777"/></marker></defs>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="24" font-size="15" font-weight="bold">Maria creates the vault and sets its NAV</text>
+  <path d="M 0,33 Q 400,33 640,113" fill="none" stroke="#111" stroke-width="3.5"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="628" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">Solana Devnet</text>
+  <rect x="328" y="168" width="134" height="96" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="454" y="181" font-size="9" fill="#444" font-style="italic" text-anchor="end">curve continued</text>
+  <path d="M 336,192 Q 400,192 458,197" fill="none" stroke="#111" stroke-width="3.5"/>
+  <g>
+  <circle cx="98" cy="34.263" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="16" y="44" width="92" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(24,47.5)"><g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g></g>
+  <text x="44" y="58.5" font-size="9.5" font-weight="bold">Maria</text>
+  <line x1="24" y1="65" x2="100" y2="65" stroke="#888" stroke-width="0.8"/>
+  <text x="24" y="76" font-size="9" fill="#444">1 SOL</text>
+  </g>
+  <g>
+  <circle cx="446" cy="196.024" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="336" y="205.5" width="120" height="50.5" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(344,209)"><g transform="translate(-1.4,-1.401) scale(0.7)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g></g>
+  <text x="364" y="220" font-size="9.5" font-weight="bold">share mint</text>
+  <line x1="344" y1="226.5" x2="448" y2="226.5" stroke="#888" stroke-width="0.8"/>
+  <text x="344" y="237.5" font-size="8.5">mint authority: vault PDA</text>
+  <text x="344" y="248" font-size="8.5">supply: 0 shares</text>
+  </g>
+  <g>
+  <circle cx="622" cy="107.183" r="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <rect x="466" y="116.5" width="166" height="187" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(474,120)"><g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g></g>
+  <text x="494" y="131" font-size="9.5" font-weight="bold">async_vault program</text>
+  <line x1="474" y1="137.5" x2="624" y2="137.5" stroke="#888" stroke-width="0.8"/>
+  <text x="474" y="148.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace" font-weight="bold" fill="#1e7a3c">create_vault()</text>
+  <text x="474" y="159" font-size="7.5" font-family="'DejaVu Sans Mono', monospace" font-weight="bold" fill="#1e7a3c">initialize_min_subscription()</text>
+  <text x="474" y="169.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace" font-weight="bold" fill="#1e7a3c">initialize_vault()</text>
+  <text x="474" y="180" font-size="7.5" font-family="'DejaVu Sans Mono', monospace" font-weight="bold" fill="#1e7a3c">update_vault_nav()</text>
+  <text x="474" y="190.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">create_deposit_request()</text>
+  <text x="474" y="201" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">create_redeem_request()</text>
+  <text x="474" y="211.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">approve_request()</text>
+  <text x="474" y="222" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">reject_request()</text>
+  <text x="474" y="232.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">cancel_request()</text>
+  <text x="474" y="243" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">claim()</text>
+  <text x="474" y="253.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">set_operator()</text>
+  <text x="474" y="264" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">withdraw_assets()</text>
+  <text x="474" y="274.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">update_vault()</text>
+  <text x="474" y="285" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">invite_new_authority()</text>
+  <text x="474" y="295.5" font-size="7.5" font-family="'DejaVu Sans Mono', monospace">accept_authority_invitation()</text>
+  </g>
+  <g>
+  <circle cx="474" cy="321.5" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="484" y="320.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"VAULT" +</text>
+  <text x="484" y="329.5" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SHARE MINT</text>
+  <rect x="466" y="335.5" width="166" height="71.5" rx="6" fill="#f4f4f2" stroke="#888"/>
+  <g transform="translate(474,339)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
+  <text x="494" y="350" font-size="9.5" font-weight="bold">vault account</text>
+  <line x1="474" y1="356.5" x2="624" y2="356.5" stroke="#888" stroke-width="0.8"/>
+  <text x="474" y="367.5" font-size="9">authority: Maria</text>
+  <text x="474" y="378" font-size="9">nav: 1.00 USDC</text>
+  <text x="474" y="388.5" font-size="9">nav_version: 1</text>
+  <text x="474" y="399" font-size="9">initialized: true</text>
+  <text x="624" y="367.5" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="474" cy="425" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="484" y="424" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"RESERVE" +</text>
+  <text x="484" y="433" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SHARE MINT</text>
+  <rect x="466" y="439" width="166" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(474,442.5)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.500-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="494" y="453.5" font-size="9.5" font-weight="bold">reserve</text>
+  <line x1="474" y1="460" x2="624" y2="460" stroke="#888" stroke-width="0.8"/>
+  <text x="474" y="471" font-size="9">0 USDC</text>
+  <text x="624" y="471" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <g>
+  <circle cx="474" cy="529" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="484" y="528" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"PENDING" +</text>
+  <text x="484" y="537" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">SHARE MINT</text>
+  <rect x="466" y="543" width="166" height="40" rx="6" fill="#fff" stroke="#111" stroke-width="1.8"/>
+  <g transform="translate(474,546.5)"><g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.500-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g></g>
+  <text x="494" y="557.5" font-size="9.5" font-weight="bold">pending vault</text>
+  <line x1="474" y1="564" x2="624" y2="564" stroke="#888" stroke-width="0.8"/>
+  <text x="474" y="575" font-size="9">0 USDC</text>
+  <text x="624" y="575" font-size="7.5" letter-spacing="0.4" font-weight="bold" fill="#1e7a3c" text-anchor="end">NEW</text>
+  </g>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="120" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">1. create_vault()</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="136" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">2. initialize_min_subscription()</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="152" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">3. initialize_vault()</text>
+  <text stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round" x="16" y="168" font-size="10.5" fill="#1e7a3c" font-weight="bold" text-anchor="start">4. update_vault_nav()</text>
+  <text x="16" y="601" font-size="7.5" fill="#444" font-style="italic">The share mint's mint authority moves from Maria to the vault PDA. Not drawn: the USDC mint, named only as a seed.</text>
+</svg>

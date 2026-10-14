@@ -19,6 +19,7 @@ const manuscriptGlobs = [
   "conclusion/*.md",
   "appendices/*.md",
   "postlude/*.md",
+  "bonus/*.md",
 ];
 
 // Each rule: a regex and the reason it is banned. Case-insensitive unless
@@ -609,6 +610,7 @@ const figureDirs = [
   "solana-building-blocks/figures",
   "financial-programming-concepts-in-solana/figures",
   "building-financial-products-in-solana/figures",
+  "bonus/figures",
 ];
 
 const svgRules = [

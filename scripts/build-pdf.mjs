@@ -12,6 +12,7 @@
 // Usage: npm run build-pdf-draft -- --reviewer "<name>"
 //        npm run build-pdf-paperback
 //        npm run build-pdf-digital
+//        npm run build-pdf-bonus
 
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -24,7 +25,6 @@ import { PDFArray, PDFDocument, PDFName } from "pdf-lib";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-const TITLE = "Building Financial Software on Solana";
 const AUTHOR = "Mike MacCana";
 
 // Page sizes, in inches. "trim" is what the book is printed at: 7.44 x 9.69
@@ -46,6 +46,7 @@ const PAGE_SIZES = {
 const USAGE = `Usage: npm run build-pdf-draft -- --reviewer "<name>" [--size ${Object.keys(PAGE_SIZES).join("|")}] [output.pdf]
        npm run build-pdf-paperback
        npm run build-pdf-digital   [-- output.pdf]
+       npm run build-pdf-bonus
 
   build-pdf-draft      An advance review copy, with the prerelease markings.
   build-pdf-paperback  The interior uploaded to KDP: final, no cover, no links.
@@ -54,6 +55,8 @@ const USAGE = `Usage: npm run build-pdf-draft -- --reviewer "<name>" [--size ${O
                        its default path.
   build-pdf-digital    The finished book for reading on screen: final, with the
                        cover and links.
+  build-pdf-bonus      The bonus chapters, as a PDF of their own: final, with
+                       links and without the book's cover.
 
   --reviewer <name>  Stamp as an advance copy for that reviewer: named on the
                      title page, and in the footer of every page carrying a
@@ -61,6 +64,8 @@ const USAGE = `Usage: npm run build-pdf-draft -- --reviewer "<name>" [--size ${O
                      beside the name, so feedback can be matched to the text it
                      was about. Every draft needs one; a final build refuses it.
   --size <name>      Page size; defaults to "trim". See PRINT-SPECIFICATION.md.
+  --contents <file>  The table of contents to build from; defaults to
+                     TABLE-OF-CONTENTS.md. Its H1 is the PDF's title.
   --help             Print this and exit.
 
 Environment, set by the scripts above:
@@ -81,6 +86,7 @@ const die = (message) => {
 const argv = process.argv.slice(2).filter((arg) => arg !== "--");
 let sizeName = "trim";
 let reviewerName = "";
+let contentsFile = "TABLE-OF-CONTENTS.md";
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
   const arg = argv[i];
@@ -97,6 +103,11 @@ for (let i = 0; i < argv.length; i++) {
   } else if (arg === "--reviewer") {
     if (i + 1 >= argv.length || argv[i + 1].startsWith("-")) die("--reviewer needs a name.");
     reviewerName = argv[++i].trim();
+  } else if (arg.startsWith("--contents=")) {
+    contentsFile = arg.slice("--contents=".length);
+  } else if (arg === "--contents") {
+    if (i + 1 >= argv.length || argv[i + 1].startsWith("-")) die("--contents needs a file.");
+    contentsFile = argv[++i];
   } else if (arg.startsWith("-")) {
     // Without this an unrecognized flag becomes the output path, and the build
     // succeeds having written a file named "--size".
@@ -109,6 +120,14 @@ if (positional.length > 1) die(`Expected one output path, got ${positional.lengt
 if (!Object.hasOwn(PAGE_SIZES, sizeName)) {
   die(`Unknown --size ${JSON.stringify(sizeName)}; expected one of: ${Object.keys(PAGE_SIZES).join(", ")}`);
 }
+// Chapter order comes from the reader-facing table of contents: every
+// relative .md link, in document order. The contents file's H1 is the title
+// printed on the title page and in every running head, so the bonus chapters,
+// built from a contents file of their own, carry their own title.
+if (!existsSync(join(repoRoot, contentsFile))) die(`No contents file at ${contentsFile}.`);
+const toc = readFileSync(join(repoRoot, contentsFile), "utf8");
+const TITLE = toc.match(/^# (.+)$/m)?.[1].trim() ?? die(`${contentsFile} has no H1 to title the PDF with.`);
+
 const PAGE_WIDTH_IN = PAGE_SIZES[sizeName].widthIn;
 const PAGE_HEIGHT_IN = PAGE_SIZES[sizeName].heightIn;
 const SIDE_MARGIN_IN = PAGE_SIZES[sizeName].sideMarginIn;
@@ -192,9 +211,6 @@ const reviewerFooter = reviewerName
   : "";
 const suppressReviewerFooter = reviewerName ? " @bottom-right { content: none; }" : "";
 
-// Chapter order comes from the reader-facing table of contents: every
-// relative .md link, in document order.
-const toc = readFileSync(join(repoRoot, "TABLE-OF-CONTENTS.md"), "utf8");
 const chapterPaths = [...toc.matchAll(/\]\(((?!https?:)[^)#]+\.md)\)/g)]
   .map((match) => match[1])
   .filter((path, index, all) => all.indexOf(path) === index);
@@ -485,13 +501,16 @@ for (const section of sections) {
   // all, so the title sits at the left margin where "Chapter N" sits above
   // it rather than indented to the chapter-title column.
   const isBackMatter = section.path.startsWith("appendices/");
-  const label = isBackMatter ? "" : `Chapter ${++chapterNumber}`;
-  const shortLabel = isBackMatter ? "" : String(chapterNumber);
+  // A bonus chapter is published apart from the book and numbered outside it,
+  // so its row is labelled "Bonus" rather than taking the next chapter number.
+  const isBonus = /^Bonus Chapter:/.test(section.title);
+  const label = isBackMatter ? "" : isBonus ? "Bonus" : `Chapter ${++chapterNumber}`;
+  const shortLabel = isBackMatter ? "" : isBonus ? "B" : String(chapterNumber);
   const labelCell = label ? `<span class="label">${label}</span>` : "";
   // The row already prints its own "Chapter N" label, and every chapter's H1
   // carries that prefix too (it is what the running header and the chapter
   // opening page print), so drop it here to avoid "Chapter 2  Chapter 2: ...".
-  const tocTitle = section.title.replace(/^Chapter \d+:\s*/, "");
+  const tocTitle = section.title.replace(/^(Chapter \d+|Bonus Chapter):\s*/, "");
   tocEntries.push(`<li class="toc-chapter"><a href="#${section.id}">${labelCell}<span class="t">${tocTitle}</span><span class="pg"></span></a></li>`);
   for (const [index, subsection] of section.subsections.entries()) {
     const sectionLabel = shortLabel ? `${shortLabel}.${index + 1}` : "";
@@ -1166,9 +1185,15 @@ if (overflows.length > 0) {
   process.exitCode = 1;
 }
 
-// The book has several such pairs, so an empty list means the source was not
-// found rather than that every pair kept its page.
-if (!headingFigurePairs || headingFigurePairs.pairs === 0) {
+// The manuscript says how many such pairs there should be: a heading line
+// followed, after one blank line, by a figure. The book has several, so when
+// the markdown has any and the laid-out source shows none, the source was not
+// found rather than every pair keeping its page. The bonus chapters have none.
+const expectedHeadingFigurePairs = sections.reduce(
+  (count, section) => count + (readFileSync(join(repoRoot, section.path), "utf8").match(/^#{2,6} .+\n\n!\[[^\]]*\]\([^)]+\.svg\)/gm)?.length ?? 0),
+  0,
+);
+if (!headingFigurePairs || (headingFigurePairs.pairs === 0 && expectedHeadingFigurePairs > 0)) {
   console.error("\nNo heading followed by a figure was found in the laid-out source, so their pages could not be checked.");
   process.exitCode = 1;
 } else if (headingFigurePairs.split.length > 0) {
