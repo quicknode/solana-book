@@ -1,6 +1,12 @@
 # Bonus Chapter: The Async Vault
 
-An **async vault** is a fund whose deposits and redemptions settle later, in a separate transaction signed by the fund's manager. A user asks to deposit and the manager approves the request at the fund's current price per share, and only then can the user claim the shares. Redemptions work the same way in reverse. The Solana Foundation publishes one as `async_vault`, the program in its Vault Standard Suite, and this chapter describes that program as it stands at one commit.[^vault-source]
+An **async vault** is a fund whose deposits and redemptions settle later, in a separate transaction signed by the fund's manager. A user asks to deposit and the manager approves the request at the fund's current price per share, and only then can the user claim the shares. Redemptions work the same way in reverse. The approval is where the manager does three things the program cannot do for them:
+
+- **Prices the request.** The manager publishes the fund's price per share, so a deposit has no price until they have valued the fund's holdings. A request is filled at whatever price the manager has published when they approve it, which can be newer than the one the user saw when they asked.
+- **Decides who may invest.** A regulated fund sells only to investors who pass its identity and eligibility checks. The manager runs those offchain, and rejects a request from anyone who fails them.
+- **Waits for the USDC.** A redemption is paid in USDC the manager has already invested. They approve it once they have sold enough of the fund's holdings to pay it.
+
+The Solana Foundation publishes an async vault as `async_vault`, the program in its Vault Standard Suite, and this chapter describes that program as it stands at one commit.[^vault-source]
 
 Any asset can have a token: issuers already put US Treasury bills and stocks such as NVDAx onchain. The managed fund in the *Managed Fund* chapter needs more than a token for each asset it holds:
 
@@ -46,7 +52,7 @@ The handler refuses a vault that is not initialized (`UninitializedVault`) or is
 
 ## The Manager Approves at the Current NAV
 
-The program records who Alice is and how much she sent, and nothing about whether Maria may sell her fund shares. A regulated fund usually sells only to investors who have passed identity and eligibility checks, and Maria runs those offchain. Approval is where she acts on them. She can approve the request, reject it, or leave it; while it waits, Alice can take it back with `cancel_request()`, which returns her 900 USDC and closes the request account, returning its rent to her.
+The program records who Alice is and how much she sent, and nothing about whether Maria may sell her fund shares. Maria runs her eligibility checks offchain, and approval is where she acts on them. She can approve the request, reject it, or leave it; while it waits, Alice can take it back with `cancel_request()`, which returns her 900 USDC and closes the request account, returning its rent to her.
 
 Maria runs `approve_request()`. Its arguments repeat the request's `owner`, `request_type`, `amount`, `created_at` and `nav_update_version`, and the handler refuses an approval that does not match the account it is given (`ApprovalRequestMismatch`). Maria's approval names the request she reviewed. If Alice canceled and opened a new request at the same address for a different amount, an approval Maria had already signed for the first one would fail. `test_stale_approval_rejected_on_recreated_request` cancels a 1,000,000 request, recreates it at the same address for 600,000, and checks that the original approval is refused with that error and that a fresh one goes through.
 
