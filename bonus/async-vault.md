@@ -1,14 +1,14 @@
 # Bonus Chapter: The Permissioned Fund
 
-A **permissioned fund** is a fund whose manager approves every deposit and every redemption before it settles. A user asks to deposit, the manager approves the request at the fund's current price per share, and the user then claims the shares. A redemption runs the same way in reverse. The Solana Foundation publishes a program for this, `async_vault` in its Vault Standard Suite, named for the way each deposit and redemption settles in a later transaction than the one that asked for it. This chapter describes that program as it stands at one commit.[^vault-source]
+A token that represents a share of a fund needs a fund behind it: someone who takes investors' USDC, buys the fund's holdings, works out what they are worth, and pays investors when they leave. A **permissioned fund** is a program for that issuer. Investors hold the fund's shares as tokens, and the fund's manager approves every deposit and every redemption before it settles. The Solana Foundation publishes one, `async_vault` in its Vault Standard Suite, named for the way each deposit and redemption settles in a later transaction than the one that asked for it. Its README says it is for issuers of real-world assets, and for teams that run an investment strategy offchain. This chapter describes the program as it stands at one commit.[^vault-source]
 
-The fund this chapter follows holds US Treasury bills, and three things set it apart from the managed fund in the *Managed Fund* chapter:
+The program in the *Managed Fund* chapter sits on the other side of such a token. It buys and holds tokens that issuers created, values each one from a Pyth price feed, and settles a deposit in the transaction that makes it. A permissioned fund is the issuer: the shares it mints are the token, and the assets behind them are whatever the manager bought with investors' USDC. The fund this chapter follows holds US Treasury bills, and its shares are how an investor holds those bills on Solana. Being the issuer puts three things with the manager rather than the program:
 
-- **The fund's investments are held offchain.** The fund's Treasury bills are held in an account at the manager's broker, not as tokens, and the program does not hold them. The program holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed. The manager takes the rest out to buy the bills.
+- **The fund's investments are held offchain.** The manager buys the bills at the Treasury's auctions, and they are held in an account at the manager's broker, not as tokens; the program does not hold them. The program holds only USDC: deposits waiting to be approved, and redemptions waiting to be claimed.
 - **The manager values the investments.** They work out what the bills are worth from the broker's records and the interest each bill has earned. The program never sees a price for any holding.
 - **The manager sets the fund's price per share.** They publish one number, the fund's value per share, and the program converts every deposit and redemption at it rather than calculating a price of its own.
 
-If the fund held its bills as tokens, the program could hold them itself and value them from a price feed, as the managed fund's program does. This chapter's fund buys its bills at the Treasury's auctions, which settle into an account at its broker rather than a Solana account, so the manager holds the bills and works out their value. A fund that lends to businesses, or owns buildings, has a further reason to use this design. Its loans and buildings take weeks to sell, so its redemptions have to wait for a sale. Their value comes from a periodic appraisal rather than a stream of trades a price feed could publish, so its price per share has to come from whoever made the appraisal. Because the price per share comes from the manager, approving a request is where the manager does three jobs:
+Because the price per share comes from the manager, approving a request is where the manager does three jobs:
 
 - **Pricing the request.** A deposit has no price until the manager has published one. The program converts at whatever price is stored when the manager approves, which can be newer than the one the user saw when they asked.
 - **Deciding who may invest.** A regulated fund sells only to investors who pass its identity and eligibility checks. This program keeps no record of who has passed, so the manager runs the checks offchain and rejects a request from anyone who fails them.
@@ -151,7 +151,7 @@ All three use u128 intermediates and checked arithmetic, and multiply before the
 - **Tokens sent straight to the reserve change no price.** Shares come from the NAV and payouts from the amount stored in each request, never from a token account's balance. A donation to the reserve buys no one anything, and the inflation attack the *Adversary* chapter describes has nothing to inflate.
 - **Token Extensions can take what the vault holds.** The program refuses an asset mint with a nonzero transfer fee at creation and again at every deposit and approval, because a fee could be switched on later. `test_approve_rejected_when_transfer_fee_reenabled` turns a fee on between a request and its approval and checks that approval is refused. Other extensions are left to the issuer to check before creating a vault: a permanent delegate on the asset mint can move tokens out of the reserve and the pending vault, and a freeze authority can freeze them.
 
-## Choosing Between Settling Now and Settling Later
+## The Managed Fund Holds Tokens, and a Permissioned Fund Issues Them
 
 The managed fund and the permissioned fund both issue shares against a pool of assets, and they draw the line of trust in different places:
 
@@ -164,7 +164,7 @@ The managed fund and the permissioned fund both issue shares against a pool of a
 | A shareholder leaves | At any time, in kind | When the authority approves the redemption |
 | Assets it can hold | Assets held as tokens, with a Pyth price feed | Assets held anywhere, that the authority can value |
 
-The managed fund's design works when every asset has a Solana token and a price feed, and in return the manager cannot take the assets. The permissioned fund's design works for holdings the program cannot trade or value within a transaction, and in return the depositors trust the authority with the reserve, the price, and when each redemption is approved. A fund of Treasury bills already trusts its manager, its broker and its administrator to that extent, so this program records onchain what a traditional Treasury bill fund already does.
+The managed fund's manager cannot take the assets, because every asset is a token the program holds and prices itself. A permissioned fund is the issuer of such a token, so someone has to hold and value what stands behind it, and its depositors trust the authority with the reserve, the price, and when each redemption is approved. A traditional Treasury bill fund already trusts its manager, its broker and its administrator to that extent, so this program records onchain what such a fund already does.
 
 ## Testing Considerations
 
