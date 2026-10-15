@@ -5,7 +5,7 @@
   "scripts": {
     "build-pdf-digital": "FINAL=1 node scripts/build-pdf.mjs",
     "build-pdf-draft": "node scripts/build-pdf.mjs",
-    "build-pdf-bonus": "FINAL=1 NO_COVER=1 node scripts/build-pdf.mjs --contents BONUS-CONTENTS.md \"build/Building Financial Software on Solana - Bonus Chapter.pdf\"",
+    "build-pdf-bonus": "FINAL=1 NO_COVER=1 node scripts/build-pdf.mjs --contents BONUS-CONTENTS.md \"build/Unofficial Bonus Chapter for Daniel Sapkota.pdf\"",
     "build-pdf-website-preview": "npm run build-pdf-digital && node scripts/build-website-preview.mjs",
     "build-pdf-paperback": "FINAL=1 NO_COVER=1 NO_LINKS=1 node scripts/build-pdf.mjs && node scripts/resize-cover.mjs",
     "lint": "node scripts/lint-manuscript.mjs",

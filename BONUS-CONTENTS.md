@@ -1,4 +1,4 @@
-# Building Financial Software on Solana: Bonus Chapter
+# Unofficial Bonus Chapter for Daniel Sapkota
 
 A chapter published apart from the book, about a program outside the [companion repository](https://github.com/quicknode/solana-program-examples). Build it with `npm run build-pdf-bonus`.
 
