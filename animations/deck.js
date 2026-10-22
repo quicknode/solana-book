@@ -244,8 +244,9 @@
       </div>`,
 
     // The closing slide: the talk's own picture, a cluster curve drawing
-    // itself across the slide, accounts appearing on it and a coin riding
-    // it, under the handle to follow.
+    // itself across the slide with accounts appearing on it, and above it a
+    // token transfer between two accounts off either edge, coins streaming
+    // along its arrow.
     follow: (s, deck) => {
       const [x0, y0, cx, x1, y1] = [-40, 560, 1050, 1640, 860];
       const d = `M ${x0},${y0} Q ${cx},${y0} ${x1},${y1}`;
@@ -257,11 +258,17 @@
         })
         .join("");
       const coin = [[10, 3], [0, 0], [-10, 3]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9"/>`).join("");
+      // Clear of the handle above and the curve below, all the way across.
+      const arrow = "M -80,430 L 1680,430";
+      const coins = [0, 1, 2, 3]
+        // Each coin is hidden until its first run starts, then runs edge to edge.
+        .map((k) => `<g class="coin" visibility="hidden">${coin}<set attributeName="visibility" to="visible" begin="${2 + k * 1.5}s"/><animateMotion dur="6s" begin="${2 + k * 1.5}s" repeatCount="indefinite" path="${arrow}"/></g>`)
+        .join("");
       return `
       <div class="slide dark follow-slide">${bar(deck.series)}
         <svg class="follow-curve" viewBox="0 0 1600 840" aria-hidden="true">
           <path class="curve" d="${d}"/>${dots}
-          <g class="coin">${coin}<animateMotion dur="7s" begin="2s" repeatCount="indefinite" path="${d}"/></g>
+          <path class="transfer" d="${arrow}"/>${coins}
         </svg>
         <div class="body">
           <span class="tag green">// ${escape(s.tag)}</span>
