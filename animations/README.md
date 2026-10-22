@@ -56,7 +56,7 @@ is a title, a caption, and a list of actions:
 
 | Action | Shows |
 | --- | --- |
-| `show` | accounts that already exist on chain fade in, with their lines (and, with `focus`, drawn in full) |
+| `show` | accounts that already exist on chain fade in, with their lines; `focus: "shown"` draws them in full |
 | `hide` | accounts the rest of the story no longer needs fade out, so others can take their columns |
 | `focus` | which accounts are drawn in full; the rest fade to their heading |
 | `call` | a handler lights up in the program box, and the focus moves to the accounts it touches |
@@ -64,6 +64,10 @@ is a title, a caption, and a list of actions:
 | `set` | fields or titles change; numbers count from the old value to the new |
 | `transfer` | the arrow draws, a coin rides it, and both balances count to their new values |
 | `close` | an account is marked `CLOSED` and fades out |
+
+A person appears in the step where they first do something, with the accounts that step uses: Bob and his
+USDC when he buys, Maria when she opens the venue and her USDC only when she collects the fees. A scene
+opens on one person and builds outward, so an audience new to Solana meets one account at a time.
 
 A step can also carry a `key`, and a later step can start `from` that key instead of from the step before
 it. That is how another future branches off the story (the call expiring unused starts from the purchase,

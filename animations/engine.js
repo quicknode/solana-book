@@ -100,7 +100,11 @@
       case "show":
         for (const id of action.ids) if (!s.exists.includes(id)) s.exists.push(id);
         for (const [id, lines] of Object.entries(action.lines || {})) s.lines[id] = lines;
-        if (action.focus) s.focus = action.focus === "all" ? [...s.exists] : [...action.focus];
+        // focus: "all" draws everything in full, "shown" adds the arriving
+        // accounts to what is already in full, and a list replaces it.
+        if (action.focus === "all") s.focus = [...s.exists];
+        else if (action.focus === "shown") s.focus = [...new Set([...s.focus, ...action.ids])];
+        else if (action.focus) s.focus = [...action.focus];
         break;
       case "focus":
         s.focus = action.ids === "all" ? [...s.exists] : [...action.ids];

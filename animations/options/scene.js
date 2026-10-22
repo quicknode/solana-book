@@ -233,24 +233,6 @@
       ],
     },
     {
-      title: "Meet [Bob] and [Maria]",
-      caption:
-        "Bob has 1 SOL and 1,000 USDC. So does Maria, who is about to open a venue for trading options.",
-      actions: [
-        {
-          type: "show",
-          ids: ["maria", "mariaUsdc", "bob", "bobUsdc"],
-          lines: {
-            maria: [sol("1 SOL")],
-            mariaUsdc: [balance("1,000 USDC")],
-            bob: [sol("1 SOL")],
-            bobUsdc: [balance("1,000 USDC")],
-          },
-          focus: "all",
-        },
-      ],
-    },
-    {
       title: "Programs are [accounts] too",
       caption:
         "A program is an account that holds code. This one runs the options venue. Each line is an instruction " +
@@ -258,21 +240,21 @@
       actions: [{ type: "show", ids: ["program"], lines: { program: HANDLERS.map(field) }, focus: "all" }],
     },
     {
-      title: "Alice and Bob want to make a [deal]",
+      title: "Alice wants to be paid to [wait]",
       caption:
-        "Alice would sell her five NVDAx at $180, and would like to be paid while she waits. Bob thinks NVIDIA " +
-        "will pass $180 this week. An option serves both: Bob pays Alice 25 USDC now for the right, but not " +
-        "the obligation, to buy her five NVDAx at $180 any time this week.",
-      actions: [{ type: "focus", ids: ["alice", "aliceNvdax", "bob", "bobUsdc"] }],
+        "Alice would sell her five NVDAx at $180, and would like to be paid while she waits. An option lets her: " +
+        "a buyer pays her now for the right, but not the obligation, to buy her five NVDAx at $180 any time this week.",
+      actions: [{ type: "focus", ids: ["alice", "aliceNvdax"] }],
     },
 
     // ---- The venue opens
     {
       title: "Maria runs [initialize_market()] to open the venue",
       caption:
-        "Maria calls initialize_market() with fee_bps of 100. One transaction creates the market and its two vaults, " +
-        "and Maria pays their rent. No tokens move until a writer posts collateral.",
+        "Maria wants to run a venue for options, for 1% of every premium. She calls initialize_market() with " +
+        "fee_bps of 100: one transaction creates the market and its two vaults, and Maria pays their rent.",
       actions: [
+        { type: "show", ids: ["maria"], lines: { maria: [sol("1 SOL")] }, focus: "shown" },
         { type: "call", handler: "initialize_market()", focus: ["maria", "program", "nvdaxMint", "usdcMint"] },
         { type: "set", changes: [{ id: "maria", title: "Maria (admin)" }] },
         {
@@ -327,9 +309,15 @@
     {
       title: "Bob runs [buy_option()]",
       caption:
-        "Bob calls buy_option() with the terms he read. The handler refuses if the option is no longer Listed, " +
-        "has expired, or has different terms from the ones Bob passed (OptionTermsChanged).",
+        "Bob thinks NVIDIA will pass $180 this week, and has 1,000 USDC. He calls buy_option() with the terms he " +
+        "read, and the handler refuses if the option is no longer Listed, has expired, or has changed terms.",
       actions: [
+        {
+          type: "show",
+          ids: ["bob", "bobUsdc"],
+          lines: { bob: [sol("1 SOL")], bobUsdc: [balance("1,000 USDC")] },
+          focus: "shown",
+        },
         { type: "call", handler: "buy_option()", focus: ["bob", "bobUsdc", "aliceUsdc", "option", "program", "market", "quoteVault"] },
       ],
     },
@@ -487,32 +475,19 @@
 
     // ---- The put
     {
-      title: "Meet [Carol] and [Dave]",
+      title: "Carol runs [write_option()] for a cash-secured put",
       caption:
-        "Carol has 1,000 USDC and would like to own NVDAx at $150, and be paid while she waits. Dave holds five " +
-        "NVDAx and wants insurance against a fall below $150 for the week.",
+        "Carol has 1,000 USDC and would buy NVDAx at $150. She calls write_option() for a put: 5 NVDAx, a strike " +
+        "amount of 750 USDC, a premium of 20 USDC. She has no NVDAx account, so the handler creates one.",
       actions: [
+        // Alice and Bob are done; Carol takes the writer's column.
         { type: "hide", ids: ["alice", "aliceNvdax", "aliceUsdc", "bob", "bobUsdc", "bobNvdax"] },
         {
           type: "show",
-          ids: ["carol", "carolUsdc", "dave", "daveUsdc", "daveNvdax"],
-          lines: {
-            carol: [sol("1 SOL")],
-            carolUsdc: [balance("1,000 USDC")],
-            dave: [sol("1 SOL")],
-            daveUsdc: [balance("1,000 USDC")],
-            daveNvdax: [balance("5 NVDAx")],
-          },
+          ids: ["carol", "carolUsdc"],
+          lines: { carol: [sol("1 SOL")], carolUsdc: [balance("1,000 USDC")] },
+          focus: "shown",
         },
-        { type: "focus", ids: ["carol", "carolUsdc", "dave", "daveUsdc", "daveNvdax"] },
-      ],
-    },
-    {
-      title: "Carol runs [write_option()] for a cash-secured put",
-      caption:
-        "Carol calls write_option() with kind Put: 5 NVDAx, a strike amount of 750 USDC, a premium of 20 USDC. " +
-        "She has no NVDAx account, so the handler creates one, at her expense.",
-      actions: [
         { type: "call", handler: "write_option()", focus: ["carol", "carolUsdc", "program", "market", "quoteVault"] },
         { type: "set", changes: [{ id: "carol", title: "Carol (writer)" }] },
         { type: "create", id: "carolNvdax", lines: [balance("0 NVDAx")] },
@@ -542,9 +517,15 @@
     {
       title: "Dave runs [buy_option()]",
       caption:
-        "Dave calls buy_option(). This is a protective put: a stockholder buys it the way a homeowner buys fire " +
-        "insurance, and like fire insurance it is meant to expire unused.",
+        "Dave holds five NVDAx and 1,000 USDC, and wants insurance against a fall below $150 this week. " +
+        "This is a protective put, meant like fire insurance to expire unused.",
       actions: [
+        {
+          type: "show",
+          ids: ["dave", "daveNvdax", "daveUsdc"],
+          lines: { dave: [sol("1 SOL")], daveNvdax: [balance("5 NVDAx")], daveUsdc: [balance("1,000 USDC")] },
+          focus: "shown",
+        },
         { type: "call", handler: "buy_option()", focus: ["dave", "daveUsdc", "carolUsdc", "putOption", "program", "market", "quoteVault"] },
       ],
     },
@@ -662,6 +643,7 @@
         "Back to the expired put. Maria calls collect_fees(), which zeroes fees_owed, 0.45 USDC across the two " +
         "sales, before it pays her. It refuses to run with nothing to collect (NothingToCollect).",
       actions: [
+        { type: "show", ids: ["mariaUsdc"], lines: { mariaUsdc: [balance("1,000 USDC")] }, focus: "shown" },
         { type: "call", handler: "collect_fees()", focus: ["maria", "mariaUsdc", "program", "market", "quoteVault"] },
         { type: "set", changes: [{ id: "market", key: "fees_owed", value: "0 USDC" }] },
       ],

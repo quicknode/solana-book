@@ -31,20 +31,20 @@
         ],
       },
 
-      // Solana, the people, their accounts, and the deal they want.
-      { type: "diagram", from: 0, to: 7 },
+      // Solana, Alice, her accounts, and the deal she wants.
+      { type: "diagram", from: 0, to: 6 },
       {
         type: "cards",
         heading: "An option is a [right] on one side and an [obligation] on the other",
         cards: [
           { tone: "slab", icon: "wallet", name: "Alice writes the option", text: "She posts her five NVDAx up front, and names a price" },
-          { tone: "lavender", icon: "wallet", name: "Bob pays the premium", text: "25 USDC now, for the right to buy at $180 this week" },
-          { tone: "mint", icon: "token", name: "Bob decides", text: "Exercise if NVDAx passes $180, or let the option expire" },
+          { tone: "lavender", icon: "wallet", name: "A buyer pays the premium", text: "25 USDC now, for the right to buy at $180 this week" },
+          { tone: "mint", icon: "token", name: "The buyer decides", text: "Exercise if NVDAx passes $180, or let the option expire" },
         ],
       },
 
       // The venue opens, and the call is written, bought, exercised, and paid out.
-      { type: "diagram", from: 8, to: 23 },
+      { type: "diagram", from: 7, to: 22 },
       {
         type: "cards",
         heading: "A [call] and a [put]",
@@ -56,7 +56,7 @@
       },
 
       // The put is written, bought, and expires; the fees are collected.
-      { type: "diagram", from: 24, to: 37 },
+      { type: "diagram", from: 23, to: 35 },
       {
         type: "cards",
         tone: "light",
