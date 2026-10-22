@@ -148,6 +148,79 @@ mark.purple { background: var(--purple); color: #fff; }
 .card.white { background: var(--white); color: var(--ink); }
 .cards.five .card { width: 15.6cqw; min-height: 17cqw; padding: 2cqw 1.8cqw; }
 
+/* ---- Template layouts: statement, split, grid, numbered, chart --------- */
+
+.slide-heading { font-weight: 400; font-size: 3cqw; line-height: 1.2; margin: 0; }
+.slide-sub { font-size: 1.3cqw; color: #666; margin: 0.8cqw 0 0; line-height: 1.4; }
+.dark .slide-sub { color: #a8a8a8; }
+.waiting { opacity: 0; transform: translateY(1cqw); }
+.row-card, .grid-card, .series { transition: opacity 0.4s, transform 0.4s; }
+
+.tpl-icon { width: 2.2cqw; height: 2.2cqw; display: block; }
+.dark .tpl-icon, .card.slab .tpl-icon { filter: invert(1); }
+
+.statement {
+  position: absolute; inset: 3.3cqw 0 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; padding: 0 12cqw;
+}
+.statement h2 { font-weight: 400; font-size: 4.6cqw; line-height: 1.2; margin: 0; }
+.statement p { font-size: 1.6cqw; color: #a8a8a8; margin: 2cqw 0 0; line-height: 1.45; }
+.light .statement p, .lavender .statement p, .mint .statement p { color: #555; }
+
+.versus {
+  position: absolute; inset: 3.3cqw 0 0; display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.6cqw; padding: 3cqw;
+}
+.panel {
+  display: flex; flex-direction: column; justify-content: center; padding: 4cqw 4.5cqw;
+  transition: opacity 0.5s, transform 0.5s;
+}
+.panel.mint { background: var(--mint); color: var(--ink); }
+.panel.lavender { background: var(--lavender); color: var(--ink); }
+.panel .tpl-icon { width: 3.4cqw; height: 3.4cqw; margin-bottom: 2.4cqw; filter: none; }
+.panel .who { font: 1.2cqw var(--mono); letter-spacing: 0.12cqw; text-transform: uppercase; color: #555; }
+.panel h2 { font-weight: 400; font-size: 4.2cqw; line-height: 1.15; margin: 1cqw 0 2cqw; }
+.panel p { font-size: 1.75cqw; line-height: 1.5; margin: 0; }
+
+.split { display: grid; grid-template-columns: 30% 1fr; gap: 5cqw; padding-top: 5.5cqw; }
+.stack { display: flex; flex-direction: column; gap: 1.4cqw; }
+.row-card {
+  background: var(--white); display: grid; grid-template-columns: auto 1fr; gap: 2.4cqw;
+  align-items: center; padding: 2cqw 2.6cqw;
+}
+.dark .row-card { background: var(--slab); color: #f0f0f0; }
+.row-card .name, .grid-card .name { font-size: 1.6cqw; line-height: 1.3; }
+.row-card .text, .grid-card .text { font-size: 1.2cqw; line-height: 1.45; opacity: 0.8; margin-top: 0.3cqw; }
+
+.grid { display: grid; gap: 1.4cqw; margin-top: 3cqw; }
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-card {
+  background: var(--white); display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 0.6cqw; padding: 2.2cqw 2cqw;
+}
+.grid-card .tpl-icon { margin-bottom: 0.8cqw; }
+.dark .grid-card { background: var(--slab); color: #f0f0f0; }
+
+.cards.numbered { justify-content: flex-start; margin-top: 3.4cqw; }
+.cards.numbered .card { width: 26cqw; min-height: 13cqw; }
+.cards.numbered .tag { align-self: flex-start; font-size: 0.9cqw; margin-bottom: 1.2cqw; }
+
+.chart { display: block; width: 100%; height: 33cqw; margin-top: 1.4cqw; font-family: var(--sans); }
+.chart .gridline { stroke: #2c2c2c; stroke-width: 1; }
+.chart .zero { stroke: #777; stroke-width: 1.5; }
+.chart .tick { fill: #8a8a8a; font-size: 14px; }
+.chart .axis { fill: #a8a8a8; font-size: 15px; }
+.chart .mark-line { stroke: #555; stroke-dasharray: 5 4; }
+.chart .mark-label { fill: #bdbdbd; font: 13px var(--mono); letter-spacing: 1px; }
+.chart .series path { fill: none; stroke-width: 4; stroke-linejoin: round; }
+.chart .series.green path { stroke: var(--green); }
+.chart .series.purple path { stroke: var(--purple); }
+.chart .series-label { font-size: 17px; }
+.chart .series.green .series-label { fill: var(--green); }
+.chart .series.purple .series-label { fill: #b9a4ff; }
+
 /* ---- QR and follow ----------------------------------------------------- */
 
 .qr-slide h2 { font-weight: 400; font-size: 3cqw; margin: 0 0 0.6cqw; }

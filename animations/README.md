@@ -30,14 +30,31 @@ should know and what you'll learn, card slides between the runs of diagram steps
 and the closing slides. One key advances through all of it: a diagram step plays its animation, and a slide
 of cards builds them one at a time.
 
-- `deck.js` and `deck.css` are shared by every talk. A slide kind (`title`, `columns`, `cards`, `qr`,
-  `follow`) is a template filled from data, and `[word]` in any text is set on the green highlight,
-  `{word}` on the purple one.
+- `deck.js` and `deck.css` are shared by every talk. A slide kind is a template filled from data, and
+  `[word]` in any text is set on the green highlight, `{word}` on the purple one. The kinds follow the
+  Quicknode Keynote template's layouts:
+
+  | Kind | Layout |
+  | --- | --- |
+  | `title` | the series tag, a large title, the mark in a green square |
+  | `columns` | what you should know, and what you'll learn |
+  | `statement` | one large centred sentence |
+  | `versus` | two people side by side, a full-height panel each |
+  | `split` | the heading on the left, a stack of wide icon cards on the right |
+  | `grid` | the heading across the top, a grid of centred icon cards (`columns`: 2, 3 or 4) |
+  | `numbered` | cards tagged `// 01`, `// 02` |
+  | `cards` | tall cards in the slides' three tones |
+  | `chart` | a payoff chart, one line per side |
+  | `qr`, `follow` | the closing slides |
+
+  Any slide with cards, or a chart's lines, builds one per key press unless it sets `build: false`.
+  A card's `icon` is one of the book's account glyphs (`wallet`, `token`, ...) or, as `tpl:name`, one of
+  the template's icons in `assets/icons`.
 - `<chapter>/slides.js` lists the talk's slides. A `diagram` slide names the scene steps it shows, `from`
   and `to` by index, and together the diagram slides show every step once, in order; the deck refuses to
   start otherwise.
-- `assets/` holds the Quicknode mark (inlined in `deck.css` as a mask) and QR codes generated from the two
-  repository URLs.
+- `assets/` holds the Quicknode mark (inlined in `deck.css` as a mask), QR codes generated from the two
+  repository URLs, and in `assets/icons` the icons taken from the Quicknode Keynote template.
 
 The diagrams take the same palette: accounts are pastel cards on near-black (white for wallets, green for
 token accounts, lavender for programs, grey for data accounts, cream for mints), a faded account is a dark
