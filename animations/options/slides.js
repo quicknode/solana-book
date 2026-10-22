@@ -139,11 +139,22 @@
       },
 
       {
+        type: "photo",
+        image: "../assets/sky.jpg",
+        heading: "[Questions]?",
+        sub: "solanabook.org  ·  @QuicknodeSolana",
+      },
+      {
         type: "qr",
         heading: "Building [Financial Software] on Solana",
         url: "solanabook.org",
         qr: "../assets/qr-solanabook.svg",
-        items: [],
+        cover: "../assets/book-cover.jpg",
+        items: [
+          "The definitive guide to building financial products on the most active blockchain",
+          "Options trading, Exchanges, Betting Markets, Perpetual Futures.",
+          "#3 in “Financial Engineering” category on Amazon",
+        ],
       },
       {
         type: "follow",

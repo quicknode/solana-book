@@ -227,7 +227,7 @@ mark.purple { background: var(--purple); color: #fff; }
 .chart .series.purple .series-label { fill: #b9a4ff; }
 
 .alloc { display: flex; gap: 0.5cqw; margin-top: 5cqw; }
-.seg { flex-basis: 0; min-width: 12cqw; display: flex; flex-direction: column; }
+.seg { flex-basis: 0; min-width: 12cqw; display: flex; flex-direction: column; transition: flex-grow 1.6s ease-in-out; }
 .seg .pct { font: 1.4cqw var(--mono); margin-bottom: 0.8cqw; color: #bdbdbd; }
 .light .seg .pct, .lavender .seg .pct, .mint .seg .pct { color: #555; }
 .seg-box {
@@ -257,13 +257,57 @@ mark.purple { background: var(--purple); color: #fff; }
   border: 0.55cqw solid transparent; border-bottom: 0.8cqw solid #e0e0e0; border-top: 0;
 }
 
+.photo-slide { overflow: hidden; }
+.photo-slide .photo {
+  position: absolute; inset: 3.3cqw 0 0; background-size: cover; background-position: center 60%;
+  animation: photo-drift 16s ease-out forwards;
+}
+.photo-slide .statement { z-index: 1; }
+.photo-slide .statement h2 { font-size: 10cqw; letter-spacing: -0.2cqw; color: var(--ink); }
+.photo-slide .statement p { font: 1.6cqw var(--mono); letter-spacing: 0.1cqw; color: #333; text-transform: uppercase; }
+@keyframes photo-drift { from { transform: scale(1.14); } to { transform: scale(1); } }
+
 /* ---- QR and follow ----------------------------------------------------- */
 
 .qr-slide h2 { font-weight: 400; font-size: 3cqw; margin: 0 0 0.6cqw; }
 .qr-slide .url { font: 1.1cqw var(--mono); color: #aaa; margin-bottom: 2.4cqw; }
 .qr-slide .row { display: grid; grid-template-columns: auto 1fr; gap: 4cqw; align-items: center; }
 .qr-slide img { width: 22cqw; background: #fff; padding: 1cqw; display: block; }
+.qr-slide.with-cover .body {
+  display: grid; grid-template-columns: 1fr auto; gap: 5cqw; align-items: center;
+  height: calc(100% - 3.3cqw); box-sizing: border-box; padding-top: 3cqw; padding-bottom: 3cqw;
+}
+.qr-slide.with-cover ul { margin-bottom: 2.6cqw; }
+.qr-slide.with-cover img.qr { width: 13cqw; }
+.qr-slide.with-cover img.cover {
+  height: 42cqw; width: auto; padding: 0; background: none;
+  box-shadow: 0 1.2cqw 3cqw rgba(0, 0, 0, 0.6);
+}
 
-.follow-slide .lead { font-size: 3.2cqw; margin: 2cqw 0 5cqw; }
-.follow-slide .handle-big { font-size: 7cqw; text-align: center; letter-spacing: -0.1cqw; }
-.follow-slide .thanks { position: absolute; right: 6cqw; bottom: 5cqw; font-size: 3.2cqw; }
+.follow-slide {
+  background-color: var(--black);
+  background-image: radial-gradient(#1d1d22 0.1cqw, transparent 0.11cqw);
+  background-size: 2.4cqw 2.4cqw;
+  overflow: hidden;
+}
+.follow-slide .body { position: relative; }
+.follow-slide .lead { font-size: 3.2cqw; margin: 2cqw 0 2.6cqw; color: #f0f0f0; }
+.follow-slide .handle-big { font-size: 7.6cqw; letter-spacing: -0.12cqw; line-height: 1.1; }
+.follow-slide .handle-big mark { padding: 0 1cqw; }
+/* Top right: the open sky above the curve. */
+.follow-slide .thanks {
+  position: absolute; right: 6cqw; top: 8cqw; font-size: 4cqw; color: #f0f0f0;
+  border-bottom: 0.35cqw solid var(--green);
+}
+
+/* The curve draws itself in, its accounts pop up along it, and a coin rides it. */
+.follow-curve { position: absolute; left: 0; top: 3.3cqw; width: 100%; height: calc(100% - 3.3cqw); }
+.follow-curve .curve {
+  fill: none; stroke: #4f8a3c; stroke-width: 5;
+  stroke-dasharray: 2000; stroke-dashoffset: 2000;
+  animation: follow-draw 1.6s 0.3s ease-out forwards;
+}
+.follow-curve .dot { fill: #f4f4f4; opacity: 0; transform-box: fill-box; transform-origin: center; animation: follow-pop 0.4s ease-out forwards; }
+.follow-curve .coin circle { fill: var(--black); stroke: var(--green); stroke-width: 3; }
+@keyframes follow-draw { to { stroke-dashoffset: 0; } }
+@keyframes follow-pop { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: scale(1); } }

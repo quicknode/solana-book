@@ -232,21 +232,21 @@
       actions: [{ type: "show", ids: ["aliceNvdax"], lines: { aliceNvdax: [balance("5 NVDAx")] }, focus: "all" }],
     },
     {
-      title: "Programs are [accounts] too",
-      caption:
-        "A program is an account that holds code. This one runs the options venue. Each line is an instruction " +
-        "handler, which anyone can call by sending a transaction.",
-      actions: [{ type: "show", ids: ["program"], lines: { program: HANDLERS.map(field) }, focus: "all" }],
-    },
-    {
       title: "Alice wants to be paid to [wait]",
       caption:
         "Alice wants to write an option: the right to buy her five NVDAx at $180 any time this week, " +
-        "for a premium of 25 USDC. First, somebody has to open a venue to sell it on.",
+        "for a premium of 25 USDC.",
       actions: [{ type: "focus", ids: ["alice", "aliceNvdax"] }],
     },
 
     // ---- The venue opens
+    {
+      title: "Programs are [accounts] too",
+      caption:
+        "A program is an account that holds code. This one runs an options venue, and each line is an instruction " +
+        "handler anyone can call by sending a transaction. First, somebody has to open the venue.",
+      actions: [{ type: "show", ids: ["program"], lines: { program: HANDLERS.map(field) }, focus: "all" }],
+    },
     {
       title: "Maria runs [initialize_market()] to open the venue",
       caption:

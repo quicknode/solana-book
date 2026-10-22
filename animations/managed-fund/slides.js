@@ -85,8 +85,8 @@
         heading: "NVIDIA rallies, and the weights [drift]",
         sub: "Nothing traded, but NVDAx is now worth more than its 60% share",
         parts: [
-          { tone: "mint", name: "TSLAx", text: "1.44 TSLAx at $250: $360", value: 360 },
-          { tone: "lavender", name: "NVDAx", text: "3 NVDAx at $200: $600", value: 600 },
+          { tone: "mint", name: "TSLAx", text: "1.44 TSLAx at $250: $360", value: 360, from: 360 },
+          { tone: "lavender", name: "NVDAx", fromText: "3 NVDAx at $180: $540", text: "3 NVDAx at $200: $600", value: 600, from: 540 },
         ],
       },
       // The rebalance.
@@ -96,8 +96,8 @@
         heading: "Back to [40/60]",
         sub: "The rebalance sold $24 of NVDAx and bought $24 of TSLAx",
         parts: [
-          { tone: "mint", name: "TSLAx", text: "1.536 TSLAx at $250: $384", value: 384 },
-          { tone: "lavender", name: "NVDAx", text: "2.88 NVDAx at $200: $576", value: 576 },
+          { tone: "mint", name: "TSLAx", fromText: "1.44 TSLAx at $250: $360", text: "1.536 TSLAx at $250: $384", value: 384, from: 360 },
+          { tone: "lavender", name: "NVDAx", fromText: "3 NVDAx at $200: $600", text: "2.88 NVDAx at $200: $576", value: 576, from: 600 },
         ],
       },
       // Bob, and the fee.
@@ -128,11 +128,22 @@
       },
 
       {
+        type: "photo",
+        image: "../assets/sky.jpg",
+        heading: "[Questions]?",
+        sub: "solanabook.org  ·  @QuicknodeSolana",
+      },
+      {
         type: "qr",
         heading: "Building [Financial Software] on Solana",
         url: "solanabook.org",
         qr: "../assets/qr-solanabook.svg",
-        items: [],
+        cover: "../assets/book-cover.jpg",
+        items: [
+          "The definitive guide to building financial products on the most active blockchain",
+          "Options trading, Exchanges, Betting Markets, Perpetual Futures.",
+          "#3 in “Financial Engineering” category on Amazon",
+        ],
       },
       {
         type: "follow",

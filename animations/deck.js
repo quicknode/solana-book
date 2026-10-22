@@ -128,6 +128,14 @@
           .join("")}</div>
       </div>`,
 
+    // A big centred sentence over one of the template's photographs, which
+    // drifts slowly closer while the slide is up.
+    photo: (s, deck) => `
+      <div class="slide light photo-slide">${bar(deck.series)}
+        <div class="photo" style="background-image:url('${s.image}')"></div>
+        <div class="statement"><h2>${marked(s.heading)}</h2>${s.sub ? `<p>${marked(s.sub)}</p>` : ""}</div>
+      </div>`,
+
     // The heading on the left, and a stack of wide icon cards on the right.
     split: (s, deck, shown) => `
       <div class="slide ${s.tone || "light"}">${bar(deck.series)}
@@ -171,9 +179,13 @@
 
     // A bar split by value, each part labelled with its share of the whole:
     // a fund's allocation, or who owns its shares.
+    // With `from`, a part opens at an earlier value and grows or shrinks to
+    // its own, the bar, its percentage and its words changing together: the
+    // weights drifting as a price moves, or a rebalance pulling them back.
     allocation: (s, deck) => {
       const total = s.parts.reduce((sum, p) => sum + p.value, 0);
-      const pct = (v) => ((v / total) * 100).toFixed(s.decimals ?? 0);
+      const fromTotal = s.parts.reduce((sum, p) => sum + (p.from ?? p.value), 0);
+      const pct = (v, t = total) => ((v / t) * 100).toFixed(s.decimals ?? 0);
       return `
       <div class="slide ${s.tone || "dark"}">${bar(deck.series)}
         <div class="body">${heading(s)}
@@ -185,7 +197,13 @@
                 ? `<div class="seg thin" style="flex-grow:${p.value}"><div class="pct">&nbsp;</div>
                     <div class="seg-box ${p.tone}"></div>
                     <div class="callout"><span class="callout-name">${marked(p.name)}</span> · ${marked(p.text)} · ${pct(p.value)}%</div></div>`
-                : `<div class="seg" style="flex-grow:${p.value}">
+                : p.from != null
+                  ? `<div class="seg" style="flex-grow:${p.from}" data-grow="${p.value}"
+                      data-pct-from="${pct(p.from, fromTotal)}" data-pct-to="${pct(p.value)}" data-decimals="${s.decimals ?? 0}">
+                <div class="pct">${pct(p.from, fromTotal)}%</div>
+                <div class="seg-box ${p.tone}">${p.icon ? icon(p.icon, deck) : ""}
+                  <div class="name">${marked(p.name)}</div><div class="text" data-to="${escape(marked(p.text))}">${marked(p.fromText || p.text)}</div></div></div>`
+                  : `<div class="seg" style="flex-grow:${p.value}">
                 <div class="pct">${pct(p.value)}%</div>
                 <div class="seg-box ${p.tone}">${p.icon ? icon(p.icon, deck) : ""}
                   <div class="name">${marked(p.name)}</div><div class="text">${marked(p.text)}</div></div></div>`,
@@ -200,7 +218,22 @@
         <div class="body">${heading(s)}${payoffChart(s, shown)}</div>
       </div>`,
 
-    qr: (s, deck) => `
+    // A link to share: the heading, its address, bullets and a QR code, and
+    // with `cover` the book's cover beside them.
+    qr: (s, deck) => s.cover
+      ? `
+      <div class="slide dark qr-slide with-cover">${bar(deck.series)}
+        <div class="body">
+          <div>
+            <h2>${marked(s.heading)}</h2>
+            <div class="url">${escape(s.url)}</div>
+            <ul>${s.items.map((i) => `<li>${marked(i)}</li>`).join("")}</ul>
+            <img class="qr" src="${s.qr}" alt="QR code for ${escape(s.url)}">
+          </div>
+          <img class="cover" src="${s.cover}" alt="">
+        </div>
+      </div>`
+      : `
       <div class="slide dark qr-slide">${bar(deck.series)}
         <div class="body">
           <h2>${marked(s.heading)}</h2>
@@ -210,15 +243,34 @@
         </div>
       </div>`,
 
-    follow: (s, deck) => `
-      <div class="slide mint follow-slide">${bar(deck.series)}
+    // The closing slide: the talk's own picture, a cluster curve drawing
+    // itself across the slide, accounts appearing on it and a coin riding
+    // it, under the handle to follow.
+    follow: (s, deck) => {
+      const [x0, y0, cx, x1, y1] = [-40, 560, 1050, 1640, 860];
+      const d = `M ${x0},${y0} Q ${cx},${y0} ${x1},${y1}`;
+      const at = (t) => [(1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, (1 - t) ** 2 * y0 + 2 * (1 - t) * t * y0 + t * t * y1];
+      const dots = [0.18, 0.34, 0.5, 0.64, 0.78, 0.9]
+        .map((t, i) => {
+          const [x, y] = at(t);
+          return `<circle class="dot" style="animation-delay:${1.1 + i * 0.18}s" cx="${x}" cy="${y}" r="9"/>`;
+        })
+        .join("");
+      const coin = [[10, 3], [0, 0], [-10, 3]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9"/>`).join("");
+      return `
+      <div class="slide dark follow-slide">${bar(deck.series)}
+        <svg class="follow-curve" viewBox="0 0 1600 840" aria-hidden="true">
+          <path class="curve" d="${d}"/>${dots}
+          <g class="coin">${coin}<animateMotion dur="7s" begin="2s" repeatCount="indefinite" path="${d}"/></g>
+        </svg>
         <div class="body">
           <span class="tag green">// ${escape(s.tag)}</span>
           <div class="lead">${marked(s.lead)}</div>
           <div class="handle-big">${marked(s.handle)}</div>
         </div>
         <div class="thanks">${escape(s.thanks)}</div>
-      </div>`,
+      </div>`;
+    },
   };
 
   class Deck {
@@ -292,6 +344,33 @@
       this.html.innerHTML = RENDER[item.slide.type](item.slide, this.deck, item.shown);
       this.html.classList.remove("hidden");
       this.svg.classList.add("hidden");
+      this.moveAllocation();
+    }
+
+    // Moves an allocation's parts from their `from` values to their own once
+    // the slide has faded in: the bars grow, the percentages count, and the
+    // words change as the move ends.
+    moveAllocation() {
+      const segs = [...this.html.querySelectorAll(".seg[data-grow]")];
+      if (segs.length === 0) return;
+      setTimeout(() => {
+        for (const seg of segs) seg.style.flexGrow = seg.dataset.grow;
+        const start = performance.now();
+        const frame = (now) => {
+          const p = Math.min(1, (now - start) / 1600);
+          const e = p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2;
+          for (const seg of segs) {
+            const a = Number(seg.dataset.pctFrom), b = Number(seg.dataset.pctTo);
+            seg.querySelector(".pct").textContent = `${(a + (b - a) * e).toFixed(Number(seg.dataset.decimals))}%`;
+          }
+          if (p < 1) return requestAnimationFrame(frame);
+          for (const seg of segs) {
+            const text = seg.querySelector(".text");
+            text.innerHTML = text.dataset.to;
+          }
+        };
+        requestAnimationFrame(frame);
+      }, 700);
     }
 
     async goto(i) {

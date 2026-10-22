@@ -87,7 +87,9 @@
   // ---- State ---------------------------------------------------------------
 
   function initialState() {
-    return { exists: [], focus: [], isNew: [], titles: {}, lines: {}, handlers: [], arrows: [] };
+    // `changed` lists the lines this step changed, as "account:line", so they
+    // stay marked until the next step starts.
+    return { exists: [], focus: [], isNew: [], titles: {}, lines: {}, handlers: [], arrows: [], changed: [] };
   }
 
   function lineIndex(lines, key) {
@@ -139,7 +141,9 @@
           if (change.title) s.titles[change.id] = change.title;
           if (change.value != null) {
             const lines = s.lines[change.id];
-            lines[lineIndex(lines, change.key)].text = lineText(change.key, change.value);
+            const index = lineIndex(lines, change.key);
+            lines[index].text = lineText(change.key, change.value);
+            s.changed.push(`${change.id}:${index}`);
           }
         }
         break;
@@ -169,7 +173,9 @@
           if (!s.focus.includes(change.id)) s.focus.push(change.id);
           if (change.value == null) continue;
           const lines = s.lines[change.id];
-          lines[lineIndex(lines, change.key)].text = lineText(change.key, change.value);
+          const index = lineIndex(lines, change.key);
+          lines[index].text = lineText(change.key, change.value);
+          s.changed.push(`${change.id}:${index}`);
         }
         break;
       default:
@@ -230,6 +236,13 @@
         out += `<text data-line="${i}" x="${acc.x + 17}" y="${y}" ${lineAttrs(acc, line, state)}>${escape(line.text)}</text>`;
         return;
       }
+      // A value the step changed stays on the green band, in bold, until the
+      // next step, so the new number is easy to find after it stops counting.
+      if (state.changed.includes(`${acc.id}:${i}`)) {
+        out += changedBand(acc, y);
+        out += `<text data-line="${i}" x="${acc.x + 8}" y="${y}" ${lineAttrs(acc, line, state)} font-weight="bold">${escape(line.text)}</text>`;
+        return;
+      }
       out += `<text data-line="${i}" x="${acc.x + 8}" y="${y}" ${lineAttrs(acc, line, state)}>${escape(line.text)}</text>`;
     });
     out += `</g>`;
@@ -237,6 +250,11 @@
     out += `<text class="closed" x="${acc.x + acc.w - 8}" y="${acc.y + 14.5}" font-size="8" font-family="${MONO}" letter-spacing="1" fill="${THEME.boxText}" text-anchor="end" opacity="0">CLOSED</text>`;
     out += `</g></g>`;
     return out;
+  }
+
+  // The band behind a changed value: the same green as the running handler.
+  function changedBand(acc, y) {
+    return `<rect class="changed" x="${acc.x + 4}" y="${y - 9}" width="${acc.w - 8}" height="12" rx="1" fill="${THEME.accent}"/>`;
   }
 
   // Sets an account's drawn focus: 0 is faded to its heading, 1 is expanded
@@ -361,7 +379,8 @@
       scene.steps.forEach((step, i) => {
         if (step.from != null && !(step.from in keys)) throw new Error(`step ${i + 1} starts from unknown key ${step.from}`);
         const base = i === 0 ? null : step.from != null ? keys[step.from] : i - 1;
-        let s = base == null ? initialState() : this.states[base];
+        // A step's changed lines are its own: the next step starts unmarked.
+        let s = { ...(base == null ? initialState() : this.states[base]), changed: [] };
         for (const action of step.actions) s = reduce(s, action);
         this.states.push(s);
         this.bases.push(base);
@@ -458,7 +477,7 @@
 
     async play(i) {
       const base = this.bases[i];
-      let state = this.states[base];
+      let state = { ...this.states[base], changed: [] };
       if (base !== i - 1) {
         // A jump between futures: fade to the state this step starts from.
         await this.tween(300, (p) => this.svg.querySelector(".scene").setAttribute("opacity", 1 - p));
@@ -557,7 +576,17 @@
         el.textContent = toText;
         await this.tween(250, (p) => el.setAttribute("opacity", p));
       }
-      setTimeout(() => (el.style.fill = ""), this.skip ? 0 : 700 / this.speed);
+      // Settle on the band, in bold ink, rather than fading back to plain text.
+      const acc = this.scene.accounts[id];
+      const holder = document.createElementNS(SVG_NS, "g");
+      holder.innerHTML = changedBand(acc, Number(el.getAttribute("y")));
+      const band = holder.firstElementChild;
+      const already = el.previousElementSibling?.classList.contains("changed");
+      band.setAttribute("opacity", already ? 1 : 0);
+      if (!already) el.parentNode.insertBefore(band, el);
+      el.setAttribute("font-weight", "bold");
+      el.style.fill = THEME.boxText;
+      await this.tween(300, (p) => band.setAttribute("opacity", p));
     }
 
     async animate(state, action) {

@@ -217,21 +217,20 @@
       actions: [{ type: "show", ids: ["aliceUsdc"], lines: { aliceUsdc: [balance("1,000 USDC")] }, focus: "all" }],
     },
     {
-      title: "Programs are [accounts] too",
-      caption:
-        "A program is an account that holds code. This one runs managed funds. Each line is an instruction " +
-        "handler, which anyone can call by sending a transaction.",
-      actions: [{ type: "show", ids: ["program"], lines: { program: HANDLERS.map(field) }, focus: "all" }],
-    },
-    {
       title: "Alice wants her savings [invested]",
       caption:
-        "Alice wants to put $900 into stocks, picked by an expert, without handing the expert her money. " +
-        "First, somebody has to decide which stocks a fund may hold at all.",
+        "Alice wants to put $900 into stocks, picked by an expert, without handing the expert her money.",
       actions: [{ type: "focus", ids: ["alice", "aliceUsdc"] }],
     },
 
     // ---- The registry
+    {
+      title: "Programs are [accounts] too",
+      caption:
+        "A program is an account that holds code. This one runs managed funds, and each line is an instruction " +
+        "handler anyone can call by sending a transaction. First, somebody decides which stocks a fund may hold.",
+      actions: [{ type: "show", ids: ["program"], lines: { program: HANDLERS.map(field) }, focus: "all" }],
+    },
     {
       title: "Victor runs [initialize_registry()]",
       caption:
@@ -469,8 +468,8 @@
     {
       title: "Bob runs [deposit()]",
       caption:
-        "Bob, a later investor, deposits 480 USDC. The NAV is now $960 against 900 shares, so 480 USDC buys 450 shares, " +
-        "not 480: Alice's gains stay hers. His share account is created.",
+        "Bob, a later investor, deposits 480 USDC. Valued from Pyth's prices, the NAV is now $960 against 900 shares, " +
+        "so 480 USDC buys 450 shares, not 480: Alice's gains stay hers. His share account is created.",
       actions: [
         {
           type: "show",
