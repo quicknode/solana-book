@@ -66,7 +66,14 @@
   // one quadratic across the whole canvas. yAt() puts an address dot on it.
   function clusterCurve(width, { top = 33, drop = 80, control = 0.625 } = {}) {
     const cx = width * control;
-    const d = `M 0,${top} Q ${cx},${top} ${width},${top + drop}`;
+    // Past the canvas at both ends the curve runs on along its own tangent,
+    // flat at the left and sloping at the right, so where the page shows
+    // more than the canvas the curve still reaches the very edge.
+    const reach = width / 2;
+    const slope = drop / (width - cx);
+    const d =
+      `M ${-reach},${top} L 0,${top} Q ${cx},${top} ${width},${top + drop}` +
+      ` L ${width + reach},${top + drop + reach * slope}`;
     // x(t) = 2(1-t)t·cx + t²·width, solved for t; y follows from t.
     const yAt = (x) => {
       const a = width - 2 * cx;

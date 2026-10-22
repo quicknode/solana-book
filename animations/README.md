@@ -61,8 +61,8 @@ of cards builds them one at a time.
 - `<chapter>/slides.js` lists the talk's slides. A `diagram` slide names the scene steps it shows, `from`
   and `to` by index, and together the diagram slides show every step once, in order; the deck refuses to
   start otherwise.
-- `assets/` holds the Quicknode mark (inlined in `deck.css` as a mask), QR codes generated from the two
-  repository URLs, and in `assets/icons` the icons taken from the Quicknode Keynote template.
+- `assets/` holds the Quicknode mark (inlined in `deck.css` as a mask), a QR code generated from
+  solanabook.org, and in `assets/icons` the icons taken from the Quicknode Keynote template.
 
 The diagrams take the same palette: accounts are pastel cards on near-black (white for wallets, green for
 token accounts, lavender for programs, grey for data accounts, cream for mints), a faded account is a dark

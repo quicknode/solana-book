@@ -129,21 +129,10 @@
 
       {
         type: "qr",
-        heading: "Working [examples] of every kind of Solana program",
-        url: "github.com/quicknode/solana-program-examples",
-        qr: "../assets/qr-program-examples.svg",
-        items: [
-          "Working, up-to-date examples for every type of Solana program, in current Anchor",
-          "Emphasis on [financial software]",
-          "Please ⭐ it if you find it useful",
-        ],
-      },
-      {
-        type: "qr",
-        heading: "[AI skill] for generating financial software",
-        url: "github.com/quicknode/solana-finance-claude-plugin",
-        qr: "../assets/qr-finance-plugin.svg",
-        items: ["Building mathematically correct financial products on Solana", "Please ⭐ it if you find it useful"],
+        heading: "Building [Financial Software] on Solana",
+        url: "solanabook.org",
+        qr: "../assets/qr-solanabook.svg",
+        items: [],
       },
       {
         type: "follow",
