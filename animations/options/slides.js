@@ -26,7 +26,7 @@
             sub: "From the Options chapter",
             items: [
               "How options work as a Solana program",
-              "Why fully collateralized options need no margin, no oracle and no liquidator",
+              "Why a venue that holds everything up front never has to chase anyone",
               "How a program records what it owes before it moves a token",
             ],
           },
@@ -38,14 +38,14 @@
         type: "versus",
         cards: [
           {
-            tone: "mint", icon: "tpl:premium", who: "Alice",
+            tone: "mint", icon: "tpl:income", who: "Alice",
             name: "Wants to be paid for [waiting]",
             text: "She owns five NVIDIA shares at $165, and doesn't expect the price to move much this week. " +
               "She'd like money now for promising to sell them at $180: a promise she expects nobody to take up, " +
               "and one she'd be happy to keep if they did.",
           },
           {
-            tone: "lavender", icon: "tpl:call", who: "Bob",
+            tone: "lavender", icon: "tpl:bargain", who: "Bob",
             name: "Wants to buy [below the market]",
             text: "He thinks NVIDIA will pass $180 this week. He wants the chance to buy at $180 when it does, " +
               "without spending $825 on five shares today, or losing more than a little if he's wrong.",
@@ -58,7 +58,7 @@
         sub: "The right, but not the obligation, to trade at a price fixed today",
         cards: [
           { icon: "tpl:contract", name: "Bob pays Alice $25 now", text: "For the right to buy her five shares at $180, any time this week" },
-          { icon: "tpl:call", name: "If NVIDIA passes $180, Bob buys", text: "He pays $180 a share for shares the market prices higher, and Alice sells at the price she chose" },
+          { icon: "tpl:price-rises", name: "If NVIDIA passes $180, Bob buys", text: "He pays $180 a share for shares the market prices higher, and Alice sells at the price she chose" },
           { icon: "tpl:expire", name: "If it doesn't, the option expires", text: "Bob is out $25, and Alice keeps the $25 and her shares: paid for waiting" },
         ],
       },
@@ -100,28 +100,6 @@
         ],
       },
       {
-        type: "grid",
-        columns: 4,
-        heading: "More [words] traders use",
-        cards: [
-          { icon: "tpl:american", name: "American", text: "May be exercised at any moment before expiry. This venue's options are American" },
-          { icon: "tpl:european", name: "European", text: "May be exercised only at expiry. The names are historical, not geographic" },
-          { icon: "tpl:in-the-money", name: "In the money", text: "Worth exercising: for Bob, NVIDIA is above the $180 strike" },
-          { icon: "tpl:out-of-the-money", name: "Out of the money", text: "Not worth exercising, so the holder lets it expire" },
-        ],
-      },
-      {
-        type: "split",
-        tone: "dark",
-        heading: "How the trade [settles]",
-        sub: "What changes hands when the holder exercises",
-        cards: [
-          { icon: "tpl:physical", name: "Physical settlement", text: "The asset itself changes hands at the strike, and no price is read. This venue settles physically" },
-          { icon: "tpl:cash", name: "Cash settlement", text: "Pays the holder the difference between the price and the strike. Needs a price feed, and a defense against its manipulation" },
-          { icon: "tpl:collateral", name: "Fully collateralized", text: "The writer posts the whole obligation up front, so this venue needs no margin, no oracle and no liquidator" },
-        ],
-      },
-      {
         type: "statement",
         heading: "Now let's build it on [Solana]",
         sub: "Every account, every instruction, and every token that moves",
@@ -152,11 +130,11 @@
         tone: "light",
         tag: "Where everyone ended up",
         cards: [
-          { tone: "white", icon: "wallet", name: "Alice", text: "Earned a premium and sold her shares at her price" },
-          { tone: "lavender", icon: "wallet", name: "Bob", text: "Bought five NVDAx at $180 against a $200 market: $75 ahead after the premium" },
-          { tone: "mint", icon: "wallet", name: "Carol", text: "Was paid 19.80 USDC to wait for a purchase that never came" },
-          { tone: "white", icon: "wallet", name: "Dave", text: "Paid 20 USDC for insurance he did not need" },
-          { tone: "lavender", icon: "mint", name: "Maria the venue operator", text: "Earned 1% of every premium" },
+          { tone: "white", icon: "tpl:premium", name: "Alice", text: "Earned a premium and sold her shares at her price" },
+          { tone: "lavender", icon: "tpl:price-rises", name: "Bob", text: "Bought five NVDAx at $180 against a $200 market: $75 ahead after the premium" },
+          { tone: "mint", icon: "tpl:expire", name: "Carol", text: "Was paid 19.80 USDC to wait for a purchase that never came" },
+          { tone: "white", icon: "tpl:insurance", name: "Dave", text: "Paid 20 USDC for insurance he did not need" },
+          { tone: "lavender", icon: "tpl:venue", name: "Maria the venue operator", text: "Earned 1% of every premium" },
         ],
       },
 

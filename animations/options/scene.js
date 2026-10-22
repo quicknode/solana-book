@@ -241,8 +241,8 @@
     {
       title: "Alice wants to be paid to [wait]",
       caption:
-        "Alice would sell her five NVDAx at $180, and would like to be paid while she waits. An option lets her: " +
-        "a buyer pays her now for the right, but not the obligation, to buy her five NVDAx at $180 any time this week.",
+        "Alice wants to write an option: the right to buy her five NVDAx at $180 any time this week, " +
+        "for a premium of 25 USDC. First, somebody has to open a venue to sell it on.",
       actions: [{ type: "focus", ids: ["alice", "aliceNvdax"] }],
     },
 
@@ -250,8 +250,9 @@
     {
       title: "Maria runs [initialize_market()] to open the venue",
       caption:
-        "Maria wants to run a venue for options, for 1% of every premium. She calls initialize_market() with " +
-        "fee_bps of 100: one transaction creates the market and its two vaults, and Maria pays their rent.",
+        "Maria runs the venue, for 1% of every premium. One transaction creates the market, which records what the " +
+        "venue owes, and two vaults: token accounts the program controls, an underlying vault for NVDAx and a quote " +
+        "vault for USDC. Maria pays their rent, the SOL an account holds to exist.",
       actions: [
         { type: "show", ids: ["maria"], lines: { maria: [sol("1 SOL")] }, focus: "shown" },
         { type: "call", handler: "initialize_market()", focus: ["maria", "program", "nvdaxMint", "usdcMint"] },
@@ -275,10 +276,10 @@
 
     // ---- The call
     {
-      title: "Alice runs [write_option()] for a covered call",
+      title: "Alice runs [write_option()] for a call",
       caption:
         "Alice calls write_option(): a call on 5 NVDAx, a strike amount of 900 USDC, a premium of 25 USDC, " +
-        "and an expiry one week out. The handler writes the option as Listed, with no holder.",
+        "and an expiry one week out. The handler writes the option as Listed, for sale, with no holder.",
       actions: [
         { type: "call", handler: "write_option()", focus: ["alice", "aliceNvdax", "program", "market", "underlyingVault"] },
         { type: "set", changes: [{ id: "alice", title: "Alice (writer)" }] },
@@ -295,8 +296,8 @@
     {
       title: "Alice's 5 NVDAx move into the [vault]",
       caption:
-        "Alice's 5 NVDAx move into the underlying vault. The call is covered: everything a holder could claim " +
-        "is already in custody.",
+        "Alice's 5 NVDAx move into the underlying vault: her collateral. The call is covered, since everything a " +
+        "holder could claim is already in the vault, so nobody ever has to chase Alice to deliver.",
       actions: [
         transfer("aliceNvdax", "0 NVDAx", "underlyingVault", "5 NVDAx", {
           id: "write", d: downLane(A.aliceNvdax, 20, underlyingVault, 26), coinAt: 0.7,
@@ -323,7 +324,7 @@
     {
       title: "The option records its [holder]",
       caption:
-        "Before a token moves, the handler records Bob as the holder and the option as Held, and adds Maria's " +
+        "Before a token moves, the handler records Bob as the holder and the option as Held, sold, and adds Maria's " +
         "1% fee, 0.25 USDC, to fees_owed.",
       actions: [
         {
@@ -367,8 +368,8 @@
     {
       title: "Bob runs [exercise_option()]",
       caption:
-        "NVIDIA reports earnings and NVDAx moves to $200. Bob calls exercise_option() before the week is out. " +
-        "His NVDAx account, which he has never needed before, is created in the same transaction at his expense.",
+        "NVDAx moves to $200: the option is in the money, worth exercising. It is American, so Bob may exercise at " +
+        "any moment before expiry; a European option would wait for expiry. His NVDAx account is created at his expense.",
       actions: [
         { type: "call", handler: "exercise_option()", focus: ["bob", "bobUsdc", "program", "option", "market", "underlyingVault", "quoteVault"] },
         { type: "create", id: "bobNvdax", lines: [balance("0 NVDAx")] },
@@ -393,8 +394,8 @@
     {
       title: "Bob pays the [strike]",
       caption:
-        "Bob pays the strike, 5 times 180 USDC, into the quote vault. It waits there for Alice, so a writer who " +
-        "closed their token account could never block the holder from exercising.",
+        "Bob pays the strike, 5 times 180 USDC, into the quote vault. This is physical settlement: the tokens " +
+        "themselves change hands, so the program never reads a price. Cash settlement would need a price feed.",
       actions: [
         transfer("bobUsdc", "75 USDC", "quoteVault", "900.25 USDC", {
           id: "strike", d: across(A.bobUsdc, 20, quoteVault, 26), coinAt: 0.5,
@@ -423,8 +424,8 @@
       from: "callBought",
       title: "Had NVDAx stayed at $165, Alice runs [reclaim_collateral()]",
       caption:
-        "Another future. At $165 Bob would not pay 900 for shares the market sells for 825, so he lets the week run out. " +
-        "Then Alice calls reclaim_collateral(), and underlying_owed falls by 5 NVDAx.",
+        "Another future. At $165 the option is out of the money: Bob would not pay 900 for shares the market sells " +
+        "for 825, so he lets it expire. Then Alice calls reclaim_collateral(), and underlying_owed falls by 5 NVDAx.",
       actions: [
         { type: "call", handler: "reclaim_collateral()", focus: ["alice", "aliceNvdax", "program", "option", "market", "underlyingVault"] },
         { type: "set", changes: [{ id: "market", key: "underlying_owed", value: "0 NVDAx" }] },
@@ -450,8 +451,8 @@
       from: "callExercised",
       title: "Alice runs [collect_proceeds()]",
       caption:
-        "Back to the exercised call. Alice calls collect_proceeds(), which requires the option to be Exercised " +
-        "and the signer to be the writer. quote_owed falls by the 900 USDC it held for her.",
+        "Back to the exercised call. Alice calls collect_proceeds(), which only the writer may call, and only once " +
+        "the option is Exercised. quote_owed falls by the 900 USDC it held for her.",
       actions: [
         { type: "call", handler: "collect_proceeds()", focus: ["alice", "aliceUsdc", "program", "option", "market", "quoteVault"] },
         { type: "set", changes: [{ id: "market", key: "quote_owed", value: "0 USDC" }] },
@@ -474,7 +475,7 @@
 
     // ---- The put
     {
-      title: "Carol runs [write_option()] for a cash-secured put",
+      title: "Carol runs [write_option()] for a put",
       caption:
         "Carol has 1,000 USDC and would buy NVDAx at $150. She calls write_option() for a put: 5 NVDAx, a strike " +
         "amount of 750 USDC, a premium of 20 USDC. She has no NVDAx account, so the handler creates one.",

@@ -49,7 +49,12 @@ of cards builds them one at a time.
 
   Any slide with cards, or a chart's lines, builds one per key press unless it sets `build: false`.
   A card's `icon` is one of the book's account glyphs (`wallet`, `token`, ...) or, as `tpl:name`, one of
-  the template's icons in `assets/icons`.
+  the template's icons in `assets/icons`, named for the idea it stands for (`premium`, `price-rises`,
+  `insurance`). One icon means one idea throughout a talk: reuse it where the idea comes back, and never
+  give it to anything else.
+- A term is defined where the talk first needs it: not before, where it means nothing yet, and not after,
+  where it was already used unexplained. Calls are defined just before Alice writes one, "covered" in the
+  step where her collateral lands in the vault, and "in the money" in the step where Bob exercises.
 - `<chapter>/slides.js` lists the talk's slides. A `diagram` slide names the scene steps it shows, `from`
   and `to` by index, and together the diagram slides show every step once, in order; the deck refuses to
   start otherwise.
