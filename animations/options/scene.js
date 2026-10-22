@@ -200,7 +200,8 @@
       title: "This is [Solana Devnet]",
       // One idea a line: a caption keeps its line breaks.
       caption:
-        "It is a global computer\nAll data is stored in accounts\nEach account has an address\n" +
+        "It is a global computer\nFinancial products are programs that run on this computer\n" +
+        "All data is stored in accounts\nEach account has an address\n" +
         "Some addresses are public keys, others are made from ‘seeds’ chosen by programmers",
       actions: [],
     },
