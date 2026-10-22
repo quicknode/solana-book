@@ -2,8 +2,13 @@
 
 A chapter's figures, stepped through on screen: press a key and the next thing the program does happens.
 Accounts are created, fields change, and tokens travel along their arrows. Every step is drawn in the book's
-own figure vocabulary (`DIAGRAMS.md` in the companion plugin) at the figures' own coordinates, so the screen
-version and the printed figures show the same map.
+own figure vocabulary (`DIAGRAMS.md` in the companion plugin), with the chapter figures' columns, so the
+screen version and the printed figures show the same map.
+
+The screen has no print limits, so a scene is drawn on a 16:9 canvas (1120 by 630 units) in a dark theme.
+The extra width puts every public-key account, mints included, beneath the one cluster curve. Colours live
+in `THEME` at the top of `engine.js`: the paper goes dark and the ink light, and the one accent and the 0.3
+fade are unchanged. Each step is headed "Step n:" and its title, with its caption in the frame beneath.
 
 Open `options/index.html` in a browser. No build step and no server: it runs straight from disk.
 
@@ -12,21 +17,25 @@ Open `options/index.html` in a browser. No build step and no server: it runs str
 | `→`, `Space`, `PageDown`, `Enter`, click | next step |
 | `←`, `PageUp`, `Backspace` | previous step |
 | `Home` / `End` | first / last step |
+| `P` | play / pause: each finished step holds for `hold` ms (3 seconds), then the next plays |
+| `F` | full screen |
 
-A key pressed while a step is animating finishes that step at once. `PageDown` and `PageUp` are what
-presentation remotes send.
+A step plays once and then holds until the next key. A key pressed while a step is animating finishes that
+step at once. `PageDown` and `PageUp` are what presentation remotes send. Open `index.html?autoplay` to start
+playing on load.
 
 ## How a scene is built
 
 - `engine.js` is shared by every scene. It draws accounts, arrows and coins, and animates each step's actions.
 - `<chapter>/scene.js` holds that chapter's layout and steps, and nothing else.
 
-The layout is placed by hand, as the figures are: each account gives its box position, its address dot,
-and its seed list, copied from the chapter's SVGs. A step is a caption and a list of actions:
+The layout is placed by hand, as the figures are: each column's position and width is chosen in the scene.
+A public-key account's dot is put on the curve with `clusterCurve().yAt()` and its box hangs 9.3 below it,
+and a derived account's dot and seed list sit above its box, so the dots never drift off the curve. A step
+is a title, a caption, and a list of actions:
 
 | Action | Shows |
 | --- | --- |
-| `headline` | the figure's headline changes |
 | `show` | accounts that already exist, with their lines, appear without motion |
 | `focus` | which accounts are drawn in full; the rest fade to their heading |
 | `call` | a handler lights up in the program box, and the focus moves to the accounts it touches |
@@ -45,7 +54,7 @@ either transfer, so the scene does the same.
 
 ```
 node scripts/animation-frames.mjs options          # each step's end state as build/animation-options-NN.png and .svg
-node scripts/animation-frames.mjs options --video  # the whole animation as build/animation-options.webm
+node scripts/animation-frames.mjs options --video  # the whole animation, each step held, as build/animation-options.webm
 ```
 
 The script fails if the page throws an error.

@@ -14,73 +14,62 @@
   @font-face { font-family: "DejaVu Sans Mono"; src: url("../../assets/fonts/DejaVuSansMono.ttf"); font-weight: normal; }
   @font-face { font-family: "DejaVu Sans Mono"; src: url("../../assets/fonts/DejaVuSansMono-Bold.ttf"); font-weight: bold; }
 
-  :root { --ink: #111; --paper: #fff; --panel: #f4f4f2; --grey: #555; --accent: #1e7a3c; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; }
+  :root { --letterbox: #0b0d0f; --hint: #8d9196; }
+  html, body { margin: 0; height: 100%; background: var(--letterbox); overflow: hidden; }
   body {
-    background: var(--panel);
-    color: var(--ink);
-    font-family: "Denim INK", Helvetica, Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
-    gap: 12px;
-  }
-  #stage {
-    width: min(100%, calc((100vh - 150px) * 640 / 632));
-    flex: none;
-    background: var(--paper);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-  }
-  #stage svg { display: block; width: 100%; height: auto; }
-  #caption-bar {
-    width: min(100%, calc((100vh - 150px) * 640 / 632));
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 6px 14px;
-    align-items: start;
+    place-items: center;
+    font-family: "Denim INK", Helvetica, Arial, sans-serif;
   }
-  #counter { font-weight: bold; font-variant-numeric: tabular-nums; color: var(--grey); padding-top: 2px; }
-  #caption { font-size: 16px; line-height: 1.4; min-height: 2.8em; }
-  #progress { grid-column: 1 / -1; height: 3px; background: #ddd; }
-  #progress div { height: 100%; background: var(--accent); transition: width 0.3s; }
-  #hint { grid-column: 1 / -1; font-size: 12px; color: var(--grey); }
-  kbd { font-family: inherit; border: 1px solid #bbb; border-radius: 3px; padding: 0 4px; background: var(--paper); }
+  /* The frame is 16:9 at the largest size the window allows. */
+  #stage { width: min(100vw, 100vh * 16 / 9); aspect-ratio: 16 / 9; cursor: pointer; }
+  #stage svg { display: block; width: 100%; height: 100%; }
+  #hint {
+    position: fixed; right: 12px; bottom: 10px;
+    font-size: 12px; color: var(--hint);
+    transition: opacity 0.6s;
+  }
+  #hint.hidden { opacity: 0; }
+  kbd { font-family: inherit; border: 1px solid #444; border-radius: 3px; padding: 0 4px; }
 </style>
 </head>
 <body>
-<div id="stage"><svg viewBox="0 0 640 632" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#111" role="img" aria-label="Animated account diagram"></svg></div>
-<div id="caption-bar">
-  <div id="counter"></div>
-  <div id="caption" aria-live="polite"></div>
-  <div id="progress"><div></div></div>
-  <div id="hint"><kbd>→</kbd> or <kbd>Space</kbd> next · <kbd>←</kbd> back · <kbd>Home</kbd> start · <kbd>End</kbd> last step · a key during a step finishes it</div>
-</div>
+<div id="stage"><svg viewBox="0 0 1120 630" font-family="'Denim INK', Helvetica, Arial, sans-serif" fill="#e6e6e3" role="img" aria-label="Animated account diagram"></svg></div>
+<div id="hint"><kbd>→</kbd> next · <kbd>←</kbd> back · <kbd>P</kbd> play / pause · <kbd>F</kbd> full screen</div>
 <script src="../engine.js"></script>
 <script src="scene.js"></script>
 <script>
   const scene = window.OPTIONS_SCENE;
   const svg = document.querySelector("#stage svg");
-  const show = (i) => {
-    document.getElementById("counter").textContent = `${i + 1} / ${scene.steps.length}`;
-    document.getElementById("caption").textContent = scene.steps[i].caption;
-    document.querySelector("#progress div").style.width = `${(i / (scene.steps.length - 1)) * 100}%`;
-  };
-  const player = new AccountAnimation.Player(scene, svg, { onStep: show });
-  show(0);
+  svg.setAttribute("viewBox", `0 0 ${scene.canvas.width} ${scene.canvas.height}`);
+  const player = new AccountAnimation.Player(scene, svg);
   // Exposed for scripts/animation-frames.mjs and the browser console.
   window.player = player;
 
-  // Presentation remotes send PageDown and PageUp.
+  const hint = document.getElementById("hint");
+  let hintTimer = setTimeout(() => hint.classList.add("hidden"), 4000);
+  const touch = () => {
+    hint.classList.remove("hidden");
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => hint.classList.add("hidden"), 2500);
+  };
+
+  // A step plays once and then holds until the next key; autoplay holds each
+  // finished step for scene.hold before moving on. Presentation remotes send
+  // PageDown and PageUp.
   document.addEventListener("keydown", (e) => {
-    if (["ArrowRight", " ", "PageDown", "Enter"].includes(e.key)) { e.preventDefault(); player.next(); }
+    touch();
+    if (["ArrowRight", " ", "PageDown", "Enter"].includes(e.key)) { e.preventDefault(); player.stopAutoplay(); player.next(); }
     else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); player.prev(); }
-    else if (e.key === "Home") player.goto(0);
-    else if (e.key === "End") player.goto(scene.steps.length - 1);
+    else if (e.key === "Home") { player.stopAutoplay(); player.goto(0); }
+    else if (e.key === "End") { player.stopAutoplay(); player.goto(scene.steps.length - 1); }
+    else if (e.key === "p" || e.key === "P") { player.autoplay ? player.stopAutoplay() : player.startAutoplay(); }
+    else if (e.key === "f" || e.key === "F") {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
   });
-  document.getElementById("stage").addEventListener("click", () => player.next());
+  document.getElementById("stage").addEventListener("click", () => { player.stopAutoplay(); player.next(); });
+  if (new URLSearchParams(location.search).has("autoplay")) player.startAutoplay();
 </script>
 </body>
 </html>

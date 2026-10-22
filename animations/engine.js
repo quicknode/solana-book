@@ -1,7 +1,7 @@
 // A stepper for animated account figures. A scene file supplies the layout
-// (hand-placed, in the book figure's own coordinates) and an ordered list of
-// steps; this file draws the scene in the book's figure vocabulary
-// (DIAGRAMS.md in the companion plugin) and animates each step's actions.
+// (hand-placed, on a 16:9 canvas) and an ordered list of steps; this file
+// draws the scene in the book's figure vocabulary (DIAGRAMS.md in the
+// companion plugin), recoloured for a dark screen, and animates each step.
 //
 // Every step's end state is computed by replaying the actions without motion,
 // so going back, jumping, or interrupting an animation always lands on the
@@ -10,46 +10,64 @@
 // Classic script rather than a module, so index.html opens straight from disk.
 
 (function () {
-  const INK = "#111";
-  const ACCENT = "#1e7a3c";
+  // The book's palette is ink on paper with one accent; on screen the paper
+  // goes dark and the ink light. The fade and the single accent are unchanged.
+  const THEME = {
+    paper: "#15181c",
+    ink: "#e6e6e3",
+    panel: "#23272c",
+    border: "#7a7f85",
+    rule: "#5d6268",
+    secondary: "#a3a7ac",
+    seed: "#8d9196",
+    handler: "#858a90",
+    accent: "#3fbf6f",
+  };
   const FADE = 0.3;
-  const SANS = "'Denim INK', Helvetica, Arial, sans-serif";
   const MONO = "'DejaVu Sans Mono', Menlo, monospace";
   const SVG_NS = "http://www.w3.org/2000/svg";
 
-  // The five account glyphs, verbatim from the book's figures: each fills the
-  // 14-unit glyph box once placed with translate(x, y).
-  const ICONS = {
-    struct: `<g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g>`,
-    token: `<g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g>`,
-    wallet: `<g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g>`,
-    mint: `<g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g>`,
-    program: `<g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g>`,
-  };
+  // The five account glyphs, verbatim from the book's figures with the ink
+  // swapped for the theme's: each fills the 14-unit glyph box once placed.
+  const ICONS = Object.fromEntries(
+    Object.entries({
+      struct: `<g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g>`,
+      token: `<g transform="translate(-0.624,-0.624) scale(0.6353)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.047"><path d="M14.5 5.5h-4A6.5 6.5 0 0 0 7 17.478l.288 1.738c.07.423.105.635.202.798a1 1 0 0 0 .49.416c.178.07.392.07.822.07c.397 0 .596 0 .764-.062a1 1 0 0 0 .479-.374c.1-.148.15-.34.246-.727l.209-.837h3l.21.837c.096.386.144.58.245.727a1 1 0 0 0 .479.374c.168.062.367.062.764.062c.43 0 .644 0 .821-.07a1 1 0 0 0 .49-.416c.098-.163.133-.375.203-.798L17 17.478a6.5 6.5 0 0 0 2.502-2.978l.89-.178c.77-.154 1.155-.231 1.381-.508c.227-.276.227-.669.227-1.453v-.3c0-.75 0-1.124-.212-1.396c-.212-.27-.575-.362-1.303-.544L20 10c0-1.5-1.167-2.833-2-3.5v-3h-.264c-1.37 0-2.623.774-3.236 2"/><path d="M15.875 9.75h-.125m.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0M2 8v2a2 2 0 0 0 2 2"/></g>`,
+      wallet: `<g transform="translate(0.36,0.767) scale(0.8301)" fill="#111"><path d="M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0"/></g>`,
+      mint: `<g transform="translate(0.52,0.519) scale(0.54)" fill="#111"><path d="m21.49 7.13l-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44l8 4.44z"/><path d="M12 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3"/></g>`,
+      program: `<g transform="translate(0.951,0.952) scale(0.864)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.28"><path d="M11.808 7.727c0 .05.017.1.048.14l.667.84a.96.96 0 0 1 .082 1.08l-.392.676a.96.96 0 0 1-.975.47l-1.063-.16a.23.23 0 0 0-.145.027l-1.26.727a.23.23 0 0 0-.096.112l-.392 1a.96.96 0 0 1-.893.611h-.782a.96.96 0 0 1-.893-.61l-.392-1a.23.23 0 0 0-.096-.113L3.967 10.8a.23.23 0 0 0-.145-.028l-1.063.162a.96.96 0 0 1-.976-.47l-.39-.677a.96.96 0 0 1 .08-1.08l.67-.84a.22.22 0 0 0 .05-.14V6.273c0-.05-.018-.1-.05-.14l-.67-.84a.96.96 0 0 1-.08-1.08l.39-.676a.96.96 0 0 1 .976-.47l1.06.16a.23.23 0 0 0 .145-.027l1.262-.73a.23.23 0 0 0 .096-.113l.394-.996A.96.96 0 0 1 6.61.75h.784a.96.96 0 0 1 .893.61l.392.997q.028.075.096.116l1.26.727a.23.23 0 0 0 .145.028l1.062-.162a.96.96 0 0 1 .976.47l.391.677a.96.96 0 0 1-.081 1.08l-.67.84a.22.22 0 0 0-.049.14v1.454Z"/><path d="M7 8.996c1.277 0 1.996-.719 1.996-1.996S8.277 5.004 7 5.004S5.004 5.723 5.004 7S5.723 8.996 7 8.996"/></g>`,
+    }).map(([kind, svg]) => [kind, svg.replaceAll("#111", THEME.ink)]),
+  );
 
-  const COIN = `<g stroke="#fff" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="${ACCENT}" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g>`;
+  // Three rings with a halo in the paper colour, so the mark occludes any
+  // stroke beneath it.
+  const COIN = `<g fill="${THEME.paper}"><g stroke="${THEME.paper}" stroke-width="4.5"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g><g stroke="${THEME.accent}" stroke-width="1.3"><circle cx="5" cy="1.5" r="4.5"/><circle cx="0" cy="0" r="4.5"/><circle cx="-5" cy="1.5" r="4.5"/></g></g>`;
 
-  const HALO = `stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round"`;
+  const HALO = `stroke="${THEME.paper}" stroke-width="4" paint-order="stroke" stroke-linejoin="round"`;
 
   const escape = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const lerp = (a, b, t) => a + (b - a) * t;
   const clamp01 = (t) => Math.max(0, Math.min(1, t));
 
+  // The cluster curve: flat at the top left, sloping down to the right, as
+  // one quadratic across the whole canvas. yAt() puts an address dot on it.
+  function clusterCurve(width, { top = 33, drop = 80, control = 0.625 } = {}) {
+    const cx = width * control;
+    const d = `M 0,${top} Q ${cx},${top} ${width},${top + drop}`;
+    // x(t) = 2(1-t)t·cx + t²·width, solved for t; y follows from t.
+    const yAt = (x) => {
+      const a = width - 2 * cx;
+      const b = 2 * cx;
+      const t = Math.abs(a) < 1e-9 ? x / b : (-b + Math.sqrt(b * b + 4 * a * x)) / (2 * a);
+      return top + drop * t * t;
+    };
+    return { d, yAt };
+  }
+
   // ---- State ---------------------------------------------------------------
 
-  // A state is plain data: which accounts exist, which are in focus, every
-  // account's lines, the active handler and the step's arrows.
-  function initialState(scene) {
-    return {
-      headline: "",
-      exists: [],
-      focus: [],
-      isNew: [],
-      titles: {},
-      lines: {},
-      handler: null,
-      arrows: [],
-    };
+  function initialState() {
+    return { exists: [], focus: [], isNew: [], titles: {}, lines: {}, handler: null, arrows: [] };
   }
 
   function lineIndex(lines, key) {
@@ -63,12 +81,9 @@
 
   // Applies one action to a state, with no motion. The animator plays the
   // same actions and then lands on the state this produces.
-  function reduce(scene, state, action) {
+  function reduce(state, action) {
     const s = structuredClone(state);
     switch (action.type) {
-      case "headline":
-        s.headline = action.text;
-        break;
       case "show":
         for (const id of action.ids) if (!s.exists.includes(id)) s.exists.push(id);
         for (const [id, lines] of Object.entries(action.lines || {})) s.lines[id] = lines;
@@ -97,14 +112,13 @@
           }
         }
         break;
-      case "transfer": {
+      case "transfer":
         s.arrows.push(action.arrow);
         for (const change of [action.from, action.to]) {
           const lines = s.lines[change.id];
           lines[lineIndex(lines, change.key)].text = lineText(change.key, change.value);
         }
         break;
-      }
       default:
         throw new Error(`unknown action ${action.type}`);
     }
@@ -113,28 +127,27 @@
 
   // ---- Drawing -------------------------------------------------------------
 
-  // An account box's geometry at focus t: 0 is faded to its heading, 1 is
-  // expanded with its lines. Expanded height is the book's anatomy: a 21-unit
-  // title bar, 12 units a line (10 for handler lists), and the bottom padding.
-  function expandedHeight(acc, lines) {
-    if (!lines || lines.length === 0) return 22;
-    return acc.kind === "program" ? 21 + lines.length * 10 + 9 : 21 + lines.length * 12 + 7;
+  // An account's expanded height is the book's anatomy: a 21-unit title bar,
+  // 12 units a line (10 for handler lists), and the bottom padding.
+  function expandedHeight(acc, lineCount) {
+    if (lineCount === 0) return 22;
+    return acc.kind === "program" ? 21 + lineCount * 10 + 9 : 21 + lineCount * 12 + 7;
   }
 
   function lineAttrs(acc, line, state) {
     if (acc.kind === "program") {
       const active = line.text === state.handler;
-      return `font-size="8.5" font-family="${MONO}" ${active ? `font-weight="bold" fill="${ACCENT}"` : `fill="#888"`}`;
+      return `font-size="8.5" font-family="${MONO}" ${active ? `font-weight="bold" fill="${THEME.accent}"` : `fill="${THEME.handler}"`}`;
     }
     switch (line.style) {
-      case "sol": return `font-size="9.5" fill="#444"`;
+      case "sol": return `font-size="9.5" fill="${THEME.secondary}"`;
       case "balance": return `font-size="9"`;
-      case "note": return `font-size="9" font-style="italic" fill="#444"`;
+      case "note": return `font-size="9" font-style="italic" fill="${THEME.secondary}"`;
       default: return `font-size="9.5"`;
     }
   }
 
-  function accountMarkup(scene, acc, state) {
+  function accountMarkup(acc, state) {
     const lines = state.lines[acc.id] || [];
     const title = state.titles[acc.id] || acc.title;
     const struct = acc.kind === "struct";
@@ -142,69 +155,87 @@
     const step = acc.kind === "program" ? 10 : 12;
     let out = `<g class="acc" data-id="${acc.id}">`;
     // The opaque disc keeps a faded dot from letting the curve show through.
-    out += `<circle class="backing" cx="${acc.dot.cx}" cy="${acc.dot.cy}" r="${r + 1}" fill="#fff"/>`;
+    out += `<circle class="backing" cx="${acc.dot.cx}" cy="${acc.dot.cy}" r="${r + 1}" fill="${THEME.paper}"/>`;
     out += `<g class="body">`;
-    out += `<circle cx="${acc.dot.cx}" cy="${acc.dot.cy}" r="${r}" fill="#fff" stroke="${INK}" stroke-width="2"/>`;
+    out += `<circle cx="${acc.dot.cx}" cy="${acc.dot.cy}" r="${r}" fill="${THEME.paper}" stroke="${THEME.ink}" stroke-width="2"/>`;
     (acc.seeds?.lines || []).forEach((seed, i) => {
-      out += `<text x="${acc.seeds.x}" y="${acc.seeds.y + i * 9}" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">${escape(seed)}</text>`;
+      out += `<text x="${acc.seeds.x}" y="${acc.seeds.y + i * 9}" font-size="7" font-family="${MONO}" fill="${THEME.seed}">${escape(seed)}</text>`;
     });
-    out += `<rect class="box" x="${acc.x}" y="${acc.y}" width="${acc.w}" height="22" rx="6" ${struct ? `fill="#f4f4f2" stroke="#888"` : `fill="#fff" stroke="${INK}" stroke-width="1.8"`}/>`;
+    out += `<rect class="box" x="${acc.x}" y="${acc.y}" width="${acc.w}" height="22" rx="6" ${struct ? `fill="${THEME.panel}" stroke="${THEME.border}"` : `fill="${THEME.paper}" stroke="${THEME.ink}" stroke-width="1.8"`}/>`;
     out += `<g class="icon" transform="translate(${acc.x + 8},${acc.y + 4})">${ICONS[acc.kind]}</g>`;
     out += `<text class="title" x="${acc.x + 28}" y="${acc.y + 14.5}" font-size="10.5" font-weight="bold">${escape(title)}</text>`;
-    out += `<line class="rule" x1="${acc.x + 8}" y1="${acc.y + 21}" x2="${acc.x + acc.w - 8}" y2="${acc.y + 21}" stroke="#888" stroke-width="0.8"/>`;
+    out += `<line class="rule" x1="${acc.x + 8}" y1="${acc.y + 21}" x2="${acc.x + acc.w - 8}" y2="${acc.y + 21}" stroke="${THEME.rule}" stroke-width="0.8"/>`;
     out += `<g class="lines">`;
     lines.forEach((line, i) => {
       out += `<text data-line="${i}" x="${acc.x + 8}" y="${acc.y + 32 + i * step}" ${lineAttrs(acc, line, state)}>${escape(line.text)}</text>`;
     });
     out += `</g>`;
-    out += `<text class="new" ${HALO} x="${acc.x + acc.w - 8}" y="${acc.y + 14.5}" font-size="9" font-weight="bold" letter-spacing="1" fill="${ACCENT}" text-anchor="end">NEW</text>`;
+    out += `<text class="new" ${HALO} x="${acc.x + acc.w - 8}" y="${acc.y + 14.5}" font-size="9" font-weight="bold" letter-spacing="1" fill="${THEME.accent}" text-anchor="end">NEW</text>`;
     out += `</g></g>`;
     return out;
   }
 
-  // Sets an account's drawn focus. appear scales the whole group's opacity,
-  // for an account being created.
+  // Sets an account's drawn focus: 0 is faded to its heading, 1 is expanded
+  // with its lines. appear scales the group's opacity, for a new account.
   function applyFocus(scene, g, t, appear = 1) {
     const acc = scene.accounts[g.dataset.id];
     const lineCount = g.querySelectorAll(".lines text").length;
-    const full = expandedHeight(acc, Array(lineCount).fill(0));
-    const expandable = lineCount > 0;
-    const e = expandable ? t : 0;
-    g.querySelector(".box").setAttribute("height", lerp(22, full, e));
+    const e = lineCount > 0 ? t : 0;
+    g.querySelector(".box").setAttribute("height", lerp(22, expandedHeight(acc, lineCount), e));
     g.querySelector(".icon").setAttribute("transform", `translate(${acc.x + 8},${acc.y + lerp(4, 3.5, e)})`);
     g.querySelector(".title").setAttribute("y", acc.y + lerp(14.5, 14.175, e));
-    g.querySelector(".rule").setAttribute("opacity", expandable ? clamp01((e - 0.6) / 0.4) : 0);
+    g.querySelector(".rule").setAttribute("opacity", lineCount > 0 ? clamp01((e - 0.6) / 0.4) : 0);
     g.querySelector(".lines").setAttribute("opacity", clamp01((e - 0.85) / 0.15));
     g.querySelector(".body").setAttribute("opacity", lerp(FADE, 1, t) * appear);
     g.querySelector(".backing").setAttribute("opacity", appear);
     g.dataset.t = t;
   }
 
+  // An arrow names where its coin sits as a fraction of its length; the
+  // label hangs off the coin, so both stay on the stroke if the path moves.
   function arrowMarkup(arrow, { partial = false } = {}) {
     let out = `<g class="arrow" data-id="${arrow.id}">`;
-    out += `<path class="stroke" d="${arrow.d}" fill="none" stroke="${ACCENT}" stroke-width="1.8" ${partial ? "" : `marker-end="url(#anim-arr)"`}/>`;
+    out += `<path class="stroke" d="${arrow.d}" fill="none" stroke="${THEME.accent}" stroke-width="1.8" ${partial ? "" : `marker-end="url(#anim-arr)"`}/>`;
+    out += `<g class="label">`;
     arrow.label.forEach((text, i) => {
-      out += `<text class="label" ${HALO} x="${arrow.labelAt.x}" y="${arrow.labelAt.y + i * 13}" font-size="10.5" font-weight="bold" fill="${ACCENT}" text-anchor="${arrow.labelAt.anchor || "start"}">${escape(text)}</text>`;
+      out += `<text ${HALO} x="${arrow.labelAt.dx}" y="${arrow.labelAt.dy + i * 13}" font-size="10.5" font-weight="bold" fill="${THEME.accent}" text-anchor="${arrow.labelAt.anchor || "start"}">${escape(text)}</text>`;
     });
-    out += `<g class="coin label" transform="translate(${arrow.coin.x},${arrow.coin.y})" fill="#fff">${COIN}</g>`;
-    out += `</g>`;
+    out += `</g><g class="coin">${COIN}</g></g>`;
     return out;
   }
 
-  function sceneMarkup(scene, state) {
+  // Places an arrow's coin on its stroke and its label beside the coin.
+  function placeArrow(g, arrow) {
+    const path = g.querySelector(".stroke");
+    const pt = path.getPointAtLength(path.getTotalLength() * arrow.coinAt);
+    g.querySelector(".coin").setAttribute("transform", `translate(${pt.x},${pt.y})`);
+    g.querySelector(".label").setAttribute("transform", `translate(${pt.x},${pt.y})`);
+  }
+
+  function sceneMarkup(scene, state, stepIndex) {
     const { width, height } = scene.canvas;
-    let out = `<defs><marker id="anim-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="${ACCENT}"/></marker></defs>`;
-    out += `<rect width="${width}" height="${height}" fill="#fff"/>`;
-    out += `<text class="headline" ${HALO.replace('stroke-width="4"', 'stroke-width="4.5"')} x="16" y="24" font-size="15" font-weight="bold">${escape(state.headline)}</text>`;
-    out += `<g class="background">${scene.background || ""}</g>`;
+    const step = scene.steps[stepIndex];
+    const c = scene.caption;
+    let out = `<defs><marker id="anim-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="${THEME.accent}"/></marker></defs>`;
+    out += `<rect width="${width}" height="${height}" fill="${THEME.paper}"/>`;
+    out += `<path d="${scene.curve.d}" fill="none" stroke="${THEME.ink}" stroke-width="3.5"/>`;
+    out += `<text ${HALO} x="${scene.network.x}" y="${scene.network.y}" font-size="13" font-weight="bold" text-anchor="end">${escape(scene.network.text)}</text>`;
+    out += `<text class="headline" ${HALO.replace('stroke-width="4"', 'stroke-width="4.5"')} x="16" y="24" font-size="15" font-weight="bold">${escape(stepHeadline(stepIndex, step))}</text>`;
+    out += `<foreignObject class="caption" x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:${c.fontSize}px;line-height:1.45;color:${THEME.secondary}">${escape(step.caption)}</div></foreignObject>`;
     out += `<g class="accounts">`;
     for (const id of scene.order) {
-      if (state.exists.includes(id)) out += accountMarkup(scene, scene.accounts[id], state);
+      if (state.exists.includes(id)) out += accountMarkup(scene.accounts[id], state);
     }
     out += `</g><g class="arrows">`;
     for (const arrow of state.arrows) out += arrowMarkup(arrow);
     out += `</g><g class="movers"></g>`;
+    const progress = scene.steps.length > 1 ? stepIndex / (scene.steps.length - 1) : 1;
+    out += `<rect class="progress" x="0" y="${height - 3}" width="${width * progress}" height="3" fill="${THEME.accent}"/>`;
     return out;
+  }
+
+  function stepHeadline(i, step) {
+    return `Step ${i + 1}: ${step.title}`;
   }
 
   // ---- Motion --------------------------------------------------------------
@@ -233,26 +264,30 @@
       this.skip = false;
       this.busy = null;
       this.speed = 1;
+      this.autoplay = null;
       // states[i] is the picture once step i has finished.
       this.states = [];
-      let s = initialState(scene);
+      let s = initialState();
       for (const step of scene.steps) {
-        for (const action of step.actions) s = reduce(scene, s, action);
+        for (const action of step.actions) s = reduce(s, action);
         this.states.push(s);
       }
       this.index = 0;
-      this.render(this.states[0]);
+      this.render(this.states[0], 0);
     }
 
     get count() {
       return this.scene.steps.length;
     }
 
-    render(state) {
-      this.svg.innerHTML = sceneMarkup(this.scene, state);
+    render(state, stepIndex) {
+      this.svg.innerHTML = sceneMarkup(this.scene, state, stepIndex);
       for (const g of this.svg.querySelectorAll(".acc")) {
         applyFocus(this.scene, g, state.focus.includes(g.dataset.id) ? 1 : 0);
         g.querySelector(".new").setAttribute("opacity", state.isNew.includes(g.dataset.id) ? 1 : 0);
+      }
+      for (const g of this.svg.querySelectorAll(".arrows .arrow")) {
+        placeArrow(g, state.arrows.find((a) => a.id === g.dataset.id));
       }
     }
 
@@ -260,7 +295,7 @@
     async goto(i) {
       await this.interrupt();
       this.index = Math.max(0, Math.min(this.count - 1, i));
-      this.render(this.states[this.index]);
+      this.render(this.states[this.index], this.index);
       this.onStep(this.index);
     }
 
@@ -276,7 +311,27 @@
     }
 
     prev() {
+      this.stopAutoplay();
       return this.goto(this.index - 1);
+    }
+
+    // Plays every remaining step, holding each finished one for `hold` ms.
+    startAutoplay(hold = this.scene.hold || 3000) {
+      this.stopAutoplay();
+      const token = {};
+      this.autoplay = token;
+      const tick = async () => {
+        if (this.autoplay !== token) return;
+        if (this.index >= this.count - 1) return this.stopAutoplay();
+        await this.next();
+        if (this.autoplay === token) token.timer = setTimeout(tick, hold);
+      };
+      token.timer = setTimeout(tick, hold);
+    }
+
+    stopAutoplay() {
+      if (this.autoplay) clearTimeout(this.autoplay.timer);
+      this.autoplay = null;
     }
 
     // Finishes the running animation at once, on its end state.
@@ -308,13 +363,35 @@
 
     async play(i) {
       let state = this.states[i - 1];
-      this.render(state);
+      this.render(state, i - 1);
+      await this.retitle(i);
       for (const action of this.scene.steps[i].actions) {
         await this.animate(state, action);
-        state = reduce(this.scene, state, action);
+        state = reduce(state, action);
       }
       // Land exactly on the computed end state, whatever the motion left.
-      this.render(this.states[i]);
+      this.render(this.states[i], i);
+    }
+
+    // Swaps in the step's headline and caption, and moves the progress bar.
+    async retitle(i) {
+      const step = this.scene.steps[i];
+      const headline = this.svg.querySelector(".headline");
+      const caption = this.svg.querySelector(".caption div");
+      const bar = this.svg.querySelector(".progress");
+      const from = Number(bar.getAttribute("width"));
+      const to = (this.scene.canvas.width * i) / (this.count - 1);
+      await this.tween(250, (p) => {
+        headline.setAttribute("opacity", 1 - p);
+        caption.style.opacity = 1 - p;
+      });
+      headline.textContent = stepHeadline(i, step);
+      caption.textContent = step.caption;
+      await this.tween(300, (p) => {
+        headline.setAttribute("opacity", p);
+        caption.style.opacity = p;
+        bar.setAttribute("width", lerp(from, to, p));
+      });
     }
 
     accountGroup(id) {
@@ -322,7 +399,7 @@
     }
 
     // Moves every account from its focus in one state to its focus in the next.
-    refocus(from, to) {
+    refocus(to) {
       const groups = [...this.svg.querySelectorAll(".acc")];
       const starts = groups.map((g) => Number(g.dataset.t));
       const ends = groups.map((g) => (to.focus.includes(g.dataset.id) ? 1 : 0));
@@ -330,7 +407,7 @@
     }
 
     // Counts a line from its old value to its new one, tinted with the accent
-    // while it changes, then settles back to ink.
+    // while it changes, then settles back to the ink.
     async changeLine(id, key, value) {
       const g = this.accountGroup(id);
       const lines = [...g.querySelectorAll(".lines text")];
@@ -340,7 +417,7 @@
       const a = numberIn(fromText);
       const b = numberIn(toText);
       el.style.transition = "fill 0.3s";
-      el.style.fill = ACCENT;
+      el.style.fill = THEME.accent;
       if (a && b && a.before === b.before && a.after === b.after) {
         const decimals = Math.max(a.decimals, b.decimals);
         await this.tween(900, (p) => {
@@ -355,19 +432,16 @@
     }
 
     async animate(state, action) {
-      const next = reduce(this.scene, state, action);
+      const next = reduce(state, action);
       switch (action.type) {
-        case "headline": {
-          const el = this.svg.querySelector(".headline");
-          if (el.textContent === action.text) return;
-          await this.tween(250, (p) => el.setAttribute("opacity", 1 - p));
-          el.textContent = action.text;
-          await this.tween(250, (p) => el.setAttribute("opacity", p));
-          return;
-        }
         case "show":
         case "focus":
-          this.render(next);
+          for (const g of this.svg.querySelectorAll(".acc")) g.remove();
+          this.svg.querySelector(".accounts").innerHTML = this.scene.order
+            .filter((id) => next.exists.includes(id))
+            .map((id) => accountMarkup(this.scene.accounts[id], next))
+            .join("");
+          for (const g of this.svg.querySelectorAll(".acc")) applyFocus(this.scene, g, next.focus.includes(g.dataset.id) ? 1 : 0);
           return;
         case "call": {
           const old = [...this.svg.querySelectorAll(".arrows .arrow, .acc .new")];
@@ -376,15 +450,15 @@
           // Light the handler line in the program box.
           for (const t of this.svg.querySelectorAll(`.acc[data-id="${this.scene.program}"] .lines text`)) {
             const active = t.textContent === action.handler;
-            t.setAttribute("fill", active ? ACCENT : "#888");
+            t.setAttribute("fill", active ? THEME.accent : THEME.handler);
             t.setAttribute("font-weight", active ? "bold" : "normal");
           }
-          await this.refocus(state, next);
+          await this.refocus(next);
           return this.wait(200);
         }
         case "create": {
           const holder = document.createElementNS(SVG_NS, "g");
-          holder.innerHTML = accountMarkup(this.scene, this.scene.accounts[action.id], next);
+          holder.innerHTML = accountMarkup(this.scene.accounts[action.id], next);
           const g = holder.firstElementChild;
           // Keep the scene's drawing order, so a box never lands on top of a later one.
           const layer = this.svg.querySelector(".accounts");
@@ -417,12 +491,13 @@
           const layer = this.svg.querySelector(".arrows");
           layer.insertAdjacentHTML("beforeend", arrowMarkup(action.arrow, { partial: true }));
           const g = layer.lastElementChild;
+          placeArrow(g, action.arrow);
           const path = g.querySelector(".stroke");
-          const labels = [...g.querySelectorAll(".label")];
-          labels.forEach((el) => el.setAttribute("opacity", 0));
+          const marks = [g.querySelector(".label"), g.querySelector(".coin")];
+          marks.forEach((el) => el.setAttribute("opacity", 0));
           const length = path.getTotalLength();
           path.setAttribute("stroke-dasharray", `${length} ${length}`);
-          await this.tween(500, (p) => path.setAttribute("stroke-dashoffset", length * (1 - p)));
+          await this.tween(600, (p) => path.setAttribute("stroke-dashoffset", length * (1 - p)));
           path.removeAttribute("stroke-dasharray");
           path.removeAttribute("stroke-dashoffset");
           path.setAttribute("marker-end", "url(#anim-arr)");
@@ -430,16 +505,15 @@
           // and arrive in the destination as it lands.
           const mover = document.createElementNS(SVG_NS, "g");
           mover.innerHTML = COIN;
-          mover.setAttribute("fill", "#fff");
           this.svg.querySelector(".movers").appendChild(mover);
           const leaving = this.changeLine(action.from.id, action.from.key, action.from.value);
-          await this.tween(1100, (p) => {
+          await this.tween(1300, (p) => {
             const pt = path.getPointAtLength(length * p);
             mover.setAttribute("transform", `translate(${pt.x},${pt.y})`);
           });
           mover.remove();
           await Promise.all([leaving, this.changeLine(action.to.id, action.to.key, action.to.value)]);
-          await this.tween(300, (p) => labels.forEach((el) => el.setAttribute("opacity", p)));
+          await this.tween(300, (p) => marks.forEach((el) => el.setAttribute("opacity", p)));
           return this.wait(200);
         }
         default:
@@ -448,5 +522,5 @@
     }
   }
 
-  window.AccountAnimation = { Player, reduce, sceneMarkup, ICONS, COIN, ACCENT, INK, SANS };
+  window.AccountAnimation = { Player, reduce, clusterCurve, THEME };
 })();

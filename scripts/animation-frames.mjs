@@ -32,7 +32,8 @@ const outDir = join(repoRoot, "build");
 mkdirSync(outDir, { recursive: true });
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
-const viewport = { width: 1280, height: 1400 };
+// 16:9, the frame the scene is drawn for.
+const viewport = { width: 1280, height: 720 };
 const context = await browser.newContext({
   viewport,
   deviceScaleFactor: 2,
@@ -44,13 +45,17 @@ page.on("pageerror", (e) => errors.push(e.message));
 await page.goto(pathToFileURL(page_).href);
 await page.waitForFunction(() => window.player);
 const count = await page.evaluate(() => window.player.count);
+// The key hint is for a person at the keyboard, not for a frame or a recording.
+await page.addStyleTag({ content: "#hint { display: none; }" });
 
 if (video) {
-  // Wait on each step's own animation rather than a fixed delay.
-  await page.waitForTimeout(1500);
+  // next() resolves when its step's animation ends; then hold the finished
+  // step as autoplay does.
+  const hold = await page.evaluate(() => window.player.scene.hold ?? 3000);
+  await page.waitForTimeout(hold);
   for (let i = 1; i < count; i++) {
     await page.evaluate(() => window.player.next());
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(hold);
   }
   const path = await page.video().path();
   await context.close();
