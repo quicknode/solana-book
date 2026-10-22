@@ -213,8 +213,9 @@
     {
       title: "Every token has a [mint]",
       caption:
-        "Each kind of token is defined by one mint account. This is the mint for USDC, a token worth one US dollar.",
-      actions: [{ type: "show", ids: ["usdcMint"], focus: "all" }],
+        "Each kind of token is defined by one mint account. Here are two: USDC, a token worth one US dollar, " +
+        "and NVDAx, a token that tracks one share of NVIDIA stock.",
+      actions: [{ type: "show", ids: ["nvdaxMint", "usdcMint"], focus: "all" }],
     },
     {
       title: "Alice has a [thousand dollars]",
@@ -226,11 +227,9 @@
     {
       title: "Alice owns five shares of [NVIDIA]",
       caption:
-        "NVDAx is a token that tracks one share of NVIDIA stock, which trades at $165. It has its own mint, " +
-        "and Alice holds five NVDAx in a second token account.",
-      actions: [
-        { type: "show", ids: ["nvdaxMint", "aliceNvdax"], lines: { aliceNvdax: [balance("5 NVDAx")] }, focus: "all" },
-      ],
+        "Alice holds five NVDAx in a second token account, one for each kind of token she owns. " +
+        "NVIDIA trades at $165, so her five shares are worth $825.",
+      actions: [{ type: "show", ids: ["aliceNvdax"], lines: { aliceNvdax: [balance("5 NVDAx")] }, focus: "all" }],
     },
     {
       title: "Programs are [accounts] too",
