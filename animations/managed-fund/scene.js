@@ -196,10 +196,9 @@
   const steps = [
     // ---- The opening, for an audience new to Solana.
     {
-      title: "This is [Solana]",
-      caption:
-        "Everything on Solana is stored in accounts, and every account lives at an address. " +
-        "This curve stands for the addresses that someone holds a private key for.",
+      title: "This is [Solana Devnet]",
+      // One idea a line: a caption keeps its line breaks.
+      caption: "It is a global computer\nAll data is stored in accounts\nEach account has an address",
       actions: [],
     },
     {
