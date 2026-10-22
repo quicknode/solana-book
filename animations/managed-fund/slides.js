@@ -63,7 +63,7 @@
       {
         type: "statement",
         heading: "Now let's build it on [Solana]",
-        sub: "Every account, every instruction, and every token that moves",
+        sub: "Every account, every handler, and every token that moves",
       },
 
       // Solana, Alice, the curator, the fund, and Alice's deposit.
@@ -110,7 +110,7 @@
         parts: [
           { tone: "mint", name: "Alice", text: "900 shares", value: 900 },
           { tone: "lavender", name: "Bob", text: "450 shares", value: 450 },
-          { tone: "white", name: "Maria", text: "13.5 shares", value: 13.5 },
+          { tone: "white", name: "Maria", text: "13.5 shares", value: 13.5, callout: true },
         ],
       },
       // Alice withdraws.

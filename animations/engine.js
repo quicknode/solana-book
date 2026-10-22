@@ -124,8 +124,11 @@
         s.isNew.push(action.id);
         s.lines[action.id] = action.lines;
         break;
+      // An account a step changes, or moves tokens into or out of, is drawn
+      // in full: the reader can't follow a balance on a faded slab.
       case "set":
         for (const change of action.changes) {
+          if (!s.focus.includes(change.id)) s.focus.push(change.id);
           if (change.title) s.titles[change.id] = change.title;
           if (change.value != null) {
             const lines = s.lines[change.id];
@@ -156,6 +159,7 @@
         if (action.alone) s.arrows = [];
         s.arrows.push(action.arrow);
         for (const change of [action.from, action.to]) {
+          if (!s.focus.includes(change.id)) s.focus.push(change.id);
           if (change.value == null) continue;
           const lines = s.lines[change.id];
           lines[lineIndex(lines, change.key)].text = lineText(change.key, change.value);
@@ -179,7 +183,7 @@
   function lineAttrs(acc, line, state) {
     if (acc.kind === "program") {
       const active = state.handlers.includes(line.text);
-      return `font-size="8.5" font-family="${MONO}" ${active ? `font-weight="bold" fill="${THEME.accentInk}"` : `fill="${THEME.boxMuted}"`}`;
+      return `font-size="8.5" font-family="${MONO}" ${active ? `font-weight="bold" fill="${THEME.boxText}"` : `fill="${THEME.boxMuted}"`}`;
     }
     switch (line.style) {
       case "sol": return `font-size="9.5" fill="${THEME.boxMuted}"`;
@@ -208,7 +212,18 @@
     out += `<line class="rule" x1="${acc.x + 8}" y1="${acc.y + 21}" x2="${acc.x + acc.w - 8}" y2="${acc.y + 21}" stroke="${THEME.boxRule}" stroke-width="0.8"/>`;
     out += `<g class="lines">`;
     lines.forEach((line, i) => {
-      out += `<text data-line="${i}" x="${acc.x + 8}" y="${acc.y + 32 + i * step}" ${lineAttrs(acc, line, state)}>${escape(line.text)}</text>`;
+      const y = acc.y + 32 + i * step;
+      if (acc.kind === "program") {
+        // The running handler sits on the slides' green highlight, marked ▶,
+        // so it reads at a glance from the back of the room.
+        const on = state.handlers.includes(line.text) ? 1 : 0;
+        out += `<g class="running" data-for="${i}" opacity="${on}">`;
+        out += `<rect x="${acc.x + 4}" y="${y - 8}" width="${acc.w - 8}" height="10.5" rx="1" fill="${THEME.accent}"/>`;
+        out += `<text x="${acc.x + 7}" y="${y}" font-size="7" fill="${THEME.boxText}">▶</text></g>`;
+        out += `<text data-line="${i}" x="${acc.x + 17}" y="${y}" ${lineAttrs(acc, line, state)}>${escape(line.text)}</text>`;
+        return;
+      }
+      out += `<text data-line="${i}" x="${acc.x + 8}" y="${y}" ${lineAttrs(acc, line, state)}>${escape(line.text)}</text>`;
     });
     out += `</g>`;
     out += `<text class="new" x="${acc.x + acc.w - 8}" y="${acc.y + 14.5}" font-size="8" font-family="${MONO}" letter-spacing="1" fill="${THEME.accentInk}" text-anchor="end">NEW</text>`;
@@ -221,7 +236,7 @@
   // with its lines. appear scales the group's opacity, for a new account.
   function applyFocus(scene, g, t, appear = 1) {
     const acc = scene.accounts[g.dataset.id];
-    const lineCount = g.querySelectorAll(".lines text").length;
+    const lineCount = g.querySelectorAll(".lines text[data-line]").length;
     const e = lineCount > 0 ? t : 0;
     g.querySelector(".box").setAttribute("height", lerp(22, expandedHeight(acc, lineCount), e));
     g.querySelector(".icon").setAttribute("transform", `translate(${acc.x + 8},${acc.y + lerp(4, 3.5, e)})`);
@@ -478,14 +493,25 @@
       });
     }
 
+    // Draws in full any account this action brings into focus, before the
+    // action plays on it.
+    async refocusIfNeeded(state, next) {
+      if (next.focus.every((id) => state.focus.includes(id))) return;
+      await this.refocus(next);
+    }
+
     // Lights the named handler lines in every program box, and dims the rest.
     lightHandlers(handlers) {
       for (const g of this.svg.querySelectorAll(".acc")) {
         if (this.scene.accounts[g.dataset.id].kind !== "program") continue;
-        for (const t of g.querySelectorAll(".lines text")) {
+        for (const t of g.querySelectorAll(".lines text[data-line]")) {
           const active = handlers.includes(t.textContent);
-          t.setAttribute("fill", active ? THEME.accentInk : THEME.boxMuted);
+          t.setAttribute("fill", active ? THEME.boxText : THEME.boxMuted);
           t.setAttribute("font-weight", active ? "bold" : "normal");
+          const band = g.querySelector(`.running[data-for="${t.dataset.line}"]`);
+          const from = Number(band.getAttribute("opacity"));
+          const to = active ? 1 : 0;
+          if (from !== to) this.tween(300, (p) => band.setAttribute("opacity", lerp(from, to, p)));
         }
       }
     }
@@ -506,7 +532,7 @@
     // while it changes, then settles back to the ink.
     async changeLine(id, key, value) {
       const g = this.accountGroup(id);
-      const lines = [...g.querySelectorAll(".lines text")];
+      const lines = [...g.querySelectorAll(".lines text[data-line]")];
       const el = lines.find((t) => (key == null ? t.dataset.line === "0" : t.textContent.startsWith(key + ": ")));
       const fromText = el.textContent;
       const toText = lineText(key, value);
@@ -540,6 +566,8 @@
             .map((id) => accountMarkup(this.scene.accounts[id], next))
             .join("");
           const groups = [...this.svg.querySelectorAll(".acc")];
+          // Redrawn accounts keep their NEW badges only if they are still new.
+          for (const g of groups) g.querySelector(".new").setAttribute("opacity", next.isNew.includes(g.dataset.id) ? 1 : 0);
           const end = (g) => (next.focus.includes(g.dataset.id) ? 1 : 0);
           await this.tween(700, (p) =>
             groups.forEach((g) => {
@@ -551,7 +579,11 @@
           return;
         }
         case "call": {
-          const old = [...this.svg.querySelectorAll(".arrows .arrow, .acc .new")];
+          // Fade out the last call's arrows and NEW badges, and only those:
+          // a hidden badge must stay hidden, not flash on and fade.
+          const old = [...this.svg.querySelectorAll(".arrows .arrow, .acc .new")].filter(
+            (el) => el.getAttribute("opacity") !== "0",
+          );
           await this.tween(300, (p) => old.forEach((el) => el.setAttribute("opacity", 1 - p)));
           for (const el of this.svg.querySelectorAll(".arrows .arrow")) el.remove();
           this.lightHandlers(next.handlers);
@@ -579,6 +611,7 @@
           return this.wait(250);
         }
         case "set": {
+          await this.refocusIfNeeded(state, next);
           await Promise.all(
             action.changes.map(async (change) => {
               if (change.title) {
@@ -614,6 +647,7 @@
             await this.tween(250, (p) => old.forEach((el) => el.setAttribute("opacity", 1 - p)));
             old.forEach((el) => el.remove());
           }
+          await this.refocusIfNeeded(state, next);
           const layer = this.svg.querySelector(".arrows");
           layer.insertAdjacentHTML("beforeend", arrowMarkup(action.arrow, { partial: true }));
           const g = layer.lastElementChild;

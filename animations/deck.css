@@ -35,6 +35,9 @@ body { display: grid; place-items: center; font-family: var(--sans); }
   background: var(--black);
 }
 #stage > .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* A diagram sits beneath the series bar, scaled to the height that leaves. */
+#stage > svg.layer { top: 3.3cqw; height: calc(100% - 3.3cqw); }
+#stage > .diagram-bar { position: absolute; inset: 0 0 auto; height: auto; }
 #stage > svg { display: block; }
 .slide { position: relative; width: 100%; height: 100%; }
 .layer { transition: opacity 0.35s; }
@@ -125,7 +128,7 @@ mark.purple { background: var(--purple); color: #fff; }
 /* ---- Cards ------------------------------------------------------------- */
 
 .cards-slide {
-  height: 100%; box-sizing: border-box;
+  height: calc(100% - 3.3cqw); box-sizing: border-box;
   display: flex; flex-direction: column; justify-content: center;
 }
 .cards-slide .tag { align-self: flex-start; }
@@ -235,6 +238,22 @@ mark.purple { background: var(--purple); color: #fff; }
 .seg-box.mint { background: var(--mint); color: var(--ink); }
 .seg-box.lavender { background: var(--lavender); color: var(--ink); }
 .seg-box.white { background: var(--white); color: var(--ink); }
+.seg.thin { min-width: 0.5cqw; position: relative; }
+.seg.thin .seg-box { padding: 0; }
+.callout {
+  position: absolute; top: calc(100% + 3.4cqw); right: 0; white-space: nowrap;
+  font-size: 1.5cqw; color: #e0e0e0;
+}
+.callout-name { font-size: 2cqw; }
+/* The arrow from the label up to the thin part. */
+.callout::before {
+  content: ""; position: absolute; right: 0.15cqw; bottom: calc(100% + 0.4cqw);
+  height: 2.6cqw; border-left: 0.15cqw solid #e0e0e0;
+}
+.callout::after {
+  content: ""; position: absolute; right: -0.35cqw; bottom: calc(100% + 2.9cqw);
+  border: 0.55cqw solid transparent; border-bottom: 0.8cqw solid #e0e0e0; border-top: 0;
+}
 
 /* ---- QR and follow ----------------------------------------------------- */
 

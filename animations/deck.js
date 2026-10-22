@@ -95,7 +95,7 @@
       </div>`,
 
     cards: (s, deck, shown) => `
-      <div class="slide ${s.tone || "dark"}">
+      <div class="slide ${s.tone || "dark"}">${bar(deck.series)}
         <div class="body cards-slide">
           ${s.tag ? `<span class="tag purple">// ${escape(s.tag)}</span><div style="height:3cqw"></div>` : ""}
           ${s.heading ? `<h2 class="heading">${marked(s.heading)}</h2>` : ""}
@@ -178,8 +178,14 @@
       <div class="slide ${s.tone || "dark"}">${bar(deck.series)}
         <div class="body">${heading(s)}
           <div class="alloc">${s.parts
-            .map(
-              (p) => `<div class="seg" style="flex-grow:${p.value}">
+            .map((p) =>
+              // A part too thin to hold its words is drawn at its true width,
+              // with its label outside the bar and an arrow to it.
+              p.callout
+                ? `<div class="seg thin" style="flex-grow:${p.value}"><div class="pct">&nbsp;</div>
+                    <div class="seg-box ${p.tone}"></div>
+                    <div class="callout"><span class="callout-name">${marked(p.name)}</span> · ${marked(p.text)} · ${pct(p.value)}%</div></div>`
+                : `<div class="seg" style="flex-grow:${p.value}">
                 <div class="pct">${pct(p.value)}%</div>
                 <div class="seg-box ${p.tone}">${p.icon ? icon(p.icon, deck) : ""}
                   <div class="name">${marked(p.name)}</div><div class="text">${marked(p.text)}</div></div></div>`,
@@ -225,6 +231,8 @@
       this.html = document.createElement("div");
       this.html.className = "layer";
       stage.appendChild(this.html);
+      // The series bar sits above the diagrams too, as on every slide.
+      stage.insertAdjacentHTML("afterbegin", `<div class="diagram-bar slide dark">${bar(deck.series)}</div>`);
       this.player = new AccountAnimation.Player(scene, this.svg);
       this.autoplay = null;
 

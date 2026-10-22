@@ -102,7 +102,7 @@
       {
         type: "statement",
         heading: "Now let's build it on [Solana]",
-        sub: "Every account, every instruction, and every token that moves",
+        sub: "Every account, every handler, and every token that moves",
       },
 
       // Solana, Alice, her accounts, and the deal she wants.
