@@ -65,6 +65,8 @@ if (video) {
   const stage = page.locator("#stage");
   for (let i = 0; i < count; i++) {
     await page.evaluate((n) => window.player.goto(n), i);
+    // Let a cross-fade between a slide and a diagram, or a card's build, finish.
+    await page.waitForTimeout(500);
     const step = String(i + 1).padStart(2, "0");
     await stage.screenshot({ path: join(outDir, `animation-${name}-${step}.png`) });
     const svg = await page.evaluate(() => new XMLSerializer().serializeToString(document.querySelector("#stage svg")));

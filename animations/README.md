@@ -5,10 +5,9 @@ Accounts are created, fields change, and tokens travel along their arrows. Every
 own figure vocabulary (`DIAGRAMS.md` in the companion plugin), with the chapter figures' columns, so the
 screen version and the printed figures show the same map.
 
-The screen has no print limits, so a scene is drawn on a 16:9 canvas (1120 by 630 units) in a dark theme.
-The extra width puts every public-key account, mints included, beneath the one cluster curve. Colours live
-in `THEME` at the top of `engine.js`: the paper goes dark and the ink light, and the one accent and the 0.3
-fade are unchanged. Each step is headed "Step n:" and its title, with its caption in the frame beneath.
+The screen has no print limits, so a scene is drawn on a 16:9 canvas (1120 by 630 units). The extra width
+puts every public-key account, mints included, beneath the one cluster curve. Colours live in `THEME` at
+the top of `engine.js`. Each step has a title, with its caption in the frame beneath.
 
 Open `options/index.html` in a browser. No build step and no server: it runs straight from disk.
 
@@ -23,6 +22,27 @@ Open `options/index.html` in a browser. No build step and no server: it runs str
 A step plays once and then holds until the next key. A key pressed while a step is animating finishes that
 step at once. `PageDown` and `PageUp` are what presentation remotes send. Open `index.html?autoplay` to start
 playing on load.
+
+## The talk around the diagrams
+
+`index.html` opens a slide deck in the look of the Quicknode Solana Finance Keynote: a title slide, what you
+should know and what you'll learn, card slides between the runs of diagram steps, where everyone ended up,
+and the closing slides. One key advances through all of it: a diagram step plays its animation, and a slide
+of cards builds them one at a time.
+
+- `deck.js` and `deck.css` are shared by every talk. A slide kind (`title`, `columns`, `cards`, `qr`,
+  `follow`) is a template filled from data, and `[word]` in any text is set on the green highlight,
+  `{word}` on the purple one.
+- `<chapter>/slides.js` lists the talk's slides. A `diagram` slide names the scene steps it shows, `from`
+  and `to` by index, and together the diagram slides show every step once, in order; the deck refuses to
+  start otherwise.
+- `assets/` holds the Quicknode mark (inlined in `deck.css` as a mask) and QR codes generated from the two
+  repository URLs.
+
+The diagrams take the same palette: accounts are pastel cards on near-black (white for wallets, green for
+token accounts, lavender for programs, grey for data accounts, cream for mints), a faded account is a dark
+slab, and the step's action is the bright green. A step title marks its keyword in brackets, `Maria runs
+[collect_fees()]`, and the step number sits in the corner as `// STEP n`.
 
 ## How a scene is built
 
