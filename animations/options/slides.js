@@ -25,7 +25,7 @@
             heading: "What you'll {learn}",
             sub: "From the Options chapter",
             items: [
-              "How calls and puts work as a Solana program",
+              "How options work as a Solana program",
               "Why fully collateralized options need no margin, no oracle and no liquidator",
               "How a program records what it owes before it moves a token",
             ],
@@ -77,17 +77,6 @@
         ],
       },
       {
-        type: "grid",
-        tone: "mint",
-        columns: 2,
-        heading: "A [call] and a [put]",
-        sub: "The two kinds of option",
-        cards: [
-          { icon: "tpl:call", name: "Call", text: "The right to buy at the strike. Worth using when the price rises above it" },
-          { icon: "tpl:put", name: "Put", text: "The right to sell at the strike. Worth using when the price falls below it: insurance for an owner" },
-        ],
-      },
-      {
         type: "numbered",
         heading: "A sold option has [two endings]",
         sub: "Where the price lands inside each ending decides how much each side made",
@@ -99,7 +88,7 @@
       {
         type: "chart",
         heading: "The holder's loss is capped at the [premium]",
-        sub: "Profit at expiry for each side of the call. Bob profits past $185: the strike plus the premium",
+        sub: "Profit at expiry for each side of Alice and Bob's option. Bob profits past $185: the strike plus the premium",
         x: [140, 210], xStep: 10,
         y: [-150, 150], yStep: 50,
         xLabel: "NVIDIA's price at expiry",
@@ -117,7 +106,7 @@
         cards: [
           { icon: "tpl:american", name: "American", text: "May be exercised at any moment before expiry. This venue's options are American" },
           { icon: "tpl:european", name: "European", text: "May be exercised only at expiry. The names are historical, not geographic" },
-          { icon: "tpl:in-the-money", name: "In the money", text: "Worth exercising: for a call, the price is above the strike" },
+          { icon: "tpl:in-the-money", name: "In the money", text: "Worth exercising: for Bob, NVIDIA is above the $180 strike" },
           { icon: "tpl:out-of-the-money", name: "Out of the money", text: "Not worth exercising, so the holder lets it expire" },
         ],
       },
@@ -141,11 +130,19 @@
       // Solana, Alice, her accounts, and the deal she wants.
       { type: "diagram", from: 0, to: 6 },
       // The venue opens, and the call is written, bought, exercised, and paid out.
-      { type: "diagram", from: 7, to: 22 },
+      { type: "diagram", from: 7, to: 7 },
+      // "Call" is first needed here: the next step writes one.
+      {
+        type: "statement",
+        heading: "Alice's option is a [call]",
+        sub: "The right to buy the underlying at the strike, worth using when the price rises above it",
+      },
+      { type: "diagram", from: 8, to: 22 },
       {
         type: "statement",
         heading: "Now a [put]: the right to sell",
-        sub: "A put writer posts cash instead of shares, and the holder delivers the shares if they exercise",
+        sub: "Worth using when the price falls below the strike: insurance for an owner. " +
+          "A put writer posts cash instead of shares, and the holder delivers the shares if they exercise",
       },
 
       // The put is written, bought, and expires; the fees are collected.
