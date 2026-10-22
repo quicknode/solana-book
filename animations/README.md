@@ -36,12 +36,19 @@ is a title, a caption, and a list of actions:
 
 | Action | Shows |
 | --- | --- |
-| `show` | accounts that already exist, with their lines, appear without motion |
+| `show` | accounts that already exist on chain fade in, with their lines (and, with `focus`, drawn in full) |
+| `hide` | accounts the rest of the story no longer needs fade out, so others can take their columns |
 | `focus` | which accounts are drawn in full; the rest fade to their heading |
 | `call` | a handler lights up in the program box, and the focus moves to the accounts it touches |
 | `create` | a new account grows in, with a `NEW` badge |
 | `set` | fields or titles change; numbers count from the old value to the new |
 | `transfer` | the arrow draws, a coin rides it, and both balances count to their new values |
+| `close` | an account is marked `CLOSED` and fades out |
+
+A step can also carry a `key`, and a later step can start `from` that key instead of from the step before
+it. That is how another future branches off the story (the call expiring unused starts from the purchase,
+not from the exercise before it) and how the story resumes afterwards. The jump between futures fades out
+and back in, so it never reads as the program doing something.
 
 Every step's end state is computed by replaying the actions without motion. Going back, jumping, or
 cutting an animation short therefore lands on exactly the picture the forward animation ends on.

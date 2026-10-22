@@ -87,6 +87,7 @@
       case "show":
         for (const id of action.ids) if (!s.exists.includes(id)) s.exists.push(id);
         for (const [id, lines] of Object.entries(action.lines || {})) s.lines[id] = lines;
+        if (action.focus) s.focus = action.focus === "all" ? [...s.exists] : [...action.focus];
         break;
       case "focus":
         s.focus = action.ids === "all" ? [...s.exists] : [...action.ids];
@@ -111,6 +112,16 @@
             lines[lineIndex(lines, change.key)].text = lineText(change.key, change.value);
           }
         }
+        break;
+      case "hide":
+        s.arrows = [];
+        s.exists = s.exists.filter((id) => !action.ids.includes(id));
+        s.focus = s.focus.filter((id) => !action.ids.includes(id));
+        break;
+      case "close":
+        s.exists = s.exists.filter((id) => id !== action.id);
+        s.focus = s.focus.filter((id) => id !== action.id);
+        s.isNew = s.isNew.filter((id) => id !== action.id);
         break;
       case "transfer":
         s.arrows.push(action.arrow);
@@ -171,6 +182,7 @@
     });
     out += `</g>`;
     out += `<text class="new" ${HALO} x="${acc.x + acc.w - 8}" y="${acc.y + 14.5}" font-size="9" font-weight="bold" letter-spacing="1" fill="${THEME.accent}" text-anchor="end">NEW</text>`;
+    out += `<text class="closed" ${HALO} x="${acc.x + acc.w - 8}" y="${acc.y + 14.5}" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="end" opacity="0">CLOSED</text>`;
     out += `</g></g>`;
     return out;
   }
@@ -218,7 +230,7 @@
     const c = scene.caption;
     let out = `<defs><marker id="anim-arr" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="${THEME.accent}"/></marker></defs>`;
     out += `<rect width="${width}" height="${height}" fill="${THEME.paper}"/>`;
-    out += `<path d="${scene.curve.d}" fill="none" stroke="${THEME.ink}" stroke-width="3.5"/>`;
+    out += `<g class="scene"><path d="${scene.curve.d}" fill="none" stroke="${THEME.ink}" stroke-width="3.5"/>`;
     out += `<text ${HALO} x="${scene.network.x}" y="${scene.network.y}" font-size="13" font-weight="bold" text-anchor="end">${escape(scene.network.text)}</text>`;
     out += `<text class="headline" ${HALO.replace('stroke-width="4"', 'stroke-width="4.5"')} x="16" y="24" font-size="15" font-weight="bold">${escape(stepHeadline(stepIndex, step))}</text>`;
     out += `<foreignObject class="caption" x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:${c.fontSize}px;line-height:1.45;color:${THEME.secondary}">${escape(step.caption)}</div></foreignObject>`;
@@ -228,7 +240,7 @@
     }
     out += `</g><g class="arrows">`;
     for (const arrow of state.arrows) out += arrowMarkup(arrow);
-    out += `</g><g class="movers"></g>`;
+    out += `</g><g class="movers"></g></g>`;
     const progress = scene.steps.length > 1 ? stepIndex / (scene.steps.length - 1) : 1;
     out += `<rect class="progress" x="0" y="${height - 3}" width="${width * progress}" height="3" fill="${THEME.accent}"/>`;
     return out;
@@ -265,13 +277,22 @@
       this.busy = null;
       this.speed = 1;
       this.autoplay = null;
-      // states[i] is the picture once step i has finished.
+      // states[i] is the picture once step i has finished. A step starts
+      // from the one before it, or, with `from`, from the end of the step
+      // carrying that key: how another future branches off the story, and how
+      // the story resumes after it.
       this.states = [];
-      let s = initialState();
-      for (const step of scene.steps) {
+      this.bases = [];
+      const keys = {};
+      scene.steps.forEach((step, i) => {
+        if (step.from != null && !(step.from in keys)) throw new Error(`step ${i + 1} starts from unknown key ${step.from}`);
+        const base = i === 0 ? null : step.from != null ? keys[step.from] : i - 1;
+        let s = base == null ? initialState() : this.states[base];
         for (const action of step.actions) s = reduce(s, action);
         this.states.push(s);
-      }
+        this.bases.push(base);
+        if (step.key != null) keys[step.key] = i;
+      });
       this.index = 0;
       this.render(this.states[0], 0);
     }
@@ -345,7 +366,7 @@
 
     tween(ms, fn) {
       return new Promise((resolve) => {
-        if (this.skip) { fn(1); return resolve(); }
+        if (this.skip || ms <= 0) { fn(1); return resolve(); }
         const start = performance.now();
         const frame = (now) => {
           const p = this.skip ? 1 : Math.min(1, (now - start) / (ms / this.speed));
@@ -362,8 +383,17 @@
     }
 
     async play(i) {
-      let state = this.states[i - 1];
-      this.render(state, i - 1);
+      const base = this.bases[i];
+      let state = this.states[base];
+      if (base !== i - 1) {
+        // A jump between futures: fade to the state this step starts from.
+        await this.tween(300, (p) => this.svg.querySelector(".scene").setAttribute("opacity", 1 - p));
+        this.render(state, i - 1);
+        this.svg.querySelector(".scene").setAttribute("opacity", 0);
+        await this.tween(300, (p) => this.svg.querySelector(".scene").setAttribute("opacity", p));
+      } else {
+        this.render(state, i - 1);
+      }
       await this.retitle(i);
       for (const action of this.scene.steps[i].actions) {
         await this.animate(state, action);
@@ -435,14 +465,25 @@
       const next = reduce(state, action);
       switch (action.type) {
         case "show":
-        case "focus":
-          for (const g of this.svg.querySelectorAll(".acc")) g.remove();
+        case "focus": {
+          // Accounts already on screen move to their new focus; ones arriving
+          // fade in where they stand.
+          const starts = Object.fromEntries([...this.svg.querySelectorAll(".acc")].map((g) => [g.dataset.id, Number(g.dataset.t)]));
           this.svg.querySelector(".accounts").innerHTML = this.scene.order
             .filter((id) => next.exists.includes(id))
             .map((id) => accountMarkup(this.scene.accounts[id], next))
             .join("");
-          for (const g of this.svg.querySelectorAll(".acc")) applyFocus(this.scene, g, next.focus.includes(g.dataset.id) ? 1 : 0);
+          const groups = [...this.svg.querySelectorAll(".acc")];
+          const end = (g) => (next.focus.includes(g.dataset.id) ? 1 : 0);
+          await this.tween(700, (p) =>
+            groups.forEach((g) => {
+              const id = g.dataset.id;
+              if (id in starts) applyFocus(this.scene, g, lerp(starts[id], end(g), p));
+              else applyFocus(this.scene, g, end(g), p);
+            }),
+          );
           return;
+        }
         case "call": {
           const old = [...this.svg.querySelectorAll(".arrows .arrow, .acc .new")];
           await this.tween(300, (p) => old.forEach((el) => el.setAttribute("opacity", 1 - p)));
@@ -486,6 +527,22 @@
             }),
           );
           return this.wait(300);
+        }
+        case "hide": {
+          const groups = [...action.ids.map((id) => this.accountGroup(id)).filter(Boolean), ...this.svg.querySelectorAll(".arrows .arrow")];
+          await this.tween(500, (p) => groups.forEach((g) => g.setAttribute("opacity", 1 - p)));
+          groups.forEach((g) => g.remove());
+          return;
+        }
+        case "close": {
+          const g = this.accountGroup(action.id);
+          g.querySelector(".new").setAttribute("opacity", 0);
+          const badge = g.querySelector(".closed");
+          await this.tween(250, (p) => badge.setAttribute("opacity", p));
+          await this.wait(700);
+          await this.tween(600, (p) => g.setAttribute("opacity", 1 - p));
+          g.remove();
+          return this.wait(200);
         }
         case "transfer": {
           const layer = this.svg.querySelector(".arrows");
