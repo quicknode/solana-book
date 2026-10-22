@@ -169,6 +169,26 @@
         </div>
       </div>`,
 
+    // A bar split by value, each part labelled with its share of the whole:
+    // a fund's allocation, or who owns its shares.
+    allocation: (s, deck) => {
+      const total = s.parts.reduce((sum, p) => sum + p.value, 0);
+      const pct = (v) => ((v / total) * 100).toFixed(s.decimals ?? 0);
+      return `
+      <div class="slide ${s.tone || "dark"}">${bar(deck.series)}
+        <div class="body">${heading(s)}
+          <div class="alloc">${s.parts
+            .map(
+              (p) => `<div class="seg" style="flex-grow:${p.value}">
+                <div class="pct">${pct(p.value)}%</div>
+                <div class="seg-box ${p.tone}">${p.icon ? icon(p.icon, deck) : ""}
+                  <div class="name">${marked(p.name)}</div><div class="text">${marked(p.text)}</div></div></div>`,
+            )
+            .join("")}</div>
+        </div>
+      </div>`;
+    },
+
     chart: (s, deck, shown) => `
       <div class="slide ${s.tone || "dark"}">${bar(deck.series)}
         <div class="body">${heading(s)}${payoffChart(s, shown)}</div>

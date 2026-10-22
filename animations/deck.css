@@ -221,6 +221,21 @@ mark.purple { background: var(--purple); color: #fff; }
 .chart .series.green .series-label { fill: var(--green); }
 .chart .series.purple .series-label { fill: #b9a4ff; }
 
+.alloc { display: flex; gap: 0.5cqw; margin-top: 5cqw; }
+.seg { flex-basis: 0; min-width: 12cqw; display: flex; flex-direction: column; }
+.seg .pct { font: 1.4cqw var(--mono); margin-bottom: 0.8cqw; color: #bdbdbd; }
+.light .seg .pct, .lavender .seg .pct, .mint .seg .pct { color: #555; }
+.seg-box {
+  flex: 1; min-height: 11cqw; padding: 2cqw 2.2cqw; display: flex; flex-direction: column;
+  justify-content: center; gap: 0.4cqw;
+}
+.seg-box .tpl-icon { margin-bottom: 0.8cqw; filter: none; }
+.seg-box .name { font-size: 2cqw; }
+.seg-box .text { font-size: 1.25cqw; opacity: 0.8; }
+.seg-box.mint { background: var(--mint); color: var(--ink); }
+.seg-box.lavender { background: var(--lavender); color: var(--ink); }
+.seg-box.white { background: var(--white); color: var(--ink); }
+
 /* ---- QR and follow ----------------------------------------------------- */
 
 .qr-slide h2 { font-weight: 400; font-size: 3cqw; margin: 0 0 0.6cqw; }

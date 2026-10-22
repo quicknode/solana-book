@@ -9,7 +9,9 @@ The screen has no print limits, so a scene is drawn on a 16:9 canvas (1120 by 63
 puts every public-key account, mints included, beneath the one cluster curve. Colours live in `THEME` at
 the top of `engine.js`. Each step has a title, with its caption in the frame beneath.
 
-Open `options/index.html` in a browser. No build step and no server: it runs straight from disk.
+There are two talks, each a directory: `options/` for the *Options* chapter and `managed-fund/` for the
+*Managed Fund* chapter. Open a talk's `index.html` in a browser. No build step and no server: it runs
+straight from disk.
 
 | Key | Does |
 | --- | --- |
@@ -45,6 +47,7 @@ of cards builds them one at a time.
   | `numbered` | cards tagged `// 01`, `// 02` |
   | `cards` | tall cards in the slides' three tones |
   | `chart` | a payoff chart, one line per side |
+  | `allocation` | a bar split by value: a fund's weights, or who owns its shares |
   | `qr`, `follow` | the closing slides |
 
   Any slide with cards, or a chart's lines, builds one per key press unless it sets `build: false`.
@@ -81,10 +84,11 @@ is a title, a caption, and a list of actions:
 | `show` | accounts that already exist on chain fade in, with their lines; `focus: "shown"` draws them in full |
 | `hide` | accounts the rest of the story no longer needs fade out, so others can take their columns |
 | `focus` | which accounts are drawn in full; the rest fade to their heading |
-| `call` | a handler lights up in the program box, and the focus moves to the accounts it touches |
+| `call` | a handler lights up in the program box, and the focus moves to the accounts it touches; `also` lights handlers it calls in other programs, and a `call` with no handler is a step no program takes, such as a price moving |
+| `highlight` | the lit handlers change within a call, as a deposit moves from one swap to the next |
 | `create` | a new account grows in, with a `NEW` badge |
 | `set` | fields or titles change; numbers count from the old value to the new |
-| `transfer` | the arrow draws, a coin rides it, and both balances count to their new values |
+| `transfer` | the arrow draws, a coin rides it, and both balances count to their new values; with `alone` it replaces the step's earlier arrows, and a side with no `value` (a router trading on the far side) shows no balance |
 | `close` | an account is marked `CLOSED` and fades out |
 
 A person appears in the step where they first do something, with the accounts that step uses: Bob and his
@@ -107,6 +111,7 @@ either transfer, so the scene does the same.
 
 ```
 node scripts/animation-frames.mjs options          # each step's end state as build/animation-options-NN.png and .svg
+node scripts/animation-frames.mjs managed-fund     # the same for the Managed Fund talk
 node scripts/animation-frames.mjs options --video  # the whole animation, each step held, as build/animation-options.webm
 ```
 

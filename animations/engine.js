@@ -80,7 +80,7 @@
   // ---- State ---------------------------------------------------------------
 
   function initialState() {
-    return { exists: [], focus: [], isNew: [], titles: {}, lines: {}, handler: null, arrows: [] };
+    return { exists: [], focus: [], isNew: [], titles: {}, lines: {}, handlers: [], arrows: [] };
   }
 
   function lineIndex(lines, key) {
@@ -109,8 +109,11 @@
       case "focus":
         s.focus = action.ids === "all" ? [...s.exists] : [...action.ids];
         break;
+      // A call lights its handler, and with `also` the handlers it calls in
+      // other programs; a call with no handler is a step no program takes,
+      // such as the market moving.
       case "call":
-        s.handler = action.handler;
+        s.handlers = [action.handler, ...(action.also || [])].filter(Boolean);
         s.arrows = [];
         s.isNew = [];
         s.focus = [...action.focus];
@@ -140,9 +143,20 @@
         s.focus = s.focus.filter((id) => id !== action.id);
         s.isNew = s.isNew.filter((id) => id !== action.id);
         break;
+      // Within a call, a lit handler can change, as when a deposit moves from
+      // buying one asset through the router to buying the next.
+      case "highlight":
+        s.handlers = [...action.handlers];
+        break;
+      // An `alone` transfer replaces the step's earlier arrows rather than
+      // adding to them, for a handler that makes many transfers in a row. A
+      // side without a `value` is an account with no balance to show, such as
+      // a program that trades on the far side.
       case "transfer":
+        if (action.alone) s.arrows = [];
         s.arrows.push(action.arrow);
         for (const change of [action.from, action.to]) {
+          if (change.value == null) continue;
           const lines = s.lines[change.id];
           lines[lineIndex(lines, change.key)].text = lineText(change.key, change.value);
         }
@@ -164,7 +178,7 @@
 
   function lineAttrs(acc, line, state) {
     if (acc.kind === "program") {
-      const active = line.text === state.handler;
+      const active = state.handlers.includes(line.text);
       return `font-size="8.5" font-family="${MONO}" ${active ? `font-weight="bold" fill="${THEME.accentInk}"` : `fill="${THEME.boxMuted}"`}`;
     }
     switch (line.style) {
@@ -232,10 +246,22 @@
     return out;
   }
 
-  // Places an arrow's coin on its stroke and its label beside the coin.
+  // Places an arrow's coin on its stroke and its label beside the coin. The
+  // coin sits at `coinAt`, a fraction of the stroke's length, or at the point
+  // of the stroke nearest `coinNear`, for a routed arrow whose straight runs
+  // are easier to name by place than by length.
   function placeArrow(g, arrow) {
     const path = g.querySelector(".stroke");
-    const pt = path.getPointAtLength(path.getTotalLength() * arrow.coinAt);
+    const length = path.getTotalLength();
+    let pt = path.getPointAtLength(length * (arrow.coinAt ?? 0.5));
+    if (arrow.coinNear) {
+      let best = Infinity;
+      for (let i = 0; i <= 400; i++) {
+        const q = path.getPointAtLength((length * i) / 400);
+        const d = (q.x - arrow.coinNear.x) ** 2 + (q.y - arrow.coinNear.y) ** 2;
+        if (d < best) { best = d; pt = q; }
+      }
+    }
     g.querySelector(".coin").setAttribute("transform", `translate(${pt.x},${pt.y})`);
     g.querySelector(".label").setAttribute("transform", `translate(${pt.x},${pt.y})`);
   }
@@ -452,6 +478,18 @@
       });
     }
 
+    // Lights the named handler lines in every program box, and dims the rest.
+    lightHandlers(handlers) {
+      for (const g of this.svg.querySelectorAll(".acc")) {
+        if (this.scene.accounts[g.dataset.id].kind !== "program") continue;
+        for (const t of g.querySelectorAll(".lines text")) {
+          const active = handlers.includes(t.textContent);
+          t.setAttribute("fill", active ? THEME.accentInk : THEME.boxMuted);
+          t.setAttribute("font-weight", active ? "bold" : "normal");
+        }
+      }
+    }
+
     accountGroup(id) {
       return this.svg.querySelector(`.acc[data-id="${id}"]`);
     }
@@ -516,15 +554,13 @@
           const old = [...this.svg.querySelectorAll(".arrows .arrow, .acc .new")];
           await this.tween(300, (p) => old.forEach((el) => el.setAttribute("opacity", 1 - p)));
           for (const el of this.svg.querySelectorAll(".arrows .arrow")) el.remove();
-          // Light the handler line in the program box.
-          for (const t of this.svg.querySelectorAll(`.acc[data-id="${this.scene.program}"] .lines text`)) {
-            const active = t.textContent === action.handler;
-            t.setAttribute("fill", active ? THEME.accentInk : THEME.boxMuted);
-            t.setAttribute("font-weight", active ? "bold" : "normal");
-          }
+          this.lightHandlers(next.handlers);
           await this.refocus(next);
           return this.wait(200);
         }
+        case "highlight":
+          this.lightHandlers(next.handlers);
+          return this.wait(200);
         case "create": {
           const holder = document.createElementNS(SVG_NS, "g");
           holder.innerHTML = accountMarkup(this.scene.accounts[action.id], next);
@@ -573,6 +609,11 @@
           return this.wait(200);
         }
         case "transfer": {
+          if (action.alone) {
+            const old = [...this.svg.querySelectorAll(".arrows .arrow")];
+            await this.tween(250, (p) => old.forEach((el) => el.setAttribute("opacity", 1 - p)));
+            old.forEach((el) => el.remove());
+          }
           const layer = this.svg.querySelector(".arrows");
           layer.insertAdjacentHTML("beforeend", arrowMarkup(action.arrow, { partial: true }));
           const g = layer.lastElementChild;
@@ -591,13 +632,13 @@
           const mover = document.createElementNS(SVG_NS, "g");
           mover.innerHTML = COIN;
           this.svg.querySelector(".movers").appendChild(mover);
-          const leaving = this.changeLine(action.from.id, action.from.key, action.from.value);
+          const leaving = action.from.value == null ? null : this.changeLine(action.from.id, action.from.key, action.from.value);
           await this.tween(1300, (p) => {
             const pt = path.getPointAtLength(length * p);
             mover.setAttribute("transform", `translate(${pt.x},${pt.y})`);
           });
           mover.remove();
-          await Promise.all([leaving, this.changeLine(action.to.id, action.to.key, action.to.value)]);
+          await Promise.all([leaving, action.to.value == null ? null : this.changeLine(action.to.id, action.to.key, action.to.value)]);
           await this.tween(300, (p) => marks.forEach((el) => el.setAttribute("opacity", p)));
           return this.wait(200);
         }
@@ -607,5 +648,20 @@
     }
   }
 
-  window.AccountAnimation = { Player, reduce, clusterCurve, THEME, ICONS };
+  // A path through waypoints, straight between them and turning each corner
+  // on a quarter curve of radius r, so the stroke stays smooth at every join.
+  function rounded(points, r = 8) {
+    let d = `M ${points[0][0]},${points[0][1]}`;
+    for (let i = 1; i < points.length - 1; i++) {
+      const [px, py] = points[i - 1], [x, y] = points[i], [nx, ny] = points[i + 1];
+      const into = Math.hypot(x - px, y - py), out = Math.hypot(nx - x, ny - y);
+      const k = Math.min(r, into / 2, out / 2);
+      d += ` L ${x - ((x - px) / into) * k},${y - ((y - py) / into) * k}`;
+      d += ` Q ${x},${y} ${x + ((nx - x) / out) * k},${y + ((ny - y) / out) * k}`;
+    }
+    const [lx, ly] = points[points.length - 1];
+    return `${d} L ${lx},${ly}`;
+  }
+
+  window.AccountAnimation = { Player, reduce, clusterCurve, rounded, THEME, ICONS };
 })();
