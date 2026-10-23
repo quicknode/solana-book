@@ -325,7 +325,7 @@
     out += `<text ${HALO} x="${scene.network.x}" y="${scene.network.y}" font-size="10" font-family="${MONO}" letter-spacing="1" fill="${THEME.seed}" text-anchor="end">${escape(scene.network.text.toUpperCase())}</text>`;
     out += `<foreignObject x="16" y="12" width="120" height="16"><div xmlns="http://www.w3.org/1999/xhtml" class="step-tag" style="font: 8px ${MONO};letter-spacing:1px;color:${THEME.seed}">${escape(stepTag(stepIndex))}</div></foreignObject>`;
     out += `<foreignObject x="140" y="6" width="${width - 280}" height="40"><div xmlns="http://www.w3.org/1999/xhtml" class="headline" style="text-align:center;font-size:19px;line-height:28px;color:${THEME.ink}">${headlineHtml(step.title)}</div></foreignObject>`;
-    out += `<foreignObject class="caption" x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:${c.fontSize}px;line-height:1.45;white-space:pre-line;color:${THEME.caption}">${captionHtml(step.caption)}</div></foreignObject>`;
+    out += `<foreignObject class="caption" x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:${c.fontSize}px;line-height:1.45;white-space:pre-line;color:${THEME.caption}">${escape(step.caption)}</div></foreignObject>`;
     out += `<g class="accounts">`;
     for (const id of scene.order) {
       if (state.exists.includes(id)) out += accountMarkup(scene.accounts[id], state);
@@ -341,21 +341,10 @@
   // A title marks its keyword in brackets, "Maria runs [collect_fees()]",
   // and the keyword is set on the slides' green highlight.
   function headlineHtml(title) {
-    return boldHandlers(
-      escape(title).replace(
-        /\[([^\]]+)\]/g,
-        `<mark style="background:${THEME.accent};color:${THEME.boxText};padding:0 3px">$1</mark>`,
-      ),
+    return escape(title).replace(
+      /\[([^\]]+)\]/g,
+      `<mark style="background:${THEME.accent};color:${THEME.boxText};padding:0 3px">$1</mark>`,
     );
-  }
-
-  // A handler name, "deposit()", is bold wherever it appears in words.
-  function boldHandlers(html) {
-    return html.replace(/\b[a-z][a-z0-9_]*\(\)/g, "<b>$&</b>");
-  }
-
-  function captionHtml(text) {
-    return boldHandlers(escape(text));
   }
 
   function stepTag(i) {
@@ -531,7 +520,7 @@
       });
       headline.innerHTML = headlineHtml(step.title);
       tag.textContent = stepTag(i);
-      caption.innerHTML = captionHtml(step.caption);
+      caption.textContent = step.caption;
       await this.tween(300, (p) => {
         headline.style.opacity = p;
         caption.style.opacity = p;

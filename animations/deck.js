@@ -11,12 +11,10 @@
   const escape = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   // [word] becomes the green highlight; {word} the purple one.
-  // A handler name, "deposit()", is bold wherever it appears.
   function marked(text) {
     return escape(text)
       .replace(/\[([^\]]+)\]/g, "<mark>$1</mark>")
-      .replace(/\{([^}]+)\}/g, '<mark class="purple">$1</mark>')
-      .replace(/\b[a-z][a-z0-9_]*\(\)/g, "<b>$&</b>");
+      .replace(/\{([^}]+)\}/g, '<mark class="purple">$1</mark>');
   }
 
   // A card's icon: one of the book's account glyphs by kind ("wallet",

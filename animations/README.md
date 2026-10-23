@@ -110,8 +110,9 @@ A person appears in the step where they first do something, with the accounts th
 USDC when he buys, Maria when she opens the venue and her USDC only when she collects the fees. A scene
 opens on one person and builds outward, so an audience new to Solana meets one account at a time.
 
-A handler name, `deposit()`, is set in bold wherever it appears: titles, captions, slides and arrow labels.
-The running handler's line in a program box sits on the green band in a face with a real bold weight.
+The running handler's line in a program box is bold, on the green band, in a face with a real bold weight:
+Andale Mono has none, and a browser's made-up bold is too faint to pick out. Handler names elsewhere are
+set like the words around them.
 
 A step can also carry a `key`, and a later step can start `from` that key instead of from the step before
 it. That is how another possible ending branches off the story (the call expiring unused starts from the purchase,
