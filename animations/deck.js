@@ -11,10 +11,12 @@
   const escape = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   // [word] becomes the green highlight; {word} the purple one.
+  // A handler name, "deposit()", is bold wherever it appears.
   function marked(text) {
     return escape(text)
       .replace(/\[([^\]]+)\]/g, "<mark>$1</mark>")
-      .replace(/\{([^}]+)\}/g, '<mark class="purple">$1</mark>');
+      .replace(/\{([^}]+)\}/g, '<mark class="purple">$1</mark>')
+      .replace(/\b[a-z][a-z0-9_]*\(\)/g, "<b>$&</b>");
   }
 
   // A card's icon: one of the book's account glyphs by kind ("wallet",
@@ -186,20 +188,26 @@
       const total = s.parts.reduce((sum, p) => sum + p.value, 0);
       const fromTotal = s.parts.reduce((sum, p) => sum + (p.from ?? p.value), 0);
       const pct = (v, t = total) => ((v / t) * 100).toFixed(s.decimals ?? 0);
+      // A part moving to or from nothing may be as thin as nothing, and its
+      // words leave or arrive with it.
+      const moving = (p) => (p.from != null ? ` moving${p.value === 0 ? " to-zero" : ""}${p.from === 0 ? " from-zero" : ""}` : "");
+      const motion = (p) =>
+        p.from != null
+          ? ` data-grow="${p.value}" data-pct-from="${pct(p.from, fromTotal)}" data-pct-to="${pct(p.value)}" data-decimals="${s.decimals ?? 0}"`
+          : "";
       return `
       <div class="slide ${s.tone || "dark"}">${bar(deck.series)}
         <div class="body">${heading(s)}
-          <div class="alloc">${s.parts
+          <div class="alloc" data-delay="${s.delay ?? 700}">${s.parts
             .map((p) =>
               // A part too thin to hold its words is drawn at its true width,
               // with its label outside the bar and an arrow to it.
               p.callout
-                ? `<div class="seg thin" style="flex-grow:${p.value}"><div class="pct">&nbsp;</div>
+                ? `<div class="seg thin${moving(p)}" style="flex-grow:${p.from ?? p.value}"${motion(p)}><div class="pct">&nbsp;</div>
                     <div class="seg-box ${p.tone}"></div>
                     <div class="callout"><span class="callout-name">${marked(p.name)}</span> · ${marked(p.text)} · ${pct(p.value)}%</div></div>`
                 : p.from != null
-                  ? `<div class="seg" style="flex-grow:${p.from}" data-grow="${p.value}"
-                      data-pct-from="${pct(p.from, fromTotal)}" data-pct-to="${pct(p.value)}" data-decimals="${s.decimals ?? 0}">
+                  ? `<div class="seg${moving(p)}" style="flex-grow:${p.from}"${motion(p)}>
                 <div class="pct">${pct(p.from, fromTotal)}%</div>
                 <div class="seg-box ${p.tone}">${p.icon ? icon(p.icon, deck) : ""}
                   <div class="name">${marked(p.name)}</div><div class="text" data-to="${escape(marked(p.text))}">${marked(p.fromText || p.text)}</div></div></div>`
@@ -248,26 +256,16 @@
     // token transfer between two accounts off either edge, coins streaming
     // along its arrow.
     follow: (s, deck) => {
-      const [x0, y0, cx, x1, y1] = [-40, 560, 1050, 1640, 860];
-      const d = `M ${x0},${y0} Q ${cx},${y0} ${x1},${y1}`;
-      const at = (t) => [(1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, (1 - t) ** 2 * y0 + 2 * (1 - t) * t * y0 + t * t * y1];
-      const dots = [0.18, 0.34, 0.5, 0.64, 0.78, 0.9]
-        .map((t, i) => {
-          const [x, y] = at(t);
-          return `<circle class="dot" style="animation-delay:${1.1 + i * 0.18}s" cx="${x}" cy="${y}" r="9"/>`;
-        })
-        .join("");
       const coin = [[10, 3], [0, 0], [-10, 3]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9"/>`).join("");
-      // Clear of the handle above and the curve below, all the way across.
-      const arrow = "M -80,430 L 1680,430";
+      // A transfer between two accounts off either edge, beneath the handle.
+      const arrow = "M -80,620 L 1680,620";
       const coins = [0, 1, 2, 3]
         // Each coin is hidden until its first run starts, then runs edge to edge.
-        .map((k) => `<g class="coin" visibility="hidden">${coin}<set attributeName="visibility" to="visible" begin="${2 + k * 1.5}s"/><animateMotion dur="6s" begin="${2 + k * 1.5}s" repeatCount="indefinite" path="${arrow}"/></g>`)
+        .map((k) => `<g class="coin" visibility="hidden">${coin}<set attributeName="visibility" to="visible" begin="${1.4 + k * 1.5}s"/><animateMotion dur="6s" begin="${1.4 + k * 1.5}s" repeatCount="indefinite" path="${arrow}"/></g>`)
         .join("");
       return `
       <div class="slide dark follow-slide">${bar(deck.series)}
-        <svg class="follow-curve" viewBox="0 0 1600 840" aria-hidden="true">
-          <path class="curve" d="${d}"/>${dots}
+        <svg class="follow-transfer" viewBox="0 0 1600 840" aria-hidden="true">
           <path class="transfer" d="${arrow}"/>${coins}
         </svg>
         <div class="body">
@@ -360,24 +358,29 @@
     moveAllocation() {
       const segs = [...this.html.querySelectorAll(".seg[data-grow]")];
       if (segs.length === 0) return;
+      const delay = Number(this.html.querySelector(".alloc").dataset.delay);
       setTimeout(() => {
-        for (const seg of segs) seg.style.flexGrow = seg.dataset.grow;
+        for (const seg of segs) {
+          seg.style.flexGrow = seg.dataset.grow;
+          seg.classList.add("moved");
+        }
         const start = performance.now();
         const frame = (now) => {
           const p = Math.min(1, (now - start) / 1600);
           const e = p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2;
           for (const seg of segs) {
+            if (seg.classList.contains("thin")) continue;
             const a = Number(seg.dataset.pctFrom), b = Number(seg.dataset.pctTo);
             seg.querySelector(".pct").textContent = `${(a + (b - a) * e).toFixed(Number(seg.dataset.decimals))}%`;
           }
           if (p < 1) return requestAnimationFrame(frame);
           for (const seg of segs) {
             const text = seg.querySelector(".text");
-            text.innerHTML = text.dataset.to;
+            if (text) text.innerHTML = text.dataset.to;
           }
         };
         requestAnimationFrame(frame);
-      }, 700);
+      }, delay);
     }
 
     async goto(i) {

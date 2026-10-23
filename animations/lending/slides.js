@@ -111,7 +111,7 @@
         cards: [
           { tone: "white", icon: "tpl:savings", name: "Alice", text: "Earned $6.75 on savings that would otherwise have sat idle" },
           { tone: "lavender", icon: "tpl:lending-cash", name: "Bob", text: "Borrowed $750 for weeks for $7.50 of interest, and kept his NVIDIA shares" },
-          { tone: "mint", icon: "tpl:lending-liquidation", name: "Dave", text: "In the future where NVIDIA fell: paid 375 USDC for $393.75 of NVDAx shares" },
+          { tone: "mint", icon: "tpl:lending-liquidation", name: "Dave", text: "If NVIDIA had fallen: paid 375 USDC for $393.75 of NVDAx shares" },
           { tone: "white", icon: "tpl:venue", name: "Maria the market owner", text: "Earned 10% of the interest: 75 cents" },
         ],
       },

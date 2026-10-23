@@ -55,7 +55,7 @@
         heading: "Two ways to [bet] on it",
         sub: "Both let Alice and Carol put money on their view",
         cards: [
-          { icon: "tpl:betting-bookmaker", name: "With a bookmaker", text: "A house sets the odds, the payout for each dollar staked, and takes the other side of every bet, carrying the risk itself" },
+          { icon: "tpl:betting-house", name: "With a bookmaker", text: "A house sets the odds, the payout for each dollar staked, and takes the other side of every bet, carrying the risk itself" },
           { icon: "tpl:betting-pool", name: "Without one: a parimutuel pool", text: "Every stake goes into one pool. When the result is known, the winners share the losers' stakes" },
           { icon: "tpl:betting-fee", name: "The house takes a fee", text: "instead of a side: here 2%, and only out of the losing stakes" },
         ],
@@ -94,12 +94,15 @@
       {
         type: "allocation",
         decimals: 1,
-        heading: "Where the 600 USDC [go]",
-        sub: "Glowbugs 3 won. Carol's 200 pays the winners, less Maria's 4 USDC fee",
+        // Hold the stakes long enough to read before the losing side pays out.
+        delay: 2200,
+        heading: "Glowbugs 3 wins: the losing stake pays the [winners]",
+        sub: "From each bettor's stake to each bettor's payout. Carol's 200 goes to Alice and Bob in proportion to their stakes, less Maria's 4 USDC fee",
         parts: [
-          { tone: "mint", name: "Alice", text: "447 USDC: her 300, plus 147", value: 447 },
-          { tone: "lavender", name: "Bob", text: "149 USDC: his 100, plus 49", value: 149 },
-          { tone: "white", name: "Maria", text: "4 USDC fee", value: 4, callout: true },
+          { tone: "mint", name: "Alice", fromText: "staked 300 USDC", text: "447 USDC: her 300, plus 147", from: 300, value: 447 },
+          { tone: "lavender", name: "Bob", fromText: "staked 100 USDC", text: "149 USDC: his 100, plus 49", from: 100, value: 149 },
+          { tone: "white", name: "Carol", fromText: "staked 200 USDC", text: "lost her stake", from: 200, value: 0 },
+          { tone: "white", name: "Maria", text: "4 USDC fee", from: 0, value: 4, callout: true },
         ],
       },
       // The claims, and closing the market.

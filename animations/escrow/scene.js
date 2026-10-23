@@ -209,7 +209,7 @@
     {
       title: "If nobody takes it, Alice runs [cancel_offer()]",
       caption:
-        "Another future. An open offer always has a way out: only the maker may cancel, since the offer's address " +
+        "It's possible that nobody takes the offer. Then Alice can cancel it, and only she can: the offer's address " +
         "is worked out again from the signer's address, and a different signer finds no offer there.",
       actions: [
         { type: "call", handler: "cancel_offer()", focus: ["alice", "aliceUsdc", "program", "offer", "vault"] },

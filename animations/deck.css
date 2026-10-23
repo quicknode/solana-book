@@ -4,6 +4,7 @@
    hundredths of the stage's width, so a slide scales as one picture. */
 
 @font-face { font-family: "DejaVu Sans Mono"; src: url("../assets/fonts/DejaVuSansMono.ttf"); }
+@font-face { font-family: "DejaVu Sans Mono"; src: url("../assets/fonts/DejaVuSansMono-Bold.ttf"); font-weight: bold; }
 
 :root {
   --black: #040406;
@@ -241,6 +242,14 @@ mark.purple { background: var(--purple); color: #fff; }
 .seg-box.lavender { background: var(--lavender); color: var(--ink); }
 .seg-box.white { background: var(--white); color: var(--ink); }
 .seg.thin { min-width: 0.5cqw; position: relative; }
+/* A part moving to or from nothing: no minimum width, and its words fade
+   out as it shrinks to nothing, or in once it has grown. */
+.seg.moving { min-width: 0; overflow: hidden; white-space: nowrap; }
+.seg.thin.moving { overflow: visible; }
+.seg.to-zero.moved > * { opacity: 0; transition: opacity 0.8s; }
+.seg.to-zero.moved { margin-right: -0.5cqw; transition: flex-grow 1.6s ease-in-out, margin 1.6s ease-in-out; }
+.seg.from-zero .callout { opacity: 0; transition: opacity 0.6s 1.4s; }
+.seg.from-zero.moved .callout { opacity: 1; }
 .seg.thin .seg-box { padding: 0; }
 .callout {
   position: absolute; top: calc(100% + 3.4cqw); right: 0; white-space: nowrap;
@@ -290,30 +299,22 @@ mark.purple { background: var(--purple); color: #fff; }
   background-size: 2.4cqw 2.4cqw;
   overflow: hidden;
 }
-.follow-slide .body { position: relative; }
+/* The handle sits in the upper half, the transfer runs beneath it across the
+   whole slide, and the thanks sits under the transfer at the right. */
+.follow-slide .body { position: relative; padding-top: 6.5cqw; }
 .follow-slide .lead { font-size: 3.2cqw; margin: 2cqw 0 2.6cqw; color: #f0f0f0; }
 .follow-slide .handle-big { font-size: 7.6cqw; letter-spacing: -0.12cqw; line-height: 1.1; }
 .follow-slide .handle-big mark { padding: 0 1cqw; }
-/* Top right: the open sky above the curve. */
 .follow-slide .thanks {
-  position: absolute; right: 6cqw; top: 8cqw; font-size: 4cqw; color: #f0f0f0;
+  position: absolute; right: 6cqw; bottom: 4.5cqw; font-size: 4cqw; color: #f0f0f0;
   border-bottom: 0.35cqw solid var(--green);
 }
 
-/* The curve draws itself in, its accounts pop up along it, and a coin rides it. */
-.follow-curve { position: absolute; left: 0; top: 3.3cqw; width: 100%; height: calc(100% - 3.3cqw); }
-.follow-curve .curve {
-  fill: none; stroke: #4f8a3c; stroke-width: 5;
-  stroke-dasharray: 2000; stroke-dashoffset: 2000;
-  animation: follow-draw 1.6s 0.3s ease-out forwards;
-}
-.follow-curve .dot { fill: #f4f4f4; opacity: 0; transform-box: fill-box; transform-origin: center; animation: follow-pop 0.4s ease-out forwards; }
-.follow-curve .transfer {
+.follow-transfer { position: absolute; left: 0; top: 3.3cqw; width: 100%; height: calc(100% - 3.3cqw); }
+.follow-transfer .transfer {
   fill: none; stroke: var(--green); stroke-width: 4;
   stroke-dasharray: 1800; stroke-dashoffset: 1800;
-  animation: follow-draw-transfer 1.2s 1.2s ease-out forwards;
+  animation: follow-draw-transfer 1.2s 0.3s ease-out forwards;
 }
-.follow-curve .coin circle { fill: var(--black); stroke: var(--green); stroke-width: 3; }
+.follow-transfer .coin circle { fill: var(--black); stroke: var(--green); stroke-width: 3; }
 @keyframes follow-draw-transfer { to { stroke-dashoffset: 0; } }
-@keyframes follow-draw { to { stroke-dashoffset: 0; } }
-@keyframes follow-pop { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: scale(1); } }

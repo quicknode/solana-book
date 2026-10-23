@@ -426,7 +426,7 @@
       from: "callBought",
       title: "Had NVDAx stayed at $165, Alice runs [reclaim_collateral()]",
       caption:
-        "Another future. At $165 the option is out of the money: Bob would not pay 900 for shares the market sells " +
+        "It's possible NVDAx stays at $165. Then the option is out of the money: Bob would not pay 900 for shares the market sells " +
         "for 825, so he lets it expire. Then Alice calls reclaim_collateral(), and underlying_owed falls by 5 NVDAx.",
       actions: [
         { type: "call", handler: "reclaim_collateral()", focus: ["alice", "aliceNvdax", "program", "option", "market", "underlyingVault"] },
@@ -604,7 +604,7 @@
       from: "putBought",
       title: "Had NVDAx fallen below $150, Dave runs [exercise_option()]",
       caption:
-        "Another future. Below $150, Dave exercises. The option becomes Exercised, quote_owed falls by the 750 USDC " +
+        "It's possible NVDAx falls below $150. Then Dave exercises. The option becomes Exercised, quote_owed falls by the 750 USDC " +
         "strike, and underlying_owed rises by the 5 NVDAx now owed to Carol.",
       actions: [
         { type: "call", handler: "exercise_option()", focus: ["dave", "daveUsdc", "daveNvdax", "program", "putOption", "market", "underlyingVault", "quoteVault"] },

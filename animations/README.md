@@ -24,7 +24,7 @@ There is a talk for every program in Part II, each a directory named for its cha
 | `options/` | 19 Options | `finance/options` |
 | `perpetual-futures/` | 20 Perpetual Futures | `finance/perpetual-futures` |
 
-Open a talk's `index.html` in a browser. No build step and no server: it runs straight from disk. A talk's
+`index.html` here links to every talk. Open a talk's own `index.html` in a browser. No build step and no server: it runs straight from disk. A talk's
 own icons in `assets/icons` carry its directory's prefix (`escrow-`, `perps-`, ...); unprefixed icons are
 shared, and mean the same idea in every talk.
 
@@ -62,7 +62,7 @@ of cards builds them one at a time.
   | `numbered` | cards tagged `// 01`, `// 02` |
   | `cards` | tall cards in the slides' three tones |
   | `chart` | a payoff chart, one line per side |
-  | `allocation` | a bar split by value: a fund's weights, or who owns its shares |
+  | `allocation` | a bar split by value: a fund's weights, or who owns its shares; with `from`, the parts move from earlier values to their own, to or from nothing (a losing stake paying the winners), after `delay` ms |
   | `qr`, `follow` | the closing slides |
 
   Any slide with cards, or a chart's lines, builds one per key press unless it sets `build: false`.
@@ -110,10 +110,14 @@ A person appears in the step where they first do something, with the accounts th
 USDC when he buys, Maria when she opens the venue and her USDC only when she collects the fees. A scene
 opens on one person and builds outward, so an audience new to Solana meets one account at a time.
 
+A handler name, `deposit()`, is set in bold wherever it appears: titles, captions, slides and arrow labels.
+The running handler's line in a program box sits on the green band in a face with a real bold weight.
+
 A step can also carry a `key`, and a later step can start `from` that key instead of from the step before
-it. That is how another future branches off the story (the call expiring unused starts from the purchase,
-not from the exercise before it) and how the story resumes afterwards. The jump between futures fades out
-and back in, so it never reads as the program doing something.
+it. That is how another possible ending branches off the story (the call expiring unused starts from the purchase,
+not from the exercise before it) and how the story resumes afterwards. The jump between endings fades out
+and back in, so it never reads as the program doing something. Open such a step plainly: "It's possible
+that nobody takes the offer", not "Another future".
 
 Every step's end state is computed by replaying the actions without motion. Going back, jumping, or
 cutting an animation short therefore lands on exactly the picture the forward animation ends on.

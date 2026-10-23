@@ -366,7 +366,7 @@
     {
       title: "Had the films been pulled, Maria runs [cancel_event()]",
       caption:
-        "Another future. If the studio pulled both films there would be no result to report, so Maria cancels " +
+        "It's possible the studio pulls both films. Then there's no result to report, so Maria cancels " +
         "the event instead, and the market owes every bettor their exact stake back.",
       actions: [
         { type: "call", handler: "cancel_event()", focus: ["maria", "program", "event"] },

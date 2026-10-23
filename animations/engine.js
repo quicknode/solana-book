@@ -35,9 +35,15 @@
       mint: "#f4f9e3",
     },
   };
+  const ACTIVE_HANDLER_STYLE = (t) => `font-family="${t}" font-weight="bold" fill="#161616" stroke="#161616" stroke-width="0.35"`;
   // On the dark paper a faded card reads as the slides' dark grey slab.
   const FADE = 0.22;
   const MONO = "'Andale Mono', 'DejaVu Sans Mono', Menlo, monospace";
+  // The running handler: Andale Mono has no bold, and a browser's made-up
+  // bold is faint, so this line is set in a face with a real bold weight and
+  // thickened by a hairline of its own colour.
+  const ACTIVE_FONT = "'DejaVu Sans Mono', Menlo, monospace";
+  const ACTIVE_HANDLER = ACTIVE_HANDLER_STYLE(ACTIVE_FONT);
   const SVG_NS = "http://www.w3.org/2000/svg";
 
   // The five account glyphs, verbatim from the book's figures with the ink
@@ -199,7 +205,7 @@
   function lineAttrs(acc, line, state) {
     if (acc.kind === "program") {
       const active = state.handlers.includes(line.text);
-      return `font-size="8.5" font-family="${MONO}" ${active ? `font-weight="bold" fill="${THEME.boxText}"` : `fill="${THEME.boxMuted}"`}`;
+      return `font-size="8.5" ${active ? ACTIVE_HANDLER : `font-family="${MONO}" fill="${THEME.boxMuted}"`}`;
     }
     switch (line.style) {
       case "sol": return `font-size="9.5" fill="${THEME.boxMuted}"`;
@@ -319,7 +325,7 @@
     out += `<text ${HALO} x="${scene.network.x}" y="${scene.network.y}" font-size="10" font-family="${MONO}" letter-spacing="1" fill="${THEME.seed}" text-anchor="end">${escape(scene.network.text.toUpperCase())}</text>`;
     out += `<foreignObject x="16" y="12" width="120" height="16"><div xmlns="http://www.w3.org/1999/xhtml" class="step-tag" style="font: 8px ${MONO};letter-spacing:1px;color:${THEME.seed}">${escape(stepTag(stepIndex))}</div></foreignObject>`;
     out += `<foreignObject x="140" y="6" width="${width - 280}" height="40"><div xmlns="http://www.w3.org/1999/xhtml" class="headline" style="text-align:center;font-size:19px;line-height:28px;color:${THEME.ink}">${headlineHtml(step.title)}</div></foreignObject>`;
-    out += `<foreignObject class="caption" x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:${c.fontSize}px;line-height:1.45;white-space:pre-line;color:${THEME.caption}">${escape(step.caption)}</div></foreignObject>`;
+    out += `<foreignObject class="caption" x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:${c.fontSize}px;line-height:1.45;white-space:pre-line;color:${THEME.caption}">${captionHtml(step.caption)}</div></foreignObject>`;
     out += `<g class="accounts">`;
     for (const id of scene.order) {
       if (state.exists.includes(id)) out += accountMarkup(scene.accounts[id], state);
@@ -335,10 +341,21 @@
   // A title marks its keyword in brackets, "Maria runs [collect_fees()]",
   // and the keyword is set on the slides' green highlight.
   function headlineHtml(title) {
-    return escape(title).replace(
-      /\[([^\]]+)\]/g,
-      `<mark style="background:${THEME.accent};color:${THEME.boxText};padding:0 3px">$1</mark>`,
+    return boldHandlers(
+      escape(title).replace(
+        /\[([^\]]+)\]/g,
+        `<mark style="background:${THEME.accent};color:${THEME.boxText};padding:0 3px">$1</mark>`,
+      ),
     );
+  }
+
+  // A handler name, "deposit()", is bold wherever it appears in words.
+  function boldHandlers(html) {
+    return html.replace(/\b[a-z][a-z0-9_]*\(\)/g, "<b>$&</b>");
+  }
+
+  function captionHtml(text) {
+    return boldHandlers(escape(text));
   }
 
   function stepTag(i) {
@@ -514,7 +531,7 @@
       });
       headline.innerHTML = headlineHtml(step.title);
       tag.textContent = stepTag(i);
-      caption.textContent = step.caption;
+      caption.innerHTML = captionHtml(step.caption);
       await this.tween(300, (p) => {
         headline.style.opacity = p;
         caption.style.opacity = p;
@@ -537,6 +554,9 @@
           const active = handlers.includes(t.textContent);
           t.setAttribute("fill", active ? THEME.boxText : THEME.boxMuted);
           t.setAttribute("font-weight", active ? "bold" : "normal");
+          t.setAttribute("font-family", active ? ACTIVE_FONT : MONO);
+          t.setAttribute("stroke", active ? THEME.boxText : "none");
+          t.setAttribute("stroke-width", active ? "0.35" : "0");
           const band = g.querySelector(`.running[data-for="${t.dataset.line}"]`);
           const from = Number(band.getAttribute("opacity"));
           const to = active ? 1 : 0;

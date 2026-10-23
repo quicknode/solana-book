@@ -417,7 +417,7 @@
     {
       title: "Had NVIDIA fallen to [$180]",
       caption:
-        "Another future. NVIDIA falls to $180 and Maria's price feed says so. Bob's collateral is now worth $900, " +
+        "It's possible that NVIDIA falls. Say it drops to $180, and Maria's price feed says so. Bob's collateral is now worth $900, " +
         "80% of that is $720, and he owes $750.",
       actions: [
         { type: "call", handler: "set_price()", focus: ["maria", "program", "nvdaxFeed", "obligation", "collateralVault"] },
