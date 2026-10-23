@@ -181,8 +181,8 @@
     {
       title: "Alice wants to back [Glowbugs 3]",
       caption:
-        "Alice thinks Glowbugs 3 will be this month's top-grossing film, and wants to stake $300 on it against " +
-        "anyone who thinks otherwise.",
+        "Alice is confident about school holidays: she thinks Glowbugs 3 will be this month's top-grossing film, " +
+        "and wants to stake $300 on it.",
       actions: [{ type: "focus", ids: ["alice", "aliceUsdc"] }],
     },
     {
@@ -210,7 +210,6 @@
             field("token_mint: USDC"),
             field("fee_recipient: Maria"),
             field("default_fee_bps: 200"),
-            field("event_count: 0"),
           ],
         },
       ],
@@ -229,14 +228,12 @@
             field("betting_closes_at: month's end"),
             field("fee_bps: 200"),
             field("total_pool: 0 USDC"),
+            // A count, so zero until the first bet. The settlement fields are left out
+            // until settle_event() writes them, as in the chapter's figures.
             field("open_bets: 0"),
-            field("winning_outcome_index: 0"),
-            field("winning_pool: 0 USDC"),
-            field("distributable_losing_pool: 0 USDC"),
           ],
         },
         { type: "create", id: "vault", lines: [balance("0 USDC"), note("authority: the event")] },
-        { type: "set", changes: [{ id: "config", key: "event_count", value: "1" }] },
       ],
     },
     {
@@ -406,6 +403,7 @@
         "The losing pool is 600 − 400 = 200 USDC, and the fee is 2% of the losing pool only: 4 USDC. So a winner " +
         "never gets back less than their stake. The fee leaves the vault first.",
       actions: [
+        // 1,000: the chapter's figure shows 1,004 once the 4 USDC fee lands.
         { type: "show", ids: ["mariaUsdc"], lines: { mariaUsdc: [balance("1,000 USDC")] }, focus: "shown" },
         transfer("vault", "596 USDC", "mariaUsdc", "1,004 USDC", {
           id: "fee",
@@ -421,6 +419,23 @@
         "Then the event becomes Settled, and records the winner, the 400 USDC winning pool, and the 196 USDC left " +
         "of the losing pool for the winners to share.",
       actions: [
+        // The settlement fields join the event box, then light up as written.
+        {
+          type: "show",
+          ids: ["event"],
+          lines: {
+            event: [
+              field("status: Open"),
+              field("betting_closes_at: month's end"),
+              field("fee_bps: 200"),
+              field("total_pool: 600 USDC"),
+              field("open_bets: 3"),
+              field("winning_outcome_index: 0 (Glowbugs 3)"),
+              field("winning_pool: 400 USDC"),
+              field("distributable_losing_pool: 196 USDC"),
+            ],
+          },
+        },
         {
           type: "set",
           changes: [

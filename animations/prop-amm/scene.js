@@ -75,7 +75,8 @@
     nvdaxMint: onCurve("mint", "NVDAx mint", ...COLUMN.nvdaxMint),
     usdcMint: onCurve("mint", "USDC mint", ...COLUMN.usdcMint),
     // Created from a key pair by the oracle's deployer, so its dot is on the curve.
-    priceFeed: onCurve("struct", "price feed", ...COLUMN.priceFeed),
+    // Named as the chapter's figures name it.
+    priceFeed: onCurve("struct", "NVDAx feed", ...COLUMN.priceFeed),
     program,
     market,
     baseVault,
@@ -215,7 +216,7 @@
           type: "create", id: "market",
           lines: [
             field("operator: Maria"),
-            field("oracle_feed: the price feed"),
+            field("oracle_feed: the NVDAx feed"),
             field("spread_bps: 10"),
             field("max_confidence_bps: 100"),
             field("paused: false"),
@@ -234,6 +235,7 @@
         {
           type: "show",
           ids: ["mariaUsdc", "mariaNvdax"],
+          // The chapter: her own 1,000 USDC plus the firm's 200,000 USDC, and 1,000 NVDAx.
           lines: { mariaUsdc: [balance("201,000 USDC")], mariaNvdax: [balance("1,000 NVDAx")] },
           focus: "shown",
         },
@@ -331,12 +333,13 @@
       ],
     },
 
-    // ---- Another future: the price moves
+    // ---- The chapter's hypothetical: the oracle reprices
     {
-      title: "Had NVIDIA's price moved to [$170]",
+      title: "If NVIDIA reprices to [$170]",
       caption:
-        "The next swap would fill at a $170.17 ask, with nobody trading the market there. But a quote can be " +
-        "seconds old, and a trader who knows the price moved fills it first: adverse selection, a loss Maria bears.",
+        "It's possible NVIDIA reports earnings and the price feed reprices to $170. The very next swap fills at a " +
+        "$170.17 ask. But a quote can be seconds old, and a trader who knows the price moved fills it first: " +
+        "adverse selection, a loss Maria bears.",
       actions: [
         { type: "call", handler: null, focus: ["priceFeed", "market"] },
         { type: "set", changes: [{ id: "priceFeed", key: "price", value: "$170.00" }] },
@@ -346,25 +349,32 @@
     // ---- Maria manages the risk
     {
       from: "bobSold",
+      key: "widened",
       title: "Maria runs [set_quote()] to widen the spread",
       caption:
-        "Back at $165, prices start moving fast, so Maria widens the spread to 50 basis points. The next buyer " +
+        "Back at $165. When volatility rises, Maria widens the spread to 50 basis points. The next buyer " +
         "would pay $165.825 per NVDAx, paying her more for the risk of a stale quote.",
       actions: [
         { type: "call", handler: "set_quote()", focus: ["maria", "program", "market"] },
         { type: "set", changes: [{ id: "market", key: "spread_bps", value: "50" }] },
       ],
     },
+    // The chapter pauses only when Maria's view diverges from the price feed; its
+    // withdrawal figure shows the market unpaused, so the pause is a branch.
     {
-      title: "Maria [pauses] the market",
+      title: "If she distrusts the price, Maria [pauses]",
       caption:
-        "When she doesn't trust the price feed at all, set_quote() sets paused, and every swap is refused with " +
-        "MarketPaused until she unpauses it.",
-      actions: [{ type: "set", changes: [{ id: "market", key: "paused", value: "true" }] }],
+        "It's possible Maria's view of the market diverges from the price feed entirely. Then set_quote() sets " +
+        "paused, and every swap is refused with MarketPaused until she calls it again with paused false.",
+      actions: [
+        { type: "call", handler: "set_quote()", focus: ["maria", "program", "market"] },
+        { type: "set", changes: [{ id: "market", key: "paused", value: "true" }] },
+      ],
     },
 
-    // ---- Maria takes her capital back
+    // ---- Maria takes her capital back, from the widened, unpaused market
     {
+      from: "widened",
       title: "Maria runs [withdraw_inventory()]",
       caption:
         "Her capital comes back whenever she wants it, with nobody's permission and no shares to work out. " +

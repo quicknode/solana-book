@@ -331,25 +331,26 @@
       title: "Maria runs [check_contributions()]",
       caption:
         "The claim compares the target with current_amount, the program's own count, never the vault's balance, " +
-        "which anyone can raise by sending tokens in. It sets claimed, and creates Maria's USDC account if she has none.",
+        "which anyone can raise by sending tokens in. It sets claimed. Maria's USDC account holds the standard 1,000 USDC.",
       actions: [
-        { type: "call", handler: "check_contributions()", focus: ["maria", "program", "fundraiser", "vault"] },
+        { type: "show", ids: ["mariaUsdc"], lines: { mariaUsdc: [balance("1,000 USDC")] }, focus: "shown" },
+        { type: "call", handler: "check_contributions()", focus: ["maria", "mariaUsdc", "program", "fundraiser", "vault"] },
         { type: "set", changes: [{ id: "fundraiser", key: "claimed", value: "true" }] },
-        { type: "create", id: "mariaUsdc", lines: [balance("0 USDC")] },
       ],
     },
     {
       title: "Maria receives the [9,000 USDC]",
       caption: "The whole vault goes to Maria, signed by the fundraiser. A second claim, or a late contribution, now fails.",
-      actions: [payout("maria", "0 USDC", "9,000 USDC", ["check_contributions()", "9,000 USDC"])],
+      // Maria's 1,000 USDC plus the 9,000 claimed: the figure's 10,000.
+      actions: [payout("maria", "0 USDC", "10,000 USDC", ["check_contributions()", "9,000 USDC"])],
     },
     {
-      title: "Anyone runs [close_contribution()]",
+      title: "Maria runs [close_contribution()]",
       caption:
-        "Each receipt closes and its rent goes back to its backer, whoever sends it. The fundraiser stays open until " +
-        "open_contributions reaches zero, so a new raise at the same address can never read an old receipt.",
+        "Maria sends one for each of the eleven receipts, and each one's rent goes back to its backer. The fundraiser " +
+        "stays open until open_contributions reaches zero, so a new raise at the same address can never read an old receipt.",
       actions: [
-        { type: "call", handler: "close_contribution()", focus: ["alice", "bob", "carol", "program", "fundraiser", "aliceReceipt", "bobReceipt", "carolReceipt"] },
+        { type: "call", handler: "close_contribution()", focus: ["maria", "alice", "bob", "carol", "program", "fundraiser", "aliceReceipt", "bobReceipt", "carolReceipt"] },
         { type: "set", changes: [{ id: "fundraiser", key: "open_contributions", value: "0" }] },
         { type: "close", id: "aliceReceipt" },
         { type: "close", id: "bobReceipt" },
@@ -426,9 +427,11 @@
     {
       title: "Everyone is [refunded]",
       caption:
-        "Bob and Carol send their own refunds. Dave doesn't come back, so Maria sends his: a refund needs nobody's " +
-        "signature, because the tokens can only go to the backer.",
+        "Bob and Carol are refunded the same way. Dave hasn't come back for his 800 USDC, so Maria sends his refund " +
+        "herself: a refund needs nobody's signature, because the tokens can only go to the backer.",
       actions: [
+        // Maria sends Dave's refund, so she is in this step too.
+        { type: "focus", ids: ["maria", "alice", "aliceUsdc", "bob", "bobUsdc", "bobReceipt", "carol", "carolUsdc", "carolReceipt", "dave", "daveUsdc", "daveReceipt", "program", "fundraiser", "vault"] },
         {
           type: "set",
           changes: [

@@ -85,10 +85,10 @@
       {
         type: "allocation",
         heading: "Who owns the [pool]",
-        sub: "Each LP token is a claim on a slice: Maria's 600, counting the unminted floor, and Alice's 150",
+        sub: "Each LP token is a claim on a slice of the pool. The 0.0001 LP floor is never minted to anyone",
         parts: [
-          { tone: "mint", name: "Maria", text: "600 LP", value: 600 },
-          { tone: "lavender", name: "Alice", text: "150 LP", value: 150 },
+          { tone: "mint", name: "Maria", text: "599.9999 LP", value: 599.9999 },
+          { tone: "lavender", name: "Alice", text: "150 LP: a fifth", value: 150 },
         ],
       },
       // Bob and Carol trade, Maria claims, and Alice withdraws.

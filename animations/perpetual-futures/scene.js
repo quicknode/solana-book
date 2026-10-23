@@ -268,6 +268,8 @@
       ],
     },
     {
+      // Derived: the LP mint has the collateral's 6 decimals, so 1,000 USDC less MINIMUM_LIQUIDITY's
+      // 1,000 minor units (the chapter's "tenth of a cent") is 999.999 shares.
       title: "Carol gets 999.999 [LP shares]",
       caption:
         "Her shares are her slice of the pool. As the first depositor, she gets her deposit less a tenth of a cent, " +
@@ -385,6 +387,7 @@
         {
           type: "show",
           ids: ["dave", "daveUsdc"],
+          // The book's standard wallet: every character starts with one SOL and 1,000 USDC.
           lines: { dave: [sol("1 SOL")], daveUsdc: [balance("1,000 USDC")] },
           focus: "shown",
         },
@@ -459,6 +462,7 @@
         "program_fees holds 7.50 USDC: half the fees on two opens and one close. The other half stays in the insurance fund. " +
         "Only Maria may collect, and it zeroes the balance before it pays her.",
       actions: [
+        // The book's standard wallet: every character starts with one SOL and 1,000 USDC.
         { type: "show", ids: ["mariaUsdc"], lines: { mariaUsdc: [balance("1,000 USDC")] }, focus: "shown" },
         { type: "call", handler: "collect_fees()", focus: ["maria", "mariaUsdc", "program", "pool", "vault"] },
         changes("pool", { program_fees: "0" }),

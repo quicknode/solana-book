@@ -121,7 +121,7 @@
         tag: "Where everyone ended up",
         cards: [
           { tone: "white", icon: "tpl:savings", name: "Alice", text: "Came in with $900, rode NVIDIA up, paid Maria by dilution, and left with about $950 of TSLAx and NVDAx" },
-          { tone: "lavender", icon: "tpl:later", name: "Bob", text: "Holds 450 shares worth about $475: the fee has cost him $5 so far" },
+          { tone: "lavender", icon: "tpl:later", name: "Bob", text: "Still holds his 450 shares, unrealized" },
           { tone: "mint", icon: "tpl:expertise", name: "Maria the manager", text: "Holds 13.5 shares, about $14, for managing the fund" },
           { tone: "white", icon: "tpl:vetting", name: "Victor the curator", text: "Took no fee: his business is a platform whose funds don't fail" },
         ],

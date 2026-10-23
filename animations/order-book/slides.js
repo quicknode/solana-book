@@ -40,14 +40,13 @@
           {
             tone: "mint", icon: "tpl:orderbook-ask", who: "Alice",
             name: "Wants to sell at [her price]",
-            text: "She owns ten NVIDIA shares and thinks they're overvalued. She'll sell, " +
-              "but for $265 a share or more, and she's happy to wait for it.",
+            text: "She owns ten NVIDIA shares and thinks AI is overhyped. She wants out, " +
+              "but not at any price: $265 a share or more.",
           },
           {
             tone: "lavender", icon: "tpl:orderbook-bid", who: "Bob",
             name: "Wants to buy at [his price]",
-            text: "He wants NVIDIA shares, but won't pay more than $250 for them. " +
-              "He'll wait too, rather than pay what anyone happens to ask.",
+            text: "He wants in, but he isn't prepared to pay more than $250 a share.",
           },
         ],
       },

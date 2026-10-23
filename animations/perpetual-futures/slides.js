@@ -41,14 +41,14 @@
           {
             tone: "mint", icon: "tpl:price-rises", who: "Alice",
             name: "Wants [more upside] than her money buys",
-            text: "She thinks NVIDIA is about to have a very good quarter. Buying NVIDIA stock with her $1,000 " +
-              "would earn her 1% for every 1% it rises. She wants five times that.",
+            text: "She thinks NVIDIA is about to have a very good quarter. She could buy NVIDIA and wait, " +
+              "but she wants more exposure than her $1,000 buys.",
           },
           {
             tone: "lavender", icon: "tpl:perps-price-falls", who: "Bob",
             name: "Wants to profit if it [falls]",
-            text: "He thinks NVIDIA's run is over. Owning the stock can't pay him when the price falls, " +
-              "and he doesn't own any to sell.",
+            text: "He thinks NVIDIA's run is over, and wants to profit if it falls, which owning the stock " +
+              "cannot give him.",
           },
         ],
       },
@@ -83,6 +83,9 @@
         yLabel: "Profit ($)",
         marks: [{ at: 100, label: "TODAY $100" }],
         series: [
+          // Both lines follow from the chapter by arithmetic: the long's profit is size × price change ÷
+          // entry price (5,000 × (p − 100) ÷ 100, so +1,000 at $120 as the chapter states), and $1,000 of
+          // the stock at the chapter's $100 entry is ten shares, the chapter's "buy NVDAx and wait".
           { tone: "green", label: "Alice's 5x long", points: [[90, -500], [120, 1000]], labelAt: [91, 380] },
           { tone: "purple", label: "Owning $1,000 of NVIDIA", points: [[90, -100], [120, 200]], labelAt: [111, -140] },
         ],
@@ -100,7 +103,7 @@
         heading: "A perpetual never expires, so traders pay [funding]",
         sub: "To keep the numbers clean, this walkthrough's pool sets the funding rate to zero",
         cards: [
-          { name: "The heavier side pays", text: "Whichever side has more open positions pays a fee for every second it stays open" },
+          { name: "The heavier side pays", text: "The side with more open interest pays a fee for every second it stays open" },
           { name: "The pool is the other side", text: "It takes the heavier side's payment, and pays the lighter side at the same rate" },
           { name: "One index for every position", text: "Each position remembers the index when it opened, so settling it reads one account" },
         ],

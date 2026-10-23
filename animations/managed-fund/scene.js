@@ -568,7 +568,8 @@
     },
     {
       title: "Alice's 900 shares are [burned]",
-      caption: "Her shares are destroyed first: 900 of the 1,363.5, so her slice of each vault is 900 ÷ 1,363.5, about 66%.",
+      // 66% is 900 ÷ 1,363.5, from the chapter's share counts.
+      caption: "Her 900 shares are destroyed first, leaving 463.5. Her slice of each vault is 900 of the 1,363.5 shares, about 66%.",
       actions: [
         transfer("aliceShares", "0 shares", "shareMint", "463.5 shares", {
           id: "burn", d: burned(LANE.alice, A.aliceShares),
@@ -579,23 +580,24 @@
     },
     {
       title: "Alice receives her [TSLAx]",
-      caption: "66% of the TSLAx vault's 2.304 TSLAx is 1.521, rounded down, in the fund's favour.",
+      caption: "Her slice of the TSLAx vault's 2.304 TSLAx is about 1.52, rounded down, in the fund's favour.",
       actions: [
-        transfer("tslaxVault", "0.783 TSLAx", "aliceTslax", "1.521 TSLAx", {
+        // The chapter and its figure give these to two places, as approximate.
+        transfer("tslaxVault", "≈0.78 TSLAx", "aliceTslax", "≈1.52 TSLAx", {
           id: "payTsla", d: outOfVault(tslaxVault, LANE.alice, A.aliceTslax),
-          coinNear: { x: 490, y: CORRIDOR }, label: ["1.521 TSLAx"], labelAt: below,
+          coinNear: { x: 490, y: CORRIDOR }, label: ["≈1.52 TSLAx"], labelAt: below,
         }),
       ],
     },
     {
       title: "Alice receives her [NVDAx]",
       caption:
-        "And 2.851 of the 4.32 NVDAx. She came in with $900, rode NVIDIA up, paid Maria's 1% by dilution, " +
+        "And about 2.85 of the 4.32 NVDAx. She came in with $900, rode NVIDIA up, paid Maria's 1% by dilution, " +
         "and leaves with about $950 of shares in Tesla and NVIDIA.",
       actions: [
-        transfer("nvdaxVault", "1.469 NVDAx", "aliceNvdax", "2.851 NVDAx", {
+        transfer("nvdaxVault", "≈1.47 NVDAx", "aliceNvdax", "≈2.85 NVDAx", {
           id: "payNvda", d: outOfVault(nvdaxVault, LANE.alice, A.aliceNvdax),
-          coinNear: { x: 490, y: CORRIDOR }, label: ["2.851 NVDAx"], labelAt: below,
+          coinNear: { x: 490, y: CORRIDOR }, label: ["≈2.85 NVDAx"], labelAt: below,
         }),
       ],
     },

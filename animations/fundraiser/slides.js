@@ -100,7 +100,7 @@
         tag: "Where everyone ended up",
         cards: [
           { tone: "white", icon: "tpl:fundraiser-maker", name: "Maria the maker", text: "Met: 9,000 USDC for the mold. Missed: nothing, and free to try again" },
-          { tone: "lavender", icon: "tpl:fundraiser-backer", name: "Alice, Bob and Carol", text: "Met: their machine gets made. Missed: every dollar back" },
+          { tone: "lavender", icon: "tpl:fundraiser-backer", name: "Alice, Bob and Carol", text: "Met: Maria is paid the 9,000 USDC to make the machine. Missed: every dollar back" },
           { tone: "mint", icon: "tpl:fundraiser-receipt", name: "Their receipts", text: "Closed either way, their rent back to each backer" },
           { tone: "white", icon: "tpl:fundraiser-refund", name: "Dave", text: "Refunded 800 USDC without coming back: Maria sent it for him" },
         ],

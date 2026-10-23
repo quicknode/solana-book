@@ -41,12 +41,12 @@
           {
             tone: "mint", icon: "tpl:betting-backs", who: "Alice",
             name: "Thinks [Glowbugs 3] will win",
-            text: "She's sure it will be this month's top-grossing film, and wants to put $300 on it.",
+            text: "She's confident about school holidays, and wants to put $300 on it being this month's top-grossing film.",
           },
           {
             tone: "lavender", icon: "tpl:betting-against", who: "Carol",
-            name: "Thinks it [won't]",
-            text: "She's betting on The Quiet Floor instead, and would happily take the other side of Alice's bet.",
+            name: "Thinks [The Quiet Floor] will",
+            text: "She believes in word of mouth, and wants to put $200 on The Quiet Floor instead.",
           },
         ],
       },

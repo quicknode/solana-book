@@ -228,7 +228,9 @@
     },
     {
       title: "The vault and the offer [close]",
-      caption: "Both accounts close, and their rent goes back to Alice. She is where she started, less a transaction fee.",
+      caption:
+        "Both accounts close, and their rent goes back to Alice. She has her 1,000 USDC again, and keeps the TSLAx " +
+        "account make_offer() opened for her.",
       actions: [
         // Clear the last arrow first, so nothing points at a closed account.
         { type: "hide", ids: [] },
@@ -248,6 +250,8 @@
         {
           type: "show",
           ids: ["bob", "bobUsdc", "bobTslax"],
+          // 1,000 USDC: every character starts with it (the chapter's opening), and the take
+          // figure's 1,250 is that plus the vault's 250.
           lines: { bob: [sol("1 SOL")], bobUsdc: [balance("1,000 USDC")], bobTslax: [balance("1 TSLAx")] },
           focus: "shown",
         },

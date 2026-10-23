@@ -222,7 +222,7 @@
       actions: [
         { type: "show", ids: ["maria"], lines: { maria: [sol("1 SOL")] }, focus: "shown" },
         { type: "call", handler: "initialize_market()", focus: ["maria", "program"] },
-        { type: "set", changes: [{ id: "maria", title: "Maria (admin)" }] },
+        { type: "set", changes: [{ id: "maria", title: "Maria (authority)" }] },
         { type: "create", id: "orderBook", lines: [field("next_order_id: 1"), field("bids_root: empty"), field("asks_root: empty")] },
         {
           type: "create", id: "market",
@@ -447,7 +447,7 @@
       title: "Bob runs [settle_funds()]",
       caption:
         "Settling turns his claims into tokens. The handler copies what he's owed and zeroes the counters first, " +
-        "so calling it twice pays nothing. He opened an NVDAx account to receive the shares.",
+        "so calling it twice pays nothing. His NVDAx account receives the shares.",
       actions: [
         { type: "show", ids: ["bobNvdax"], lines: { bobNvdax: [balance("0 NVDAx")] }, focus: "shown" },
         { type: "call", handler: "settle_funds()", focus: ["bob", "bobUsdc", "bobNvdax", "bobUser", "program", "market", "baseVault", "quoteVault"] },

@@ -56,9 +56,9 @@
         heading: "The usual answer: a [middleman]",
         sub: "How traditional finance makes strangers trade",
         cards: [
-          { icon: "tpl:escrow-middleman", name: "Both sides send to a third party", text: "A company they both trust holds Alice's money and Bob's share" },
-          { icon: "tpl:escrow-swap", name: "It swaps them once both have arrived", text: "This holding is called escrow, and the company the escrow agent" },
-          { icon: "tpl:escrow-fee", name: "And it takes a fee", text: "A cut of what it holds, for being trusted not to walk away with it" },
+          { icon: "tpl:escrow-middleman", name: "Both sides send to a trusted third party", text: "Alice sends her money to it, and it holds the money in escrow until Bob has sent his share" },
+          { icon: "tpl:escrow-swap", name: "It passes each side on", text: "Once both have arrived, Alice's money goes to Bob and Bob's share to Alice" },
+          { icon: "tpl:escrow-fee", name: "And it takes a fee", text: "A slice for the service, kept from what it holds on each side" },
         ],
       },
       {
@@ -96,7 +96,7 @@
         tone: "light",
         tag: "Where everyone ended up",
         cards: [
-          { tone: "white", icon: "tpl:escrow-buy", name: "Alice", text: "Paid 250 USDC for her Tesla share, and got every lamport of rent back" },
+          { tone: "white", icon: "tpl:escrow-buy", name: "Alice", text: "Paid 250 USDC for her Tesla share, and got back the rent for the offer and the vault" },
           { tone: "lavender", icon: "tpl:escrow-sell", name: "Bob", text: "Sold his share for the full 250 USDC, without trusting Alice" },
           { tone: "mint", icon: "program", name: "The escrow program", text: "Took no fee: nobody runs it, and nobody can sign for its vaults" },
         ],

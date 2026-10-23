@@ -40,15 +40,14 @@
           {
             tone: "mint", icon: "tpl:income", who: "Alice",
             name: "Wants to be paid for [waiting]",
-            text: "She owns five NVIDIA shares at $165, and doesn't expect the price to move much this week. " +
-              "She'd like money now for promising to sell them at $180: a promise she expects nobody to take up, " +
-              "and one she'd be happy to keep if they did.",
+            text: "She holds five NVDAx, a token that tracks a share of NVIDIA, trading at $165. " +
+              "She would be happy to sell at $180, and she would like to be paid while she waits.",
           },
           {
             tone: "lavender", icon: "tpl:bargain", who: "Bob",
             name: "Wants to buy [below the market]",
-            text: "He thinks NVIDIA will pass $180 this week. He wants the chance to buy at $180 when it does, " +
-              "without spending $825 on five shares today, or losing more than a little if he's wrong.",
+            text: "He thinks NVIDIA will pass $180 within the week, and he wants that upside for less than " +
+              "the $825 five shares would cost him.",
           },
         ],
       },
@@ -59,7 +58,7 @@
         cards: [
           { icon: "tpl:contract", name: "Bob pays Alice $25 now", text: "For the right to buy her five shares at $180, any time this week" },
           { icon: "tpl:price-rises", name: "If NVIDIA passes $180, Bob buys", text: "He pays $180 a share for shares the market prices higher, and Alice sells at the price she chose" },
-          { icon: "tpl:expire", name: "If it doesn't, the option expires", text: "Bob is out $25, and Alice keeps the $25 and her shares: paid for waiting" },
+          { icon: "tpl:expire", name: "If it doesn't, the option expires", text: "Bob loses the $25, and Alice keeps it as income on shares she still owns" },
         ],
       },
       {
@@ -89,14 +88,16 @@
         type: "chart",
         heading: "The holder's loss is capped at the [premium]",
         sub: "Profit at expiry for each side of Alice and Bob's option. Bob profits past $185: the strike plus the premium",
-        x: [140, 210], xStep: 10,
-        y: [-150, 150], yStep: 50,
+        // The prices and results of the chapter's payoff figure: $160, $180,
+        // $185 and $200, with +-25, +-25, 0 and -+75.
+        x: [160, 200], xStep: 5,
+        y: [-100, 100], yStep: 25,
         xLabel: "NVIDIA's price at expiry",
         yLabel: "Profit, five shares ($)",
         marks: [{ at: 165, label: "TODAY $165" }, { at: 180, label: "STRIKE $180" }],
         series: [
-          { tone: "green", label: "Bob, the holder: loses at most $25", points: [[140, -25], [180, -25], [210, 125]], labelAt: [141, -50] },
-          { tone: "purple", label: "Alice, the writer: earns at most $25", points: [[140, 25], [180, 25], [210, -125]], labelAt: [141, 40] },
+          { tone: "green", label: "Bob, the holder: loses at most $25", points: [[160, -25], [180, -25], [185, 0], [200, 75]], labelAt: [160.5, -45] },
+          { tone: "purple", label: "Alice, the writer: earns at most $25", points: [[160, 25], [180, 25], [185, 0], [200, -75]], labelAt: [160.5, 40] },
         ],
       },
       {
