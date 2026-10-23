@@ -369,8 +369,23 @@
     return value.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   }
 
+  // Two derived accounts with the same seeds would be one address, so a scene
+  // that draws two is wrong: refuse it rather than show it.
+  function assertUniqueSeeds(scene) {
+    const owners = {};
+    for (const acc of Object.values(scene.accounts)) {
+      if (!acc.seeds) continue;
+      const seeds = acc.seeds.lines.join(" ");
+      if (owners[seeds]) {
+        throw new Error(`${owners[seeds]} and ${acc.id} have the same seeds, ${seeds}, so they would be one address`);
+      }
+      owners[seeds] = acc.id;
+    }
+  }
+
   class Player {
     constructor(scene, svg, { onStep } = {}) {
+      assertUniqueSeeds(scene);
       this.scene = scene;
       this.svg = svg;
       this.onStep = onStep || (() => {});

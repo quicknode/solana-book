@@ -160,7 +160,7 @@
   <circle cx="130" cy="363.144" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="140" y="357.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ORDER" +</text>
   <text x="140" y="366.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET ADDRESS +</text>
-  <text x="140" y="375.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ORDER ID</text>
+  <text x="140" y="375.644" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ORDER ID 2</text>
   <rect x="122" y="381.644" width="107" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(130,385.644)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="150" y="396.14" font-size="10.5" font-weight="bold">Bob's order</text>
@@ -169,7 +169,7 @@
   <circle cx="243" cy="373.562" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="253" y="368.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"ORDER" +</text>
   <text x="253" y="377.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">MARKET ADDRESS +</text>
-  <text x="253" y="386.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ORDER ID</text>
+  <text x="253" y="386.062" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ORDER ID 3</text>
   <rect x="235" y="392.062" width="117" height="22" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(243,396.062)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="263" y="406.56" font-size="10.5" font-weight="bold">Carol's order</text>

@@ -96,7 +96,9 @@ slab, and the step's action is the bright green. A step title marks its keyword 
 
 The layout is placed by hand, as the figures are: each column's position and width is chosen in the scene.
 A public-key account's dot is put on the curve with `clusterCurve().yAt()` and its box hangs 9.3 below it,
-and a derived account's dot and seed list sit above its box, so the dots never drift off the curve. A step
+and a derived account's dot and seed list sit above its box, so the dots never drift off the curve. No two derived accounts share a seed list: the same seeds are the
+same address, so a scene that repeats one is wrong, and the engine refuses to draw it. Name the seed that
+tells them apart, the index, the order ID or the reserve, as the program does. A step
 is a title, a caption, and a list of actions:
 
 | Action | Shows |

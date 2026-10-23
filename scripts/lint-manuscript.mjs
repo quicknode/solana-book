@@ -697,6 +697,45 @@ for (const file of svgFiles) {
     failures += 1;
     console.error(`${file}: markup after </svg> is not part of the figure; move it inside the root element\n    ${trailing.slice(0, 160)}`);
   }
+  // A derived address is its seeds, so two accounts drawn with the same seed
+  // list would be one account: whatever tells them apart (an index, an order
+  // ID, which reserve, whose obligation) belongs in the list. A seed list is
+  // a run of seed-face lines (7-unit mono) at one x, a line apart. Thirty
+  // figures once drew "LIQUIDITY_VAULT" + RESERVE three times over.
+  const seedLists = new Map();
+  let run = null;
+  const closeRun = () => {
+    if (!run) return;
+    const seeds = run.lines.join(" ").replace(/\s+/g, " ").trim();
+    seedLists.set(seeds, [...(seedLists.get(seeds) || []), run.line]);
+    run = null;
+  };
+  source.split("\n").forEach((line, index) => {
+    for (const m of line.matchAll(/<text\b([^>]*)>([^<]*)<\/text>/g)) {
+      const [, attrs, body] = m;
+      if (!/font-size="7"/.test(attrs) || !/Mono/.test(attrs) || !body.trim()) {
+        closeRun();
+        continue;
+      }
+      const x = attrs.match(/\bx="([\d.]+)"/)?.[1];
+      const y = Number(attrs.match(/\by="([\d.]+)"/)?.[1]);
+      if (run && run.x === x && y - run.y > 0 && y - run.y <= 10) {
+        run.lines.push(body.trim());
+        run.y = y;
+      } else {
+        closeRun();
+        run = { x, y, lines: [body.trim()], line: index + 1 };
+      }
+    }
+  });
+  closeRun();
+  for (const [seeds, at] of seedLists) {
+    if (at.length < 2) continue;
+    failures += 1;
+    console.error(`${file}:${at.join(",")}: ${at.length} accounts drawn with the same seeds, ${seeds}; ` +
+      "two derived accounts with the same seeds are one address, so name what tells them apart");
+  }
+
   const lines = source.split("\n");
   lines.forEach((line, index) => {
     for (const [pattern, reason] of svgRules) {

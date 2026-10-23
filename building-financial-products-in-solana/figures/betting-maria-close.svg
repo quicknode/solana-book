@@ -111,7 +111,7 @@
   <g>
   <circle cx="482" cy="471.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="492" y="470.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
-  <text x="492" y="479.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
+  <text x="492" y="479.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX 0</text>
   <rect x="474" y="485.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,488.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="499.545" font-size="10.5" font-weight="bold">outcome 0: Glowbugs 3</text>
@@ -123,7 +123,7 @@
   <g>
   <circle cx="482" cy="539.37" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>
   <text x="492" y="538.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">"OUTCOME" + EVENT</text>
-  <text x="492" y="547.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX</text>
+  <text x="492" y="547.37" font-size="7" font-family="'DejaVu Sans Mono', monospace" fill="#555">ADDRESS + INDEX 1</text>
   <rect x="474" y="553.37" width="158" height="40" rx="6" fill="#f4f4f2" stroke="#888"/>
   <g transform="translate(482,556.87)"><g transform="translate(-0.195,-0.195) scale(0.6)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.843"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm0 5h18M10 3v18"/></g></g>
   <text x="502" y="567.545" font-size="10.5" font-weight="bold">outcome 1: The Quiet Floor</text>
