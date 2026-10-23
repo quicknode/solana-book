@@ -90,7 +90,17 @@
       },
 
       // Solana, Alice, her accounts, the offer, the cancel, and Bob's take.
-      { type: "diagram", from: 0, to: 15 },
+      { type: "diagram", from: 0, to: 8 },
+      {
+        type: "statement",
+        heading: "Outcome 1: nobody [takes] Alice's offer",
+      },
+      { type: "diagram", from: 9, to: 11 },
+      {
+        type: "statement",
+        heading: "Outcome 2: Bob [takes] Alice's offer",
+      },
+      { type: "diagram", from: 12, to: 15 },
       {
         type: "cards",
         tone: "light",

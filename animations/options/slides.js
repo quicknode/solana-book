@@ -116,7 +116,22 @@
         heading: "Alice's option is a [call]",
         sub: "The right to buy the underlying at the strike, worth using when the price rises above it",
       },
-      { type: "diagram", from: 8, to: 22 },
+      { type: "diagram", from: 8, to: 14 },
+      {
+        type: "statement",
+        heading: "Outcome 1: NVDAx [moves] to $200, and Bob exercises",
+      },
+      { type: "diagram", from: 15, to: 18 },
+      {
+        type: "statement",
+        heading: "Outcome 2: NVDAx [stays] at $165",
+      },
+      { type: "diagram", from: 19, to: 20 },
+      {
+        type: "statement",
+        heading: "Back to Outcome 1: Alice [collects] the strike",
+      },
+      { type: "diagram", from: 21, to: 22 },
       {
         type: "statement",
         heading: "Now a [put]: the right to sell",
@@ -125,7 +140,22 @@
       },
 
       // The put is written, bought, and expires; the fees are collected.
-      { type: "diagram", from: 23, to: 35 },
+      { type: "diagram", from: 23, to: 29 },
+      {
+        type: "statement",
+        heading: "Outcome 1: the put [expires] unused",
+      },
+      { type: "diagram", from: 30, to: 31 },
+      {
+        type: "statement",
+        heading: "Outcome 2: NVDAx [falls] below $150",
+      },
+      { type: "diagram", from: 32, to: 33 },
+      {
+        type: "statement",
+        heading: "Back to Outcome 1: Maria [collects] the fees",
+      },
+      { type: "diagram", from: 34, to: 35 },
       {
         type: "cards",
         tone: "light",

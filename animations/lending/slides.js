@@ -27,7 +27,7 @@
             items: [
               "How lending and borrowing work as a Solana program",
               "How interest grows every debt without moving a token",
-              "How liquidators keep the market solvent when prices fall",
+              "How liquidators keep the market solvent when prices move",
             ],
           },
         ],
@@ -63,14 +63,12 @@
       {
         type: "grid",
         tone: "lavender",
-        columns: 2,
         heading: "The [terms] of a loan",
         sub: "Every lending market sets these",
         cards: [
-          { icon: "tpl:lending-collateral", name: "Collateral", text: "What the borrower pledges, and loses if they don't keep the loan safe: Bob's NVIDIA shares" },
+          { icon: "tpl:lending-collateral", name: "Collateral", text: "What the borrower pledges, and can lose: Bob's NVIDIA shares" },
           { icon: "tpl:lending-ltv", name: "Loan-to-value", text: "How much of the collateral's value may be borrowed: 75%, so $750 against $1,000" },
           { icon: "tpl:lending-interest", name: "Interest", text: "What borrowers pay for the loan, at a yearly rate that rises as more of the pool is lent out" },
-          { icon: "tpl:lending-liquidation", name: "Liquidation", text: "If the debt passes 80% of the collateral's value, anyone may repay part of it and take collateral at a discount" },
         ],
       },
       {
@@ -79,40 +77,68 @@
         sub: "Every account, every handler, and every token that moves",
       },
 
-      // Solana, the market, Alice's deposit, and Bob's loan.
-      { type: "diagram", from: 0, to: 17 },
+      // Solana, the market, Alice's deposits, and Bob's loan.
+      { type: "diagram", from: 0, to: 20 },
       {
         type: "allocation",
         heading: "Bob's loan against his [collateral]",
-        sub: "He may borrow up to 75% of its value; past 80%, the loan can be liquidated",
+        sub: "He may borrow up to 75% of its value",
         parts: [
           { tone: "lavender", name: "Debt", text: "750 USDC", value: 750 },
           { tone: "mint", name: "Not borrowed against", text: "$250 of $1,000", value: 250 },
         ],
       },
-      // One future: the price falls.
-      { type: "diagram", from: 18, to: 18 },
+      {
+        type: "statement",
+        heading: "Carol wants to [short] SpaceX",
+        sub: "Borrow the asset, sell it now, and buy it back later, cheaper if she is right. A lending market is where shorts are built",
+      },
+      // Carol borrows SPCXx and sells it, and SpaceX rallies.
+      { type: "diagram", from: 21, to: 29 },
+      {
+        type: "allocation",
+        heading: "SpaceX rallies, and Carol's debt passes [80%]",
+        sub: "Against her $1,000 of collateral. Past 80%, $800, the loan can be liquidated",
+        parts: [
+          { tone: "lavender", name: "Debt", fromText: "3 SPCXx at $250: $750", text: "3 SPCXx at $300: $900", from: 750, value: 900 },
+          { tone: "mint", name: "Not borrowed against", fromText: "$250 of $1,000", text: "$100 of $1,000", from: 250, value: 100 },
+        ],
+      },
+      {
+        type: "numbered",
+        heading: "How a [liquidation] works",
+        sub: "Anyone may repay part of an unhealthy loan, and is paid in its collateral",
+        cards: [
+          { name: "Only past the threshold", text: "A loan below 80% of its collateral's value cannot be touched" },
+          { name: "At most half at a time", text: "The close factor caps one liquidation at 50% of the debt" },
+          { name: "Paid with a bonus", text: "The liquidator takes collateral worth the repayment plus 5%" },
+        ],
+      },
+      // Dave's two liquidations.
+      { type: "diagram", from: 30, to: 35 },
       {
         type: "allocation",
         decimals: 1,
-        heading: "NVIDIA falls, and the debt passes [80%]",
-        sub: "Bob still owes $750, but his collateral is worth less",
+        delay: 1800,
+        heading: "Carol's collateral, [paid down]",
+        sub: "Her 1,000 USDC shares: what is left of them, and what Dave took for repaying $675 of her debt",
         parts: [
-          { tone: "lavender", name: "Debt", text: "750 USDC", value: 750, from: 750 },
-          { tone: "mint", name: "Not borrowed against", fromText: "$250 of $1,000", text: "$150 of $900", value: 150, from: 250 },
+          { tone: "mint", name: "Carol", fromText: "1,000 shares", text: "291.25 shares", from: 1000, value: 291.25 },
+          { tone: "lavender", name: "Dave", fromText: "0 shares", text: "708.75 shares", from: 0, value: 708.75 },
         ],
       },
-      // The liquidation, then the other future: interest, repayment, redemptions, fees.
-      { type: "diagram", from: 19, to: 27 },
+      // Interest, Bob's repayment, Maria's fee, and Alice's yield.
+      { type: "diagram", from: 36, to: 41 },
       {
         type: "cards",
         tone: "light",
         tag: "Where everyone ended up",
         cards: [
-          { tone: "white", icon: "tpl:savings", name: "Alice", text: "Earned $6.75 on savings that would otherwise have sat idle" },
-          { tone: "lavender", icon: "tpl:lending-cash", name: "Bob", text: "Borrowed $750 for weeks for $7.50 of interest, and kept his NVIDIA shares" },
-          { tone: "mint", icon: "tpl:lending-liquidation", name: "Dave", text: "If NVIDIA had fallen: paid 375 USDC for $393.75 of NVDAx shares" },
-          { tone: "white", icon: "tpl:venue", name: "Maria the market owner", text: "Earned 10% of the interest: 75 cents" },
+          { tone: "white", icon: "tpl:savings", name: "Alice", text: "About $3.38 for five weeks of otherwise idle capital" },
+          { tone: "lavender", icon: "tpl:lending-cash", name: "Bob", text: "Five weeks of cash for about $7.50, and he kept his stock" },
+          { tone: "mint", icon: "tpl:lending-short", name: "Carol", text: "$1,000 became about $816.25: the price moved against her short, and $33.75 went to Dave" },
+          { tone: "white", icon: "tpl:lending-liquidation", name: "Dave", text: "$33.75 for repaying $675 of Carol's debt" },
+          { tone: "lavender", icon: "tpl:venue", name: "Maria the market owner", text: "$0.75: her 10% of the interest on Bob's loan" },
         ],
       },
 

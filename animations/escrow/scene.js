@@ -207,9 +207,9 @@
 
     // ---- Another future: nobody takes it, and Alice cancels
     {
-      title: "If nobody takes it, Alice runs [cancel_offer()]",
+      title: "Alice runs [cancel_offer()]",
       caption:
-        "It's possible that nobody takes the offer. Then Alice can cancel it, and only she can: the offer's address " +
+        "Alice can cancel her offer, and only she can: the offer's address " +
         "is worked out again from the signer's address, and a different signer finds no offer there.",
       actions: [
         { type: "call", handler: "cancel_offer()", focus: ["alice", "aliceUsdc", "program", "offer", "vault"] },
@@ -244,7 +244,7 @@
       from: "offered",
       title: "Bob runs [take_offer()]",
       caption:
-        "Back to the open offer. Bob holds a TSLAx and likes the price. He passes the terms he saw: at least 250 USDC " +
+        "Bob holds a TSLAx and likes the price. He passes the terms he saw: at least 250 USDC " +
         "out, at most 1 TSLAx in. If the offer has changed, the handler refuses (OfferTermsChanged) before any token moves.",
       actions: [
         {

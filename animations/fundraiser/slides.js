@@ -84,13 +84,13 @@
       { type: "diagram", from: 0, to: 12 },
       {
         type: "statement",
-        heading: "First ending: the target is [met]",
+        heading: "Outcome 1: the target is [met]",
         sub: "Eight more backers come, and the counter reaches 9,000",
       },
       { type: "diagram", from: 13, to: 17 },
       {
         type: "statement",
-        heading: "Second ending: the target is [missed]",
+        heading: "Outcome 2: the target is [missed]",
         sub: "The same raise, but only Dave comes after Carol",
       },
       { type: "diagram", from: 18, to: 23 },

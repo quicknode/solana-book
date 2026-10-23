@@ -335,9 +335,9 @@
 
     // ---- The chapter's hypothetical: the oracle reprices
     {
-      title: "If NVIDIA reprices to [$170]",
+      title: "The price feed reprices to [$170]",
       caption:
-        "It's possible NVIDIA reports earnings and the price feed reprices to $170. The very next swap fills at a " +
+        "NVIDIA reports earnings and the price feed reprices to $170. The very next swap fills at a " +
         "$170.17 ask. But a quote can be seconds old, and a trader who knows the price moved fills it first: " +
         "adverse selection, a loss Maria bears.",
       actions: [
@@ -352,7 +352,7 @@
       key: "widened",
       title: "Maria runs [set_quote()] to widen the spread",
       caption:
-        "Back at $165. When volatility rises, Maria widens the spread to 50 basis points. The next buyer " +
+        "When volatility rises, Maria widens the spread to 50 basis points. The next buyer " +
         "would pay $165.825 per NVDAx, paying her more for the risk of a stale quote.",
       actions: [
         { type: "call", handler: "set_quote()", focus: ["maria", "program", "market"] },
@@ -362,9 +362,9 @@
     // The chapter pauses only when Maria's view diverges from the price feed; its
     // withdrawal figure shows the market unpaused, so the pause is a branch.
     {
-      title: "If she distrusts the price, Maria [pauses]",
+      title: "Maria runs [set_quote()] to pause",
       caption:
-        "It's possible Maria's view of the market diverges from the price feed entirely. Then set_quote() sets " +
+        "Maria's view of the market diverges from the price feed entirely, so set_quote() sets " +
         "paused, and every swap is refused with MarketPaused until she calls it again with paused false.",
       actions: [
         { type: "call", handler: "set_quote()", focus: ["maria", "program", "market"] },

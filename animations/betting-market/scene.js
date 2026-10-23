@@ -361,9 +361,9 @@
 
     // ---- Another future: the event is cancelled
     {
-      title: "Had the films been pulled, Maria runs [cancel_event()]",
+      title: "Maria runs [cancel_event()]",
       caption:
-        "It's possible the studio pulls both films. Then there's no result to report, so Maria cancels " +
+        "With both films pulled there's no result to report, so Maria cancels " +
         "the event instead, and the market owes every bettor their exact stake back.",
       actions: [
         { type: "call", handler: "cancel_event()", focus: ["maria", "program", "event"] },
@@ -371,7 +371,7 @@
       ],
     },
     {
-      title: "Had the films been pulled, every bettor gets a [refund]",
+      title: "Every bettor gets a [refund]",
       caption:
         "Each bettor calls claim_refund() for their whole stake, with no fee taken, and their bet account closes. " +
         "Alice's 300 USDC come back; Bob and Carol do the same.",
@@ -391,7 +391,7 @@
       from: "betsPlaced",
       title: "The month ends, and Maria runs [settle_event()]",
       caption:
-        "Back to the market. Glowbugs 3 wins in the real world, and the program only learns it because Maria, " +
+        "Glowbugs 3 wins in the real world, and the program only learns it because Maria, " +
         "the admin, signs to say so. Settling is reporting the result; it can't happen before betting closes.",
       actions: [
         { type: "call", handler: "settle_event()", focus: ["maria", "program", "event", "outcome0", "vault"] },

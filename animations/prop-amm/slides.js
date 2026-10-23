@@ -89,7 +89,26 @@
         sub: "Alice paid 825.825 USDC for 5 NVDAx, and Bob got 824.175 for the same 5. The difference stays in the market",
       },
       // The price moves, Maria manages her risk, and closes the market.
-      { type: "diagram", from: 16, to: 21 },
+      {
+        type: "statement",
+        heading: "What if NVIDIA [reprices] to $170?",
+      },
+      { type: "diagram", from: 16, to: 16 },
+      {
+        type: "statement",
+        heading: "Back at $165: Maria [manages] the risk",
+      },
+      { type: "diagram", from: 17, to: 17 },
+      {
+        type: "statement",
+        heading: "What if Maria [distrusts] the price?",
+      },
+      { type: "diagram", from: 18, to: 18 },
+      {
+        type: "statement",
+        heading: "Back to the open market: Maria [withdraws]",
+      },
+      { type: "diagram", from: 19, to: 21 },
       {
         type: "cards",
         tone: "light",

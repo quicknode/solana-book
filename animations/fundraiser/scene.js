@@ -374,7 +374,7 @@
       from: "carolDone",
       title: "Dave backs it with [800]",
       caption:
-        "It's possible that too few people back it. Say Dave, who runs a catering company, contributes 800 USDC, and nobody else comes: " +
+        "Dave, who runs a catering company, contributes 800 USDC, and nobody else comes: " +
         "3,600 USDC against a 9,000 USDC target.",
       actions: [
         backer("dave"),

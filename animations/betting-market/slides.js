@@ -90,7 +90,16 @@
         ],
       },
       // The cancelled future, then settlement.
-      { type: "diagram", from: 14, to: 18 },
+      {
+        type: "statement",
+        heading: "Outcome 1: the studio [pulls] both films",
+      },
+      { type: "diagram", from: 14, to: 15 },
+      {
+        type: "statement",
+        heading: "Outcome 2: Glowbugs 3 [wins]",
+      },
+      { type: "diagram", from: 16, to: 18 },
       {
         type: "allocation",
         decimals: 1,

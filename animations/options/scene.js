@@ -424,9 +424,9 @@
     // ---- Another future: the call expires
     {
       from: "callBought",
-      title: "Had NVDAx stayed at $165, Alice runs [reclaim_collateral()]",
+      title: "Alice runs [reclaim_collateral()]",
       caption:
-        "It's possible NVDAx stays at $165. Then the option is out of the money: Bob would not pay 900 for shares the market sells " +
+        "At $165 the option is out of the money: Bob would not pay 900 for shares the market sells " +
         "for 825, so he lets it expire. Then Alice calls reclaim_collateral(), and underlying_owed falls by 5 NVDAx.",
       actions: [
         { type: "call", handler: "reclaim_collateral()", focus: ["alice", "aliceNvdax", "program", "option", "market", "underlyingVault"] },
@@ -434,7 +434,7 @@
       ],
     },
     {
-      title: "Had NVDAx stayed at $165, Alice [keeps] her shares",
+      title: "Alice [keeps] her shares",
       caption:
         "Alice's 5 NVDAx come back and the option closes, its rent returned to her. Bob's 25 USDC bought a right " +
         "he never used; Alice keeps 24.75 of it and her shares.",
@@ -453,7 +453,7 @@
       from: "callExercised",
       title: "Alice runs [collect_proceeds()]",
       caption:
-        "Back to the exercised call. Alice calls collect_proceeds(), which only the writer may call, and only once " +
+        "Alice calls collect_proceeds(), which only the writer may call, and only once " +
         "the option is Exercised. quote_owed falls by the 900 USDC it held for her.",
       actions: [
         { type: "call", handler: "collect_proceeds()", focus: ["alice", "aliceUsdc", "program", "option", "market", "quoteVault"] },
@@ -602,9 +602,9 @@
     // ---- Another future: the put is exercised
     {
       from: "putBought",
-      title: "Had NVDAx fallen below $150, Dave runs [exercise_option()]",
+      title: "Dave runs [exercise_option()]",
       caption:
-        "It's possible NVDAx falls below $150. Then Dave exercises. The option becomes Exercised, quote_owed falls by the 750 USDC " +
+        "Below $150, Dave exercises. The option becomes Exercised, quote_owed falls by the 750 USDC " +
         "strike, and underlying_owed rises by the 5 NVDAx now owed to Carol.",
       actions: [
         { type: "call", handler: "exercise_option()", focus: ["dave", "daveUsdc", "daveNvdax", "program", "putOption", "market", "underlyingVault", "quoteVault"] },
@@ -619,7 +619,7 @@
       ],
     },
     {
-      title: "Had NVDAx fallen below $150, the tokens [change hands]",
+      title: "The tokens [change hands]",
       caption:
         "Dave delivers his 5 NVDAx and takes 750 USDC. The shares wait in the vault for Carol, who bought at $150 " +
         "what the market now sells for less.",
@@ -642,7 +642,7 @@
       from: "putReclaimed",
       title: "Maria runs [collect_fees()]",
       caption:
-        "Back to the expired put. Maria calls collect_fees(), which zeroes fees_owed, 0.45 USDC across the two " +
+        "Maria calls collect_fees(), which zeroes fees_owed, 0.45 USDC across the two " +
         "sales, before it pays her. It refuses to run with nothing to collect (NothingToCollect).",
       actions: [
         { type: "show", ids: ["mariaUsdc"], lines: { mariaUsdc: [balance("1,000 USDC")] }, focus: "shown" },

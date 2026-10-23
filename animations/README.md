@@ -122,8 +122,10 @@ set like the words around them.
 A step can also carry a `key`, and a later step can start `from` that key instead of from the step before
 it. That is how another possible ending branches off the story (the call expiring unused starts from the purchase,
 not from the exercise before it) and how the story resumes afterwards. The jump between endings fades out
-and back in, so it never reads as the program doing something. Open such a step plainly: "It's possible
-that nobody takes the offer", not "Another future".
+and back in, so it never reads as the program doing something. Each ending opens on a `statement`
+slide that names it, "Outcome 1: nobody takes Alice's offer", "Outcome 2: Bob takes Alice's offer", and
+a return to the main story on "Back to Outcome 1: …". A brief aside that is not an ending opens on
+"What if …?". The steps after such a slide go straight to what happens, without "It's possible that".
 
 Every step's end state is computed by replaying the actions without motion. Going back, jumping, or
 cutting an animation short therefore lands on exactly the picture the forward animation ends on.
