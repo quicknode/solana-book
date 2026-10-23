@@ -123,7 +123,7 @@
         <div class="versus">${s.cards
           .map(
             (c, i) => `<div class="panel ${c.tone} ${waiting(i, shown)}">${icon(c.icon, deck)}
-              <div class="who">${escape(c.who)}</div><h2>${marked(c.name)}</h2><p>${marked(c.text)}</p></div>`,
+              <div class="who">// ${escape(c.who)}</div><h2>${marked(c.name)}</h2><p>${marked(c.text)}</p></div>`,
           )
           .join("")}</div>
       </div>`,

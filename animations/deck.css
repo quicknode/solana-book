@@ -184,7 +184,14 @@ mark.purple { background: var(--purple); color: #fff; }
 .panel.mint { background: var(--mint); color: var(--ink); }
 .panel.lavender { background: var(--lavender); color: var(--ink); }
 .panel .tpl-icon { width: 3.4cqw; height: 3.4cqw; margin-bottom: 2.4cqw; filter: none; }
-.panel .who { font: 1.2cqw var(--mono); letter-spacing: 0.12cqw; text-transform: uppercase; color: #555; }
+/* The person's name is a badge, in the colour that stands out from its panel:
+   purple on the mint panel, green on the lavender one. */
+.panel .who {
+  align-self: flex-start; padding: 0.45cqw 1cqw;
+  font: 1.5cqw var(--mono); letter-spacing: 0.15cqw; text-transform: uppercase;
+}
+.panel.mint .who { background: var(--purple); color: #fff; }
+.panel.lavender .who { background: var(--green); color: #134d1a; }
 .panel h2 { font-weight: 400; font-size: 4.2cqw; line-height: 1.15; margin: 1cqw 0 2cqw; }
 .panel p { font-size: 1.75cqw; line-height: 1.5; margin: 0; }
 
