@@ -82,8 +82,8 @@
   // The program, the fund, its asset configs, and its share mint.
   const program = onCurve("program", "managed-fund program", ...COLUMN.program);
   const fund = derived("struct", "fund", COLUMN.program[0], program.y + 120 + GAP2, COLUMN.program[1], ['"FUND" +', "INDEX"]);
-  const assetConfig0 = derived("struct", "asset config 0", COLUMN.program[0], fund.y + tall(6) + GAP2, COLUMN.program[1], ['"ASSET" + FUND +', "INDEX"]);
-  const assetConfig1 = derived("struct", "asset config 1", COLUMN.program[0], assetConfig0.y + tall(2) + GAP2, COLUMN.program[1], ['"ASSET" + FUND +', "INDEX"]);
+  const assetConfig0 = derived("struct", "asset config 0", COLUMN.program[0], fund.y + tall(6) + GAP2, COLUMN.program[1], ['"ASSET" + FUND +', "INDEX 0"]);
+  const assetConfig1 = derived("struct", "asset config 1", COLUMN.program[0], assetConfig0.y + tall(2) + GAP2, COLUMN.program[1], ['"ASSET" + FUND +', "INDEX 1"]);
   const shareMint = derived("mint", "share mint", COLUMN.program[0], assetConfig1.y + tall(2) + GAP2, COLUMN.program[1], ['"SHARE_MINT" +', "FUND'S ADDRESS"]);
 
   const accounts = {

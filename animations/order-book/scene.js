@@ -53,7 +53,8 @@
     derived("token", `${owner}'s ${token}`, x, y, w, [`${owner.toUpperCase()}'S ADDRESS +`, "TOKEN PROGRAM +", `${token.toUpperCase()} MINT`]);
   const marketUser = (owner, x, y, w) =>
     derived("struct", `${owner}'s market user`, x, y, w, ['"MARKET_USER" +', "MARKET ADDRESS +", `${owner.toUpperCase()}'S ADDRESS`]);
-  const order = (owner, x, y, w) => derived("struct", `${owner}'s order`, x, y, w, ['"ORDER" +', "MARKET ADDRESS +", "ORDER ID"]);
+  // The seed is the order book's next_order_id when the order is placed: 1, 2 and 3.
+  const order = (owner, id, x, y, w) => derived("struct", `${owner}'s order`, x, y, w, ['"ORDER" +', "MARKET ADDRESS +", `ORDER ID ${id}`]);
 
   // Each person's column: wallet, token accounts, market user, order.
   const maria = onCurve("wallet", "Maria", ...COLUMN.maria);
@@ -64,17 +65,17 @@
 
   const aliceNvdax = ata("Alice", "NVDAx", COLUMN.alice[0], below(alice.y, 40), COLUMN.alice[1]);
   const aliceUser = marketUser("Alice", COLUMN.alice[0], below(aliceNvdax.y, 40), COLUMN.alice[1]);
-  const aliceOrder = order("Alice", COLUMN.alice[0], below(aliceUser.y, tall(3)), COLUMN.alice[1]);
+  const aliceOrder = order("Alice", 1, COLUMN.alice[0], below(aliceUser.y, tall(3)), COLUMN.alice[1]);
 
   const bobUsdc = ata("Bob", "USDC", COLUMN.bob[0], below(bob.y, 40), COLUMN.bob[1]);
   const bobNvdax = ata("Bob", "NVDAx", COLUMN.bob[0], below(bobUsdc.y, 40), COLUMN.bob[1]);
   const bobUser = marketUser("Bob", COLUMN.bob[0], below(bobNvdax.y, 40), COLUMN.bob[1]);
-  const bobOrder = order("Bob", COLUMN.bob[0], below(bobUser.y, tall(3)), COLUMN.bob[1]);
+  const bobOrder = order("Bob", 2, COLUMN.bob[0], below(bobUser.y, tall(3)), COLUMN.bob[1]);
 
   const carolNvdax = ata("Carol", "NVDAx", COLUMN.carol[0], below(carol.y, 40), COLUMN.carol[1]);
   const carolUsdc = ata("Carol", "USDC", COLUMN.carol[0], below(carolNvdax.y, 40), COLUMN.carol[1]);
   const carolUser = marketUser("Carol", COLUMN.carol[0], below(carolUsdc.y, 40), COLUMN.carol[1]);
-  const carolOrder = order("Carol", COLUMN.carol[0], below(carolUser.y, tall(3)), COLUMN.carol[1]);
+  const carolOrder = order("Carol", 3, COLUMN.carol[0], below(carolUser.y, tall(3)), COLUMN.carol[1]);
 
   const mariaUsdc = ata("Maria", "USDC", COLUMN.maria[0], below(maria.y, 40), COLUMN.maria[1]);
 

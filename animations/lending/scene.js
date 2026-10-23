@@ -49,6 +49,7 @@
   // Heights of boxes in full: the title bar, 12 a line, and padding.
   const tall = (lines) => 21 + lines * 12 + 7;
   const GAP2 = 28.6;
+  const GAP3 = 37;
 
   // Three people columns, then a column per asset, then the program.
   const COLUMN = {
@@ -75,8 +76,14 @@
 
   const obligationOf = (owner, person, [x, w]) =>
     derived("struct", "obligation", x, slot(person, 4), w, ['"OBLIGATION" + MARKET +', `${owner.toUpperCase()}'S ADDRESS`]);
-  const vaultOf = (obligation, [x, w]) =>
-    derived("token", "collateral vault", x, obligation.y + tall(2) + GAP2, w, ['"OBLIGATION_SHARE_VAULT"', "+ RESERVE + OBLIGATION"]);
+  // Seeds name which reserve and whose obligation: two vaults with the same
+  // seed list would be one address.
+  const vaultOf = (obligation, reserve, owner, [x, w]) =>
+    derived("token", "collateral vault", x, obligation.y + tall(2) + GAP3, w, [
+      '"OBLIGATION_SHARE_VAULT" +',
+      `${reserve} RESERVE +`,
+      `${owner.toUpperCase()}'S OBLIGATION`,
+    ]);
   const bobObligation = obligationOf("Bob", bob, COLUMN.p2);
   const carolObligation = obligationOf("Carol", carol, COLUMN.p1);
 
@@ -86,8 +93,10 @@
     const mint = `${asset.toUpperCase()} MINT`;
     const feed = derived("struct", `${asset} price feed`, x, 150, w, ['"PRICE_FEED" + MARKET +', mint]);
     const reserve = derived("struct", `${asset} reserve`, x, feed.y + tall(1) + GAP2, w, ['"RESERVE" + MARKET +', mint]);
-    const vault = derived("token", `${asset} vault`, x, reserve.y + tall(reserveLines) + GAP2, w, ['"LIQUIDITY_VAULT" +', "RESERVE'S ADDRESS"]);
-    const shareMint = derived("mint", "share mint", x, vault.y + tall(1) + GAP2, w, ['"SHARE_MINT" +', "RESERVE'S ADDRESS"]);
+    // Each reserve has its own vault and share mint, so the seeds name which.
+    const reserveAddress = `${asset.toUpperCase()} RESERVE'S ADDRESS`;
+    const vault = derived("token", `${asset} vault`, x, reserve.y + tall(reserveLines) + GAP2, w, ['"LIQUIDITY_VAULT" +', reserveAddress]);
+    const shareMint = derived("mint", "share mint", x, vault.y + tall(1) + GAP2, w, ['"SHARE_MINT" +', reserveAddress]);
     return [feed, reserve, vault, shareMint];
   }
   const [usdcFeed, usdcReserve, usdcVault, usdcShareMint] = assetColumn("USDC", COLUMN.usdc, 4);
@@ -109,13 +118,13 @@
     carolShares: ata("Carol", "USDC SHARE MINT", p1[0], slot(carol, 2), p1[1], "USDC shares"),
     carolSpcx: ata("Carol", "SPCXX MINT", p1[0], slot(carol, 3), p1[1], "Carol's SPCXx"),
     carolObligation,
-    carolVault: vaultOf(carolObligation, p1),
+    carolVault: vaultOf(carolObligation, "USDC", "Carol", p1),
     bob,
     bobNvdax: ata("Bob", "NVDAX MINT", p2[0], slot(bob, 1), p2[1], "Bob's NVDAx"),
     bobShares: ata("Bob", "NVDAX SHARE MINT", p2[0], slot(bob, 2), p2[1], "NVDAx shares"),
     bobUsdc: ata("Bob", "USDC MINT", p2[0], slot(bob, 3), p2[1], "Bob's USDC"),
     bobObligation,
-    bobVault: vaultOf(bobObligation, p2),
+    bobVault: vaultOf(bobObligation, "NVDAX", "Bob", p2),
     maria,
     mariaUsdc: ata("Maria", "USDC MINT", p3[0], slot(maria, 1), p3[1], "Maria's USDC"),
     dave,

@@ -69,8 +69,8 @@
   // The event column hangs beneath the curve at its right edge.
   const eventTop = curve.yAt(COLUMN.event[0] + COLUMN.event[1]) + 9 + GAP2;
   const event = derived("struct", "event", COLUMN.event[0], eventTop, COLUMN.event[1], ['"EVENT" +', "EVENT ID"]);
-  const outcome0 = derived("struct", "outcome 0", COLUMN.event[0], event.y + tall(8) + GAP2, COLUMN.event[1], ['"OUTCOME" + EVENT\'S', "ADDRESS + INDEX"]);
-  const outcome1 = derived("struct", "outcome 1", COLUMN.event[0], outcome0.y + tall(3) + GAP2, COLUMN.event[1], ['"OUTCOME" + EVENT\'S', "ADDRESS + INDEX"]);
+  const outcome0 = derived("struct", "outcome 0", COLUMN.event[0], event.y + tall(8) + GAP2, COLUMN.event[1], ['"OUTCOME" + EVENT\'S', "ADDRESS + INDEX 0"]);
+  const outcome1 = derived("struct", "outcome 1", COLUMN.event[0], outcome0.y + tall(3) + GAP2, COLUMN.event[1], ['"OUTCOME" + EVENT\'S', "ADDRESS + INDEX 1"]);
   const vault = derived("token", "vault", COLUMN.event[0], outcome1.y + tall(3) + GAP3, COLUMN.event[1], ["EVENT'S ADDRESS +", "TOKEN PROGRAM +", "USDC MINT"]);
 
   const program = onCurve("program", "betting program", ...COLUMN.program);
