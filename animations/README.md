@@ -9,9 +9,24 @@ The screen has no print limits, so a scene is drawn on a 16:9 canvas (1120 by 63
 puts every public-key account, mints included, beneath the one cluster curve. Colours live in `THEME` at
 the top of `engine.js`. Each step has a title, with its caption in the frame beneath.
 
-There are two talks, each a directory: `options/` for the *Options* chapter and `managed-fund/` for the
-*Managed Fund* chapter. Open a talk's `index.html` in a browser. No build step and no server: it runs
-straight from disk.
+There is a talk for every program in Part II, each a directory named for its chapter:
+
+| Directory | Chapter | Program |
+| --- | --- | --- |
+| `escrow/` | 11 Escrow | `finance/escrow` |
+| `fundraiser/` | 12 The Fundraiser | `finance/fundraiser` |
+| `betting-market/` | 13 The Betting Market | `finance/betting-market` |
+| `order-book/` | 14 The Order Book Exchange | `finance/order-book` |
+| `constant-product-amm/` | 15 The Constant-Product AMM | `finance/token-swap` |
+| `prop-amm/` | 16 The Prop AMM | `finance/prop-amm` |
+| `lending/` | 17 Lending and Borrowing | `finance/lending` |
+| `managed-fund/` | 18 The Managed Fund | `finance/managed-fund` |
+| `options/` | 19 Options | `finance/options` |
+| `perpetual-futures/` | 20 Perpetual Futures | `finance/perpetual-futures` |
+
+Open a talk's `index.html` in a browser. No build step and no server: it runs straight from disk. A talk's
+own icons in `assets/icons` carry its directory's prefix (`escrow-`, `perps-`, ...); unprefixed icons are
+shared, and mean the same idea in every talk.
 
 | Key | Does |
 | --- | --- |
@@ -89,7 +104,7 @@ is a title, a caption, and a list of actions:
 | `create` | a new account grows in, with a `NEW` badge |
 | `set` | fields or titles change; numbers count from the old value to the new |
 | `transfer` | the arrow draws, a coin rides it, and both balances count to their new values; with `alone` it replaces the step's earlier arrows, and a side with no `value` (a router trading on the far side) shows no balance |
-| `close` | an account is marked `CLOSED` and fades out |
+| `close` | an account is marked `CLOSED` and fades out, taking the step's arrows with it |
 
 A person appears in the step where they first do something, with the accounts that step uses: Bob and his
 USDC when he buys, Maria when she opens the venue and her USDC only when she collects the fees. A scene

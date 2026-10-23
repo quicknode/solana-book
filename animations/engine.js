@@ -152,7 +152,10 @@
         s.exists = s.exists.filter((id) => !action.ids.includes(id));
         s.focus = s.focus.filter((id) => !action.ids.includes(id));
         break;
+      // A closed account takes the step's arrows with it: an arrow left
+      // pointing at an account that is gone points at nothing.
       case "close":
+        s.arrows = [];
         s.exists = s.exists.filter((id) => id !== action.id);
         s.focus = s.focus.filter((id) => id !== action.id);
         s.isNew = s.isNew.filter((id) => id !== action.id);
@@ -673,8 +676,10 @@
           const badge = g.querySelector(".closed");
           await this.tween(250, (p) => badge.setAttribute("opacity", p));
           await this.wait(700);
-          await this.tween(600, (p) => g.setAttribute("opacity", 1 - p));
+          const arrows = [...this.svg.querySelectorAll(".arrows .arrow")];
+          await this.tween(600, (p) => [g, ...arrows].forEach((el) => el.setAttribute("opacity", 1 - p)));
           g.remove();
+          arrows.forEach((el) => el.remove());
           return this.wait(200);
         }
         case "transfer": {

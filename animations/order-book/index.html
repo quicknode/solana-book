@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Book Talk</title>
+<link rel="stylesheet" href="../deck.css">
+</head>
+<body>
+<div id="stage"><svg viewBox="0 0 1120 630" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#f4f4f4" role="img" aria-label="Animated account diagram"></svg></div>
+<div id="hint"><kbd>→</kbd> next · <kbd>←</kbd> back · <kbd>P</kbd> play / pause · <kbd>F</kbd> full screen</div>
+<script src="../engine.js"></script>
+<script src="../deck.js"></script>
+<script src="scene.js"></script>
+<script src="slides.js"></script>
+<script>
+  const scene = window.ORDERBOOK_SCENE;
+  const stage = document.getElementById("stage");
+  stage.querySelector("svg").setAttribute("viewBox", `0 0 ${scene.canvas.width} ${scene.canvas.height}`);
+  const deck = new AccountDeck.Deck(window.ORDERBOOK_DECK, scene, stage);
+  // Exposed for scripts/animation-frames.mjs and the browser console.
+  window.player = deck;
+
+  const hint = document.getElementById("hint");
+  let hintTimer = setTimeout(() => hint.classList.add("hidden"), 4000);
+  const touch = () => {
+    hint.classList.remove("hidden");
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => hint.classList.add("hidden"), 2500);
+  };
+
+  // Each key press plays one diagram step or builds one card, then holds
+  // until the next; autoplay holds each for scene.hold. Presentation remotes
+  // send PageDown and PageUp.
+  document.addEventListener("keydown", (e) => {
+    touch();
+    if (["ArrowRight", " ", "PageDown", "Enter"].includes(e.key)) { e.preventDefault(); deck.stopAutoplay(); deck.next(); }
+    else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); deck.prev(); }
+    else if (e.key === "Home") { deck.stopAutoplay(); deck.goto(0); }
+    else if (e.key === "End") { deck.stopAutoplay(); deck.goto(deck.count - 1); }
+    else if (e.key === "p" || e.key === "P") { deck.autoplay ? deck.stopAutoplay() : deck.startAutoplay(); }
+    else if (e.key === "f" || e.key === "F") {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  stage.addEventListener("click", () => { deck.stopAutoplay(); deck.next(); });
+  if (new URLSearchParams(location.search).has("autoplay")) deck.startAutoplay();
+</script>
+</body>
+</html>
