@@ -70,6 +70,11 @@ of cards builds them one at a time.
   the template's icons in `assets/icons`, named for the idea it stands for (`premium`, `price-rises`,
   `insurance`). One icon means one idea throughout a talk: reuse it where the idea comes back, and never
   give it to anything else.
+- **A talk always matches its chapter.** Its people, assets, events, order of events and numbers are the
+  chapter's. A talk never invents a scenario, swaps one person for another, adds an event the chapter
+  doesn't describe, or shows a number the chapter doesn't state. A balance may follow from the chapter's
+  numbers by plain arithmetic, marked in a comment; a number the chapter leaves out stays out. A talk may
+  leave a minor branch out for time, never replace one.
 - A term is defined where the talk first needs it: not before, where it means nothing yet, and not after,
   where it was already used unexplained. Calls are defined just before Alice writes one, "covered" in the
   step where her collateral lands in the vault, and "in the money" in the step where Bob exercises.
