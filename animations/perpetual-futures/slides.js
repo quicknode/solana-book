@@ -138,12 +138,6 @@
       },
 
       {
-        type: "photo",
-        image: "../assets/sky.jpg",
-        heading: "[Questions]?",
-        sub: "solanabook.org  ·  @QuicknodeSolana",
-      },
-      {
         type: "qr",
         heading: "Building [Financial Software] on Solana",
         url: "solanabook.org",
