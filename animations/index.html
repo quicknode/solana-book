@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solana Finance Talks</title>
+<style>
+  @font-face { font-family: "DejaVu Sans Mono"; src: url("../assets/fonts/DejaVuSansMono.ttf"); }
+
+  /* The talks' own palette: near-black paper, pastel cards, one green. */
+  :root {
+    --black: #040406;
+    --dark: #131313;
+    --slab: #2f2f2f;
+    --ink: #2a2a2a;
+    --paper: #f0f0f0;
+    --muted: #a8a8a8;
+    --mint: #d9fbda;
+    --lavender: #efeafe;
+    --white: #fcfcfc;
+    --green: #95fc86;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: "Andale Mono", "DejaVu Sans Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--dark); color: var(--paper); font-family: var(--sans); }
+
+  .bar {
+    display: flex; align-items: center; gap: 16px; padding: 12px 24px;
+    background: #2b2b2b; border-bottom: 1px solid #555;
+    font: 11px var(--mono); letter-spacing: 1px; text-transform: uppercase; color: #bdbdbd;
+  }
+  .bar .handle { margin-left: auto; }
+
+  main { max-width: 1120px; margin: 0 auto; padding: 56px 16px 72px; }
+  .tag {
+    display: inline-block; background: var(--green); color: #134d1a;
+    font: 13px var(--mono); letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px;
+  }
+  h1 { font-weight: 400; font-size: clamp(36px, 6vw, 64px); line-height: 1.1; margin: 20px 0 12px; letter-spacing: -1px; }
+  h1 mark { background: var(--green); color: var(--ink); padding: 0 8px; }
+  .lead { color: var(--muted); font-size: 18px; line-height: 1.5; max-width: 720px; margin: 0 0 40px; }
+
+  .talks { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .talk {
+    display: flex; flex-direction: column; gap: 10px; min-height: 180px; padding: 24px;
+    text-decoration: none; color: var(--ink); transition: transform 0.2s;
+  }
+  .talk:hover, .talk:focus-visible { transform: translateY(-4px); outline: none; }
+  .talk:nth-child(3n + 1) { background: var(--mint); }
+  .talk:nth-child(3n + 2) { background: var(--lavender); }
+  .talk:nth-child(3n) { background: var(--white); }
+  .talk .chapter { font: 12px var(--mono); letter-spacing: 1px; text-transform: uppercase; color: #555; }
+  .talk .name { font-size: 24px; line-height: 1.2; }
+  .talk .about { font-size: 15px; line-height: 1.45; opacity: 0.8; }
+  .talk .open { margin-top: auto; font: 12px var(--mono); letter-spacing: 1px; text-transform: uppercase; }
+
+  footer { margin-top: 48px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  footer kbd { font-family: inherit; border: 1px solid #555; border-radius: 3px; padding: 0 5px; }
+  footer a { color: var(--green); }
+</style>
+</head>
+<body>
+<div class="bar"><span>Quicknode Solana Finance</span><span class="handle">@QuicknodeSolana</span></div>
+<main>
+  <span class="tag">// Building Financial Software on Solana</span>
+  <h1>One talk for every <mark>program</mark> in the book</h1>
+  <p class="lead">Each talk explains what people want from a financial product, then builds it on Solana, one
+    account, handler and token transfer at a time.</p>
+
+  <nav class="talks">
+    <a class="talk" href="escrow/index.html"><span class="chapter">Chapter 11</span><span class="name">Escrow</span><span class="about">Two strangers swap without trusting each other</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="fundraiser/index.html"><span class="chapter">Chapter 12</span><span class="name">The Fundraiser</span><span class="about">Onchain crowdfunding: the target is met, or everyone gets a refund</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="betting-market/index.html"><span class="chapter">Chapter 13</span><span class="name">The Betting Market</span><span class="about">A parimutuel pool with no bookmaker</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="order-book/index.html"><span class="chapter">Chapter 14</span><span class="name">The Order Book Exchange</span><span class="about">Bids and asks wait on a book until they cross</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="constant-product-amm/index.html"><span class="chapter">Chapter 15</span><span class="name">The Constant-Product AMM</span><span class="about">Instant swaps priced by a formula</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="prop-amm/index.html"><span class="chapter">Chapter 16</span><span class="name">The Prop AMM</span><span class="about">A market maker quoting its own capital at oracle prices</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="lending/index.html"><span class="chapter">Chapter 17</span><span class="name">Lending and Borrowing</span><span class="about">Deposits, collateral, interest and liquidation</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="managed-fund/index.html"><span class="chapter">Chapter 18</span><span class="name">The Managed Fund</span><span class="about">An onchain mutual fund whose manager can trade, but never take</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="options/index.html"><span class="chapter">Chapter 19</span><span class="name">Options</span><span class="about">Calls and puts, fully collateralized and physically settled</span><span class="open">Open talk →</span></a>
+    <a class="talk" href="perpetual-futures/index.html"><span class="chapter">Chapter 20</span><span class="name">Perpetual Futures</span><span class="about">Leveraged bets on a price that never expire</span><span class="open">Open talk →</span></a>
+  </nav>
+
+  <footer>
+    In a talk, <kbd>→</kbd> or <kbd>Space</kbd> moves on, <kbd>←</kbd> goes back, <kbd>P</kbd> plays through and
+    <kbd>F</kbd> goes full screen. The book is at <a href="https://solanabook.org">solanabook.org</a>.
+  </footer>
+</main>
+</body>
+</html>
