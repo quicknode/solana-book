@@ -390,7 +390,9 @@
       this.svg = svg;
       this.onStep = onStep || (() => {});
       this.skip = false;
-      this.busy = null;
+      // The running step's animation: the promise play() returns, which
+      // resolves once the step has finished. Null between steps.
+      this.stepAnimation = null;
       this.speed = 1;
       this.autoplay = null;
       // states[i] is the picture once step i has finished. A step starts
@@ -438,14 +440,14 @@
     }
 
     async next() {
-      if (this.busy) return this.interrupt();
+      if (this.stepAnimation) return this.interrupt();
       if (this.index >= this.count - 1) return;
       this.index += 1;
       this.onStep(this.index);
       const run = this.play(this.index);
-      this.busy = run;
+      this.stepAnimation = run;
       await run;
-      if (this.busy === run) this.busy = null;
+      if (this.stepAnimation === run) this.stepAnimation = null;
     }
 
     prev() {
@@ -474,11 +476,11 @@
 
     // Finishes the running animation at once, on its end state.
     async interrupt() {
-      if (!this.busy) return;
+      if (!this.stepAnimation) return;
       this.skip = true;
-      await this.busy;
+      await this.stepAnimation;
       this.skip = false;
-      this.busy = null;
+      this.stepAnimation = null;
     }
 
     tween(ms, fn) {
