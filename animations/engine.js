@@ -393,6 +393,8 @@
       // The running step's animation: the promise play() returns, which
       // resolves once the step has finished. Null between steps.
       this.stepAnimation = null;
+      // How many step animations have started; next() uses it to tell them apart.
+      this.animationCount = 0;
       this.speed = 1;
       this.autoplay = null;
       // states[i] is the picture once step i has finished. A step starts
@@ -444,10 +446,12 @@
       if (this.index >= this.count - 1) return;
       this.index += 1;
       this.onStep(this.index);
-      const run = this.play(this.index);
-      this.stepAnimation = run;
-      await run;
-      if (this.stepAnimation === run) this.stepAnimation = null;
+      // Number each animation, so one that finishes after a newer step has
+      // started leaves the newer step's stepAnimation alone.
+      const animationNumber = ++this.animationCount;
+      this.stepAnimation = this.play(this.index);
+      await this.stepAnimation;
+      if (this.animationCount === animationNumber) this.stepAnimation = null;
     }
 
     prev() {
