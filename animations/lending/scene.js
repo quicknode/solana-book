@@ -196,7 +196,6 @@
   const sol = (text) => ({ text, style: "sol" });
   const balance = (text) => ({ text, style: "balance" });
   const field = (text) => ({ text });
-  const note = (text) => ({ text, style: "note" });
 
   // In the order the chapter's figures list them.
   const HANDLERS = [

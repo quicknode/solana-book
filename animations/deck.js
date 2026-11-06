@@ -318,8 +318,8 @@
       return this.items.length;
     }
 
-    get busy() {
-      return this.player.busy;
+    get currentStepCompletion() {
+      return this.player.currentStepCompletion;
     }
 
     async show(i, forward) {
@@ -388,7 +388,7 @@
     }
 
     async next() {
-      if (this.player.busy) return this.player.interrupt();
+      if (this.player.currentStepCompletion) return this.player.interrupt();
       if (this.index >= this.count - 1) return;
       this.index += 1;
       await this.show(this.index, true);
