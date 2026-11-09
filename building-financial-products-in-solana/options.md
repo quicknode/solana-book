@@ -4,7 +4,7 @@ Alice holds five NVDAx, a token that tracks a share of NVIDIA stock, and NVDAx i
 
 Bob thinks NVIDIA will pass $180 within the week, and he wants that upside for less than the $825 five shares would cost him.
 
-An **option** serves them both: Alice sells Bob the right, but not the obligation, to buy her five NVDAx at $180 any time in the next week, and Bob pays her 25 USDC for it now. If NVIDIA rallies, Bob buys the shares below the market. If it does not, he loses the 25 USDC and Alice keeps it as income on shares she still owns.
+An **option** serves them both. Alice sells Bob the right, but not the obligation, to buy her five NVDAx at $180 any time in the next week. Bob pays her 25 USDC for it now. If NVIDIA rallies, Bob buys the shares below the market. If it does not, he loses the 25 USDC and Alice keeps it as income on shares she still owns.
 
 Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary offer with two additions: it expires, and the buyer pays to reserve it. The program lives at `finance/options` in the companion repository. It keeps one account per option, and the lifecycle has three states: `Listed`, `Held`, and `Exercised`.
 
@@ -13,22 +13,22 @@ Alice's offer to sell five NVDAx for 900 USDC, 180 USDC a share, is an ordinary 
 Options have their own terms:
 
 - An option is a **contract**: an agreement between the two parties to it.
-- Its **underlying**, short for "underlying asset", is the asset the option is about: NVDAx in this chapter. Options traders drop the word "asset" and just say "the underlying". On the NVDAx/USDC pair the underlying is the base token, and USDC, which the strike and premium are paid in, is the quote token (both defined in the *Order Book Exchange* chapter).
+- Its **underlying**, short for "underlying asset", is the asset the option is about: NVDAx in this chapter. Options traders drop the word "asset" and say "the underlying". On the NVDAx/USDC pair the underlying is the base token. USDC is the quote token, and the strike and premium are paid in it. The *Order Book Exchange* chapter defines both terms.
 - Its **kind** is either a **call**, the right to buy the underlying, or a **put**, the right to sell it.
 - Its **strike** is the price the trade happens at if the right is used.
-- Its **expiry** is the moment the right lapses: the holder may exercise before it, and not at or after it.
+- Its **expiry** is the moment the right ends: the holder may exercise before it, and not at or after it.
 - The **writer** creates the option, which is called **writing** it, and posts what the holder would receive on exercise: the underlying for a call, the strike for a put.
 - Its **premium** is what the buyer pays for the right, once, up front.
 - The **holder** buys the option and may use the right it carries. Using the right is **exercising** the option.
-- An option the holder may exercise at any moment before expiry is **American**, and one that can be exercised only at expiry is **European**; the names are historical, not geographic. This program's options are American.
+- An option the holder may exercise at any moment before expiry is **American**, and one that can be exercised only at expiry is **European**. The names are historical, not geographic. This program's options are American.
 - An option worth exercising is **in the money**, and one that is not is **out of the money**.
 
 The two sides have different payoffs:
 
-- **The writer** keeps the premium whatever happens, and in exchange takes on an obligation to trade the underlying at the strike whenever the holder exercises. The writer's gain is capped at the premium. A call writer's loss against the market is not, since the shares can rise without limit; a put writer's is capped at the strike less the premium, since the price cannot fall below zero.
-- **The holder's** loss is capped at the premium whatever happens. A call holder's gain is open-ended, and a put holder's is capped at the strike less the premium.
+- **The writer** keeps the premium whatever happens, and in exchange must trade the underlying at the strike whenever the holder exercises. The writer's gain is capped at the premium. A call writer's loss against the market has no cap, because the shares can rise without limit. A put writer's loss is capped at the strike less the premium, because the price cannot fall below zero.
+- **The holder's** loss is capped at the premium whatever happens. A call holder's gain has no cap, and a put holder's is capped at the strike less the premium.
 
-A sold option has exactly two endings: the holder exercises before expiry, or the option expires and the writer takes the collateral back. Where the price lands inside each ending decides how much each side made.
+A sold option has two endings: the holder exercises before expiry, or the option expires and the writer takes the collateral back. In each ending, the price decides how much each side made.
 
 ![](figures/options-payoff.svg)
 
@@ -38,7 +38,7 @@ A put is a call with the two tokens swapped: the writer posts the strike instead
 
 > **A "contract" here is an option, not a Solana program.** Other chains call a program a "smart contract". In this chapter the word always means the option, which the program records as an `OptionContract` account.
 >
-> On an exchange, "contract" also means a unit of size: a US stock option contract covers 100 shares, and a trade is for some number of identical contracts, which the buyer can later sell or exercise one at a time. In this program, each option covers any amount of the underlying, and is bought and exercised whole.
+> On an exchange, "contract" also means a unit of size. A US stock option contract covers 100 shares. A trade is for some number of identical contracts, and the buyer can later sell or exercise them one at a time. In this program, each option covers any amount of the underlying, and is bought and exercised whole.
 
 | | Call Option | Put Option |
 | --- | --- | --- |
@@ -52,19 +52,19 @@ A put is a call with the two tokens swapped: the writer posts the strike instead
 | The holder profits past | the strike plus the premium | the strike minus the premium |
 | In this chapter | Alice writes, Bob buys: strike $180, premium $5 a share, profit past $185 | Carol writes, Dave buys: strike $150, premium $4 a share, profit past $146 |
 
-Traditional options venues let a writer take on the obligation with only a fraction of it posted as **margin**, and then watch the position every day to make sure the fraction still covers it. **In this program, a writer posts the whole obligation up front, into the vault**, which is the table's second row. That makes a call **covered** and a put **cash-secured**: what the holder might claim is already in custody, so the writer cannot fail to deliver or to pay.
+Traditional options venues let a writer take on the obligation after posting only a fraction of it as **margin**. They then check the position every day to make sure the fraction still covers it. **In this program, a writer posts the whole obligation up front, into the vault**, which is the table's second row. That makes a call **covered** and a put **cash-secured**: the vault already holds what the holder might claim, so the writer cannot fail to deliver or to pay.
 
 Nothing in this program is ever undercollateralized, so it has no margin, no health to measure, no liquidator, and no oracle.
 
 ## Settlement Is Physical, So No Price Is Read
 
-Exercising moves the two tokens in the table's on-exercise rows, through the vaults, and no price is computed. This is **physical settlement**.[^psyoptions] The name is inherited from markets where settling meant delivering the share certificates or the barrels of oil themselves, and it does not mean anything happens offchain. "Physical" here means the underlying asset itself changes hands at the strike. Whether exercising is worth doing is the holder's decision, made against whatever the market is doing offchain, and a holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and never reads a price.
+Exercising moves the two tokens in the table's on-exercise rows through the vaults, and the program computes no price. This is **physical settlement**.[^psyoptions] The name comes from markets where settling meant delivering the share certificates or the barrels of oil themselves. It does not mean anything happens offchain. "Physical" here means the underlying asset itself changes hands at the strike. The holder decides whether exercising is worth doing, based on what the market is doing offchain. A holder who exercises an option that is out of the money only hurts themselves. The program enforces the terms of the deal and never reads a price.
 
-The other design, **cash settlement**, pays the holder the difference between the market price and the strike in the quote token, USDC here, and that difference is a number only a price feed can supply. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets used that design on Solana, with margin and an oracle.[^zeta]
+The other design is **cash settlement**. It pays the holder the difference between the market price and the strike in the quote token, USDC here. Only a price feed can supply that difference. A cash-settled venue needs a price feed, a staleness check on it, and a defense against its manipulation. Zeta Markets used that design on Solana, with margin and an oracle.[^zeta]
 
 ## The Operator Opens the Venue
 
-Maria runs the venue. Her incentive is a fee of 1% on every premium paid, and her power is limited to collecting it. She calls `initialize_market()` with `fee_bps` of 100. The handler refuses two configurations, both as `InvalidParameter`:
+Maria runs the venue. Her incentive is a fee of 1% on every premium paid, and collecting it is all she can do. She calls `initialize_market()` with `fee_bps` of 100. The handler refuses two configurations, both as `InvalidParameter`:
 
 - A venue whose underlying and quote are the same token.
 - A fee of 100% or more, which would leave a writer nothing from a sale.
@@ -75,17 +75,17 @@ A fee of zero is allowed: a venue run at cost is a valid choice. `test_zero_fee_
 
 This one transaction created the three accounts the venue needs.
 
-The **market** account lives at a PDA with seeds `"market"`, the underlying mint, and the quote mint, so one venue exists per pair: every call and put on NVDAx settled in USDC shares the same two vaults and the same fee schedule. Its struct, `Market`, holds the `admin`, the two mints, the two vault addresses, the `fee_bps` charged on every premium, and three counters:
+The **market** account lives at a PDA with seeds `"market"`, the underlying mint, and the quote mint, so one venue exists per pair. Every call and put on NVDAx settled in USDC shares the same two vaults and the same fee schedule. The market's struct, `Market`, holds the `admin`, the two mints, the two vault addresses, the `fee_bps` charged on every premium, and three counters:
 
 - `underlying_owed`: how much of the underlying vault the market owes, as call writers' collateral and as put holders' deliveries waiting for the writer to collect them.
 - `quote_owed`: how much of the quote vault the market owes, as put writers' collateral and as call holders' strike payments waiting to be collected.
 - `fees_owed`: how much of the quote vault belongs to the admin.
 
-The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's tokens, mixed: the underlying vault holds every call writer's shares together, and the quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees together. Every handler that moves tokens updates the three counters before its transfers, and `check_custody()` then checks that each vault will still hold at least that much once the transfers land.
+The market PDA is the authority of the **underlying vault** and the **quote vault** (seeds `"underlying_vault"` and `"quote_vault"` + market), and the program signs for them with the market's seeds. Both vaults hold other people's tokens, mixed together. The underlying vault holds every call writer's shares. The quote vault holds every put writer's cash, every exercised call's strike payment, and the venue's fees. Every handler that moves tokens updates the three counters before its transfers, and `check_custody()` then checks that each vault will still hold at least that much once the transfers land.
 
 ## A Writer Posts the Whole Obligation and Names a Price
 
-Alice, carrying the standard wallet of one SOL and 1,000 USDC plus her five NVDAx, calls `write_option()`. She passes an `id` of 1 and an `OptionTerms` struct: kind `Call`, an underlying amount of 5 NVDAx, a strike amount of 900 USDC (180 USDC a share), a premium of 25 USDC, and an expiry one week out.
+Alice has the standard wallet of one SOL and 1,000 USDC, plus her five NVDAx. She calls `write_option()`. She passes an `id` of 1 and an `OptionTerms` struct: kind `Call`, an underlying amount of 5 NVDAx, a strike amount of 900 USDC (180 USDC a share), a premium of 25 USDC, and an expiry one week out.
 
 The handler checks the terms before it touches a token:
 
@@ -95,10 +95,10 @@ The handler checks the terms before it touches a token:
 
 Then the handler does four things in order:
 
-1. The `OptionContract` is written with status `Listed` and an empty holder.
-2. The market's `underlying_owed` rises by 5 NVDAx.
-3. `check_custody()` runs.
-4. Alice's 5 NVDAx move into the underlying vault.
+1. It writes the `OptionContract` with status `Listed` and an empty holder.
+2. It raises the market's `underlying_owed` by 5 NVDAx.
+3. It runs `check_custody()`.
+4. It moves Alice's 5 NVDAx into the underlying vault.
 
 ![](figures/options-write-call.svg)
 
@@ -112,13 +112,13 @@ The transaction also created the option itself. Each option is an `OptionContrac
 
 ![](figures/options-state-machine.svg)
 
-**Every amount settlement moves is one the account stores.** A call writer posts `underlying_amount` and a call holder pays `strike_amount`; a put swaps the roles, so the writer posts the strike amount and the holder delivers the underlying amount.
+**The account stores every amount that settlement moves.** A call writer posts `underlying_amount` and a call holder pays `strike_amount`. A put swaps the roles, so the writer posts the strike amount and the holder delivers the underlying amount.
 
-There is no strike *price* to multiply by a quantity and divide by a decimals factor, so settlement does no arithmetic at all, and has no rounding direction to get wrong. A "180 USDC strike" is the 900 USDC strike amount spread over the five shares it buys.
+There is no strike *price* to multiply by a quantity and divide by a decimals factor, so settlement does no arithmetic and has no rounding direction to get wrong. A "180 USDC strike" is the 900 USDC strike amount spread over the five shares it buys.
 
-The handler would also create Alice's USDC account, where her premium will arrive, at her expense if she did not already have one, so that `buy_option()` can require it to exist rather than make the buyer pay rent on the writer's account.
+Alice's premium will arrive in her USDC account. If she did not already have one, the handler would create it at her expense. `buy_option()` can then require the account to exist, rather than make the buyer pay rent on the writer's account.
 
-Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time, which returns her collateral and closes the account, rent back to her. That includes after the expiry: an unsold option has no holder whose rights the cancel would cut short, and `test_cancel_unsold_option_works_after_expiry` checks it. Without `cancel_option()`, the collateral a writer posted for an option nobody buys would stay in the market's vault forever.
+Nobody has paid anything yet. Until someone does, Alice can call `cancel_option()` at any time. It returns her collateral, closes the account, and returns the rent to her. She can cancel after the expiry too, because an unsold option has no holder whose rights the cancel would end early. `test_cancel_unsold_option_works_after_expiry` checks it. Without `cancel_option()`, the collateral a writer posted for an option nobody buys would stay in the market's vault forever.
 
 ## A Buyer Pays the Premium, and the Collateral Does Not Move
 
@@ -132,67 +132,67 @@ Bob calls `buy_option()`, passing an `OptionTerms` struct with the terms he read
 
 ![](figures/options-buy-call.svg)
 
-The premium is the only payment in the purchase, and the 24.75 USDC of it that reaches Alice is hers from this moment whatever Bob does later. The 5 NVDAx do not move. Bob's downside is fixed at the 25 USDC he just paid, and Alice's upside on the shares is capped at $180 until the week is out.
+The premium is the only payment in the purchase. The 24.75 USDC of it that reaches Alice is hers from this moment, whatever Bob does later. The 5 NVDAx do not move. Bob's downside is fixed at the 25 USDC he just paid, and Alice's upside on the shares is capped at $180 until the week ends.
 
-A writer cannot buy their own option. In the Anchor build, the premium's source and destination are each derived as their party's associated token account, so with the writer on both sides the same account would fill two mutable slots. Anchor refuses the instruction with `ConstraintDuplicateMutableAccount` before the handler runs. `test_writer_cannot_buy_their_own_option` asserts that error and that the option is still `Listed`. A second buyer is refused because the option is no longer `Listed` (`test_buy_is_refused_once_sold`).
+A writer cannot buy their own option. The Anchor build derives the premium's source and destination as each party's associated token account. With the writer on both sides, the same account would fill two mutable slots. Anchor refuses the instruction with `ConstraintDuplicateMutableAccount` before the handler runs. `test_writer_cannot_buy_their_own_option` asserts that error and that the option is still `Listed`. A second buyer is refused because the option is no longer `Listed` (`test_buy_is_refused_once_sold`).
 
 The terms check stops the switched offer of the *Escrow* chapter. While Bob's purchase is on its way, Alice could cancel and write a new option at the same address, with the same `id`, on worse terms. `test_buy_option_refuses_a_switched_option` does that four times, with a higher premium, fewer shares, a higher strike, and a sooner expiry. Each purchase at the terms Bob saw fails with `OptionTermsChanged`, and no USDC moves.
 
 ## The Holder Exercises Before Expiry, and the Tokens Change Hands
 
-NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` before the week is out. The handler requires the option to be `Held`, the clock to be before `expiry` (`OptionNotHeld`, `OptionExpired`), and the signer to be the holder. Then it updates the ledger and moves both legs:
+NVIDIA reports earnings and NVDAx moves to $200. Bob calls `exercise_option()` before the week ends. The handler requires the option to be `Held`, the clock to be before `expiry` (`OptionNotHeld`, `OptionExpired`), and the signer to be the holder. Then it updates the ledger and moves both legs:
 
 - The market's `underlying_owed` falls by 5 NVDAx, because that collateral is no longer owed to anyone.
 - The market's `quote_owed` rises by 900 USDC, because the strike is now owed to Alice.
-- Bob pays the strike, 5 times 180 USDC, 900 USDC, into the quote vault.
-- The underlying vault pays Bob the 5 NVDAx. Bob's NVDAx account, which he has never needed before, is created in the same transaction at his expense.
+- Bob pays the strike into the quote vault: 5 times 180 USDC, which is 900 USDC.
+- The underlying vault pays Bob the 5 NVDAx. Bob has never needed an NVDAx account before. The same transaction creates one at his expense.
 
 ![](figures/options-exercise.svg)
 
-Bob now holds 5 NVDAx worth $1,000 and has spent 925 USDC to get them, 25 of premium and 900 of strike. Of his 1,000 USDC, 75 is left. Had NVDAx stayed at $165, he would not have exercised (paying 900 for shares the market sells for 825), and the 25 USDC would have been his whole loss. The call would have expired, and once the week was out Alice would have called `reclaim_collateral()` for her 5 NVDAx, keeping the premium and the shares.
+Bob now holds 5 NVDAx worth $1,000 and has spent 925 USDC to get them, 25 of premium and 900 of strike. Of his 1,000 USDC, 75 is left. Had NVDAx stayed at $165, he would not have exercised, because that would mean paying 900 for shares the market sells for 825. The 25 USDC would have been his whole loss. The call would have expired, and once the week had ended Alice would have called `reclaim_collateral()` for her 5 NVDAx, keeping the premium and the shares.
 
 ![](figures/options-call-expires.svg)
 
-The strike payment stays in the vault, owed to Alice, rather than being sent to her directly. Paying the writer inside the exercise would mean requiring the writer's token account to exist at that moment, and a writer who closed it could then block the holder from ever exercising. The vault holds it instead, and the writer withdraws it later with `collect_proceeds()`.
+The strike payment stays in the vault, owed to Alice, rather than being sent to her directly. Paying the writer inside the exercise would require the writer's token account to exist at that moment. A writer who closed it could then block the holder from ever exercising. The vault holds it instead, and the writer withdraws it later with `collect_proceeds()`.
 
 A put exercises the same way with the two tokens swapped. `test_put_lifecycle_delivers_the_underlying_for_the_strike` runs that path with a put on five NVDAx at a 150 strike, whose writer collects the five NVDAx at the end.
 
 ## The Writer Collects the Strike, and the Account Closes
 
-Alice calls `collect_proceeds()`. The handler requires the option to be `Exercised` (`OptionNotExercised`) and the signer to be the writer, reduces `quote_owed` by 900 USDC, pays her the 900 USDC from the quote vault, and closes the option with its rent back to her.
+Alice calls `collect_proceeds()`. The handler requires the option to be `Exercised` (`OptionNotExercised`) and the signer to be the writer. It reduces `quote_owed` by 900 USDC, pays her the 900 USDC from the quote vault, closes the option, and returns its rent to her.
 
 ![](figures/options-collect-proceeds.svg)
 
-Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC, an effective $184.95 a share against the $200 they now trade at. She gave up $15.05 a share, 75.25 USDC in all: the 75 USDC the payoff figure shows as the writer's loss at $200, plus Maria's 0.25 USDC fee. The premium was all she could make.
+Alice sold her five NVDAx for 900 USDC and had already been paid 24.75 USDC for agreeing to. She holds 1,924.75 USDC. That is an effective $184.95 a share for shares that now trade at $200. She gave up $15.05 a share, 75.25 USDC in all. That is the 75 USDC the payoff figure shows as the writer's loss at $200, plus Maria's 0.25 USDC fee. The premium was all she could make.
 
 ## A Put Writer Posts Cash, and the Option Expires Unexercised
 
-Carol would like to own NVDAx at $150 and would like to be paid for standing ready to buy. She calls `write_option()` with kind `Put`, an underlying amount of 5 NVDAx, a strike amount of 750 USDC (150 USDC a share), a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike amount, so 750 USDC leaves Carol's account for the quote vault, and `quote_owed` rises to match. Of her 1,000 USDC, 250 is left. Carol has no NVDAx account, so the handler also creates one, at her expense; `cancel_option()` and `reclaim_collateral()` would create it the same way.
+Carol would like to own NVDAx at $150 and would like to be paid for agreeing to buy at that price. She calls `write_option()` with kind `Put`, an underlying amount of 5 NVDAx, a strike amount of 750 USDC (150 USDC a share), a premium of 20 USDC, and an expiry a week out. A put writer's collateral is the strike amount, so 750 USDC moves from Carol's account to the quote vault, and `quote_owed` rises to match. Of her 1,000 USDC, 250 is left. Carol has no NVDAx account, so the handler also creates one, at her expense. `cancel_option()` and `reclaim_collateral()` would create it the same way.
 
 ![](figures/options-write-put.svg)
 
-Dave holds five NVDAx and wants insurance against a fall below $150 for the week. He calls `buy_option()`: 19.80 USDC to Carol, 0.20 USDC into the quote vault for Maria, and the option is `Held`. This is a **protective put**, the position a stockholder buys the way a homeowner buys fire insurance, and like fire insurance it is meant to expire unused.
+Dave holds five NVDAx and wants insurance against a fall below $150 for the week. He calls `buy_option()`. Carol receives 19.80 USDC, 0.20 USDC goes into the quote vault for Maria, and the option is `Held`. This is a **protective put**. A stockholder buys it the way a homeowner buys fire insurance, and like fire insurance it is meant to expire unused.
 
 ![](figures/options-buy-put.svg)
 
-The week passes with NVDAx above $150, and Dave does nothing: selling at 150 when the market pays more would be a gift to Carol. Once the expiry has passed, Carol calls `reclaim_collateral()`. The handler checks two things:
+The week passes with NVDAx above $150, and Dave does nothing, because selling at 150 when the market pays more would be a gift to Carol. Once the expiry has passed, Carol calls `reclaim_collateral()`. The handler checks two things:
 
 - The option must be `Held`, because an exercised option has no collateral left to reclaim (`OptionNotHeld`).
 - The clock must be at or past `expiry` (`OptionNotExpired`).
 
-Then it reduces `quote_owed` by 750 USDC, returns her 750 USDC from the quote vault, and closes the option account with its rent back to her.
+Then it reduces `quote_owed` by 750 USDC, returns her 750 USDC from the quote vault, closes the option account, and returns its rent to her.
 
 ![](figures/options-reclaim.svg)
 
 Carol's return is the 19.80 USDC premium on a purchase that never happened. Dave's insurance cost him 20 USDC and paid nothing. `test_reclaim_collateral_after_expiry_returns_the_strike_to_the_put_writer` follows this path, from Dave's purchase to the reclaim, and checks that the 750 USDC and the option's rent come back to Carol.
 
-Had NVDAx fallen below $150, Dave would have exercised instead: his 5 NVDAx into the underlying vault, the 750 USDC out to him, and the shares owed to Carol, who would have bought at $150 what the market then sold for less.
+Had NVDAx fallen below $150, Dave would have exercised instead. His 5 NVDAx would have gone into the underlying vault and the 750 USDC out to him. The shares would have been owed to Carol, who would have bought at $150 what the market then sold for less.
 
 ![](figures/options-put-exercised.svg)
 
 ## The Operator Collects the Fees
 
-Maria calls `collect_fees()`. The handler pays her `fees_owed`, 0.45 USDC across the two sales, zeroes the counter, and refuses to run when there is nothing to collect (`NothingToCollect`). The vaults are empty: every token that entered has left to the party it was owed to.
+Maria calls `collect_fees()`. The handler pays her `fees_owed`, which is 0.45 USDC across the two sales, and sets the counter to zero. It refuses to run when there is nothing to collect (`NothingToCollect`). The vaults are empty: every token that entered has gone to the party it was owed to.
 
 ![](figures/options-collect-fees.svg)
 
@@ -209,27 +209,27 @@ Here is where everyone ends up:
 The arithmetic lives in `contract_math.rs`:
 
 - **Settlement.** `collateral_amount()` returns the underlying amount for a call and the strike amount for a put, and `exercise_payment()` returns the other.
-- **The premium split.** `split_premium()` rounds the fee up, `premium` times `fee_bps` over 10,000, and gives the writer the rest. The venue keeps the rounding minor unit, so a writer gives up at most one minor unit per sale and, at any nonzero fee, a premium of one minor unit goes entirely to the venue.
+- **The premium split.** `split_premium()` computes the fee as `premium` times `fee_bps` over 10,000, rounds it up, and gives the writer the rest. The venue keeps the rounding minor unit, so a writer gives up at most one minor unit per sale. At any nonzero fee, the whole of a premium of one minor unit goes to the venue.
 - **The expiry.** `may_exercise()` is `now < expiry` and `may_reclaim()` is `now >= expiry`.
 
-Every checked operation on a counter maps to `MathOverflow`; a vault balance that would go below zero maps to `CustodyInvariantViolated`.
+Every checked operation on a counter maps to `MathOverflow`. A vault balance that would go below zero maps to `CustodyInvariantViolated`.
 
 ## The Invariants: The Vaults Cover the Ledger, and Expiry Separates Exercise From Reclaim
 
-- **Each vault covers what the market owes.** The underlying vault holds at least `underlying_owed`; the quote vault holds at least `quote_owed` plus `fees_owed`. `check_custody()` fails with `CustodyInvariantViolated` if a refactor ever breaks the accounting. The tests strengthen it to equality after every step, because nothing in them donates to a vault.
+- **Each vault covers what the market owes.** The underlying vault holds at least `underlying_owed`. The quote vault holds at least `quote_owed` plus `fees_owed`. `check_custody()` fails with `CustodyInvariantViolated` if a refactor ever breaks the accounting. The tests strengthen it to equality after every step, because nothing in them donates to a vault.
 - **At every instant, exactly one of `exercise_option()` and `reclaim_collateral()` accepts a held option.** The two comparisons are complements, so the deadline has the one boundary the *Time* chapter asks for, and both sides use it.
-- **`cancel_option()`, `collect_proceeds()`, and `reclaim_collateral()` all close the account.** Each ends by closing the option account and returning its rent to the writer, so an option cannot be collected twice: the account is gone.
-- **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else; no handler moves collateral or a strike payment to the admin under any parameters.
+- **`cancel_option()`, `collect_proceeds()`, and `reclaim_collateral()` all close the account.** Each ends by closing the option account and returning its rent to the writer, so an option cannot be collected twice, because the account is gone.
+- **The admin reaches only the fees.** `collect_fees()` moves `fees_owed` and nothing else. No handler moves collateral or a strike payment to the admin under any parameters.
 - **Physical settlement moves exactly the posted terms.** What the writer collects is what the holder paid, and what the holder receives is what the writer posted, to the minor unit, for every option the program would accept.
 
-The companion repository's `kani-proofs` crate model-checks the custody ledger, the expiry partition, the admin's reach, and physical settlement; not the account closure. `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, ends each with a cancel, a reclaim, or an exercise and collection, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` checks the expiry partition for every pair of timestamps. `proof_collect_fees_pays_only_the_fees_owed` checks the admin's reach for every ledger the program could hold: whatever is owed to writers and holders, and whatever surplus sits in the vault beside it, the handler pays the admin exactly `fees_owed` and leaves nothing for a second collection to pay. `proof_exercise_moves_exactly_the_posted_terms` checks physical settlement for every option the program would accept.
+The companion repository's `kani-proofs` crate model-checks the custody ledger, the expiry partition, the admin's reach, and physical settlement. It does not model-check the account closure. `proof_vault_ledger_stays_consistent_across_every_lifecycle` writes two options of either kind into shared vaults, ends each with a cancel, a reclaim, or an exercise and collection, and shows the ledger consistent after every step and both vaults empty at the end. `proof_exercise_and_reclaim_windows_partition_time` checks the expiry partition for every pair of timestamps. `proof_collect_fees_pays_only_the_fees_owed` checks the admin's reach for every ledger the program could hold: whatever is owed to writers and holders, and whatever surplus sits in the vault beside it, the handler pays the admin exactly `fees_owed` and leaves nothing for a second collection to pay. `proof_exercise_moves_exactly_the_posted_terms` checks physical settlement for every option the program would accept.
 
 ## The Failure Modes: What Can Go Wrong When Nothing Can Be Liquidated
 
-- **The writer defaults.** This cannot happen. `write_option()` takes the entire obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder's window has closed. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` check the two refusals that must hold while a holder could still exercise.
-- **The clock.** Expiry is a Unix timestamp, and the network's clock can drift from wall-clock time by seconds. A holder who waits until the final second to exercise risks that drift putting the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
-- **A writer blocks the exercise.** The strike goes into the vault, as the exercise section explains, so no token account of the writer's is on the exercise path.
-- **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be bound to the writer or a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account, as the purchase step above shows; the Quasar build, whose token accounts are not associated token accounts, checks the account's owner and mint in the handler, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
+- **The writer defaults.** This cannot happen. `write_option()` takes the whole obligation into the vault, and the only paths that return it are `cancel_option()` before anyone buys and `reclaim_collateral()` after the holder can no longer exercise. `test_cancel_is_refused_once_sold` and `test_reclaim_is_refused_before_expiry` check the two refusals that must hold while a holder could still exercise.
+- **The clock.** Expiry is a Unix timestamp, and the network's clock can drift from wall-clock time by seconds. If a holder waits until the final second to exercise, that drift can put the exercise after expiry, and the program cannot help them. The boundary itself is tested from both sides (`test_exercise_is_allowed_up_to_but_not_at_expiry`, `test_reclaim_is_refused_before_expiry`).
+- **A writer blocks the exercise.** The strike goes into the vault, as the exercise section explains, so exercising needs no token account of the writer's.
+- **The wrong account carries the premium.** The buyer pays the writer directly, so the destination has to be tied to the writer. Otherwise a buyer could name their own account and buy the option for free. The Anchor build derives it as the writer's associated token account, as the purchase step above shows. The Quasar build's token accounts are not associated token accounts. Its handler checks the account's owner and mint, and `buy_refuses_a_premium_account_the_writer_does_not_own` checks it.
 - **What is absent.** There are no shares to inflate, and the program has no margin, oracle, or liquidator to attack. What is left is the custody ledger and the two comparisons against the clock, which is why both are model-checked as well as tested.
 
 ## Testing Considerations
@@ -243,7 +243,7 @@ The suite (`tests/test_options.rs`) follows the call from write to collected str
 - The three zero terms, and a writer buying their own option.
 - An expiry already past, and a venue opened with the same token on both sides or a fee of 100%.
 
-When you build your own, copy the shape of the two boundary tests: a deadline needs one test one second inside it and one at it. A suite that tested only at the expiry could pass without ever showing that exercise works one second before it.
+When you build your own, copy the two boundary tests: a deadline needs one test one second before it and one test at it. A suite that tested only at the expiry could pass without ever showing that exercise works one second before it.
 
 ## What You Learnt from Building the Options Venue
 
@@ -253,13 +253,13 @@ The options venue added six concepts:
 
 - **The option's terms.** A call or a put, a strike, an expiry, and a premium; a writer who keeps the premium and takes on an obligation, and a holder whose loss is capped at the premium.
 - **Full collateralization removes margin, liquidation and the oracle.** A covered call and a cash-secured put cannot default.
-- **Physical settlement needs no price.** The holder's decision replaces the price feed, and the program's job is to enforce the terms, not to value them.
+- **Physical settlement needs no price.** The holder's decision replaces the price feed, and the program enforces the terms without valuing them.
 - **Store the amounts that change hands, not a price.** An option that records its underlying and strike amounts settles by moving them.
 - **A ledger for mixed custody.** When one vault holds several parties' tokens, the state account counts what each is owed and every handler that moves tokens asserts the vault still covers it, after the math.
 - **One deadline, compared both ways.** At every moment exactly one party can claim the collateral.
 
 In the *Perpetual Futures* chapter we will relax the collateral rule. Traders post a fraction of their exposure, a price feed values each position continuously, a haircut pays each winner only as far as the pool can back it, and a liquidator is paid to close what the fraction no longer covers.
 
-[^psyoptions]: PsyOptions ran physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. It launched on mainnet on 22 August 2021 and was, by its own account, the first options program live there; see [x.com/PsyOptions/status/1436041089518030849](https://x.com/PsyOptions/status/1436041089518030849). PsyOptions represented each option series as a token, one mint per series; this program keeps one account per option instead, for a simpler custody ledger.
+[^psyoptions]: PsyOptions ran physically settled, fully collateralized options on Solana, with no oracle, and this chapter's venue follows its settlement design. It launched on mainnet on 22 August 2021 and was, by its own account, the first options program live there; see [x.com/PsyOptions/status/1436041089518030849](https://x.com/PsyOptions/status/1436041089518030849). PsyOptions represented each option series as a token, one mint per series. This program keeps one account per option instead, for a simpler custody ledger.
 
 [^zeta]: Zeta Markets ran a margined, cash-settled options venue on Solana, later a perpetual futures one, and wound down on 1 May 2025 as its team moved to Bullet, a trading network of its own; see [x.com/ZetaMarkets/status/1908072806765735956](https://x.com/ZetaMarkets/status/1908072806765735956) and [docs.zeta.markets](https://docs.zeta.markets). The comparison is between two settlement designs, not two products: a cash-settled venue can offer leverage and needs a price feed to do it, and a physically settled one offers neither.
